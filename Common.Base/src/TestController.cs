@@ -22,11 +22,6 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			return "test index, session = " + session.Id;
 		}
 
-		[Action("static")]
-		public static string Static() {
-			return "test static";
-		}
-
 		[Action("abc")]
 		public IActionResult Abc() {
 			return new PlainResult(123);
