@@ -107,6 +107,7 @@
     <Compile Include="Common.Base\src\Controllers\StaticHandler.cs" />
     <Compile Include="Common.Base\src\Controllers\TestController.cs" />
     <Content Include="Common.Base\static\test.txt" />
+    <Compile Include="Common.Base\src\Translate\zh_CN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -118,7 +119,6 @@
     <Content Include="Common.Base\templates\test.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common.Base\src\Translate\" />
     <Folder Include="Common.User\" />
     <Folder Include="Finance.Accounting\" />
     <Folder Include="Finance.Deposit\" />
