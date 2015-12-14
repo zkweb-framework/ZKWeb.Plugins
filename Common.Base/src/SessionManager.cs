@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Base.src.Database;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Base.src {

@@ -10,7 +10,7 @@ using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 
-namespace ZKWeb.Plugins.Common.Base.src {
+namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	[ExportMany]
 	public class TestController : IController {
 		[Action("/")]

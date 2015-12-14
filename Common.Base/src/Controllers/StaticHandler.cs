@@ -10,7 +10,7 @@ using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 
-namespace ZKWeb.Plugins.Common.Base.src {
+namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>
 	/// 静态文件处理器
 	/// 路径规则
