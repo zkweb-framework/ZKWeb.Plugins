@@ -19,12 +19,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var session = sessionManager.GetSession();
 			session.Items["last updated"] = DateTime.UtcNow;
 			sessionManager.SaveSession();
-			return "test index, session = " + session.Id;
-		}
-
-		[Action("abc")]
-		public IActionResult Abc() {
-			return new PlainResult(123);
+			return "test index, session = " + session.Id + " translate = " + new T("abc");
 		}
 
 		[Action("json")]

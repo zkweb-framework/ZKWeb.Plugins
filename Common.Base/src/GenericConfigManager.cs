@@ -20,25 +20,31 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	[ExportMany, SingletonReuse]
 	public class GenericConfigManager {
 		/// <summary>
-		/// 获取指定类型的所属插件 + 配置键名
-		/// 用于从数据库中获取对应的配置
+		/// 配置值的缓存
+		/// </summary>
+		private MemoryCache<string, object> Cache = new MemoryCache<string, object>();
+
+		/// <summary>
+		/// 获取类型标记的配置属性
 		/// </summary>
 		/// <typeparam name="T">类型</typeparam>
 		/// <returns></returns>
-		private static string GetKey<T>() {
+		private static GenericConfigAttribute GetConfigAttribute<T>() {
 			var attribute = typeof(T).GetAttribute<GenericConfigAttribute>();
 			if (attribute == null) {
 				throw new ArgumentException(string.Format(
 					"type {0} not contains GenericConfigAttribute", typeof(T).Name));
 			}
-			return attribute.Plugin + "." + attribute.Key;
+			return attribute;
 		}
 
 		/// <summary>
 		/// 储存配置值
 		/// </summary>
 		public void PutData<T>(T value) where T : class, new() {
-			var key = GetKey<T>();
+			var attribute = GetConfigAttribute<T>();
+			var key = attribute.DatabaseKey();
+			// 保存到数据库
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
 				var config = context.Get<GenericConfig>(c => c.Key == key);
@@ -49,6 +55,10 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				});
 				context.SaveChanges();
 			}
+			// 保存到缓存
+			if (attribute.CacheTime > 0) {
+				Cache.Put(key, value, TimeSpan.FromSeconds(attribute.CacheTime));
+			}
 		}
 
 		/// <summary>
@@ -56,23 +66,36 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		/// <returns></returns>
 		public T GetData<T>() where T : class, new() {
-			var key = GetKey<T>();
+			var attribute = GetConfigAttribute<T>();
+			var key = attribute.DatabaseKey();
+			// 从缓存获取
+			var value = Cache.GetOrDefault(key) as T;
+			if (value != null) {
+				return value;
+			}
+			// 从数据库获取，允许缓存时设置到缓存
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
 				var config = context.Get<GenericConfig>(c => c.Key == key);
-				if (config == null) {
-					return new T();
-				} else {
-					return JsonConvert.DeserializeObject<T>(config.Value) ?? new T();
+				if (config != null) {
+					value = JsonConvert.DeserializeObject<T>(config.Value);
+					if (attribute.CacheTime > 0) {
+						Cache.Put(key, value, TimeSpan.FromSeconds(attribute.CacheTime));
+					}
 				}
 			}
+			return value ?? new T();
 		}
 
 		/// <summary>
 		/// 删除配置值
 		/// </summary>
 		public void RemoveData<T>() {
-			var key = GetKey<T>();
+			var attribute = GetConfigAttribute<T>();
+			var key = attribute.DatabaseKey();
+			// 从缓存删除
+			Cache.Remove(key);
+			// 从数据库删除
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
 				context.DeleteWhere<GenericConfig>(c => c.Key == key);

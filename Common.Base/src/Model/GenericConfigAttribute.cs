@@ -20,6 +20,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// 配置键名
 		/// </summary>
 		public string Key { get; set; }
+		/// <summary>
+		/// 缓存时间（秒），默认是0
+		/// </summary>
+		public int CacheTime { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -29,6 +33,16 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public GenericConfigAttribute(string plugin, string key) {
 			Plugin = plugin;
 			Key = key;
+			CacheTime = 0;
+		}
+
+		/// <summary>
+		/// 获取保存到数据库时使用的键名
+		/// 所属插件 + 配置键名
+		/// </summary>
+		/// <returns></returns>
+		public string DatabaseKey() {
+			return Plugin + "." + Key;
 		}
 	}
 }
