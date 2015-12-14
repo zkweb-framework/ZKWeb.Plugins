@@ -1,4 +1,5 @@
-﻿using DryIocAttributes;
+﻿using DryIoc;
+using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,12 +10,16 @@ using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 
-namespace Common.Base {
+namespace ZKWeb.Plugins.Common.Base.src {
 	[ExportMany]
 	public class TestController : IController {
 		[Action("/")]
 		public string Index() {
-			return "test index";
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var session = sessionManager.GetSession();
+			session.Items["last updated"] = DateTime.UtcNow;
+			sessionManager.SaveSession();
+			return "test index, session = " + session.Id;
 		}
 
 		[Action("static")]

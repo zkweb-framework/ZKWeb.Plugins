@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.Admin\src\AdminController.cs" />
+    <Compile Include="Common.Base\src\SessionManager.cs" />
     <Compile Include="Common.Base\src\Database\Session.cs" />
     <Compile Include="Common.Base\src\TestController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

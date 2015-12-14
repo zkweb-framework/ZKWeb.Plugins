@@ -9,15 +9,16 @@ using ZKWeb;
 using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
+using ZKWeb.Plugins.Common.Base.src.Database;
 
-namespace Common.Admin {
+namespace ZKWeb.Plugins.Common.Base.src {
 	[ExportMany]
 	public class AdminController : IController {
 		[Action("admin")]
 		[Action("admin.html")]
 		[Action("admin.aspx")]
 		public string Admin() {
-			return "here is admin\r\n" + new Base.Database.Session().ToString();
+			return "here is admin\r\n" + new Session().ToString();
 		}
 
 		[Action("admin/info")]
