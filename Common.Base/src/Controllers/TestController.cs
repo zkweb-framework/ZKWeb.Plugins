@@ -22,6 +22,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			return "test index, session = " + session.Id + " translate = " + new T("abc");
 		}
 
+		[Action("redirect")]
+		public IActionResult Redirect() {
+			return new RedirectResult("/");
+		}
+
 		[Action("json")]
 		public IActionResult Json() {
 			return new JsonResult(new { a = 1, b = 2, c = 3 });

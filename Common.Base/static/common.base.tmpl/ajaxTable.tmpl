@@ -1,0 +1,36 @@
+﻿<div class="table-container inbox-content">
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<div class="pagination-panel pull-right">
+				<a class="btn btn-sm blue to-first"><i class="fa fa-angle-double-left"></i></a>
+				<a class="btn btn-sm blue to-prev"><i class="fa fa-angle-left"></i></a>
+				<input type="text" class="pagination-panel-input form-control input-sm" />
+				<a class="btn btn-sm blue to-next"><i class="fa fa-angle-right"></i></a>
+				<a class="btn btn-sm blue to-last"><i class="fa fa-angle-double-right"></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="table-scroller">
+		<table class="table table-striped table-hover dataTable">
+			<thead>
+				<tr role="row" class="heading">
+					<% _.each(result.Columns, function(column, index) { %>
+						<% column.compiledCellTemplate = _.template(column.CellTemplate); %>
+						<% var scope = { column: column, result: result, index: index }; %>
+						<th width="<%-column.Width%>"><%=_.template(column.HeadTemplate)(scope)%></th>
+					<% }); %>
+				</tr>
+			</thead>
+			<tbody>
+				<% _.each(result.Rows, function(row, index) { %>
+					<% var scope = { row: row, result: result, index: index }; %>
+					<tr role="row" data-row="<%-JSON.stringify(row)%>">
+						<% _.each(result.Columns, function(column) { %>
+							<td><%=column.compiledCellTemplate(scope)%></td>
+						<% }); %>
+					</tr>
+				<% }); %>
+			</tbody>
+		</table>
+	</div>
+</div>

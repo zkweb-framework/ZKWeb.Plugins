@@ -1,4 +1,8 @@
 ﻿<html>
+<head>
+	<meta charset="utf-8" />
+	<link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
+</head>
 <body>
 	hello template
 	{{ a }}
@@ -7,6 +11,10 @@
 
 	{% area test_area %}
 		{% default_widgets %}
+	{% endarea %}
+
+	{% area test_widget %}
+		{% widget common.base.logo { w: 300, h: 200 } %}
 	{% endarea %}
 </body>
 </html>
