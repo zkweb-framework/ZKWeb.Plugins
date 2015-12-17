@@ -1,0 +1,11 @@
+﻿.page-on-load {
+	background: #fefefe;
+    
+	.page-header,
+	.page-container,
+	.page-footer,
+	> .clearfix {
+		display: none;
+		transition: all 2s;
+	}
+}

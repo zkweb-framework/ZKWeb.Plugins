@@ -1,0 +1,290 @@
+﻿/* 头部样式 */
+.page-header.navbar {
+	border-bottom: none;
+	box-shadow: 0px 0px 0px 1px #fff, 0px 0px 0px 2px #dfdfdf, 0px 0px 5px 3px #f0f0f0;
+	// 字体大小
+	.top-menu .navbar-nav > li.dropdown-user .dropdown-menu > li > a,
+	.top-menu .navbar-nav > li.dropdown-extended .dropdown-menu > li.external > h3,
+	.top-menu .navbar-nav > li.dropdown-inbox > .dropdown-menu .dropdown-menu-list > li .subject .from {
+		font-size: $font-size-normal;
+	}
+
+	.top-menu .navbar-nav > li.dropdown-extended .dropdown-menu > li.external > a {
+		font-size: $font-size-normal;
+		margin-top: 0px;
+	}
+
+	.top-menu .navbar-nav > li.dropdown-user > .dropdown-toggle > .username {
+		font-weight: normal;
+	}
+}
+
+@media (max-width: $screen-xs-max) { /* 767px */
+	.page-header.navbar .page-top {
+		background: none; // 手机模式下仍显示顶部导航栏的底部阴影
+		width: auto !important; // 允许和菜单栏显示在同一行
+		clear: none; // 同上
+	}
+}
+
+/* 后台背景颜色*/
+body {
+	background: #fff;
+}
+
+/* Navigation */
+.header-navigation {
+	font-size: 14px;
+	margin: 0 10px 0 0;
+	padding: 0;
+	float: left;
+	text-transform: uppercase;
+}
+
+.header-navigation ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.header-navigation > ul > li {
+	float: left;
+}
+
+.header-navigation > ul > li > a {
+	color: #808080;
+	display: block;
+	padding: 28px 15px;
+	font-size: 14px;
+}
+
+.header-navigation ul > li.active > a,
+.header-navigation ul > li > a:hover,
+.header-navigation ul > li > a:focus,
+.header-navigation ul > li.open > a,
+.header-navigation ul > li.open > a:hover,
+.header-navigation ul > li.open > a:focus {
+	color: #e02222;
+	background: #fcfcfc;
+	text-decoration: none;
+}
+
+.header-navigation ul > li.active > a {
+	border-bottom: 2px solid #e64f00;
+}
+
+
+
+/* dropdown menu */
+@media (min-width: 1025px) {
+	.header-navigation > ul > li:hover > .dropdown-menu {
+		display: block;
+	}
+}
+
+.header-navigation,
+.header-navigation .dropdown {
+	position: static;
+}
+
+.header-navigation .dropdown-fix-left,
+.header-navigation .dropdown-fix-right {
+	position: relative;
+}
+
+.header-navigation .dropdown-menu {
+	left: auto;
+	top: 100%;
+	padding: 0;
+	background: #fff;
+	position: absolute;
+	border: none;
+	box-shadow: 5px 5px rgba(91, 91, 91, 0.2);
+	text-transform: none;
+	letter-spacing: 0;
+	border-radius: 0;
+	z-index: 9999;
+}
+
+.header-navigation .dropdown-menu:before,
+.header-navigation .dropdown-menu:after {
+	display: none !important;
+}
+
+.dropdown-fix-left .dropdown-menu {
+	left: 0;
+	width: 700px;
+}
+
+.dropdown-fix-right .dropdown-menu {
+	right: 0;
+	width: 700px;
+}
+
+.header-navigation > ul > li > .dropdown-menu {
+	margin-top: -5px;
+	border-top: solid 3px transparent;
+	z-index: 1001;
+}
+
+.header-navigation .dropdown100 > .dropdown-menu {
+	left: 15px;
+	right: 15px;
+}
+
+.header-navigation > ul > li.dropdown:hover > a:after {
+	bottom: 0;
+	width: 0;
+	height: 0;
+	z-index: 1002;
+	content: " ";
+	display: block !important;
+	position: absolute;
+	border-bottom: 8px solid #e6400c;
+	border-right: 8px solid transparent;
+	border-left: 8px solid transparent;
+}
+
+.ie8 .header-navigation > ul > li.dropdown:hover > a:after {
+	display: none !important;
+}
+
+.header-navigation li.dropdown100 > .dropdown-menu:after {
+	display: none !important;
+}
+
+.header-navigation .dropdown-menu > li:first-child {
+	border-top: solid 2px #ea4c1d;
+}
+
+.header-navigation .dropdown-menu li {
+	padding: 0;
+	margin: 0;
+	border-bottom: solid 1px #efefef;
+	position: relative;
+	float: none;
+}
+
+.header-navigation .dropdown-menu li:last-child {
+	border: none;
+}
+
+.header-navigation .dropdown-menu li > a {
+	padding: 10px 15px;
+	font-weight: 400;
+	color: #767f88;
+}
+
+.header-navigation .dropdown-menu > li > a:hover,
+.header-navigation .dropdown-menu > li.active > a,
+.header-navigation .header-navigation-content .header-navigation-col li > a:hover,
+.header-navigation .header-navigation-content .header-navigation-col li.active > a {
+	background: #e6400c;
+	color: #fff;
+}
+
+/* navigation content */
+.header-navigation-content {
+	padding: 20px 30px;
+	min-width: 600px;
+}
+
+.header-navigation-content .header-navigation-col {
+	padding: 0;
+}
+
+.header-navigation-content h4,
+.ecommerce .header-navigation-content h4 {
+	margin: 0 0 6px;
+	padding: 10px 10px 5px;
+	border-bottom: solid 1px #f0f0f0;
+}
+
+.header-navigation-content ul {
+	padding: 0;
+	margin: 0 0 10px;
+	list-style: none;
+}
+
+.header-navigation-content li {
+	padding: 0;
+	border: none !important;
+}
+
+.header-navigation-content li > a {
+	display: block;
+}
+
+/* header navigation description */
+.header-navigation-content-ext {
+	padding: 20px 30px 2px;
+	background: #fff;
+}
+
+.header-navigation-description {
+	background: #fcfafb;
+	margin: -20px 0 -2px -30px;
+	padding: 20px;
+	box-shadow: 0 0 20px rgba(91, 91, 91, 0.2) inset;
+}
+
+.header-navigation-content-ext h4,
+.ecommerce .header-navigation-content-ext h4 {
+	border: none;
+	padding: 10px 0 0;
+}
+
+.header-navigation .dropdown-menu .header-navigation-content-ext li {
+	border: none;
+}
+
+.header-navigation .dropdown-menu .header-navigation-content-ext li > a {
+	padding: 0 0 10px;
+	color: #767f88;
+	display: inline-block;
+}
+
+.header-navigation .dropdown-menu .header-navigation-content-ext li > a:hover,
+.header-navigation .dropdown-menu .header-navigation-content-ext li.active > a {
+	background: #fff;
+	color: #e6400c;
+}
+
+/* n-level submenu */
+.header-navigation .dropdown-menu .dropdown-menu {
+	left: 100%;
+	right: auto;
+	top: 6px;
+}
+
+.header-navigation .dropdown-menu a {
+	position: relative;
+}
+
+.header-navigation .dropdown-menu .fa {
+	position: absolute;
+	top: 13px;
+	right: 15px;
+}
+
+.btn-group .group-checkable {
+	float: left;
+}
+
+/* 后台顶部栏样式 */
+.page-header.navbar .top-menu .navbar-nav {
+	> li.dropdown-inbox > .dropdown-menu .dropdown-menu-list > li {
+		.subject {
+			margin-left: 0px;
+		}
+
+		.message {
+			margin-left: 0px;
+		}
+	}
+}
+
+/* 应用图标的字体大小（原来是13px） */
+.tiles .tile .tile-object > .name {
+	font-size: $font-size-normal;
+}

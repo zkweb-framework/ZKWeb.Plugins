@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// <returns></returns>
 		[Action("admin/login")]
 		public IActionResult Login() {
-			return new TemplateResult("common.admin.admin_login.html");
+			return new TemplateResult("common.admin.login.html");
 		}
 
 		/// <summary>

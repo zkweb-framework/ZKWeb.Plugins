@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Model;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.Common.Base.src.Translate {
+namespace ZKWeb.Plugins.Common.Base.src.Translates {
 	/// <summary>
 	/// 中文翻译
 	/// </summary>
@@ -15,7 +15,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Translate {
 	public class zh_CN : ITranslateProvider {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "abc", "测试翻译" }
+			{ "abc", "测试翻译" },
+			{ "Admin Login", "管理员登陆" },
+			{ "ZKWeb Default Website", "ZKWeb默认站点" }
 		};
 
 		public string Translate(string text) {

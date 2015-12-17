@@ -20,7 +20,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Config {
 		/// </summary>
 		public string HomePageTitle { get; set; }
 		/// <summary>
-		/// 网页标题的默认格式，默认是 {title}-{websiteName}
+		/// 网页标题的默认格式，默认是 {title} - {websiteName}
 		/// </summary>
 		public string DocumentTitleFormat { get; set; }
 		/// <summary>
@@ -34,7 +34,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Config {
 		public WebsiteSettings() {
 			this.WebsiteName = "ZKWeb Default Website";
 			this.HomePageTitle = "HomePage";
-			this.DocumentTitleFormat = "{title}-{websiteName}";
+			this.DocumentTitleFormat = "{title} - {websiteName}";
 			this.CopyrightText = "© 2016 ZKWeb";
 		}
 	}
