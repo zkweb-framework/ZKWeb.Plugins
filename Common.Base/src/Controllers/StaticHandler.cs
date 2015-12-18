@@ -2,6 +2,7 @@
 using DryIocAttributes;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Web;
 using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>
@@ -36,8 +38,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 				var pathManager = Application.Ioc.Resolve<PathManager>();
 				var filePath = pathManager.GetResourceFullPath("static", path.Substring(Prefix.Length));
 				if (filePath != null) {
-					// 文件存在时写到http回应中
-					new FileResult(filePath).WriteResponse(context.Response);
+					var ifModifiedSince =
+						context.Request.Headers["If-Modified-Since"].ConvertOrDefault<DateTime?>();
+					new FileResult(filePath, ifModifiedSince).WriteResponse(context.Response);
 					context.Response.End();
 				}
 			}
