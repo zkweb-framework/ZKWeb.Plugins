@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.Admin\src\Controllers\AdminController.cs" />
+    <Compile Include="Common.Base\src\FormManager.cs" />
     <Compile Include="Common.Base\src\Config\LocaleSettings.cs" />
     <Compile Include="Common.Base\src\Config\WebsiteSettings.cs" />
     <Compile Include="Common.Base\src\Controllers\LocaleHandler.cs" />
@@ -179,7 +180,6 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.validate.additional.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_metronic.fullscreen.js" />
     <Content Include="Common.Base\static\favicon.ico" />
-    <Content Include="Common.Base\static\test.txt" />
     <Content Include="Common.Base\templates\common.base.logo.html" />
     <None Include="Common.Base\static\common.base.css\components.scss" />
     <None Include="Common.Base\static\common.base.css\components\_bootstrap-dialog.scss" />
