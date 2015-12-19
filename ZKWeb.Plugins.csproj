@@ -73,6 +73,7 @@
       <HintPath>..\ZKWeb\ZKWeb\bin\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -304,6 +305,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.Admin\templates\test_include.html" />
+    <Content Include="Common.Base\templates\test_form.html" />
     <Content Include="Common.Base\templates\test.html" />
   </ItemGroup>
   <ItemGroup>

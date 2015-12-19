@@ -48,7 +48,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// 多行文本框
 	/// </summary>
-	public class TextAreaAttribute : FormFieldAttribute {
+	public class TextAreaFieldAttribute : FormFieldAttribute {
 		/// <summary>
 		/// 行数
 		/// </summary>
@@ -59,7 +59,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		/// <param name="name">字段名称</param>
 		/// <param name="rows">行数</param>
-		public TextAreaAttribute(string name, int rows) {
+		public TextAreaFieldAttribute(string name, int rows) {
 			Name = name;
 			Rows = rows;
 		}

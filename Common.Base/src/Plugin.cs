@@ -22,7 +22,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		public Plugin() {
 			// 初始化定时任务管理器
 			Application.Ioc.Resolve<ScheduledTaskManager>();
-			// 注册模板标签
+			// 注册模板标签和过滤器
 			Template.RegisterFilter(typeof(Filters));
 			// 注册默认模块
 			var diyManager = Application.Ioc.Resolve<DiyManager>();

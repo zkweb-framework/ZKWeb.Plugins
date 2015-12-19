@@ -9,6 +9,8 @@ using System.Web;
 using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
+using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	[ExportMany]
@@ -45,6 +47,32 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 					b = "<b>test html</b>",
 					c = typeof(TestController).Assembly.Location
 				});
+		}
+
+		[Action("form")]
+		[Action("form", HttpMethods.POST)]
+		public IActionResult TestForm() {
+			var form = new FormBuilder();
+			form.Attribute = new FormAttribute("TestForm");
+			form.Fields.Add(new FormField(new TextBoxFieldAttribute("Username")));
+			form.Fields.Add(new FormField(new TextBoxFieldAttribute("Password")));
+			var request = HttpContext.Current.Request;
+			if (request.HttpMethod == HttpMethods.POST) {
+				var username = request.GetParam<string>("Username");
+				var password = request.GetParam<string>("Password");
+				return new JsonResult(new { Username = username, Passwod = password });
+			} else {
+				form.BindValuesFromAnonymousObject(new { Username = "TestUser", Password = "TestPassword" });
+				return new TemplateResult("test_form.html", new { form = form });
+			}
+		}
+
+		[Form("TestForm", "/test_form")]
+		public class TestFormModel : ModelFormBuilder {
+			[TextBoxField("Username")]
+			public string Username { get; set; }
+			[PasswordField("Password")]
+			public string Password { get; set; }
 		}
 	}
 }

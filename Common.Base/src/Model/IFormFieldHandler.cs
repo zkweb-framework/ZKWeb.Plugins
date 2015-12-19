@@ -13,15 +13,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// 获取表单字段的html
 		/// </summary>
 		/// <param name="field">表单字段</param>
-		/// <param name="ValidatorAttributes">验证属性</param>
+		/// <param name="htmlAttributes">添加到元素的html属性</param>
 		/// <returns></returns>
-		string Build(FormBuilder.FormField field, Dictionary<string, string> ValidatorAttributes);
+		string Build(FormField field, Dictionary<string, string> htmlAttributes);
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
 		/// <param name="field">表单字段</param>
 		/// <returns></returns>
-		object Parse(FormBuilder.FormField field, string value);
+		object Parse(FormField field, string value);
 	}
 }
