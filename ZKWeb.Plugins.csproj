@@ -90,14 +90,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.Admin\src\Controllers\AdminController.cs" />
-    <Compile Include="Common.Base\src\FormManager.cs" />
+    <Compile Include="Common.Base\src\FormBuilder.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\Captcha.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\CheckBox.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\DropdownList.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\FileUploader.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\Label.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\Password.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\RadioButtons.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\TextArea.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\TextBox.cs" />
     <Compile Include="Common.Base\src\Config\LocaleSettings.cs" />
     <Compile Include="Common.Base\src\Config\WebsiteSettings.cs" />
     <Compile Include="Common.Base\src\Controllers\LocaleHandler.cs" />
+    <Compile Include="Common.Base\src\FormFieldValidators\RegularExpression.cs" />
+    <Compile Include="Common.Base\src\FormFieldValidators\Required.cs" />
+    <Compile Include="Common.Base\src\FormFieldValidators\StringLength.cs" />
     <Compile Include="Common.Base\src\GenericConfigManager.cs" />
     <Compile Include="Common.Base\src\Database\GenericConfig.cs" />
     <Compile Include="Common.Base\src\Database\ScheduledTask.cs" />
+    <Compile Include="Common.Base\src\ModelFormBuilder.cs" />
+    <Compile Include="Common.Base\src\Model\FormAttribute.cs" />
+    <Compile Include="Common.Base\src\Model\FormFieldAttribute.cs" />
+    <Compile Include="Common.Base\src\Model\FormFieldAttributes.cs" />
     <Compile Include="Common.Base\src\Model\GenericConfigAttribute.cs" />
+    <Compile Include="Common.Base\src\Model\IFormFieldHandler.cs" />
+    <Compile Include="Common.Base\src\Model\IFormFieldRequireMultiPart.cs" />
+    <Compile Include="Common.Base\src\Model\IFormFieldValidator.cs" />
+    <Compile Include="Common.Base\src\Model\IListItemProvider.cs" />
     <Compile Include="Common.Base\src\Model\IScheduledTaskExecutor.cs" />
     <Compile Include="Common.Base\src\Plugin.cs" />
     <Compile Include="Common.Base\src\ScheduledTaskManager.cs" />
