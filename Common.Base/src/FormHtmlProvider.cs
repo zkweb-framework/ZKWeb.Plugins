@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 表单控件的默认属性
 		/// </summary>
-		public IDictionary<string, string> FormControlAttributes { get { return _FormControlAttributes; } }
+		public virtual IDictionary<string, string> FormControlAttributes { get { return _FormControlAttributes; } }
 		private Dictionary<string, string> _FormControlAttributes = new Dictionary<string, string>() {
 			{ "class", "form-control" }
 		};
@@ -26,7 +26,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 提交按钮的默认属性
 		/// </summary>
-		public IDictionary<string, string> SubmitButtonAttributes { get { return _SubmitButtonAttributes; } }
+		public virtual IDictionary<string, string> SubmitButtonAttributes { get { return _SubmitButtonAttributes; } }
 		private Dictionary<string, string> _SubmitButtonAttributes = new Dictionary<string, string>() {
 			{ "class", "btn green" },
 			{ "type", "submit" }
