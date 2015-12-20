@@ -9,5 +9,6 @@ using System.Threading.Tasks;
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 	[ExportMany(ContractKey = typeof(RequiredAttribute)), SingletonReuse]
 	public class Required {
+		public const string Key = "data-val-required";
 	}
 }

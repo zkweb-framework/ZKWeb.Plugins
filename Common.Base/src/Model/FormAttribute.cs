@@ -25,6 +25,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		public string Method { get; set; }
 		/// <summary>
+		/// 提交按钮的文本，默认等于"Submit"
+		/// </summary>
+		public string SubmitButtonText { get; set; }
+		/// <summary>
 		/// 启用Ajax提交，默认等于true
 		/// </summary>
 		public bool EnableAjaxSubmit { get; set; }
@@ -39,6 +43,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			Name = name;
 			Action = action;
 			Method = method;
+			SubmitButtonText = "Submit";
 			EnableAjaxSubmit = true;
 		}
 	}

@@ -94,8 +94,11 @@
     <Compile Include="Common.Base\src\FormBuilder.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\Captcha.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBox.cs" />
+    <Compile Include="Common.Base\src\FormHtmlProvider.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\DropdownList.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\FileUploader.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\Hidden.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\Json.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\Label.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\Password.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\RadioButtons.cs" />

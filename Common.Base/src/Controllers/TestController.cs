@@ -55,11 +55,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var form = new FormBuilder();
 			form.Attribute = new FormAttribute("TestForm");
 			form.Fields.Add(new FormField(new TextBoxFieldAttribute("Username")));
-			form.Fields.Add(new FormField(new TextBoxFieldAttribute("Password")));
+			form.Fields.Add(new FormField(new PasswordFieldAttribute("Password")));
 			var request = HttpContext.Current.Request;
 			if (request.HttpMethod == HttpMethods.POST) {
-				var username = request.GetParam<string>("Username");
-				var password = request.GetParam<string>("Password");
+				var values = form.ParseValues(request.GetParams());
+				var username = values.GetOrDefault<string>("Username");
+				var password = values.GetOrDefault<string>("Password");
 				return new JsonResult(new { Username = username, Passwod = password });
 			} else {
 				form.BindValuesFromAnonymousObject(new { Username = "TestUser", Password = "TestPassword" });

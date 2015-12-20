@@ -24,31 +24,38 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// </summary>
 	public class TextBoxFieldAttribute : FormFieldAttribute {
 		/// <summary>
+		/// 预置文本
+		/// </summary>
+		public string PlaceHolder { get; set; }
+
+		/// <summary>
 		/// 初始化
 		/// </summary>
 		/// <param name="name">字段名称</param>
-		public TextBoxFieldAttribute(string name) {
+		/// <param name="placeHolder">预置文本</param>
+		public TextBoxFieldAttribute(string name, string placeHolder = null) {
 			Name = name;
+			PlaceHolder = placeHolder;
 		}
 	}
 
 	/// <summary>
 	/// 密码框
 	/// </summary>
-	public class PasswordFieldAttribute : FormFieldAttribute {
+	public class PasswordFieldAttribute : TextBoxFieldAttribute {
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		/// <param name="name">字段名称</param>
-		public PasswordFieldAttribute(string name) {
-			Name = name;
-		}
+		/// <param name="placeHolder">预置文本</param>
+		public PasswordFieldAttribute(string name, string placeHolder = null)
+			: base(name, placeHolder) { }
 	}
 
 	/// <summary>
 	/// 多行文本框
 	/// </summary>
-	public class TextAreaFieldAttribute : FormFieldAttribute {
+	public class TextAreaFieldAttribute : TextBoxFieldAttribute {
 		/// <summary>
 		/// 行数
 		/// </summary>
@@ -59,8 +66,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		/// <param name="name">字段名称</param>
 		/// <param name="rows">行数</param>
-		public TextAreaFieldAttribute(string name, int rows) {
-			Name = name;
+		/// <param name="placeHolder">预置文本</param>
+		public TextAreaFieldAttribute(string name, int rows, string placeHolder)
+			: base(name, placeHolder) {
 			Rows = rows;
 		}
 	}
@@ -121,7 +129,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// 图片验证码
 	/// </summary>
-	public class CaptchaFieldAttribute : FormFieldAttribute {
+	public class CaptchaFieldAttribute : TextBoxFieldAttribute {
 		/// <summary>
 		/// 用于区分各个验证码的键值
 		/// </summary>
@@ -132,8 +140,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		/// <param name="name">字段名称</param>
 		/// <param name="key">用于区分各个验证码的键值</param>
-		public CaptchaFieldAttribute(string name, string key) {
-			Name = name;
+		/// <param name="placeHolder">预置文本</param>
+		public CaptchaFieldAttribute(string name, string key, string placeHolder = null)
+			: base(name, placeHolder) {
 			Key = key;
 		}
 	}
@@ -162,6 +171,33 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			Name = name;
 			Extensions = extensions;
 			MaxContentsLength = maxContentsLength;
+		}
+	}
+
+	/// <summary>
+	/// 隐藏字段
+	/// </summary>
+	public class HiddenFieldAttribute : FormFieldAttribute {
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		/// <param name="name">字段名称</param>
+		public HiddenFieldAttribute(string name) {
+			Name = name;
+		}
+	}
+
+	/// <summary>
+	/// Json字段
+	/// 这个字段储存的值会在绑定时序列化
+	/// </summary>
+	public class JsonFieldAttribute : FormFieldAttribute {
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		/// <param name="name">字段名称</param>
+		public JsonFieldAttribute(string name) {
+			Name = name;
 		}
 	}
 }

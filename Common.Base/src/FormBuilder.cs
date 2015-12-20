@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
+using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
@@ -15,17 +16,18 @@ using ZKWeb.Utils.Extensions;
 namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>
 	/// 表单构建器
-	/// 绑定例子
+	/// 创建的例子
 	///		var form = new FormBuilder();
 	///		form.Attribute = new FormAttribute() { Name = "TestForm" };
 	///		form.Fields.Add(new FormField(new TextBoxFieldAttribute("Username")));
 	///		form.Fields.Add(new FormField(new PasswordFieldAttribute("Password")));
+	/// 绑定的例子
 	///		form.BindValuesFromAnonymousObject(new { Username = "TestUser", Password = "TestPassword" });
 	///		return new TemplateResult("test_form.html", new { form = form });
-	///	提交例子
-	///		var request = HttpContext.Current.Request;
-	///		var username = request.GetParam("Username");
-	///		var password = request.GetParam("Password");
+	///	提交的例子
+	///		var values = form.ParseValues(HttpContext.Current.Request.GetParams());
+	///		var username = values.GetOrDefault[string]("Username");
+	///		var password = values.GetOrDefault[string]("Password");
 	/// </summary>
 	public class FormBuilder : ILiquidizable {
 		/// <summary>
@@ -75,12 +77,26 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			// 根据验证器添加html属性
 			var htmlAttributes = new Dictionary<string, string>();
 			foreach (var validatorAttribute in field.ValidateAttributes) {
-				var validator = Application.Ioc.Resolve<IFormFieldValidator>(validatorAttribute.GetType());
+				var validator = Application.Ioc.Resolve<IFormFieldValidator>(serviceKey: validatorAttribute.GetType());
 				validator.AddHtmlAttributes(validatorAttribute, htmlAttributes);
 			}
 			// 构建表单字段的html并写入到html构建器
-			var fieldHandler = Application.Ioc.Resolve<IFormFieldHandler>(field.Attribute.GetType());
+			var fieldHandler = Application.Ioc.Resolve<IFormFieldHandler>(serviceKey: field.Attribute.GetType());
 			html.WriteLine(fieldHandler.Build(field, htmlAttributes));
+		}
+
+		/// <summary>
+		/// 描画提交按钮
+		/// </summary>
+		/// <param name="html">html构建器</param>
+		protected virtual void RenderSubmitButton(HtmlTextWriter html) {
+			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+			foreach (var pair in provider.SubmitButtonAttributes) {
+				html.AddAttribute(pair.Key, pair.Value);
+			}
+			html.RenderBeginTag("button");
+			html.WriteEncodedText(new T(Attribute.SubmitButtonText));
+			html.RenderEndTag();
 		}
 
 		/// <summary>
@@ -99,8 +115,9 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			var html = new HtmlTextWriter(new StringWriter());
 			RenderFormBeginTag(html);
 			foreach (var field in Fields) {
-				// RenderFormField(html, field);
+				RenderFormField(html, field);
 			}
+			RenderSubmitButton(html);
 			RenderFormEndTag(html);
 			return html.InnerWriter.ToString();
 		}
@@ -160,6 +177,25 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <param name="obj">对象</param>
 		public static void BindValuesFromAnonymousObject(this FormBuilder builder, object obj) {
 			builder.BindValues(Hash.FromAnonymousObject(obj));
+		}
+
+		/// <summary>
+		/// 解析提交上来的值
+		/// </summary>
+		/// <param name="builder">表单构建器</param>
+		/// <param name="submitValues">提交上来的值</param>
+		/// <returns></returns>
+		public static IDictionary<string, object> ParseValues(
+			this FormBuilder builder, IDictionary<string, string> submitValues) {
+			var result = new Dictionary<string, object>();
+			foreach (var field in builder.Fields) {
+				var value = submitValues.GetOrDefault(field.Attribute.Name);
+				if (value != null) {
+					var fieldHandler = Application.Ioc.Resolve<IFormFieldHandler>(serviceKey: field.Attribute.GetType());
+					result[field.Attribute.Name] = fieldHandler.Parse(field, value);
+				}
+			}
+			return result;
 		}
 	}
 }
