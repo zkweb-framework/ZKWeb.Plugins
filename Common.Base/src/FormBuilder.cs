@@ -87,7 +87,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			var htmlAttributes = new Dictionary<string, string>();
 			foreach (var validatorAttribute in field.ValidateAttributes) {
 				var validator = Application.Ioc.Resolve<IFormFieldValidator>(serviceKey: validatorAttribute.GetType());
-				validator.AddHtmlAttributes(validatorAttribute, htmlAttributes);
+				validator.AddHtmlAttributes(field, validatorAttribute, htmlAttributes);
 			}
 			// 构建表单字段的html并写入到html构建器
 			var fieldHandler = Application.Ioc.Resolve<IFormFieldHandler>(serviceKey: field.Attribute.GetType());
@@ -231,19 +231,19 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			var result = new Dictionary<string, object>();
 			foreach (var field in builder.Fields) {
 				// 解析值
-				var value = submitValues.GetOrDefault(field.Attribute.Name);
-				object parsedValue = null;
+				string value = submitValues.GetOrDefault(field.Attribute.Name);
+				object parsed = null;
 				if (value != null) {
 					var fieldHandler = Application.Ioc.Resolve<IFormFieldHandler>(serviceKey: field.Attribute.GetType());
-					parsedValue = fieldHandler.Parse(field, value);
+					parsed = fieldHandler.Parse(field, value);
 				}
 				// 校验值
 				foreach (var attribute in field.ValidateAttributes) {
-					var validator = Application.Ioc.Resolve<IFormFieldValidator>(attribute.GetType());
-					validator.Validate(attribute, value);
+					var validator = Application.Ioc.Resolve<IFormFieldValidator>(serviceKey: attribute.GetType());
+					validator.Validate(field, attribute, parsed);
 				}
 				// 设置到结果中
-				result[field.Attribute.Name] = value;
+				result[field.Attribute.Name] = parsed;
 			}
 			return result;
 		}

@@ -2,6 +2,7 @@
 using DryIocAttributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -57,6 +58,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			form.Fields.Add(new FormField(new TextBoxFieldAttribute("Username")));
 			form.Fields.Add(new FormField(new PasswordFieldAttribute("Password")));
 			form.Fields.Add(new FormField(new TextAreaFieldAttribute("TextArea", 9)));
+			form.Fields.Last().ValidateAttributes.Add(new RequiredAttribute());
 			form.Fields.Add(new FormField(new HiddenFieldAttribute("Hidden")));
 			var request = HttpContext.Current.Request;
 			if (request.HttpMethod == HttpMethods.POST) {
