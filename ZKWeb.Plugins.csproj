@@ -91,6 +91,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.Admin\src\Controllers\AdminController.cs" />
+    <Compile Include="Common.Admin\src\Database\GenericClass.cs" />
+    <Compile Include="Common.Admin\src\Database\GenericRecord.cs" />
+    <Compile Include="Common.Admin\src\Database\GenericTag.cs" />
+    <Compile Include="Common.Admin\src\Database\User.cs" />
+    <Compile Include="Common.Admin\src\Database\UserMessage.cs" />
+    <Compile Include="Common.Admin\src\Database\UserRole.cs" />
     <Compile Include="Common.Base\src\FormBuilder.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\Captcha.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBox.cs" />
@@ -312,7 +318,6 @@
     <Content Include="Common.Base\templates\test.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common.User\" />
     <Folder Include="Finance.Accounting\" />
     <Folder Include="Finance.Deposit\" />
     <Folder Include="Finance.Payment.Alipay\" />

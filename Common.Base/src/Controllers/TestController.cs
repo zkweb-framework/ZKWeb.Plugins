@@ -54,8 +54,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		[Action("form", HttpMethods.POST)]
 		public IActionResult Form() {
 			var form = new FormModel();
-			var request = HttpContext.Current.Request;
-			if (request.HttpMethod == HttpMethods.POST) {
+			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
