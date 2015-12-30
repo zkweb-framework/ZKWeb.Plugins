@@ -17,13 +17,9 @@ namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 	[ExportMany]
 	public class SessionCleaner : IScheduledTaskExecutor {
 		/// <summary>
-		/// 所属的插件
-		/// </summary>
-		public string Plugin { get { return "Common.Base"; } }
-		/// <summary>
 		/// 任务键名
 		/// </summary>
-		public string Key { get { return "SessionCleaner"; } }
+		public string Key { get { return "Common.Base.SessionCleaner"; } }
 
 		/// <summary>
 		/// 每小时执行一次

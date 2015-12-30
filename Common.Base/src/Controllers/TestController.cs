@@ -56,14 +56,19 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			form.Attribute = new FormAttribute("TestForm");
 			form.Fields.Add(new FormField(new TextBoxFieldAttribute("Username")));
 			form.Fields.Add(new FormField(new PasswordFieldAttribute("Password")));
+			form.Fields.Add(new FormField(new TextAreaFieldAttribute("TextArea", 9)));
+			form.Fields.Add(new FormField(new HiddenFieldAttribute("Hidden")));
 			var request = HttpContext.Current.Request;
 			if (request.HttpMethod == HttpMethods.POST) {
 				var values = form.ParseValues(request.GetParams());
-				var username = values.GetOrDefault<string>("Username");
-				var password = values.GetOrDefault<string>("Password");
-				return new JsonResult(new { Username = username, Passwod = password });
+				return new JsonResult(values);
 			} else {
-				form.BindValuesFromAnonymousObject(new { Username = "TestUser", Password = "TestPassword" });
+				form.BindValuesFromAnonymousObject(new {
+					Username = "TestUser",
+					Password = "TestPassword",
+					TextArea = "TestTextArea",
+					Hidden = "TestHidden"
+				});
 				return new TemplateResult("test_form.html", new { form = form });
 			}
 		}

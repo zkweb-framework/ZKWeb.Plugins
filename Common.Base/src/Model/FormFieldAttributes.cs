@@ -67,7 +67,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="name">字段名称</param>
 		/// <param name="rows">行数</param>
 		/// <param name="placeHolder">预置文本</param>
-		public TextAreaFieldAttribute(string name, int rows, string placeHolder)
+		public TextAreaFieldAttribute(string name, int rows, string placeHolder = null)
 			: base(name, placeHolder) {
 			Rows = rows;
 		}

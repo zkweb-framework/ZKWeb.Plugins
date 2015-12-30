@@ -10,10 +10,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// </summary>
 	public interface IScheduledTaskExecutor {
 		/// <summary>
-		/// 所属的插件
-		/// </summary>
-		string Plugin { get; }
-		/// <summary>
 		/// 任务键名
 		/// </summary>
 		string Key { get; }

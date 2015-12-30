@@ -18,6 +18,12 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	[ExportMany, SingletonReuse]
 	public class SessionManager {
 		/// <summary>
+		/// 用于HttpContext.Items时，储存Session对象
+		/// 用于Cookies时，储存会话Id
+		/// </summary>
+		public const string SessionKey = "Common.Base.Session";
+
+		/// <summary>
 		/// 获取当前Http请求对应的会话
 		/// 当前没有会话时返回新的会话
 		/// </summary>
@@ -25,13 +31,13 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		public Session GetSession() {
 			// 从HttpContext中获取会话
 			// 因为一次请求中可能会调用多次GetSession，应该确保返回同一个对象
-			var session = HttpContextUtils.GetData<Session>("ZKWeb", "Session", null);
+			var session = HttpContextUtils.GetData<Session>(SessionKey, null);
 			if (session != null) {
 				return session;
 			}
 			// 从数据库中获取会话
 			var dabaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			string id = HttpContextUtils.GetCookie("ZKWeb", "SessionId");
+			string id = HttpContextUtils.GetCookie(SessionKey);
 			if (!string.IsNullOrEmpty(id)) {
 				using (var context = dabaseManager.GetContext()) {
 					session = context.Get<Session>(s => s.Id == id);
@@ -49,7 +55,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				};
 				session.ReGenerateId();
 			}
-			HttpContextUtils.PutData("ZKWeb", "Session", session);
+			HttpContextUtils.PutData(SessionKey, session);
 			return session;
 		}
 
@@ -58,12 +64,12 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// 必要时发送Cookie到浏览器
 		/// </summary>
 		public void SaveSession() {
-			var session = HttpContextUtils.GetData<Session>("ZKWeb", "Session", null);
+			var session = HttpContextUtils.GetData<Session>(SessionKey, null);
 			if (session == null) {
 				throw new NullReferenceException("session is null");
 			}
 			// 添加或更新到数据库中
-			var cookieSessionId = HttpContextUtils.GetCookie("ZKWeb", "SessionId");
+			var cookieSessionId = HttpContextUtils.GetCookie(SessionKey);
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
 				// 保存会话
@@ -83,7 +89,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				if (session.RememberLogin) {
 					expires = session.Expires.AddYears(1);
 				}
-				HttpContextUtils.PutCookie("ZKWeb", "SessionId", session.Id, expires, true);
+				HttpContextUtils.PutCookie(SessionKey, session.Id, expires, true);
 			}
 		}
 
@@ -93,9 +99,9 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		public void RemoveSession() {
 			// 删除HttpContext中的会话
-			HttpContextUtils.RemoveData("ZKWeb", "Session");
+			HttpContextUtils.RemoveData(SessionKey);
 			// 删除数据库中的会话
-			string id = HttpContextUtils.GetCookie("ZKWeb", "SessionId");
+			string id = HttpContextUtils.GetCookie(SessionKey);
 			if (string.IsNullOrEmpty(id)) {
 				return;
 			}
@@ -105,7 +111,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				context.SaveChanges();
 			}
 			// 删除客户端中的会话Cookies
-			HttpContextUtils.RemoveCookie("ZKWeb", "SessionId");
+			HttpContextUtils.RemoveCookie(SessionKey);
 		}
 	}
 }

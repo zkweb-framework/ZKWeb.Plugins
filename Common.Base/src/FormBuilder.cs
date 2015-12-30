@@ -12,6 +12,7 @@ using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>
@@ -30,6 +31,14 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	///		var password = values.GetOrDefault[string]("Password");
 	/// </summary>
 	public class FormBuilder : ILiquidizable {
+		/// <summary>
+		/// Csrf校验值的cookies键名
+		/// </summary>
+		public const string CsrfTokenKey = "Common.Base.CsrfToken";
+		/// <summary>
+		/// Csrf校验值的表单字段名称
+		/// </summary>
+		public const string CsrfTokenFieldName = "__CsrfToken";
 		/// <summary>
 		/// 表单属性，可省略
 		/// </summary>
@@ -86,6 +95,27 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		}
 
 		/// <summary>
+		/// 描画csrf校验值
+		/// </summary>
+		/// <param name="html">html构建器</param>
+		protected virtual void RenderCsrfToken(HtmlTextWriter html) {
+			// 不需要描画时直接返回
+			if (!Attribute.EnableCsrfToken) {
+				return;
+			}
+			// 获取cookies传入的csrf校验值，不存在时设置
+			var token = HttpContextUtils.GetCookie(CsrfTokenKey);
+			if (string.IsNullOrEmpty(token)) {
+				token = HttpServerUtility.UrlTokenEncode(RandomUtils.SystemRandomBytes(20));
+				HttpContextUtils.PutCookie(CsrfTokenKey, token);
+			}
+			// 添加到表单中
+			var field = new FormField(new HiddenFieldAttribute(CsrfTokenFieldName));
+			field.Value = token;
+			RenderFormField(html, field);
+		}
+
+		/// <summary>
 		/// 描画提交按钮
 		/// </summary>
 		/// <param name="html">html构建器</param>
@@ -117,6 +147,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			foreach (var field in Fields) {
 				RenderFormField(html, field);
 			}
+			RenderCsrfToken(html);
 			RenderSubmitButton(html);
 			RenderFormEndTag(html);
 			return html.InnerWriter.ToString();
@@ -181,19 +212,38 @@ namespace ZKWeb.Plugins.Common.Base.src {
 
 		/// <summary>
 		/// 解析提交上来的值
+		/// 同时检查csrf校验和值是否符合验证器的规则
 		/// </summary>
 		/// <param name="builder">表单构建器</param>
 		/// <param name="submitValues">提交上来的值</param>
 		/// <returns></returns>
 		public static IDictionary<string, object> ParseValues(
 			this FormBuilder builder, IDictionary<string, string> submitValues) {
+			// 检查csrf校验值
+			if (builder.Attribute.EnableCsrfToken) {
+				var exceptedToken = HttpContextUtils.GetCookie(FormBuilder.CsrfTokenKey);
+				var actualToken = submitValues.GetOrDefault(FormBuilder.CsrfTokenFieldName);
+				if (string.IsNullOrEmpty(exceptedToken) || exceptedToken != actualToken) {
+					throw new FormatException(new T("Check Csrf Token Failed."));
+				}
+			}
+			// 枚举字段，逐个进行检查和设置
 			var result = new Dictionary<string, object>();
 			foreach (var field in builder.Fields) {
+				// 解析值
 				var value = submitValues.GetOrDefault(field.Attribute.Name);
+				object parsedValue = null;
 				if (value != null) {
 					var fieldHandler = Application.Ioc.Resolve<IFormFieldHandler>(serviceKey: field.Attribute.GetType());
-					result[field.Attribute.Name] = fieldHandler.Parse(field, value);
+					parsedValue = fieldHandler.Parse(field, value);
 				}
+				// 校验值
+				foreach (var attribute in field.ValidateAttributes) {
+					var validator = Application.Ioc.Resolve<IFormFieldValidator>(attribute.GetType());
+					validator.Validate(attribute, value);
+				}
+				// 设置到结果中
+				result[field.Attribute.Name] = value;
 			}
 			return result;
 		}

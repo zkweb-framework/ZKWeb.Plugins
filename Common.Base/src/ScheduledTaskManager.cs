@@ -64,15 +64,14 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
 				// 从数据库获取任务的最后执行时间，判断是否需要立刻执行
-				var key = executor.Plugin + "." + executor.Key;
-				var task = context.Get<ScheduledTask>(t => t.Key == key);
+				var task = context.Get<ScheduledTask>(t => t.Key == executor.Key);
 				if (!executor.ShouldExecuteNow(task != null ? task.LastExecuted : DateTime.MinValue)) {
 					return;
 				}
 				// 执行前使用事务更新数据库中的LastExecuted，防止多个进程托管同一个网站时重复执行
 				// 如果重复执行Save应该会抛出例外（实际捕捉到例外后再添加catch处理）
 				if (task == null) {
-					task = new ScheduledTask() { Key = key, CreateTime = DateTime.UtcNow };
+					task = new ScheduledTask() { Key = executor.Key, CreateTime = DateTime.UtcNow };
 				}
 				context.Save(ref task, t => t.LastExecuted = DateTime.UtcNow);
 				context.SaveChanges();

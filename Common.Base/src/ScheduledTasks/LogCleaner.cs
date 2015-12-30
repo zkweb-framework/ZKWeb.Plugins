@@ -24,13 +24,9 @@ namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 	[ExportMany]
 	public class LogCleaner : IScheduledTaskExecutor {
 		/// <summary>
-		/// 所属的插件
-		/// </summary>
-		public string Plugin { get { return "Common.Base"; } }
-		/// <summary>
 		/// 任务键名
 		/// </summary>
-		public string Key { get { return "LogCleaner"; } }
+		public string Key { get { return "Common.Base.LogCleaner"; } }
 
 		/// <summary>
 		/// 每小时执行一次

@@ -8,6 +8,13 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	[ExportMany(ContractKey = typeof(CaptchaFieldAttribute)), SingletonReuse]
-	public class Captcha {
+	public class Captcha : IFormFieldHandler {
+		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
+			throw new NotImplementedException();
+		}
+
+		public object Parse(FormField field, string value) {
+			throw new NotImplementedException();
+		}
 	}
 }

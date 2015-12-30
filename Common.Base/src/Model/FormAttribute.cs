@@ -32,6 +32,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// 启用Ajax提交，默认等于true
 		/// </summary>
 		public bool EnableAjaxSubmit { get; set; }
+		/// <summary>
+		/// 启用Csrf校验，默认等于true
+		/// </summary>
+		public bool EnableCsrfToken { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -45,6 +49,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			Method = method;
 			SubmitButtonText = "Submit";
 			EnableAjaxSubmit = true;
+			EnableCsrfToken = true;
 		}
 	}
 }
