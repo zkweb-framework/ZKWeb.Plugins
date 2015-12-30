@@ -52,35 +52,38 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 
 		[Action("form")]
 		[Action("form", HttpMethods.POST)]
-		public IActionResult TestForm() {
-			var form = new FormBuilder();
-			form.Attribute = new FormAttribute("TestForm");
-			form.Fields.Add(new FormField(new TextBoxFieldAttribute("Username")));
-			form.Fields.Add(new FormField(new PasswordFieldAttribute("Password")));
-			form.Fields.Add(new FormField(new TextAreaFieldAttribute("TextArea", 9)));
-			form.Fields.Last().ValidateAttributes.Add(new RequiredAttribute());
-			form.Fields.Add(new FormField(new HiddenFieldAttribute("Hidden")));
+		public IActionResult Form() {
+			var form = new FormModel();
 			var request = HttpContext.Current.Request;
 			if (request.HttpMethod == HttpMethods.POST) {
-				var values = form.ParseValues(request.GetParams());
-				return new JsonResult(values);
+				return new JsonResult(form.Submit());
 			} else {
-				form.BindValuesFromAnonymousObject(new {
-					Username = "TestUser",
-					Password = "TestPassword",
-					TextArea = "TestTextArea",
-					Hidden = "TestHidden"
-				});
+				form.Bind();
 				return new TemplateResult("test_form.html", new { form = form });
 			}
 		}
-
-		[Form("TestForm", "/test_form")]
-		public class TestFormModel : ModelFormBuilder {
+		
+		public class FormModel : ModelFormBuilder {
 			[TextBoxField("Username")]
 			public string Username { get; set; }
 			[PasswordField("Password")]
 			public string Password { get; set; }
+			[TextAreaField("TextArea", 9)]
+			[Required]
+			public string TextArea { get; set; }
+			[HiddenField("Hidden")]
+			public string Hidden { get; set; }
+
+			protected override void OnBind() {
+				Username = "TestUsername";
+				Password = "TestPassword";
+				Hidden = "TestHidden";
+			}
+
+			protected override object OnSubmit() {
+				return this;
+			}
 		}
+
 	}
 }

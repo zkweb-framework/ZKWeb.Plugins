@@ -1,5 +1,6 @@
 ﻿using DotLiquid;
 using DryIoc;
+using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,7 @@ using ZKWeb.Utils.Functions;
 namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>
 	/// 表单构建器
+	/// 这个类可以通过Ioc替换，使用时注意要通过Ioc获取
 	/// 创建的例子
 	///		var form = new FormBuilder();
 	///		form.Attribute = new FormAttribute() { Name = "TestForm" };
@@ -30,6 +32,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	///		var username = values.GetOrDefault[string]("Username");
 	///		var password = values.GetOrDefault[string]("Password");
 	/// </summary>
+	[ExportMany]
 	public class FormBuilder : ILiquidizable {
 		/// <summary>
 		/// Csrf校验值的cookies键名
@@ -52,6 +55,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// 初始化
 		/// </summary>
 		public FormBuilder() {
+			Attribute = new FormAttribute(null);
 			Fields = new List<FormField>();
 		}
 
@@ -60,12 +64,11 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		/// <param name="html">html构建器</param>
 		protected virtual void RenderFormBeginTag(HtmlTextWriter html) {
-			var attribute = Attribute ?? new FormAttribute(null);
-			html.AddAttribute("name", attribute.Name ?? "");
-			html.AddAttribute("action", attribute.Action ?? "");
-			html.AddAttribute("method", attribute.Method ?? HttpMethods.POST);
+			html.AddAttribute("name", Attribute.Name ?? "");
+			html.AddAttribute("action", Attribute.Action ?? "");
+			html.AddAttribute("method", Attribute.Method ?? HttpMethods.POST);
 			html.AddAttribute("role", "form");
-			html.AddAttribute("ajax", attribute.EnableAjaxSubmit ? "true" : "false");
+			html.AddAttribute("ajax", Attribute.EnableAjaxSubmit ? "true" : "false");
 			html.RenderBeginTag("form");
 		}
 
@@ -85,7 +88,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		protected virtual void RenderFormField(HtmlTextWriter html, FormField field) {
 			// 根据验证器添加html属性
 			var htmlAttributes = new Dictionary<string, string>();
-			foreach (var validatorAttribute in field.ValidateAttributes) {
+			foreach (var validatorAttribute in field.ValidationAttributes) {
 				var validator = Application.Ioc.Resolve<IFormFieldValidator>(serviceKey: validatorAttribute.GetType());
 				validator.AddHtmlAttributes(field, validatorAttribute, htmlAttributes);
 			}
@@ -165,7 +168,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 验证表单的属性列表
 		/// </summary>
-		public List<Attribute> ValidateAttributes { get; set; }
+		public List<Attribute> ValidationAttributes { get; set; }
 		/// <summary>
 		/// 字段的值
 		/// </summary>
@@ -177,7 +180,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <param name="attribute">表单字段的属性</param>
 		public FormField(FormFieldAttribute attribute) {
 			Attribute = attribute;
-			ValidateAttributes = new List<Attribute>();
+			ValidationAttributes = new List<Attribute>();
 			Value = null;
 		}
 	}
@@ -238,7 +241,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 					parsed = fieldHandler.Parse(field, value);
 				}
 				// 校验值
-				foreach (var attribute in field.ValidateAttributes) {
+				foreach (var attribute in field.ValidationAttributes) {
 					var validator = Application.Ioc.Resolve<IFormFieldValidator>(serviceKey: attribute.GetType());
 					validator.Validate(field, attribute, parsed);
 				}
