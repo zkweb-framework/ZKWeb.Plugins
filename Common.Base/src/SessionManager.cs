@@ -48,7 +48,6 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				session = new Session()
 				{
 					ReleatedId = 0,
-					ItemsJson = "{}",
 					IpAddress = HttpContextUtils.GetClientIpAddress(),
 					RememberLogin = false,
 					Expires = DateTime.UtcNow.AddHours(1)

@@ -9,6 +9,7 @@ using ZKWeb.Model;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Core;
 using Newtonsoft.Json;
+using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Base.src.Database {
 	/// <summary>
@@ -25,9 +26,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		/// </summary>
 		public virtual long ReleatedId { get; set; }
 		/// <summary>
-		/// 会话数据的内容
+		/// 会话数据
 		/// </summary>
-		public virtual string ItemsJson { get; set; }
+		public virtual Dictionary<string, object> Items { get; set; }
 		/// <summary>
 		/// 会话对应的Ip地址
 		/// </summary>
@@ -46,19 +47,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		/// 这个值只用于检测是否应该把新的过期时间发送到客户端
 		/// </summary>
 		public virtual bool ExpiresUpdated { get; set; }
+
 		/// <summary>
-		/// 会话数据
-		/// 通过ItemsJson保存到数据库中
+		/// 初始化
 		/// </summary>
-		private Dictionary<string, object> _Items;
-		public virtual Dictionary<string, object> Items {
-			get {
-				// 初次获取时从ItemsJson反序列化
-				if (_Items == null) {
-					_Items = JsonConvert.DeserializeObject<Dictionary<string, object>>(ItemsJson);
-				}
-				return _Items;
-			}
+		public Session() {
+			Items = new Dictionary<string, object>();
 		}
 	}
 
@@ -98,26 +92,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		public SessionMap() {
 			Id(s => s.Id);
 			Map(s => s.ReleatedId);
-			Map(s => s.ItemsJson).Length(0xffff);
+			Map(s => s.Items).CustomType<JsonSerializedType<Dictionary<string, object>>>();
 			Map(s => s.IpAddress);
 			Map(s => s.RememberLogin);
 			Map(s => s.Expires).Index("Idx_Expires");
-		}
-	}
-
-	/// <summary>
-	/// 会话的数据库回调
-	/// </summary>
-	[ExportMany]
-	public class SessionCallback : IDataSaveCallback<Session> {
-		public void BeforeSave(DatabaseContext context, Session data) {
-			// 添加或更新到数据库前，序列化会话数据
-			if (data.Items != null) {
-				data.ItemsJson = JsonConvert.SerializeObject(data.Items);
-			}
-		}
-
-		public void AfterSave(DatabaseContext context, Session data) {
 		}
 	}
 }
