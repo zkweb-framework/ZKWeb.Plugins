@@ -10,16 +10,22 @@
 	<link href="/static/common.admin.css/admin-login.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<div class="page-top admin-page-top">
-	</div>
 	<div class="login">
 		<div class="logo"><a><img src="/static/common.admin.images/logo.png" alt=""></a></div>
+		
 		<div class="content">
-			<form action="/admin/login" class="login-form" id="Common_AdminLoginFrom" method="post" role="form">
-				<input name="__RequestVerificationToken" type="hidden" value="jUM-wPKvLeTYQlQ_Z-qotDMveMQ4nH4uyRl6ktCUcWyHNa58ehB2IdSdEkScT9ipgKwo5lOSzmYRpLyNRbr0EXGNNepgzk2MHwem_jY6bEs1" />			<h3 class="form-title">Admin login</h3>
+			<h3 class="form-title">{{ "Admin Login" | trans }}</h3>
+			{{ form }}
+			<div class="create-account">
+				<p><a href="/user/reg" id="register-btn" class="uppercase">{{ "Register new user" | trans }}</a></p>
+			</div>
+		</div>
+
+		<div class="content">
+			<form action="/admin/login" method="post" role="form">
 				<div class="form-group input-icon">
 					<i class="fa fa-user"></i>
-					<input class="form-control form-control-solid placeholder-no-fix9" data-val="true" data-val-length="Length of Username must between 3 and 100" data-val-length-max="100" data-val-length-min="3" data-val-required="Username is required" id="Username" name="Username" placeholder="Please enter username" type="text" value="" />
+					<input class="form-control" data-val="true" data-val-required="Username is required" name="Username" placeholder="Please enter username" type="text" value="" />
 					<span class="field-validation-valid" data-valmsg-for="Username" data-valmsg-replace="true"></span>
 				</div>
 				<div class="form-group input-icon">
@@ -39,32 +45,18 @@
 					<input data-val="true" data-val-required="Remember login is required" id="RememberLogin" name="RememberLogin" type="checkbox" value="true" /><input name="RememberLogin" type="hidden" value="false" />
 					<label class="rememberme check" for="RememberLogin">Remember login</label>
 				</div>
-				<div class="create-account">
-					<p>
-						<a href="/user/reg" id="register-btn" class="uppercase">Register new user</a>
-					</p>
-				</div>
 			</form>
 		</div>
 	</div>
 	<input id="RedirectAfterLogin" name="RedirectAfterLogin" type="hidden" value="/admin" />
-	<div class="page-bottom admin-page-bottom">
-	</div>
 	<footer>
 		<script src="/static/common.base.js/components.min.js" type="text/javascript"></script>
 		<script src="/static/common.admin.js/components.min.js" type="text/javascript"></script>
 		<script type="text/javascript">
-		$(function () {
-			var $form = $("#Common_AdminLoginFrom");
-			$form.commonAjaxForm(function (data) {
-				if (data.success) {
-					(function () { location.href = $('[name="RedirectAfterLogin"]').val(); }).call($form);
-				} else {
-					(function () {; }).call($form);
-				}
-				$.toastAjaxResult(data);
+			$(function () {
+				$("input[name=Username]").parent().addClass("input-icon").prepend("<i class='fa fa-user'></i>");
+				$("input[name=Password]").parent().addClass("input-icon").prepend("<i class='fa fa-lock'></i>");
 			});
-		});
 		</script>
 	</footer>
 </body>

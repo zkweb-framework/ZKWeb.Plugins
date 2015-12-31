@@ -124,11 +124,14 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <param name="html">html构建器</param>
 		protected virtual void RenderSubmitButton(HtmlTextWriter html) {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+			html.AddAttribute("class", "form-actions");
+			html.RenderBeginTag("div");
 			foreach (var pair in provider.SubmitButtonAttributes) {
 				html.AddAttribute(pair.Key, pair.Value);
 			}
 			html.RenderBeginTag("button");
 			html.WriteEncodedText(new T(Attribute.SubmitButtonText));
+			html.RenderEndTag();
 			html.RenderEndTag();
 		}
 

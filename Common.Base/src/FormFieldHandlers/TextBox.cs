@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 			html.AddAttribute("name", field.Attribute.Name);
 			html.AddAttribute("value", (field.Value ?? "").ToString());
 			html.AddAttribute("type", "text");
-			html.AddAttribute("placeholder", attribute.PlaceHolder ?? "");
+			html.AddAttribute("placeholder", new T(attribute.PlaceHolder));
 			foreach (var pair in htmlAttributes) {
 				html.AddAttribute(pair.Key, pair.Value);
 			}

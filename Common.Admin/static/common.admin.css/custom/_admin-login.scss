@@ -28,8 +28,8 @@ $bg-color: #364150;
 	position: relative;
 }
 
-.login .content .login-form,
-.login .content .forget-form {
+.login .content form,
+.login .content form {
 	padding: 0px;
 	margin: 0px;
 }
@@ -63,15 +63,13 @@ $bg-color: #364150;
 	margin-right: -30px;
 }
 
-
-
-.login .content .form-actions .btn {
+.login .content .form-actions .btn-submit {
 	margin-top: 1px;
-}
-
-.login .content .form-actions .btn-success {
 	font-weight: 600;
 	padding: 10px 20px !important;
+	color: #fff;
+	background-color: #45B6AF;
+	border-color: #3EA49D;
 }
 
 .login .content .form-actions .btn-default {
@@ -144,8 +142,13 @@ $bg-color: #364150;
 	}
 }
 
-/* 表单载入中把按钮设灰 */
-.login-form.loading button[type='submit'] {
+/* 登陆中把按钮设灰 */
+.login .content form.loading button[type='submit'] {
 	background: grey;
 	pointer-events: none;
+}
+
+/* 隐藏表单字段文本 */
+.login .content form .control-label {
+	display: none;
 }

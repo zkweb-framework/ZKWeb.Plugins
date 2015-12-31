@@ -31,14 +31,14 @@ $(function () {
 // 显示Ajax操作结果的消息
 // 允许以下类型的参数
 // { success: true, message: "成功时的消息" }
-// { success: false, reason: "失败时的原因" }
+// { success: false, message: "失败时的消息" }
 // { success: true, message: "允许使用Html文本时", allowHtmlText: true }
 $.toastAjaxResult = function (data) {
 	if (data.success) {
 		var text = data.allowHtmlText ? data.message : _.escape(data.message);
 		text && $.toast({ icon: "success", text: text });
 	} else {
-		var text = data.allowHtmlText ? data.reason : _.escape(data.reason);
+		var text = data.allowHtmlText ? data.message : _.escape(data.message);
 		$.toast({ icon: "error", text: text });
 	}
 };

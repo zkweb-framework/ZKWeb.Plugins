@@ -9,6 +9,7 @@ using ZKWeb;
 using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
+using ZKWeb.Plugins.Common.Admin.src.Forms;
 using ZKWeb.Plugins.Common.Base.src.Database;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
@@ -31,8 +32,16 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("admin/login")]
+		[Action("admin/login", HttpMethods.POST)]
 		public IActionResult Login() {
-			return new TemplateResult("common.admin.login.html");
+			var form = new AdminLoginForm();
+			var request = HttpContext.Current.Request;
+			if (request.HttpMethod == HttpMethods.POST) {
+				return new JsonResult(form.Submit());
+			} else {
+				form.Bind();
+				return new TemplateResult("common.admin.login.html", new { form });
+			}
 		}
 
 		/// <summary>

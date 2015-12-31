@@ -20,7 +20,8 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		public virtual IDictionary<string, string> FormControlAttributes { get { return _FormControlAttributes; } }
 		private Dictionary<string, string> _FormControlAttributes = new Dictionary<string, string>() {
-			{ "class", "form-control" }
+			{ "class", "form-control" },
+			{ "data-val", "true" }
 		};
 
 		/// <summary>
@@ -28,7 +29,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		public virtual IDictionary<string, string> SubmitButtonAttributes { get { return _SubmitButtonAttributes; } }
 		private Dictionary<string, string> _SubmitButtonAttributes = new Dictionary<string, string>() {
-			{ "class", "btn green" },
+			{ "class", "btn btn-submit" },
 			{ "type", "submit" }
 		};
 
