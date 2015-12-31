@@ -127,10 +127,6 @@ $bg-color: #364150;
 	text-align: center;
 }
 
-.login .content .input-captcha .captcha {
-	height: 39px;
-}
-
 @media (max-width: 440px) {
 	.login .logo {
 		margin-top: 10px;
@@ -151,4 +147,33 @@ $bg-color: #364150;
 /* 隐藏表单字段文本 */
 .login .content form .control-label {
 	display: none;
+}
+
+/* 图标居中 */
+.login .content form .input-icon > i {
+	line-height: 22px;
+}
+
+/* 验证码样式 */
+.login .content form .input-group-addon {
+	background-color: #DDE3EC;
+	border-color: #DDE3EC;
+	padding: 0px 5px;
+}
+
+/* 记住登陆样式 */
+.login .content form .rememberLogin {
+	float: right;
+
+	.control-label {
+		display: block;
+		float: left;
+		line-height: 32px;
+		color: #8290A3;
+		margin: 0px 8px 0px 0px;
+	}
+
+	.form-controls {
+		float: right;
+	}
 }

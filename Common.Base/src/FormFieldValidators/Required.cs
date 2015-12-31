@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Base.src.Model;
 
@@ -34,7 +35,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 		public void Validate(FormField field, object validatorAttribute, object value) {
 			if (value == null || value.ToString() == "") {
 				var error = string.Format(new T("{0} is required"), new T(field.Attribute.Name));
-				throw new ArgumentNullException(error);
+				throw new HttpException(400, error);
 			}
 		}
 	}

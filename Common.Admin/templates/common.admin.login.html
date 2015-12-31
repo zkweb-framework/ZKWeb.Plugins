@@ -12,40 +12,12 @@
 <body>
 	<div class="login">
 		<div class="logo"><a><img src="/static/common.admin.images/logo.png" alt=""></a></div>
-		
 		<div class="content">
 			<h3 class="form-title">{{ "Admin Login" | trans }}</h3>
 			{{ form }}
 			<div class="create-account">
 				<p><a href="/user/reg" id="register-btn" class="uppercase">{{ "Register new user" | trans }}</a></p>
 			</div>
-		</div>
-
-		<div class="content">
-			<form action="/admin/login" method="post" role="form">
-				<div class="form-group input-icon">
-					<i class="fa fa-user"></i>
-					<input class="form-control" data-val="true" data-val-required="Username is required" name="Username" placeholder="Please enter username" type="text" value="" />
-					<span class="field-validation-valid" data-valmsg-for="Username" data-valmsg-replace="true"></span>
-				</div>
-				<div class="form-group input-icon">
-					<i class="fa fa-lock"></i>
-					<input class="form-control form-control-solid placeholder-no-fix" data-val="true" data-val-length="Length of Password must between 5 and 100" data-val-length-max="100" data-val-length-min="5" data-val-required="Password is required" id="Password" name="Password" placeholder="Please enter password" type="password" />
-					<span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
-				</div>
-				<div class="form-group input-group input-captcha">
-					<input class="form-control form-control-solid placeholder-no-fix" data-val="true" data-val-length="Length of Captcha must be 4" data-val-length-max="4" data-val-length-min="4" data-val-required="Captcha is required" id="Captcha" name="Captcha" placeholder="Please enter captcha" type="text" value="" />
-					<span class="input-group-addon">
-						<img alt="" class="captcha" onclick="$(this).refreshImage()" src="/captcha/common.admin/adminlogin?timestamp=1450326094162" title="Click to change captcha image" />
-					</span>
-					<span class="field-validation-valid" data-valmsg-for="Captcha" data-valmsg-replace="true"></span>
-				</div>
-				<div class="form-actions">
-					<button type="submit" class="btn btn-success uppercase">Login</button>
-					<input data-val="true" data-val-required="Remember login is required" id="RememberLogin" name="RememberLogin" type="checkbox" value="true" /><input name="RememberLogin" type="hidden" value="false" />
-					<label class="rememberme check" for="RememberLogin">Remember login</label>
-				</div>
-			</form>
 		</div>
 	</div>
 	<input id="RedirectAfterLogin" name="RedirectAfterLogin" type="hidden" value="/admin" />
@@ -56,6 +28,8 @@
 			$(function () {
 				$("input[name=Username]").parent().addClass("input-icon").prepend("<i class='fa fa-user'></i>");
 				$("input[name=Password]").parent().addClass("input-icon").prepend("<i class='fa fa-lock'></i>");
+				$("input[name=Captcha]").parent().addClass("input-icon").prepend("<i class='fa fa-check'></i>");
+				$("input[name=RememberLogin]").closest(".form-group").addClass("rememberLogin").appendTo(".form-actions");
 			});
 		</script>
 	</footer>

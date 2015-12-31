@@ -1,7 +1,7 @@
 ﻿/*
 	通用的Ajax表单
 	$.ajaxForm的包装函数
-	在提交期间为对象设置loading类，提交后自动刷新验证码
+	在提交期间为对象设置loading类
 	自动触发以下事件
 		beforeSubmit 提交前的处理
 		success 提交成功时的处理
@@ -30,7 +30,6 @@ $.fn.commonAjaxForm = function (options) {
 		successOrig && successOrig.apply(this, arguments);
 		$form.removeClass("loading");
 		$form.trigger("success");
-		$form.refreshCaptcha();
 	};
 	// 执行失败之后回调函数
 	var errorOrig = options.error;
@@ -38,7 +37,6 @@ $.fn.commonAjaxForm = function (options) {
 		errorOrig && errorOrig.apply(this, arguments);
 		$form.removeClass("loading");
 		$form.trigger("error");
-		$form.refreshCaptcha();
 	};
 	return this.ajaxForm(options);
 };

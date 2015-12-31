@@ -29,15 +29,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 		/// <summary>
 		/// 验证码
 		/// </summary>
-		// [CaptchaField("Captcha", "Common.Admin.AdminLoginCaptcha")]
+		[CaptchaField("Captcha", "Common.Admin.AdminLoginCaptcha", "Please enter captcha")]
 		[Required]
 		public string Captcha { get; set; }
 		/// <summary>
 		/// 记住登陆
 		/// </summary>
-		// [CheckBoxField("RememberLogin")]
+		[CheckBoxField("RememberLogin")]
 		public bool RememberLogin { get; set; }
-
+		
 		/// <summary>
 		/// 绑定
 		/// </summary>

@@ -230,7 +230,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				var exceptedToken = HttpContextUtils.GetCookie(FormBuilder.CsrfTokenKey);
 				var actualToken = submitValues.GetOrDefault(FormBuilder.CsrfTokenFieldName);
 				if (string.IsNullOrEmpty(exceptedToken) || exceptedToken != actualToken) {
-					throw new FormatException(new T("Check Csrf Token Failed."));
+					throw new HttpException(403, new T("Check Csrf Token Failed."));
 				}
 			}
 			// 枚举字段，逐个进行检查和设置

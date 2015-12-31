@@ -23,7 +23,7 @@ $(function () {
 		if (jqXHR.responseText && $.toast.extra.showAjaxError) {
 			var text = jqXHR.responseText.replace(/<[^>]+>/g, ""); // 过滤html标签
 			text = _.escape(text.split("\n").slice(0, 7).join("\n")); // 只显示前面的行
-			$.toast({ icon: "error", text: text, hideAfter: false });
+			$.toast({ icon: "error", text: text });
 		}
 	});
 });

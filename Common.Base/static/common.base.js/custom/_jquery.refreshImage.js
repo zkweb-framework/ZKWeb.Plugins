@@ -7,8 +7,9 @@ $.fn.refreshImage = function () {
 		var $img = $(this);
 		var src = $img.attr("src");
 		if (src) {
-			src = src.split("?")[0] + "?timestamp=" + new Date().getTime();
-			$img.attr("src", src);
+			var uri = new Uri(src);
+			uri.replaceQueryParam("timestamp", new Date().getTime());
+			$img.attr("src", uri);
 		}
 	});
 };
