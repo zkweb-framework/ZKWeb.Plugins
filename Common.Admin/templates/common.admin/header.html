@@ -3,9 +3,11 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 	<meta charset="utf-8" />
+	<link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
+	{% raw_html __meta %}
 	<title>{{ __title }}</title>
 	<link href="/static/common.base.css/components.css" rel="stylesheet" type="text/css" />
 	<link href="/static/common.admin.css/components.css" rel="stylesheet" type="text/css" />
-	{{ __head_contents }}
+	{% raw_html __css %}
 </head>
 <body>

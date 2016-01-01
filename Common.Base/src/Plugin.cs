@@ -26,6 +26,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			// 注册模板标签和过滤器
 			Template.RegisterTag<IncludeCss>("include_css");
 			Template.RegisterTag<IncludeJs>("include_js");
+			Template.RegisterTag<WebsiteTitle>("website_title");
 			Template.RegisterFilter(typeof(Filters));
 			// 注册默认模块
 			var diyManager = Application.Ioc.Resolve<DiyManager>();

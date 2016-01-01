@@ -151,6 +151,7 @@
     <Compile Include="Common.Base\src\TemplateFilters\Filters.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeCss.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeJs.cs" />
+    <Compile Include="Common.Base\src\TemplateTags\WebsiteTitle.cs" />
     <Compile Include="Common.Base\src\Translates\zh_CN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
