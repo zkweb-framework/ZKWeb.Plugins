@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
+using ZKWeb.Plugins.Common.Base.src.TemplateTags;
 
 namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>
@@ -23,6 +24,8 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			// 初始化定时任务管理器
 			Application.Ioc.Resolve<ScheduledTaskManager>();
 			// 注册模板标签和过滤器
+			Template.RegisterTag<IncludeCss>("include_css");
+			Template.RegisterTag<IncludeJs>("include_js");
 			Template.RegisterFilter(typeof(Filters));
 			// 注册默认模块
 			var diyManager = Application.Ioc.Resolve<DiyManager>();

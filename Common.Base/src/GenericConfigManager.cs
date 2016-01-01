@@ -41,7 +41,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 储存配置值
 		/// </summary>
-		public void PutData<T>(T value) where T : class, new() {
+		public virtual void PutData<T>(T value) where T : class, new() {
 			var attribute = GetConfigAttribute<T>();
 			var key = attribute.DatabaseKey();
 			// 保存到数据库
@@ -65,7 +65,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// 获取配置值，没有找到时返回新的值
 		/// </summary>
 		/// <returns></returns>
-		public T GetData<T>() where T : class, new() {
+		public virtual T GetData<T>() where T : class, new() {
 			var attribute = GetConfigAttribute<T>();
 			var key = attribute.DatabaseKey();
 			// 从缓存获取
@@ -90,7 +90,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 删除配置值
 		/// </summary>
-		public void RemoveData<T>() {
+		public virtual void RemoveData<T>() {
 			var attribute = GetConfigAttribute<T>();
 			var key = attribute.DatabaseKey();
 			// 从缓存删除

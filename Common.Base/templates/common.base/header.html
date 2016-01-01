@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="{% html_lang %}">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<meta charset="utf-8" />
+	{% raw_html __meta %}
+	<title>{{ __title }}</title>
+	<link href="/static/common.base.css/components.css" rel="stylesheet" type="text/css" />
+	{% raw_html __css %}
+</head>
+<body>
+	<div class="top-navbar">
+		<div class="screen-center-block">
+			<div class="pull-left">
+				{% area header_navbar_left %}
+				{% default_widgets %}
+				{% endarea %}
+			</div>
+			<div class="pull-right">
+				{% area header_navbar_right %}
+				{% default_widgets %}
+				{% endarea %}
+			</div>
+		</div>
+	</div>
+	<div class="top-logobar">
+		<div class="screen-center-block">
+			{% area header_logobar %}
+			{% default_widgets %}
+			{% endarea %}
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<div class="top-menubar">
+		<div class="screen-center-block">
+			{% area header_menubar %}
+			{% default_widgets %}
+			{% endarea %}
+			<div class="clearfix"></div>
+		</div>
+	</div>

@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// 当前没有会话时返回新的会话
 		/// </summary>
 		/// <returns></returns>
-		public Session GetSession() {
+		public virtual Session GetSession() {
 			// 从HttpContext中获取会话
 			// 因为一次请求中可能会调用多次GetSession，应该确保返回同一个对象
 			var session = HttpContextUtils.GetData<Session>(SessionKey, null);
@@ -62,7 +62,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// 添加或更新当前的会话
 		/// 必要时发送Cookie到浏览器
 		/// </summary>
-		public void SaveSession() {
+		public virtual void SaveSession() {
 			var session = HttpContextUtils.GetData<Session>(SessionKey, null);
 			if (session == null) {
 				throw new NullReferenceException("session is null");
@@ -96,7 +96,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// 删除当前会话
 		/// 同时删除浏览器中的Cookie
 		/// </summary>
-		public void RemoveSession() {
+		public virtual void RemoveSession() {
 			// 删除HttpContext中的会话
 			HttpContextUtils.RemoveData(SessionKey);
 			// 删除数据库中的会话

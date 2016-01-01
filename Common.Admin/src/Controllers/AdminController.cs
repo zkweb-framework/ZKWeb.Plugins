@@ -9,6 +9,7 @@ using ZKWeb;
 using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
+using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Forms;
 using ZKWeb.Plugins.Common.Base.src.Database;
 
@@ -24,7 +25,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// <returns></returns>
 		[Action("admin")]
 		public IActionResult Admin() {
-			return new TemplateResult("common.admin.admin.html");
+			return new TemplateResult("common.admin/admin_index.html");
 		}
 
 		/// <summary>
@@ -40,7 +41,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
-				return new TemplateResult("common.admin.login.html", new { form });
+				return new TemplateResult("common.admin/admin_login.html", new { form });
 			}
 		}
 
@@ -48,9 +49,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// 退出后台登陆
 		/// </summary>
 		/// <returns></returns>
-		[Action("admin/logout")]
+		[Action("admin/logout", HttpMethods.POST)]
 		public IActionResult Logout() {
-			throw new NotImplementedException();
+			var userManager = Application.Ioc.Resolve<UserManager>();
+			userManager.Logout();
+			return new RedirectResult("/user/login");
 		}
 	}
 }

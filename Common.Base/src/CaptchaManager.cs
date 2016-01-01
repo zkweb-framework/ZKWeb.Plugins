@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>
 	/// 验证码管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class CaptchaManager {
 		/// <summary>
 		/// 默认的验证码位数
