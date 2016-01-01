@@ -17,27 +17,27 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 		/// <summary>
 		/// 用户名
 		/// </summary>
-		[TextBoxField("Username", "Please enter username")]
 		[Required]
+		[TextBoxField("Username", "Please enter username")]
 		public string Username { get; set; }
 		/// <summary>
 		/// 密码
 		/// </summary>
-		[PasswordField("Password", "Please enter password")]
 		[Required]
+		[PasswordField("Password", "Please enter password")]
 		public string Password { get; set; }
 		/// <summary>
 		/// 验证码
 		/// </summary>
-		[CaptchaField("Captcha", "Common.Admin.AdminLoginCaptcha", "Please enter captcha")]
 		[Required]
+		[CaptchaField("Captcha", "Common.Admin.AdminLogin", "Please enter captcha")]
 		public string Captcha { get; set; }
 		/// <summary>
 		/// 记住登陆
 		/// </summary>
 		[CheckBoxField("RememberLogin")]
 		public bool RememberLogin { get; set; }
-		
+
 		/// <summary>
 		/// 绑定
 		/// </summary>

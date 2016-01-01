@@ -2,6 +2,18 @@
 {% include_js /static/common.base.js/test.js -%}
 {% include common.base/header.html %}
 <div class="screen-center-block">
-	User Reg
+	<h2 class="body-title">
+		<i class="fa fa-user"></i>
+		{{ "User Registration" | trans }}
+	</h2>
+	{% area user_reg_form_before %}
+	{% default_widgets %}
+	{% endarea %}
+	<div class="user-reg-form">
+		{{ form }}
+	</div>
+	{% area user_reg_form_after %}
+	{% default_widgets %}
+	{% endarea %}
 </div>
 {% include common.base/footer.html %}

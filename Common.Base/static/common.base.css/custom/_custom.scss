@@ -10,12 +10,14 @@ html, body {
 }
 
 /*验证码图片*/
-.input-captcha .input-group-addon {
-	padding: 0px 4px;
-}
+.input-group {
+	.input-group-addon {
+		padding: 0px 4px;
+	}
 
-.input-captcha .captcha {
-	height: 30px;
+	.captcha {
+		height: 30px;
+	}
 }
 
 /*验证信息显示*/
@@ -37,16 +39,21 @@ html, body {
 .form-group label em {
 	color: red;
 	font-style: normal;
-	margin-left: 4px;
 }
 
-/* 表单样式调整 */
-.form-horizontal .form-body .form-group {
+/* 表单样式 */
+.form-horizontal {
+	margin: 0px 15px;
+}
+
+/* 表单控件样式 */
+.form-horizontal .form-group {
 	margin-right: 0px;
 	margin-left: 0px;
 	/* 只读文本 */
 	label.control-label {
-		padding-top: 7px;
+		padding: 7px 12px 0px 0px;
+		margin: 0px 0px 5px 0px;
 		text-align: right;
 		margin-top: 1px;
 		word-break: break-all; /* 设置自动换行 可分割单词 */
@@ -97,9 +104,33 @@ html, body {
 	.col-md-offset-11.col-md-1 > .btn {
 		float: right;
 	}
-	/* 只包含文本的行减少下边距 */
-	&.label-form-group {
-		margin-bottom: 5px;
+	/* 文本和控件 */
+	@media (min-width: 992px) {
+		/* 相当于col-md-2 */
+		.control-label {
+			float: left;
+			width: 16.66666667%;
+		}
+		/* 相当于col-md-10 */
+		.form-controls {
+			float: left;
+			width: 83.33333333%;
+		}
+	}
+}
+
+/* 表单提交按钮 */
+.form-horizontal .form-actions {
+	.btn-submit {
+		color: #FFF;
+		background-color: #35AA47;
+	}
+
+	@media (min-width: 992px) {
+		/* 相当于col-md-offset-2 */
+		.btn-submit {
+			margin-left: 16.66666667%;
+		}
 	}
 }
 
@@ -560,8 +591,8 @@ input[type="text"], input[type="password"], select, textarea {
 }
 
 /* 设置低分辨率时表单的提交按钮宽度100% */
-@media (max-width: 768px) {
-	.form-group .btn[type='submit'] {
+@media (max-width: 992px) {
+	.form-actions .btn[type='submit'] {
 		width: 100%;
 	}
 }
@@ -655,5 +686,17 @@ dl.entity-summary {
 
 	.description {
 		color: #666;
+	}
+}
+
+/* 页面内容的标题 */
+.body-title {
+	font-size: 25px;
+	border-bottom: 1px solid rgb(0, 0, 0);
+	padding-bottom: 8px;
+	margin: 15px;
+
+	> i {
+		font-size: 25px;
 	}
 }

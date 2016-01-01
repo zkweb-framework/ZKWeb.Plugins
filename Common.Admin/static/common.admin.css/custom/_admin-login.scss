@@ -70,6 +70,7 @@ $bg-color: #364150;
 	color: #fff;
 	background-color: #45B6AF;
 	border-color: #3EA49D;
+	margin: 0px;
 }
 
 .login .content .form-actions .btn-default {
@@ -147,6 +148,13 @@ $bg-color: #364150;
 /* 隐藏表单字段文本 */
 .login .content form .control-label {
 	display: none;
+	width: auto;
+}
+
+/* 表单控件不适用col-md样式 */
+.login .content form .form-controls {
+	float: none;
+	width: auto;
 }
 
 /* 图标居中 */
@@ -168,7 +176,7 @@ $bg-color: #364150;
 	.control-label {
 		display: block;
 		float: left;
-		line-height: 32px;
+		line-height: 24px;
 		color: #8290A3;
 		margin: 0px 8px 0px 0px;
 	}

@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		[Action("user/reg")]
 		[Action("user/reg", HttpMethods.POST)]
 		public IActionResult Reg() {
-			var form = new UserLoginForm();
+			var form = new UserRegForm();
 			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {

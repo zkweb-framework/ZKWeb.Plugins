@@ -21,7 +21,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Captcha", "验证码" },
 			{ "Click to change captcha image", "点击更换验证码图片" },
 			{ "Please enter captcha", "请填写验证码" },
-			{ "Incorrect captcha", "验证码错误，请重新填写" }
+			{ "Incorrect captcha", "验证码错误，请重新填写" },
+			{ "Length of {0} must be {1}", "{0}的长度必须是{1}" },
+			{ "Length of {0} must between {1} and {2}", "{0}的长度必须在{1}和{2}之间" },
 		};
 		
 		public bool CanTranslate(string code) {

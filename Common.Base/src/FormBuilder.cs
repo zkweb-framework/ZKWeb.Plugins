@@ -69,6 +69,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			html.AddAttribute("method", Attribute.Method ?? HttpMethods.POST);
 			html.AddAttribute("role", "form");
 			html.AddAttribute("ajax", Attribute.EnableAjaxSubmit ? "true" : "false");
+			html.AddAttribute("class", Attribute.CssClass);
 			html.RenderBeginTag("form");
 		}
 

@@ -36,6 +36,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// 启用Csrf校验，默认等于true
 		/// </summary>
 		public bool EnableCsrfToken { get; set; }
+		/// <summary>
+		/// 表单的css类，默认是form-horizontal
+		/// </summary>
+		public string CssClass { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -50,6 +54,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			SubmitButtonText = "Submit";
 			EnableAjaxSubmit = true;
 			EnableCsrfToken = true;
+			CssClass = "form-horizontal";
 		}
 	}
 }

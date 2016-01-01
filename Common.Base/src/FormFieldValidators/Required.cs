@@ -21,12 +21,20 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 		public const string Key = "data-val-required";
 
 		/// <summary>
+		/// 获取错误消息
+		/// </summary>
+		/// <param name="field"></param>
+		/// <returns></returns>
+		private string ErrorMessage(FormField field) {
+			return string.Format(new T("{0} is required"), new T(field.Attribute.Name));
+		}
+
+		/// <summary>
 		/// 添加验证使用的html属性
 		/// </summary>
 		public void AddHtmlAttributes(
 			FormField field, object validatorAttribute, IDictionary<string, string> htmlAttributes) {
-			var error = string.Format(new T("{0} is required"), new T(field.Attribute.Name));
-			htmlAttributes.Add(Key, error);
+			htmlAttributes.Add(Key, ErrorMessage(field));
 		}
 
 		/// <summary>
@@ -34,8 +42,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 		/// </summary>
 		public void Validate(FormField field, object validatorAttribute, object value) {
 			if (value == null || value.ToString() == "") {
-				var error = string.Format(new T("{0} is required"), new T(field.Attribute.Name));
-				throw new HttpException(400, error);
+				throw new HttpException(400, ErrorMessage(field));
 			}
 		}
 	}
