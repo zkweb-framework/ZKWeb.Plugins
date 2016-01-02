@@ -100,9 +100,12 @@
     <Compile Include="Common.Admin\src\Database\User.cs" />
     <Compile Include="Common.Admin\src\Database\UserMessage.cs" />
     <Compile Include="Common.Admin\src\Database\UserRole.cs" />
+    <Compile Include="Common.Admin\src\DataCallbacks\CheckUsernameDuplicate.cs" />
+    <Compile Include="Common.Admin\src\Extensions\SessionExtensions.cs" />
     <Compile Include="Common.Admin\src\Forms\AdminLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserRegForm.cs" />
+    <Compile Include="Common.Admin\src\Model\IUserLoginCallback.cs" />
     <Compile Include="Common.Admin\src\Model\UserType.cs" />
     <Compile Include="Common.Admin\src\Plugin.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
@@ -153,7 +156,8 @@
     <Compile Include="Common.Base\src\TemplateFilters\Filters.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeCss.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeJs.cs" />
-    <Compile Include="Common.Base\src\TemplateTags\WebsiteTitle.cs" />
+    <Compile Include="Common.Base\src\TemplateTags\WebsiteName.cs" />
+    <Compile Include="Common.Base\src\TemplateTags\UseTitle.cs" />
     <Compile Include="Common.Base\src\Translates\zh_CN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -190,10 +194,15 @@
     <Content Include="Common.Admin\static\common.admin.js\components.js" />
     <Content Include="Common.Admin\static\common.admin.js\components.min.js" />
     <Content Include="Common.Admin\static\common.admin.js\custom\_admin.top-menubar-activities.js" />
+    <Content Include="Common.Admin\static\common.admin.js\user-login.js" />
+    <Content Include="Common.Admin\static\common.admin.js\user-login.min.js" />
+    <Content Include="Common.Admin\static\common.admin.js\user-reg.js" />
+    <Content Include="Common.Admin\static\common.admin.js\user-reg.min.js" />
     <Content Include="Common.Admin\templates\common.admin\footer.html" />
     <Content Include="Common.Admin\templates\common.admin\header.html" />
     <Content Include="Common.Admin\templates\common.admin\admin_login.html" />
     <Content Include="Common.Admin\templates\common.admin.widgets\user_login_info.html" />
+    <Content Include="Common.Admin\templates\common.admin\user_home.html" />
     <Content Include="Common.Admin\templates\common.admin\user_reg.html" />
     <Content Include="Common.Admin\templates\common.admin\user_login.html" />
     <Content Include="Common.Base\static\common.base.css\components.css" />
