@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.Admin\src\Controllers\AdminController.cs" />
+    <Compile Include="Common.Admin\src\Controllers\ApiController.cs" />
     <Compile Include="Common.Admin\src\Controllers\UserController.cs" />
     <Compile Include="Common.Admin\src\Database\GenericClass.cs" />
     <Compile Include="Common.Admin\src\Database\GenericRecord.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Common.Admin\src\Forms\UserLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserRegForm.cs" />
     <Compile Include="Common.Admin\src\Model\UserType.cs" />
+    <Compile Include="Common.Admin\src\Plugin.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Admin\src\UserManager.cs" />
     <Compile Include="Common.Base\src\CaptchaManager.cs" />
@@ -179,6 +181,7 @@
     <None Include="Common.Admin\static\common.admin.css\metronic\variables\_variables_layout.scss" />
     <None Include="Common.Admin\static\common.admin.css\metronic\_components.scss" />
     <None Include="Common.Admin\static\common.admin.js\koala-config.json" />
+    <None Include="Common.Admin\templates\common.admin.widgets\user_login_info.widget" />
     <None Include="Common.Base\plugin.json" />
     <Content Include="Common.Admin\static\common.admin.css\admin-index.css" />
     <Content Include="Common.Admin\static\common.admin.css\admin-login.css" />
@@ -190,6 +193,7 @@
     <Content Include="Common.Admin\templates\common.admin\footer.html" />
     <Content Include="Common.Admin\templates\common.admin\header.html" />
     <Content Include="Common.Admin\templates\common.admin\admin_login.html" />
+    <Content Include="Common.Admin\templates\common.admin.widgets\user_login_info.html" />
     <Content Include="Common.Admin\templates\common.admin\user_reg.html" />
     <Content Include="Common.Admin\templates\common.admin\user_login.html" />
     <Content Include="Common.Base\static\common.base.css\components.css" />
@@ -230,7 +234,7 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.validate.additional.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_metronic.fullscreen.js" />
     <Content Include="Common.Base\static\favicon.ico" />
-    <Content Include="Common.Base\templates\common.base.logo.html" />
+    <Content Include="Common.Base\templates\common.base.widgets\logo.html" />
     <None Include="Common.Base\static\common.base.css\components.scss" />
     <None Include="Common.Base\static\common.base.css\components\_bootstrap-dialog.scss" />
     <None Include="Common.Base\static\common.base.css\components\_bootstrap.scss" />
@@ -330,7 +334,7 @@
     <None Include="Common.Base\static\common.base.js\koala-config.json" />
     <None Include="Common.Base\static\common.base.tmpl\ajaxTable.tmpl" />
     <None Include="Common.Base\static\common.base.tmpl\ajaxTableSimple.tmpl" />
-    <None Include="Common.Base\templates\common.base.logo.widget" />
+    <None Include="Common.Base\templates\common.base.widgets\logo.widget" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.Admin\templates\test_include.html" />

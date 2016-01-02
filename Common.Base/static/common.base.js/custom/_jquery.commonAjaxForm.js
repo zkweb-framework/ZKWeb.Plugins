@@ -21,22 +21,22 @@ $.fn.commonAjaxForm = function (options) {
 	var beforeSubmitOrig = options.beforeSubmit;
 	options.beforeSubmit = function () {
 		$form.addClass("loading");
-		$form.trigger("beforeSubmit");
 		beforeSubmitOrig && beforeSubmitOrig.apply(this, arguments);
+		$form.trigger("beforeSubmit", arguments);
 	};
 	// 执行成功之后回调函数
 	var successOrig = options.success;
 	options.success = function () {
 		successOrig && successOrig.apply(this, arguments);
+		$form.trigger("success", arguments);
 		$form.removeClass("loading");
-		$form.trigger("success");
 	};
 	// 执行失败之后回调函数
 	var errorOrig = options.error;
 	options.error = function () {
 		errorOrig && errorOrig.apply(this, arguments);
+		$form.trigger("error", arguments);
 		$form.removeClass("loading");
-		$form.trigger("error");
 	};
 	return this.ajaxForm(options);
 };

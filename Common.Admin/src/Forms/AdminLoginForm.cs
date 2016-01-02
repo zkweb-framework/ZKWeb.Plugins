@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -49,9 +50,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 		/// <returns></returns>
 		protected override object OnSubmit() {
 			if (Username == "admin" && Password == "123456") {
-				return new { success = true, message = "login success" };
+				return new { message = "login success" };
 			}
-			return new { message = new T("Incorrect username or password") };
+			throw new HttpException(401, new T("Incorrect username or password"));
 		}
 	}
 }

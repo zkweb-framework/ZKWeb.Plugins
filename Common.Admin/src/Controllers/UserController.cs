@@ -58,5 +58,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			userManager.Logout();
 			return new RedirectResult("/user/login");
 		}
+
+		/// <summary>
+		/// 会员中心
+		/// </summary>
+		/// <returns></returns>
+		[Action("home")]
+		public IActionResult Home() {
+			return new TemplateResult("common.admin/user_home.html");
+		}
 	}
 }

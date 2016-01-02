@@ -1,0 +1,18 @@
+﻿{% fetch /api/user_login_info > login_info %}
+<div class="user-login-info">
+	{% if login_info.userId > 0 %}
+	<div>
+		{{ "Welcome to " | trans }}{% website_name %}
+		<a href="/home">{{ login_info.username }}</a> |
+		<form class="inline" action="/user/logout" method="post">
+			<a onclick="parentNode.submit()">{{ "Logout" | trans }}</a>
+		</form>
+	</div>
+	{% else %}
+	<div>
+		{{ "Welcome to " | trans }}{% website_name %} |
+		<a href="/user/login">{{ "Login" | trans }}</a>
+		<a href="/user/reg">{{ "Register for free" | trans }}</a>
+	</div>
+	{% endif %}
+</div>

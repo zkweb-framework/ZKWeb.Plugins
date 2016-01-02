@@ -1,1 +1,19 @@
-﻿asdasdasd
+﻿{% use_title "User Login" -%}
+{% include_js /static/common.admin.js/user-login.min.js -%}
+{% include common.base/header.html %}
+<div class="screen-center-block">
+	<h2 class="body-title">
+		<i class="fa fa-user"></i>
+		{{ "User Login" | trans }}
+	</h2>
+	{% area user_reg_form_before %}
+	{% default_widgets %}
+	{% endarea %}
+	<div class="user-login-form">
+		{{ form }}
+	</div>
+	{% area user_reg_form_after %}
+	{% default_widgets %}
+	{% endarea %}
+</div>
+{% include common.base/footer.html %}

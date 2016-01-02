@@ -28,7 +28,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Register", "注册" },
 			{ "ConfirmPassword", "确认密码" },
 			{ "Please repeat the password exactly", "请重复前面填写的密码" },
-			{ "User Registration", "用户注册" }
+			{ "User Registration", "用户注册" },
+			{ "User Login", "用户登录" },
+			{ "Username is already taken, please choose other username", "用户名已经被使用，请选择其他用户名" },
+			{ "You have registered successfully, thanks for you registration", "注册用户成功，感谢您的注册" },
+			{ "User Panel", "用户中心" },
+			{ "Login successful", "登陆成功" },
+			{ "Welcome to ", "欢迎光临" },
+			{ "Logout", "退出登陆" },
+			{ "Register for free", "免费注册" }
 		};
 
 		public bool CanTranslate(string code) {

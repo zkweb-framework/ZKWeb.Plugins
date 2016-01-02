@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Model;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Core;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Database {
 	/// <summary>
@@ -96,7 +98,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		public UserMap() {
 			Id(u => u.Id);
 			Map(u => u.Type).CustomType<int>().Index("Idx_Type");
-			Map(u => u.Username).Index("Idx_Username");
+			Map(u => u.Username).Unique();
 			Map(u => u.Password);
 			Map(u => u.CreateTime);
 			References(u => u.Role);

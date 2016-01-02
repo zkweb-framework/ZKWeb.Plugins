@@ -1,9 +1,12 @@
-﻿using System;
+﻿using DryIoc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Model;
 
@@ -13,18 +16,30 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 	/// </summary>
 	[Form("UserRegForm", SubmitButtonText = "Register")]
 	public class UserRegForm : ModelFormBuilder {
+		/// <summary>
+		/// 用户名
+		/// </summary>
 		[Required]
 		[StringLength(100, MinimumLength = 3)]
 		[TextBoxField("Username", "Please enter username")]
 		public string Username { get; set; }
+		/// <summary>
+		/// 密码
+		/// </summary>
 		[Required]
 		[StringLength(100, MinimumLength = 5)]
 		[PasswordField("Password", "Please enter password")]
 		public string Password { get; set; }
+		/// <summary>
+		/// 确认密码
+		/// </summary>
 		[Required]
 		[StringLength(100, MinimumLength = 5)]
 		[PasswordField("ConfirmPassword", "Please repeat the password exactly")]
 		public string ConfirmPassword { get; set; }
+		/// <summary>
+		/// 验证码
+		/// </summary>
 		[Required]
 		[CaptchaField("Captcha", "Common.Admin.UserReg", "Please enter captcha")]
 		public string Captcha { get; set; }
@@ -35,11 +50,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 		protected override void OnBind() { }
 
 		/// <summary>
-		/// 提交
+		/// 注册用户，成功后自动登陆
 		/// </summary>
 		/// <returns></returns>
 		protected override object OnSubmit() {
-			throw new NotImplementedException();
+			if (Password != ConfirmPassword) {
+				throw new HttpException(400, new T("Please repeat the password exactly"));
+			}
+			var userManager = Application.Ioc.Resolve<UserManager>();
+			userManager.Reg(Username, Password);
+			userManager.Login(Username, Password, false);
+			return new { message = new T("You have registered successfully, thanks for you registration") };
 		}
 	}
 }

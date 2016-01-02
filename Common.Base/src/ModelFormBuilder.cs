@@ -69,7 +69,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			OnBind();
 			// 把模型中的值设置到字段
 			foreach (var field in Form.Fields) {
-				var member = FieldToMember[field];
+				var member = FieldToMember.GetOrDefault(field);
 				if (member is PropertyInfo) {
 					field.Value = ((PropertyInfo)member).GetValue(this);
 				} else if (member is FieldInfo) {
@@ -88,7 +88,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			var values = Form.ParseValues(submitValues);
 			foreach (var field in Form.Fields) {
 				var value = values.GetOrDefault(field.Attribute.Name);
-				var member = FieldToMember[field];
+				var member = FieldToMember.GetOrDefault(field);
 				if (member is PropertyInfo) {
 					((PropertyInfo)member).SetValue(this, value);
 				} else if (member is FieldInfo) {
