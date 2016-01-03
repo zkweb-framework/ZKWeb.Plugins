@@ -46,27 +46,32 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		}
 
 		/// <summary>
-		/// 登陆用户
-		/// 登陆失败时会抛出例外
+		/// 根据用户名查找用户
+		/// 找不到时返回null
 		/// </summary>
-		public virtual void Login(string username, string password, bool rememberLogin) {
-			User user = null;
+		public virtual User FindUser(string username) {
 			var callbacks = Application.Ioc.ResolveMany<IUserLoginCallback>();
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
 				// 通过回调查找用户
 				foreach (var callback in callbacks) {
-					user = callback.FindUser(context, username);
+					var user = callback.FindUser(context, username);
 					if (user != null) {
-						break;
+						return user;
 					}
 				}
 				// 通过用户名查找用户
-				if (user == null) {
-					user = context.Get<User>(u => u.Username == username);
-				}
+				return context.Get<User>(u => u.Username == username);
 			}
+		}
+
+		/// <summary>
+		/// 登陆用户
+		/// 登陆失败时会抛出例外
+		/// </summary>
+		public virtual void Login(string username, string password, bool rememberLogin) {
 			// 用户不存在或密码错误时抛出例外
+			var user = FindUser(username);
 			if (user == null || !user.CheckPassword(password)) {
 				throw new HttpException(401, new T("Incorrect username or password"));
 			}

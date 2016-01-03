@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DryIoc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -38,21 +39,28 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 		/// </summary>
 		[CheckBoxField("RememberLogin")]
 		public bool RememberLogin { get; set; }
+		/// <summary>
+		/// 登陆后跳转到的地址
+		/// </summary>
+		[HiddenField("RedirectAfterLogin")]
+		public string RedirectAfterLogin { get; set; }
 
 		/// <summary>
 		/// 绑定
 		/// </summary>
-		protected override void OnBind() { }
+		protected override void OnBind() {
+			var adminManager = Application.Ioc.Resolve<AdminManager>();
+			RedirectAfterLogin = adminManager.GetUrlRedirectAfterLogin();
+		}
 
 		/// <summary>
 		/// 提交
 		/// </summary>
 		/// <returns></returns>
 		protected override object OnSubmit() {
-			if (Username == "admin" && Password == "123456") {
-				return new { message = "login success" };
-			}
-			throw new HttpException(401, new T("Incorrect username or password"));
+			var adminManager = Application.Ioc.Resolve<AdminManager>();
+			adminManager.Login(Username, Password, RememberLogin);
+			return new { message = new T("Login successful") };
 		}
 	}
 }

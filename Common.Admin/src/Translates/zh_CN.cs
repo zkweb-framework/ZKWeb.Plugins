@@ -36,7 +36,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Login successful", "登陆成功" },
 			{ "Welcome to ", "欢迎光临" },
 			{ "Logout", "退出登陆" },
-			{ "Register for free", "免费注册" }
+			{ "Register for free", "免费注册" },
+			{ "Website has no admin yet, the first login user will become super admin.",
+				"当前没有任何管理员，第一次登录的用户将会成为超级管理员" },
+			{ "You have already logged in, continue will replace the logged in user.",
+				"您已经登陆，继续登陆将会替换当前登录的用户" },
+			{ "Sorry, You have no privileges to use admin panel.", "抱歉，你没有使用管理员后台的权限" },
+			{ "Incorrect username or password", "用户名或密码不正确，请重新填写" }
 		};
 
 		public bool CanTranslate(string code) {

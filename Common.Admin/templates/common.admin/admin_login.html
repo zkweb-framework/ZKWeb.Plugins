@@ -14,6 +14,7 @@
 		<div class="logo"><a><img src="/static/common.admin.images/logo.png" alt=""></a></div>
 		<div class="content">
 			<h3 class="form-title">{{ "Admin Login" | trans }}</h3>
+			<p class="text-danger">{{ warning }}</p>
 			{{ form }}
 			<div class="create-account">
 				<p><a href="/user/reg" id="register-btn" class="uppercase">{{ "Register new user" | trans }}</a></p>
@@ -30,6 +31,10 @@
 				$("input[name=Password]").parent().addClass("input-icon").prepend("<i class='fa fa-lock'></i>");
 				$("input[name=Captcha]").parent().addClass("input-icon").prepend("<i class='fa fa-check'></i>");
 				$("input[name=RememberLogin]").closest(".form-group").addClass("rememberLogin").appendTo(".form-actions");
+				$("[name=AdminLoginForm]").on("success", function () {
+					var url = $(this).find("[name=RedirectAfterLogin]").val();
+					location.href = url;
+				});
 			});
 		</script>
 	</footer>

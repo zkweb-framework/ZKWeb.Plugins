@@ -36,12 +36,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		[Action("admin/login", HttpMethods.POST)]
 		public IActionResult Login() {
 			var form = new AdminLoginForm();
-			var request = HttpContext.Current.Request;
-			if (request.HttpMethod == HttpMethods.POST) {
+			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
-				return new TemplateResult("common.admin/admin_login.html", new { form });
+				var adminManager = Application.Ioc.Resolve<AdminManager>();
+				var warning = adminManager.GetLoginWarning();
+				return new TemplateResult("common.admin/admin_login.html", new { form, warning });
 			}
 		}
 

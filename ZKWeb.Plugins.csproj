@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.Admin\src\AdminManager.cs" />
     <Compile Include="Common.Admin\src\Controllers\AdminController.cs" />
     <Compile Include="Common.Admin\src\Controllers\ApiController.cs" />
     <Compile Include="Common.Admin\src\Controllers\UserController.cs" />
