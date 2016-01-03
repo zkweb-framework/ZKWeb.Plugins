@@ -1,4 +1,5 @@
-﻿using DryIoc;
+﻿using DotLiquid;
+using DryIoc;
 using DryIocAttributes;
 using Newtonsoft.Json;
 using System;
@@ -11,6 +12,7 @@ using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Forms;
+using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Database;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
@@ -25,7 +27,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// <returns></returns>
 		[Action("admin")]
 		public IActionResult Admin() {
-			return new TemplateResult("common.admin/admin_index.html");
+			var apps = Application.Ioc.ResolveMany<AdminApp>();
+			return new TemplateResult("common.admin/admin_index.html", new { apps });
 		}
 
 		/// <summary>

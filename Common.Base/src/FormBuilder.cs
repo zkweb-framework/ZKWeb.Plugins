@@ -141,7 +141,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		/// <returns></returns>
 		object ILiquidizable.ToLiquid() {
-			return new HtmlString(this.ToString());
+			return new HtmlString(ToString());
 		}
 
 		/// <summary>

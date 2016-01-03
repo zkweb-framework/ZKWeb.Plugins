@@ -28,9 +28,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Config {
 		/// 初始化
 		/// </summary>
 		public LocaleSettings() {
-			this.DefaultLanguage = "zh-CN";
-			this.DefaultTimezone = "China Standard Time";
-			this.AllowDetectLanguageFromBrowser = false;
+			DefaultLanguage = "zh-CN";
+			DefaultTimezone = "China Standard Time";
+			AllowDetectLanguageFromBrowser = false;
 		}
 	}
 }

@@ -32,10 +32,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Config {
 		/// 初始化
 		/// </summary>
 		public WebsiteSettings() {
-			this.WebsiteName = "ZKWeb Default Website";
-			this.HomePageTitle = "HomePage";
-			this.DocumentTitleFormat = "{title} - {websiteName}";
-			this.CopyrightText = "© 2016 ZKWeb";
+			WebsiteName = "ZKWeb Default Website";
+			HomePageTitle = "HomePage";
+			DocumentTitleFormat = "{title} - {websiteName}";
+			CopyrightText = "© 2016 ZKWeb";
 		}
 	}
 }

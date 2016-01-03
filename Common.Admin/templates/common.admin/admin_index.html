@@ -1,4 +1,16 @@
 ﻿{% use_title "Admin Panel" -%}
 {% include common.admin/header.html %}
-{{ "Apps" | trans }}
+<div class="portlet-title">
+	<div class="caption">
+		<i class="fa fa-cubes"></i>
+		<span class="caption-subject">{{ "My Apps" | trans }}</span>
+	</div>
+</div>
+<div class="portlet-body">
+	<div class="tiles">
+		{% for app in apps %}
+		{{ app }}
+		{% endfor %}
+	</div>
+</div>
 {% include common.admin/footer.html %}

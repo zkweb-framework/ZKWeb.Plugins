@@ -43,7 +43,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				while (true) {
 					Thread.Sleep(TimeSpan.FromMinutes(1));
 					// 枚举并处理定时任务
-					foreach (var executor in this.Executors.Value) {
+					foreach (var executor in Executors.Value) {
 						try {
 							HandleTask(executor);
 						} catch (Exception e) {

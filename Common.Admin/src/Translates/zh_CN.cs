@@ -48,7 +48,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Website Index", "网站首页" },
 			{ "About Me", "关于我" },
 			{ "About Website", "关于网站" },
-			{ "Admin Panel", "管理后台" }
+			{ "Admin Panel", "管理后台" },
+			{ "My Apps", "我的应用" }
 		};
 
 		public bool CanTranslate(string code) {

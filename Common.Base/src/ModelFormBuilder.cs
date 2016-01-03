@@ -30,7 +30,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		public ModelFormBuilder(FormBuilder form = null) {
 			Form = form ?? Application.Ioc.Resolve<FormBuilder>();
-			var type = this.GetType();
+			var type = GetType();
 			// 设置表单属性
 			var formAttribute = type.GetAttribute<FormAttribute>();
 			if (formAttribute != null) {
