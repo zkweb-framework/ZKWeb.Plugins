@@ -91,6 +91,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.Admin\src\AdminApps\TestAppA.cs" />
+    <Compile Include="Common.Admin\src\AdminApps\TestAppB.cs" />
+    <Compile Include="Common.Admin\src\AdminApps\TestAppC.cs" />
     <Compile Include="Common.Admin\src\AdminManager.cs" />
     <Compile Include="Common.Admin\src\Controllers\AdminController.cs" />
     <Compile Include="Common.Admin\src\Controllers\ApiController.cs" />
@@ -106,9 +109,11 @@
     <Compile Include="Common.Admin\src\Forms\AdminLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserRegForm.cs" />
+    <Compile Include="Common.Admin\src\Model\AdminApp.cs" />
     <Compile Include="Common.Admin\src\Model\IUserLoginCallback.cs" />
     <Compile Include="Common.Admin\src\Model\UserType.cs" />
     <Compile Include="Common.Admin\src\Plugin.cs" />
+    <Compile Include="Common.Admin\src\PrivilegesChecker.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Admin\src\UserManager.cs" />
     <Compile Include="Common.Base\src\CaptchaManager.cs" />
@@ -199,6 +204,7 @@
     <Content Include="Common.Admin\static\common.admin.js\user-login.min.js" />
     <Content Include="Common.Admin\static\common.admin.js\user-reg.js" />
     <Content Include="Common.Admin\static\common.admin.js\user-reg.min.js" />
+    <Content Include="Common.Admin\templates\common.admin\admin_index.html" />
     <Content Include="Common.Admin\templates\common.admin\footer.html" />
     <Content Include="Common.Admin\templates\common.admin\header.html" />
     <Content Include="Common.Admin\templates\common.admin\admin_login.html" />
