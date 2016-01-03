@@ -7,6 +7,7 @@
 */
 $(function () {
 	// 设置定时刷新
+	return;
 	var $nav = $(".admin-page-top .page-header .page-top .nav").first();
 	var reloadActivitiesEventName = "reloadActivities.adminTopMenuBar";
 	var reloadActivitiesNoCacheEventName = "reloadActivitiesNoCache.adminTopMenuBar";

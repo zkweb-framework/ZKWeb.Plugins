@@ -41,8 +41,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 				"当前没有任何管理员，第一次登录的用户将会成为超级管理员" },
 			{ "You have already logged in, continue will replace the logged in user.",
 				"您已经登陆，继续登陆将会替换当前登录的用户" },
-			{ "Sorry, You have no privileges to use admin panel.", "抱歉，你没有使用管理员后台的权限" },
-			{ "Incorrect username or password", "用户名或密码不正确，请重新填写" }
+			{ "Sorry, You have no privileges to use admin panel.", "抱歉，你没有使用管理后台的权限" },
+			{ "Incorrect username or password", "用户名或密码不正确，请重新填写" },
+			{ "Apps", "应用" },
+			{ "Workspace", "工作间" },
+			{ "Website Index", "网站首页" },
+			{ "About Me", "关于我" },
+			{ "About Website", "关于网站" },
+			{ "Admin Panel", "管理后台" }
 		};
 
 		public bool CanTranslate(string code) {

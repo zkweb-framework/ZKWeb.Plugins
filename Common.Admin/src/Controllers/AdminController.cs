@@ -54,7 +54,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		public IActionResult Logout() {
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			userManager.Logout();
-			return new RedirectResult("/user/login");
+			return new RedirectResult("/admin/login");
 		}
 	}
 }

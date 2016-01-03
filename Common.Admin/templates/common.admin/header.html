@@ -11,3 +11,51 @@
 	{% raw_html __css %}
 </head>
 <body>
+	<div class="page-top admin-page-top">
+		<div class="page-header navbar navbar-static-top">
+			<div class="page-header-inner">
+				<div class="page-logo">
+					<a href="/admin">
+						<img src="/static/common.admin.images/logo.png" alt="logo" class="logo-default">
+					</a>
+				</div>
+				<div class="header-navigation pull-left font-transform-inherit">
+					<ul>
+						<li class="dropdown"><a class="dropdown-toggle" href="/admin">{{ "Apps" | trans }}</a></li>
+						<li class="dropdown"><a class="dropdown-toggle" href="/admin/workspace">{{ "Workspace" | trans }}</a></li>
+					</ul>
+				</div>
+				<div class="page-top">
+					<div class="top-menu">
+						<ul class="nav navbar-nav pull-right">
+							<li class="dropdown dropdown-user dropdown-dark">
+								<a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+									<span class="username username-hide-on-mobile">
+										{% fetch /api/user_login_info > login_info %}
+										{{ login_info.username }}
+									</span>
+									<img class="img-rounded" alt="" src="/static/common.admin.images/default-avatar.jpg">
+								</a>
+								<ul class="dropdown-menu dropdown-menu-default">
+									<li>
+										<a href="/" target="_blank"> <i class="fa fa-home"></i>{{ "Website Index" | trans }}</a>
+									</li>
+									<li>
+										<a href="/admin/about_me" target=""><i class="fa fa-info-circle"></i>{{ "About Me" | trans }}</a>
+									</li>
+									<li>
+										<a href="/admin/about_website" target=""><i class="fa fa-question-circle"></i>{{ "About Website" | trans }}</a>
+									</li>
+									<li>
+										<form class="inline" action="/admin/logout" method="post"></form>
+										<a onclick="previousElementSibling.submit()"><i class="fa fa-power-off "></i>{{ "Logout" | trans }}</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>

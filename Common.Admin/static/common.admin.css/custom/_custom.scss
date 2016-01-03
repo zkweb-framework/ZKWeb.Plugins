@@ -25,6 +25,15 @@
 		width: auto !important; // 允许和菜单栏显示在同一行
 		clear: none; // 同上
 	}
+
+	.page-header.navbar .page-logo {
+		margin: 0px 0px 0px -4px; // 腾位置
+		padding: 0px;
+	}
+
+	.page-header.navbar .header-navigation  {
+		margin: 0px -7px; // 腾位置
+	}
 }
 
 /* 后台背景颜色*/
