@@ -118,6 +118,7 @@
     <Compile Include="Common.Admin\src\UserManager.cs" />
     <Compile Include="Common.Base\src\CaptchaManager.cs" />
     <Compile Include="Common.Base\src\Controllers\CaptchaController.cs" />
+    <Compile Include="Common.Base\src\Controllers\IndexController.cs" />
     <Compile Include="Common.Base\src\FormBuilder.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\Captcha.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBox.cs" />
@@ -158,7 +159,6 @@
     <Compile Include="Common.Base\src\SessionManager.cs" />
     <Compile Include="Common.Base\src\Database\Session.cs" />
     <Compile Include="Common.Base\src\Controllers\StaticHandler.cs" />
-    <Compile Include="Common.Base\src\Controllers\TestController.cs" />
     <Compile Include="Common.Base\src\TemplateFilters\Filters.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeCss.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeJs.cs" />
@@ -168,6 +168,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Common.Admin\static\common.admin.images\default-avatar.jpg" />
+    <Content Include="Common.Admin\templates\common.admin\test_list.html" />
+    <Content Include="Common.Base\static\common.base.images\logo.png" />
+    <Content Include="Common.Base\templates\common.base\index.html" />
     <None Include="Common.Admin\plugin.json" />
     <None Include="Common.Admin\static\common.admin.css\admin-index.scss" />
     <None Include="Common.Admin\static\common.admin.css\admin-login.scss" />
@@ -353,11 +357,8 @@
     <None Include="Common.Base\templates\common.base.widgets\logo.widget" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Common.Admin\templates\test_include.html" />
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
-    <Content Include="Common.Base\templates\test_form.html" />
-    <Content Include="Common.Base\templates\test.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Finance.Accounting\" />
