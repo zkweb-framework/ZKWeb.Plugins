@@ -60,5 +60,30 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			userManager.Logout();
 			return new RedirectResult("/admin/login");
 		}
+
+		/// <summary>
+		/// 测试列表页
+		/// </summary>
+		/// <returns></returns>
+		[Action("admin/list")]
+		[Action("admin/list/search", HttpMethods.POST)]
+		public IActionResult TestSearch() {
+			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
+				return new JsonResult(new {
+					PageIndex = 0,
+					PageSize = 50,
+					IsLastPage = true,
+					Rows = new object[] {
+						new { Id = 1, Username = "TestA" },
+						new { Id = 2, Username = "TestB" }
+					},
+					Columns = new object[] {
+						new { HeadTemplate = "Id", Width = 100, CellTemplate = "<%- row.Id %>" },
+						new { HeadTemplate = "Username", CellTemplate = "<%- row.Username %>" }
+					}
+				});
+			}
+			return new TemplateResult("common.admin/test_list.html");
+		}
 	}
 }

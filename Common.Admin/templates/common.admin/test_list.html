@@ -1,0 +1,90 @@
+﻿{% use_title "Test List" -%}
+{% include common.admin/header.html %}
+<div class="portlet-title">
+	<div class="caption">
+		<i class="fa fa-cubes"></i>
+		<span class="caption-subject">{{ "Test List" | trans }}</span>
+	</div>
+	<div class="actions search-bar">
+		<div class="btn-group">
+			<a class="btn btn-default btn-circle" aria-expanded="true" data-toggle="dropdown">
+				<i class="fa fa-angle-down"></i>
+			</a>
+			<ul class="dropdown-menu pull-right">
+				<li><a class="refresh"><i class="fa fa-refresh "></i>{{ "Refresh" | trans }}</a></li>
+				<li><a class="fullscreen"><i class="fa fa-arrows-alt"></i>{{ "Fullscreen" | trans }}</a></li>
+				<li class="divider"></li>
+				<li class="dropdown-submenu">
+					<a><i class=""></i>{{ "Operations" | trans }}</a>
+					<ul class="dropdown-menu pull-right">
+						<li><a class="unimplemented"><i class="fa fa-file-excel-o "></i>{{ "Export to excel" | trans }}</a></li>
+						<li><a class="unimplemented"><i class="fa fa-print "></i>{{ "Print" | trans }}</a></li>
+					</ul>
+				</li>
+				<li class="dropdown-submenu">
+					<a><i class=""></i>{{ "Pagination Settings" | trans }}</a>
+					<ul class="dropdown-menu pull-right">
+						<li><a class="set-page-size" data-size="5"><i class="fa fa-list "></i>{{ "5 Records per page" | trans }}</a></li>
+						<li><a class="set-page-size" data-size="25"><i class="fa fa-list "></i>{{ "25 Records per page" | trans }}</a></li>
+						<li><a class="set-page-size" data-size="50"><i class="fa fa-list "></i>{{ "50 Records per page" | trans }}</a></li>
+						<li><a class="set-page-size" data-size="100"><i class="fa fa-list "></i>{{ "100 Records per page" | trans }}</a></li>
+					</ul>
+				</li>
+				<li class="divider"></li>
+				<li><a><i class="fa fa-user-plus "></i>{{ "Add admin" | trans }}</a></li>
+			</ul>
+		</div>
+		<div class="portlet-input input-inline input-medium">
+			<div class="input-group">
+				<input class="form-control keyword" placeholder="{{ "PlaceHolder" | trans }}" type="text">
+				<div class="input-group-btn">
+					<a class="btn btn-default search-button">
+						<i class="fa fa-search"></i>
+					</a>
+					<div class="btn-group">
+						<a class="btn btn-default" aria-expanded="true" data-toggle="dropdown">
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu pull-right">
+							<div class="portlet-body form advanced-search">
+								<form class="form-horizontal" action="#">
+									<div class="form-body">
+										<div class="form-group">
+											<label class="col-md-3 control-label">Ordering</label>
+											<div class="col-md-8">
+												<select class="form-control" condition-key="Ordering"><option value="0">Default</option><option value="1">Ascending by create time</option><option value="2">Descending by create time</option></select>
+											</div>
+										</div>
+										<div class="form-actions bottom">
+											<a class="btn green advance-search-button" type="submit">
+												<i class="fa fa-search"></i>{{ "Advance search" | trans }}
+											</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="portlet-body">
+	<div id="AdminAdmins" class="context-area" data-toggle="context" data-target="#AdminAdminsMenu">
+	</div>
+	<div id="AdminAdminsMenu">
+		<ul class="dropdown-menu" role="menu">
+			<li><a class="refresh"><i class="fa fa-refresh "></i>{{ "Refresh" | trans }}</a></li>
+			<li><a class="fullscreen"><i class="fa fa-arrows-alt"></i>{{ "Fullscreen" | trans }}</a></li>
+		</ul>
+	</div>
+</div>
+{% include common.admin/footer.html %}
+<script>
+	$(function () {
+		var options = $.extend({ target: "/admin/list/search", });
+		var table = $("#AdminAdmins").ajaxTable(options);
+		table.refresh();
+	});
+</script>
