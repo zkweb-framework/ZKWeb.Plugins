@@ -147,7 +147,7 @@ html, body {
 
 /* 表格载入中样式 */
 .context-area.loading {
-	background: #FFF url('../images/ajax-loading.gif') no-repeat scroll center center;
+	background: #FFF url('../common.base.images/ajax-loading.gif') no-repeat scroll center center;
 	min-height: 300px;
 
 	> * {
@@ -296,7 +296,7 @@ html, body {
 
 /* 模态框载入远程内容时的样式 */
 .bootstrap-dialog-message .remote-contents.loading {
-	background: #FFF url('../images/ajax-loading.gif') no-repeat scroll center center;
+	background: #FFF url('../common.base.images/ajax-loading.gif') no-repeat scroll center center;
 	min-height: 300px;
 }
 
