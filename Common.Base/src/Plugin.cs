@@ -31,7 +31,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			Template.RegisterFilter(typeof(Filters));
 			// 注册默认模块
 			var diyManager = Application.Ioc.Resolve<DiyManager>();
-			diyManager.GetArea("test_area").DefaultWidgets.Add("common.base.widgets/logo");
+			diyManager.GetArea("header_logobar").DefaultWidgets.Add("common.base.widgets/logo");
 		}
 	}
 }

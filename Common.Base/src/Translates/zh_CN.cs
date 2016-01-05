@@ -24,6 +24,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Incorrect captcha", "验证码错误，请重新填写" },
 			{ "Length of {0} must be {1}", "{0}的长度必须是{1}" },
 			{ "Length of {0} must between {1} and {2}", "{0}的长度必须在{1}和{2}之间" },
+			{ "HomePage", "首页" },
+			{ "How to edit this page", "怎样编辑这个页面" },
+			{ "Use Plugin", "使用插件" },
+			{ "Copy Common.Base/templates/common.base/index.html to Your.Plugin/templates/common.base/index.html then edit it.",
+				"复制Common.Base/templates/common.base/index.html到你的插件/templates/common.base/index.html然后编辑" },
+			{ "Use Diy", "使用Diy" },
+			{ "Diy is not ready yet.", "Diy功能尚未完成" }
 		};
 		
 		public bool CanTranslate(string code) {
