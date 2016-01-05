@@ -49,7 +49,19 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "About Me", "关于我" },
 			{ "About Website", "关于网站" },
 			{ "Admin Panel", "管理后台" },
-			{ "My Apps", "我的应用" }
+			{ "My Apps", "我的应用" },
+			{ "Access this page require user login and {0} privileges",
+				"访问此页面要求用户登录且拥有以下权限 {0}" },
+			{ "Access this page require user login", "访问此页面要求用户登录" },
+			{ "Access this page require admin login and {0} privileges",
+				"访问此页面要求管理员登陆且拥有以下权限 {0}" },
+			{ "Access this page require admin login", "访问此页面要求管理员登陆" },
+			{ "Access this page require partner login and {0} privileges",
+				"访问此页面要求合作伙伴登陆且拥有以下权限 {0}" },
+			{ "Access this page require partner login", "访问此页面要求合作伙伴登陆" },
+			{ "Access this page require admin or partner login and {0} privileges",
+				"访问此页面要求管理员或合作伙伴登陆且拥有以下权限 {0}" },
+			{ "Access this page require admin or partner login", "访问此页面要求管理员或合作伙伴登陆" }
 		};
 
 		public bool CanTranslate(string code) {

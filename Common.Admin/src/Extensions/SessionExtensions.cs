@@ -39,6 +39,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 				if (user == null) {
 					return null;
 				}
+				var role = user.Role; // 同时获取角色
 				HttpContextUtils.PutData(SessionUserKey, Tuple.Create(session, user));
 				return user;
 			}

@@ -27,6 +27,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// <returns></returns>
 		[Action("admin")]
 		public IActionResult Admin() {
+			PrivilegesChecker.CheckAdmin();
 			var apps = Application.Ioc.ResolveMany<AdminApp>();
 			return new TemplateResult("common.admin/admin_index.html", new { apps });
 		}
