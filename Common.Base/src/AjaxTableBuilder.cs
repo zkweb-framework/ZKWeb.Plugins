@@ -83,7 +83,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			if (!MenuItems.Any()) {
 				return;
 			}
-			html.AddAttribute("id", "#" + Id + MenuIdSuffix);
+			html.AddAttribute("id", Id + MenuIdSuffix);
 			html.AddAttribute("class", "ajax-table-menu");
 			html.AddAttribute("ajax-table", "#" + Id);
 			html.RenderBeginTag("div");
