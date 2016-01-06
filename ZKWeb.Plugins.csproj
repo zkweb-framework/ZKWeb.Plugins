@@ -142,6 +142,9 @@
     <Compile Include="Common.Base\src\Database\GenericConfig.cs" />
     <Compile Include="Common.Base\src\Database\ScheduledTask.cs" />
     <Compile Include="Common.Base\src\ModelFormBuilder.cs" />
+    <Compile Include="Common.Base\src\Model\AjaxTableColumn.cs" />
+    <Compile Include="Common.Base\src\Model\AjaxTableSearchRequest.cs" />
+    <Compile Include="Common.Base\src\Model\AjaxTableSearchResponse.cs" />
     <Compile Include="Common.Base\src\Model\FormAttribute.cs" />
     <Compile Include="Common.Base\src\Model\FormFieldAttribute.cs" />
     <Compile Include="Common.Base\src\Model\FormFieldAttributes.cs" />

@@ -10,7 +10,7 @@
 			<a class="btn btn-default btn-circle" aria-expanded="true" data-toggle="dropdown">
 				<i class="fa fa-angle-down"></i>
 			</a>
-			<ul class="dropdown-menu pull-right">
+			<ul class="dropdown-menu pull-right ajax-table-menu" ajax-table="#AdminList">
 				<li><a class="refresh"><i class="fa fa-refresh "></i>{{ "Refresh" | trans }}</a></li>
 				<li><a class="fullscreen"><i class="fa fa-arrows-alt"></i>{{ "Fullscreen" | trans }}</a></li>
 				<li class="divider"></li>
@@ -28,6 +28,7 @@
 						<li><a class="set-page-size" data-size="25"><i class="fa fa-list "></i>{{ "25 Records per page" | trans }}</a></li>
 						<li><a class="set-page-size" data-size="50"><i class="fa fa-list "></i>{{ "50 Records per page" | trans }}</a></li>
 						<li><a class="set-page-size" data-size="100"><i class="fa fa-list "></i>{{ "100 Records per page" | trans }}</a></li>
+						<li><a class="set-page-size" data-size="500"><i class="fa fa-list "></i>{{ "500 Records per page" | trans }}</a></li>
 					</ul>
 				</li>
 				<li class="divider"></li>
@@ -71,20 +72,14 @@
 	</div>
 </div>
 <div class="portlet-body">
-	<div id="AdminAdmins" class="context-area" data-toggle="context" data-target="#AdminAdminsMenu">
+	<div id="AdminList" class="context-area ajax-table"
+		 data-toggle="context" data-target="#AdminListMenu" ajax-table-target="/admin/list/search">
 	</div>
-	<div id="AdminAdminsMenu">
+	<div id="AdminListMenu" class="ajax-table-menu" ajax-table="#AdminList">
 		<ul class="dropdown-menu" role="menu">
-			<li><a class="refresh"><i class="fa fa-refresh "></i>{{ "Refresh" | trans }}</a></li>
+			<li><a class="refresh"><i class="fa fa-refresh"></i>{{ "Refresh" | trans }}</a></li>
 			<li><a class="fullscreen"><i class="fa fa-arrows-alt"></i>{{ "Fullscreen" | trans }}</a></li>
 		</ul>
 	</div>
 </div>
 {% include common.admin/footer.html %}
-<script>
-	$(function () {
-		var options = $.extend({ target: "/admin/list/search", });
-		var table = $("#AdminAdmins").ajaxTable(options);
-		table.refresh();
-	});
-</script>

@@ -41,11 +41,6 @@ $.fn.ajaxTableHelper = function (options) {
 				$.toastAjaxResult(data);
 			});
 		},
-		updatePageSize: function (size) {
-			// 更新每页显示数量
-			$ajaxTable.searchRequest.PageSize = parseInt(size);
-			$ajaxTable.toPage(0);
-		},
 		toggleRecycleBin: function (toggleButton) {
 			// 切换回收站状态
 			var conditions = $ajaxTable.searchRequest.Conditions;

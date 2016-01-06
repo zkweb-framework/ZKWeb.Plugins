@@ -23,7 +23,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Password", "密码" },
 			{ "Login", "登陆" },
 			{ "Register new user", "注册新用户" },
-			{ "{0} is required", "请填写{0}" },
 			{ "RememberLogin", "记住登陆" },
 			{ "Register", "注册" },
 			{ "ConfirmPassword", "确认密码" },
