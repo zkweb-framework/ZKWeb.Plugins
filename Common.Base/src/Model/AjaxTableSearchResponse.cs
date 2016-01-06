@@ -32,6 +32,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		public IList<AjaxTableColumn> Columns { get; set; }
 
+		/// <summary>
+		/// 初始化
+		/// </summary>
 		public AjaxTableSearchResponse() {
 			Rows = new List<IDictionary<string, object>>();
 			Columns = new List<AjaxTableColumn>();

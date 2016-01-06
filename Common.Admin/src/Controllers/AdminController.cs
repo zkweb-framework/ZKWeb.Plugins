@@ -83,7 +83,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 					}
 				});
 			}
-			return new TemplateResult("common.admin/test_list.html");
+			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
+			table.Id = "AdminList";
+			table.Target = "/admin/list/search";
+			return new TemplateResult("common.admin/test_list.html", new { table });
 		}
 	}
 }

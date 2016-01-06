@@ -72,14 +72,6 @@
 	</div>
 </div>
 <div class="portlet-body">
-	<div id="AdminList" class="context-area ajax-table"
-		 data-toggle="context" data-target="#AdminListMenu" ajax-table-target="/admin/list/search">
-	</div>
-	<div id="AdminListMenu" class="ajax-table-menu" ajax-table="#AdminList">
-		<ul class="dropdown-menu" role="menu">
-			<li><a class="refresh"><i class="fa fa-refresh"></i>{{ "Refresh" | trans }}</a></li>
-			<li><a class="fullscreen"><i class="fa fa-arrows-alt"></i>{{ "Fullscreen" | trans }}</a></li>
-		</ul>
-	</div>
+	{{ table }}
 </div>
 {% include common.admin/footer.html %}

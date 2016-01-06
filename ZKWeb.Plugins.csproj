@@ -116,6 +116,7 @@
     <Compile Include="Common.Admin\src\PrivilegesChecker.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Admin\src\UserManager.cs" />
+    <Compile Include="Common.Base\src\AjaxTableBuilder.cs" />
     <Compile Include="Common.Base\src\CaptchaManager.cs" />
     <Compile Include="Common.Base\src\Controllers\CaptchaController.cs" />
     <Compile Include="Common.Base\src\Controllers\IndexController.cs" />
