@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.Admin\src\AdminAppBuilder.cs" />
     <Compile Include="Common.Admin\src\AdminApps\TestAppA.cs" />
     <Compile Include="Common.Admin\src\AdminApps\TestAppB.cs" />
     <Compile Include="Common.Admin\src\AdminApps\TestAppC.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Common.Admin\src\Forms\UserLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserRegForm.cs" />
     <Compile Include="Common.Admin\src\Model\AdminApp.cs" />
+    <Compile Include="Common.Admin\src\Model\IAdminAppBuilder.cs" />
     <Compile Include="Common.Admin\src\Model\IUserLoginCallback.cs" />
     <Compile Include="Common.Admin\src\Model\UserType.cs" />
     <Compile Include="Common.Admin\src\Plugin.cs" />
@@ -117,9 +119,11 @@
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Admin\src\UserManager.cs" />
     <Compile Include="Common.Base\src\AjaxTableBuilder.cs" />
+    <Compile Include="Common.Base\src\AjaxTableSearchBarBuilder.cs" />
     <Compile Include="Common.Base\src\CaptchaManager.cs" />
     <Compile Include="Common.Base\src\Controllers\CaptchaController.cs" />
     <Compile Include="Common.Base\src\Controllers\IndexController.cs" />
+    <Compile Include="Common.Base\src\Extensions\MenuItemsExtensions.cs" />
     <Compile Include="Common.Base\src\FormBuilder.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\Captcha.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBox.cs" />
@@ -144,9 +148,11 @@
     <Compile Include="Common.Base\src\Database\ScheduledTask.cs" />
     <Compile Include="Common.Base\src\ModelFormBuilder.cs" />
     <Compile Include="Common.Base\src\Model\AjaxTableColumn.cs" />
+    <Compile Include="Common.Base\src\Model\IAjaxTableSearchHandler.cs" />
     <Compile Include="Common.Base\src\Model\AjaxTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\AjaxTableSearchResponse.cs" />
     <Compile Include="Common.Base\src\Model\FormAttribute.cs" />
+    <Compile Include="Common.Base\src\Model\FormField.cs" />
     <Compile Include="Common.Base\src\Model\FormFieldAttribute.cs" />
     <Compile Include="Common.Base\src\Model\FormFieldAttributes.cs" />
     <Compile Include="Common.Base\src\Model\GenericConfigAttribute.cs" />
@@ -156,6 +162,7 @@
     <Compile Include="Common.Base\src\Model\IListItemProvider.cs" />
     <Compile Include="Common.Base\src\Model\IScheduledTaskExecutor.cs" />
     <Compile Include="Common.Base\src\Model\JsonSerializedType.cs" />
+    <Compile Include="Common.Base\src\Model\MenuItem.cs" />
     <Compile Include="Common.Base\src\Plugin.cs" />
     <Compile Include="Common.Base\src\ScheduledTaskManager.cs" />
     <Compile Include="Common.Base\src\ScheduledTasks\LogCleaner.cs" />
@@ -176,6 +183,14 @@
     <Content Include="Common.Admin\templates\common.admin\test_list.html" />
     <Content Include="Common.Base\static\common.base.images\logo.png" />
     <Content Include="Common.Base\templates\common.base\index.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.ajax_table_search_bar.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.form_group.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.menu_item.pagination_settings.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.menu_item.table_operations.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.menu_item.divider.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.menu_item.fullscreen.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.menu_item.refresh.html" />
     <None Include="Common.Admin\plugin.json" />
     <None Include="Common.Admin\static\common.admin.css\admin-index.scss" />
     <None Include="Common.Admin\static\common.admin.css\admin-login.scss" />

@@ -9,7 +9,7 @@ using ZKWeb.Plugins.Common.Admin.src.Model;
 namespace ZKWeb.Plugins.Common.Admin.src {
 	/// <summary>
 	/// 后台应用构建器
-	/// 支持自动生成列表和增删查改页面
+	/// 支持自动生成列表和增删查改页面（Scaffold，半自动）
 	/// 例子
 	///		...
 	/// </summary>
@@ -20,6 +20,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// 网站启动时添加页面处理函数
 		/// </summary>
 		public void OnWebsiteStart() {
+
 		}
 	}
 }
