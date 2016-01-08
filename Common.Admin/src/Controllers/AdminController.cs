@@ -14,6 +14,7 @@ using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Forms;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Database;
+using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>
@@ -86,7 +87,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = "AdminList";
 			table.Target = "/admin/list/search";
-			return new TemplateResult("common.admin/test_list.html", new { table });
+			var searchBar = new AjaxTableSearchBarBuilder();
+			searchBar.TableId = table.Id;
+			searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("TestCondition")));
+			return new TemplateResult("common.admin/test_list.html", new { table, searchBar });
 		}
 	}
 }

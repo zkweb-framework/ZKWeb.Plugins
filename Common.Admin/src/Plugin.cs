@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	/// <summary>
 	/// 载入插件时的处理
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class Plugin : IPlugin {
 		/// <summary>
 		/// 初始化

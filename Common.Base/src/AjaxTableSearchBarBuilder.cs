@@ -15,44 +15,41 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>
-	/// Ajax表格构建器
+	/// Ajax表格搜索栏构建器
 	/// 这个类可以通过Ioc替换，使用时注意要通过Ioc获取
 	/// 例子
-	///		var table = Application.Ioc.Resolve[AjaxTableBuilder]();
-	///		table.Id = "TestList";
-	///		table.Target = "/test/search";
-	///		return new TemplateResult("test_table.html", new { table });
+	///		...
 	/// </summary>
 	[ExportMany]
-	public class AjaxTableBuilder : ILiquidizable {
-		/// <summary>
-		/// 表格菜单Id的后缀，表格菜单Id = 表格Id + 后缀
-		/// </summary>
-		public const string MenuIdSuffix = "Menu";
+	public class AjaxTableSearchBarBuilder : ILiquidizable {
 		/// <summary>
 		/// 表格Id，必填
 		/// </summary>
-		public string Id { get; set; }
+		public string TableId { get; set; }
 		/// <summary>
-		/// 获取表格数据的url，必填
+		/// 关键字的预留文本
 		/// </summary>
-		public string Target { get; set; }
+		public string KeywordPlaceHolder { get; set; }
 		/// <summary>
-		/// 使用的模板，不设置时使用默认
-		/// </summary>
-		public string Template { get; set; }
-		/// <summary>
-		/// 右键菜单项列表，默认包含刷新和全屏
+		/// 菜单项列表，默认包含刷新，全屏，操作和页面设置
 		/// </summary>
 		public List<MenuItem> MenuItems { get; protected set; }
+		/// <summary>
+		/// 高级搜索框的条件项
+		/// </summary>
+		public List<FormField> Conditions { get; protected set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		public AjaxTableBuilder() {
+		public AjaxTableSearchBarBuilder() {
 			MenuItems = new List<MenuItem>();
+			Conditions = new List<FormField>();
 			MenuItems.AddRefresh();
 			MenuItems.AddFullscreen();
+			MenuItems.AddDivider();
+			MenuItems.AddTableOperations();
+			MenuItems.AddPaginationSettings();
 		}
 
 		/// <summary>
@@ -68,16 +65,15 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString() {
-			if (string.IsNullOrEmpty(Id) || string.IsNullOrEmpty(Target)) {
-				throw new ArgumentNullException("Id and Target can't be empty");
+			if (string.IsNullOrEmpty(TableId)) {
+				throw new ArgumentNullException("TableId can't be empty");
 			}
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var html = templateManager.RenderTemplate("common.base/tmpl.ajax_table.html", new {
-				id = Id,
-				target = Target,
-				template = Template,
-				menuId = Id + MenuIdSuffix,
-				menuItems = MenuItems
+			var html = templateManager.RenderTemplate("common.base/tmpl.ajax_table_search_bar.html", new {
+				tableId = TableId,
+				menuItems = MenuItems,
+				placeholder = new T(KeywordPlaceHolder ?? "Please enter keyword"),
+				conditions = Conditions
 			});
 			return html;
 		}

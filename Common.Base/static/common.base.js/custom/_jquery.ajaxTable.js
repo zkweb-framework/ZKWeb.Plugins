@@ -128,7 +128,7 @@ $(function () {
 		var $table = $(this);
 		var options = {
 			target: $table.attr("ajax-table-target"),
-			template: $table.attr("ajax-table-template")
+			template: $table.attr("ajax-table-template") || undefined
 		};
 		if (options.target) {
 			$table.ajaxTable(options).refresh();

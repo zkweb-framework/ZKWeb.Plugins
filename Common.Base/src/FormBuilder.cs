@@ -20,13 +20,13 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	/// 表单构建器
 	/// 这个类可以通过Ioc替换，使用时注意要通过Ioc获取
 	/// 创建的例子
-	///		var form = new FormBuilder();
+	///		var form = Application.Ioc.Resolve[FormBuilder]();
 	///		form.Attribute = new FormAttribute() { Name = "TestForm" };
 	///		form.Fields.Add(new FormField(new TextBoxFieldAttribute("Username")));
 	///		form.Fields.Add(new FormField(new PasswordFieldAttribute("Password")));
 	/// 绑定的例子
 	///		form.BindValuesFromAnonymousObject(new { Username = "TestUser", Password = "TestPassword" });
-	///		return new TemplateResult("test_form.html", new { form = form });
+	///		return new TemplateResult("test_form.html", new { form });
 	///	提交的例子
 	///		var values = form.ParseValues(HttpContext.Current.Request.GetParams());
 	///		var username = values.GetOrDefault[string]("Username");
@@ -49,7 +49,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 表单字段列表
 		/// </summary>
-		public List<FormField> Fields { get; private set; }
+		public List<FormField> Fields { get; protected set; }
 
 		/// <summary>
 		/// 初始化
@@ -87,15 +87,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <param name="html">html构建器</param>
 		/// <param name="field">表单字段</param>
 		protected virtual void RenderFormField(HtmlTextWriter html, FormField field) {
-			// 根据验证器添加html属性
-			var htmlAttributes = new Dictionary<string, string>();
-			foreach (var validatorAttribute in field.ValidationAttributes) {
-				var validator = Application.Ioc.Resolve<IFormFieldValidator>(serviceKey: validatorAttribute.GetType());
-				validator.AddHtmlAttributes(field, validatorAttribute, htmlAttributes);
-			}
-			// 构建表单字段的html并写入到html构建器
-			var fieldHandler = Application.Ioc.Resolve<IFormFieldHandler>(serviceKey: field.Attribute.GetType());
-			html.WriteLine(fieldHandler.Build(field, htmlAttributes));
+			html.WriteLine(field);
 		}
 
 		/// <summary>
@@ -158,34 +150,6 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			RenderSubmitButton(html);
 			RenderFormEndTag(html);
 			return html.InnerWriter.ToString();
-		}
-	}
-
-	/// <summary>
-	/// 表单字段
-	/// </summary>
-	public class FormField {
-		/// <summary>
-		/// 表单字段的属性
-		/// </summary>
-		public FormFieldAttribute Attribute { get; set; }
-		/// <summary>
-		/// 验证表单的属性列表
-		/// </summary>
-		public List<Attribute> ValidationAttributes { get; set; }
-		/// <summary>
-		/// 字段的值
-		/// </summary>
-		public object Value { get; set; }
-
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		/// <param name="attribute">表单字段的属性</param>
-		public FormField(FormFieldAttribute attribute) {
-			Attribute = attribute;
-			ValidationAttributes = new List<Attribute>();
-			Value = null;
 		}
 	}
 

@@ -421,8 +421,31 @@ html, body {
 	.divider {
 		margin: 7px 0px;
 	}
-	/* 高级搜索样式 */
-	.advanced-search .form-actions {
+}
+
+/* 高级搜索样式 */
+.advanced-search {
+	.form-horizontal {
+		padding: 12px 0px 0px;
+
+		.form-group {
+			/* 文本和控件 */
+			@media (min-width: 992px) {
+				/* 相当于col-md-4 */
+				.control-label {
+					float: left;
+					width: 33.33333333%;
+				}
+				/* 相当于col-md-8 */
+				.form-controls {
+					float: left;
+					width: 66.66666667%;
+				}
+			}
+		}
+	}
+
+	.form-actions {
 		min-width: 280px;
 		padding-right: 20px !important;
 

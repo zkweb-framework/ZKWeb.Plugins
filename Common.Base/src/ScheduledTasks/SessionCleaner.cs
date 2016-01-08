@@ -14,7 +14,7 @@ namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 	/// 会话清理器
 	/// 每小时删除一次过期的会话
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class SessionCleaner : IScheduledTaskExecutor {
 		/// <summary>
 		/// 任务键名

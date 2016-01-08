@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	/// <summary>
 	/// 用户管理器
 	/// </summary>
-	[ExportMany, SingletonReuse]
+	[ExportMany]
 	public class UserManager {
 		/// <summary>
 		/// 记住登陆时，保留会话的天数

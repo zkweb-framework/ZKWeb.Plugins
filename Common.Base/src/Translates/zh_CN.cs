@@ -31,7 +31,16 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Copy Common.Base/templates/common.base/index.html to Your.Plugin/templates/common.base/index.html then edit it.",
 				"复制Common.Base/templates/common.base/index.html到你的插件/templates/common.base/index.html然后编辑" },
 			{ "Use Diy", "使用Diy" },
-			{ "Diy is not ready yet.", "Diy功能尚未完成" }
+			{ "Diy is not ready yet.", "Diy功能尚未完成" },
+			{ "Refresh", "刷新" },
+			{ "Fullscreen", "全屏" },
+			{ "Operations", "操作" },
+			{ "Export to excel", "导出到表格" },
+			{ "Print", "打印" },
+			{ "Pagination Settings", "分页设置" },
+			{ "[0] Records per page", "每页[0]条" },
+			{ "Please enter keyword", "请填写关键词" },
+			{ "Advance search", "高级搜索" }
 		};
 		
 		public bool CanTranslate(string code) {

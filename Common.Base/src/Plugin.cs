@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Core;
 using ZKWeb.Model;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWeb.Plugins.Common.Base.src.TemplateTags;
 
@@ -15,7 +16,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>
 	/// 载入插件时的处理
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class Plugin : IPlugin {
 		/// <summary>
 		/// 初始化
@@ -29,6 +30,8 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			Template.RegisterTag<UseTitle>("use_title");
 			Template.RegisterTag<WebsiteName>("website_name");
 			Template.RegisterFilter(typeof(Filters));
+			// 注册模板可描画类型
+			Template.RegisterSafeType(typeof(MenuItem), s => s);
 			// 注册默认模块
 			var diyManager = Application.Ioc.Resolve<DiyManager>();
 			diyManager.GetArea("header_logobar").DefaultWidgets.Add("common.base.widgets/logo");

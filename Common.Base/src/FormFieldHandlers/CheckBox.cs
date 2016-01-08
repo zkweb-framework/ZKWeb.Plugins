@@ -21,10 +21,10 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("class", "switchery");
-			foreach (var pair in provider.FormControlAttributes) {
+			foreach (var pair in provider.FormControlAttributes.Where(p => p.Key != "class")) {
 				html.AddAttribute(pair.Key, pair.Value);
 			}
+			html.AddAttribute("class", "switchery");
 			html.AddAttribute("name", field.Attribute.Name);
 			if (field.Value as bool? == true) {
 				html.AddAttribute("checked", null);

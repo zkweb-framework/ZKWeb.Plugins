@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// 登陆管理员
 		/// 登陆失败时会抛出例外
 		/// </summary>
-		public void Login(string username, string password, bool rememberLogin) {
+		public virtual void Login(string username, string password, bool rememberLogin) {
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			var user = userManager.FindUser(username);
 			// 用户不存在或密码错误时抛出例外
@@ -61,7 +61,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// 获取登录管理员时的警告信息
 		/// </summary>
 		/// <returns></returns>
-		public string GetLoginWarning() {
+		public virtual string GetLoginWarning() {
 			// 当前没有任何管理员，第一次登录的用户将成为超级管理员
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {

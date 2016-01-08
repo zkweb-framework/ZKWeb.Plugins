@@ -21,7 +21,7 @@ namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 	///		Error 30天
 	///		Transaction 30天
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class LogCleaner : IScheduledTaskExecutor {
 		/// <summary>
 		/// 任务键名
