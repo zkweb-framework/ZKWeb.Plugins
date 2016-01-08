@@ -9,7 +9,7 @@ using ZKWeb.Core;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Model {
 	/// <summary>
-	/// 管理员应用的基础类
+	/// 后台应用的基础类
 	/// </summary>
 	public abstract class AdminApp : ILiquidizable {
 		/// <summary>

@@ -87,7 +87,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = "AdminList";
 			table.Target = "/admin/list/search";
-			var searchBar = new AjaxTableSearchBarBuilder();
+			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
 			searchBar.TableId = table.Id;
 			searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("TestCondition")));
 			return new TemplateResult("common.admin/test_list.html", new { table, searchBar });
