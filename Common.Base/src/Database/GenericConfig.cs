@@ -38,10 +38,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 	public class GenericConfigMap : ClassMap<GenericConfig> {
 		/// <summary>
 		/// 初始化
+		/// key在sqlserver中是关键字，需要改名
 		/// </summary>
 		public GenericConfigMap() {
 			Id(c => c.Id);
-			Map(c => c.Key).Length(0xffff).Unique();
+			Map(c => c.Key).Column("key_").Length(255).Unique();
 			Map(c => c.Value).Length(0xffff);
 			Map(c => c.LastUpdated);
 		}

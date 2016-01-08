@@ -37,10 +37,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 	public class ScheduledTaskMap : ClassMap<ScheduledTask> {
 		/// <summary>
 		/// 初始化
+		/// key在sqlserver中是关键字，需要改名
 		/// </summary>
 		public ScheduledTaskMap() {
 			Id(t => t.Id);
-			Map(t => t.Key).Length(0xffff).Unique();
+			Map(t => t.Key).Column("key_").Length(255).Unique();
 			Map(t => t.CreateTime);
 			Map(t => t.LastExecuted);
 		}
