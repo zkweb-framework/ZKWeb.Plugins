@@ -61,7 +61,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Access this page require admin or partner login and {0} privileges",
 				"访问此页面要求管理员或合作伙伴登陆且拥有以下权限 {0}" },
 			{ "Access this page require admin or partner login", "访问此页面要求管理员或合作伙伴登陆" },
-			{ "CreateTime", "创建时间" }
+			{ "CreateTime", "创建时间" },
+			{ "Admin Manage", "管理员管理" },
+			{ "User Manage", "用户管理" },
+			{ "Role Manage", "角色管理" }
 		};
 
 		public bool CanTranslate(string code) {

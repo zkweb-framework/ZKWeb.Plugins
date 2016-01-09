@@ -12,6 +12,7 @@ using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Database;
+using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Forms;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Database;
@@ -27,12 +28,18 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	public class AdminController : IController {
 		/// <summary>
 		/// 后台首页
+		/// 显示应用列表，会根据当前用户权限进行过滤
 		/// </summary>
 		/// <returns></returns>
 		[Action("admin")]
 		public IActionResult Admin() {
-			PrivilegesChecker.CheckAdmin();
+			PrivilegesChecker.CheckAdminOrPartner();
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var user = sessionManager.GetSession().GetUser();
 			var apps = Application.Ioc.ResolveMany<AdminApp>();
+			apps = apps.Where(app =>
+				app.AllowedUserTypes.Contains(user.Type) &&
+				PrivilegesChecker.HasPrivileges(user, app.RequiredPrivileges));
 			return new TemplateResult("common.admin/admin_index.html", new { apps });
 		}
 

@@ -23,29 +23,25 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 		/// <summary>
 		/// 格式的css类名
 		/// </summary>
-		public virtual string TileClass
-		{
+		public virtual string TileClass {
 			get { return "tile bg-grey-gallery"; }
 		}
 		/// <summary>
 		/// 图标的css类名
 		/// </summary>
-		public virtual string IconClass
-		{
+		public virtual string IconClass {
 			get { return "fa fa-archive"; }
 		}
 		/// <summary>
 		/// 允许显示此应用的用户类型列表
 		/// </summary>
-		public virtual UserTypes[] AllowedUserTypes
-		{
-			get { return new UserTypes[] { UserTypes.Admin, UserTypes.SuperAdmin }; }
+		public virtual UserTypes[] AllowedUserTypes {
+			get { return AdminManager.AdminTypes; }
 		}
 		/// <summary>
 		/// 显示此应用要求的权限列表
 		/// </summary>
-		public virtual string[] RequiredPrivileges
-		{
+		public virtual string[] RequiredPrivileges {
 			get { return new string[0]; }
 		}
 
