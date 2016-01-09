@@ -39,7 +39,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		/// <param name="request">搜索请求</param>
 		/// <param name="pairs">对象和需要字段的组合列表</param>
-		void OnSelect(AjaxTableSearchRequest request, IList<KeyValuePair<T, IDictionary<string, object>>> pairs);
+		void OnSelect(AjaxTableSearchRequest request, List<KeyValuePair<T, Dictionary<string, object>>> pairs);
 
 		/// <summary>
 		/// 添加列和批量处理

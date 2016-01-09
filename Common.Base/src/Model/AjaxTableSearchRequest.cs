@@ -33,5 +33,18 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public AjaxTableSearchRequest() {
 			Conditions = new Dictionary<string, object>();
 		}
+
+		/// <summary>
+		/// 从json反序列化到搜索请求
+		/// </summary>
+		/// <param name="json">json文本</param>
+		/// <returns></returns>
+		public static AjaxTableSearchRequest FromJson(string json) {
+			var request = JsonConvert.DeserializeObject<AjaxTableSearchRequest>(json);
+			request.PageIndex = Math.Max(request.PageIndex, 0);
+			request.PageSize = Math.Min(Math.Max(request.PageSize, 1), 10000);
+			request.Conditions = request.Conditions ?? new Dictionary<string, object>();
+			return request;
+		}
 	}
 }

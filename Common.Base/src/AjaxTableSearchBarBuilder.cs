@@ -72,7 +72,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				throw new ArgumentNullException("TableId can't be empty");
 			}
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var html = templateManager.RenderTemplate("common.base/tmpl.ajax_table_search_bar.html", new {
+			var html = templateManager.RenderTemplate("common.base/tmpl.ajax_table.search_bar.html", new {
 				tableId = TableId,
 				menuItems = MenuItems,
 				placeholder = new T(KeywordPlaceHolder ?? "Please enter keyword"),

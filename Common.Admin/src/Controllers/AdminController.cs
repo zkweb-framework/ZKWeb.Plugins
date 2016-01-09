@@ -11,10 +11,13 @@ using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src;
+using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Forms;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Database;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>
@@ -62,6 +65,44 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			return new RedirectResult("/admin/login");
 		}
 
+		public class TestSearchHandler : IAjaxTableSearchHandler<User> {
+			public IEnumerable<FormField> GetConditions() {
+				yield return new FormField(new TextBoxFieldAttribute("TestCondition"));
+			}
+
+			public void OnQuery(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) {
+				var keyword = request.Keyword;
+				if (!string.IsNullOrEmpty(keyword)) {
+					query = query.Where(u => u.Username.Contains(keyword));
+				}
+				query = query.Where(u => AdminManager.AdminTypes.Contains(u.Type));
+			}
+
+			public void OnSort(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) {
+				query = query.OrderByDescending(u => u.Id);
+			}
+
+			public void OnSelect(AjaxTableSearchRequest request, List<KeyValuePair<User, Dictionary<string, object>>> pairs) {
+				foreach (var pair in pairs) {
+					pair.Value["Id"] = pair.Key.Id;
+					pair.Value["Username"] = pair.Key.Username;
+					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
+				}
+			}
+
+			public void OnResponse(AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
+				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddNoColumn();
+				response.Columns.AddMemberColumn("Id");
+				response.Columns.AddMemberColumn("Username");
+				response.Columns.AddMemberColumn("CreateTime");
+				// response.Columns.AddActionColumn().AddEditAction();
+				// idColumn.AddBatchRemoveAction();
+				// idColumn.AddBatchRemoveForeverAction();
+				// idColumn.AddBatchRecoverAction();
+			}
+		}
+
 		/// <summary>
 		/// 测试列表页
 		/// </summary>
@@ -69,27 +110,20 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		[Action("admin/list")]
 		[Action("admin/list/search", HttpMethods.POST)]
 		public IActionResult TestSearch() {
-			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
-				return new JsonResult(new {
-					PageIndex = 0,
-					PageSize = 50,
-					IsLastPage = true,
-					Rows = new object[] {
-						new { Id = 1, Username = "TestA" },
-						new { Id = 2, Username = "TestB" }
-					},
-					Columns = new object[] {
-						new { HeadTemplate = "Id", Width = 100, CellTemplate = "<%- row.Id %>" },
-						new { HeadTemplate = "Username", CellTemplate = "<%- row.Username %>" }
-					}
-				});
+			var handler = new TestSearchHandler();
+			var request = HttpContext.Current.Request;
+			if (request.HttpMethod == HttpMethods.POST) {
+				var json = request.GetParam<string>("json");
+				var searchRequest = AjaxTableSearchRequest.FromJson(json);
+				var searchResponse = AjaxTableSearchResponse.FromRequest(searchRequest, new[] { handler });
+				return new JsonResult(searchResponse);
 			}
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = "AdminList";
 			table.Target = "/admin/list/search";
 			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
 			searchBar.TableId = table.Id;
-			searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("TestCondition")));
+			searchBar.Conditions.AddRange(handler.GetConditions());
 			return new TemplateResult("common.admin/test_list.html", new { table, searchBar });
 		}
 	}

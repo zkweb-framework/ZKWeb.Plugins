@@ -53,23 +53,6 @@ $.fn.ajaxTableHelper = function (options) {
 			}
 			$ajaxTable.toPage(0);
 		},
-		applySearch: function (searchButton) {
-			// 应用搜索条件并提交搜索
-			var $searchBar = $(searchButton).closest(".search-bar");
-			var isAdvanceSearch = $(searchButton).hasClass("advance-search-button");
-			var conditions = $ajaxTable.searchRequest.Conditions;
-			$ajaxTable.searchRequest.Keyword = $searchBar.find(".keyword").val();
-			$searchBar.find("[condition-key]").each(function () {
-				// 高级搜索时设置找到的搜索条件，否则删除这些搜索条件 (不影响其他条件)
-				var key = $(this).attr("condition-key");
-				if (isAdvanceSearch) {
-					conditions[key] = $(this).val();
-				} else {
-					delete conditions[key];
-				}
-			});
-			$ajaxTable.toPage(0);
-		},
 		showRemoteModalForRow: function (row, titleTemplate, urlTemplate, extendParameters) {
 			// 弹出使用远程内容显示或编辑表格中数据的模态框，支持在数据改动后刷新表格
 			// 标题和远程地址根据模板和数据生成

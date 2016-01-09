@@ -10,9 +10,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// </summary>
 	public class AjaxTableColumn {
 		/// <summary>
-		/// 列类型
+		/// 列的识别键
 		/// </summary>
-		public virtual string Type { get; set; }
+		public virtual string Key { get; set; }
 		/// <summary>
 		/// 宽度
 		/// </summary>
