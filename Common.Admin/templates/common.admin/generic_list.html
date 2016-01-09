@@ -1,0 +1,13 @@
+﻿{% use_title title -%}
+{% include common.admin/header.html %}
+<div class="portlet-title">
+	<div class="caption">
+		<i class="{{ iconClass }}"></i>
+		<span class="caption-subject">{{ title }}</span>
+	</div>
+	{{ searchBar }}
+</div>
+<div class="portlet-body">
+	{{ table }}
+</div>
+{% include common.admin/footer.html %}

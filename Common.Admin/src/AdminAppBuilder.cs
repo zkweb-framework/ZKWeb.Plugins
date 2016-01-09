@@ -5,9 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ZKWeb.Core;
 using ZKWeb.Model;
+using ZKWeb.Model.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Model;
+using ZKWeb.Plugins.Common.Base.src;
+using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Admin.src {
 	/// <summary>
@@ -16,32 +21,48 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	/// 例子
 	///		...
 	/// </summary>
-	/// <typeparam name="T">管理的数据类型</typeparam>
+	/// <typeparam name="TData">管理的数据类型</typeparam>
+	/// <typeparam name="TApp">继承类自身的类型</typeparam>
 	[ExportMany]
-	public abstract class AdminAppBuilder<T> : AdminApp, IAdminAppBuilder {
+	public abstract class AdminAppBuilder<TData, TApp> : AdminApp, IAdminAppBuilder
+		where TData : class {
 		/// <summary>
-		/// 搜索请求使用的Url
+		/// 常量的定义
 		/// </summary>
 		public const string SearchUrl = "/search";
-		/// <summary>
-		/// 添加数据使用的Url
-		/// </summary>
 		public const string AddUrl = "/add";
-		/// <summary>
-		/// 编辑使用的Url
-		/// </summary>
 		public const string EditUrl = "/edit";
-		/// <summary>
-		/// 批量操作使用的Url
-		/// </summary>
 		public const string BatchUrl = "/batch";
+		public const string TableIdSuffix = "List";
+
+		/// <summary>
+		/// 获取添加表单
+		/// </summary>
+		protected abstract FormBuilder GetAddForm();
+		/// <summary>
+		/// 获取编辑表单
+		/// </summary>
+		/// <returns></returns>
+		protected abstract FormBuilder GetEditForm();
+		/// <summary>
+		/// 获取搜索处理器
+		/// </summary>
+		/// <returns></returns>
+		protected abstract IAjaxTableSearchHandler<TData> GetSearchHandler();
 
 		/// <summary>
 		/// 列表页的处理函数
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult ListAction() {
-			throw new NotImplementedException();
+			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
+			table.Id = typeof(TData).Name + TableIdSuffix;
+			table.Target = Url + SearchUrl;
+			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
+			searchBar.TableId = table.Id;
+			searchBar.Conditions.AddRange(GetSearchHandler().GetConditions());
+			return new TemplateResult("common.admin/generic_list.html",
+				new { title = new T(Name), iconClass = IconClass, table, searchBar });
 		}
 
 		/// <summary>
@@ -49,7 +70,10 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult SearchAction() {
-			throw new NotImplementedException();
+			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var request = AjaxTableSearchRequest.FromJson(json);
+			var response = AjaxTableSearchResponse.FromRequest(request, new[] { GetSearchHandler() });
+			return new JsonResult(response);
 		}
 
 		/// <summary>
