@@ -92,10 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.Admin\src\AdminAppBuilder.cs" />
+    <Compile Include="Common.Admin\src\AdminApps\UserManageApp.cs" />
+    <Compile Include="Common.Admin\src\AdminApps\RoleManageApp.cs" />
     <Compile Include="Common.Admin\src\AdminApps\AdminManageApp.cs" />
-    <Compile Include="Common.Admin\src\AdminApps\TestAppA.cs" />
-    <Compile Include="Common.Admin\src\AdminApps\TestAppB.cs" />
-    <Compile Include="Common.Admin\src\AdminApps\TestAppC.cs" />
     <Compile Include="Common.Admin\src\AdminManager.cs" />
     <Compile Include="Common.Admin\src\Controllers\AdminController.cs" />
     <Compile Include="Common.Admin\src\Controllers\ApiController.cs" />
@@ -183,6 +182,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.Admin\static\common.admin.images\default-avatar.jpg" />
+    <Content Include="Common.Admin\templates\common.admin\app_tile.html" />
+    <Content Include="Common.Admin\templates\common.admin\generic_edit.html" />
+    <Content Include="Common.Admin\templates\common.admin\generic_add.html" />
+    <Content Include="Common.Admin\templates\common.admin\generic_list.html" />
     <Content Include="Common.Admin\templates\common.admin\test_list.html" />
     <Content Include="Common.Base\static\common.base.images\logo.png" />
     <Content Include="Common.Base\templates\common.base\index.html" />

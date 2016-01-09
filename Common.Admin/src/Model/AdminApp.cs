@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using DryIoc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,19 +59,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString() {
-			var html = new StringBuilder();
-			var name = HttpUtility.HtmlAttributeEncode(new T(Name));
-			var tileClass = HttpUtility.HtmlAttributeEncode(TileClass);
-			var url = HttpUtility.HtmlAttributeEncode(Url);
-			var iconClass = HttpUtility.HtmlAttributeEncode(IconClass);
-			html.AppendFormat("<a title='{0}' class='{1}' href='{2}'>", name, tileClass, url);
-			html.AppendLine();
-			html.AppendFormat("	<div class='tile-body'><i class='{0}'></i></div>", IconClass);
-			html.AppendLine();
-			html.AppendFormat("	<div class='tile-object'><div class='name'>{0}</div></div>", name);
-			html.AppendLine();
-			html.AppendLine("</a>");
-			return html.ToString();
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var html = templateManager.RenderTemplate(
+				"common.admin/app_tile.html",
+				new { name = new T(Name), tileClass = TileClass, url = Url, iconClass = IconClass });
+			return html;
 		}
 	}
 }
