@@ -190,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.Admin\static\common.admin.images\default-avatar.jpg" />
+    <Content Include="Common.Admin\static\common.admin.images\logo.png" />
     <Content Include="Common.Admin\templates\common.admin\app_tile.html" />
     <Content Include="Common.Admin\templates\common.admin\generic_edit.html" />
     <Content Include="Common.Admin\templates\common.admin\generic_add.html" />
@@ -236,7 +237,6 @@
     <Content Include="Common.Admin\static\common.admin.css\admin-index.css" />
     <Content Include="Common.Admin\static\common.admin.css\admin-login.css" />
     <Content Include="Common.Admin\static\common.admin.css\components.css" />
-    <Content Include="Common.Admin\static\common.admin.images\logo.png" />
     <Content Include="Common.Admin\static\common.admin.js\components.js" />
     <Content Include="Common.Admin\static\common.admin.js\components.min.js" />
     <Content Include="Common.Admin\static\common.admin.js\custom\_admin.top-menubar-activities.js" />
