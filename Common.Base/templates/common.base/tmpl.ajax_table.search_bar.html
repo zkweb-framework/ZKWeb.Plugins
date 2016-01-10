@@ -16,6 +16,7 @@
 				<a class="btn btn-default search-button">
 					<i class="fa fa-search"></i>
 				</a>
+				{% if conditions.size > 0 %}
 				<div class="btn-group">
 					<a class="btn btn-default" aria-expanded="true" data-toggle="dropdown">
 						<i class="fa fa-angle-down"></i>
@@ -35,6 +36,7 @@
 						</div>
 					</ul>
 				</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>
