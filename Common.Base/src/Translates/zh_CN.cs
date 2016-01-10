@@ -41,7 +41,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "[0] Records per page", "每页[0]条" },
 			{ "Please enter keyword", "请填写关键词" },
 			{ "Advance search", "高级搜索" },
-			{ "Data with id {0} cannot be found", "无法找到Id是{0}的数据" }
+			{ "Data with id {0} cannot be found", "无法找到Id是{0}的数据" },
+			{ "True", "是" },
+			{ "False", "否" },
+			{ "Actions", "操作" },
+			{ "Deleted", "已删除" }
 		};
 
 		public bool CanTranslate(string code) {

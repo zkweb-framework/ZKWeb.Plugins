@@ -64,7 +64,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "CreateTime", "创建时间" },
 			{ "Admin Manage", "管理员管理" },
 			{ "User Manage", "用户管理" },
-			{ "Role Manage", "角色管理" }
+			{ "Role Manage", "角色管理" },
+			{ "Role", "角色" },
+			{ "SuperAdmin", "超级管理员" }
 		};
 
 		public bool CanTranslate(string code) {

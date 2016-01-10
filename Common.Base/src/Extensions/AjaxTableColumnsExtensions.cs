@@ -1,4 +1,5 @@
 ﻿using DryIoc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,49 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				HeadTemplate = HttpUtility.HtmlEncode(new T(member)),
 				CellTemplate = string.Format("<%-row.{0}%>", HttpUtility.HtmlAttributeEncode(member))
 			};
+			columns.Add(column);
+			return column;
+		}
+
+		/// <summary>
+		/// 添加显示枚举值的标签列
+		/// </summary>
+		/// <param name="columns">列列表</param>
+		/// <param name="member">成员</param>
+		/// <param name="enumType">枚举类型</param>
+		/// <param name="width">宽度</param>
+		/// <returns></returns>
+		public static AjaxTableColumn AddEnumLabelColumn(
+			this IList<AjaxTableColumn> columns, string member, Type enumType, string width = null) {
+			var enums = enumType.GetEnumValues().OfType<Enum>();
+			var classMapping = new HtmlString(JsonConvert.SerializeObject(
+				enums.ToDictionary(e => (int)(object)e, e => {
+					var attr = e.GetAttribute<LabelCssClassAttribute>();
+					return attr == null ? null : attr.CssClass;
+				})));
+			var nameMapping = new HtmlString(JsonConvert.SerializeObject(
+				enums.ToDictionary(e => (int)(object)e, e => new T(e.GetDescription()))));
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var column = new AjaxTableColumn() {
+				Key = member,
+				Width = width,
+				HeadTemplate = HttpUtility.HtmlEncode(new T(member)),
+				CellTemplate = templateManager.RenderTemplate(
+					"common.base/tmpl.ajax_table.label_column_cell.html",
+					new { classMapping, nameMapping, member })
+			};
+			columns.Add(column);
+			return column;
+		}
+
+		/// <summary>
+		/// 添加操作列
+		/// </summary>
+		/// <param name="columns">列列表</param>
+		/// <param name="width">宽度</param>
+		public static AjaxTableActionColumn AddActionColumn(
+			this IList<AjaxTableColumn> columns, string width = "5%") {
+			var column = new AjaxTableActionColumn() { Width = width };
 			columns.Add(column);
 			return column;
 		}
