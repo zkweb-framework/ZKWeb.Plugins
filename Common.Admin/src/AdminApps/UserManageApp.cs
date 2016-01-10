@@ -19,8 +19,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string Url { get { return "/admin/users"; } }
 		public override string TileClass { get { return "tile bg-blue-hoki"; } }
 		public override string IconClass { get { return "fa fa-user"; } }
+		protected override IAjaxTableSearchHandler<User> GetSearchHandler() { throw new NotImplementedException(); }
 		protected override FormBuilder GetAddForm() { return new FormBuilder(); }
 		protected override FormBuilder GetEditForm() { return new FormBuilder(); }
-		protected override IAjaxTableSearchHandler<User> GetSearchHandler() { throw new NotImplementedException(); }
 	}
 }

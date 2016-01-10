@@ -21,8 +21,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string TileClass { get { return "tile bg-blue-hoki"; } }
 		public override string IconClass { get { return "fa fa-legal"; } }
 		public override UserTypes[] AllowedUserTypes { get { return new[] { UserTypes.SuperAdmin }; } }
+		protected override IAjaxTableSearchHandler<UserRole> GetSearchHandler() { throw new NotImplementedException(); }
 		protected override FormBuilder GetAddForm() { return new FormBuilder(); }
 		protected override FormBuilder GetEditForm() { return new FormBuilder(); }
-		protected override IAjaxTableSearchHandler<UserRole> GetSearchHandler() { throw new NotImplementedException(); }
 	}
 }

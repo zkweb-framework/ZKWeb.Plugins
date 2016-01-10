@@ -25,9 +25,9 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	///		public override string Url { get { return "/admin/test_data"; } }
 	///		public override string TileClass { get { return "tile bg-blue-hoki"; } }
 	///		public override string IconClass { get { return "fa fa-legal"; } }
+	///		protected override IAjaxTableSearchHandler<TestData> GetSearchHandler() { return new SearchHandler(); }
 	///		protected override FormBuilder GetAddForm() { return new EditForm(); }
 	///		protected override FormBuilder GetEditForm() { return new EditForm(); }
-	///		protected override IAjaxTableSearchHandler<TestData> GetSearchHandler() { return new SearchHandler(); }
 	///		public class SearchHandler : IAjaxTableSearchHandler[TestData] { /* 实现函数 */ }
 	///		public class EditForm : DataEditFormBuilder[TestData, EditForm] { /* 实现函数 */ }
 	/// }
@@ -47,6 +47,11 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		public const string TableIdSuffix = "List";
 
 		/// <summary>
+		/// 获取搜索处理器
+		/// </summary>
+		/// <returns></returns>
+		protected abstract IAjaxTableSearchHandler<TData> GetSearchHandler();
+		/// <summary>
 		/// 获取添加表单
 		/// </summary>
 		protected abstract FormBuilder GetAddForm();
@@ -55,11 +60,6 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected abstract FormBuilder GetEditForm();
-		/// <summary>
-		/// 获取搜索处理器
-		/// </summary>
-		/// <returns></returns>
-		protected abstract IAjaxTableSearchHandler<TData> GetSearchHandler();
 
 		/// <summary>
 		/// 列表页的处理函数
@@ -76,7 +76,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			// 搜索栏构建器
 			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
 			searchBar.TableId = table.Id;
-			searchBar.Conditions.AddRange(searchHandlers.SelectMany(s => s.GetConditions()));
+			searchHandlers.ForEach(s => s.OnBuildSearchBar(searchBar));
 			return new TemplateResult("common.admin/generic_list.html",
 				new { title = new T(Name), iconClass = IconClass, table, searchBar });
 		}

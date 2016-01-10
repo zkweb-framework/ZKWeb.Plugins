@@ -11,11 +11,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// </summary>
 	public interface IAjaxTableSearchHandler<T> {
 		/// <summary>
-		/// 获取搜索条件
-		/// 这个函数只在构建搜索栏时使用，与搜索无关
+		/// 构建搜索栏时的处理
+		/// 这个函数与搜索无关，仅在显示搜索栏时调用
 		/// </summary>
-		/// <returns></returns>
-		IEnumerable<FormField> GetConditions();
+		/// <param name="searchBar">搜索栏</param>
+		void OnBuildSearchBar(AjaxTableSearchBarBuilder searchBar);
 
 		/// <summary>
 		/// 过滤数据

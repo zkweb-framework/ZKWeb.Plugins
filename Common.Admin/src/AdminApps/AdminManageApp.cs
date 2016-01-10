@@ -24,20 +24,19 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string TileClass { get { return "tile bg-blue-hoki"; } }
 		public override string IconClass { get { return "fa fa-user-secret"; } }
 		public override UserTypes[] AllowedUserTypes { get { return new[] { UserTypes.SuperAdmin }; } }
+		protected override IAjaxTableSearchHandler<User> GetSearchHandler() { return new SearchHandler(); }
 		protected override FormBuilder GetAddForm() { return new FormBuilder(); }
 		protected override FormBuilder GetEditForm() { return new FormBuilder(); }
-		protected override IAjaxTableSearchHandler<User> GetSearchHandler() { return new SearchHandler(); }
 
 		/// <summary>
 		/// 搜索处理器
 		/// </summary>
 		public class SearchHandler : IAjaxTableSearchHandler<User> {
 			/// <summary>
-			/// 获取搜索条件
+			/// 构建搜索栏时的处理
 			/// </summary>
-			/// <returns></returns>
-			public IEnumerable<FormField> GetConditions() {
-				yield break;
+			public void OnBuildSearchBar(AjaxTableSearchBarBuilder searchBar) {
+				searchBar.KeywordPlaceHolder = new T("Username");
 			}
 
 			/// <summary>
