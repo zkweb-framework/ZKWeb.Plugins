@@ -124,6 +124,8 @@
     <Compile Include="Common.Base\src\Controllers\CaptchaController.cs" />
     <Compile Include="Common.Base\src\Controllers\IndexController.cs" />
     <Compile Include="Common.Base\src\DataEditFormBuilder.cs" />
+    <Compile Include="Common.Base\src\Extensions\AjaxTableActionColumn.cs" />
+    <Compile Include="Common.Base\src\Extensions\AjaxTableActionColumnExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\AjaxTableColumnsExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\AjaxTableIdColumn.cs" />
     <Compile Include="Common.Base\src\Extensions\MenuItemsExtensions.cs" />
@@ -151,6 +153,8 @@
     <Compile Include="Common.Base\src\Database\ScheduledTask.cs" />
     <Compile Include="Common.Base\src\ModelFormBuilder.cs" />
     <Compile Include="Common.Base\src\Model\AjaxTableColumn.cs" />
+    <Compile Include="Common.Base\src\Model\EnumBool.cs" />
+    <Compile Include="Common.Base\src\Model\EnumDeleted.cs" />
     <Compile Include="Common.Base\src\Model\IAjaxTableSearchHandler.cs" />
     <Compile Include="Common.Base\src\Model\AjaxTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\AjaxTableSearchResponse.cs" />
@@ -167,6 +171,7 @@
     <Compile Include="Common.Base\src\Model\IListItemProvider.cs" />
     <Compile Include="Common.Base\src\Model\IScheduledTaskExecutor.cs" />
     <Compile Include="Common.Base\src\Model\JsonSerializedType.cs" />
+    <Compile Include="Common.Base\src\Model\LabelCssClassAttribute.cs" />
     <Compile Include="Common.Base\src\Model\MenuItem.cs" />
     <Compile Include="Common.Base\src\Plugin.cs" />
     <Compile Include="Common.Base\src\ScheduledTaskManager.cs" />
@@ -193,6 +198,7 @@
     <Content Include="Common.Base\static\common.base.images\logo.png" />
     <Content Include="Common.Base\templates\common.base\index.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.label_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.id_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.id_column_head.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.search_bar.html" />
