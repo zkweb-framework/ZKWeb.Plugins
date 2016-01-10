@@ -14,6 +14,22 @@ using ZKWeb.Utils.Extensions;
 namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>
 	/// 从模型构建表单的构建器
+	/// 例子
+	/// public class TestForm : ModelFormBuilder {
+	///		[Required]
+	///		[TextBoxField("FieldA", "Please enter something")]
+	///		public string FieldA { get; set; }
+	///		[TextBoxField("FieldB", "Please enter something")]
+	///		public string FieldB { get; set; }
+	///		
+	///		protected override void OnBind() {
+	///			FieldA = "Default value";
+	///		}
+	///		
+	///		protected override object OnSubmit() {
+	///			return new { message = string.Format("{0}, {1}", FieldA, FieldB) };
+	///		}
+	/// }
 	/// </summary>
 	public abstract class ModelFormBuilder : ILiquidizable {
 		/// <summary>

@@ -1,0 +1,14 @@
+This list is for not implemented but planned features.
+
+Finance.Accounting
+Finance.Deposit
+Finance.Payment
+Finance.Payment.Alipay
+Finance.Payment.Tenpay
+Finance.Settlement
+Shopping.Aftersales
+Shopping.Order
+Shopping.Product
+Shopping.Seller
+SMS.Base
+SMS.GuangXin

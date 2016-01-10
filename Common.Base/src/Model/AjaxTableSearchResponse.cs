@@ -46,17 +46,17 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// 从搜索请求和处理器获取搜索回应
 		/// 这个函数主要处理分页和配合搜索处理器设置结果
 		/// </summary>
-		/// <typeparam name="T">数据类型</typeparam>
+		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="request">搜索请求</param>
 		/// <param name="handlers">搜索处理器</param>
 		/// <returns></returns>
-		public static AjaxTableSearchResponse FromRequest<T>(
-			AjaxTableSearchRequest request, IEnumerable<IAjaxTableSearchHandler<T>> handlers)
-			where T : class {
+		public static AjaxTableSearchResponse FromRequest<TData>(
+			AjaxTableSearchRequest request, IEnumerable<IAjaxTableSearchHandler<TData>> handlers)
+			where TData : class {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
 				// 从数据库获取数据，过滤并排序
-				var query = context.Query<T>();
+				var query = context.Query<TData>();
 				foreach (var handler in handlers) {
 					handler.OnQuery(request, context, ref query);
 				}
@@ -88,7 +88,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 				}
 				// 选择数据
 				var pairs = queryResults
-					.Select(r => new KeyValuePair<T, Dictionary<string, object>>(
+					.Select(r => new KeyValuePair<TData, Dictionary<string, object>>(
 						r, new Dictionary<string, object>()))
 					.ToList();
 				foreach (var handler in handlers) {

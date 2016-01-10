@@ -19,7 +19,18 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	/// 后台应用构建器
 	/// 支持自动生成列表和增删查改页面（Scaffold，半自动）
 	/// 例子
-	///		...
+	///	[ExportMany]
+	///	public class TestDataManageApp : AdminAppBuilder[TestData, TestDataManageApp] {
+	///		public override string Name { get { return "TestData Manage"; } }
+	///		public override string Url { get { return "/admin/test_data"; } }
+	///		public override string TileClass { get { return "tile bg-blue-hoki"; } }
+	///		public override string IconClass { get { return "fa fa-legal"; } }
+	///		protected override FormBuilder GetAddForm() { return new EditForm(); }
+	///		protected override FormBuilder GetEditForm() { return new EditForm(); }
+	///		protected override IAjaxTableSearchHandler<TestData> GetSearchHandler() { return new SearchHandler(); }
+	///		public class SearchHandler : IAjaxTableSearchHandler[TestData] { /* 实现函数 */ }
+	///		public class EditForm : DataEditFormBuilder[TestData, EditForm] { /* 实现函数 */ }
+	/// }
 	/// </summary>
 	/// <typeparam name="TData">管理的数据类型</typeparam>
 	/// <typeparam name="TApp">继承类自身的类型</typeparam>
@@ -55,12 +66,17 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult ListAction() {
+			// 表格构建器
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = typeof(TData).Name + TableIdSuffix;
 			table.Target = Url + SearchUrl;
+			// 搜索处理器，内置+使用Ioc注册的额外处理器
+			var searchHandlers = new List<IAjaxTableSearchHandler<TData>>() { GetSearchHandler() };
+			searchHandlers.AddRange(Application.Ioc.ResolveMany<IAjaxTableSearchHandlerFor<TData, TApp>>());
+			// 搜索栏构建器
 			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
 			searchBar.TableId = table.Id;
-			searchBar.Conditions.AddRange(GetSearchHandler().GetConditions());
+			searchBar.Conditions.AddRange(searchHandlers.SelectMany(s => s.GetConditions()));
 			return new TemplateResult("common.admin/generic_list.html",
 				new { title = new T(Name), iconClass = IconClass, table, searchBar });
 		}
@@ -70,9 +86,14 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult SearchAction() {
+			// 获取参数并转换到搜索请求
 			var json = HttpContext.Current.Request.GetParam<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
-			var response = AjaxTableSearchResponse.FromRequest(request, new[] { GetSearchHandler() });
+			// 搜索处理器，内置+使用Ioc注册的额外处理器
+			var searchHandlers = new List<IAjaxTableSearchHandler<TData>>() { GetSearchHandler() };
+			searchHandlers.AddRange(Application.Ioc.ResolveMany<IAjaxTableSearchHandlerFor<TData, TApp>>());
+			// 构建搜索回应
+			var response = AjaxTableSearchResponse.FromRequest(request, searchHandlers);
 			return new JsonResult(response);
 		}
 

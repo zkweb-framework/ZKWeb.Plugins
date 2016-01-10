@@ -40,9 +40,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Pagination Settings", "分页设置" },
 			{ "[0] Records per page", "每页[0]条" },
 			{ "Please enter keyword", "请填写关键词" },
-			{ "Advance search", "高级搜索" }
+			{ "Advance search", "高级搜索" },
+			{ "Data with id {0} cannot be found", "无法找到Id是{0}的数据" }
 		};
-		
+
 		public bool CanTranslate(string code) {
 			return Codes.Contains(code);
 		}

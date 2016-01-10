@@ -123,6 +123,7 @@
     <Compile Include="Common.Base\src\CaptchaManager.cs" />
     <Compile Include="Common.Base\src\Controllers\CaptchaController.cs" />
     <Compile Include="Common.Base\src\Controllers\IndexController.cs" />
+    <Compile Include="Common.Base\src\DataEditFormBuilder.cs" />
     <Compile Include="Common.Base\src\Extensions\AjaxTableColumnsExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\AjaxTableIdColumn.cs" />
     <Compile Include="Common.Base\src\Extensions\MenuItemsExtensions.cs" />
@@ -158,6 +159,8 @@
     <Compile Include="Common.Base\src\Model\FormFieldAttribute.cs" />
     <Compile Include="Common.Base\src\Model\FormFieldAttributes.cs" />
     <Compile Include="Common.Base\src\Model\GenericConfigAttribute.cs" />
+    <Compile Include="Common.Base\src\Model\IAjaxTableSearchHandlerFor.cs" />
+    <Compile Include="Common.Base\src\Model\IDataEditFormCallback.cs" />
     <Compile Include="Common.Base\src\Model\IFormFieldHandler.cs" />
     <Compile Include="Common.Base\src\Model\IFormFieldRequireMultiPart.cs" />
     <Compile Include="Common.Base\src\Model\IFormFieldValidator.cs" />
@@ -387,18 +390,7 @@
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Finance.Accounting\" />
-    <Folder Include="Finance.Deposit\" />
-    <Folder Include="Finance.Payment.Alipay\" />
-    <Folder Include="Finance.Payment.Tenpay\" />
-    <Folder Include="Finance.Payment\" />
-    <Folder Include="Finance.Settlement\" />
-    <Folder Include="SMS.Base\" />
-    <Folder Include="SMS.GuangXin\" />
-    <Folder Include="ZKShop.Order\" />
-    <Folder Include="ZKShop.Product\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
