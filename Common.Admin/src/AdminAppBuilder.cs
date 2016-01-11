@@ -23,13 +23,11 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	///	public class TestDataManageApp : AdminAppBuilder[TestData, TestDataManageApp] {
 	///		public override string Name { get { return "TestData Manage"; } }
 	///		public override string Url { get { return "/admin/test_data"; } }
-	///		public override string TileClass { get { return "tile bg-blue-hoki"; } }
-	///		public override string IconClass { get { return "fa fa-legal"; } }
 	///		protected override IAjaxTableCallback<TestData> GetTableCallback() { return new TableCallback(); }
-	///		protected override FormBuilder GetAddForm() { return new EditForm(); }
-	///		protected override FormBuilder GetEditForm() { return new EditForm(); }
+	///		protected override FormBuilder GetAddForm() { return new Form(); }
+	///		protected override FormBuilder GetEditForm() { return new Form(); }
 	///		public class TableCallback : IAjaxTableCallback[TestData] { /* 实现函数 */ }
-	///		public class EditForm : DataEditFormBuilder[TestData, EditForm] { /* 实现函数 */ }
+	///		public class Form : DataEditFormBuilder[TestData, Form] { /* 实现函数 */ }
 	/// }
 	/// </summary>
 	/// <typeparam name="TData">管理的数据类型</typeparam>

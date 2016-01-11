@@ -71,7 +71,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Edit User", "编辑用户" },
 			{ "Edit Admin", "编辑管理员" },
 			{ "Successfully Saved", "保存成功" },
-			{ "Keep empty if you don't want to change", "如果不想修改，请保持空白" }
+			{ "Keep empty if you don't want to change", "如果不想修改，请保持空白" },
+			{ "Name/Remark", "名称/备注" },
+			{ "Name", "名称" },
+			{ "LastUpdated", "更新时间" },
+			{ "Add UserRole", "添加角色" },
+			{ "Edit UserRole", "编辑角色" },
+			{ "Please enter name", "请填写名称" },
+			{ "Remark", "备注" },
+			{ "Please enter remark", "请填写备注" }
 		};
 
 		public bool CanTranslate(string code) {

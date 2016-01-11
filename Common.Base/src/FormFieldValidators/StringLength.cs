@@ -42,7 +42,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 		/// 验证值是否通过，不通过时抛出例外
 		/// </summary>
 		public void Validate(FormField field, object validatorAttribute, object value) {
-			var str = value == null ? "" : value.ToString();
+			var str = (value ?? "").ToString();
 			if (string.IsNullOrEmpty(str)) {
 				return; // 空白文本应该由Required处理
 			}

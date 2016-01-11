@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// 点击后弹出编辑数据的模态框
 		/// 各个参数如不指定则使用默认值
 		/// </summary>
-		/// <typeparam name="TApp"></typeparam>
+		/// <typeparam name="TApp">后台应用的类型</typeparam>
 		public static void AddEditActionForAdminApp<TApp>(
 			this AjaxTableActionColumn column,
 			string name = null, string buttonClass = null, string iconClass = null,

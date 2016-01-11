@@ -26,8 +26,8 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 		/// 添加html到变量中，不重复添加
 		/// </summary>
 		public override void Render(Context context, TextWriter result) {
-			var js = context[Key].ConvertOrDefault<string>() ?? "";
-			var path = context[Markup.Trim()].ConvertOrDefault<string>();
+			var js = (context[Key] ?? "").ToString();
+			var path = (context[Markup.Trim()] ?? "").ToString();
 			if (string.IsNullOrEmpty(path)) {
 				throw new NullReferenceException("js path can't be empty");
 			}

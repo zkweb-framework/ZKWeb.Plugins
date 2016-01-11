@@ -30,13 +30,13 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 				html.AddAttribute(pair.Key, pair.Value);
 			}
 			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttribute("value", (field.Value ?? "").ToString());
 			html.AddAttribute("rows", attribute.Rows.ToString());
 			html.AddAttribute("placeholder", new T(attribute.PlaceHolder));
 			foreach (var pair in htmlAttributes) {
 				html.AddAttribute(pair.Key, pair.Value);
 			}
 			html.RenderBeginTag("textarea");
+			html.WriteEncodedText((field.Value ?? "").ToString());
 			html.RenderEndTag();
 			return provider.FormGroupHtml(
 				field, htmlAttributes, html.InnerWriter.ToString());

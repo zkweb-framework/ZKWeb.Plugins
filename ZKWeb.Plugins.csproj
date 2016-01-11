@@ -106,6 +106,8 @@
     <Compile Include="Common.Admin\src\Database\UserMessage.cs" />
     <Compile Include="Common.Admin\src\Database\UserRole.cs" />
     <Compile Include="Common.Admin\src\DataCallbacks\CheckUsernameDuplicate.cs" />
+    <Compile Include="Common.Admin\src\Extensions\AjaxTableActionColumnExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\MenuItemsExtensions.cs" />
     <Compile Include="Common.Admin\src\Extensions\SessionExtensions.cs" />
     <Compile Include="Common.Admin\src\Forms\AdminLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserLoginForm.cs" />
@@ -170,6 +172,7 @@
     <Compile Include="Common.Base\src\Model\IFormFieldRequireMultiPart.cs" />
     <Compile Include="Common.Base\src\Model\IFormFieldValidator.cs" />
     <Compile Include="Common.Base\src\Model\IListItemProvider.cs" />
+    <Compile Include="Common.Base\src\Model\IModelFormBuilder.cs" />
     <Compile Include="Common.Base\src\Model\IScheduledTaskExecutor.cs" />
     <Compile Include="Common.Base\src\Model\JsonSerializedType.cs" />
     <Compile Include="Common.Base\src\Model\LabelCssClassAttribute.cs" />

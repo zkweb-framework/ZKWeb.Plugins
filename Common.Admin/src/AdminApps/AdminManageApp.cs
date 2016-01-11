@@ -39,7 +39,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 构建表格时的处理
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
+				table.MenuItems.AddDivider();
+				table.MenuItems.AddAddActionForAdminApp<AdminManageApp>();
 				searchBar.KeywordPlaceHolder = new T("Username");
+				searchBar.MenuItems.AddDivider();
+				searchBar.MenuItems.AddAddActionForAdminApp<AdminManageApp>();
 			}
 
 			/// <summary>
@@ -126,12 +130,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			[PasswordField("ConfirmPassword", "Keep empty if you don't want to change")]
 			public string ConfirmPassword { get; set; }
 			/// <summary>
-			/// 是否超级管理员
+			/// 是否超级管理员，TODO:需要添加检查
 			/// </summary>
 			[CheckBoxField("SuperAdmin")]
 			public bool IsSuperAdmin { get; set; }
 			/// <summary>
-			/// 角色
+			/// 角色，TODO:未实现
 			/// </summary>
 			public string Role { get; set; }
 
