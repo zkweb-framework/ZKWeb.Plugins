@@ -21,17 +21,15 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	///		public string FieldA { get; set; }
 	///		[TextBoxField("FieldB", "Please enter something")]
 	///		public string FieldB { get; set; }
-	///		
 	///		protected override void OnBind() {
 	///			FieldA = "Default value";
 	///		}
-	///		
 	///		protected override object OnSubmit() {
 	///			return new { message = string.Format("{0}, {1}", FieldA, FieldB) };
 	///		}
 	/// }
 	/// </summary>
-	public abstract class ModelFormBuilder : ILiquidizable {
+	public abstract class ModelFormBuilder : IModelFormBuilder, ILiquidizable {
 		/// <summary>
 		/// 表单构建器
 		/// </summary>
@@ -42,7 +40,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		protected Dictionary<FormField, MemberInfo> FieldToMember { get; set; }
 
 		/// <summary>
-		/// 初始化表单构建器
+		/// 初始化
 		/// </summary>
 		public ModelFormBuilder(FormBuilder form = null) {
 			Form = form ?? Application.Ioc.Resolve<FormBuilder>();
@@ -113,6 +111,14 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			}
 			// 调用提交时的处理
 			return OnSubmit();
+		}
+
+		/// <summary>
+		/// 获取表单属性
+		/// </summary>
+		/// <returns></returns>
+		FormAttribute IModelFormBuilder.GetFormAttribute() {
+			return Form.Attribute;
 		}
 
 		/// <summary>

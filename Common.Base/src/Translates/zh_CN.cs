@@ -16,7 +16,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "abc", "测试翻译" },
 			{ "ZKWeb Default Website", "ZKWeb默认站点" },
 			{ "Captcha", "验证码" },
 			{ "Click to change captcha image", "点击更换验证码图片" },
@@ -46,7 +45,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "False", "否" },
 			{ "Actions", "操作" },
 			{ "Deleted", "已删除" },
-			{ "Select/Unselect All", "全选/取消全选" }
+			{ "Select/Unselect All", "全选/取消全选" },
+			{ "Submit", "提交" }
 		};
 
 		public bool CanTranslate(string code) {

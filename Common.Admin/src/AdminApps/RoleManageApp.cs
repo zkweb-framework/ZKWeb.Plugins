@@ -22,7 +22,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string IconClass { get { return "fa fa-legal"; } }
 		public override UserTypes[] AllowedUserTypes { get { return new[] { UserTypes.SuperAdmin }; } }
 		protected override IAjaxTableCallback<UserRole> GetTableCallback() { throw new NotImplementedException(); }
-		protected override FormBuilder GetAddForm() { return new FormBuilder(); }
-		protected override FormBuilder GetEditForm() { return new FormBuilder(); }
+		protected override IModelFormBuilder GetAddForm() { throw new NotImplementedException(); }
+		protected override IModelFormBuilder GetEditForm() { throw new NotImplementedException(); }
 	}
 }

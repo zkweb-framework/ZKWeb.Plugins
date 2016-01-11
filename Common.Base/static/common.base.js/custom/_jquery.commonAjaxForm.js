@@ -43,7 +43,12 @@ $.fn.commonAjaxForm = function (options) {
 
 /* 页面加载时自动设置ajax表单 */
 $(function () {
-	$("form[ajax=true]").commonAjaxForm(function (data) {
-		$.toastAjaxResult(data);
+	var setup = function ($elem) {
+		$elem.commonAjaxForm(function (data) { $.toastAjaxResult(data); });
+	};
+	var rule = "form[ajax=true]";
+	setup($(rule));
+	$(document).on("dynamicLoaded", function (e, contents) {
+		setup($(contents).find(rule));
 	});
 });

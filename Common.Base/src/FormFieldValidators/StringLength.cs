@@ -43,6 +43,9 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 		/// </summary>
 		public void Validate(FormField field, object validatorAttribute, object value) {
 			var str = value == null ? "" : value.ToString();
+			if (string.IsNullOrEmpty(str)) {
+				return; // 空白文本应该由Required处理
+			}
 			var attribute = (StringLengthAttribute)validatorAttribute;
 			if (str.Length < attribute.MinimumLength || str.Length > attribute.MaximumLength) {
 				throw new HttpException(400, ErrorMessage(field, attribute));

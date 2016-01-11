@@ -73,12 +73,12 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// <summary>
 		/// 获取添加表单
 		/// </summary>
-		protected abstract FormBuilder GetAddForm();
+		protected abstract IModelFormBuilder GetAddForm();
 		/// <summary>
 		/// 获取编辑表单
 		/// </summary>
 		/// <returns></returns>
-		protected abstract FormBuilder GetEditForm();
+		protected abstract IModelFormBuilder GetEditForm();
 
 		/// <summary>
 		/// 初始化
@@ -135,7 +135,16 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult AddAction() {
-			throw new NotImplementedException();
+			var form = GetAddForm();
+			var request = HttpContext.Current.Request;
+			var attribute = form.GetFormAttribute();
+			attribute.Action = attribute.Action ?? request.Url.PathAndQuery;
+			if (request.HttpMethod == HttpMethods.POST) {
+				return new JsonResult(form.Submit()); // 提交表单
+			} else {
+				form.Bind(); // 绑定表单
+				return new TemplateResult("common.admin/generic_add.html", new { form });
+			}
 		}
 
 		/// <summary>
@@ -143,7 +152,16 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult EditAction() {
-			throw new NotImplementedException();
+			var form = GetEditForm();
+			var request = HttpContext.Current.Request;
+			var attribute = form.GetFormAttribute();
+			attribute.Action = attribute.Action ?? request.Url.PathAndQuery;
+			if (request.HttpMethod == HttpMethods.POST) {
+				return new JsonResult(form.Submit()); // 提交表单
+			} else {
+				form.Bind(); // 绑定表单
+				return new TemplateResult("common.admin/generic_edit.html", new { form });
+			}
 		}
 
 		/// <summary>
@@ -155,6 +173,14 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		}
 
 		/// <summary>
+		/// 获取管理的数据类型
+		/// </summary>
+		/// <returns></returns>
+		Type IAdminAppBuilder.GetDataType() {
+			return typeof(TData);
+		}
+
+		/// <summary>
 		/// 网站启动时添加处理函数
 		/// </summary>
 		public virtual void OnWebsiteStart() {
@@ -163,8 +189,8 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			controllerManager.RegisterAction(SearchUrl, HttpMethods.POST, SearchAction);
 			controllerManager.RegisterAction(AddUrl, HttpMethods.GET, AddAction);
 			controllerManager.RegisterAction(AddUrl, HttpMethods.POST, AddAction);
-			controllerManager.RegisterAction(EditUrl, HttpMethods.GET, AddAction);
-			controllerManager.RegisterAction(EditUrl, HttpMethods.POST, AddAction);
+			controllerManager.RegisterAction(EditUrl, HttpMethods.GET, EditAction);
+			controllerManager.RegisterAction(EditUrl, HttpMethods.POST, EditAction);
 			controllerManager.RegisterAction(BatchUrl, HttpMethods.POST, BatchAction);
 		}
 	}

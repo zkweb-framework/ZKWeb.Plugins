@@ -20,7 +20,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string TileClass { get { return "tile bg-blue-hoki"; } }
 		public override string IconClass { get { return "fa fa-user"; } }
 		protected override IAjaxTableCallback<User> GetTableCallback() { throw new NotImplementedException(); }
-		protected override FormBuilder GetAddForm() { return new FormBuilder(); }
-		protected override FormBuilder GetEditForm() { return new FormBuilder(); }
+		protected override IModelFormBuilder GetAddForm() { throw new NotImplementedException(); }
+		protected override IModelFormBuilder GetEditForm() { throw new NotImplementedException(); }
 	}
 }

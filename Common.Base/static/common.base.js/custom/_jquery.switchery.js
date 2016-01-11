@@ -13,7 +13,11 @@ $.fn.Switchery = function (config) {
 	});
 };
 
+/* 加载页面时自动设置表单中，css类带switchery的勾选框 */
 $(function () {
-	// 加载页面时自动设置表单中，css类带switchery的勾选框
-	$("form input.switchery[type=checkbox]").Switchery();
+	var rule = "form input.switchery[type=checkbox]";
+	$(rule).Switchery();
+	$(document).on("dynamicLoaded", function (e, contents) {
+		$(contents).find(rule).Switchery();
+	});
 });

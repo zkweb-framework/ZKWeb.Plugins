@@ -66,7 +66,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "User Manage", "用户管理" },
 			{ "Role Manage", "角色管理" },
 			{ "Role", "角色" },
-			{ "SuperAdmin", "超级管理员" }
+			{ "SuperAdmin", "超级管理员" },
+			{ "View", "查看" },
+			{ "Edit User", "编辑用户" },
+			{ "Edit Admin", "编辑管理员" },
+			{ "Successfully Saved", "保存成功" },
+			{ "Keep empty if you don't want to change", "如果不想修改，请保持空白" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -11,6 +11,9 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Core;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
+using ZKWeb.Plugins.Common.Admin.src.Extensions;
+using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// <summary>
@@ -25,9 +28,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string IconClass { get { return "fa fa-user-secret"; } }
 		public override UserTypes[] AllowedUserTypes { get { return new[] { UserTypes.SuperAdmin }; } }
 		protected override IAjaxTableCallback<User> GetTableCallback() { return new TableCallback(); }
-		protected override FormBuilder GetAddForm() { return new FormBuilder(); }
-		protected override FormBuilder GetEditForm() { return new FormBuilder(); }
-		
+		protected override IModelFormBuilder GetAddForm() { return new Form(); }
+		protected override IModelFormBuilder GetEditForm() { return new Form(); }
+
 		/// <summary>
 		/// 表格回调
 		/// </summary>
@@ -89,16 +92,73 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				response.Columns.AddEnumLabelColumn("SuperAdmin", typeof(EnumBool));
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
-
-				actionColumn.AddRemoteModalForBelongedRow(
-					"View", "btn btn-xs default", "fa fa-edit",
-					"Edit Admin", "/admin_admins/edit/<%-row.Id%>");
+				actionColumn.AddEditActionForAdminApp<AdminManageApp>(titleTemplate: new T("Edit Admin"));
 
 				idColumn.AddItemForClickEvent("Test", "fa fa-check", "alert('asdasdas')");
-				
+
 				// idColumn.AddBatchRemoveAction();
 				// idColumn.AddBatchRemoveForeverAction();
 				// idColumn.AddBatchRecoverAction();
+			}
+		}
+
+		/// <summary>
+		/// 添加和编辑表单
+		/// </summary>
+		public class Form : DataEditFormBuilder<User, Form> {
+			/// <summary>
+			/// 用户名
+			/// </summary>
+			[Required]
+			[StringLength(100, MinimumLength = 3)]
+			[TextBoxField("Username", "Please enter username")]
+			public string Username { get; set; }
+			/// <summary>
+			/// 密码
+			/// </summary>
+			[StringLength(100, MinimumLength = 5)]
+			[PasswordField("Password", "Keep empty if you don't want to change")]
+			public string Password { get; set; }
+			/// <summary>
+			/// 确认密码
+			/// </summary>
+			[StringLength(100, MinimumLength = 5)]
+			[PasswordField("ConfirmPassword", "Keep empty if you don't want to change")]
+			public string ConfirmPassword { get; set; }
+			/// <summary>
+			/// 是否超级管理员
+			/// </summary>
+			[CheckBoxField("SuperAdmin")]
+			public bool IsSuperAdmin { get; set; }
+			/// <summary>
+			/// 角色
+			/// </summary>
+			public string Role { get; set; }
+
+			/// <summary>
+			/// 绑定数据到表单
+			/// </summary>
+			protected override void OnBind(User bindFrom) {
+				Username = bindFrom.Username;
+				Password = null;
+				IsSuperAdmin = bindFrom.Type == UserTypes.SuperAdmin;
+				Role = bindFrom.Role == null ? null : bindFrom.Role.Id.ToString();
+			}
+
+			/// <summary>
+			/// 保存表单到数据
+			/// </summary>
+			protected override object OnSubmit(User saveTo) {
+				saveTo.Username = Username;
+				if (!string.IsNullOrEmpty(Password)) {
+					if (Password != ConfirmPassword) {
+						throw new HttpException(400, new T("Please repeat the password exactly"));
+					}
+					saveTo.SetPassword(Password);
+				}
+				saveTo.Type = IsSuperAdmin ? UserTypes.SuperAdmin : UserTypes.Admin;
+				saveTo.Role = null;
+				return new { message = new T("Successfully Saved") };
 			}
 		}
 	}
