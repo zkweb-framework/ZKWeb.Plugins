@@ -128,6 +128,7 @@
     <Compile Include="Common.Base\src\Extensions\AjaxTableActionColumnExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\AjaxTableColumnsExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\AjaxTableIdColumn.cs" />
+    <Compile Include="Common.Base\src\Extensions\AjaxTableIdColumnExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\MenuItemsExtensions.cs" />
     <Compile Include="Common.Base\src\FormBuilder.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\Captcha.cs" />
@@ -155,7 +156,7 @@
     <Compile Include="Common.Base\src\Model\AjaxTableColumn.cs" />
     <Compile Include="Common.Base\src\Model\EnumBool.cs" />
     <Compile Include="Common.Base\src\Model\EnumDeleted.cs" />
-    <Compile Include="Common.Base\src\Model\IAjaxTableSearchHandler.cs" />
+    <Compile Include="Common.Base\src\Model\IAjaxTableCallback.cs" />
     <Compile Include="Common.Base\src\Model\AjaxTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\AjaxTableSearchResponse.cs" />
     <Compile Include="Common.Base\src\Model\FormAttribute.cs" />
@@ -163,7 +164,7 @@
     <Compile Include="Common.Base\src\Model\FormFieldAttribute.cs" />
     <Compile Include="Common.Base\src\Model\FormFieldAttributes.cs" />
     <Compile Include="Common.Base\src\Model\GenericConfigAttribute.cs" />
-    <Compile Include="Common.Base\src\Model\IAjaxTableSearchHandlerFor.cs" />
+    <Compile Include="Common.Base\src\Model\IAjaxTableCallbackFor.cs" />
     <Compile Include="Common.Base\src\Model\IDataEditFormCallback.cs" />
     <Compile Include="Common.Base\src\Model\IFormFieldHandler.cs" />
     <Compile Include="Common.Base\src\Model\IFormFieldRequireMultiPart.cs" />
@@ -198,12 +199,15 @@
     <Content Include="Common.Admin\templates\common.admin\test_list.html" />
     <Content Include="Common.Base\static\common.base.images\logo.png" />
     <Content Include="Common.Base\templates\common.base\index.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.action_link.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.action_onclick.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.label_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.id_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.id_column_head.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.search_bar.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.form_group.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.menu_item.onclick.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.pagination_settings.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.table_operations.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.divider.html" />
@@ -276,7 +280,7 @@
     <Content Include="Common.Base\static\common.base.js\custom\_bootstrap.dialog.additional.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_bootstrap.dropdownmenu.setup.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.ajaxTable.js" />
-    <Content Include="Common.Base\static\common.base.js\custom\_jquery.ajaxTableHelper.js" />
+    <Content Include="Common.Base\static\common.base.js\custom\_jquery.ajaxTableExtensions.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.ajaxTableTreeHelper.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.checkbox.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.commonAjaxForm.js" />
