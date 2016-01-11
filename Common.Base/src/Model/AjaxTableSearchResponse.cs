@@ -43,25 +43,25 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		}
 
 		/// <summary>
-		/// 从搜索请求和处理器获取搜索回应
-		/// 这个函数主要处理分页和配合搜索处理器设置结果
+		/// 从搜索请求和表格回调生成搜索回应
+		/// 这个函数主要处理分页和配合表格回调设置结果
 		/// </summary>
 		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="request">搜索请求</param>
-		/// <param name="handlers">搜索处理器</param>
+		/// <param name="callbacks">表格回调</param>
 		/// <returns></returns>
 		public static AjaxTableSearchResponse FromRequest<TData>(
-			AjaxTableSearchRequest request, IEnumerable<IAjaxTableSearchHandler<TData>> handlers)
+			AjaxTableSearchRequest request, IEnumerable<IAjaxTableCallback<TData>> callbacks)
 			where TData : class {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
 				// 从数据库获取数据，过滤并排序
 				var query = context.Query<TData>();
-				foreach (var handler in handlers) {
-					handler.OnQuery(request, context, ref query);
+				foreach (var callback in callbacks) {
+					callback.OnQuery(request, context, ref query);
 				}
-				foreach (var handler in handlers) {
-					handler.OnSort(request, context, ref query);
+				foreach (var callback in callbacks) {
+					callback.OnSort(request, context, ref query);
 				}
 				// 分页，数量+1是为了检测是否最后一页
 				// 当前页没有任何内容时返回最后一页的数据
@@ -91,13 +91,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 					.Select(r => new KeyValuePair<TData, Dictionary<string, object>>(
 						r, new Dictionary<string, object>()))
 					.ToList();
-				foreach (var handler in handlers) {
-					handler.OnSelect(request, pairs);
+				foreach (var callback in callbacks) {
+					callback.OnSelect(request, pairs);
 				}
 				response.Rows = pairs.Select(p => p.Value).ToList();
 				// 调用返回搜索回应前的回调，这里会添加需要的列
-				foreach (var handler in handlers) {
-					handler.OnResponse(request, response);
+				foreach (var callback in callbacks) {
+					callback.OnResponse(request, response);
 				}
 				return response;
 			}

@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 					"common.base/tmpl.ajax_table.id_column_cell.html", new { member })
 			};
 			columns.Add(column);
-			// column.AddSelectOrUnselectAll();
+			column.AddSelectOrUnselectAll();
 			return column;
 		}
 

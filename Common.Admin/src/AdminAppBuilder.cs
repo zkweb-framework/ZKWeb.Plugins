@@ -25,10 +25,10 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	///		public override string Url { get { return "/admin/test_data"; } }
 	///		public override string TileClass { get { return "tile bg-blue-hoki"; } }
 	///		public override string IconClass { get { return "fa fa-legal"; } }
-	///		protected override IAjaxTableSearchHandler<TestData> GetSearchHandler() { return new SearchHandler(); }
+	///		protected override IAjaxTableCallback<TestData> GetTableCallback() { return new TableCallback(); }
 	///		protected override FormBuilder GetAddForm() { return new EditForm(); }
 	///		protected override FormBuilder GetEditForm() { return new EditForm(); }
-	///		public class SearchHandler : IAjaxTableSearchHandler[TestData] { /* 实现函数 */ }
+	///		public class TableCallback : IAjaxTableCallback[TestData] { /* 实现函数 */ }
 	///		public class EditForm : DataEditFormBuilder[TestData, EditForm] { /* 实现函数 */ }
 	/// }
 	/// </summary>
@@ -40,17 +40,17 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// <summary>
 		/// 常量的定义
 		/// </summary>
-		public const string SearchUrl = "/search";
-		public const string AddUrl = "/add";
-		public const string EditUrl = "/edit";
-		public const string BatchUrl = "/batch";
-		public const string TableIdSuffix = "List";
+		public virtual string SearchUrl { get { return Url + "/search"; } }
+		public virtual string AddUrl { get { return Url + "/add"; } }
+		public virtual string EditUrl { get { return Url + "/edit"; } }
+		public virtual string BatchUrl { get { return Url + "/batch"; } }
+		public virtual string TableId { get { return typeof(TData).Name + "List"; } }
 
 		/// <summary>
-		/// 获取搜索处理器
+		/// 获取表格回调
 		/// </summary>
 		/// <returns></returns>
-		protected abstract IAjaxTableSearchHandler<TData> GetSearchHandler();
+		protected abstract IAjaxTableCallback<TData> GetTableCallback();
 		/// <summary>
 		/// 获取添加表单
 		/// </summary>
@@ -60,7 +60,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected abstract FormBuilder GetEditForm();
-
+		
 		/// <summary>
 		/// 列表页的处理函数
 		/// </summary>
@@ -68,15 +68,15 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		protected virtual IActionResult ListAction() {
 			// 表格构建器
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
-			table.Id = typeof(TData).Name + TableIdSuffix;
-			table.Target = Url + SearchUrl;
-			// 搜索处理器，内置+使用Ioc注册的额外处理器
-			var searchHandlers = new List<IAjaxTableSearchHandler<TData>>() { GetSearchHandler() };
-			searchHandlers.AddRange(Application.Ioc.ResolveMany<IAjaxTableSearchHandlerFor<TData, TApp>>());
+			table.Id = TableId;
+			table.Target = SearchUrl;
+			// 表格回调，内置+使用Ioc注册的额外回调
+			var callbacks = new List<IAjaxTableCallback<TData>>() { GetTableCallback() };
+			callbacks.AddRange(Application.Ioc.ResolveMany<IAjaxTableCallbackFor<TData, TApp>>());
 			// 搜索栏构建器
 			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
 			searchBar.TableId = table.Id;
-			searchHandlers.ForEach(s => s.OnBuildSearchBar(searchBar));
+			callbacks.ForEach(s => s.OnBuildTable(table, searchBar));
 			return new TemplateResult("common.admin/generic_list.html",
 				new { title = new T(Name), iconClass = IconClass, table, searchBar });
 		}
@@ -89,11 +89,11 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			// 获取参数并转换到搜索请求
 			var json = HttpContext.Current.Request.GetParam<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
-			// 搜索处理器，内置+使用Ioc注册的额外处理器
-			var searchHandlers = new List<IAjaxTableSearchHandler<TData>>() { GetSearchHandler() };
-			searchHandlers.AddRange(Application.Ioc.ResolveMany<IAjaxTableSearchHandlerFor<TData, TApp>>());
+			// 表格回调，内置+使用Ioc注册的额外回调
+			var callbacks = new List<IAjaxTableCallback<TData>>() { GetTableCallback() };
+			callbacks.AddRange(Application.Ioc.ResolveMany<IAjaxTableCallbackFor<TData, TApp>>());
 			// 构建搜索回应
-			var response = AjaxTableSearchResponse.FromRequest(request, searchHandlers);
+			var response = AjaxTableSearchResponse.FromRequest(request, callbacks);
 			return new JsonResult(response);
 		}
 
@@ -127,12 +127,12 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		public virtual void OnWebsiteStart() {
 			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
 			controllerManager.RegisterAction(Url, HttpMethods.GET, ListAction);
-			controllerManager.RegisterAction(Url + SearchUrl, HttpMethods.POST, SearchAction);
-			controllerManager.RegisterAction(Url + AddUrl, HttpMethods.GET, AddAction);
-			controllerManager.RegisterAction(Url + AddUrl, HttpMethods.POST, AddAction);
-			controllerManager.RegisterAction(Url + EditUrl, HttpMethods.GET, AddAction);
-			controllerManager.RegisterAction(Url + EditUrl, HttpMethods.POST, AddAction);
-			controllerManager.RegisterAction(Url + BatchUrl, HttpMethods.POST, BatchAction);
+			controllerManager.RegisterAction(SearchUrl, HttpMethods.POST, SearchAction);
+			controllerManager.RegisterAction(AddUrl, HttpMethods.GET, AddAction);
+			controllerManager.RegisterAction(AddUrl, HttpMethods.POST, AddAction);
+			controllerManager.RegisterAction(EditUrl, HttpMethods.GET, AddAction);
+			controllerManager.RegisterAction(EditUrl, HttpMethods.POST, AddAction);
+			controllerManager.RegisterAction(BatchUrl, HttpMethods.POST, BatchAction);
 		}
 	}
 }

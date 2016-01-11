@@ -24,18 +24,18 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string TileClass { get { return "tile bg-blue-hoki"; } }
 		public override string IconClass { get { return "fa fa-user-secret"; } }
 		public override UserTypes[] AllowedUserTypes { get { return new[] { UserTypes.SuperAdmin }; } }
-		protected override IAjaxTableSearchHandler<User> GetSearchHandler() { return new SearchHandler(); }
+		protected override IAjaxTableCallback<User> GetTableCallback() { return new TableCallback(); }
 		protected override FormBuilder GetAddForm() { return new FormBuilder(); }
 		protected override FormBuilder GetEditForm() { return new FormBuilder(); }
 
 		/// <summary>
-		/// 搜索处理器
+		/// 表格回调
 		/// </summary>
-		public class SearchHandler : IAjaxTableSearchHandler<User> {
+		public class TableCallback : IAjaxTableCallback<User> {
 			/// <summary>
-			/// 构建搜索栏时的处理
+			/// 构建表格时的处理
 			/// </summary>
-			public void OnBuildSearchBar(AjaxTableSearchBarBuilder searchBar) {
+			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
 				searchBar.KeywordPlaceHolder = new T("Username");
 			}
 
@@ -89,6 +89,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				response.Columns.AddEnumLabelColumn("SuperAdmin", typeof(EnumBool));
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
+
+				actionColumn.AddRemoteModalForBelongedRow(
+					"View", "btn btn-xs default", "fa fa-edit",
+					"Edit Admin", "/admin_admins/edit/<%-row.Id%>");
+
+				idColumn.AddItemForClickEvent("Test", "fa fa-check", "alert('asdasdas')");
+				
 				// idColumn.AddBatchRemoveAction();
 				// idColumn.AddBatchRemoveForeverAction();
 				// idColumn.AddBatchRecoverAction();

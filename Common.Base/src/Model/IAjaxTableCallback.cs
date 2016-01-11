@@ -7,15 +7,16 @@ using ZKWeb.Core;
 
 namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
-	/// Ajax表格的搜索处理器
+	/// Ajax表格回调
 	/// </summary>
-	public interface IAjaxTableSearchHandler<T> {
+	public interface IAjaxTableCallback<T> {
 		/// <summary>
-		/// 构建搜索栏时的处理
-		/// 这个函数与搜索无关，仅在显示搜索栏时调用
+		/// 构建表格时的处理
+		/// 这个函数与搜索无关，仅在显示表格和搜索栏时调用
 		/// </summary>
+		/// <param name="table">表格</param>
 		/// <param name="searchBar">搜索栏</param>
-		void OnBuildSearchBar(AjaxTableSearchBarBuilder searchBar);
+		void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar);
 
 		/// <summary>
 		/// 过滤数据

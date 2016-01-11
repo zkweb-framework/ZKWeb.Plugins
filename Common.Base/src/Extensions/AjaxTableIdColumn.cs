@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// <summary>
 		/// 菜单项的模板列表，ul中的li
 		/// </summary>
-		public virtual List<HtmlString> ActionTemplates { get; set; }
+		public virtual List<MenuItem> ActionTemplates { get; set; }
 		/// <summary>
 		/// 头部模板字符串
 		/// </summary>
@@ -37,7 +37,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// 初始化
 		/// </summary>
 		public AjaxTableIdColumn() {
-			ActionTemplates = new List<HtmlString>();
+			ActionTemplates = new List<MenuItem>();
 		}
 	}
 }
