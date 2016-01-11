@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		protected override IAjaxTableCallback<User> GetTableCallback() { return new TableCallback(); }
 		protected override FormBuilder GetAddForm() { return new FormBuilder(); }
 		protected override FormBuilder GetEditForm() { return new FormBuilder(); }
-
+		
 		/// <summary>
 		/// 表格回调
 		/// </summary>

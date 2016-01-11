@@ -38,14 +38,33 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	public abstract class AdminAppBuilder<TData, TApp> : AdminApp, IAdminAppBuilder
 		where TData : class {
 		/// <summary>
-		/// 常量的定义
+		/// 获取搜索结果的Url
 		/// </summary>
 		public virtual string SearchUrl { get { return Url + "/search"; } }
+		/// <summary>
+		/// 添加数据的Url
+		/// </summary>
 		public virtual string AddUrl { get { return Url + "/add"; } }
+		/// <summary>
+		/// 编辑数据的Url
+		/// </summary>
 		public virtual string EditUrl { get { return Url + "/edit"; } }
+		/// <summary>
+		/// 批量操作的Url
+		/// </summary>
 		public virtual string BatchUrl { get { return Url + "/batch"; } }
+		/// <summary>
+		/// 表格Id
+		/// </summary>
 		public virtual string TableId { get { return typeof(TData).Name + "List"; } }
-
+		/// <summary>
+		/// 显示列表页时引用的Css文件路径
+		/// </summary>
+		protected virtual List<string> IncludeCss { get; set; }
+		/// <summary>
+		/// 显示列表页时引用的Js文件路径
+		/// </summary>
+		protected virtual List<string> IncludeJs { get; set; }
 		/// <summary>
 		/// 获取表格回调
 		/// </summary>
@@ -60,7 +79,15 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected abstract FormBuilder GetEditForm();
-		
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public AdminAppBuilder() {
+			IncludeCss = new List<string>();
+			IncludeJs = new List<string>();
+		}
+
 		/// <summary>
 		/// 列表页的处理函数
 		/// </summary>
@@ -77,8 +104,14 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
 			searchBar.TableId = table.Id;
 			callbacks.ForEach(s => s.OnBuildTable(table, searchBar));
-			return new TemplateResult("common.admin/generic_list.html",
-				new { title = new T(Name), iconClass = IconClass, table, searchBar });
+			return new TemplateResult("common.admin/generic_list.html", new {
+				includeCss = IncludeCss,
+				includeJs = IncludeJs,
+				title = new T(Name),
+				iconClass = IconClass,
+				table,
+				searchBar
+			});
 		}
 
 		/// <summary>

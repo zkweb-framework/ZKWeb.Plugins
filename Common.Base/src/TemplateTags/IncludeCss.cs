@@ -6,13 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 引用css文件
 	/// 必须使用在引用header.html之前
 	/// 例子
-	/// {% include_css /static/common.base.css/test.css %}
+	/// {% include_css "/static/common.base.css/test.css" %}
+	/// {% include_css variable %}
 	/// </summary>
 	public class IncludeCss : Tag {
 		/// <summary>
@@ -24,13 +26,17 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 		/// 添加html到变量中，不重复添加
 		/// </summary>
 		public override void Render(Context context, TextWriter result) {
-			var css = context[Key] as string ?? "";
+			var css = context[Key].ConvertOrDefault<string>() ?? "";
+			var path = context[Markup.Trim()].ConvertOrDefault<string>();
+			if (string.IsNullOrEmpty(path)) {
+				throw new NullReferenceException("css path can't be empty");
+			}
 			var html = string.Format(
 				"<link href='{0}' rel='stylesheet' type='text/css' />\r\n",
-				HttpUtility.HtmlAttributeEncode(Markup.Trim()));
+				HttpUtility.HtmlAttributeEncode(path));
 			if (!css.Contains(html)) {
 				css += html;
-				context[Key] = css;
+				context.Environments[0][Key] = css; // 设置到顶级空间
 			}
 		}
 	}
