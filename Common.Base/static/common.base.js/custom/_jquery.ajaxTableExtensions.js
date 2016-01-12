@@ -30,7 +30,7 @@
 			if (data.success) {
 				table.refresh();
 			}
-			$.toastAjaxResult(data);
+			$.handleAjaxResult(data);
 		});*/
 	};
 	// 切换回收站状态

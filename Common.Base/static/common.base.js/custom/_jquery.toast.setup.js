@@ -27,11 +27,3 @@ $(function () {
 		}
 	});
 });
-
-// 显示Ajax操作结果的消息
-// { message: "显示的消息" }
-// { message: "允许使用Html文本时", allowHtmlText: true }
-$.toastAjaxResult = function (data) {
-	var text = data.allowHtmlText ? data.message : _.escape(data.message);
-	text && $.toast({ icon: "success", text: text });
-};

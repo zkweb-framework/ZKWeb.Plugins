@@ -137,7 +137,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 					saveTo.CreateTime = DateTime.UtcNow;
 				}
 				saveTo.LastUpdated = DateTime.UtcNow;
-				return new { message = new T("Successfully Saved") };
+				return new {
+					message = new T("Successfully Saved"),
+					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
+				};
 			}
 		}
 	}

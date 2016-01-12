@@ -41,10 +41,23 @@ $.fn.commonAjaxForm = function (options) {
 	return this.ajaxForm(options);
 };
 
+/* 处理提交结果 */
+$.handleAjaxResult = function (data) {
+	// 支持的属性
+	//	message 显示消息
+	//	allowHtmlText 允许显示html消息
+	//	script 执行的脚本
+	// 显示消息
+	var text = data.allowHtmlText ? data.message : _.escape(data.message);
+	text && $.toast({ icon: "success", text: text });
+	// 执行脚本
+	data.script && eval(data.script);
+}
+
 /* 页面加载时自动设置ajax表单 */
 $(function () {
 	var setup = function ($elem) {
-		$elem.commonAjaxForm(function (data) { $.toastAjaxResult(data); });
+		$elem.commonAjaxForm(function (data) { $.handleAjaxResult.call($elem, data); });
 	};
 	var rule = "form[ajax=true]";
 	setup($(rule));

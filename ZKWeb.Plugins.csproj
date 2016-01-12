@@ -180,6 +180,7 @@
     <Compile Include="Common.Base\src\Model\JsonSerializedType.cs" />
     <Compile Include="Common.Base\src\Model\LabelCssClassAttribute.cs" />
     <Compile Include="Common.Base\src\Model\MenuItem.cs" />
+    <Compile Include="Common.Base\src\Model\ScriptStrings.cs" />
     <Compile Include="Common.Base\src\Plugin.cs" />
     <Compile Include="Common.Base\src\ScheduledTaskManager.cs" />
     <Compile Include="Common.Base\src\ScheduledTasks\LogCleaner.cs" />

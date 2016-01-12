@@ -178,7 +178,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 					throw new HttpException(400, new T("You can't downgrade yourself to normal admin"));
 				}
 				saveTo.Role = null;
-				return new { message = new T("Successfully Saved") };
+				return new {
+					message = new T("Successfully Saved"),
+					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
+				};
 			}
 		}
 	}
