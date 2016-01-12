@@ -87,7 +87,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	}
 
 	/// <summary>
-	/// 下拉框
+	/// 下拉列表
 	/// </summary>
 	public class DropdownListFieldAttribute : FormFieldAttribute {
 		/// <summary>

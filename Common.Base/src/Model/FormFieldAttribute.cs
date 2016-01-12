@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// 表单字段的属性
 	/// 用于标记模型中的成员是表单字段
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+	[AttributeUsage(AttributeTargets.Property)]
 	public abstract class FormFieldAttribute : Attribute {
 		/// <summary>
 		/// 字段名称

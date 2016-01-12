@@ -56,6 +56,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		public User() {
 			Items = new Dictionary<string, object>();
 		}
+
+		/// <summary>
+		/// 显示用户名
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() {
+			return Username;
+		}
 	}
 
 	/// <summary>

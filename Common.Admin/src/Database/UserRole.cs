@@ -47,6 +47,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		public UserRole() {
 			Privileges = new HashSet<string>();
 		}
+
+		/// <summary>
+		/// 显示角色名称
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() {
+			return Name;
+		}
 	}
 
 	/// <summary>

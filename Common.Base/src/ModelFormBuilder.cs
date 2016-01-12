@@ -37,7 +37,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 表单字段到成员信息
 		/// </summary>
-		protected Dictionary<FormField, MemberInfo> FieldToMember { get; set; }
+		protected Dictionary<FormField, PropertyInfo> FieldToProperty { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -52,15 +52,14 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			}
 			// 添加成员和验证属性
 			Form.Fields.Clear();
-			FieldToMember = new Dictionary<FormField, MemberInfo>();
-			var members = type.GetProperties().OfType<MemberInfo>().Concat(type.GetFields());
-			foreach (var member in members) {
+			FieldToProperty = new Dictionary<FormField, PropertyInfo>();
+			foreach (var member in type.GetProperties()) {
 				var fieldAttribute = member.GetAttribute<FormFieldAttribute>();
 				if (fieldAttribute != null) {
 					var field = new FormField(fieldAttribute);
 					field.ValidationAttributes.AddRange(member.GetAttributes<ValidationAttribute>());
 					Form.Fields.Add(field);
-					FieldToMember[field] = member;
+					FieldToProperty[field] = member;
 				}
 			}
 		}
@@ -83,11 +82,9 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			OnBind();
 			// 把模型中的值设置到字段
 			foreach (var field in Form.Fields) {
-				var member = FieldToMember.GetOrDefault(field);
-				if (member is PropertyInfo) {
-					field.Value = ((PropertyInfo)member).GetValue(this);
-				} else if (member is FieldInfo) {
-					field.Value = ((FieldInfo)member).GetValue(this);
+				var property = FieldToProperty.GetOrDefault(field);
+				if (property != null) {
+					field.Value = property.GetValue(this);
 				}
 			}
 		}
@@ -102,11 +99,9 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			var values = Form.ParseValues(submitValues);
 			foreach (var field in Form.Fields) {
 				var value = values.GetOrDefault(field.Attribute.Name);
-				var member = FieldToMember.GetOrDefault(field);
-				if (member is PropertyInfo) {
-					((PropertyInfo)member).SetValue(this, value);
-				} else if (member is FieldInfo) {
-					((FieldInfo)member).SetValue(this, value);
+				var property = FieldToProperty.GetOrDefault(field);
+				if (property != null) {
+					property.SetValue(this, value.ConvertOrDefault(property.PropertyType, null));
 				}
 			}
 			// 调用提交时的处理

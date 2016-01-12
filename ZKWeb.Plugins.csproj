@@ -121,7 +121,11 @@
     <Compile Include="Common.Admin\src\Plugin.cs" />
     <Compile Include="Common.Admin\src\PrivilegesChecker.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
-    <Compile Include="Common.Admin\src\TypeTraits\IsRecyclable.cs" />
+    <Compile Include="Common.Base\src\Extensions\HtmlTextWriterExtensions.cs" />
+    <Compile Include="Common.Base\src\Model\ListItemFromData.cs" />
+    <Compile Include="Common.Base\src\Model\ListItemFromDataNotDeleted.cs" />
+    <Compile Include="Common.Base\src\Model\ListItemFromEnum.cs" />
+    <Compile Include="Common.Base\src\TypeTraits\IsRecyclable.cs" />
     <Compile Include="Common.Admin\src\UserManager.cs" />
     <Compile Include="Common.Base\src\AjaxTableBuilder.cs" />
     <Compile Include="Common.Base\src\AjaxTableSearchBarBuilder.cs" />
@@ -179,6 +183,8 @@
     <Compile Include="Common.Base\src\Model\IScheduledTaskExecutor.cs" />
     <Compile Include="Common.Base\src\Model\JsonSerializedType.cs" />
     <Compile Include="Common.Base\src\Model\LabelCssClassAttribute.cs" />
+    <Compile Include="Common.Base\src\Model\ListItem.cs" />
+    <Compile Include="Common.Base\src\Model\ListItemsWithOptional.cs" />
     <Compile Include="Common.Base\src\Model\MenuItem.cs" />
     <Compile Include="Common.Base\src\Model\ScriptStrings.cs" />
     <Compile Include="Common.Base\src\Plugin.cs" />

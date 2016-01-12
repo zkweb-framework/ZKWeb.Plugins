@@ -10,9 +10,9 @@ using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Model;
-using ZKWeb.Plugins.Common.Admin.src.TypeTraits;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.TypeTraits;
 using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Admin.src {

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
 using ZKWeb.Core;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
@@ -26,20 +27,15 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var attribute = (TextAreaFieldAttribute)field.Attribute;
 			var html = new HtmlTextWriter(new StringWriter());
-			foreach (var pair in provider.FormControlAttributes) {
-				html.AddAttribute(pair.Key, pair.Value);
-			}
 			html.AddAttribute("name", field.Attribute.Name);
 			html.AddAttribute("rows", attribute.Rows.ToString());
 			html.AddAttribute("placeholder", new T(attribute.PlaceHolder));
-			foreach (var pair in htmlAttributes) {
-				html.AddAttribute(pair.Key, pair.Value);
-			}
+			html.AddAttributes(provider.FormControlAttributes);
+			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("textarea");
 			html.WriteEncodedText((field.Value ?? "").ToString());
 			html.RenderEndTag();
-			return provider.FormGroupHtml(
-				field, htmlAttributes, html.InnerWriter.ToString());
+			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());
 		}
 
 		/// <summary>

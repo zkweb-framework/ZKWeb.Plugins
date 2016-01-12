@@ -137,9 +137,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			[CheckBoxField("SuperAdmin")]
 			public bool IsSuperAdmin { get; set; }
 			/// <summary>
-			/// 角色，TODO:未实现
+			/// 角色
 			/// </summary>
-			public string Role { get; set; }
+			[DropdownListField("Role", typeof(ListItemsWithOptional<ListItemFromDataNotDeleted<UserRole>>))]
+			public long? RoleId { get; set; }
 
 			/// <summary>
 			/// 绑定数据到表单
@@ -148,7 +149,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				Username = bindFrom.Username;
 				Password = null;
 				IsSuperAdmin = bindFrom.Type == UserTypes.SuperAdmin;
-				Role = bindFrom.Role == null ? null : bindFrom.Role.Id.ToString();
+				RoleId = bindFrom.Role == null ? null : (long?)bindFrom.Role.Id;
 			}
 
 			/// <summary>
@@ -177,7 +178,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				if (sessionManager.GetSession().ReleatedId == saveTo.Id && saveTo.Type != UserTypes.SuperAdmin) {
 					throw new HttpException(400, new T("You can't downgrade yourself to normal admin"));
 				}
-				saveTo.Role = null;
+				saveTo.Role = RoleId == null ? null : context.Get<UserRole>(r => r.Id == RoleId);
 				return new {
 					message = new T("Successfully Saved"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal

@@ -9,6 +9,7 @@ using System.Web;
 using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>
@@ -64,13 +65,10 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			if (id <= 0) {
 				return new TData();
 			}
-			var dataParam = Expression.Parameter(typeof(TData), "data");
-			var memberExp = Expression.Property(dataParam, "Id");
-			var body = Expression.Equal(memberExp, Expression.Constant(id));
-			var data = context.Get(Expression.Lambda<Func<TData, bool>>(body, dataParam));
+			var exp = ExpressionUtils.MakeMemberEqualiventExpression<TData>("Id", id);
+			var data = context.Get(exp);
 			if (data == null) {
-				throw new HttpException(404,
-					string.Format(new T("Data with id {0} cannot be found"), id));
+				throw new HttpException(404, string.Format(new T("Data with id {0} cannot be found"), id));
 			}
 			return data;
 		}

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
@@ -21,15 +22,11 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var html = new HtmlTextWriter(new StringWriter());
-			foreach (var pair in provider.FormControlAttributes) {
-				html.AddAttribute(pair.Key, pair.Value);
-			}
 			html.AddAttribute("name", field.Attribute.Name);
 			html.AddAttribute("value", (field.Value ?? "").ToString());
 			html.AddAttribute("type", "hidden");
-			foreach (var pair in htmlAttributes) {
-				html.AddAttribute(pair.Key, pair.Value);
-			}
+			html.AddAttributes(provider.FormControlAttributes);
+			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("input");
 			html.RenderEndTag();
 			return html.InnerWriter.ToString();

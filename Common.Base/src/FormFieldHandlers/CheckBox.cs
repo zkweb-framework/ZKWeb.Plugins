@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -21,22 +23,17 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var html = new HtmlTextWriter(new StringWriter());
-			foreach (var pair in provider.FormControlAttributes.Where(p => p.Key != "class")) {
-				html.AddAttribute(pair.Key, pair.Value);
-			}
-			html.AddAttribute("class", "switchery");
 			html.AddAttribute("name", field.Attribute.Name);
-			if (field.Value as bool? == true) {
+			if (field.Value.ConvertOrDefault<bool?>() == true) {
 				html.AddAttribute("checked", null);
 			}
 			html.AddAttribute("type", "checkbox");
-			foreach (var pair in htmlAttributes) {
-				html.AddAttribute(pair.Key, pair.Value);
-			}
+			html.AddAttribute("class", "switchery");
+			html.AddAttributes(provider.FormControlAttributes.Where(a => a.Key != "class"));
+			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("input");
 			html.RenderEndTag();
-			return provider.FormGroupHtml(
-				field, htmlAttributes, html.InnerWriter.ToString());
+			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());
 		}
 
 		/// <summary>

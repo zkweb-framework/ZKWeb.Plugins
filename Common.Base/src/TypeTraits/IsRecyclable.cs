@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZKWeb.Plugins.Common.Admin.src.TypeTraits {
+namespace ZKWeb.Plugins.Common.Base.src.TypeTraits {
 	/// <summary>
 	/// 判断数据库类型是否可回收
 	/// </summary>
