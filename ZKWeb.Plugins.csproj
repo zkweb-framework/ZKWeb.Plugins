@@ -114,11 +114,14 @@
     <Compile Include="Common.Admin\src\Forms\UserRegForm.cs" />
     <Compile Include="Common.Admin\src\Model\AdminApp.cs" />
     <Compile Include="Common.Admin\src\Model\IAdminAppBuilder.cs" />
+    <Compile Include="Common.Admin\src\Model\IPrivilegesProvider.cs" />
     <Compile Include="Common.Admin\src\Model\IUserLoginCallback.cs" />
-    <Compile Include="Common.Admin\src\Model\UserType.cs" />
+    <Compile Include="Common.Admin\src\Model\UserTypes.cs" />
+    <Compile Include="Common.Admin\src\Model\UserTypesGroup.cs" />
     <Compile Include="Common.Admin\src\Plugin.cs" />
     <Compile Include="Common.Admin\src\PrivilegesChecker.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.Admin\src\TypeTraits\IsRecyclable.cs" />
     <Compile Include="Common.Admin\src\UserManager.cs" />
     <Compile Include="Common.Base\src\AjaxTableBuilder.cs" />
     <Compile Include="Common.Base\src\AjaxTableSearchBarBuilder.cs" />
