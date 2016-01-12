@@ -120,7 +120,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 绑定数据到表单
 			/// </summary>
-			protected override void OnBind(UserRole bindFrom) {
+			protected override void OnBind(DatabaseContext context, UserRole bindFrom) {
 				Name = bindFrom.Name;
 				Privileges = null;
 				Remark = bindFrom.Remark;
@@ -129,7 +129,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
-			protected override object OnSubmit(UserRole saveTo) {
+			protected override object OnSubmit(DatabaseContext context, UserRole saveTo) {
 				saveTo.Name = Name;
 				saveTo.Privileges = null;
 				saveTo.Remark = Remark;

@@ -18,16 +18,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	/// </summary>
 	[ExportMany, SingletonReuse]
 	public class AdminManager {
-		/// <summary>
-		/// 管理员类型
-		/// </summary>
-		public readonly static UserTypes[] AdminTypes =
-			new UserTypes[] { UserTypes.Admin, UserTypes.SuperAdmin };
-		/// <summary>
-		/// 合作伙伴类型
-		/// </summary>
-		public readonly static UserTypes[] ParterTypes =
-			new UserTypes[] { UserTypes.CooperationPartner };
+
 
 		/// <summary>
 		/// 登陆管理员
@@ -43,14 +34,14 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			// 当前没有任何管理员时，把这个用户设置为超级管理员
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
-				if (context.Count<User>(u => AdminTypes.Contains(u.Type)) <= 0) {
+				if (context.Count<User>(u => UserTypesGroup.Admin.Contains(u.Type)) <= 0) {
 					user.Type = UserTypes.SuperAdmin;
 					context.Save(ref user);
 					context.SaveChanges();
 				}
 			}
 			// 只允许管理员或合作伙伴登陆到后台
-			if (!AdminTypes.Contains(user.Type) && !ParterTypes.Contains(user.Type)) {
+			if (!UserTypesGroup.AdminOrParter.Contains(user.Type)) {
 				throw new HttpException(401, new T("Sorry, You have no privileges to use admin panel."));
 			}
 			// 以指定用户登录
@@ -65,7 +56,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			// 当前没有任何管理员，第一次登录的用户将成为超级管理员
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
-				if (context.Count<User>(u => AdminTypes.Contains(u.Type)) <= 0) {
+				if (context.Count<User>(u => UserTypesGroup.Admin.Contains(u.Type)) <= 0) {
 					return new T("Website has no admin yet, the first login user will become super admin.");
 				}
 			}

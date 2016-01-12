@@ -60,8 +60,8 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 						return user;
 					}
 				}
-				// 通过用户名查找用户
-				return context.Get<User>(u => u.Username == username);
+				// 通过用户名查找用户，要求未删除
+				return context.Get<User>(u => u.Username == username && !u.Deleted);
 			}
 		}
 

@@ -10,6 +10,7 @@ using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Model;
+using ZKWeb.Plugins.Common.Admin.src.TypeTraits;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
@@ -33,7 +34,8 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	/// <typeparam name="TData">管理的数据类型</typeparam>
 	/// <typeparam name="TApp">继承类自身的类型</typeparam>
 	[ExportMany]
-	public abstract class AdminAppBuilder<TData, TApp> : AdminApp, IAdminAppBuilder
+	public abstract class AdminAppBuilder<TData, TApp> :
+		AdminApp, IAdminAppBuilder, IPrivilegesProvider
 		where TData : class {
 		/// <summary>
 		/// 获取搜索结果的Url
@@ -55,6 +57,30 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// 表格Id
 		/// </summary>
 		public virtual string TableId { get { return typeof(TData).Name + "List"; } }
+		/// <summary>
+		/// 查看权限
+		/// </summary>
+		public virtual string ViewPrivilege { get { return Name + ":View"; } }
+		/// <summary>
+		/// 编辑权限
+		/// </summary>
+		public virtual string EditPrivilege { get { return Name + ":Edit"; } }
+		/// <summary>
+		/// 删除权限
+		/// </summary>
+		public virtual string DeletePrivilege { get { return Name + ":Delete"; } }
+		/// <summary>
+		/// 永久删除权限
+		/// </summary>
+		public virtual string DeleteForeverPrivilege { get { return Name + ":DeleteForever"; } }
+		/// <summary>
+		/// 默认需要拥有管理员权限
+		/// </summary>
+		public override UserTypes[] AllowedUserTypes { get { return UserTypesGroup.Admin; } }
+		/// <summary>
+		/// 默认需要拥有查看权限
+		/// </summary>
+		public override string[] RequiredPrivileges { get { return new[] { ViewPrivilege }; } }
 		/// <summary>
 		/// 显示列表页时引用的Css文件路径
 		/// </summary>
@@ -91,6 +117,8 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult ListAction() {
+			// 检查权限
+			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 表格构建器
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = TableId;
@@ -117,6 +145,8 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult SearchAction() {
+			// 检查权限
+			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取参数并转换到搜索请求
 			var json = HttpContext.Current.Request.GetParam<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
@@ -138,9 +168,15 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			var attribute = form.GetFormAttribute();
 			attribute.Action = attribute.Action ?? request.Url.PathAndQuery;
 			if (request.HttpMethod == HttpMethods.POST) {
-				return new JsonResult(form.Submit()); // 提交表单
+				// 检查权限
+				PrivilegesChecker.Check(AllowedUserTypes, EditPrivilege);
+				// 提交表单
+				return new JsonResult(form.Submit());
 			} else {
-				form.Bind(); // 绑定表单
+				// 检查权限
+				PrivilegesChecker.Check(AllowedUserTypes, ViewPrivilege);
+				// 绑定表单
+				form.Bind();
 				return new TemplateResult("common.admin/generic_add.html", new { form });
 			}
 		}
@@ -155,9 +191,15 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			var attribute = form.GetFormAttribute();
 			attribute.Action = attribute.Action ?? request.Url.PathAndQuery;
 			if (request.HttpMethod == HttpMethods.POST) {
-				return new JsonResult(form.Submit()); // 提交表单
+				// 检查权限
+				PrivilegesChecker.Check(AllowedUserTypes, EditPrivilege);
+				// 提交表单
+				return new JsonResult(form.Submit());
 			} else {
-				form.Bind(); // 绑定表单
+				// 检查权限
+				PrivilegesChecker.Check(AllowedUserTypes, ViewPrivilege);
+				// 绑定表单
+				form.Bind();
 				return new TemplateResult("common.admin/generic_edit.html", new { form });
 			}
 		}
@@ -176,6 +218,19 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// <returns></returns>
 		Type IAdminAppBuilder.GetDataType() {
 			return typeof(TData);
+		}
+
+		/// <summary>
+		/// 获取权限列表
+		/// </summary>
+		/// <returns></returns>
+		public virtual IEnumerable<string> GetPrivileges() {
+			yield return ViewPrivilege;
+			yield return EditPrivilege;
+			if (IsRecyclable<TData>.Value) {
+				yield return DeletePrivilege;
+			}
+			yield return DeleteForeverPrivilege;
 		}
 
 		/// <summary>

@@ -14,6 +14,7 @@ using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using DryIoc;
 
 namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// <summary>
@@ -39,11 +40,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 构建表格时的处理
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
+				var addAdmin = new T("Add Admin");
 				table.MenuItems.AddDivider();
-				table.MenuItems.AddAddActionForAdminApp<AdminManageApp>();
+				table.MenuItems.AddAddActionForAdminApp<AdminManageApp>(name: addAdmin, title: addAdmin);
 				searchBar.KeywordPlaceHolder = new T("Username");
 				searchBar.MenuItems.AddDivider();
-				searchBar.MenuItems.AddAddActionForAdminApp<AdminManageApp>();
+				searchBar.MenuItems.AddAddActionForAdminApp<AdminManageApp>(name: addAdmin, title: addAdmin);
 			}
 
 			/// <summary>
@@ -51,7 +53,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnQuery(
 				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) {
-				query = query.Where(u => AdminManager.AdminTypes.Contains(u.Type));
+				query = query.Where(u => UserTypesGroup.Admin.Contains(u.Type));
 				if (!string.IsNullOrEmpty(request.Keyword)) {
 					query = query.Where(u => u.Username.Contains(request.Keyword));
 				}
@@ -142,7 +144,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 绑定数据到表单
 			/// </summary>
-			protected override void OnBind(User bindFrom) {
+			protected override void OnBind(DatabaseContext context, User bindFrom) {
 				Username = bindFrom.Username;
 				Password = null;
 				IsSuperAdmin = bindFrom.Type == UserTypes.SuperAdmin;
@@ -152,15 +154,29 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
-			protected override object OnSubmit(User saveTo) {
+			protected override object OnSubmit(DatabaseContext context, User saveTo) {
 				saveTo.Username = Username;
+				// 添加时设置创建时间，并要求填密码
+				if (saveTo.Id <= 0) {
+					saveTo.CreateTime = DateTime.UtcNow;
+					if (string.IsNullOrEmpty(Password)) {
+						throw new HttpException(400, new T("Please enter password when creating admin"));
+					}
+				}
+				// 需要更新密码时
 				if (!string.IsNullOrEmpty(Password)) {
 					if (Password != ConfirmPassword) {
 						throw new HttpException(400, new T("Please repeat the password exactly"));
 					}
 					saveTo.SetPassword(Password);
 				}
+				// 选中超级管理员时设置超级管理员
 				saveTo.Type = IsSuperAdmin ? UserTypes.SuperAdmin : UserTypes.Admin;
+				// 不允许取消自身的超级管理员权限
+				var sessionManager = Application.Ioc.Resolve<SessionManager>();
+				if (sessionManager.GetSession().ReleatedId == saveTo.Id && saveTo.Type != UserTypes.SuperAdmin) {
+					throw new HttpException(400, new T("You can't downgrade yourself to normal admin"));
+				}
 				saveTo.Role = null;
 				return new { message = new T("Successfully Saved") };
 			}

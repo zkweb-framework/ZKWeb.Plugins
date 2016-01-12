@@ -37,7 +37,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 		/// 允许显示此应用的用户类型列表
 		/// </summary>
 		public virtual UserTypes[] AllowedUserTypes {
-			get { return AdminManager.AdminTypes; }
+			get { return UserTypesGroup.Admin; }
 		}
 		/// <summary>
 		/// 显示此应用要求的权限列表

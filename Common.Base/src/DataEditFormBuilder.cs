@@ -38,15 +38,17 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 绑定数据到表单
 		/// </summary>
+		/// <param name="context">数据库上下文</param>
 		/// <param name="bindFrom">来源的数据</param>
-		protected abstract void OnBind(TData bindFrom);
+		protected abstract void OnBind(DatabaseContext context, TData bindFrom);
 
 		/// <summary>
 		/// 保存表单到数据，返回处理结果
 		/// </summary>
+		/// <param name="context">数据库上下文</param>
 		/// <param name="saveTo">保存到的数据</param>
 		/// <returns></returns>
-		protected abstract object OnSubmit(TData saveTo);
+		protected abstract object OnSubmit(DatabaseContext context, TData saveTo);
 
 		/// <summary>
 		/// 获取绑定表单时来源的数据
@@ -91,7 +93,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			var callbacks = Application.Ioc.ResolveMany<IDataEditFormCallback<TData, TForm>>();
 			using (var context = databaseManager.GetContext()) {
 				var data = GetDataBindFrom(context);
-				OnBind(data);
+				OnBind(context, data);
 				callbacks.ForEach(c => c.OnBind((TForm)(object)this, context, data));
 			}
 		}
@@ -108,7 +110,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				var data = GetDataSaveTo(context);
 				object result = null;
 				context.Save(ref data, d => {
-					result = OnSubmit(d);
+					result = OnSubmit(context, d);
 					callbacks.ForEach(c => c.OnSubmit((TForm)(object)this, context, d));
 				});
 				context.SaveChanges();

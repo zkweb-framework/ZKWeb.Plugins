@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// <returns></returns>
 		[Action("admin")]
 		public IActionResult Admin() {
-			PrivilegesChecker.CheckAdminOrPartner();
+			PrivilegesChecker.Check(UserTypesGroup.AdminOrParter);
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			var apps = Application.Ioc.ResolveMany<AdminApp>();
