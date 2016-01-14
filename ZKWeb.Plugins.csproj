@@ -106,7 +106,10 @@
     <Compile Include="Common.Admin\src\Database\UserMessage.cs" />
     <Compile Include="Common.Admin\src\Database\UserRole.cs" />
     <Compile Include="Common.Admin\src\DataCallbacks\CheckUsernameDuplicate.cs" />
+    <Compile Include="Common.Admin\src\DataCallbacks\PreventDeleteSelf.cs" />
     <Compile Include="Common.Admin\src\Extensions\AjaxTableActionColumnExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\AjaxTableIdColumnExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\IQueryableExtensions.cs" />
     <Compile Include="Common.Admin\src\Extensions\MenuItemsExtensions.cs" />
     <Compile Include="Common.Admin\src\Extensions\SessionExtensions.cs" />
     <Compile Include="Common.Admin\src\Forms\AdminLoginForm.cs" />
@@ -121,10 +124,12 @@
     <Compile Include="Common.Admin\src\Model\UserTypesGroup.cs" />
     <Compile Include="Common.Admin\src\Plugin.cs" />
     <Compile Include="Common.Admin\src\PrivilegesChecker.cs" />
+    <Compile Include="Common.Admin\src\PrivilegesTranslator.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroup.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroups.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxTree.cs" />
+    <Compile Include="Common.Base\src\GenericDataDeleter.cs" />
     <Compile Include="Common.Base\src\Model\IListItemGroupsProvider.cs" />
     <Compile Include="Common.Base\src\Model\IListItemTreeProvider.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromData.cs" />
