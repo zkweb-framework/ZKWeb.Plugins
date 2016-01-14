@@ -87,22 +87,82 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	}
 
 	/// <summary>
-	/// 下拉列表
+	/// 勾选框分组
 	/// </summary>
-	public class DropdownListFieldAttribute : FormFieldAttribute {
+	public class CheckBoxGroupFieldAttribute : FormFieldAttribute {
 		/// <summary>
 		/// 选项来源，必须继承IListItemProvider
 		/// </summary>
-		public Type Sources { get; set; }
+		public Type Source { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		/// <param name="name">字段名称</param>
 		/// <param name="sources">选项来源，必须继承IListItemProvider</param>
-		public DropdownListFieldAttribute(string name, Type sources) {
+		public CheckBoxGroupFieldAttribute(string name, Type source) {
 			Name = name;
-			Sources = sources;
+			Source = source;
+		}
+	}
+
+	/// <summary>
+	/// 勾选框分组列表
+	/// </summary>
+	public class CheckBoxGroupsFieldAttribute : FormFieldAttribute {
+		/// <summary>
+		/// 选项来源，必须继承IListItemGroupsProvider
+		/// </summary>
+		public Type Source { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		/// <param name="name">字段名称</param>
+		/// <param name="sources">选项来源，必须继承IListItemGroupsProvider</param>
+		public CheckBoxGroupsFieldAttribute(string name, Type source) {
+			Name = name;
+			Source = source;
+		}
+	}
+
+	/// <summary>
+	/// 勾选框树
+	/// </summary>
+	public class CheckBoxTreeFieldAttribute : FormFieldAttribute {
+		/// <summary>
+		/// 选项来源，必须继承IListItemTreeProvider
+		/// </summary>
+		public Type Source { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		/// <param name="name">字段名称</param>
+		/// <param name="source">选项来源，必须继承IListItemProvider</param>
+		public CheckBoxTreeFieldAttribute(string name, Type source) {
+			Name = name;
+			Source = source;
+		}
+	}
+
+	/// <summary>
+	/// 下拉列表
+	/// </summary>
+	public class DropdownListFieldAttribute : FormFieldAttribute {
+		/// <summary>
+		/// 选项来源，必须继承IListItemProvider
+		/// </summary>
+		public Type Source { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		/// <param name="name">字段名称</param>
+		/// <param name="source">选项来源，必须继承IListItemProvider</param>
+		public DropdownListFieldAttribute(string name, Type source) {
+			Name = name;
+			Source = source;
 		}
 	}
 

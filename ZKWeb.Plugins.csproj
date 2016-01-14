@@ -112,6 +112,7 @@
     <Compile Include="Common.Admin\src\Forms\AdminLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserRegForm.cs" />
+    <Compile Include="Common.Admin\src\ListItemProviders\PrivilegesListItemGroupsProvider.cs" />
     <Compile Include="Common.Admin\src\Model\AdminApp.cs" />
     <Compile Include="Common.Admin\src\Model\IAdminAppBuilder.cs" />
     <Compile Include="Common.Admin\src\Model\IPrivilegesProvider.cs" />
@@ -121,7 +122,11 @@
     <Compile Include="Common.Admin\src\Plugin.cs" />
     <Compile Include="Common.Admin\src\PrivilegesChecker.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
-    <Compile Include="Common.Base\src\Extensions\HtmlTextWriterExtensions.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroup.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroups.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxTree.cs" />
+    <Compile Include="Common.Base\src\Model\IListItemGroupsProvider.cs" />
+    <Compile Include="Common.Base\src\Model\IListItemTreeProvider.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromData.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromDataNotDeleted.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromEnum.cs" />
@@ -219,6 +224,9 @@
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.id_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.id_column_head.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.search_bar.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.checkbox_groups.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.checkbox_tree.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.checkbox_group.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.form_group.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.onclick.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.pagination_settings.html" />

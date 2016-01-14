@@ -45,6 +45,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "False", "否" },
 			{ "Actions", "操作" },
 			{ "Deleted", "已删除" },
+			{ "Select All", "全选" },
 			{ "Select/Unselect All", "全选/取消全选" },
 			{ "Submit", "提交" },
 			{ "Please Select", "请选择" }

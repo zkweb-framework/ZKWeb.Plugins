@@ -61,6 +61,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Role Manage", "角色管理" },
 			{ "Role", "角色" },
 			{ "View", "查看" },
+			{ "Edit", "编辑" },
+			{ "Delete", "删除" },
+			{ "DeleteForever", "永久删除" },
 			{ "Please enter name", "请填写名称" },
 			{ "Remark", "备注" },
 			{ "Please enter remark", "请填写备注" },
@@ -76,7 +79,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Add Admin", "添加管理员" },
 			{ "Edit Admin", "编辑管理员" },
 			{ "Please enter password when creating admin", "创建管理员时需要填写密码" },
-			{ "You can't downgrade yourself to normal admin", "不能取消自身的超级管理员权限" }
+			{ "You can't downgrade yourself to normal admin", "不能取消自身的超级管理员权限" },
+			{ "Privileges", "权限" },
 		};
 
 		public bool CanTranslate(string code) {

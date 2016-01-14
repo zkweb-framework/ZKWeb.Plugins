@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotLiquid;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// 下拉框或单选按钮使用的选项
 	/// </summary>
-	public class ListItem {
+	public class ListItem : ILiquidizable {
 		/// <summary>
 		/// 名称
 		/// </summary>
@@ -31,6 +32,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public ListItem(string name, string value) {
 			Name = name;
 			Value = value;
+		}
+
+		/// <summary>
+		/// 允许描画元素到模板
+		/// </summary>
+		/// <returns></returns>
+		object ILiquidizable.ToLiquid() {
+			return new { name = Name, value = Value };
 		}
 	}
 }

@@ -132,7 +132,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			[PasswordField("ConfirmPassword", "Keep empty if you don't want to change")]
 			public string ConfirmPassword { get; set; }
 			/// <summary>
-			/// 是否超级管理员，TODO:需要添加检查
+			/// 是否超级管理员
 			/// </summary>
 			[CheckBoxField("SuperAdmin")]
 			public bool IsSuperAdmin { get; set; }

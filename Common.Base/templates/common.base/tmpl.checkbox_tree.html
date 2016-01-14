@@ -1,0 +1,11 @@
+﻿<div class="form-control-scrollable">
+	<div class="checkbox-list">
+		{% for item in items %}
+		<label style="padding-left: {{ item.level | times: 20 }}px">
+			<input type="checkbox" merge-to="input[name='{{ fieldName }}']" value="{{ item.value }}" />
+			{{ item.name | trans }}
+		</label>
+		{% endfor %}
+	</div>
+</div>
+{{ fieldHtml }}

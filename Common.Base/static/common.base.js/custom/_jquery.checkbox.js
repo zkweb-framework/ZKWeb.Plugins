@@ -11,11 +11,10 @@
 		同一分组的多选框除了全选外全部选中时，把全选也选中
 
 	支持储存多个多选框的值到一个控件中
-		<input type="checkbox" value="A" data-merge-to="ExampleList">
-		<input type="checkbox" value="B" data-merge-to="ExampleList">
+		<input type="checkbox" value="A" merge-to="input[name=ExampleList]">
+		<input type="checkbox" value="B" merge-to="input[name=ExampleList]">
 		<input type="hidden" name="ExampleList" value="[]" />
-		使用 $("[name='ExampleList']").checkboxMerging() 初始化
-		之后当A和B选中或取消选中时，ExampleList中的值会随着改变
+		当A和B选中或取消选中时，ExampleList中的值会随着改变
 */
 
 $(function () {
@@ -52,25 +51,29 @@ $(function () {
 	});
 
 	// 支持储存多个多选框的值到一个控件中
-	$.fn.checkboxMerging = function () {
-		var $this = $(this);
-		var name = $this.attr("name");
-		if (!name) {
-			return; // name不能等于空，否则会绑定到所有多选框
-		}
-		var values = JSON.parse($this.val() || "[]");
-		($(checkboxSelector)
-			.filter(function () { return $(this).data("merge-to") == name; })
-			.each(function () {
-				var $checkbox = $(this);
-				$checkbox.prop("checked", _.contains(values, $checkbox.val())).trigger("change");
-			})
-			.on("change", function () {
-				var $checkbox = $(this);
-				var value = $checkbox.val();
-				values = ($checkbox.is(":checked") ?
-					_.union(values, [value]) : _.without(values, value));
-				$this.val(JSON.stringify(values));
-			}));
+	var checkboxWithMergeToSelector = checkboxSelector + "[merge-to]";
+	$(document).on("change", checkboxWithMergeToSelector, function () {
+		var $checkbox = $(this);
+		var $target = $($checkbox.attr("merge-to"));
+		var value = $checkbox.val();
+		var values = $target.data("values") || JSON.parse($target.val() || "[]");
+		values = $checkbox.is(":checked") ? _.union(values, [value]) : _.without(values, value);
+		$target.data("values", values);
+		$target.val(JSON.stringify(values));
+	});
+
+	// 页面载入时自动绑定值
+	var setup = function (checkboxes, targetSource) {
+		$(checkboxes).each(function() {
+			var $checkbox = $(this);
+			var $target = $(targetSource).find($checkbox.attr("merge-to"));
+			var values = $target.data("values") || JSON.parse($target.val() || "[]");
+			$target.data("values", values);
+			$checkbox.prop("checked", _.contains(values, $checkbox.val()));
+		});
 	};
+	setup($(checkboxWithMergeToSelector), document);
+	$(document).on("dynamicLoaded", function (e, contents) {
+		setup($(contents).find(checkboxWithMergeToSelector), contents);
+	});
 });

@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var attribute = (DropdownListFieldAttribute)field.Attribute;
-			var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Sources);
+			var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
 			var listItems = listItemProvider.GetItems().ToList();
 			var html = new HtmlTextWriter(new StringWriter());
 			html.AddAttribute("name", field.Attribute.Name);

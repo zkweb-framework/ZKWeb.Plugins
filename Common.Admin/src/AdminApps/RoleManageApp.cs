@@ -13,6 +13,9 @@ using ZKWeb.Utils.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using System.ComponentModel.DataAnnotations;
+using ZKWeb.Utils.Functions;
+using ZKWeb.Plugins.Common.Admin.src.ListItemProviders;
+using Newtonsoft.Json;
 
 namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// <summary>
@@ -106,10 +109,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			[TextBoxField("Name", "Please enter name")]
 			public string Name { get; set; }
 			/// <summary>
-			/// 权限，TODO:未实现
+			/// 权限
 			/// </summary>
-			[TextBoxField("Privileges")]
-			public string Privileges { get; set; }
+			[Required]
+			[CheckBoxGroupsField("Privileges", typeof(PrivilegesListItemGroupsProvider))]
+			public HashSet<string> Privileges { get; set; }
 			/// <summary>
 			/// 备注
 			/// </summary>
@@ -122,7 +126,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			protected override void OnBind(DatabaseContext context, UserRole bindFrom) {
 				Name = bindFrom.Name;
-				Privileges = null;
+				Privileges = bindFrom.Privileges;
 				Remark = bindFrom.Remark;
 			}
 
@@ -131,7 +135,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			protected override object OnSubmit(DatabaseContext context, UserRole saveTo) {
 				saveTo.Name = Name;
-				saveTo.Privileges = null;
+				saveTo.Privileges = Privileges;
 				saveTo.Remark = Remark;
 				if (saveTo.Id <= 0) {
 					saveTo.CreateTime = DateTime.UtcNow;
