@@ -180,7 +180,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		public static void BindValuesFromAnonymousObject(this FormBuilder builder, object obj) {
 			builder.BindValues(Hash.FromAnonymousObject(obj));
 		}
-
+		
 		/// <summary>
 		/// 解析提交上来的值
 		/// 同时检查csrf校验和值是否符合验证器的规则

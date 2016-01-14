@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public IEnumerable<ListItem> GetItems() {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			var exp = ExpressionUtils.MakeMemberEqualiventExpression<TData>(
-				IsRecyclable<TData>.PropertyName, false);
+				IsRecyclable.PropertyName, false);
 			using (var context = databaseManager.GetContext()) {
 				foreach (var data in context.Query<TData>().Where(exp)) {
 					yield return new ListItem(

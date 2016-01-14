@@ -24,14 +24,11 @@
 	};
 	// 提交操作到指定的地址并显示返回的消息，成功时刷新表格
 	$.ajaxTableType.prototype.postAction = function (data, target) {
-		/*var table = this;
-		var token = $("input[name='__RequestVerificationToken']").val();
-		$.post(target, { json: JSON.stringify(data), __RequestVerificationToken: token }, function (data) {
-			if (data.success) {
-				table.refresh();
-			}
+		var table = this;
+		$.post(target, { json: JSON.stringify(data) }, function (data) {
+			table.refresh();
 			$.handleAjaxResult(data);
-		});*/
+		});
 	};
 	// 切换回收站状态
 	$.ajaxTableType.prototype.toggleRecycleBin = function (toggleButton) {

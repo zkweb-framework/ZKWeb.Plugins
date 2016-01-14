@@ -18,8 +18,6 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 	/// </summary>
 	[ExportMany, SingletonReuse]
 	public class AdminManager {
-
-
 		/// <summary>
 		/// 登陆管理员
 		/// 登陆失败时会抛出例外

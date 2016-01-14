@@ -27,6 +27,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string Url { get { return "/admin/admins"; } }
 		public override string TileClass { get { return "tile bg-blue-hoki"; } }
 		public override string IconClass { get { return "fa fa-user-secret"; } }
+		public override string TypeName { get { return "Admin"; } }
 		public override UserTypes[] AllowedUserTypes { get { return new[] { UserTypes.SuperAdmin }; } }
 		protected override IAjaxTableCallback<User> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() { return new Form(); }
@@ -40,12 +41,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 构建表格时的处理
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				var addAdmin = new T("Add Admin");
 				table.MenuItems.AddDivider();
-				table.MenuItems.AddAddActionForAdminApp<AdminManageApp>(name: addAdmin, title: addAdmin);
+				table.MenuItems.AddAddActionForAdminApp<AdminManageApp>();
 				searchBar.KeywordPlaceHolder = new T("Username");
 				searchBar.MenuItems.AddDivider();
-				searchBar.MenuItems.AddAddActionForAdminApp<AdminManageApp>(name: addAdmin, title: addAdmin);
+				searchBar.MenuItems.AddRecycleBin();
+				searchBar.MenuItems.AddAddActionForAdminApp<AdminManageApp>();
 			}
 
 			/// <summary>
@@ -53,6 +54,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnQuery(
 				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) {
+				query = query.FilterByRecycleBin(request);
 				query = query.Where(u => UserTypesGroup.Admin.Contains(u.Type));
 				if (!string.IsNullOrEmpty(request.Keyword)) {
 					query = query.Where(u => u.Username.Contains(request.Keyword));
@@ -98,13 +100,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				response.Columns.AddEnumLabelColumn("SuperAdmin", typeof(EnumBool));
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditActionForAdminApp<AdminManageApp>(titleTemplate: new T("Edit Admin"));
-
-				idColumn.AddItemForClickEvent("Test", "fa fa-check", "alert('asdasdas')");
-
-				// idColumn.AddBatchRemoveAction();
-				// idColumn.AddBatchRemoveForeverAction();
-				// idColumn.AddBatchRecoverAction();
+				actionColumn.AddEditActionForAdminApp<AdminManageApp>();
+				idColumn.AddDivider();
+				idColumn.AddDeleteActionsForAdminApp<AdminManageApp>(request);
 			}
 		}
 

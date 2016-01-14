@@ -45,6 +45,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				table.MenuItems.AddAddActionForAdminApp<RoleManageApp>();
 				searchBar.KeywordPlaceHolder = new T("Name/Remark");
 				searchBar.MenuItems.AddDivider();
+				searchBar.MenuItems.AddRecycleBin();
 				searchBar.MenuItems.AddAddActionForAdminApp<RoleManageApp>();
 			}
 
@@ -53,6 +54,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnQuery(
 				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<UserRole> query) {
+				query = query.FilterByRecycleBin(request);
 				var keyword = request.Keyword;
 				if (!string.IsNullOrEmpty(keyword)) {
 					query = query.Where(r => r.Name.Contains(keyword) || r.Remark.Contains(keyword));
@@ -94,6 +96,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
 				actionColumn.AddEditActionForAdminApp<RoleManageApp>();
+				idColumn.AddDivider();
+				idColumn.AddDeleteActionsForAdminApp<RoleManageApp>(request);
 			}
 		}
 

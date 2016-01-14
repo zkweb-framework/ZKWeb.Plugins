@@ -14,6 +14,19 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 	/// </summary>
 	public static class MenuItemsExtensions {
 		/// <summary>
+		/// 添加回收站选项
+		/// 各个参数如不指定则使用默认值
+		/// </summary>
+		/// <typeparam name="TApp">后台应用的类型</typeparam>
+		public static void AddRecycleBin(
+			this List<MenuItem> items, string name = null, string iconClass = null) {
+			items.AddItemForClickEvent(
+				name ?? new T("Recycle Bin"),
+				iconClass ?? "fa fa-recycle",
+				"$(this).closestAjaxTable().toggleRecycleBin(this)");
+		}
+
+		/// <summary>
 		/// 添加添加按钮
 		/// 点击后弹出添加数据的模态框
 		/// 各个参数如不指定则使用默认值
@@ -24,7 +37,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 			string title = null, string url = null, object dialogParameters = null)
 			where TApp : class, IAdminAppBuilder, new() {
 			var app = new TApp();
-			var defaultName = new T("Add " + app.GetDataType().Name);
+			var defaultName = string.Format(new T("Add {0}"), new T(app.TypeName));
 			items.AddRemoteModalForAjaxTable(
 				name ?? defaultName,
 				iconClass ?? "fa fa-plus",

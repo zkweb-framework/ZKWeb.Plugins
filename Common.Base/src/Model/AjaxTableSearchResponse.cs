@@ -87,10 +87,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 					response.IsLastPage = true;
 				}
 				// 选择数据
+				// 默认把对象转换到的字符串保存到ToString中
 				var pairs = queryResults
 					.Select(r => new KeyValuePair<TData, Dictionary<string, object>>(
 						r, new Dictionary<string, object>()))
 					.ToList();
+				foreach (var pair in pairs) {
+					pair.Value["ToString"] = pair.Key.ToString();
+				}
 				foreach (var callback in callbacks) {
 					callback.OnSelect(request, pairs);
 				}

@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 				name ?? new T("View"),
 				buttonClass ?? "btn btn-xs default",
 				iconClass ?? "fa fa-edit",
-				titleTemplate ?? new T("Edit " + app.GetDataType().Name),
+				titleTemplate ?? string.Format(new T("Edit {0}"), new T(app.TypeName)),
 				urlTemplate ?? (app.EditUrl + "?id=<%-row.Id%>"),
 				dialogParameters);
 		}

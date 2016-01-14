@@ -1,5 +1,6 @@
 ﻿using DryIoc;
 using DryIocAttributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.TypeTraits;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Admin.src {
 	/// <summary>
@@ -54,9 +56,13 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		public virtual string BatchUrl { get { return Url + "/batch"; } }
 		/// <summary>
+		/// 类型名称
+		/// </summary>
+		public virtual string TypeName { get { return typeof(TData).Name; } }
+		/// <summary>
 		/// 表格Id
 		/// </summary>
-		public virtual string TableId { get { return typeof(TData).Name + "List"; } }
+		public virtual string TableId { get { return TypeName + "List"; } }
 		/// <summary>
 		/// 查看权限
 		/// </summary>
@@ -103,6 +109,10 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected abstract IModelFormBuilder GetEditForm();
+		/// <summary>
+		/// 批量操作对应的函数
+		/// </summary>
+		protected virtual Dictionary<string, Func<IActionResult>> BatchActions { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -110,6 +120,12 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		public AdminAppBuilder() {
 			IncludeCss = new List<string>();
 			IncludeJs = new List<string>();
+			BatchActions = new Dictionary<string, Func<IActionResult>>();
+			BatchActions["delete_forever"] = BatchActionForDeleteForever;
+			if (IsRecyclable<TData>.Value) {
+				BatchActions["delete"] = BatchActionForDelete;
+				BatchActions["recover"] = BatchActionForRecover;
+			}
 		}
 
 		/// <summary>
@@ -209,7 +225,57 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchAction() {
-			throw new NotImplementedException();
+			var request = HttpContext.Current.Request;
+			if (!request.IsAjaxRequest()) {
+				// 非ajax提交的请求有跨站攻击的危险，这里拒绝处理
+				throw new HttpException(403, new T("Non ajax request batch action is not secure"));
+			}
+			var actionName = request.GetParam<string>("action");
+			var action = BatchActions.GetOrDefault(actionName);
+			if (action == null) {
+				// 找不到对应的操作
+				throw new HttpException(404, string.Format(new T("Action {0} not exist"), actionName));
+			}
+			return action();
+		}
+
+		/// <summary>
+		/// 批量删除
+		/// </summary>
+		/// <returns></returns>
+		protected virtual IActionResult BatchActionForDelete() {
+			PrivilegesChecker.Check(AllowedUserTypes, DeletePrivilege);
+			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var idList = JsonConvert.DeserializeObject<IList<long>>(json);
+			var deleter = Application.Ioc.Resolve<GenericDataDeleter>();
+			deleter.BatchDelete<TData>(idList);
+			return new JsonResult(new { message = new T("Batch Delete Successful") });
+		}
+
+		/// <summary>
+		/// 批量恢复
+		/// </summary>
+		/// <returns></returns>
+		protected virtual IActionResult BatchActionForRecover() {
+			PrivilegesChecker.Check(AllowedUserTypes, DeletePrivilege);
+			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var idList = JsonConvert.DeserializeObject<IList<long>>(json);
+			var deleter = Application.Ioc.Resolve<GenericDataDeleter>();
+			deleter.BatchRecover<TData>(idList);
+			return new JsonResult(new { message = new T("Batch Recover Successful") });
+		}
+
+		/// <summary>
+		/// 批量永久删除
+		/// </summary>
+		/// <returns></returns>
+		protected virtual IActionResult BatchActionForDeleteForever() {
+			PrivilegesChecker.Check(AllowedUserTypes, DeleteForeverPrivilege);
+			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var idList = JsonConvert.DeserializeObject<IList<long>>(json);
+			var deleter = Application.Ioc.Resolve<GenericDataDeleter>();
+			deleter.BatchDeleteForever<TData>(idList);
+			return new JsonResult(new { message = new T("Batch Delete Forever Successful") });
 		}
 
 		/// <summary>

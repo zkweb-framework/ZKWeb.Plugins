@@ -43,19 +43,20 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 				// 跳转到登陆页面
 				context.Response.Redirect("/admin/login");
 				return;
-			} else if (HasPrivileges(user, privileges)) {
+			} else if (types.Contains(user.Type) && HasPrivileges(user, privileges)) {
 				// 检查通过
 				return;
 			} else if (privileges != null && privileges.Length > 0) {
 				// 无权限403
+				var translator = Application.Ioc.Resolve<PrivilegesTranslator>();
 				throw new HttpException(403, string.Format(
-					new T("Access this page require {0}, and {1} privileges"),
+					new T("Action require {0}, and {1} privileges"),
 					string.Join(",", types.Select(t => new T(t.GetDescription()))),
-					string.Join(",", privileges.Select(p => new T(p)))));
+					string.Join(",", privileges.Select(p => translator.Translate(p)))));
 			} else {
-				// 未登录403
+				// 用户类型不符合，或未登录403
 				throw new HttpException(403, string.Format(
-					new T("Access this page require {0}"),
+					new T("Action require {0}"),
 					string.Join(",", types.Select(t => new T(t.GetDescription())))));
 			}
 		}

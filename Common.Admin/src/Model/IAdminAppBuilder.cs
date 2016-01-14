@@ -35,6 +35,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 		/// </summary>
 		string BatchUrl { get; }
 		/// <summary>
+		/// 类型名称
+		/// </summary>
+		string TypeName { get; }
+		/// <summary>
 		/// 获取管理的数据类型
 		/// </summary>
 		/// <returns></returns>
