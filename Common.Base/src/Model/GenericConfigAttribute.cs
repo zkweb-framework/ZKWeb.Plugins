@@ -13,11 +13,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 	public class GenericConfigAttribute : Attribute {
 		/// <summary>
-		/// 所属插件
-		/// </summary>
-		public string Plugin { get; set; }
-		/// <summary>
 		/// 配置键名
+		/// 格式应该使用"插件.配置键"
 		/// </summary>
 		public string Key { get; set; }
 		/// <summary>
@@ -28,21 +25,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		/// <param name="plugin">所属插件</param>
 		/// <param name="key">配置键名</param>
-		public GenericConfigAttribute(string plugin, string key) {
-			Plugin = plugin;
+		public GenericConfigAttribute(string key) {
 			Key = key;
 			CacheTime = 0;
-		}
-
-		/// <summary>
-		/// 获取保存到数据库时使用的键名
-		/// 所属插件 + 配置键名
-		/// </summary>
-		/// <returns></returns>
-		public string DatabaseKey() {
-			return Plugin + "." + Key;
 		}
 	}
 }

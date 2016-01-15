@@ -43,7 +43,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		public virtual void PutData<T>(T value) where T : class, new() {
 			var attribute = GetConfigAttribute<T>();
-			var key = attribute.DatabaseKey();
+			var key = attribute.Key;
 			// 保存到数据库
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
@@ -67,7 +67,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <returns></returns>
 		public virtual T GetData<T>() where T : class, new() {
 			var attribute = GetConfigAttribute<T>();
-			var key = attribute.DatabaseKey();
+			var key = attribute.Key;
 			// 从缓存获取
 			var value = Cache.GetOrDefault(key) as T;
 			if (value != null) {
@@ -92,7 +92,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		public virtual void RemoveData<T>() {
 			var attribute = GetConfigAttribute<T>();
-			var key = attribute.DatabaseKey();
+			var key = attribute.Key;
 			// 从缓存删除
 			Cache.Remove(key);
 			// 从数据库删除

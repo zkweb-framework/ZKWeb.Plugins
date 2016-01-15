@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Config {
 	/// <summary>
 	/// 语言时区设置
 	/// </summary>
-	[GenericConfig("Common.Base", "LocaleSettings", CacheTime = 15)]
+	[GenericConfig("Common.Base.LocaleSettings", CacheTime = 15)]
 	public class LocaleSettings {
 		/// <summary>
 		/// 默认语言
