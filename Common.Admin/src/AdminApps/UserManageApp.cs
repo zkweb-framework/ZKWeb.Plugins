@@ -39,6 +39,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
 				table.MenuItems.AddDivider();
+				table.MenuItems.AddEditActionForAdminApp<UserManageApp>();
 				table.MenuItems.AddAddActionForAdminApp<UserManageApp>();
 				searchBar.KeywordPlaceHolder = new T("Username");
 				searchBar.MenuItems.AddDivider();

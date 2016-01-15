@@ -107,5 +107,28 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				JsonConvert.SerializeObject(url),
 				JsonConvert.SerializeObject(dialogParameters)));
 		}
+
+		/// <summary>
+		/// 使用模态框弹出指定指定页面的菜单项
+		/// 链接模板传入Ajax表格当前选中单行的数据
+		/// 支持在数据改变后模态框关闭时刷新Ajax表格
+		/// </summary>
+		/// <param name="column">操作列</param>
+		/// <param name="name">显示名称</param>
+		/// <param name="iconClass">图标Css类</param>
+		/// <param name="titleTemplate">模态框标题的模板，格式是underscore.js的默认格式，参数传入row</param>
+		/// <param name="urlTemplate">远程链接的模板，格式是underscore.js的默认格式，参数传入row</param>
+		/// <param name="extendParameters">用于覆盖传入给BootstrapDialog.show的参数</param>
+		public static void AddRemoteModalForSelectedRow(
+			this List<MenuItem> items, string name, string iconClass,
+			string titleTemplate, string urlTemplate, object dialogParameters = null) {
+			items.AddItemForClickEvent(name, iconClass, string.Format(@"
+				var table = $(this).closestAjaxTable();
+				var row = table.getSingleSelectedRowData();
+				row && table.showRemoteModalForRow(row, {0}, {1}, {2});",
+				JsonConvert.SerializeObject(titleTemplate),
+				JsonConvert.SerializeObject(urlTemplate),
+				JsonConvert.SerializeObject(dialogParameters)));
+		}
 	}
 }
