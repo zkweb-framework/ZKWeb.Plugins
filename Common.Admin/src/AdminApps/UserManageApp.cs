@@ -105,7 +105,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				idColumn.AddDeleteActionsForAdminApp<UserManageApp>(request);
 			}
 		}
-
+		
 		/// <summary>
 		/// 添加和编辑表单
 		/// </summary>
@@ -129,7 +129,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			[StringLength(100, MinimumLength = 5)]
 			[PasswordField("ConfirmPassword", "Keep empty if you don't want to change")]
 			public string ConfirmPassword { get; set; }
-
+			
 			/// <summary>
 			/// 绑定数据到表单
 			/// </summary>

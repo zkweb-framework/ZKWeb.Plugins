@@ -50,7 +50,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Select All", "全选" },
 			{ "Select/Unselect All", "全选/取消全选" },
 			{ "Submit", "提交" },
-			{ "Please Select", "请选择" }
+			{ "Please Select", "请选择" },
+			{ "Only {0} files are allowed", "只允许上传{0}文件" },
+			{ "Please upload file size not greater than {0}", "请上传大小不超过{0}的文件" }
 		};
 
 		public bool CanTranslate(string code) {

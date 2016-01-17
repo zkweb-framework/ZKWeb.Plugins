@@ -204,7 +204,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				// 解析值
 				string value = submitValues.GetOrDefault(field.Attribute.Name);
 				object parsed = null;
-				if (value != null) {
+				if (value != null || field.Attribute is IFormFieldParseFromEnv) {
 					var fieldHandler = Application.Ioc.Resolve<IFormFieldHandler>(serviceKey: field.Attribute.GetType());
 					parsed = fieldHandler.Parse(field, value);
 				}

@@ -210,11 +210,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// 文件上传
 	/// </summary>
-	public class FileUploaderFieldAttribute : FormFieldAttribute, IFormFieldRequireMultiPart {
+	public class FileUploaderFieldAttribute :
+		FormFieldAttribute, IFormFieldRequireMultiPart, IFormFieldParseFromEnv {
 		/// <summary>
 		/// 允许的文件后缀
 		/// </summary>
-		public string Extensions { get; set; }
+		public HashSet<string> Extensions { get; set; }
 		/// <summary>
 		/// 允许上传的最大长度，单位是字节
 		/// </summary>
@@ -229,7 +230,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public FileUploaderFieldAttribute(
 			string name, string extensions = "png,jpg,jpeg,gif", int maxContentsLength = 1048576) {
 			Name = name;
-			Extensions = extensions;
+			Extensions = new HashSet<string>(extensions.Split(','));
 			MaxContentsLength = maxContentsLength;
 		}
 	}
