@@ -110,7 +110,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		/// <summary>
 		/// 添加和编辑表单
 		/// </summary>
-		public class Form : DataEditFormBuilder<User, Form> {
+		public class Form : TabDataEditFormBuilder<User, Form> {
 			/// <summary>
 			/// 用户名
 			/// </summary>

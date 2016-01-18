@@ -78,7 +78,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		/// <param name="html">html构建器</param>
 		protected virtual void RenderFormEndTag(HtmlTextWriter html) {
-			html.RenderEndTag();
+			html.RenderEndTag(); // form
 		}
 
 		/// <summary>
@@ -124,8 +124,8 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			}
 			html.RenderBeginTag("button");
 			html.WriteEncodedText(new T(Attribute.SubmitButtonText));
-			html.RenderEndTag();
-			html.RenderEndTag();
+			html.RenderEndTag(); // button
+			html.RenderEndTag(); // div
 		}
 
 		/// <summary>

@@ -52,7 +52,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Submit", "提交" },
 			{ "Please Select", "请选择" },
 			{ "Only {0} files are allowed", "只允许上传{0}文件" },
-			{ "Please upload file size not greater than {0}", "请上传大小不超过{0}的文件" }
+			{ "Please upload file size not greater than {0}", "请上传大小不超过{0}的文件" },
+			{ "Basic Information", "基本信息" }
 		};
 
 		public bool CanTranslate(string code) {

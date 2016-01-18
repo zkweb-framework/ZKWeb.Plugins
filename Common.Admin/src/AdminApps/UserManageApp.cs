@@ -109,7 +109,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		/// <summary>
 		/// 添加和编辑表单
 		/// </summary>
-		public class Form : DataEditFormBuilder<User, Form> {
+		public class Form : TabDataEditFormBuilder<User, Form> {
 			/// <summary>
 			/// 用户名
 			/// </summary>
@@ -121,15 +121,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 密码
 			/// </summary>
 			[StringLength(100, MinimumLength = 5)]
-			[PasswordField("Password", "Keep empty if you don't want to change")]
+			[PasswordField("Password", "Keep empty if you don't want to change", Group = "Change Password")]
 			public string Password { get; set; }
 			/// <summary>
 			/// 确认密码
 			/// </summary>
 			[StringLength(100, MinimumLength = 5)]
-			[PasswordField("ConfirmPassword", "Keep empty if you don't want to change")]
+			[PasswordField("ConfirmPassword", "Keep empty if you don't want to change", Group = "Change Password")]
 			public string ConfirmPassword { get; set; }
-			
+
 			/// <summary>
 			/// 绑定数据到表单
 			/// </summary>
