@@ -103,6 +103,31 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		}
 
 		/// <summary>
+		/// 添加图片列
+		/// </summary>
+		/// <param name="columns">列列表</param>
+		/// <param name="member">成员</param>
+		/// <param name="width">宽度</param>
+		/// <param name="imageWidth">图片宽度</param>
+		/// <param name="imageHeight">图片高度</param>
+		/// <returns></returns>
+		public static AjaxTableColumn AddImageColumn(
+			this IList<AjaxTableColumn> columns, string member,
+			string width = "30", string imageWidth = "30", string imageHeight = "30") {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var column = new AjaxTableColumn() {
+				Key = member,
+				Width = width,
+				HeadTemplate = HttpUtility.HtmlEncode(new T(member)),
+				CellTemplate = templateManager.RenderTemplate(
+					"common.base/tmpl.ajax_table.image_column_cell.html",
+					new { member, imageWidth, imageHeight })
+			};
+			columns.Add(column);
+			return column;
+		}
+
+		/// <summary>
 		/// 添加操作列
 		/// </summary>
 		/// <param name="columns">列列表</param>

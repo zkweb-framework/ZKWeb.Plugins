@@ -35,5 +35,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="context">数据库上下文</param>
 		/// <param name="saveTo">保存到的数据</param>
 		void OnSubmit(TForm form, DatabaseContext context, TData saveTo);
+
+		/// <summary>
+		/// 数据保存后的处理，用于添加关联数据等
+		/// </summary>
+		/// <param name="form">表单</param>
+		/// <param name="context">数据库上下文</param>
+		/// <param name="saved">已保存的数据，Id已分配</param>
+		void OnSubmitSaved(TForm form, DatabaseContext context, TData saved);
 	}
 }

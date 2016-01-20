@@ -95,7 +95,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Batch Delete Successful", "批量删除成功" },
 			{ "Batch Recover Successful", "批量恢复成功" },
 			{ "Batch Delete Forever Successful", "批量永久删除成功" },
-			{ "Change Password", "修改密码" }
+			{ "Change Password", "修改密码" },
+			{ "Change Avatar", "修改头像" },
+			{ "Avatar", "头像" },
+			{ "DeleteAvatar", "删除头像" },
+			{ "Please select avatar file", "请选择头像图片" },
+			{ "Parse uploaded image failed", "解析上传的图片失败" }
 		};
 
 		public bool CanTranslate(string code) {

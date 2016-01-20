@@ -71,9 +71,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnSelect(
 				AjaxTableSearchRequest request, List<KeyValuePair<User, Dictionary<string, object>>> pairs) {
+				var userManager = Application.Ioc.Resolve<UserManager>();
 				foreach (var pair in pairs) {
 					var role = pair.Key.Role;
 					pair.Value["Id"] = pair.Key.Id;
+					pair.Value["Avatar"] = userManager.GetAvatarWebPath(pair.Key.Id);
 					pair.Value["Username"] = pair.Key.Username;
 					pair.Value["UserType"] = new T(pair.Key.Type.GetDescription());
 					pair.Value["Role"] = role == null ? null : role.Name;
@@ -90,22 +92,19 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
 				var idColumn = response.Columns.AddIdColumn("Id");
 				response.Columns.AddNoColumn();
+				response.Columns.AddImageColumn("Avatar");
 				response.Columns.AddMemberColumn("Username", "45%");
 				response.Columns.AddMemberColumn("UserType");
 				response.Columns.AddMemberColumn("Role");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
-				var sessionManager = Application.Ioc.Resolve<SessionManager>();
-				if (sessionManager.GetSession().GetUser().Type == UserTypes.SuperAdmin) {
-					// 修改用户名或密码需要超级管理员
-					actionColumn.AddEditActionForAdminApp<UserManageApp>(new T("Change Password"));
-				}
+				actionColumn.AddEditActionForAdminApp<UserManageApp>(new T("View"));
 				idColumn.AddDivider();
 				idColumn.AddDeleteActionsForAdminApp<UserManageApp>(request);
 			}
 		}
-		
+
 		/// <summary>
 		/// 添加和编辑表单
 		/// </summary>
@@ -129,6 +128,16 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			[StringLength(100, MinimumLength = 5)]
 			[PasswordField("ConfirmPassword", "Keep empty if you don't want to change", Group = "Change Password")]
 			public string ConfirmPassword { get; set; }
+			/// <summary>
+			/// 头像
+			/// </summary>
+			[FileUploaderField("Avatar", Group = "Change Avatar")]
+			public HttpPostedFileBase Avatar { get; set; }
+			/// <summary>
+			/// 删除头像
+			/// </summary>
+			[CheckBoxField("DeleteAvatar", Group = "Change Avatar")]
+			public bool DeleteAvatar { get; set; }
 
 			/// <summary>
 			/// 绑定数据到表单
@@ -142,9 +151,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 保存表单到数据
 			/// </summary>
 			protected override object OnSubmit(DatabaseContext context, User saveTo) {
-				// 修改用户名或密码需要超级管理员
-				PrivilegesChecker.Check(UserTypes.SuperAdmin);
-				saveTo.Username = Username;
 				// 添加时设置创建时间，并要求填密码
 				// 添加时设置用户类型是"用户"
 				if (saveTo.Id <= 0) {
@@ -154,8 +160,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 					}
 					saveTo.Type = UserTypes.User;
 				}
-				// 需要更新密码时
+				// 添加用户或修改密码需要超级管理员
 				if (!string.IsNullOrEmpty(Password)) {
+					PrivilegesChecker.Check(UserTypes.SuperAdmin);
 					if (Password != ConfirmPassword) {
 						throw new HttpException(400, new T("Please repeat the password exactly"));
 					}
@@ -165,6 +172,18 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 					message = new T("Successfully Saved"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
 				};
+			}
+
+			/// <summary>
+			/// 保存头像
+			/// </summary>
+			protected override void OnSubmitSaved(DatabaseContext context, User saved) {
+				var userManagr = Application.Ioc.Resolve<UserManager>();
+				if (Avatar != null) {
+					userManagr.SaveAvatar(saved.Id, Avatar.InputStream);
+				} else if (DeleteAvatar) {
+					userManagr.DeleteAvatar(saved.Id);
+				}
 			}
 		}
 	}

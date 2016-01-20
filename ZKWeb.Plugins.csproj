@@ -229,6 +229,7 @@
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.action_link.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.action_onclick.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.image_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.label_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.id_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.id_column_head.html" />

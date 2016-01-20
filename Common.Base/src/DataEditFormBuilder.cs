@@ -52,6 +52,13 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		protected abstract object OnSubmit(DatabaseContext context, TData saveTo);
 
 		/// <summary>
+		/// 数据保存后的处理，用于添加关联数据等
+		/// </summary>
+		/// <param name="context">数据库上下文</param>
+		/// <param name="saved">已保存的数据，Id已分配</param>
+		protected virtual void OnSubmitSaved(DatabaseContext context, TData saved) { }
+
+		/// <summary>
 		/// 获取绑定表单时来源的数据
 		/// 默认获取成员"Id"等于传入参数中的"id"或"Id"的数据
 		/// 没有id参数时新建返回
@@ -108,9 +115,13 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				var data = GetDataSaveTo(context);
 				object result = null;
 				context.Save(ref data, d => {
+					// 保存时的处理
 					result = OnSubmit(context, d);
 					callbacks.ForEach(c => c.OnSubmit((TForm)(object)this, context, d));
 				});
+				// 保存后的处理
+				OnSubmitSaved(context, data);
+				callbacks.ForEach(c => c.OnSubmitSaved((TForm)(object)this, context, data));
 				context.SaveChanges();
 				return result;
 			}
