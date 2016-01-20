@@ -1,0 +1,5 @@
+﻿{
+	"Name": "User Center",
+	"Description": "Pages for user center",
+	"Dependencies": [ "Common.Admin" ]
+}

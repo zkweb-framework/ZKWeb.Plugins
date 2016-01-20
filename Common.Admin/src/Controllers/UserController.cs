@@ -60,7 +60,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		}
 
 		/// <summary>
-		/// 会员中心
+		/// 用户中心
 		/// </summary>
 		/// <returns></returns>
 		[Action("home")]

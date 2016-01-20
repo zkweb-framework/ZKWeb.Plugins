@@ -223,7 +223,6 @@
     <Content Include="Common.Admin\templates\common.admin\generic_edit.html" />
     <Content Include="Common.Admin\templates\common.admin\generic_add.html" />
     <Content Include="Common.Admin\templates\common.admin\generic_list.html" />
-    <Content Include="Common.Admin\templates\common.admin\test_list.html" />
     <Content Include="Common.Base\static\common.base.images\logo.png" />
     <Content Include="Common.Base\templates\common.base\index.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.action_link.html" />
@@ -244,6 +243,7 @@
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.divider.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.fullscreen.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.refresh.html" />
+    <Content Include="Common.UserCenter\templates\common.admin\user_home.html" />
     <None Include="Common.Admin\plugin.json" />
     <None Include="Common.Admin\static\common.admin.css\admin-index.scss" />
     <None Include="Common.Admin\static\common.admin.css\admin-login.scss" />
@@ -426,12 +426,18 @@
     <None Include="Common.Base\static\common.base.tmpl\ajaxTable.tmpl" />
     <None Include="Common.Base\static\common.base.tmpl\ajaxTableSimple.tmpl" />
     <None Include="Common.Base\templates\common.base.widgets\logo.widget" />
+    <None Include="Common.UserCenter\plugin.json" />
+    <None Include="Common.UserContact\plugin.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Common.UserCenter\src\" />
+    <Folder Include="Common.UserContact\src\" />
+    <Folder Include="Common.UserContact\templates\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

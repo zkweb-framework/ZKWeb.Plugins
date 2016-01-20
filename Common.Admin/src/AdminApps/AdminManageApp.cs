@@ -75,9 +75,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnSelect(
 				AjaxTableSearchRequest request, List<KeyValuePair<User, Dictionary<string, object>>> pairs) {
+				var userManager = Application.Ioc.Resolve<UserManager>();
 				foreach (var pair in pairs) {
 					var role = pair.Key.Role;
 					pair.Value["Id"] = pair.Key.Id;
+					pair.Value["Avatar"] = userManager.GetAvatarWebPath(pair.Key.Id);
 					pair.Value["Username"] = pair.Key.Username;
 					pair.Value["Role"] = role == null ? null : role.Name;
 					pair.Value["RoleId"] = role == null ? null : (long?)role.Id;
@@ -95,7 +97,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
 				var idColumn = response.Columns.AddIdColumn("Id");
 				response.Columns.AddNoColumn();
-
+				response.Columns.AddImageColumn("Avatar");
 				response.Columns.AddMemberColumn("Username", "45%");
 				response.Columns.AddMemberColumn("Role");
 				response.Columns.AddMemberColumn("CreateTime");

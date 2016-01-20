@@ -1,0 +1,5 @@
+﻿{
+	"Name": "User Contact",
+	"Description": "Manage contact information for users",
+	"Dependencies": [ "Common.Admin", "Common.UserCenter" ]
+}
