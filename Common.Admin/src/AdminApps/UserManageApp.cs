@@ -27,8 +27,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string TileClass { get { return "tile bg-blue-hoki"; } }
 		public override string IconClass { get { return "fa fa-user"; } }
 		protected override IAjaxTableCallback<User> GetTableCallback() { return new TableCallback(); }
-		protected override IModelFormBuilder GetAddForm() { return new Form(); }
-		protected override IModelFormBuilder GetEditForm() { return new Form(); }
+		protected override IModelFormBuilder GetAddForm() { return new AddForm(); }
+		protected override IModelFormBuilder GetEditForm() { return new EditForm(); }
 
 		/// <summary>
 		/// 表格回调
@@ -106,16 +106,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		}
 
 		/// <summary>
-		/// 添加和编辑表单
+		/// 添加和编辑共用的基础表单
 		/// </summary>
-		public class Form : TabDataEditFormBuilder<User, Form> {
-			/// <summary>
-			/// 用户名
-			/// </summary>
-			[Required]
-			[StringLength(100, MinimumLength = 3)]
-			[TextBoxField("Username", "Please enter username")]
-			public string Username { get; set; }
+		public abstract class BaseForm : TabDataEditFormBuilder<User, BaseForm> {
 			/// <summary>
 			/// 密码
 			/// </summary>
@@ -138,14 +131,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			[CheckBoxField("DeleteAvatar", Group = "Change Avatar")]
 			public bool DeleteAvatar { get; set; }
-
-			/// <summary>
-			/// 绑定数据到表单
-			/// </summary>
-			protected override void OnBind(DatabaseContext context, User bindFrom) {
-				Username = bindFrom.Username;
-				Password = null;
-			}
 
 			/// <summary>
 			/// 保存表单到数据
@@ -184,6 +169,44 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				} else if (DeleteAvatar) {
 					userManagr.DeleteAvatar(saved.Id);
 				}
+			}
+		}
+
+		/// <summary>
+		/// 添加表单，允许设置用户名
+		/// </summary>
+		public class AddForm : BaseForm {
+			[Required]
+			[StringLength(100, MinimumLength = 3)]
+			[TextBoxField("Username", "Please enter username")]
+			public string Username { get; set; }
+
+			/// <summary>
+			/// 绑定数据到表单
+			/// </summary>
+			protected override void OnBind(DatabaseContext context, User bindFrom) { }
+
+			/// <summary>
+			/// 保存表单到数据
+			/// </summary>
+			protected override object OnSubmit(DatabaseContext context, User saveTo) {
+				saveTo.Username = Username;
+				return base.OnSubmit(context, saveTo);
+			}
+		}
+
+		/// <summary>
+		/// 编辑表单，用户名只读
+		/// </summary>
+		public class EditForm : BaseForm {
+			[LabelField("Username")]
+			public string Username { get; set; }
+
+			/// <summary>
+			/// 绑定数据到表单
+			/// </summary>
+			protected override void OnBind(DatabaseContext context, User bindFrom) {
+				Username = bindFrom.Username;
 			}
 		}
 	}

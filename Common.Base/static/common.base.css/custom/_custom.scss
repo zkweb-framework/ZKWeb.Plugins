@@ -50,13 +50,17 @@ html, body {
 .form-horizontal .form-group {
 	margin-right: 0px;
 	margin-left: 0px;
-	/* 只读文本 */
+	/* 字段名称 */
 	label.control-label {
 		padding: 7px 12px 0px 0px;
 		margin: 0px 0px 5px 0px;
 		text-align: right;
 		margin-top: 1px;
 		word-break: break-all; /* 设置自动换行 可分割单词 */
+	}
+	/* 只读文本 */
+	label.form-control {
+		border: none;
 	}
 	/* 单选 */
 	.radio-list > label.radio-inline:first-child {

@@ -30,8 +30,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string TypeName { get { return "Admin"; } }
 		public override UserTypes[] AllowedUserTypes { get { return new[] { UserTypes.SuperAdmin }; } }
 		protected override IAjaxTableCallback<User> GetTableCallback() { return new TableCallback(); }
-		protected override IModelFormBuilder GetAddForm() { return new Form(); }
-		protected override IModelFormBuilder GetEditForm() { return new Form(); }
+		protected override IModelFormBuilder GetAddForm() { return new AddForm(); }
+		protected override IModelFormBuilder GetEditForm() { return new EditForm(); }
 
 		/// <summary>
 		/// 表格回调
@@ -95,6 +95,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
 				var idColumn = response.Columns.AddIdColumn("Id");
 				response.Columns.AddNoColumn();
+
 				response.Columns.AddMemberColumn("Username", "45%");
 				response.Columns.AddMemberColumn("Role");
 				response.Columns.AddMemberColumn("CreateTime");
@@ -108,16 +109,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		}
 
 		/// <summary>
-		/// 添加和编辑表单
+		/// 添加和编辑共用的编辑表单
 		/// </summary>
-		public class Form : TabDataEditFormBuilder<User, Form> {
-			/// <summary>
-			/// 用户名
-			/// </summary>
-			[Required]
-			[StringLength(100, MinimumLength = 3)]
-			[TextBoxField("Username", "Please enter username")]
-			public string Username { get; set; }
+		public class BaseForm : TabDataEditFormBuilder<User, BaseForm> {
 			/// <summary>
 			/// 密码
 			/// </summary>
@@ -145,7 +139,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 绑定数据到表单
 			/// </summary>
 			protected override void OnBind(DatabaseContext context, User bindFrom) {
-				Username = bindFrom.Username;
 				Password = null;
 				IsSuperAdmin = bindFrom.Type == UserTypes.SuperAdmin;
 				RoleId = bindFrom.Role == null ? null : (long?)bindFrom.Role.Id;
@@ -155,7 +148,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 保存表单到数据
 			/// </summary>
 			protected override object OnSubmit(DatabaseContext context, User saveTo) {
-				saveTo.Username = Username;
 				// 添加时设置创建时间，并要求填密码
 				if (saveTo.Id <= 0) {
 					saveTo.CreateTime = DateTime.UtcNow;
@@ -182,6 +174,46 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 					message = new T("Successfully Saved"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
 				};
+			}
+		}
+
+		/// <summary>
+		/// 添加表单
+		/// </summary>
+		public class AddForm : BaseForm {
+			/// <summary>
+			/// 用户名
+			/// </summary>
+			[Required]
+			[StringLength(100, MinimumLength = 3)]
+			[TextBoxField("Username", "Please enter username")]
+			public string Username { get; set; }
+			
+			/// <summary>
+			/// 保存表单到数据
+			/// </summary>
+			protected override object OnSubmit(DatabaseContext context, User saveTo) {
+				saveTo.Username = Username;
+				return base.OnSubmit(context, saveTo);
+			}
+		}
+
+		/// <summary>
+		/// 编辑表单
+		/// </summary>
+		public class EditForm : BaseForm {
+			/// <summary>
+			/// 用户名
+			/// </summary>
+			[LabelField("Username")]
+			public string Username { get; set; }
+
+			/// <summary>
+			/// 绑定数据到表单
+			/// </summary>
+			protected override void OnBind(DatabaseContext context, User bindFrom) {
+				Username = bindFrom.Username;
+				base.OnBind(context, bindFrom);
 			}
 		}
 	}
