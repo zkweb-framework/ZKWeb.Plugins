@@ -44,6 +44,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Data with id {0} cannot be found", "无法找到Id是{0}的数据" },
 			{ "True", "是" },
 			{ "False", "否" },
+			{ "Yes", "是" },
+			{ "No", "否" },
 			{ "Ok", "确认" },
 			{ "Cancel", "取消" },
 			{ "Actions", "操作" },

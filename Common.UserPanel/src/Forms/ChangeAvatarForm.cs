@@ -12,7 +12,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.UserPanel.src.Forms {
 	/// <summary>
-	/// 修改头像的表单
+	/// 修改自身头像的表单
 	/// </summary>
 	public class ChangeAvatarForm : ModelFormBuilder {
 		/// <summary>
@@ -38,11 +38,11 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Forms {
 		protected override object OnSubmit() {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
-			var userManagr = Application.Ioc.Resolve<UserManager>();
+			var userManager = Application.Ioc.Resolve<UserManager>();
 			if (Avatar != null) {
-				userManagr.SaveAvatar(session.ReleatedId, Avatar.InputStream);
+				userManager.SaveAvatar(session.ReleatedId, Avatar.InputStream);
 			} else if (DeleteAvatar) {
-				userManagr.DeleteAvatar(session.ReleatedId);
+				userManager.DeleteAvatar(session.ReleatedId);
 			}
 			return new {
 				message = new T("Saved Successfully"),

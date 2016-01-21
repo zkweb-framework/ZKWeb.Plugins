@@ -104,7 +104,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Please select avatar file", "请选择头像图片" },
 			{ "Parse uploaded image failed", "解析上传的图片失败" },
 			{ "User not found", "用户不存在" },
-			{ "Incorrect old password", "原密码不正确，请重新填写" }
+			{ "Incorrect old password", "原密码不正确，请重新填写" },
+			{ "No Role", "无角色" }
 		};
 
 		public bool CanTranslate(string code) {

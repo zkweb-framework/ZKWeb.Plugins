@@ -112,6 +112,7 @@
     <Compile Include="Common.Admin\src\Extensions\IQueryableExtensions.cs" />
     <Compile Include="Common.Admin\src\Extensions\MenuItemsExtensions.cs" />
     <Compile Include="Common.Admin\src\Extensions\SessionExtensions.cs" />
+    <Compile Include="Common.Admin\src\Forms\AdminAboutMeForm.cs" />
     <Compile Include="Common.Admin\src\Forms\AdminLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserRegForm.cs" />
@@ -229,6 +230,9 @@
   <ItemGroup>
     <Content Include="Common.Admin\static\common.admin.images\default-avatar.jpg" />
     <Content Include="Common.Admin\static\common.admin.images\logo.png" />
+    <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
+    <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
+    <Content Include="Common.Admin\templates\common.admin\about_me.html" />
     <Content Include="Common.Admin\templates\common.admin\app_tile.html" />
     <Content Include="Common.Admin\templates\common.admin\generic_edit.html" />
     <Content Include="Common.Admin\templates\common.admin\generic_add.html" />

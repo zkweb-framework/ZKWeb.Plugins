@@ -71,5 +71,32 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			userManager.Logout();
 			return new RedirectResult("/admin/login");
 		}
+
+		/// <summary>
+		/// 关于我
+		/// </summary>
+		/// <returns></returns>
+		[Action("admin/about_me")]
+		[Action("admin/about_me", HttpMethods.POST)]
+		public IActionResult AboutMe() {
+			PrivilegesChecker.Check(UserTypesGroup.AdminOrParter);
+			var form = new AdminAboutMeForm();
+			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
+				return new JsonResult(form.Submit());
+			} else {
+				form.Bind();
+				return new TemplateResult("common.admin/about_me.html", new { form });
+			}
+		}
+
+		/// <summary>
+		/// 关于网站
+		/// </summary>
+		/// <returns></returns>
+		[Action("admin/about_website")]
+		public IActionResult AboutWebsite() {
+			PrivilegesChecker.Check(UserTypesGroup.AdminOrParter);
+			throw new NotImplementedException();
+		}
 	}
 }

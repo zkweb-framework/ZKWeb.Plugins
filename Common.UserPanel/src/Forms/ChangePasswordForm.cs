@@ -13,7 +13,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.UserPanel.src.Forms {
 	/// <summary>
-	/// 修改密码的表单
+	/// 修改自身密码的表单
 	/// </summary>
 	public class ChangePasswordForm : ModelFormBuilder {
 		/// <summary>

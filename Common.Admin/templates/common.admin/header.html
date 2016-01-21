@@ -37,15 +37,9 @@
 									<img class="img-rounded" alt="" src="{{ login_info.avatar }}">
 								</a>
 								<ul class="dropdown-menu dropdown-menu-default">
-									<li>
-										<a href="/" target="_blank"> <i class="fa fa-home"></i>{{ "Website Index" | trans }}</a>
-									</li>
-									<li>
-										<a href="/admin/about_me" target=""><i class="fa fa-info-circle"></i>{{ "About Me" | trans }}</a>
-									</li>
-									<li>
-										<a href="/admin/about_website" target=""><i class="fa fa-question-circle"></i>{{ "About Website" | trans }}</a>
-									</li>
+									<li><a href="/" target="_blank"> <i class="fa fa-home"></i>{{ "Website Index" | trans }}</a></li>
+									<li><a href="/admin/about_me" target=""><i class="fa fa-user"></i>{{ "About Me" | trans }}</a></li>
+									<li><a href="/admin/about_website" target=""><i class="fa fa-cubes"></i>{{ "About Website" | trans }}</a></li>
 									<li>
 										<form class="inline" action="/admin/logout" method="post"></form>
 										<a onclick="previousElementSibling.submit()"><i class="fa fa-power-off "></i>{{ "Logout" | trans }}</a>

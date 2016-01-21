@@ -12,14 +12,14 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
+	/// <summary>
+	/// 隐藏字段
+	/// </summary>
 	[ExportMany(ContractKey = typeof(HiddenFieldAttribute)), SingletonReuse]
 	public class Hidden : IFormFieldHandler {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		/// <param name="field"></param>
-		/// <param name="htmlAttributes"></param>
-		/// <returns></returns>
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var html = new HtmlTextWriter(new StringWriter());
@@ -36,9 +36,6 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		/// <param name="field"></param>
-		/// <param name="value"></param>
-		/// <returns></returns>
 		public object Parse(FormField field, string value) {
 			return value;
 		}
