@@ -34,7 +34,10 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		public DataEditFormBuilder(FormBuilder form = null) : base(form) { }
+		public DataEditFormBuilder(FormBuilder form = null) : base(form) {
+			var callbacks = Application.Ioc.ResolveMany<IDataEditFormCallback<TData, TForm>>();
+			callbacks.ForEach(c => c.OnCreated((TForm)(object)this));
+		}
 
 		/// <summary>
 		/// 绑定数据到表单

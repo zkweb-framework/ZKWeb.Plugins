@@ -215,6 +215,8 @@
     <Compile Include="Common.Base\src\TemplateTags\WebsiteName.cs" />
     <Compile Include="Common.Base\src\TemplateTags\UseTitle.cs" />
     <Compile Include="Common.Base\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.UserContact\src\DataEditFormCallbacks\AddContactEditorToUserManager.cs" />
+    <Compile Include="Common.UserContact\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserPanel\src\Controllers\ApiController.cs" />
     <Compile Include="Common.UserPanel\src\Controllers\UserPanelController.cs" />
     <Compile Include="Common.UserPanel\src\Forms\ChangeAvatarForm.cs" />
@@ -446,8 +448,8 @@
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common.UserContact\src\" />
-    <Folder Include="Common.UserContact\templates\" />
+    <Folder Include="Common.UserContact\src\Controllers\" />
+    <Folder Include="Common.UserContact\src\Database\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

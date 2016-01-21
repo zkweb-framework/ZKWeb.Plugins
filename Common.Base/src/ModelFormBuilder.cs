@@ -33,11 +33,11 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 表单构建器
 		/// </summary>
-		protected FormBuilder Form { get; set; }
+		public FormBuilder Form { get; protected set; }
 		/// <summary>
 		/// 表单字段到成员信息
 		/// </summary>
-		protected Dictionary<FormField, PropertyInfo> FieldToProperty { get; set; }
+		public Dictionary<FormField, PropertyInfo> FieldToProperty { get; protected set; }
 
 		/// <summary>
 		/// 初始化

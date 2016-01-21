@@ -21,6 +21,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	public interface IDataEditFormCallback<TData, TForm>
 		where TData : class, new() {
 		/// <summary>
+		/// 表单创建时的处理
+		/// </summary>
+		/// <param name="form">表单</param>
+		void OnCreated(TForm form);
+
+		/// <summary>
 		/// 绑定数据到表单的处理，这个函数会在原表单绑定后调用
 		/// </summary>
 		/// <param name="form">表单</param>
