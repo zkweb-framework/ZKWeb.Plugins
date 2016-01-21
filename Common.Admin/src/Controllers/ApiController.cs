@@ -28,7 +28,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		public IActionResult UserLoginInfo() {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser() ?? new User();
-			return new JsonResult(new { userId = user.Id, username = user.Username });
+			var userManager = Application.Ioc.Resolve<UserManager>();
+			return new JsonResult(new {
+				userId = user.Id,
+				username = user.Username,
+				avatar = userManager.GetAvatarWebPath(user.Id)
+			});
 		}
 	}
 }

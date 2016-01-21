@@ -25,6 +25,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Length of {0} must be {1}", "{0}的长度必须是{1}" },
 			{ "Length of {0} must between {1} and {2}", "{0}的长度必须在{1}和{2}之间" },
 			{ "HomePage", "首页" },
+			{ "Index", "首页" },
 			{ "How to edit this page", "怎样编辑这个页面" },
 			{ "Use Plugin", "使用插件" },
 			{ "Copy Common.Base/templates/common.base/index.html to Your.Plugin/templates/common.base/index.html then edit it.",

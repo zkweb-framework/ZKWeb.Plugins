@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	///		}
 	///		protected override object OnSubmit(User saveTo) {
 	///			saveTo.Username = Username;
-	///			return new { message = new T("Successfully Saved") };
+	///			return new { message = new T("Saved Successfully") };
 	///		}
 	/// }
 	/// </summary>

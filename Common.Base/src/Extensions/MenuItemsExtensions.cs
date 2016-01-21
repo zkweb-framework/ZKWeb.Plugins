@@ -89,6 +89,24 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		}
 
 		/// <summary>
+		/// 添加打开链接使用的菜单项
+		/// </summary>
+		/// <param name="items">菜单项列表</param>
+		/// <param name="name">显示名称</param>
+		/// <param name="iconClass">图标css类</param>
+		/// <param name="href">链接地址</param>
+		/// <param name="target">打开目标</param>
+		public static void AddItemForLink(
+			this List<MenuItem> items, string name, string iconClass,
+			string href, string target = "_self") {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var html = templateManager.RenderTemplate(
+				"common.base/tmpl.menu_item.link.html",
+				new { name, iconClass, href, target });
+			items.Add(new MenuItem(html));
+		}
+
+		/// <summary>
 		/// 添加使用模态框弹出指定指定页面的菜单项
 		/// 支持在数据改变后模态框关闭时刷新Ajax表格
 		/// </summary>

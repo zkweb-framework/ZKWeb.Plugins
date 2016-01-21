@@ -1,0 +1,5 @@
+﻿{
+	"Name": "User Panel",
+	"Description": "Pages for user panel",
+	"Dependencies": [ "Common.Admin" ]
+}

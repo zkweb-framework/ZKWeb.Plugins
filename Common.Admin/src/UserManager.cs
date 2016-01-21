@@ -197,5 +197,25 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 				File.Delete(path);
 			}
 		}
+
+		/// <summary>
+		/// 修改密码
+		/// </summary>
+		/// <param name="userId">用户Id</param>
+		/// <param name="oldPassword">原密码</param>
+		/// <param name="newPassword">新密码</param>
+		public void ChangePassword(long userId, string oldPassword, string newPassword) {
+			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
+			using (var context = databaseManager.GetContext()) {
+				var user = context.Get<User>(u => u.Id == userId);
+				if (user == null) {
+					throw new HttpException(400, new T("User not found"));
+				} else if (!user.CheckPassword(oldPassword)) {
+					throw new HttpException(400, new T("Incorrect old password"));
+				}
+				user.SetPassword(newPassword);
+				context.SaveChanges();
+			}
+		}
 	}
 }

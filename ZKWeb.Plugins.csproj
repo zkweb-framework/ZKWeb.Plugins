@@ -136,6 +136,7 @@
     <Compile Include="Common.Base\src\Model\ListItemFromData.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromDataNotDeleted.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromEnum.cs" />
+    <Compile Include="Common.Base\src\Model\MenuItemGroup.cs" />
     <Compile Include="Common.Base\src\TabDataEditFormBuilder.cs" />
     <Compile Include="Common.Base\src\TabFormBuilder.cs" />
     <Compile Include="Common.Base\src\TabModelFormBuilder.cs" />
@@ -214,6 +215,13 @@
     <Compile Include="Common.Base\src\TemplateTags\WebsiteName.cs" />
     <Compile Include="Common.Base\src\TemplateTags\UseTitle.cs" />
     <Compile Include="Common.Base\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.UserPanel\src\Controllers\ApiController.cs" />
+    <Compile Include="Common.UserPanel\src\Controllers\UserPanelController.cs" />
+    <Compile Include="Common.UserPanel\src\Forms\ChangeAvatarForm.cs" />
+    <Compile Include="Common.UserPanel\src\Forms\ChangePasswordForm.cs" />
+    <Compile Include="Common.UserPanel\src\Model\IUserPanelMenuProvider.cs" />
+    <Compile Include="Common.UserPanel\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.UserPanel\src\UserPanelMenuProviders\IndexAndAccountManage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -237,13 +245,17 @@
     <Content Include="Common.Base\templates\common.base\tmpl.checkbox_tree.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.checkbox_group.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.form_group.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.menu_item.link.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.onclick.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.pagination_settings.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.table_operations.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.divider.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.fullscreen.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.refresh.html" />
-    <Content Include="Common.UserCenter\templates\common.admin\user_home.html" />
+    <Content Include="Common.UserPanel\templates\common.admin\user_home.html" />
+    <Content Include="Common.UserPanel\templates\common.user_panel\footer.html" />
+    <Content Include="Common.UserPanel\templates\common.user_panel\generic_form.html" />
+    <Content Include="Common.UserPanel\templates\common.user_panel\header.html" />
     <None Include="Common.Admin\plugin.json" />
     <None Include="Common.Admin\static\common.admin.css\admin-index.scss" />
     <None Include="Common.Admin\static\common.admin.css\admin-login.scss" />
@@ -426,7 +438,7 @@
     <None Include="Common.Base\static\common.base.tmpl\ajaxTable.tmpl" />
     <None Include="Common.Base\static\common.base.tmpl\ajaxTableSimple.tmpl" />
     <None Include="Common.Base\templates\common.base.widgets\logo.widget" />
-    <None Include="Common.UserCenter\plugin.json" />
+    <None Include="Common.UserPanel\plugin.json" />
     <None Include="Common.UserContact\plugin.json" />
   </ItemGroup>
   <ItemGroup>
@@ -434,7 +446,6 @@
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common.UserCenter\src\" />
     <Folder Include="Common.UserContact\src\" />
     <Folder Include="Common.UserContact\templates\" />
   </ItemGroup>

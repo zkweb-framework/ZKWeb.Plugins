@@ -154,7 +154,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 					saveTo.SetPassword(Password);
 				}
 				return new {
-					message = new T("Successfully Saved"),
+					message = new T("Saved Successfully"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
 				};
 			}

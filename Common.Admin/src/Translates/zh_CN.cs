@@ -27,6 +27,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Register", "注册" },
 			{ "ConfirmPassword", "确认密码" },
 			{ "Please repeat the password exactly", "请重复前面填写的密码" },
+			{ "OldPassword", "原密码" },
+			{ "Please enter old password", "请填写原密码" },
 			{ "User Registration", "用户注册" },
 			{ "User Login", "用户登录" },
 			{ "Username is already taken, please choose other username", "用户名已经被使用，请选择其他用户名" },
@@ -69,7 +71,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Please enter name", "请填写名称" },
 			{ "Remark", "备注" },
 			{ "Please enter remark", "请填写备注" },
-			{ "Successfully Saved", "保存成功" },
+			{ "Saved Successfully", "保存成功" },
 			{ "Keep empty if you don't want to change", "如果不想修改，请保持空白" },
 			{ "Name/Remark", "名称/备注" },
 			{ "Name", "名称" },
@@ -100,7 +102,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Avatar", "头像" },
 			{ "DeleteAvatar", "删除头像" },
 			{ "Please select avatar file", "请选择头像图片" },
-			{ "Parse uploaded image failed", "解析上传的图片失败" }
+			{ "Parse uploaded image failed", "解析上传的图片失败" },
+			{ "User not found", "用户不存在" },
+			{ "Incorrect old password", "原密码不正确，请重新填写" }
 		};
 
 		public bool CanTranslate(string code) {

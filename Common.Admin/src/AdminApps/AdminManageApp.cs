@@ -173,7 +173,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				}
 				saveTo.Role = RoleId == null ? null : context.Get<UserRole>(r => r.Id == RoleId);
 				return new {
-					message = new T("Successfully Saved"),
+					message = new T("Saved Successfully"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
 				};
 			}

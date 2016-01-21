@@ -60,5 +60,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 				"result && table.postAction(_.map(rows, function(row) {{ return row.{0}; }}), {1});",
 				member, JsonConvert.SerializeObject(target));
 		}
+
+		/// <summary>
+		/// 在指定时间后刷新当前页面
+		/// </summary>
+		/// <param name="milliseconds">指定时间，单位是毫秒</param>
+		/// <returns></returns>
+		public static string RefreshAfter(int milliseconds) {
+			return string.Format(
+				"setTimeout(function() {{ location.href = location.href; }}, {0});", milliseconds);
+		}
 	}
 }
