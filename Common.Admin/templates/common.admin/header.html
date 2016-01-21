@@ -34,7 +34,7 @@
 										{% fetch /api/user_login_info > login_info %}
 										{{ login_info.username }}
 									</span>
-									<img class="img-rounded" alt="" src="/static/common.admin.images/default-avatar.jpg">
+									<img class="img-rounded" alt="" src="{{ login_info.avatar }}">
 								</a>
 								<ul class="dropdown-menu dropdown-menu-default">
 									<li>
