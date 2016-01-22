@@ -1,9 +1,11 @@
-﻿using DotLiquid;
+﻿using Common.Minimal.Model.Extensions;
+using DotLiquid;
 using DryIoc;
 using DryIocAttributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using ZKWeb;
@@ -15,6 +17,7 @@ using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Forms;
 using ZKWeb.Plugins.Common.Admin.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Config;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -73,6 +76,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		}
 
 		/// <summary>
+		/// 工作区
+		/// </summary>
+		/// <returns></returns>
+		[Action("admin/workspace")]
+		public IActionResult Workspace() {
+			return new TemplateResult("common.admin/workspace.html");
+		}
+
+		/// <summary>
 		/// 关于我
 		/// </summary>
 		/// <returns></returns>
@@ -96,7 +108,30 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		[Action("admin/about_website")]
 		public IActionResult AboutWebsite() {
 			PrivilegesChecker.Check(UserTypesGroup.AdminOrParter);
-			throw new NotImplementedException();
+			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
+			var pluginManager = Application.Ioc.Resolve<PluginManager>();
+			var websiteSettings = configManager.GetData<WebsiteSettings>();
+			var localeSettings = configManager.GetData<LocaleSettings>();
+			var serverVariables = HttpContext.Current.Request.ServerVariables;
+			var hostingInfoTable = new DataTable();
+			hostingInfoTable.Columns.Add("Name");
+			hostingInfoTable.Columns.Add("Value");
+			serverVariables.AllKeys.ForEach(k =>
+				hostingInfoTable.Rows.Add(k, serverVariables[k]));
+			var pluginInfoTable = new DataTable();
+			pluginInfoTable.Columns.Add("DirectoryName");
+			pluginInfoTable.Columns.Add("Name");
+			pluginInfoTable.Columns.Add("Description");
+			pluginManager.Plugins.ForEach(p =>
+				pluginInfoTable.Rows.Add(p.DirectoryName(), new T(p.Name), new T(p.Description)));
+			return new TemplateResult("common.admin/about_website.html", new {
+				websiteName = websiteSettings.WebsiteName,
+				defaultLanguage = localeSettings.DefaultLanguage,
+				defaultTimeZone = localeSettings.DefaultTimezone,
+				hostingInfoTable = hostingInfoTable.ToHtml(),
+				pluginInfoTable = pluginInfoTable.ToHtml()
+			});
 		}
 	}
 }
+

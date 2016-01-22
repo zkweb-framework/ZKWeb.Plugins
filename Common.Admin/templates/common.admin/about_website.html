@@ -1,0 +1,19 @@
+﻿{% use_title "About Website" -%}
+{% include_js "/static/common.admin.js/about_me.min.js" %}
+{% include common.admin/header.html %}
+<div class="portlet-title">
+	<div class="caption">
+		<i class="fa fa-cubes"></i>
+		<span class="caption-subject">{{ "About Website" | trans }}</span>
+	</div>
+</div>
+<div class="portlet-body">
+	<h4>{{ "Website Name" | trans }}: {{ websiteName | trans }}</h4>
+	<h4>{{ "Default Language" | trans }}: {{ defaultLanguage }}</h4>
+	<h4>{{ "Default Timezone" | trans }}: {{ defaultTimezone }}</h4>
+	<h4>{{ "Hosting Information" | trans }}: </h4>
+	<div>{{ hostingInfoTable }}</div>
+	<h4>{{ "Plugin List" | trans }}: </h4>
+	<div>{{ pluginInfoTable }}</div>
+</div>
+{% include common.admin/footer.html %}

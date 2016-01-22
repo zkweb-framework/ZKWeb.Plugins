@@ -75,6 +75,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Keep empty if you don't want to change", "如果不想修改，请保持空白" },
 			{ "Name/Remark", "名称/备注" },
 			{ "Name", "名称" },
+			{ "Value", "值" },
+			{ "DirectoryName", "目录名称" },
+			{ "Description", "描述" },
 			{ "LastUpdated", "更新时间" },
 			{ "Add {0}", "添加{0}" },
 			{ "Edit {0}", "编辑{0}" },
@@ -105,7 +108,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Parse uploaded image failed", "解析上传的图片失败" },
 			{ "User not found", "用户不存在" },
 			{ "Incorrect old password", "原密码不正确，请重新填写" },
-			{ "No Role", "无角色" }
+			{ "No Role", "无角色" },
+			{ "Website Name", "网站名称" },
+			{ "Default Language", "默认语言" },
+			{ "Default Timezone", "默认时区" },
+			{ "Hosting Information", "服务器信息" },
+			{ "Plugin List", "插件列表" },
+			{ "Admin panel and users management", "提供管理后台和用户角色管理等功能" }
 		};
 
 		public bool CanTranslate(string code) {

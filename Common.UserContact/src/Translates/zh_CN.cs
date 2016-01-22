@@ -20,7 +20,9 @@ namespace ZKWeb.Plugins.Common.UserContact.src.Translates {
 			{ "Tel", "电话" },
 			{ "Mobile", "手机" },
 			{ "Email", "邮箱" },
-			{ "Address", "地址" }
+			{ "Address", "地址" },
+			{ "User Contact", "联系信息" },
+			{ "Manage contact information for users", "管理用户的联系信息" }
 		};
 
 		public bool CanTranslate(string code) {

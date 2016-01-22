@@ -127,6 +127,7 @@
     <Compile Include="Common.Admin\src\PrivilegesChecker.cs" />
     <Compile Include="Common.Admin\src\PrivilegesTranslator.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.Base\src\Extensions\DataTableExtensions.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroup.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroups.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxTree.cs" />
@@ -232,6 +233,8 @@
     <Content Include="Common.Admin\static\common.admin.images\logo.png" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
+    <Content Include="Common.Admin\templates\common.admin\about_website.html" />
+    <Content Include="Common.Admin\templates\common.admin\workspace.html" />
     <Content Include="Common.Admin\templates\common.admin\about_me.html" />
     <Content Include="Common.Admin\templates\common.admin\app_tile.html" />
     <Content Include="Common.Admin\templates\common.admin\generic_edit.html" />
