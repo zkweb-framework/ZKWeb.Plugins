@@ -391,19 +391,14 @@ html, body {
 	margin-bottom: 15px;
 	box-shadow: 0px 0px 0px 1px #fff, 0px 0px 0px 2px #dfdfdf, 0px 0px 5px 3px #f0f0f0;
 	/* 右侧菜单的样式 */
-	.pull-right .nav {
-		float: left;
-
-		> li {
+	.nav.pull-right > .diy_area {
+		.diy_widget {
 			float: left;
-		}
-
-		> li > a {
 			padding: 0px 5px;
 		}
 	}
 	/* 链接的样式 */
-	a, .nav > li > a {
+	a {
 		color: #666;
 		background-color: transparent;
 		/* 选中时改变颜色和添加下划线 */

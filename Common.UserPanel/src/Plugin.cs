@@ -7,10 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Core;
 using ZKWeb.Model;
-using ZKWeb.Plugins.Common.Admin.src.Model;
-using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.Common.Admin.src {
+namespace ZKWeb.Plugins.Common.UserPanel.src {
 	/// <summary>
 	/// 载入插件时的处理
 	/// </summary>
@@ -20,14 +18,10 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// 初始化
 		/// </summary>
 		public Plugin() {
-			// 通知后台应用构建器
-			Application.Ioc.ResolveMany<IAdminAppBuilder>().ForEach(b => b.OnWebsiteStart());
 			// 注册默认模块
 			var diyManager = Application.Ioc.Resolve<DiyManager>();
-			var navbarLeft = diyManager.GetArea("header_navbar_left");
 			var navbarRight = diyManager.GetArea("header_navbar_right");
-			navbarLeft.DefaultWidgets.Add("common.admin.widgets/user_login_info");
-			navbarRight.DefaultWidgets.Add("common.admin.widgets/enter_admin_panel");
+			navbarRight.DefaultWidgets.AddBefore("", "common.user_panel.widgets/enter_user_panel");
 		}
 	}
 }

@@ -224,6 +224,7 @@
     <Compile Include="Common.UserPanel\src\Forms\ChangeAvatarForm.cs" />
     <Compile Include="Common.UserPanel\src\Forms\ChangePasswordForm.cs" />
     <Compile Include="Common.UserPanel\src\Model\IUserPanelMenuProvider.cs" />
+    <Compile Include="Common.UserPanel\src\Plugin.cs" />
     <Compile Include="Common.UserPanel\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserPanel\src\UserPanelMenuProviders\IndexAndAccountManage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -233,6 +234,8 @@
     <Content Include="Common.Admin\static\common.admin.images\logo.png" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
+    <None Include="Common.Admin\templates\common.admin.widgets\enter_admin_panel.widget" />
+    <Content Include="Common.Admin\templates\common.admin.widgets\enter_admin_panel.html" />
     <Content Include="Common.Admin\templates\common.admin\about_website.html" />
     <Content Include="Common.Admin\templates\common.admin\workspace.html" />
     <Content Include="Common.Admin\templates\common.admin\about_me.html" />
@@ -262,6 +265,8 @@
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.fullscreen.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.refresh.html" />
     <Content Include="Common.UserPanel\templates\common.admin\user_home.html" />
+    <None Include="Common.UserPanel\templates\common.user_panel.widgets\enter_user_panel.widget" />
+    <Content Include="Common.UserPanel\templates\common.user_panel.widgets\enter_user_panel.html" />
     <Content Include="Common.UserPanel\templates\common.user_panel\footer.html" />
     <Content Include="Common.UserPanel\templates\common.user_panel\generic_form.html" />
     <Content Include="Common.UserPanel\templates\common.user_panel\header.html" />

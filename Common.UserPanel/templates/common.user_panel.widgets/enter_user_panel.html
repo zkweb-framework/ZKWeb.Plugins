@@ -1,0 +1,4 @@
+﻿{% fetch /api/user_login_info > login_info %}
+{% if login_info.userId > 0 %}
+<a href="/home">{{ "User Panel" | trans }}</a>
+{% endif %}

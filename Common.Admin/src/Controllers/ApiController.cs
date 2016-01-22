@@ -11,6 +11,7 @@ using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
+using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Utils.Extensions;
 
@@ -32,6 +33,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			return new JsonResult(new {
 				userId = user.Id,
 				username = user.Username,
+				userType = user.Type.ToString(),
+				userIsAdmin = UserTypesGroup.Admin.Contains(user.Type),
+				userIsParter = UserTypesGroup.Parter.Contains(user.Type),
+				userIsAdminOrParter = UserTypesGroup.AdminOrParter.Contains(user.Type),
 				avatar = userManager.GetAvatarWebPath(user.Id)
 			});
 		}
