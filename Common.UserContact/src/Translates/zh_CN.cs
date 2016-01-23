@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Common.UserContact.src.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "Contact Infomation", "联系信息" },
+			{ "Contact Information", "联系信息" },
 			{ "Tel", "电话" },
 			{ "Mobile", "手机" },
 			{ "Email", "邮箱" },
