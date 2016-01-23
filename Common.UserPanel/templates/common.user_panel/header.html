@@ -5,25 +5,27 @@
 	<div class="portlet light">
 		<div class="page-content">
 			<div class="panel-sidebar">
-				<div class="profile-portlet">
-					<div class="profile-image">
-						<img src="{{ login_info.avatar }}" class="img-responsive" alt="{{ "Avatar" | trans }}">
+				<div class="portlet">
+					<div class="profile-portlet">
+						<div class="profile-image">
+							<img src="{{ login_info.avatar }}" class="img-responsive" alt="{{ "Avatar" | trans }}">
+						</div>
+						<div class="profile-title">
+							<div class="main-title">{{ login_info.username }}</div>
+						</div>
 					</div>
-					<div class="profile-title">
-						<div class="main-title">{{ login_info.username }}</div>
-					</div>
+					<ul class="nav">
+						{% for group in menu_groups %}
+						<li>
+							<a><i class="{{ group.IconClass }}"></i>{{ group.Name | trans }}</a>
+							<ul class="nav childs">
+								{% for item in group.Items %}
+								<li>{{ item }}</li>
+								{% endfor %}
+							</ul>
+						</li>
+						{% endfor %}
+					</ul>
 				</div>
-				<ul class="nav">
-					{% for group in menu_groups %}
-					<li>
-						<a><i class="{{ group.IconClass }}"></i>{{ group.Name | trans }}</a>
-						<ul class="nav childs">
-							{% for item in group.Items %}
-							<li>{{ item }}</li>
-							{% endfor %}
-						</ul>
-					</li>
-					{% endfor %}
-				</ul>
 			</div>
 			<div class="panel-content">

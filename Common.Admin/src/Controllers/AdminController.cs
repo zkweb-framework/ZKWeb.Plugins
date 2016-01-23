@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using ZKWeb;
 using ZKWeb.Core;
@@ -53,6 +54,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		[Action("admin/login")]
 		[Action("admin/login", HttpMethods.POST)]
 		public IActionResult Login() {
+			// 已登录时跳转到后台首页
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var user = sessionManager.GetSession().GetUser();
+			if (user != null && UserTypesGroup.AdminOrParter.Contains(user.Type)) {
+				return new RedirectResult("/admin");
+			}
+			// 否则显示登陆表单
 			var form = new AdminLoginForm();
 			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
@@ -134,4 +142,3 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		}
 	}
 }
-

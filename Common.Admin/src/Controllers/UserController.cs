@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
+using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Forms;
+using ZKWeb.Plugins.Common.Base.src;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -23,6 +25,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		[Action("user/reg")]
 		[Action("user/reg", HttpMethods.POST)]
 		public IActionResult Reg() {
+			// 已登录时跳转到用户中心
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var user = sessionManager.GetSession().GetUser();
+			if (user != null) {
+				return new RedirectResult("/home");
+			}
+			// 否则显示注册表单
 			var form = new UserRegForm();
 			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
@@ -39,6 +48,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		[Action("user/login")]
 		[Action("user/login", HttpMethods.POST)]
 		public IActionResult Login() {
+			// 已登录时跳转到用户中心
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var user = sessionManager.GetSession().GetUser();
+			if (user != null) {
+				return new RedirectResult("/home");
+			}
+			// 否则显示登陆表单
 			var form = new UserLoginForm();
 			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());

@@ -43,9 +43,5 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 		/// </summary>
 		/// <returns></returns>
 		Type GetDataType();
-		/// <summary>
-		/// 网站启动时的处理
-		/// </summary>
-		void OnWebsiteStart();
 	}
 }

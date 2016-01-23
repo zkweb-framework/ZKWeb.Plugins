@@ -132,7 +132,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// 列表页的处理函数
 		/// </summary>
 		/// <returns></returns>
-		protected virtual IActionResult ListAction() {
+		protected override IActionResult Action() {
 			// 检查权限
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 表格构建器
@@ -302,9 +302,9 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// <summary>
 		/// 网站启动时添加处理函数
 		/// </summary>
-		public virtual void OnWebsiteStart() {
+		public override void OnWebsiteStart() {
 			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			controllerManager.RegisterAction(Url, HttpMethods.GET, ListAction);
+			controllerManager.RegisterAction(Url, HttpMethods.GET, Action);
 			controllerManager.RegisterAction(SearchUrl, HttpMethods.POST, SearchAction);
 			controllerManager.RegisterAction(AddUrl, HttpMethods.GET, AddAction);
 			controllerManager.RegisterAction(AddUrl, HttpMethods.POST, AddAction);

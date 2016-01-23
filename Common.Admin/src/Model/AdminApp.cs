@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Core;
+using ZKWeb.Model;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Model {
 	/// <summary>
@@ -24,27 +25,24 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 		/// <summary>
 		/// 格式的css类名
 		/// </summary>
-		public virtual string TileClass {
-			get { return "tile bg-grey-gallery"; }
-		}
+		public virtual string TileClass { get { return "tile bg-grey-gallery"; } }
 		/// <summary>
 		/// 图标的css类名
 		/// </summary>
-		public virtual string IconClass {
-			get { return "fa fa-archive"; }
-		}
+		public virtual string IconClass { get { return "fa fa-archive"; } }
 		/// <summary>
 		/// 允许显示此应用的用户类型列表
 		/// </summary>
-		public virtual UserTypes[] AllowedUserTypes {
-			get { return UserTypesGroup.Admin; }
-		}
+		public virtual UserTypes[] AllowedUserTypes { get { return UserTypesGroup.Admin; } }
 		/// <summary>
 		/// 显示此应用要求的权限列表
 		/// </summary>
-		public virtual string[] RequiredPrivileges {
-			get { return new string[0]; }
-		}
+		public virtual string[] RequiredPrivileges { get { return new string[0]; } }
+		/// <summary>
+		/// 对应的处理函数，会自动进行权限检查
+		/// </summary>
+		/// <returns></returns>
+		protected abstract IActionResult Action();
 
 		/// <summary>
 		/// 允许直接描画到模板
@@ -64,6 +62,19 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 				"common.admin/app_tile.html",
 				new { name = new T(Name), tileClass = TileClass, url = Url, iconClass = IconClass });
 			return html;
+		}
+
+		/// <summary>
+		/// 网站启动时注册处理函数
+		/// </summary>
+		public virtual void OnWebsiteStart() {
+			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
+			var privilegesCheckedAction = new Func<IActionResult>(() => {
+				PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+				return Action();
+			});
+			controllerManager.RegisterAction(Url, HttpMethods.GET, privilegesCheckedAction);
+			controllerManager.RegisterAction(Url, HttpMethods.POST, privilegesCheckedAction);
 		}
 	}
 }

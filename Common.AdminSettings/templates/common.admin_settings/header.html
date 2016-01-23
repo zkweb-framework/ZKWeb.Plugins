@@ -1,0 +1,26 @@
+﻿{% include common.admin/header.html %}
+{% fetch /api/admin_settings_menu_groups > menu_groups %}
+<div class="page-content">
+	<div class="panel-sidebar">
+		<div class="portlet">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-wrench font-green-sharp"></i>
+					<span class="caption-subject font-green-sharp bold uppercase">{{ "Settings" | trans }}</span>
+				</div>
+			</div>
+			<ul class="nav">
+				{% for group in menu_groups %}
+				<li>
+					<a><i class="{{ group.IconClass }}"></i>{{ group.Name | trans }}</a>
+					<ul class="nav childs">
+						{% for item in group.Items %}
+						<li>{{ item }}</li>
+						{% endfor %}
+					</ul>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="panel-content">

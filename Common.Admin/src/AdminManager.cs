@@ -76,8 +76,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			var referrer = request.UrlReferrer;
 			// 来源于同一站点时，跳转到来源页面
 			if (referrer != null && referrer.Host == request.Url.Host &&
-				referrer.AbsolutePath != "/admin/logout" &&
-				referrer.AbsolutePath != "/admin/login") {
+				referrer.AbsolutePath != "/admin/logout") {
 				return referrer.PathAndQuery;
 			}
 			// 默认跳转到后台首页

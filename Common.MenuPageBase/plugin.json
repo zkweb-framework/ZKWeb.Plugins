@@ -1,0 +1,5 @@
+﻿{
+	"Name": "Menu Page Base Functions",
+	"Description": "Base functions for building menu page",
+	"Dependencies": [ "Common.Admin" ]
+}

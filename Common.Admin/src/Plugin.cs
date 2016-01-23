@@ -20,8 +20,8 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		/// 初始化
 		/// </summary>
 		public Plugin() {
-			// 通知后台应用构建器
-			Application.Ioc.ResolveMany<IAdminAppBuilder>().ForEach(b => b.OnWebsiteStart());
+			// 注册后台应用
+			Application.Ioc.ResolveMany<AdminApp>().ForEach(a => a.OnWebsiteStart());
 			// 注册默认模块
 			var diyManager = Application.Ioc.Resolve<DiyManager>();
 			var navbarLeft = diyManager.GetArea("header_navbar_left");

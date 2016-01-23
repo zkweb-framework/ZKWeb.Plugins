@@ -91,6 +91,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.AdminSettings\src\AdminApps\AdminSettingsApp.cs" />
+    <Compile Include="Common.AdminSettings\src\Controllers\ApiController.cs" />
+    <Compile Include="Common.AdminSettings\src\GenericFormsForAdminSettings\LocaleSettingsForm.cs" />
+    <Compile Include="Common.AdminSettings\src\GenericFormsForAdminSettings\WebsiteSettingsForm.cs" />
+    <Compile Include="Common.AdminSettings\src\GenericFormForAdminSettings.cs" />
+    <Compile Include="Common.AdminSettings\src\ListItemProviders\LanguageListItemProvider.cs" />
+    <Compile Include="Common.AdminSettings\src\ListItemProviders\TimezoneListItemProvider.cs" />
+    <Compile Include="Common.AdminSettings\src\Model\IAdminSettingsMenuProvider.cs" />
+    <Compile Include="Common.AdminSettings\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Admin\src\AdminAppBuilder.cs" />
     <Compile Include="Common.Admin\src\AdminApps\UserManageApp.cs" />
     <Compile Include="Common.Admin\src\AdminApps\RoleManageApp.cs" />
@@ -135,6 +144,7 @@
     <Compile Include="Common.Base\src\Model\IFormFieldParseFromEnv.cs" />
     <Compile Include="Common.Base\src\Model\IListItemGroupsProvider.cs" />
     <Compile Include="Common.Base\src\Model\IListItemTreeProvider.cs" />
+    <Compile Include="Common.AdminSettings\src\Model\Languages.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromData.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromDataNotDeleted.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromEnum.cs" />
@@ -142,6 +152,7 @@
     <Compile Include="Common.Base\src\TabDataEditFormBuilder.cs" />
     <Compile Include="Common.Base\src\TabFormBuilder.cs" />
     <Compile Include="Common.Base\src\TabModelFormBuilder.cs" />
+    <Compile Include="Common.Base\src\Translates\en_US.cs" />
     <Compile Include="Common.Base\src\TypeTraits\IsRecyclable.cs" />
     <Compile Include="Common.Admin\src\UserManager.cs" />
     <Compile Include="Common.Base\src\AjaxTableBuilder.cs" />
@@ -217,29 +228,36 @@
     <Compile Include="Common.Base\src\TemplateTags\WebsiteName.cs" />
     <Compile Include="Common.Base\src\TemplateTags\UseTitle.cs" />
     <Compile Include="Common.Base\src\Translates\zh_CN.cs" />
-    <Compile Include="Common.UserContact\src\Forms\ContactInfoForm.cs" />
+    <Compile Include="Common.MenuPageBase\src\GenericFormForMenuPage.cs" />
+    <Compile Include="Common.MenuPageBase\src\Model\IMenuProvider.cs" />
+    <Compile Include="Common.MenuPageBase\src\Plugin.cs" />
+    <Compile Include="Common.MenuPageBase\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.UserContact\src\GenericFormsForUserPanel\ContactInfoForm.cs" />
     <Compile Include="Common.UserContact\src\UserContactManager.cs" />
-    <Compile Include="Common.UserContact\src\Controllers\ContactInfoController.cs" />
     <Compile Include="Common.UserContact\src\Database\UserContact.cs" />
     <Compile Include="Common.UserContact\src\DataCallbacks\RemoveContactBeforeUserDelete.cs" />
     <Compile Include="Common.UserContact\src\DataEditFormCallbacks\AddContactEditorToUserManager.cs" />
     <Compile Include="Common.UserContact\src\Translates\zh_CN.cs" />
-    <Compile Include="Common.UserContact\src\UserPanelMenuProviders\ContactInformation.cs" />
     <Compile Include="Common.UserPanel\src\Controllers\ApiController.cs" />
-    <Compile Include="Common.UserPanel\src\Controllers\UserPanelController.cs" />
-    <Compile Include="Common.UserPanel\src\Forms\ChangeAvatarForm.cs" />
-    <Compile Include="Common.UserPanel\src\Forms\ChangePasswordForm.cs" />
+    <Compile Include="Common.UserPanel\src\GenericFormsForUserPanel\ChangeAvatarForm.cs" />
+    <Compile Include="Common.UserPanel\src\GenericFormsForUserPanel\ChangePassword.cs" />
+    <Compile Include="Common.UserPanel\src\GenericFormForUserPanel.cs" />
     <Compile Include="Common.UserPanel\src\Model\IUserPanelMenuProvider.cs" />
     <Compile Include="Common.UserPanel\src\Plugin.cs" />
     <Compile Include="Common.UserPanel\src\Translates\zh_CN.cs" />
-    <Compile Include="Common.UserPanel\src\UserPanelMenuProviders\IndexAndAccountManage.cs" />
+    <Compile Include="Common.UserPanel\src\UserPanelMenuProviders\UserPanelIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Common.AdminSettings\templates\common.admin_settings\footer.html" />
+    <Content Include="Common.AdminSettings\templates\common.admin_settings\index.html" />
+    <Content Include="Common.AdminSettings\templates\common.admin_settings\generic_form.html" />
+    <Content Include="Common.AdminSettings\templates\common.admin_settings\header.html" />
     <Content Include="Common.Admin\static\common.admin.images\default-avatar.jpg" />
     <Content Include="Common.Admin\static\common.admin.images\logo.png" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
+    <None Include="Common.AdminSettings\plugin.json" />
     <None Include="Common.Admin\templates\common.admin.widgets\enter_admin_panel.widget" />
     <Content Include="Common.Admin\templates\common.admin.widgets\enter_admin_panel.html" />
     <Content Include="Common.Admin\templates\common.admin\about_website.html" />
@@ -271,6 +289,7 @@
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.fullscreen.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.refresh.html" />
     <Content Include="Common.UserPanel\templates\common.admin\user_home.html" />
+    <None Include="Common.MenuPageBase\plugin.json" />
     <None Include="Common.UserPanel\templates\common.user_panel.widgets\enter_user_panel.widget" />
     <Content Include="Common.UserPanel\templates\common.user_panel.widgets\enter_user_panel.html" />
     <Content Include="Common.UserPanel\templates\common.user_panel\footer.html" />

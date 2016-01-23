@@ -1,0 +1,5 @@
+﻿{
+	"Name": "AdminSettings",
+	"Description": "Centralized management for admin settings",
+	"Dependencies": [ "Common.Admin" ]
+}

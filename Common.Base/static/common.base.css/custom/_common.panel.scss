@@ -112,7 +112,11 @@
 			font-size: 12px;
 			border-bottom: none;
 		}
+	}
 
+	ul.nav > li:last-child > ul.nav.childs {
+		/* 最后的子菜单不显示底部边框 */
+		border: none;
 	}
 }
 
