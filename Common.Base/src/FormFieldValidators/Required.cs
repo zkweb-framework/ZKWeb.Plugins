@@ -23,8 +23,6 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 		/// <summary>
 		/// 获取错误消息
 		/// </summary>
-		/// <param name="field"></param>
-		/// <returns></returns>
 		private string ErrorMessage(FormField field) {
 			return string.Format(new T("{0} is required"), new T(field.Attribute.Name));
 		}

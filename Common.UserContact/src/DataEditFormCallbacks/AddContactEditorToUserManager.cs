@@ -1,6 +1,7 @@
 ﻿using DryIocAttributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.UserContact.src.DataEditFormCallbacks {
 	/// <summary>
@@ -21,21 +23,25 @@ namespace ZKWeb.Plugins.Common.UserContact.src.DataEditFormCallbacks {
 		/// 电话
 		/// </summary>
 		[TextBoxField("Tel", Group = "Contact Infomation")]
+		[RegularExpression(RegexUtils.Expressions.Tel)]
 		public string Tel { get; set; }
 		/// <summary>
 		/// 手机
 		/// </summary>
 		[TextBoxField("Mobile", Group = "Contact Infomation")]
+		[RegularExpression(RegexUtils.Expressions.Tel)]
 		public string Mobile { get; set; }
 		/// <summary>
 		/// QQ
 		/// </summary>
 		[TextBoxField("QQ", Group = "Contact Infomation")]
+		[RegularExpression(RegexUtils.Expressions.Digits)]
 		public string QQ { get; set; }
 		/// <summary>
 		/// 邮箱
 		/// </summary>
 		[TextBoxField("Email", Group = "Contact Infomation")]
+		[RegularExpression(RegexUtils.Expressions.Email)]
 		public string Email { get; set; }
 		/// <summary>
 		/// 地址
