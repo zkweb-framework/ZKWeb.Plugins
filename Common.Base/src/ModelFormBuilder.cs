@@ -37,29 +37,39 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <summary>
 		/// 表单字段到成员信息
 		/// </summary>
-		public Dictionary<FormField, PropertyInfo> FieldToProperty { get; protected set; }
+		public Dictionary<FormField, Tuple<object, PropertyInfo>> FieldToProperty { get; protected set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public ModelFormBuilder(FormBuilder form = null) {
 			Form = form ?? Application.Ioc.Resolve<FormBuilder>();
-			var type = GetType();
 			// 设置表单属性
+			var type = GetType();
 			var formAttribute = type.GetAttribute<FormAttribute>();
 			if (formAttribute != null) {
 				Form.Attribute = formAttribute;
 			}
 			// 添加成员和验证属性
 			Form.Fields.Clear();
-			FieldToProperty = new Dictionary<FormField, PropertyInfo>();
-			foreach (var member in type.GetProperties()) {
-				var fieldAttribute = member.GetAttribute<FormFieldAttribute>();
+			FieldToProperty = new Dictionary<FormField, Tuple<object, PropertyInfo>>();
+			AddFieldsFrom(this);
+		}
+
+		/// <summary>
+		/// 从指定的对象添加字段
+		/// 默认会从this添加，这个函数可以用于从其他对象扩展表单
+		/// </summary>
+		/// <param name="obj">对象</param>
+		public void AddFieldsFrom(object obj) {
+			var type = obj.GetType();
+			foreach (var property in type.GetProperties()) {
+				var fieldAttribute = property.GetAttribute<FormFieldAttribute>();
 				if (fieldAttribute != null) {
 					var field = new FormField(fieldAttribute);
-					field.ValidationAttributes.AddRange(member.GetAttributes<ValidationAttribute>());
+					field.ValidationAttributes.AddRange(property.GetAttributes<ValidationAttribute>());
 					Form.Fields.Add(field);
-					FieldToProperty[field] = member;
+					FieldToProperty[field] = Tuple.Create(obj, property);
 				}
 			}
 		}
@@ -84,7 +94,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			foreach (var field in Form.Fields) {
 				var property = FieldToProperty.GetOrDefault(field);
 				if (property != null) {
-					field.Value = property.GetValue(this);
+					field.Value = property.Item2.GetValue(property.Item1);
 				}
 			}
 		}
@@ -101,7 +111,8 @@ namespace ZKWeb.Plugins.Common.Base.src {
 				var value = values.GetOrDefault(field.Attribute.Name);
 				var property = FieldToProperty.GetOrDefault(field);
 				if (property != null) {
-					property.SetValue(this, value.ConvertOrDefault(property.PropertyType, null));
+					property.Item2.SetValue(property.Item1,
+						value.ConvertOrDefault(property.Item2.PropertyType, null));
 				}
 			}
 			// 调用提交时的处理

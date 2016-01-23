@@ -32,11 +32,16 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	public abstract class DataEditFormBuilder<TData, TForm> : ModelFormBuilder
 		where TData : class, new() {
 		/// <summary>
+		/// 回调列表
+		/// </summary>
+		protected List<IDataEditFormCallback<TData, TForm>> Callbacks { get; set; }
+
+		/// <summary>
 		/// 初始化
 		/// </summary>
 		public DataEditFormBuilder(FormBuilder form = null) : base(form) {
-			var callbacks = Application.Ioc.ResolveMany<IDataEditFormCallback<TData, TForm>>();
-			callbacks.ForEach(c => c.OnCreated((TForm)(object)this));
+			Callbacks = Application.Ioc.ResolveMany<IDataEditFormCallback<TData, TForm>>().ToList();
+			Callbacks.ForEach(c => c.OnCreated((TForm)(object)this));
 		}
 
 		/// <summary>
@@ -98,11 +103,10 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		protected sealed override void OnBind() {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			var callbacks = Application.Ioc.ResolveMany<IDataEditFormCallback<TData, TForm>>();
 			using (var context = databaseManager.GetContext()) {
 				var data = GetDataBindFrom(context);
 				OnBind(context, data);
-				callbacks.ForEach(c => c.OnBind((TForm)(object)this, context, data));
+				Callbacks.ForEach(c => c.OnBind((TForm)(object)this, context, data));
 			}
 		}
 
@@ -113,18 +117,17 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <returns></returns>
 		protected sealed override object OnSubmit() {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			var callbacks = Application.Ioc.ResolveMany<IDataEditFormCallback<TData, TForm>>();
 			using (var context = databaseManager.GetContext()) {
 				var data = GetDataSaveTo(context);
 				object result = null;
 				context.Save(ref data, d => {
 					// 保存时的处理
 					result = OnSubmit(context, d);
-					callbacks.ForEach(c => c.OnSubmit((TForm)(object)this, context, d));
+					Callbacks.ForEach(c => c.OnSubmit((TForm)(object)this, context, d));
 				});
 				// 保存后的处理
 				OnSubmitSaved(context, data);
-				callbacks.ForEach(c => c.OnSubmitSaved((TForm)(object)this, context, data));
+				Callbacks.ForEach(c => c.OnSubmitSaved((TForm)(object)this, context, data));
 				context.SaveChanges();
 				return result;
 			}

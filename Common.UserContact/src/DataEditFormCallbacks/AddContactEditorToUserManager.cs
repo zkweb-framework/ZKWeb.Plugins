@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Admin.src.AdminApps;
 using ZKWeb.Plugins.Common.Admin.src.Database;
+using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.UserContact.src.DataEditFormCallbacks {
 	/// <summary>
@@ -15,23 +17,69 @@ namespace ZKWeb.Plugins.Common.UserContact.src.DataEditFormCallbacks {
 	/// </summary>
 	[ExportMany]
 	public class AddContactEditorToUserManager : IDataEditFormCallback<User, UserManageApp.BaseForm> {
+		/// <summary>
+		/// 电话
+		/// </summary>
+		[TextBoxField("Tel", Group = "Contact Infomation")]
+		public string Tel { get; set; }
+		/// <summary>
+		/// 手机
+		/// </summary>
+		[TextBoxField("Mobile", Group = "Contact Infomation")]
+		public string Mobile { get; set; }
+		/// <summary>
+		/// QQ
+		/// </summary>
+		[TextBoxField("QQ", Group = "Contact Infomation")]
+		public string QQ { get; set; }
+		/// <summary>
+		/// 邮箱
+		/// </summary>
+		[TextBoxField("Email", Group = "Contact Infomation")]
+		public string Email { get; set; }
+		/// <summary>
+		/// 地址
+		/// </summary>
+		[TextBoxField("Address", Group = "Contact Infomation")]
+		public string Address { get; set; }
+
+		/// <summary>
+		/// 创建表单时的处理
+		/// </summary>
 		public void OnCreated(UserManageApp.BaseForm form) {
-			form.Form.Fields.AddRange(new[] {
-				new FormField(new TextBoxFieldAttribute("Tel") { Group = "Contact Infomation" }),
-				new FormField(new TextBoxFieldAttribute("Mobile") { Group = "Contact Infomation" }),
-				new FormField(new TextBoxFieldAttribute("QQ") { Group = "Contact Infomation" }),
-				new FormField(new TextBoxFieldAttribute("Email") { Group = "Contact Infomation" }),
-				new FormField(new TextBoxFieldAttribute("Address") { Group = "Contact Infomation" })
-			});
+			form.AddFieldsFrom(this);
 		}
 
+		/// <summary>
+		/// 绑定数据到表单
+		/// </summary>
 		public void OnBind(UserManageApp.BaseForm form, DatabaseContext context, User bindFrom) {
+			var contact = context.Get<Database.UserContact>(c => c.User.Id == bindFrom.Id) ??
+				new Database.UserContact();
+			Tel = contact.Tel;
+			Mobile = contact.Mobile;
+			QQ = contact.QQ;
+			Email = contact.Email;
+			Address = contact.Address;
 		}
 
-		public void OnSubmit(UserManageApp.BaseForm form, DatabaseContext context, User saveTo) {
-		}
+		/// <summary>
+		/// 保存表单到数据
+		/// </summary>
+		public void OnSubmit(UserManageApp.BaseForm form, DatabaseContext context, User saveTo) { }
 
+		/// <summary>
+		/// 保存数据后的处理
+		/// </summary>
 		public void OnSubmitSaved(UserManageApp.BaseForm form, DatabaseContext context, User saved) {
+			var contact = context.Get<Database.UserContact>(c => c.User.Id == saved.Id) ??
+				new Database.UserContact() { User = saved };
+			contact.Tel = Tel;
+			contact.Mobile = Mobile;
+			contact.QQ = QQ;
+			contact.Email = Email;
+			contact.Address = Address;
+			context.Save(ref contact);
 		}
 	}
 }
