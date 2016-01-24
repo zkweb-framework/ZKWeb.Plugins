@@ -269,6 +269,7 @@
     <Content Include="Common.Admin\templates\common.admin\generic_add.html" />
     <Content Include="Common.Admin\templates\common.admin\generic_list.html" />
     <Content Include="Common.Base\static\common.base.images\logo.png" />
+    <Content Include="Common.Base\static\common.base.js\custom\_jquery.postLink.js" />
     <Content Include="Common.Base\templates\common.base\index.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.action_link.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.action_onclick.html" />

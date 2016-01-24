@@ -28,6 +28,20 @@ namespace ZKWeb.Plugins.Common.UserContact.src {
 		}
 
 		/// <summary>
+		/// 批量获取联系信息
+		/// </summary>
+		/// <param name="userIds">用户Id列表</param>
+		/// <returns></returns>
+		public virtual Dictionary<long, Database.UserContact> GetContacts(IList<long> userIds) {
+			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
+			using (var context = databaseManager.GetContext()) {
+				return context.Query<Database.UserContact>()
+					.Where(c => userIds.Contains(c.User.Id))
+					.ToDictionary(c => c.User.Id);
+			}
+		}
+
+		/// <summary>
 		/// 设置用户的联系信息，没有时新建
 		/// </summary>
 		/// <param name="userId">用户Id</param>

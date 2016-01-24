@@ -23,6 +23,7 @@
 // @koala-append "custom/_jquery.commonAjaxForm.js"
 // @koala-append "custom/_jquery.load.setup.js"
 // @koala-append "custom/_jquery.numberInput.js"
+// @koala-append "custom/_jquery.postLink.js"
 // @koala-append "custom/_jquery.refreshCaptcha.js"
 // @koala-append "custom/_jquery.refreshImage.js"
 // @koala-append "custom/_jquery.select.js"

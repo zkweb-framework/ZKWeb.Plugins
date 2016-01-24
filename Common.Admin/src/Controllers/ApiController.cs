@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using ZKWeb.Core;
 using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Database;
@@ -39,6 +40,23 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 				userIsAdminOrParter = UserTypesGroup.AdminOrParter.Contains(user.Type),
 				avatar = userManager.GetAvatarWebPath(user.Id)
 			});
+		}
+
+		/// <summary>
+		/// 清理缓存
+		/// 要求本地访问或管理员登陆
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/clear_cache", HttpMethods.POST)]
+		public IActionResult ClearCache() {
+			var request = HttpContext.Current.Request;
+			if (!request.IsLocal) {
+				PrivilegesChecker.Check(UserTypesGroup.Admin);
+			}
+			var cleaners = Application.Ioc.ResolveMany<ICacheCleaner>();
+			cleaners.ForEach(c => c.ClearCache());
+			GC.Collect();
+			return new JsonResult(new { message = new T("Clear Cache Successfully") });
 		}
 	}
 }

@@ -56,8 +56,11 @@ $.handleAjaxResult = function (data) {
 
 /* 页面加载时自动设置ajax表单 */
 $(function () {
-	var setup = function ($elem) {
-		$elem.commonAjaxForm(function (data) { $.handleAjaxResult.call($elem, data); });
+	var setup = function ($elements) {
+		$elements.each(function () {
+			var $this = $(this);
+			$this.commonAjaxForm(function (data) { $.handleAjaxResult.call($this, data); });
+		});
 	};
 	var rule = "form[ajax=true]";
 	setup($(rule));

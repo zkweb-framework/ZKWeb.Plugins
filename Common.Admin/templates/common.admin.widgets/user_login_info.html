@@ -4,9 +4,7 @@
 	<div>
 		{{ "Welcome to " | trans }}{% website_name %}
 		<a href="/home">{{ login_info.username }}</a> |
-		<form class="inline" action="/user/logout" method="post">
-			<a onclick="parentNode.submit()">{{ "Logout" | trans }}</a>
-		</form>
+		<a post-href="/user/logout">{{ "Logout" | trans }}</a>
 	</div>
 	{% else %}
 	<div>

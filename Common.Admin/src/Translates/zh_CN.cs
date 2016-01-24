@@ -114,7 +114,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Default Timezone", "默认时区" },
 			{ "Hosting Information", "服务器信息" },
 			{ "Plugin List", "插件列表" },
-			{ "Admin panel and users management", "提供管理后台和用户角色管理等功能" }
+			{ "Admin panel and users management", "提供管理后台和用户角色管理等功能" },
+			{ "Clear Cache", "清理缓存" },
+			{ "Clear Cache Successfully", "清理缓存成功" }
 		};
 
 		public bool CanTranslate(string code) {
