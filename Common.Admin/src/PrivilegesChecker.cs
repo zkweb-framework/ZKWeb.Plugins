@@ -40,8 +40,8 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			var context = HttpContext.Current;
 			if (context != null && context.Request.HttpMethod == HttpMethods.GET &&
 				(user == null || !types.Contains(user.Type))) {
-				// 跳转到登陆页面
-				context.Response.Redirect("/admin/login");
+				// 包含普通用户时跳转到前台登陆页面，否则跳转到后台登陆页面
+				context.Response.Redirect(types.Contains(UserTypes.User) ? "/user/login" : "/admin/login");
 				return;
 			} else if (types.Contains(user.Type) && HasPrivileges(user, privileges)) {
 				// 检查通过

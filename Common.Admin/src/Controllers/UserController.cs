@@ -10,6 +10,7 @@ using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Forms;
+using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
@@ -81,6 +82,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		[Action("home")]
 		public IActionResult Home() {
+			PrivilegesChecker.Check(UserTypesGroup.All);
 			return new TemplateResult("common.admin/user_home.html");
 		}
 	}
