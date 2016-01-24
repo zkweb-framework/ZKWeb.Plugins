@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src {
 	/// <summary>
 	/// 网站启动时的处理
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class Plugin : IPlugin {
 		/// <summary>
 		/// 初始化
