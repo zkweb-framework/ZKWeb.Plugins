@@ -25,7 +25,7 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.GenericFormsForAdminSettings {
 		public override string IconClass { get { return "fa fa-language"; } }
 		public override string Url { get { return "/admin/settings/locale_settings"; } }
 		public override string Privilege { get { return "AdminSettings:LocaleSettings"; } }
-		public override IModelFormBuilder GetForm() { return new Form(); }
+		protected override IModelFormBuilder GetForm() { return new Form(); }
 
 		/// <summary>
 		/// 表单

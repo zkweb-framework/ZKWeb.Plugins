@@ -1,0 +1,5 @@
+﻿{
+	"Name": "Generic Class",
+	"Description": "Generic class/catalog management",
+	"Dependencies": [ "Common.Admin", "Common.AdminSettings" ]
+}

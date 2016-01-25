@@ -25,7 +25,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// <param name="groupName">分组名称</param>
 		/// <returns></returns>
 		protected virtual string GetTabId(string groupName) {
-			return "Tab" + new string(groupName.Where(c => c != ' ').ToArray());
+			return "Tab" + groupName.Replace(" ", "");
 		}
 
 		/// <summary>

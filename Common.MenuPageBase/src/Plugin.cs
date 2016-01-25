@@ -18,8 +18,8 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src {
 		/// 初始化
 		/// </summary>
 		public Plugin() {
-			// 注册带表单的通用菜单页
-			Application.Ioc.ResolveMany<GenericFormForMenuPage>().ForEach(g => g.OnWebsiteStart());
+			// 注册通用菜单页
+			Application.Ioc.ResolveMany<GenericPageForMenuPage>().ForEach(g => g.OnWebsiteStart());
 		}
 	}
 }

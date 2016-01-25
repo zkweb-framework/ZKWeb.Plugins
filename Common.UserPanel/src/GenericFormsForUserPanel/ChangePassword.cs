@@ -24,7 +24,7 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.GenericFormsForUserPanel {
 		public override string Name { get { return "Change Password"; } }
 		public override string IconClass { get { return "fa fa-lock"; } }
 		public override string Url { get { return "/home/change_password"; } }
-		public override IModelFormBuilder GetForm() { return new Form(); }
+		protected override IModelFormBuilder GetForm() { return new Form(); }
 
 		/// <summary>
 		/// 表单

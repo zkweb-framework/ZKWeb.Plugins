@@ -1,40 +1,33 @@
-﻿using DryIoc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using ZKWeb.Core;
-using ZKWeb.Model;
-using ZKWeb.Model.ActionResults;
-using ZKWeb.Plugins.Common.Admin.src;
-using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.AdminSettings.src.Model;
-using ZKWeb.Plugins.Common.Base.src;
-using ZKWeb.Plugins.Common.Base.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.MenuPageBase.src;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src {
 	/// <summary>
-	/// 这个类用于给后台设置快速添加只包含表单的页面
+	/// 这个类用于给后台设置快速添加只包含数据列表的页面
 	/// 例子
 	/// [ExportMany]
-	/// public class ExampleForm : GenericFormForAdminSettings {
+	/// public class ExampleList : GenericListForAdminSettings[Data, ExampleList] {
 	///		public override string Group { get { return "Example Group"; } }
 	///		public override string GroupIcon { get { return "fa fa-group"; } }
-	///		public override string Name { get { return "Example Form"; } }
+	///		public override string Name { get { return "Example List"; } }
 	///		public override string IconClass { get { return "fa fa-example"; } }
-	///		public override string Url { get { return "/admin/settings/example_form"; } }
-	///		public override string Privilege { get { return "AdminSettings:ExampleForm"; } }
-	///		protected override IModelFormBuilder GetForm() { return new Form(); }
-	///		public class Form : ModelFormBuilder { /* 表单内容 */ }
+	///		public override string Url { get { return "/admin/settings/example_list"; } }
+	///		public override string Privilege { get { return "AdminSettings:ExampleList"; } }
+	///		protected override IAjaxTableCallback<Data> GetTableCallback() { return new TableCallback(); }
+	///		public class TableCallback : IAjaxTableCallback<Data> { /* 表格回调 */ }
 	/// }
 	/// </summary>
-	public abstract class GenericFormForAdminSettings :
-		GenericFormForMenuPage, IAdminSettingsMenuProvider, IPrivilegesProvider {
+	/// <typeparam name="TData">列表中的数据类型</typeparam>
+	/// <typeparam name="TPage">继承这个类的类型</typeparam>
+	public abstract class GenericListForAdminSettings<TData, TPage>
+		: GenericListForMenuPage<TData, TPage>, IAdminSettingsMenuProvider, IPrivilegesProvider
+		where TData : class {
 		/// <summary>
 		/// 使用的权限
 		/// </summary>
@@ -50,7 +43,7 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src {
 		/// <summary>
 		/// 模板路径
 		/// </summary>
-		public override string TemplatePath { get { return "common.admin_settings/generic_form.html"; } }
+		public override string TemplatePath { get { return "common.admin_settings/generic_list.html"; } }
 
 		/// <summary>
 		/// 获取权限列表

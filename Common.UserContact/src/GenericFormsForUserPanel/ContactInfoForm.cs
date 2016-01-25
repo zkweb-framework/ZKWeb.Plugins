@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.UserContact.src.GenericFormsForUserPanel {
 		public override string Name { get { return "Contact Information"; } }
 		public override string IconClass { get { return "fa fa-phone"; } }
 		public override string Url { get { return "/home/contact_info"; } }
-		public override IModelFormBuilder GetForm() { return new Form(); }
+		protected override IModelFormBuilder GetForm() { return new Form(); }
 
 		/// <summary>
 		/// 表单

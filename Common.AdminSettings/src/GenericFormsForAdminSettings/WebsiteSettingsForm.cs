@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.GenericFormsForAdminSettings {
 		public override string IconClass { get { return "fa fa-globe"; } }
 		public override string Url { get { return "/admin/settings/website_settings"; } }
 		public override string Privilege { get { return "AdminSettings:WebsiteSettings"; } }
-		public override IModelFormBuilder GetForm() { return new Form(); }
+		protected override IModelFormBuilder GetForm() { return new Form(); }
 
 		/// <summary>
 		/// 表单

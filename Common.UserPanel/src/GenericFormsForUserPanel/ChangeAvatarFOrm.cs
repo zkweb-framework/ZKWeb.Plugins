@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.GenericFormsForUserPanel {
 		public override string Name { get { return "Change Avatar"; } }
 		public override string IconClass { get { return "fa fa-smile-o"; } }
 		public override string Url { get { return "/home/change_avatar"; } }
-		public override IModelFormBuilder GetForm() { return new Form(); }
+		protected override IModelFormBuilder GetForm() { return new Form(); }
 
 		/// <summary>
 		/// 表单
