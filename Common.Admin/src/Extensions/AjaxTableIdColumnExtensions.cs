@@ -20,18 +20,19 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// 如果数据类型可以回收，则添加批量删除或批量恢复和永久删除
 		/// 如果数据类型不可以回收，则添加批量永久删除
 		/// </summary>
-		/// <typeparam name="TApp">后台应用的类型</typeparam>
 		/// <param name="column">Id列</param>
 		/// <param name="request">搜索请求</param>
-		public static void AddDeleteActionsForAdminApp<TApp>(
-			this AjaxTableIdColumn column, AjaxTableSearchRequest request)
-			where TApp : class, IAdminAppBuilder, new() {
+		/// <param name="dataType">数据类型</param>
+		/// <param name="typeName">类型名称</param>
+		/// <param name="batchUrl">批量操作使用的Url</param>
+		public static void AddDeleteActions(
+			this AjaxTableIdColumn column, AjaxTableSearchRequest request,
+			Type dataType, string typeName, string batchUrl) {
 			// 判断需要添加哪些操作
-			var app = new TApp();
 			bool addBatchDelete = false;
 			bool addBatchRecover = false;
 			bool addBatchDeleteForever = false;
-			if (IsRecyclable.Value(app.GetDataType())) {
+			if (IsRecyclable.Value(dataType)) {
 				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
 				addBatchDelete = !deleted;
 				addBatchRecover = deleted;
@@ -40,7 +41,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 				addBatchDeleteForever = true;
 			}
 			// 添加批量删除
-			var typeName = new T(app.TypeName);
+			typeName = new T(typeName);
 			if (addBatchDelete) {
 				column.AddConfirmActionForMultiChecked(
 					new T("Batch Delete"),
@@ -50,7 +51,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 					ScriptStrings.ConfirmMessageTemplateForMultiSelected(
 						string.Format(new T("Sure to delete following {0}?"), typeName), "ToString"),
 					ScriptStrings.PostConfirmedActionForMultiSelected(
-						"Id", app.BatchUrl + "?action=delete"),
+						"Id", batchUrl + "?action=delete"),
 					new { type = "type-danger" });
 			}
 			// 添加批量恢复
@@ -63,7 +64,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 					ScriptStrings.ConfirmMessageTemplateForMultiSelected(
 						string.Format(new T("Sure to recover following {0}?"), typeName), "ToString"),
 					ScriptStrings.PostConfirmedActionForMultiSelected(
-						"Id", app.BatchUrl + "?action=recover"));
+						"Id", batchUrl + "?action=recover"));
 			}
 			// 添加批量永久删除
 			if (addBatchDeleteForever) {
@@ -75,9 +76,25 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 					ScriptStrings.ConfirmMessageTemplateForMultiSelected(
 						string.Format(new T("Sure to delete following {0} forever?"), typeName), "ToString"),
 					ScriptStrings.PostConfirmedActionForMultiSelected(
-						"Id", app.BatchUrl + "?action=delete_forever"),
+						"Id", batchUrl + "?action=delete_forever"),
 					new { type = "type-danger" });
 			}
+		}
+
+		/// <summary>
+		/// 添加删除相关的按钮
+		/// 如果数据类型可以回收，则添加批量删除或批量恢复和永久删除
+		/// 如果数据类型不可以回收，则添加批量永久删除
+		/// 根据后台应用自动生成
+		/// </summary>
+		/// <typeparam name="TApp">后台应用的类型</typeparam>
+		/// <param name="column">Id列</param>
+		/// <param name="request">搜索请求</param>
+		public static void AddDeleteActionsForAdminApp<TApp>(
+			this AjaxTableIdColumn column, AjaxTableSearchRequest request)
+			where TApp : class, IAdminAppBuilder, new() {
+			var app = new TApp();
+			column.AddDeleteActions(request, app.GetDataType(), app.TypeName, app.BatchUrl);
 		}
 	}
 }

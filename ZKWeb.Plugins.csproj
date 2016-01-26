@@ -257,6 +257,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.AdminSettings\templates\common.admin_settings\footer.html" />
+    <Content Include="Common.AdminSettings\templates\common.admin_settings\generic_list.html" />
     <Content Include="Common.AdminSettings\templates\common.admin_settings\index.html" />
     <Content Include="Common.AdminSettings\templates\common.admin_settings\generic_form.html" />
     <Content Include="Common.AdminSettings\templates\common.admin_settings\header.html" />

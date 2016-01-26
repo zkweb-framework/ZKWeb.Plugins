@@ -17,7 +17,12 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Translates {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			{ "Generic Class", "通用分类" },
-			{ "Generic class/catalog management", "通用分类的管理" }
+			{ "Generic class/catalog management", "通用分类的管理" },
+			{ "ClassManage", "分类管理" },
+			{ "DefaultClass", "默认分类" },
+			{ "Try to access class that type not matched", "尝试操作类型不匹配的分类" },
+			{ "DisplayOrder", "显示顺序" },
+			{ "Order from small to large", "从小到大排列" }
 		};
 
 		public bool CanTranslate(string code) {

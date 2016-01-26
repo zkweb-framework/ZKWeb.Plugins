@@ -15,7 +15,33 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// <summary>
 		/// 添加查看按钮
 		/// 点击后弹出编辑数据的模态框
-		/// 各个参数如不指定则使用默认值
+		/// </summary>
+		/// <param name="column">操作列</param>
+		/// <param name="typeName">类型名称</param>
+		/// <param name="editUrl">编辑使用的Url</param>
+		/// <param name="name">名称，不指定时使用默认值</param>
+		/// <param name="buttonClass">按钮的Css类，不指定时使用默认值</param>
+		/// <param name="iconClass">图标的Css类，不指定时使用默认值</param>
+		/// <param name="titleTemplate">标题的模板，格式是underscore.js的格式，参数传入row</param>
+		/// <param name="urlTemplate">编辑Url的模板，格式是underscore.js的格式，参数传入row</param>
+		/// <param name="dialogParameters">弹出框的参数，不指定时使用默认值</param>
+		public static void AddEditAction(
+			this AjaxTableActionColumn column, string typeName, string editUrl,
+			string name = null, string buttonClass = null, string iconClass = null,
+			string titleTemplate = null, string urlTemplate = null, object dialogParameters = null) {
+			column.AddRemoteModalForBelongedRow(
+				name ?? new T("View"),
+				buttonClass ?? "btn btn-xs default",
+				iconClass ?? "fa fa-edit",
+				titleTemplate ?? string.Format(new T("Edit {0}"), new T(typeName)),
+				urlTemplate ?? (editUrl + "?id=<%-row.Id%>"),
+				dialogParameters);
+		}
+
+		/// <summary>
+		/// 添加查看按钮
+		/// 点击后弹出编辑数据的模态框
+		/// 根据后台应用自动生成，各个参数如不指定则使用默认值
 		/// </summary>
 		/// <typeparam name="TApp">后台应用的类型</typeparam>
 		public static void AddEditActionForAdminApp<TApp>(
@@ -24,13 +50,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 			string titleTemplate = null, string urlTemplate = null, object dialogParameters = null)
 			where TApp : class, IAdminAppBuilder, new() {
 			var app = new TApp();
-			column.AddRemoteModalForBelongedRow(
-				name ?? new T("View"),
-				buttonClass ?? "btn btn-xs default",
-				iconClass ?? "fa fa-edit",
-				titleTemplate ?? string.Format(new T("Edit {0}"), new T(app.TypeName)),
-				urlTemplate ?? (app.EditUrl + "?id=<%-row.Id%>"),
-				dialogParameters);
+			column.AddEditAction(app.TypeName, app.EditUrl,
+				name, buttonClass, iconClass, titleTemplate, urlTemplate, dialogParameters);
 		}
 	}
 }

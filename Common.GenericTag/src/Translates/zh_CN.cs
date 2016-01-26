@@ -19,7 +19,10 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Translates {
 			{ "Generic Tag", "通用标签" },
 			{ "Generic tag management", "通用标签的管理" },
 			{ "TagManage", "标签管理" },
-			{ "DefaultTag", "默认标签" }
+			{ "DefaultTag", "默认标签" },
+			{ "Try to access tag that type not matched", "尝试操作类型不匹配的标签" },
+			{ "DisplayOrder", "显示顺序" },
+			{ "Order from small to large", "从小到大排列" }
 		};
 
 		public bool CanTranslate(string code) {

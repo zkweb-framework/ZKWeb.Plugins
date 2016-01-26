@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Database {
 		/// </summary>
 		public virtual DateTime CreateTime { get; set; }
 		/// <summary>
-		/// 显示顺序
+		/// 显示顺序，从小到大
 		/// </summary>
 		public virtual long DisplayOrder { get; set; }
 		/// <summary>
@@ -39,6 +39,22 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Database {
 		/// 是否已删除
 		/// </summary>
 		public virtual bool Deleted { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public GenericTag() {
+			// 设置默认显示顺序
+			DisplayOrder = 10000;
+		}
+
+		/// <summary>
+		/// 显示名称
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() {
+			return Name;
+		}
 	}
 
 	/// <summary>
@@ -55,7 +71,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Database {
 			Map(t => t.Name);
 			Map(t => t.CreateTime);
 			Map(t => t.DisplayOrder);
-			Map(t => t.Remark);
+			Map(t => t.Remark).Length(0xffff);
 			Map(t => t.Deleted);
 		}
 	}

@@ -190,7 +190,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			[StringLength(100, MinimumLength = 3)]
 			[TextBoxField("Username", "Please enter username")]
 			public string Username { get; set; }
-			
+
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
