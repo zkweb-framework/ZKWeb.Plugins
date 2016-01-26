@@ -212,7 +212,7 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 				} else if (!user.CheckPassword(oldPassword)) {
 					throw new HttpException(400, new T("Incorrect old password"));
 				}
-				user.SetPassword(newPassword);
+				context.Save(ref user, u => u.SetPassword(newPassword));
 				context.SaveChanges();
 			}
 		}

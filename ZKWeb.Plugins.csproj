@@ -253,6 +253,8 @@
     <Compile Include="Common.UserPanel\src\Plugin.cs" />
     <Compile Include="Common.UserPanel\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserPanel\src\UserPanelMenuProviders\UserPanelIndex.cs" />
+    <Compile Include="Demo\src\DataCallbacks\PreventEditDemoAccount.cs" />
+    <Compile Include="Demo\src\Translates\zh_CN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -490,6 +492,7 @@
     <None Include="Common.Base\templates\common.base.widgets\logo.widget" />
     <None Include="Common.UserPanel\plugin.json" />
     <None Include="Common.UserContact\plugin.json" />
+    <None Include="Demo\plugin.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.Base\templates\common.base\footer.html" />
