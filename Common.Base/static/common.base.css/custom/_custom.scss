@@ -210,6 +210,10 @@ html, body {
 /* 要求横向滚动的表格 */
 .table-scroller {
 	overflow-x: auto;
+	/* 让absolute的弹出菜单最少能显示一点，无其他解决办法了，参考
+		http://stackoverflow.com/questions/4605715/position-absolute-and-overflow-hidden
+		http://stackoverflow.com/questions/5072467/why-does-overflow-yhidden-affect-the-visibility-of-items-overflowing-on-the-x */
+	min-height: 200px;
 
 	> table {
 		min-width: 768px;
