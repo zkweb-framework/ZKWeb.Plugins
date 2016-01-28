@@ -22,7 +22,11 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Translates {
 			{ "DefaultClass", "默认分类" },
 			{ "Try to access class that type not matched", "尝试操作类型不匹配的分类" },
 			{ "DisplayOrder", "显示顺序" },
-			{ "Order from small to large", "从小到大排列" }
+			{ "Order from small to large", "从小到大排列" },
+			{ "ParentClass", "上级分类" },
+			{ "Add Top Level Class", "添加顶级分类" },
+			{ "Add Same Level Class", "添加同级分类" },
+			{ "Add Child Class", "添加子分类" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -18,7 +18,6 @@
 // @koala-append "custom/_bootstrap.dropdownmenu.setup.js"
 // @koala-append "custom/_jquery.ajaxTable.js"
 // @koala-append "custom/_jquery.ajaxTableExtensions.js"
-// @koala-append "custom/_jquery.ajaxTableTreeHelper.js"
 // @koala-append "custom/_jquery.checkbox.js"
 // @koala-append "custom/_jquery.commonAjaxForm.js"
 // @koala-append "custom/_jquery.load.setup.js"

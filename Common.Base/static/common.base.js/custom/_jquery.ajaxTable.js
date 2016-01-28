@@ -104,7 +104,6 @@ $.fn.ajaxTable = function (options) {
 	};
 	// 应用搜索条件并提交搜索
 	$.ajaxTableType.prototype.applySearch = function (searchButton) {
-		console.log(searchButton);
 		var table = this;
 		var $searchButton = $(searchButton);
 		var $searchBar = $searchButton.closest(".ajax-table-search-bar");

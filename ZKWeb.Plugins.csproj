@@ -226,6 +226,9 @@
     <Compile Include="Common.Base\src\TemplateTags\UseTitle.cs" />
     <Compile Include="Common.Base\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericClass\src\Database\GenericClass.cs" />
+    <Compile Include="Common.GenericClass\src\GenericClassBuilder.cs" />
+    <Compile Include="Common.GenericClass\src\GenericClasses\DefaultClass.cs" />
+    <Compile Include="Common.GenericClass\src\GenericClassManager.cs" />
     <Compile Include="Common.GenericClass\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericTag\src\Database\GenericTag.cs" />
     <Compile Include="Common.GenericTag\src\GenericTagBuilder.cs" />
@@ -283,6 +286,7 @@
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.action_link.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.action_onclick.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.tree_node_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.image_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.label_column_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.id_column_cell.html" />
@@ -299,6 +303,7 @@
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.divider.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.fullscreen.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.refresh.html" />
+    <Content Include="Common.GenericClass\templates\common.generic_class\class_list.html" />
     <Content Include="Common.UserPanel\templates\common.admin\user_home.html" />
     <None Include="Common.GenericClass\plugin.json" />
     <None Include="Common.GenericTag\plugin.json" />
@@ -376,7 +381,6 @@
     <Content Include="Common.Base\static\common.base.js\custom\_bootstrap.dropdownmenu.setup.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.ajaxTable.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.ajaxTableExtensions.js" />
-    <Content Include="Common.Base\static\common.base.js\custom\_jquery.ajaxTableTreeHelper.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.checkbox.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.commonAjaxForm.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.load.setup.js" />

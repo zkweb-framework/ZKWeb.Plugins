@@ -131,7 +131,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// 链接模板传入Ajax表格当前选中单行的数据
 		/// 支持在数据改变后模态框关闭时刷新Ajax表格
 		/// </summary>
-		/// <param name="column">操作列</param>
+		/// <param name="items">菜单项列表</param>
 		/// <param name="name">显示名称</param>
 		/// <param name="iconClass">图标Css类</param>
 		/// <param name="titleTemplate">模态框标题的模板，格式是underscore.js的默认格式，参数传入row</param>
@@ -147,6 +147,18 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				JsonConvert.SerializeObject(titleTemplate),
 				JsonConvert.SerializeObject(urlTemplate),
 				JsonConvert.SerializeObject(dialogParameters)));
+		}
+
+		/// <summary>
+		/// Ajax表格树展开/折叠全部的菜单项
+		/// </summary>
+		/// <param name="items">菜单项列表</param>
+		/// <param name="levelMember">保存节点等级的成员名称</param>
+		public static void AddToggleAllForAjaxTableTree(
+			this List<MenuItem> items, string levelMember) {
+			items.AddItemForClickEvent(new T("Expand/Collapse All"), "fa fa-expand",
+				string.Format("$(this).closestAjaxTable().treeNodeToggleAll({0})",
+				JsonConvert.SerializeObject(levelMember)));
 		}
 	}
 }

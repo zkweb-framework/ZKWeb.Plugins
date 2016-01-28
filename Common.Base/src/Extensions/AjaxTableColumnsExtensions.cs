@@ -128,6 +128,31 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		}
 
 		/// <summary>
+		/// 添加树节点列
+		/// </summary>
+		/// <param name="columns">列列表</param>
+		/// <param name="nameMember">名称成员</param>
+		/// <param name="levelMember">层次成员，开始值是0</param>
+		/// <param name="noChildsMember">判断是否没有子节点的成员</param>
+		/// <param name="width">宽度</param>
+		/// <returns></returns>
+		public static AjaxTableColumn AddTreeNodeColumn(
+			this IList<AjaxTableColumn> columns,
+			string nameMember, string levelMember, string noChildsMember, string width = null) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var column = new AjaxTableColumn() {
+				Key = nameMember,
+				Width = width,
+				HeadTemplate = HttpUtility.HtmlEncode(new T(nameMember)),
+				CellTemplate = templateManager.RenderTemplate(
+					"common.base/tmpl.ajax_table.tree_node_column_cell.html",
+					new { nameMember, levelMember, noChildsMember })
+			};
+			columns.Add(column);
+			return column;
+		}
+
+		/// <summary>
 		/// 添加操作列
 		/// </summary>
 		/// <param name="columns">列列表</param>

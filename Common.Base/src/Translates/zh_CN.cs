@@ -59,7 +59,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Basic Information", "基本信息" },
 			{ "Base Functions", "基础功能" },
 			{ "Base functions and template pages", "基础的功能和模板页面" },
-			{ "{0} format is incorrect", "{0}的格式不正确" }
+			{ "{0} format is incorrect", "{0}的格式不正确" },
+			{ "Expand/Collapse All", "展开/折叠全部" }
 		};
 
 		public bool CanTranslate(string code) {

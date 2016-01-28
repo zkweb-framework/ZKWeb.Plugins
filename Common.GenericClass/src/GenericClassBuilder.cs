@@ -12,51 +12,53 @@ using ZKWeb.Model;
 using ZKWeb.Model.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
-using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.AdminSettings.src;
-using ZKWeb.Plugins.Common.AdminSettings.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.GenericTag.src.Database;
-using ZKWeb.Plugins.Common.MenuPageBase.src;
+using ZKWeb.Plugins.Common.GenericClass.src.Database;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 
-namespace ZKWeb.Plugins.Common.GenericTag.src {
+namespace ZKWeb.Plugins.Common.GenericClass.src {
 	/// <summary>
-	/// 通用标签构建器
+	/// 通用分类构建器
 	/// 使用时需要继承，例子
 	/// [ExportMany]
-	/// public class ExampleTag : GenericTagBuilder {
-	///		public override string Name { get { return "ExampleTag"; } }
+	/// public class ExampleClass : GenericClassBuilder {
+	///		public override string Name { get { return "ExampleClass"; } }
 	/// }
 	/// </summary>
-	public abstract class GenericTagBuilder :
-		GenericListForAdminSettings<Database.GenericTag, GenericTagBuilder> {
+	public abstract class GenericClassBuilder :
+		GenericListForAdminSettings<Database.GenericClass, GenericClassBuilder> {
 		/// <summary>
-		/// 标签类型，默认使用名称（除去空格）
+		/// 分类类型，默认使用名称（除去空格）
 		/// </summary>
 		public virtual string Type { get { return Name.Replace(" ", ""); } }
 		/// <summary>
 		/// 使用的权限
 		/// </summary>
-		public override string Privilege { get { return "TagManage:" + Type; } }
+		public override string Privilege { get { return "ClassManage:" + Type; } }
 		/// <summary>
 		/// 所属分组
 		/// </summary>
-		public override string Group { get { return "TagManage"; } }
+		public override string Group { get { return "ClassManage"; } }
 		/// <summary>
 		/// 分组图标
 		/// </summary>
-		public override string GroupIcon { get { return "fa fa-tags"; } }
+		public override string GroupIcon { get { return "fa fa-list"; } }
 		/// <summary>
 		/// 图标的Css类
 		/// </summary>
-		public override string IconClass { get { return "fa fa-tags"; } }
+		public override string IconClass { get { return "fa fa-list"; } }
+		/// <summary>
+		/// 模板路径
+		/// </summary>
+		public override string TemplatePath { get { return "common.generic_class/class_list.html"; } }
 		/// <summary>
 		/// Url地址
 		/// </summary>
-		public override string Url { get { return "/admin/settings/generic_tag/" + Type.ToLower(); } }
+		public override string Url { get { return "/admin/settings/generic_class/" + Type.ToLower(); } }
 		/// <summary>
 		/// 添加使用的Url地址
 		/// </summary>
@@ -74,12 +76,12 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 		/// 获取表格回调
 		/// </summary>
 		/// <returns></returns>
-		protected override IAjaxTableCallback<Database.GenericTag> GetTableCallback() {
+		protected override IAjaxTableCallback<Database.GenericClass> GetTableCallback() {
 			return new TableCallback(Type, AddUrl, EditUrl, BatchUrl);
 		}
 
 		/// <summary>
-		/// 添加标签
+		/// 添加分类
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult AddAction() {
@@ -87,7 +89,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 		}
 
 		/// <summary>
-		/// 编辑标签
+		/// 编辑分类
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult EditAction() {
@@ -120,24 +122,25 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 				throw new HttpException(403, new T("Non ajax request batch action is not secure"));
 			}
 			// 获取参数
+			// 其中Id列表需要把顺序倒转，用于先删除子分类再删除上级分类
 			var actionName = request.GetParam<string>("action");
 			var json = HttpContext.Current.Request.GetParam<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<long>>(json);
+			var idList = JsonConvert.DeserializeObject<IList<long>>(json).Reverse().ToList();
 			// 检查是否所有Id都属于指定的类型，防止越权操作
-			var tagManager = Application.Ioc.Resolve<GenericTagManager>();
-			if (!tagManager.IsAllTagsTypeEqualTo(idList, Type)) {
-				throw new HttpException(403, new T("Try to access tag that type not matched"));
+			var classManager = Application.Ioc.Resolve<GenericClassManager>();
+			if (!classManager.IsAllClassesTypeEqualTo(idList, Type)) {
+				throw new HttpException(403, new T("Try to access class that type not matched"));
 			}
 			// 执行批量操作
 			var deleter = Application.Ioc.Resolve<GenericDataDeleter>();
 			if (actionName == "delete_forever") {
-				deleter.BatchDeleteForever<Database.GenericTag>(idList);
+				deleter.BatchDeleteForever<Database.GenericClass>(idList);
 				return new JsonResult(new { message = new T("Batch Delete Forever Successful") });
 			} else if (actionName == "delete") {
-				deleter.BatchDelete<Database.GenericTag>(idList);
+				deleter.BatchDelete<Database.GenericClass>(idList);
 				return new JsonResult(new { message = new T("Batch Delete Successful") });
 			} else if (actionName == "recover") {
-				deleter.BatchRecover<Database.GenericTag>(idList);
+				deleter.BatchRecover<Database.GenericClass>(idList);
 				return new JsonResult(new { message = new T("Batch Recover Successful") });
 			}
 			throw new HttpException(404, string.Format(new T("Action {0} not exist"), actionName));
@@ -159,9 +162,9 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 		/// <summary>
 		/// 表格回调
 		/// </summary>
-		public class TableCallback : IAjaxTableCallback<Database.GenericTag> {
+		public class TableCallback : IAjaxTableCallback<Database.GenericClass> {
 			/// <summary>
-			/// 标签类型
+			/// 分类类型
 			/// </summary>
 			public string Type { get; set; }
 			/// <summary>
@@ -192,23 +195,29 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
+				table.MenuItems.AddToggleAllForAjaxTableTree("Level");
 				table.MenuItems.AddDivider();
 				table.MenuItems.AddEditAction(Type, EditUrl, dialogParameters: new { size = "size-wide" });
-				table.MenuItems.AddAddAction(Type, AddUrl, dialogParameters: new { size = "size-wide" });
+				table.MenuItems.AddAddAction(Type, AddUrl,
+					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
+				table.MenuItems.AddRemoteModalForSelectedRow(
+					new T("Add Same Level Class"), "fa fa-plus", string.Format(new T("Add {0}"), new T(Type)),
+					AddUrl + "?parentId=<%-row.ParentId%>", new { size = "size-wide" });
+				table.MenuItems.AddRemoteModalForSelectedRow(
+					new T("Add Child Class"), "fa fa-plus", string.Format(new T("Add {0}"), new T(Type)),
+					AddUrl + "?parentId=<%-row.Id%>", new { size = "size-wide" });
 				searchBar.KeywordPlaceHolder = "Name/Remark";
 				searchBar.MenuItems.AddDivider();
 				searchBar.MenuItems.AddRecycleBin();
-				searchBar.MenuItems.AddAddAction(Type, AddUrl, dialogParameters: new { size = "size-wide" });
+				searchBar.MenuItems.AddAddAction(Type, AddUrl,
+					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
 			}
 
 			/// <summary>
 			/// 查询数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.GenericTag> query) {
-				// 在第一页显示所有分类
-				request.PageIndex = 0;
-				request.PageSize = 0x7ffffffe;
+				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.GenericClass> query) {
 				// 提供类型给其他回调
 				request.Conditions["Type"] = Type;
 				// 按类型
@@ -225,55 +234,71 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 			/// 排序数据
 			/// </summary>
 			public void OnSort(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.GenericTag> query) {
+				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.GenericClass> query) {
 				// 默认按显示顺序排列
 				query = query.OrderBy(q => q.DisplayOrder).ThenByDescending(q => q.Id);
 			}
 
 			/// <summary>
-			/// 选择字段
+			/// 选择数据
 			/// </summary>
 			public void OnSelect(
-				AjaxTableSearchRequest request, List<KeyValuePair<Database.GenericTag, Dictionary<string, object>>> pairs) {
-				foreach (var pair in pairs) {
+				AjaxTableSearchRequest request, List<KeyValuePair<Database.GenericClass, Dictionary<string, object>>> pairs) {
+				// 按上下级关系重新生成数据列表
+				var classMapping = pairs.ToDictionary(p => p.Key.Id);
+				var tree = TreeUtils.CreateTree(pairs,
+					p => p, p => classMapping.GetOrDefault(p.Key.Parent == null ? 0 : p.Key.Parent.Id));
+				pairs.Clear();
+				foreach (var node in tree.EnumerateAllNodes().Skip(1)) {
+					var pair = node.Value;
 					pair.Value["Id"] = pair.Key.Id;
 					pair.Value["Name"] = pair.Key.Name;
+					pair.Value["ParentId"] = pair.Key.Parent == null ? 0 : pair.Key.Parent.Id;
 					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
 					pair.Value["DisplayOrder"] = pair.Key.DisplayOrder;
 					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					pair.Value["Level"] = node.GetParents().Count() - 1;
+					pair.Value["NoChilds"] = !node.Childs.Any();
+					pairs.Add(pair);
 				}
 			}
 
 			/// <summary>
 			/// 添加列和操作
 			/// </summary>
-			public void OnResponse(AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
+			public void OnResponse(
+				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
 				var idColumn = response.Columns.AddIdColumn("Id");
-				response.Columns.AddMemberColumn("Name", "45%");
+				response.Columns.AddTreeNodeColumn("Name", "Level", "NoChilds");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
 				actionColumn.AddEditAction(Type, EditUrl, dialogParameters: new { size = "size-wide" });
 				idColumn.AddDivider();
-				idColumn.AddDeleteActions(request, typeof(Database.GenericTag), Type, BatchUrl);
+				idColumn.AddDeleteActions(request, typeof(Database.GenericClass), Type, BatchUrl);
 			}
 		}
 
 		/// <summary>
 		/// 添加和编辑使用的表单
 		/// </summary>
-		public class Form : TabDataEditFormBuilder<Database.GenericTag, Form> {
+		public class Form : DataEditFormBuilder<Database.GenericClass, Form> {
 			/// <summary>
-			/// 标签类型
+			/// 分类类型
 			/// </summary>
 			public string Type { get; set; }
+			/// <summary>
+			/// 上级分类名称
+			/// </summary>
+			[LabelField("ParentClass")]
+			public string ParentClass { get; set; }
 			/// <summary>
 			/// 名称
 			/// </summary>
 			[Required]
 			[StringLength(100)]
-			[TextBoxField("Name", "Name")]
+			[TextBoxField("Name")]
 			public string Name { get; set; }
 			/// <summary>
 			/// 显示顺序
@@ -290,18 +315,44 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 			/// <summary>
 			/// 初始化
 			/// </summary>
-			/// <param name="type">标签类型</param>
+			/// <param name="type">分类类型</param>
 			public Form(string type) {
 				Type = type;
 			}
 
 			/// <summary>
-			/// 绑定数据到表单
+			/// 根据当前请求传入的parentId参数获取上级分类，不存在时返回null
+			/// 这个函数只在添加时使用
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, Database.GenericTag bindFrom) {
-				if (bindFrom.Id > 0 && bindFrom.Type != Type) {
+			protected Database.GenericClass GetParentClass(DatabaseContext context) {
+				var parentId = HttpContext.Current.Request.GetParam<long>("parentId");
+				if (parentId <= 0) {
+					return null;
+				}
+				var parent = context.Get<Database.GenericClass>(c => c.Id == parentId);
+				if (parent == null) {
+					return null;
+				} else if (parent.Type != Type) {
+					throw new HttpException(403, new T("Try to access class that type not matched"));
+				}
+				return parent;
+			}
+
+			/// <summary>
+			/// 从数据绑定表单
+			/// </summary>
+			protected override void OnBind(DatabaseContext context, Database.GenericClass bindFrom) {
+				if (bindFrom.Id <= 0) {
+					// 添加时
+					var parent = GetParentClass(context);
+					ParentClass = parent == null ? "" : parent.Name;
+				} else {
+					// 编辑时
+					ParentClass = bindFrom.Parent == null ? "" : bindFrom.Parent.Name;
 					// 检查类型，防止越权操作
-					throw new HttpException(403, new T("Try to access tag that type not matched"));
+					if (bindFrom.Type != Type) {
+						throw new HttpException(403, new T("Try to access class that type not matched"));
+					}
 				}
 				Name = bindFrom.Name;
 				DisplayOrder = bindFrom.DisplayOrder;
@@ -311,14 +362,15 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, Database.GenericTag saveTo) {
+			protected override object OnSubmit(DatabaseContext context, Database.GenericClass saveTo) {
 				if (saveTo.Id <= 0) {
 					// 添加时
 					saveTo.Type = Type;
+					saveTo.Parent = GetParentClass(context);
 					saveTo.CreateTime = DateTime.UtcNow;
-				} else if (saveTo.Id > 0 && saveTo.Type != Type) {
+				} else if (saveTo.Type != Type) {
 					// 编辑时检查类型，防止越权操作
-					throw new HttpException(403, new T("Try to access tag that type not matched"));
+					throw new HttpException(403, new T("Try to access class that type not matched"));
 				}
 				saveTo.Name = Name;
 				saveTo.DisplayOrder = DisplayOrder;
