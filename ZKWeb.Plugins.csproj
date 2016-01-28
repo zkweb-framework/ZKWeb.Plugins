@@ -225,6 +225,23 @@
     <Compile Include="Common.Base\src\TemplateTags\WebsiteName.cs" />
     <Compile Include="Common.Base\src\TemplateTags\UseTitle.cs" />
     <Compile Include="Common.Base\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.Currency\src\Config\CurrencySettings.cs" />
+    <Compile Include="Common.Currency\src\Currencies\THB.cs" />
+    <Compile Include="Common.Currency\src\Currencies\CZK.cs" />
+    <Compile Include="Common.Currency\src\Currencies\CHF.cs" />
+    <Compile Include="Common.Currency\src\Currencies\RUB.cs" />
+    <Compile Include="Common.Currency\src\Currencies\KRW.cs" />
+    <Compile Include="Common.Currency\src\Currencies\TWD.cs" />
+    <Compile Include="Common.Currency\src\Currencies\HKD.cs" />
+    <Compile Include="Common.Currency\src\Currencies\JPY.cs" />
+    <Compile Include="Common.Currency\src\Currencies\EUR.cs" />
+    <Compile Include="Common.Currency\src\Currencies\USD.cs" />
+    <Compile Include="Common.Currency\src\Currencies\CNY.cs" />
+    <Compile Include="Common.Currency\src\CurrencyManager.cs" />
+    <Compile Include="Common.Currency\src\GenericFormsForAdminSettings\CurrencySettingsForm.cs" />
+    <Compile Include="Common.Currency\src\ListItemProviders\CurrencyListItemProvider.cs" />
+    <Compile Include="Common.Currency\src\Model\ICurrency.cs" />
+    <Compile Include="Common.Currency\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericClass\src\Database\GenericClass.cs" />
     <Compile Include="Common.GenericClass\src\GenericClassBuilder.cs" />
     <Compile Include="Common.GenericClass\src\GenericClasses\DefaultClass.cs" />
@@ -241,6 +258,9 @@
     <Compile Include="Common.MenuPageBase\src\Model\IMenuProvider.cs" />
     <Compile Include="Common.MenuPageBase\src\Plugin.cs" />
     <Compile Include="Common.MenuPageBase\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.Region\src\Model\Region.cs" />
+    <Compile Include="Common.Region\src\Model\Country.cs" />
+    <Compile Include="Common.Region\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserContact\src\GenericFormsForUserPanel\ContactInfoForm.cs" />
     <Compile Include="Common.UserContact\src\AjaxTableCallbacks\AddColumnsToUserManageApp.cs" />
     <Compile Include="Common.UserContact\src\UserContactManager.cs" />
@@ -305,9 +325,11 @@
     <Content Include="Common.Base\templates\common.base\tmpl.menu_item.refresh.html" />
     <Content Include="Common.GenericClass\templates\common.generic_class\class_list.html" />
     <Content Include="Common.UserPanel\templates\common.admin\user_home.html" />
+    <None Include="Common.Currency\plugin.json" />
     <None Include="Common.GenericClass\plugin.json" />
     <None Include="Common.GenericTag\plugin.json" />
     <None Include="Common.MenuPageBase\plugin.json" />
+    <None Include="Common.Region\plugin.json" />
     <None Include="Common.UserPanel\templates\common.user_panel.widgets\enter_user_panel.widget" />
     <Content Include="Common.UserPanel\templates\common.user_panel.widgets\enter_user_panel.html" />
     <Content Include="Common.UserPanel\templates\common.user_panel\footer.html" />
@@ -502,7 +524,9 @@
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Common.CustomTranslator\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
