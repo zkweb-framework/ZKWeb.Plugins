@@ -17,7 +17,25 @@ namespace ZKWeb.Plugins.Common.Region.src.Translates {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			{ "Region", "区域" },
-			{ "Provide currency types and related functions", "提供区域列表和相关的功能" }
+			{ "Provide currency types and related functions", "提供区域列表和相关的功能" },
+			{ "RegionSettings", "地区设置" },
+			{ "DefaultCountry", "默认国家/行政区" },
+			{ "CN", "中华人民共和国" },
+			{ "US", "美利坚合众国" },
+			{ "FR", "法国" },
+			{ "DE", "德国" },
+			{ "JP", "日本国" },
+			{ "KR", "大韩民国" },
+			{ "ES", "西班牙王国" },
+			{ "TH", "泰国" },
+			{ "TW", "台湾" },
+			{ "HK", "香港特别行政区" },
+			{ "RU", "俄罗斯联邦" },
+			{ "IT", "意大利共和国" },
+			{ "GR", "希腊共和国" },
+			{ "AE", "阿拉伯联合酋长国" },
+			{ "PL", "波兰共和国" },
+			{ "CZ", "捷克共和国" }
 		};
 
 		public bool CanTranslate(string code) {
