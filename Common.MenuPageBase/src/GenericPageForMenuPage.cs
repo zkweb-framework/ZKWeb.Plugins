@@ -20,7 +20,7 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src {
 	/// 这个抽象类需要再次继承，请勿直接使用
 	/// 目前集成这个类的类有GenericFormForMenuPage, GenericListForMenuPage
 	/// </summary>
-	public abstract class GenericPageForMenuPage {
+	public abstract class GenericPageForMenuPage : IWebsiteStartHandler {
 		/// <summary>
 		/// 所属分组
 		/// </summary>

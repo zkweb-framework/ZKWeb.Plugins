@@ -13,7 +13,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 	/// <summary>
 	/// 后台应用的基础类
 	/// </summary>
-	public abstract class AdminApp : ILiquidizable {
+	public abstract class AdminApp : IWebsiteStartHandler, ILiquidizable {
 		/// <summary>
 		/// 应用名称
 		/// </summary>

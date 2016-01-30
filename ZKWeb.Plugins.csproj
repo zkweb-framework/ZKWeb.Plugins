@@ -256,7 +256,6 @@
     <Compile Include="Common.MenuPageBase\src\GenericListForMenuPage.cs" />
     <Compile Include="Common.MenuPageBase\src\GenericPageForMenuPage.cs" />
     <Compile Include="Common.MenuPageBase\src\Model\IMenuProvider.cs" />
-    <Compile Include="Common.MenuPageBase\src\Plugin.cs" />
     <Compile Include="Common.MenuPageBase\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Region\src\Config\RegionSettings.cs" />
     <Compile Include="Common.Region\src\Countries\CN.cs" />
