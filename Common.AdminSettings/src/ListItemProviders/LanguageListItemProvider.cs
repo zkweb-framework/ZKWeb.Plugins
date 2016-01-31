@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DryIoc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,9 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.ListItemProviders {
 		/// </summary>
 		/// <returns></returns>
 		public IEnumerable<ListItem> GetItems() {
-			foreach (Languages lang in Enum.GetValues(typeof(Languages))) {
-				var code = lang.GetDescription();
-				yield return new ListItem(new T(code), code);
+			var languages = Application.Ioc.ResolveMany<ILanguage>();
+			foreach (var language in languages) {
+				yield return new ListItem(new T(language.Name), language.Name);
 			}
 		}
 	}

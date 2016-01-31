@@ -29,7 +29,22 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Translates {
 			{ "CopyrightText", "版权信息" },
 			{ "DefaultLanguage", "默认语言" },
 			{ "DefaultTimezone", "默认时区" },
-			{ "AllowDetectLanguageFromBrowser", "使用浏览器指定的语言" }
+			{ "AllowDetectLanguageFromBrowser", "使用浏览器指定的语言" },
+			{ "ar-DZ", "阿拉伯语" },
+			{ "zh-CN", "中文" },
+			{ "cs-CZ", "捷克语" },
+			{ "en-US", "英语" },
+			{ "fr-FR", "法语" },
+			{ "de-DE", "德语" },
+			{ "el-GR", "希腊语" },
+			{ "it-IT", "意大利语" },
+			{ "ja-JP", "日语" },
+			{ "ko-KR", "韩语" },
+			{ "pl-PL", "波兰语" },
+			{ "ru-RU", "俄语" },
+			{ "es-ES", "西班牙语" },
+			{ "th-TH", "泰语" },
+			{ "zh-TW", "繁体中文" }
 		};
 
 		public bool CanTranslate(string code) {

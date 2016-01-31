@@ -97,9 +97,25 @@
     <Compile Include="Common.AdminSettings\src\GenericFormsForAdminSettings\WebsiteSettingsForm.cs" />
     <Compile Include="Common.AdminSettings\src\GenericFormForAdminSettings.cs" />
     <Compile Include="Common.AdminSettings\src\GenericListForAdminSettings.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Italian.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Greek.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Arabic.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Czech.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Polish.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Russian.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\TraditionalChinese.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Thai.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Spanish.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Korean.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Japanese.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\German.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\French.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\English.cs" />
+    <Compile Include="Common.AdminSettings\src\Languages\Chinese.cs" />
     <Compile Include="Common.AdminSettings\src\ListItemProviders\LanguageListItemProvider.cs" />
     <Compile Include="Common.AdminSettings\src\ListItemProviders\TimezoneListItemProvider.cs" />
     <Compile Include="Common.AdminSettings\src\Model\IAdminSettingsMenuProvider.cs" />
+    <Compile Include="Common.AdminSettings\src\Model\ILanguage.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Admin\src\AdminAppBuilder.cs" />
     <Compile Include="Common.Admin\src\AdminApps\UserManageApp.cs" />
@@ -141,7 +157,6 @@
     <Compile Include="Common.Base\src\Model\IFormFieldParseFromEnv.cs" />
     <Compile Include="Common.Base\src\Model\IListItemGroupsProvider.cs" />
     <Compile Include="Common.Base\src\Model\IListItemTreeProvider.cs" />
-    <Compile Include="Common.AdminSettings\src\Model\Languages.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromData.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromDataNotDeleted.cs" />
     <Compile Include="Common.Base\src\Model\ListItemFromEnum.cs" />
@@ -242,6 +257,10 @@
     <Compile Include="Common.Currency\src\ListItemProviders\CurrencyListItemProvider.cs" />
     <Compile Include="Common.Currency\src\Model\ICurrency.cs" />
     <Compile Include="Common.Currency\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.CustomTranslate\src\CustomTranslator.cs" />
+    <Compile Include="Common.CustomTranslate\src\CustomTranslators\Chinese.cs" />
+    <Compile Include="Common.CustomTranslate\src\Model\TranslateContent.cs" />
+    <Compile Include="Common.CustomTranslate\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericClass\src\Database\GenericClass.cs" />
     <Compile Include="Common.GenericClass\src\GenericClassBuilder.cs" />
     <Compile Include="Common.GenericClass\src\GenericClasses\DefaultClass.cs" />
@@ -346,6 +365,7 @@
     <Content Include="Common.GenericClass\templates\common.generic_class\class_list.html" />
     <Content Include="Common.UserPanel\templates\common.admin\user_home.html" />
     <None Include="Common.Currency\plugin.json" />
+    <None Include="Common.CustomTranslate\plugin.json" />
     <None Include="Common.GenericClass\plugin.json" />
     <None Include="Common.GenericTag\plugin.json" />
     <None Include="Common.MenuPageBase\plugin.json" />
@@ -545,9 +565,7 @@
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common.CustomTranslator\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
