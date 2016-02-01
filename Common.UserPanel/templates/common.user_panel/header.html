@@ -14,18 +14,7 @@
 							<div class="main-title">{{ login_info.username }}</div>
 						</div>
 					</div>
-					<ul class="nav">
-						{% for group in menu_groups %}
-						<li>
-							<a><i class="{{ group.IconClass }}"></i>{{ group.Name | trans }}</a>
-							<ul class="nav childs">
-								{% for item in group.Items %}
-								<li>{{ item }}</li>
-								{% endfor %}
-							</ul>
-						</li>
-						{% endfor %}
-					</ul>
+					{% include common.menu_page_base/menu_groups_nav.html %}
 				</div>
 			</div>
 			<div class="panel-content">
