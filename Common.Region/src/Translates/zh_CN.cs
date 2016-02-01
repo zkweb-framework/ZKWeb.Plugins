@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Common.Region.src.Translates {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			{ "Region", "区域" },
-			{ "Provide currency types and related functions", "提供区域列表和相关的功能" },
+			{ "Provide regions and related functions", "提供区域列表和相关的功能" },
 			{ "RegionSettings", "地区设置" },
 			{ "DefaultCountry", "默认国家/行政区" },
 			{ "CN", "中华人民共和国" },
