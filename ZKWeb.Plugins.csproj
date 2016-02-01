@@ -259,7 +259,7 @@
     <Compile Include="Common.Currency\src\Translates\zh_CN.cs" />
     <Compile Include="Common.CustomTranslate\src\CustomTranslator.cs" />
     <Compile Include="Common.CustomTranslate\src\CustomTranslators\Chinese.cs" />
-    <Compile Include="Common.CustomTranslate\src\Model\TranslateContent.cs" />
+    <Compile Include="Common.CustomTranslate\src\Model\Translation.cs" />
     <Compile Include="Common.CustomTranslate\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericClass\src\Database\GenericClass.cs" />
     <Compile Include="Common.GenericClass\src\GenericClassBuilder.cs" />

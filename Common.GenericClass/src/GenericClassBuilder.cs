@@ -77,7 +77,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src {
 		/// </summary>
 		/// <returns></returns>
 		protected override IAjaxTableCallback<Database.GenericClass> GetTableCallback() {
-			return new TableCallback(Type, AddUrl, EditUrl, BatchUrl);
+			return new TableCallback(this);
 		}
 
 		/// <summary>
@@ -164,30 +164,15 @@ namespace ZKWeb.Plugins.Common.GenericClass.src {
 		/// </summary>
 		public class TableCallback : IAjaxTableCallback<Database.GenericClass> {
 			/// <summary>
-			/// 分类类型
+			/// 分类构建器
 			/// </summary>
-			public string Type { get; set; }
-			/// <summary>
-			/// 添加使用的Url地址
-			/// </summary>
-			public string AddUrl { get; set; }
-			/// <summary>
-			/// 编辑使用的Url地址
-			/// </summary>
-			public string EditUrl { get; set; }
-			/// <summary>
-			/// 批量操作使用的Url地址
-			/// </summary>
-			public string BatchUrl { get; set; }
+			public GenericClassBuilder Builder { get; set; }
 
 			/// <summary>
 			/// 初始化
 			/// </summary>
-			public TableCallback(string type, string addUrl, string editUrl, string batchUrl) {
-				Type = type;
-				AddUrl = addUrl;
-				EditUrl = editUrl;
-				BatchUrl = batchUrl;
+			public TableCallback(GenericClassBuilder builder) {
+				Builder = builder;
 			}
 
 			/// <summary>
@@ -197,19 +182,24 @@ namespace ZKWeb.Plugins.Common.GenericClass.src {
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
 				table.MenuItems.AddToggleAllForAjaxTableTree("Level");
 				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditAction(Type, EditUrl, dialogParameters: new { size = "size-wide" });
-				table.MenuItems.AddAddAction(Type, AddUrl,
+				table.MenuItems.AddEditAction(
+					Builder.Type, Builder.EditUrl, dialogParameters: new { size = "size-wide" });
+				table.MenuItems.AddAddAction(
+					Builder.Type, Builder.AddUrl,
 					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
 				table.MenuItems.AddRemoteModalForSelectedRow(
-					new T("Add Same Level Class"), "fa fa-plus", string.Format(new T("Add {0}"), new T(Type)),
-					AddUrl + "?parentId=<%-row.ParentId%>", new { size = "size-wide" });
+					new T("Add Same Level Class"), "fa fa-plus",
+					string.Format(new T("Add {0}"), new T(Builder.Type)),
+					Builder.AddUrl + "?parentId=<%-row.ParentId%>", new { size = "size-wide" });
 				table.MenuItems.AddRemoteModalForSelectedRow(
-					new T("Add Child Class"), "fa fa-plus", string.Format(new T("Add {0}"), new T(Type)),
-					AddUrl + "?parentId=<%-row.Id%>", new { size = "size-wide" });
+					new T("Add Child Class"), "fa fa-plus",
+					string.Format(new T("Add {0}"), new T(Builder.Type)),
+					Builder.AddUrl + "?parentId=<%-row.Id%>", new { size = "size-wide" });
 				searchBar.KeywordPlaceHolder = "Name/Remark";
 				searchBar.MenuItems.AddDivider();
 				searchBar.MenuItems.AddRecycleBin();
-				searchBar.MenuItems.AddAddAction(Type, AddUrl,
+				searchBar.MenuItems.AddAddAction(
+					Builder.Type, Builder.AddUrl,
 					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
 			}
 
@@ -219,9 +209,9 @@ namespace ZKWeb.Plugins.Common.GenericClass.src {
 			public void OnQuery(
 				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.GenericClass> query) {
 				// 提供类型给其他回调
-				request.Conditions["Type"] = Type;
+				request.Conditions["Type"] = Builder.Type;
 				// 按类型
-				query = query.Where(q => q.Type == Type);
+				query = query.Where(q => q.Type == Builder.Type);
 				// 按回收站
 				query = query.FilterByRecycleBin(request);
 				// 按关键词
@@ -274,9 +264,11 @@ namespace ZKWeb.Plugins.Common.GenericClass.src {
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditAction(Type, EditUrl, dialogParameters: new { size = "size-wide" });
+				actionColumn.AddEditAction(
+					Builder.Type, Builder.EditUrl, dialogParameters: new { size = "size-wide" });
 				idColumn.AddDivider();
-				idColumn.AddDeleteActions(request, typeof(Database.GenericClass), Type, BatchUrl);
+				idColumn.AddDeleteActions(
+					request, typeof(Database.GenericClass), Builder.Type, Builder.BatchUrl);
 			}
 		}
 

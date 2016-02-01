@@ -90,5 +90,34 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				JsonConvert.SerializeObject(urlTemplate),
 				JsonConvert.SerializeObject(dialogParameters)));
 		}
+
+		/// <summary>
+		/// 添加对多选框选中的数据进行的需要确认的批量操作菜单项
+		/// 确认时会使用模态框
+		/// </summary>
+		/// <param name="column">操作列</param>
+		/// <param name="name">显示名称</param>
+		/// <param name="buttonClass">按钮Css类</param>
+		/// <param name="iconClass">图标Css类</param>
+		/// <param name="titleTemplate">标题栏的模板，格式是underscore.js的默认格式，参数传入rows</param>
+		/// <param name="messageTemplate">消息内容的模板，格式是underscore.js的默认格式，参数传入rows</param>
+		/// <param name="callback">回调，可以使用变量table和rows，result等于true是代表用户点击了确认</param>
+		/// <param name="dialogParameters">用于覆盖传入给BootstrapDialog的参数</param>
+		public static void AddConfirmActionForBelongedRow(
+			this AjaxTableActionColumn column,
+			string name, string buttonClass, string iconClass,
+			string titleTemplate, string messageTemplate,
+			string callback, object dialogParameters = null) {
+			column.AddButtonForClickEvent(name, buttonClass, iconClass, string.Format(@"
+				var table = $(this).closestAjaxTable();
+				var rows = [table.getBelongedRowData(this)];
+				rows.length && table.showConfirmActionForRows(rows, {0}, {1}, {2}, {3}, function(result) {{ {4} }}, {5});",
+				JsonConvert.SerializeObject(new T("Ok")),
+				JsonConvert.SerializeObject(new T("Cancel")),
+				JsonConvert.SerializeObject(titleTemplate),
+				JsonConvert.SerializeObject(messageTemplate),
+				callback,
+				JsonConvert.SerializeObject(dialogParameters)));
+		}
 	}
 }

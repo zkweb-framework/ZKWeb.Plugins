@@ -75,7 +75,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 		/// </summary>
 		/// <returns></returns>
 		protected override IAjaxTableCallback<Database.GenericTag> GetTableCallback() {
-			return new TableCallback(Type, AddUrl, EditUrl, BatchUrl);
+			return new TableCallback(this);
 		}
 
 		/// <summary>
@@ -161,30 +161,15 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 		/// </summary>
 		public class TableCallback : IAjaxTableCallback<Database.GenericTag> {
 			/// <summary>
-			/// 标签类型
+			/// 标签构建器
 			/// </summary>
-			public string Type { get; set; }
-			/// <summary>
-			/// 添加使用的Url地址
-			/// </summary>
-			public string AddUrl { get; set; }
-			/// <summary>
-			/// 编辑使用的Url地址
-			/// </summary>
-			public string EditUrl { get; set; }
-			/// <summary>
-			/// 批量操作使用的Url地址
-			/// </summary>
-			public string BatchUrl { get; set; }
+			public GenericTagBuilder Builder { get; set; }
 
 			/// <summary>
 			/// 初始化
 			/// </summary>
-			public TableCallback(string type, string addUrl, string editUrl, string batchUrl) {
-				Type = type;
-				AddUrl = addUrl;
-				EditUrl = editUrl;
-				BatchUrl = batchUrl;
+			public TableCallback(GenericTagBuilder builder) {
+				Builder = builder;
 			}
 
 			/// <summary>
@@ -193,12 +178,15 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
 				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditAction(Type, EditUrl, dialogParameters: new { size = "size-wide" });
-				table.MenuItems.AddAddAction(Type, AddUrl, dialogParameters: new { size = "size-wide" });
+				table.MenuItems.AddEditAction(
+					Builder.Type, Builder.EditUrl, dialogParameters: new { size = "size-wide" });
+				table.MenuItems.AddAddAction(
+					Builder.Type, Builder.AddUrl, dialogParameters: new { size = "size-wide" });
 				searchBar.KeywordPlaceHolder = "Name/Remark";
 				searchBar.MenuItems.AddDivider();
 				searchBar.MenuItems.AddRecycleBin();
-				searchBar.MenuItems.AddAddAction(Type, AddUrl, dialogParameters: new { size = "size-wide" });
+				searchBar.MenuItems.AddAddAction(
+					Builder.Type, Builder.AddUrl, dialogParameters: new { size = "size-wide" });
 			}
 
 			/// <summary>
@@ -210,9 +198,9 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 				request.PageIndex = 0;
 				request.PageSize = 0x7ffffffe;
 				// 提供类型给其他回调
-				request.Conditions["Type"] = Type;
+				request.Conditions["Type"] = Builder.Type;
 				// 按类型
-				query = query.Where(q => q.Type == Type);
+				query = query.Where(q => q.Type == Builder.Type);
 				// 按回收站
 				query = query.FilterByRecycleBin(request);
 				// 按关键词
@@ -249,14 +237,17 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 			/// </summary>
 			public void OnResponse(AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
 				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Name", "45%");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditAction(Type, EditUrl, dialogParameters: new { size = "size-wide" });
+				actionColumn.AddEditAction(
+					Builder.Type, Builder.EditUrl, dialogParameters: new { size = "size-wide" });
 				idColumn.AddDivider();
-				idColumn.AddDeleteActions(request, typeof(Database.GenericTag), Type, BatchUrl);
+				idColumn.AddDeleteActions(
+					request, typeof(Database.GenericTag), Builder.Type, Builder.BatchUrl);
 			}
 		}
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 	/// <summary>
@@ -52,6 +53,34 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 			var app = new TApp();
 			column.AddEditAction(app.TypeName, app.EditUrl,
 				name, buttonClass, iconClass, titleTemplate, urlTemplate, dialogParameters);
+		}
+
+		/// <summary>
+		/// 添加删除按钮
+		/// 点击后弹出确认框，确认后把json=[数据Id]提交到删除url
+		/// </summary>
+		/// <param name="column">操作列</param>
+		/// <param name="typeName">类型名称</param>
+		/// <param name="deleteUrl">删除使用的Url</param>
+		/// <param name="name">名称，不指定时使用默认值</param>
+		/// <param name="buttonClass">按钮的Css类，不指定时使用默认值</param>
+		/// <param name="iconClass">图标的Css类，不指定时使用默认值</param>
+		/// <param name="titleTemplate">标题的模板，格式是underscore.js的格式，参数传入rows</param>
+		/// <param name="urlTemplate">编辑Url的模板，格式是underscore.js的格式，参数传入rows</param>
+		/// <param name="dialogParameters">弹出框的参数，不指定时使用默认值</param>
+		public static void AddDeleteAction(
+			this AjaxTableActionColumn column, string typeName, string deleteUrl,
+			string name = null, string buttonClass = null, string iconClass = null,
+			string titleTemplate = null, string urlTemplate = null, object dialogParameters = null) {
+			column.AddConfirmActionForBelongedRow(
+				name ?? new T("Delete"),
+				buttonClass ?? "btn btn-xs btn-danger",
+				iconClass ?? "fa fa-remove",
+				titleTemplate ?? string.Format(new T("Delete {0}"), new T(typeName)),
+				ScriptStrings.ConfirmMessageTemplateForMultiSelected(
+					string.Format(new T("Sure to delete following {0}?"), new T(typeName)), "ToString"),
+				ScriptStrings.PostConfirmedActionForMultiSelected("Id", deleteUrl),
+				dialogParameters);
 		}
 	}
 }

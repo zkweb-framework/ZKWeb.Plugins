@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ZKWeb.Plugins.Common.CustomTranslate.src.CustomTranslators {
 	/// <summary>
-	/// 中文
+	/// 繁体中文
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class Chinese : CustomTranslator {
-		public override string Name { get { return "zh-CN"; } }
+	public class TraditionalChinese : CustomTranslator {
+		public override string Name { get { return "zh-TW"; } }
 	}
 }

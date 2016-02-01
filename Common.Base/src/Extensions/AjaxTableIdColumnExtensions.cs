@@ -52,7 +52,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// 添加对多选框选中的数据进行的需要确认的批量操作菜单项
 		/// 确认时会使用模态框
 		/// </summary>
-		/// <param name="column"></param>
+		/// <param name="column">Id列</param>
 		/// <param name="name">显示名称</param>
 		/// <param name="iconClass">图标Css类</param>
 		/// <param name="nonCheckedMessage">没有选中数据时的提示消息</param>

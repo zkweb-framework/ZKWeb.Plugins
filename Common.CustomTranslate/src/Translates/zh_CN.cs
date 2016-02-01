@@ -17,7 +17,12 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Translates {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			{ "CustomTranslate", "自定义翻译" },
-			{ "Support custom translate through admin panel", "支持在管理后台中设置自定义翻译" }
+			{ "Support custom translate through admin panel", "支持在管理后台中设置自定义翻译" },
+			{ "Translation", "翻译内容" },
+			{ "Origin/Translated", "原文/译文" },
+			{ "OriginalText", "原文" },
+			{ "TranslatedText", "译文" },
+			{ "Are you sure to delete this translation?", "确认要删除这条翻译内容？" }
 		};
 
 		public bool CanTranslate(string code) {
