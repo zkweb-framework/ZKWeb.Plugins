@@ -314,6 +314,8 @@
     <Compile Include="Common.Region\src\RegionManager.cs" />
     <Compile Include="Common.Region\src\Translates\en_US.cs" />
     <Compile Include="Common.Region\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.SerialGenerate\SerialGenerator.cs" />
+    <Compile Include="Common.SerialGenerate\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserContact\src\GenericFormsForUserPanel\ContactInfoForm.cs" />
     <Compile Include="Common.UserContact\src\AjaxTableCallbacks\AddColumnsToUserManageApp.cs" />
     <Compile Include="Common.UserContact\src\UserContactManager.cs" />
@@ -331,6 +333,14 @@
     <Compile Include="Common.UserPanel\src\UserPanelMenuProviders\UserPanelIndex.cs" />
     <Compile Include="Demo\src\DataCallbacks\PreventEditDemoAccount.cs" />
     <Compile Include="Demo\src\Translates\zh_CN.cs" />
+    <Compile Include="Finance.Payment\src\Database\PaymentApi.cs" />
+    <Compile Include="Finance.Payment\src\Database\PaymentTransaction.cs" />
+    <Compile Include="Finance.Payment\src\Model\IPaymentApiHandler.cs" />
+    <Compile Include="Finance.Payment\src\Model\IPaymentTransactionHandler.cs" />
+    <Compile Include="Finance.Payment\src\Model\PaymentTransactionState.cs" />
+    <Compile Include="Finance.Payment\src\PaymentApiManager.cs" />
+    <Compile Include="Finance.Payment\src\PaymentTransactionManager.cs" />
+    <Compile Include="Finance.Payment\src\Translates\zh_CN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +398,7 @@
     <None Include="Common.MenuPageBase\plugin.json" />
     <None Include="Common.Region\plugin.json" />
     <None Include="Common.Region\texts\regions_cn.json" />
+    <None Include="Common.SerialGenerate\plugin.json" />
     <None Include="Common.UserPanel\templates\common.user_panel.widgets\enter_user_panel.widget" />
     <Content Include="Common.UserPanel\templates\common.user_panel.widgets\enter_user_panel.html" />
     <Content Include="Common.UserPanel\templates\common.user_panel\footer.html" />
@@ -577,6 +588,7 @@
     <None Include="Common.UserPanel\plugin.json" />
     <None Include="Common.UserContact\plugin.json" />
     <None Include="Demo\plugin.json" />
+    <None Include="Finance.Payment\plugin.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.Base\templates\common.base\footer.html" />
