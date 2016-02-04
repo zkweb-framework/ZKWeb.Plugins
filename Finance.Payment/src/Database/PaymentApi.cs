@@ -24,7 +24,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		public virtual string Name { get; set; }
 		/// <summary>
 		/// 接口类型
-		/// 格式是"插件.类型"，创建后不能修改
+		/// 创建后不能修改
 		/// </summary>
 		public virtual string Type { get; set; }
 		/// <summary>
