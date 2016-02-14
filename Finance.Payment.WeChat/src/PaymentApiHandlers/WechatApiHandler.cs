@@ -24,54 +24,30 @@ namespace ZKWeb.Plugins.Finance.Payment.Wechat.src.PaymentApiHandlers {
 		/// </summary>
 		public string Type { get { return "WechatPay"; } }
 		/// <summary>
-		/// 公众号Id
+		/// 后台编辑表单使用的接口数据
 		/// </summary>
-		[Required]
-		[TextBoxField("PublicAccountId", "PublicAccountId")]
-		public string PublicAccountId { get; set; }
-		/// <summary>
-		/// 商户Id
-		/// </summary>
-		[Required]
-		[TextBoxField("PartnerId", "PartnerId")]
-		public string PartnerId { get; set; }
-		/// <summary>
-		/// 商户密钥
-		/// </summary>
-		[Required]
-		[TextBoxField("PartnerKey", "PartnerKey")]
-		public string PartnerKey { get; set; }
-		/// <summary>
-		/// 返回域名
-		/// </summary>
-		[TextBoxField("ReturnDomain", "keep empty will use the default domain")]
-		public string ReturnDomain { get; set; }
+		protected ApiData ApiDataEditing = new ApiData();
 
 		/// <summary>
 		/// 后台编辑表单创建后的处理
 		/// </summary>
 		public void OnFormCreated(PaymentApiEditForm form) {
-			form.AddFieldsFrom(this);
+			form.AddFieldsFrom(ApiDataEditing);
 		}
 
 		/// <summary>
 		/// 后台编辑表单绑定时的处理
 		/// </summary>
 		public void OnFormBind(PaymentApiEditForm form, DatabaseContext context, PaymentApi bindFrom) {
-			PublicAccountId = bindFrom.ExtraData.GetOrDefault<string>("PublicAccountId");
-			PartnerId = bindFrom.ExtraData.GetOrDefault<string>("PartnerId");
-			PartnerKey = bindFrom.ExtraData.GetOrDefault<string>("PartnerKey");
-			ReturnDomain = bindFrom.ExtraData.GetOrDefault<string>("ReturnDomain");
+			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
+			apiData.CopyMembersTo(ApiDataEditing);
 		}
 
 		/// <summary>
 		/// 后台编辑表单保存时的处理
 		/// </summary>
 		public void OnFormSubmit(PaymentApiEditForm form, DatabaseContext context, PaymentApi saveTo) {
-			saveTo.ExtraData["PublicAccountId"] = PublicAccountId;
-			saveTo.ExtraData["PartnerId"] = PartnerId;
-			saveTo.ExtraData["PartnerKey"] = PartnerKey;
-			saveTo.ExtraData["ReturnDomain"] = ReturnDomain;
+			saveTo.ExtraData["ApiData"] = ApiDataEditing;
 		}
 
 		/// <summary>
@@ -86,6 +62,35 @@ namespace ZKWeb.Plugins.Finance.Payment.Wechat.src.PaymentApiHandlers {
 		/// </summary>
 		public void SendGoods(PaymentTransaction transaction, string logisticsName, string invoiceNo) {
 			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// 接口数据
+		/// </summary>
+		public class ApiData {
+			/// <summary>
+			/// 公众号Id
+			/// </summary>
+			[Required]
+			[TextBoxField("PublicAccountId", "PublicAccountId")]
+			public string PublicAccountId { get; set; }
+			/// <summary>
+			/// 商户Id
+			/// </summary>
+			[Required]
+			[TextBoxField("PartnerId", "PartnerId")]
+			public string PartnerId { get; set; }
+			/// <summary>
+			/// 商户密钥
+			/// </summary>
+			[Required]
+			[TextBoxField("PartnerKey", "PartnerKey")]
+			public string PartnerKey { get; set; }
+			/// <summary>
+			/// 返回域名
+			/// </summary>
+			[TextBoxField("ReturnDomain", "keep empty will use the default domain")]
+			public string ReturnDomain { get; set; }
 		}
 	}
 }

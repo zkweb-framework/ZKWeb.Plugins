@@ -24,32 +24,30 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 		/// </summary>
 		public string Type { get { return "TestApi"; } }
 		/// <summary>
-		/// 支付密码
+		/// 编辑中的接口数据
 		/// </summary>
-		[Required]
-		[StringLength(100, MinimumLength = 5)]
-		[PasswordField("PaymentPassword", "Password required to pay transactions")]
-		public string PaymentPassword { get; set; }
+		protected ApiData ApiDataEditing = new ApiData();
 
 		/// <summary>
 		/// 后台编辑表单创建后的处理
 		/// </summary>
 		public void OnFormCreated(PaymentApiEditForm form) {
-			form.AddFieldsFrom(this);
+			form.AddFieldsFrom(ApiDataEditing);
 		}
 
 		/// <summary>
 		/// 后台编辑表单绑定时的处理
 		/// </summary>
 		public void OnFormBind(PaymentApiEditForm form, DatabaseContext context, PaymentApi bindFrom) {
-			PaymentPassword = bindFrom.ExtraData.GetOrDefault<string>("PaymentPassword");
+			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
+			apiData.CopyMembersTo(ApiDataEditing);
 		}
 
 		/// <summary>
 		/// 后台编辑表单保存时的处理
 		/// </summary>
 		public void OnFormSubmit(PaymentApiEditForm form, DatabaseContext context, PaymentApi saveTo) {
-			saveTo.ExtraData["PaymentPassword"] = PaymentPassword;
+			saveTo.ExtraData["ApiData"] = ApiDataEditing;
 		}
 
 		/// <summary>
@@ -64,6 +62,19 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 		/// </summary>
 		public void SendGoods(PaymentTransaction transaction, string logisticsName, string invoiceNo) {
 			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// 接口数据
+		/// </summary>
+		public class ApiData {
+			/// <summary>
+			/// 支付密码
+			/// </summary>
+			[Required]
+			[StringLength(100, MinimumLength = 5)]
+			[PasswordField("PaymentPassword", "Password required to pay transactions")]
+			public string PaymentPassword { get; set; }
 		}
 	}
 }
