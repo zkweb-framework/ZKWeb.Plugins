@@ -333,6 +333,13 @@
     <Compile Include="Common.UserPanel\src\UserPanelMenuProviders\UserPanelIndex.cs" />
     <Compile Include="Demo\src\DataCallbacks\PreventEditDemoAccount.cs" />
     <Compile Include="Demo\src\Translates\zh_CN.cs" />
+    <Compile Include="Finance.Payment.Alipay\src\Model\AlipayServiceTypes.cs" />
+    <Compile Include="Finance.Payment.Alipay\src\PaymentApiHandlers\AlipayApiHandler.cs" />
+    <Compile Include="Finance.Payment.Alipay\src\Translates\zh_CN.cs" />
+    <Compile Include="Finance.Payment.Tenpay\src\PaymentApiHandlers\TenpayApiHandler.cs" />
+    <Compile Include="Finance.Payment.Tenpay\src\Translates\zh_CN.cs" />
+    <Compile Include="Finance.Payment.WeChat\src\PaymentApiHandlers\WechatApiHandler.cs" />
+    <Compile Include="Finance.Payment.WeChat\src\Translates\zh_CN.cs" />
     <Compile Include="Finance.Payment\src\AdminApps\PaymentApiManageApp.cs" />
     <Compile Include="Finance.Payment\src\AdminApps\PaymentTransactionRecordsApp.cs" />
     <Compile Include="Finance.Payment\src\Database\PaymentApi.cs" />
@@ -597,6 +604,9 @@
     <None Include="Common.UserPanel\plugin.json" />
     <None Include="Common.UserContact\plugin.json" />
     <None Include="Demo\plugin.json" />
+    <None Include="Finance.Payment.Alipay\plugin.json" />
+    <None Include="Finance.Payment.Tenpay\plugin.json" />
+    <None Include="Finance.Payment.WeChat\plugin.json" />
     <None Include="Finance.Payment\plugin.json" />
   </ItemGroup>
   <ItemGroup>

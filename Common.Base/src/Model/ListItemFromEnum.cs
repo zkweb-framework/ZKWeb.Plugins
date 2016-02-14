@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Core;
 using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Model {
@@ -17,7 +18,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <returns></returns>
 		public IEnumerable<ListItem> GetItems() {
 			foreach (Enum value in Enum.GetValues(typeof(TEnum))) {
-				yield return new ListItem(value.GetDescription(), ((int)(object)value).ToString());
+				yield return new ListItem(new T(value.GetDescription()), ((int)(object)value).ToString());
 			}
 		}
 	}

@@ -1,0 +1,5 @@
+﻿{
+	"Name": "TenpayPaymentApi",
+	"Description": "Support pay transactions by tenpay",
+	"Dependencies": [ "Common.Admin", "Finance.Payment" ]
+}

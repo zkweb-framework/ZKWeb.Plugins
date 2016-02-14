@@ -1,0 +1,5 @@
+﻿{
+	"Name": "WechatPaymentApi",
+	"Description": "Support pay transactions by wechat",
+	"Dependencies": [ "Common.Admin", "Finance.Payment" ]
+}
