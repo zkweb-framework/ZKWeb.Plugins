@@ -60,6 +60,23 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// 备注
 		/// </summary>
 		public virtual string Remark { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public PaymentApi() {
+			DisplayOrder = 10000;
+			ExtraData = new Dictionary<string, object>();
+			SupportTransactionTypes = new List<string>();
+		}
+
+		/// <summary>
+		/// 返回支付接口名称
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() {
+			return Name;
+		}
 	}
 
 	/// <summary>

@@ -173,7 +173,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <summary>
 		/// 选项来源，必须继承IListItemProvider
 		/// </summary>
-		public Type Sources { get; set; }
+		public Type Source { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -182,7 +182,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="sources">选项来源，必须继承IListItemProvider</param>
 		public RadioButtonsFieldAttribute(string name, Type sources) {
 			Name = name;
-			Sources = sources;
+			Source = sources;
 		}
 	}
 

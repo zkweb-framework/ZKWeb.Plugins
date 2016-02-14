@@ -7,6 +7,7 @@ BootstrapDialog.showRemote = function (title, url, extendParameters) {
 	// 创建页面内容的容器
 	var $contents = $("<div class='remote-contents'>").attr("href", url);
 	$contents.on("reload", function () {
+		var url = $contents.attr("href");
 		$contents.empty().addClass("loading").load(url, function () {
 			$(document).trigger("dynamicLoaded", $contents); // 触发动态加载事件
 			$contents.removeClass("loading");

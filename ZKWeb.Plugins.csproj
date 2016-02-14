@@ -334,10 +334,13 @@
     <Compile Include="Demo\src\DataCallbacks\PreventEditDemoAccount.cs" />
     <Compile Include="Demo\src\Translates\zh_CN.cs" />
     <Compile Include="Finance.Payment\src\AdminApps\PaymentApiManageApp.cs" />
-    <Compile Include="Finance.Payment\src\AdminApps\PaymentTransactionListApp.cs" />
+    <Compile Include="Finance.Payment\src\AdminApps\PaymentTransactionRecordsApp.cs" />
     <Compile Include="Finance.Payment\src\Database\PaymentApi.cs" />
     <Compile Include="Finance.Payment\src\Database\PaymentTransaction.cs" />
+    <Compile Include="Finance.Payment\src\DataCallbacks\CannotChangeTypeOrOwnerAfterPaymentApiCreated.cs" />
     <Compile Include="Finance.Payment\src\Forms\PaymentApiEditForm.cs" />
+    <Compile Include="Finance.Payment\src\ListItemProviders\PaymentTransactionTypeListItemProvider.cs" />
+    <Compile Include="Finance.Payment\src\ListItemProviders\PaymentApiTypeListItemProvider.cs" />
     <Compile Include="Finance.Payment\src\Model\AutoSendGoodsParameters.cs" />
     <Compile Include="Finance.Payment\src\Model\IPaymentApiHandler.cs" />
     <Compile Include="Finance.Payment\src\Model\IPaymentTransactionHandler.cs" />

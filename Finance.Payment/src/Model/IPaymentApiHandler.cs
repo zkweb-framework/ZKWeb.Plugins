@@ -20,20 +20,26 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		string Type { get; }
 
 		/// <summary>
-		/// 绑定支付接口到后台编辑表单时的处理
+		/// 后台编辑表单创建后的处理
+		/// </summary>
+		/// <param name="form">表单</param>
+		void OnFormCreated(PaymentApiEditForm form);
+
+		/// <summary>
+		/// 后台编辑表单绑定时的处理
 		/// </summary>
 		/// <param name="form">表单</param>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="bindFrom">支付接口</param>
-		void OnBind(PaymentApiEditForm form, DatabaseContext context, PaymentApi bindFrom);
+		void OnFormBind(PaymentApiEditForm form, DatabaseContext context, PaymentApi bindFrom);
 
 		/// <summary>
-		/// 从后台编辑表单保存到支付接口时的处理
+		/// 后台编辑表单保存时的处理
 		/// </summary>
 		/// <param name="form">表单</param>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="saveTo">支付接口</param>
-		void OnSubmit(PaymentApiEditForm form, DatabaseContext context, PaymentApi saveTo);
+		void OnFormSubmit(PaymentApiEditForm form, DatabaseContext context, PaymentApi saveTo);
 
 		/// <summary>
 		/// 获取支付使用的Html

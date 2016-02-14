@@ -70,5 +70,16 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			return string.Format(
 				"setTimeout(function() {{ location.href = location.href; }}, {0});", milliseconds);
 		}
+
+		/// <summary>
+		/// 更新模态框远程页面内容到指定的Url
+		/// </summary>
+		/// <param name="url">更新到的Url</param>
+		/// <returns></returns>
+		public static string RedirectModal(string url) {
+			return string.Format(
+				"$(this).closest('.bootstrap-dialog .remote-contents').attr('href', {0}).trigger('reload');",
+				JsonConvert.SerializeObject(url));
+		}
 	}
 }

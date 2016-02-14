@@ -60,7 +60,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Base Functions", "基础功能" },
 			{ "Base functions and template pages", "基础的功能和模板页面" },
 			{ "{0} format is incorrect", "{0}的格式不正确" },
-			{ "Expand/Collapse All", "展开/折叠全部" }
+			{ "Expand/Collapse All", "展开/折叠全部" },
+			{ "Type", "类型" }
 		};
 
 		public bool CanTranslate(string code) {
