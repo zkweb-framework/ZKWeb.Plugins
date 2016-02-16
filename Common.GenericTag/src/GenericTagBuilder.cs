@@ -122,25 +122,29 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 			// 获取参数
 			var actionName = request.GetParam<string>("action");
 			var json = HttpContext.Current.Request.GetParam<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<long>>(json);
+			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
 			// 检查是否所有Id都属于指定的类型，防止越权操作
 			var tagManager = Application.Ioc.Resolve<GenericTagManager>();
 			if (!tagManager.IsAllTagsTypeEqualTo(idList, Type)) {
 				throw new HttpException(403, new T("Try to access tag that type not matched"));
 			}
 			// 执行批量操作
-			var deleter = Application.Ioc.Resolve<GenericDataDeleter>();
-			if (actionName == "delete_forever") {
-				deleter.BatchDeleteForever<Database.GenericTag>(idList);
-				return new JsonResult(new { message = new T("Batch Delete Forever Successful") });
-			} else if (actionName == "delete") {
-				deleter.BatchDelete<Database.GenericTag>(idList);
-				return new JsonResult(new { message = new T("Batch Delete Successful") });
-			} else if (actionName == "recover") {
-				deleter.BatchRecover<Database.GenericTag>(idList);
-				return new JsonResult(new { message = new T("Batch Recover Successful") });
-			}
-			throw new HttpException(404, string.Format(new T("Action {0} not exist"), actionName));
+			string message = null;
+			GenericRepository.UnitOfWorkMayChangeData<Database.GenericTag>(repository => {
+				if (actionName == "delete_forever") {
+					repository.BatchDeleteForever(idList);
+					message = new T("Batch Delete Forever Successful");
+				} else if (actionName == "delete") {
+					repository.BatchDelete(idList);
+					message = new T("Batch Delete Successful");
+				} else if (actionName == "recover") {
+					repository.BatchRecover(idList);
+					message = new T("Batch Recover Successful");
+				} else {
+					throw new HttpException(404, string.Format(new T("Action {0} not exist"), actionName));
+				}
+			});
+			return new JsonResult(new { message });
 		}
 
 		/// <summary>

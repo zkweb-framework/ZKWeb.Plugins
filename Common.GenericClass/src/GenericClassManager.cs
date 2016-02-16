@@ -21,7 +21,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src {
 		/// <param name="idList">分类的Id列表</param>
 		/// <param name="type">分类类型</param>
 		/// <returns></returns>
-		public bool IsAllClassesTypeEqualTo(IList<long> idList, string type) {
+		public bool IsAllClassesTypeEqualTo(IList<object> idList, string type) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
 				return context.Count<Database.GenericClass>(t => idList.Contains(t.Id) && t.Type != type) == 0;

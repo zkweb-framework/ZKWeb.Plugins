@@ -41,6 +41,17 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 		protected override IModelFormBuilder GetEditForm() { return new PaymentApiEditForm(); }
 
 		/// <summary>
+		/// 获取权限列表
+		/// </summary>
+		/// <returns></returns>
+		public override IEnumerable<string> GetPrivileges() {
+			var extraPrivileges = new[] {
+				Name + ":Test" // 测试支付接口的权限
+			};
+			return base.GetPrivileges().Concat(extraPrivileges);
+		}
+
+		/// <summary>
 		/// 表格回调
 		/// </summary>
 		public class TableCallback : IAjaxTableCallback<PaymentApi> {

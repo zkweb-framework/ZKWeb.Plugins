@@ -246,9 +246,10 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		protected virtual IActionResult BatchActionForDelete() {
 			PrivilegesChecker.Check(AllowedUserTypes, DeletePrivilege);
 			var json = HttpContext.Current.Request.GetParam<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<long>>(json);
-			var deleter = Application.Ioc.Resolve<GenericDataDeleter>();
-			deleter.BatchDelete<TData>(idList);
+			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
+			GenericRepository.UnitOfWorkMayChangeData<TData>(repository => {
+				repository.BatchDelete(idList);
+			});
 			return new JsonResult(new { message = new T("Batch Delete Successful") });
 		}
 
@@ -259,9 +260,10 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		protected virtual IActionResult BatchActionForRecover() {
 			PrivilegesChecker.Check(AllowedUserTypes, DeletePrivilege);
 			var json = HttpContext.Current.Request.GetParam<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<long>>(json);
-			var deleter = Application.Ioc.Resolve<GenericDataDeleter>();
-			deleter.BatchRecover<TData>(idList);
+			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
+			GenericRepository.UnitOfWorkMayChangeData<TData>(repository => {
+				repository.BatchRecover(idList);
+			});
 			return new JsonResult(new { message = new T("Batch Recover Successful") });
 		}
 
@@ -272,9 +274,10 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 		protected virtual IActionResult BatchActionForDeleteForever() {
 			PrivilegesChecker.Check(AllowedUserTypes, DeleteForeverPrivilege);
 			var json = HttpContext.Current.Request.GetParam<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<long>>(json);
-			var deleter = Application.Ioc.Resolve<GenericDataDeleter>();
-			deleter.BatchDeleteForever<TData>(idList);
+			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
+			GenericRepository.UnitOfWorkMayChangeData<TData>(repository => {
+				repository.BatchDeleteForever(idList);
+			});
 			return new JsonResult(new { message = new T("Batch Delete Forever Successful") });
 		}
 

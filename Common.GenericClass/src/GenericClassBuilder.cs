@@ -125,25 +125,29 @@ namespace ZKWeb.Plugins.Common.GenericClass.src {
 			// 其中Id列表需要把顺序倒转，用于先删除子分类再删除上级分类
 			var actionName = request.GetParam<string>("action");
 			var json = HttpContext.Current.Request.GetParam<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<long>>(json).Reverse().ToList();
+			var idList = JsonConvert.DeserializeObject<IList<object>>(json).Reverse().ToList();
 			// 检查是否所有Id都属于指定的类型，防止越权操作
 			var classManager = Application.Ioc.Resolve<GenericClassManager>();
 			if (!classManager.IsAllClassesTypeEqualTo(idList, Type)) {
 				throw new HttpException(403, new T("Try to access class that type not matched"));
 			}
 			// 执行批量操作
-			var deleter = Application.Ioc.Resolve<GenericDataDeleter>();
-			if (actionName == "delete_forever") {
-				deleter.BatchDeleteForever<Database.GenericClass>(idList);
-				return new JsonResult(new { message = new T("Batch Delete Forever Successful") });
-			} else if (actionName == "delete") {
-				deleter.BatchDelete<Database.GenericClass>(idList);
-				return new JsonResult(new { message = new T("Batch Delete Successful") });
-			} else if (actionName == "recover") {
-				deleter.BatchRecover<Database.GenericClass>(idList);
-				return new JsonResult(new { message = new T("Batch Recover Successful") });
-			}
-			throw new HttpException(404, string.Format(new T("Action {0} not exist"), actionName));
+			string message = null;
+			GenericRepository.UnitOfWorkMayChangeData<Database.GenericClass>(repository => {
+				if (actionName == "delete_forever") {
+					repository.BatchDeleteForever(idList);
+					message = new T("Batch Delete Forever Successful");
+				} else if (actionName == "delete") {
+					repository.BatchDelete(idList);
+					message = new T("Batch Delete Successful");
+				} else if (actionName == "recover") {
+					repository.BatchRecover(idList);
+					message = new T("Batch Recover Successful");
+				} else {
+					throw new HttpException(404, string.Format(new T("Action {0} not exist"), actionName));
+				}
+			});
+			return new JsonResult(new { message });
 		}
 
 		/// <summary>

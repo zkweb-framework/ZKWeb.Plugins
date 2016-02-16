@@ -21,7 +21,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src {
 		/// <param name="idList">标签的Id列表</param>
 		/// <param name="type">标签类型</param>
 		/// <returns></returns>
-		public bool IsAllTagsTypeEqualTo(IList<long> idList, string type) {
+		public bool IsAllTagsTypeEqualTo(IList<object> idList, string type) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			using (var context = databaseManager.GetContext()) {
 				return context.Count<Database.GenericTag>(t => idList.Contains(t.Id) && t.Type != type) == 0;

@@ -58,12 +58,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		/// 初始化
 		/// </summary>
 		public PaymentApiEditForm() {
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				var data = GetDataBindFrom(context);
-				var type = data.Type ?? HttpContext.Current.Request.GetParam<string>("type");
+			var id = GetRequestId();
+			GenericRepository.UnitOfWork<PaymentApi>(repository => {
+				var api = string.IsNullOrEmpty(id) ? null : repository.GetById(id);
+				var type = api.Type ?? HttpContext.Current.Request.GetParam<string>("type");
 				Handlers = Application.Ioc.ResolveMany<IPaymentApiHandler>().Where(h => h.Type == type).ToList();
-			}
+			});
 			Handlers.ForEach(h => h.OnFormCreated(this));
 		}
 

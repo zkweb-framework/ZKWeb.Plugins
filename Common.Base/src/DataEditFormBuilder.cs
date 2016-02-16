@@ -67,34 +67,13 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		protected virtual void OnSubmitSaved(DatabaseContext context, TData saved) { }
 
 		/// <summary>
-		/// 获取绑定表单时来源的数据
-		/// 默认获取成员"Id"等于传入参数中的"id"或"Id"的数据
-		/// 没有id参数时新建返回
-		/// 有传入id参数但是没有找到对象时抛出例外
+		/// 获取传入参数请求的数据Id
 		/// </summary>
-		/// <param name="context">数据库上下文</param>
 		/// <returns></returns>
-		protected virtual TData GetDataBindFrom(DatabaseContext context) {
+		protected virtual string GetRequestId() {
 			var request = HttpContext.Current.Request;
-			var id = (request.GetParam<string>("id") ?? request.GetParam<string>("Id")).ConvertOrDefault<long>();
-			if (id <= 0) {
-				return new TData();
-			}
-			var exp = ExpressionUtils.MakeMemberEqualiventExpression<TData>("Id", id);
-			var data = context.Get(exp);
-			if (data == null) {
-				throw new HttpException(404, string.Format(new T("Data with id {0} cannot be found"), id));
-			}
-			return data;
-		}
-
-		/// <summary>
-		/// 获取提交表单时保存到的数据，默认处理同GetDataBindFrom
-		/// </summary>
-		/// <param name="context">数据库上下文</param>
-		/// <returns></returns>
-		protected virtual TData GetDataSaveTo(DatabaseContext context) {
-			return GetDataBindFrom(context);
+			var id = request.GetParam<string>("id") ?? request.GetParam<string>("Id");
+			return id;
 		}
 
 		/// <summary>
@@ -102,12 +81,15 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// 支持通过回调修改表单
 		/// </summary>
 		protected sealed override void OnBind() {
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				var data = GetDataBindFrom(context);
-				OnBind(context, data);
-				Callbacks.ForEach(c => c.OnBind((TForm)(object)this, context, data));
-			}
+			var id = GetRequestId();
+			GenericRepository.UnitOfWork<TData>(repository => {
+				var data = string.IsNullOrEmpty(id) ? new TData() : repository.GetById(id);
+				if (data == null) {
+					throw new HttpException(404, string.Format(new T("Data with id {0} cannot be found"), id));
+				}
+				OnBind(repository.Context, data);
+				Callbacks.ForEach(c => c.OnBind((TForm)(object)this, repository.Context, data));
+			});
 		}
 
 		/// <summary>
@@ -116,21 +98,23 @@ namespace ZKWeb.Plugins.Common.Base.src {
 		/// </summary>
 		/// <returns></returns>
 		protected sealed override object OnSubmit() {
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				var data = GetDataSaveTo(context);
-				object result = null;
-				context.Save(ref data, d => {
-					// 保存时的处理
-					result = OnSubmit(context, d);
-					Callbacks.ForEach(c => c.OnSubmit((TForm)(object)this, context, d));
+			var id = GetRequestId();
+			object result = null;
+			GenericRepository.UnitOfWorkMayChangeData<TData>(repository => {
+				var data = string.IsNullOrEmpty(id) ? new TData() : repository.GetById(id);
+				if (data == null) {
+					throw new HttpException(404, string.Format(new T("Data with id {0} cannot be found"), id));
+				}
+				// 保存时的处理
+				repository.Save(ref data, d => {
+					result = OnSubmit(repository.Context, d);
+					Callbacks.ForEach(c => c.OnSubmit((TForm)(object)this, repository.Context, d));
 				});
 				// 保存后的处理
-				OnSubmitSaved(context, data);
-				Callbacks.ForEach(c => c.OnSubmitSaved((TForm)(object)this, context, data));
-				context.SaveChanges();
-				return result;
-			}
+				OnSubmitSaved(repository.Context, data);
+				Callbacks.ForEach(c => c.OnSubmitSaved((TForm)(object)this, repository.Context, data));
+			});
+			return result;
 		}
 	}
 }

@@ -153,7 +153,7 @@
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroup.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroups.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxTree.cs" />
-    <Compile Include="Common.Base\src\GenericDataDeleter.cs" />
+    <Compile Include="Common.Base\src\GenericRepository.cs" />
     <Compile Include="Common.Base\src\Model\IFormFieldParseFromEnv.cs" />
     <Compile Include="Common.Base\src\Model\IListItemGroupsProvider.cs" />
     <Compile Include="Common.Base\src\Model\IListItemTreeProvider.cs" />
@@ -342,6 +342,7 @@
     <Compile Include="Finance.Payment.WeChat\src\Translates\zh_CN.cs" />
     <Compile Include="Finance.Payment\src\AdminApps\PaymentApiManageApp.cs" />
     <Compile Include="Finance.Payment\src\AdminApps\PaymentTransactionRecordsApp.cs" />
+    <Compile Include="Finance.Payment\src\Controllers\TestPaymentController.cs" />
     <Compile Include="Finance.Payment\src\Database\PaymentApi.cs" />
     <Compile Include="Finance.Payment\src\Database\PaymentTransaction.cs" />
     <Compile Include="Finance.Payment\src\DataCallbacks\CannotChangeTypeOrOwnerAfterPaymentApiCreated.cs" />
