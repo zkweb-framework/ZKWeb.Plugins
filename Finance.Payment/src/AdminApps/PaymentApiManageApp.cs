@@ -52,7 +52,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				table.MenuItems.AddDivider();
 				table.MenuItems.AddEditActionForAdminApp<PaymentApiManageApp>();
 				table.MenuItems.AddAddActionForAdminApp<PaymentApiManageApp>();
-				searchBar.KeywordPlaceHolder = new T("Name/Owner");
+				searchBar.KeywordPlaceHolder = new T("Name/Owner/Remark");
 				searchBar.MenuItems.AddDivider();
 				searchBar.MenuItems.AddRecycleBin();
 				searchBar.MenuItems.AddAddActionForAdminApp<PaymentApiManageApp>();
@@ -69,7 +69,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				if (!string.IsNullOrEmpty(request.Keyword)) {
 					query = query.Where(q =>
 						q.Name.Contains(request.Keyword) ||
-						q.Owner.Username.Contains(request.Keyword));
+						q.Owner.Username.Contains(request.Keyword) ||
+						q.Remark.Contains(request.Keyword));
 				}
 			}
 
@@ -115,7 +116,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				actionColumn.AddButtonForOpenLink(
 					new T("TestPayment"), "btn btn-xs default", "fa fa-edit",
 					"/admin/payment_apis/test_payment?id=<%-row.Id%>");
-				actionColumn.AddEditActionForAdminApp<PaymentApiManageApp>(new T("View"));
+				actionColumn.AddEditActionForAdminApp<PaymentApiManageApp>();
 				idColumn.AddDivider();
 				idColumn.AddDeleteActionsForAdminApp<PaymentApiManageApp>(request);
 			}

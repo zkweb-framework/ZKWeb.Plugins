@@ -21,7 +21,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "PaymentApiManage", "支付接口管理" },
 			{ "TestPayment", "测试支付" },
 			{ "TestApi", "测试接口" },
-			{ "Name/Owner", "名称/所属人" },
+			{ "Name/Owner/Remark", "名称/所属人/备注" },
 			{ "PaymentTransactionRecords", "支付交易记录" },
 			{ "PaymentApiType", "支付接口类型" },
 			{ "NextStep", "下一步" },
@@ -34,7 +34,16 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "SupportTransactionTypes", "支持的交易类型" },
 			{ "TestTransaction", "测试交易" },
 			{ "PaymentPassword", "支付密码" },
-			{ "Password required to pay transactions", "支付时要求的密码" }
+			{ "Password required to pay transactions", "支付时要求的密码" },
+			{ "Add transaction from admin panel is not supported", "不能从后台直接添加支付交易" },
+			{ "Serial/Payer/Payee/Description/Remark", "流水号/付款人/收款人/描述/备注" },
+			{ "Serial", "流水号" },
+			{ "ExternalSerial", "外部流水号" },
+			{ "ApiName", "接口名称" },
+			{ "Amount", "金额" },
+			{ "Payer", "付款人" },
+			{ "Payee", "收款人" },
+			{ "State", "状态" }
 		};
 
 		public bool CanTranslate(string code) {

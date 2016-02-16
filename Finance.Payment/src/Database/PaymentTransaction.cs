@@ -85,6 +85,10 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// </summary>
 		public virtual DateTime LastUpdated { get; set; }
 		/// <summary>
+		/// 是否已删除
+		/// </summary>
+		public virtual bool Deleted { get; set; }
+		/// <summary>
 		/// 备注
 		/// </summary>
 		public virtual string Remark { get; set; }
@@ -115,6 +119,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 			Map(t => t.LastError).Length(0xffff);
 			Map(t => t.CreateTime);
 			Map(t => t.LastUpdated);
+			Map(t => t.Deleted);
 			Map(t => t.Remark).Length(0xffff);
 		}
 	}
