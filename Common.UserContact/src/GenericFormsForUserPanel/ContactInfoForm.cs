@@ -11,6 +11,8 @@ using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.UserContact.src.Repositories;
 using ZKWeb.Plugins.Common.UserPanel.src;
 using ZKWeb.Plugins.Common.UserPanel.src.Scaffolding;
 using ZKWeb.Utils.Functions;
@@ -68,13 +70,14 @@ namespace ZKWeb.Plugins.Common.UserContact.src.GenericFormsForUserPanel {
 			protected override void OnBind() {
 				var sessionManager = Application.Ioc.Resolve<SessionManager>();
 				var session = sessionManager.GetSession();
-				var contactManager = Application.Ioc.Resolve<UserContactManager>();
-				var contact = contactManager.GetContact(session.ReleatedId);
-				Tel = contact.Tel;
-				Mobile = contact.Mobile;
-				QQ = contact.QQ;
-				Email = contact.Email;
-				Address = contact.Address;
+				UnitOfWork.ReadData<UserContactRepository, Database.UserContact>(repository => {
+					var contact = repository.GetContact(session.ReleatedId);
+					Tel = contact.Tel;
+					Mobile = contact.Mobile;
+					QQ = contact.QQ;
+					Email = contact.Email;
+					Address = contact.Address;
+				});
 			}
 
 			/// <summary>
@@ -84,13 +87,14 @@ namespace ZKWeb.Plugins.Common.UserContact.src.GenericFormsForUserPanel {
 			protected override object OnSubmit() {
 				var sessionManager = Application.Ioc.Resolve<SessionManager>();
 				var session = sessionManager.GetSession();
-				var contactManager = Application.Ioc.Resolve<UserContactManager>();
-				contactManager.SetContact(session.ReleatedId, c => {
-					c.Tel = Tel;
-					c.Mobile = Mobile;
-					c.QQ = QQ;
-					c.Email = Email;
-					c.Address = Address;
+				UnitOfWork.WriteData<UserContactRepository, Database.UserContact>(repository => {
+					repository.SetContact(session.ReleatedId, c => {
+						c.Tel = Tel;
+						c.Mobile = Mobile;
+						c.QQ = QQ;
+						c.Email = Email;
+						c.Address = Address;
+					});
 				});
 				return new { message = new T("Saved Successfully") };
 			}

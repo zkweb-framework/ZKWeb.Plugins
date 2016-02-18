@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
 
 namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
@@ -53,8 +54,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public static AjaxTableSearchResponse FromRequest<TData>(
 			AjaxTableSearchRequest request, IEnumerable<IAjaxTableCallback<TData>> callbacks)
 			where TData : class {
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
+			var response = new AjaxTableSearchResponse();
+			UnitOfWork.Read(context => {
 				// 从数据库获取数据，过滤并排序
 				var query = context.Query<TData>();
 				foreach (var callback in callbacks) {
@@ -77,10 +78,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 				// 获取查询结果（这里会选择所有列，为了扩展性这里实现不了只选择需要的列）
 				// 并判断是否最后一页
 				var queryResults = query.ToList();
-				var response = new AjaxTableSearchResponse() {
-					PageIndex = request.PageIndex,
-					PageSize = request.PageSize
-				};
+				response.PageIndex = request.PageIndex;
+				response.PageSize = request.PageSize;
 				if (queryResults.Count > response.PageSize) {
 					queryResults.RemoveAt(response.PageSize);
 				} else {
@@ -103,8 +102,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 				foreach (var callback in callbacks) {
 					callback.OnResponse(request, response);
 				}
-				return response;
-			}
+			});
+			return response;
 		}
 	}
 }

@@ -12,6 +12,8 @@ using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.UserContact.src.Repositories;
 using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.UserContact.src.AjaxTableCallbacks {
@@ -29,8 +31,10 @@ namespace ZKWeb.Plugins.Common.UserContact.src.AjaxTableCallbacks {
 		public void OnSort(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) { }
 
 		public void OnSelect(AjaxTableSearchRequest request, List<KeyValuePair<User, Dictionary<string, object>>> pairs) {
-			var contactManager = Application.Ioc.Resolve<UserContactManager>();
-			var contacts = contactManager.GetContacts(pairs.Select(p => p.Key.Id).ToList());
+			Dictionary<long, Database.UserContact> contacts = null;
+			UnitOfWork.ReadData<UserContactRepository, Database.UserContact>(repository => {
+				contacts = repository.GetContacts(pairs.Select(p => p.Key.Id).ToList());
+			});
 			foreach (var pair in pairs) {
 				var contact = contacts.GetOrDefault(pair.Key.Id) ?? new Database.UserContact();
 				pair.Value["Tel"] = contact.Tel;

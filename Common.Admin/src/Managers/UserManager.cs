@@ -207,17 +207,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// <param name="oldPassword">原密码</param>
 		/// <param name="newPassword">新密码</param>
 		public void ChangePassword(long userId, string oldPassword, string newPassword) {
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				var user = context.Get<User>(u => u.Id == userId);
+			UnitOfWork.WriteData<User>(repository => {
+				var user = repository.GetById(userId);
 				if (user == null) {
 					throw new HttpException(400, new T("User not found"));
 				} else if (!user.CheckPassword(oldPassword)) {
 					throw new HttpException(400, new T("Incorrect old password"));
 				}
-				context.Save(ref user, u => u.SetPassword(newPassword));
-				context.SaveChanges();
-			}
+				repository.Save(ref user, u => u.SetPassword(newPassword));
+			});
 		}
 	}
 }

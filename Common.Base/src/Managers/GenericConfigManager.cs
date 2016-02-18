@@ -10,6 +10,7 @@ using System.Web;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
 
@@ -45,16 +46,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			var attribute = GetConfigAttribute<T>();
 			var key = attribute.Key;
 			// 保存到数据库
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				var config = context.Get<GenericConfig>(c => c.Key == key);
+			UnitOfWork.WriteData<GenericConfig>(repository => {
+				var config = repository.Get(c => c.Key == key);
 				config = config ?? new GenericConfig() { Key = key };
-				context.Save(ref config, c => {
+				repository.Save(ref config, c => {
 					c.Value = JsonConvert.SerializeObject(value);
 					c.LastUpdated = DateTime.UtcNow;
 				});
-				context.SaveChanges();
-			}
+			});
 			// 保存到缓存
 			if (attribute.CacheTime > 0) {
 				Cache.Put(key, value, TimeSpan.FromSeconds(attribute.CacheTime));
@@ -74,16 +73,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 				return value;
 			}
 			// 从数据库获取，允许缓存时设置到缓存
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				var config = context.Get<GenericConfig>(c => c.Key == key);
+			UnitOfWork.ReadData<GenericConfig>(repository => {
+				var config = repository.Get(c => c.Key == key);
 				if (config != null) {
 					value = JsonConvert.DeserializeObject<T>(config.Value);
 					if (attribute.CacheTime > 0) {
 						Cache.Put(key, value, TimeSpan.FromSeconds(attribute.CacheTime));
 					}
 				}
-			}
+			});
 			return value ?? new T();
 		}
 
@@ -96,11 +94,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			// 从缓存删除
 			Cache.Remove(key);
 			// 从数据库删除
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				context.DeleteWhere<GenericConfig>(c => c.Key == key);
-				context.SaveChanges();
-			}
+			UnitOfWork.WriteData<GenericConfig>(repository => {
+				repository.DeleteWhere(c => c.Key == key);
+			});
 		}
 	}
 }

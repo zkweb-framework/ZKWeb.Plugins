@@ -9,6 +9,7 @@ using ZKWeb.Database;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
 
 namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 	/// <summary>
@@ -35,13 +36,11 @@ namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 		/// 删除过期的会话
 		/// </summary>
 		public void Execute() {
-			long count;
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
+			long count = 0;
+			UnitOfWork.WriteData<Session>(repository => {
 				var now = DateTime.UtcNow;
-				count = context.DeleteWhere<Session>(s => s.Expires < now);
-				context.SaveChanges();
-			}
+				count = repository.DeleteWhere(s => s.Expires < now);
+			});
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogInfo(string.Format(
 				"SessionCleaner executed, {0} sessions removed", count));

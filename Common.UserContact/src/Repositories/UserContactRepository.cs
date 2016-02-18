@@ -9,23 +9,19 @@ using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 
-namespace ZKWeb.Plugins.Common.UserContact.src {
+namespace ZKWeb.Plugins.Common.UserContact.src.Repositories {
 	/// <summary>
 	/// 联系信息管理器
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class UserContactManager : GenericRepository<Database.UserContact> {
+	public class UserContactRepository : GenericRepository<Database.UserContact> {
 		/// <summary>
 		/// 获取用户的联系信息，没有时新建返回
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <returns></returns>
 		public virtual Database.UserContact GetContact(long userId) {
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				return context.Get<Database.UserContact>(c => c.User.Id == userId) ??
-					new Database.UserContact();
-			}
+			return Get(c => c.User.Id == userId) ?? new Database.UserContact();
 		}
 
 		/// <summary>
@@ -34,12 +30,9 @@ namespace ZKWeb.Plugins.Common.UserContact.src {
 		/// <param name="userIds">用户Id列表</param>
 		/// <returns></returns>
 		public virtual Dictionary<long, Database.UserContact> GetContacts(IList<long> userIds) {
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				return context.Query<Database.UserContact>()
-					.Where(c => userIds.Contains(c.User.Id))
-					.ToDictionary(c => c.User.Id);
-			}
+			return Context.Query<Database.UserContact>()
+				.Where(c => userIds.Contains(c.User.Id))
+				.ToDictionary(c => c.User.Id);
 		}
 
 		/// <summary>
@@ -48,15 +41,11 @@ namespace ZKWeb.Plugins.Common.UserContact.src {
 		/// <param name="userId">用户Id</param>
 		/// <param name="update">更新联系信息的函数</param>
 		public virtual void SetContact(long userId, Action<Database.UserContact> update) {
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				var contact = context.Get<Database.UserContact>(c => c.User.Id == userId);
-				if (contact == null) {
-					contact = new Database.UserContact() { User = context.Get<User>(u => u.Id == userId) };
-				}
-				context.Save(ref contact, update);
-				context.SaveChanges();
+			var contact = Get(c => c.User.Id == userId);
+			if (contact == null) {
+				contact = new Database.UserContact() { User = Context.Get<User>(u => u.Id == userId) };
 			}
+			Save(ref contact, update);
 		}
 	}
 }

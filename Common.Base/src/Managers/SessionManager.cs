@@ -9,6 +9,7 @@ using System.Web;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Managers {
@@ -69,17 +70,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			}
 			// 添加或更新到数据库中
 			var cookieSessionId = HttpContextUtils.GetCookie(SessionKey);
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
+			UnitOfWork.WriteData<Session>(repository => {
 				// 保存会话
-				context.Save(ref session);
+				repository.Save(ref session);
 				// 检测到会话Id有变化时删除原会话
 				if (cookieSessionId != session.Id) {
-					context.DeleteWhere<Session>(s => s.Id == cookieSessionId);
+					repository.DeleteWhere(s => s.Id == cookieSessionId);
 				}
-				// 保存修改
-				context.SaveChanges();
-			}
+			});
 			// 发送会话Cookies到客户端
 			// 已存在且过期时间没有更新时不会重复发送
 			if (cookieSessionId != session.Id || session.ExpiresUpdated) {
@@ -104,11 +102,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			if (string.IsNullOrEmpty(id)) {
 				return;
 			}
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				context.DeleteWhere<Session>(s => s.Id == id);
-				context.SaveChanges();
-			}
+			UnitOfWork.WriteData<Session>(repository => {
+				repository.DeleteWhere(s => s.Id == id);
+			});
 			// 删除客户端中的会话Cookies
 			HttpContextUtils.RemoveCookie(SessionKey);
 		}
