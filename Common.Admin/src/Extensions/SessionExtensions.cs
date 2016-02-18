@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Database;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
@@ -33,16 +34,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 				return pair.Item2;
 			}
 			// 从数据库中获取
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				var user = context.Get<User>(u => u.Id == session.ReleatedId);
-				if (user == null) {
-					return null;
+			User user = null;
+			UnitOfWork.ReadData<User>(repository => {
+				user = repository.GetById(session.ReleatedId);
+				if (user != null && user.Role != null) {
+					var _ = user.Role.Privileges;
 				}
-				var privileges = user.Role == null ? null : user.Role.Privileges;
+			});
+			if (user != null) {
 				HttpContextUtils.PutData(SessionUserKey, Tuple.Create(session, user));
-				return user;
 			}
+			return user;
 		}
 	}
 }

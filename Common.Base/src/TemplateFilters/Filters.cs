@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Base.src.Config;
+using ZKWeb.Plugins.Common.Base.src.Managers;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 	/// <summary>

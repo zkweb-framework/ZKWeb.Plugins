@@ -12,9 +12,12 @@ using ZKWeb.Plugins.Common.AdminSettings.src;
 using ZKWeb.Plugins.Common.AdminSettings.src.ListItemProviders;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Config;
+using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Currency.src.Config;
 using ZKWeb.Plugins.Common.Currency.src.ListItemProviders;
+using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 
 namespace ZKWeb.Plugins.Common.Currency.src.GenericFormsForAdminSettings {
 	/// <summary>

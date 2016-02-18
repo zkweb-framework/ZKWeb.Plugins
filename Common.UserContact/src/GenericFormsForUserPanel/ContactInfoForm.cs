@@ -8,8 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Base.src;
+using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
+using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.UserPanel.src;
+using ZKWeb.Plugins.Common.UserPanel.src.Scaffolding;
 using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.UserContact.src.GenericFormsForUserPanel {

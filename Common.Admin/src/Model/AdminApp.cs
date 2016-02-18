@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Core;
 using ZKWeb.Model;
+using ZKWeb.Plugins.Common.Admin.src.Managers;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Model {
 	/// <summary>

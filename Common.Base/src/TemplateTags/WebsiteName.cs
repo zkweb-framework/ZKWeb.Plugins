@@ -9,6 +9,7 @@ using DryIoc;
 using ZKWeb.Model;
 using ZKWeb.Plugins.Common.Base.src.Config;
 using ZKWeb.Core;
+using ZKWeb.Plugins.Common.Base.src.Managers;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
