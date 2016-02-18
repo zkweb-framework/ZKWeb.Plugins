@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Core;
-using ZKWeb.Model;
-using ZKWeb.Model.ActionResults;
+using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 	/// <summary>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Core;
+using ZKWeb.Database;
 using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Model {

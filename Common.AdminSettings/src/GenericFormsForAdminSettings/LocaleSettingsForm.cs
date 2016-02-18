@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ZKWeb.Core;
 using ZKWeb.Plugins.Common.AdminSettings.src.ListItemProviders;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Config;
@@ -15,6 +14,7 @@ using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
+using ZKWeb.Localize;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.GenericFormsForAdminSettings {
 	/// <summary>

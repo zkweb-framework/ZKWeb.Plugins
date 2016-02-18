@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Model;
-using ZKWeb.Core;
 
 namespace ZKWeb.Plugins.Common.Base.src.Database {
 	/// <summary>

@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Model;
-using ZKWeb.Model.ActionResults;
+using ZKWeb.Web.ActionResults;
+using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>

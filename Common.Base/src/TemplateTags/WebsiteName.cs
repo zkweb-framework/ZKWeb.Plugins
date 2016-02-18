@@ -6,10 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using DryIoc;
-using ZKWeb.Model;
 using ZKWeb.Plugins.Common.Base.src.Config;
-using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Localize;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>

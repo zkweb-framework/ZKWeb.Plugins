@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Core;
-using ZKWeb.Model;
+using ZKWeb.Database;
+using ZKWeb.Database.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 
 namespace ZKWeb.Plugins.Common.UserContact.src.DataCallbacks {

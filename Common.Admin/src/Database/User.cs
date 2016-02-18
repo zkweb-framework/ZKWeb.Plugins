@@ -6,11 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Model;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Functions;
-using ZKWeb.Core;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Database {
 	/// <summary>

@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using ZKWeb.Core;
-using ZKWeb.Model;
+using ZKWeb.Database;
+using ZKWeb.Database.Interfaces;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 
 namespace ZKWeb.Plugins.Common.Admin.src.DataCallbacks {

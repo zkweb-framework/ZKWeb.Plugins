@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Model;
-using ZKWeb.Model.ActionResults;
+using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.UserPanel.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Common.UserPanel.src.Controllers {
 	/// <summary>

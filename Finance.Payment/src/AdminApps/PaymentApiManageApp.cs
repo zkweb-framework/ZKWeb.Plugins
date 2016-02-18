@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src;
@@ -13,13 +12,14 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Forms;
 using ZKWeb.Utils.Extensions;
-using ZKWeb.Model;
 using System.Web;
-using ZKWeb.Model.ActionResults;
+using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Finance.Payment.src.ListItemProviders;
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
+using ZKWeb.Localize;
+using ZKWeb.Database;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>

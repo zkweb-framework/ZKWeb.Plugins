@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using ZKWeb.Core;
+using ZKWeb.Localize;
+using ZKWeb.Templating;
 
 namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 	/// <summary>

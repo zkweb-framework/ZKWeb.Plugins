@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Core;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 
 namespace ZKWeb.Plugins.Common.GenericTag.src.Repositories {
@@ -23,10 +23,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Repositories {
 		/// <param name="type">标签类型</param>
 		/// <returns></returns>
 		public bool IsAllTagsTypeEqualTo(IList<object> idList, string type) {
-			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
-				return context.Count<Database.GenericTag>(t => idList.Contains(t.Id) && t.Type != type) == 0;
-			}
+			return Count(t => idList.Contains(t.Id) && t.Type != type) == 0;
 		}
 	}
 }

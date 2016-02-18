@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ZKWeb.Model;
+using ZKWeb.Localize.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Base.src.Translates {
 	/// <summary>

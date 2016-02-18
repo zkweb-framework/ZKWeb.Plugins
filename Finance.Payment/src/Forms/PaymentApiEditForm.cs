@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using ZKWeb.Core;
+using ZKWeb.Database;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
@@ -63,7 +64,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 			var id = GetRequestId();
 			UnitOfWork.ReadData<PaymentApi>(repository => {
 				var api = string.IsNullOrEmpty(id) ? null : repository.GetById(id);
-				var type = api.Type ?? HttpContext.Current.Request.GetParam<string>("type");
+				var type = api == null ? null : api.Type;
+				type = type ?? HttpContext.Current.Request.GetParam<string>("type");
 				Handlers = Application.Ioc.ResolveMany<IPaymentApiHandler>().Where(h => h.Type == type).ToList();
 			});
 			Handlers.ForEach(h => h.OnFormCreated(this));

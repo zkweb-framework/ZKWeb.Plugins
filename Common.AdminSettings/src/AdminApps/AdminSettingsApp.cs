@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Admin.src.Model;
-using ZKWeb.Model;
-using ZKWeb.Model.ActionResults;
+using ZKWeb.Web.ActionResults;
+using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.AdminApps {
 	/// <summary>

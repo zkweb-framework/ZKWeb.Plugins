@@ -7,9 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using ZKWeb.Core;
-using ZKWeb.Model;
-using ZKWeb.Model.ActionResults;
+using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
@@ -19,6 +17,9 @@ using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.Base.src.TypeTraits;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
+using ZKWeb.Localize;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>

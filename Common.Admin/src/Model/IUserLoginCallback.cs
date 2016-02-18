@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Core;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Model {

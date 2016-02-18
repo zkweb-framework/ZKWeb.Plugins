@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using ZKWeb.Core;
+using ZKWeb.Localize;
 using ZKWeb.Utils.Extensions;
 
 namespace Common.Minimal.Model.Extensions {

@@ -9,11 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
-using ZKWeb.Core;
-using ZKWeb.Model;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 	/// <summary>

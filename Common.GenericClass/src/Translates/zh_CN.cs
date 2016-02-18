@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Model;
+using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.GenericClass.src.Translates {

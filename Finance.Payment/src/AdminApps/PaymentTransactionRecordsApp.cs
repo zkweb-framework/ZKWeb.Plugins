@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using ZKWeb.Core;
 using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
@@ -16,6 +15,8 @@ using ZKWeb.Utils.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
+using ZKWeb.Localize;
+using ZKWeb.Database;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>

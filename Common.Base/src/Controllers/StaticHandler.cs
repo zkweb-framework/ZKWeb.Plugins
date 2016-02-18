@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using ZKWeb.Core;
-using ZKWeb.Model;
-using ZKWeb.Model.ActionResults;
+using ZKWeb.Web.ActionResults;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Server;
+using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>
