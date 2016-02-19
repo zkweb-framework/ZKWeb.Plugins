@@ -621,6 +621,7 @@
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Common.GenericRecord\" />
     <Folder Include="Finance.Payment\src\PaymentTransactionCheckers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

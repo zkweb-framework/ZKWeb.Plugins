@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.SerialGenerate.src.Generator {
 			var now = DateTime.UtcNow.ToLocalTime();
 			var serial = now.ToString("yyyyMMdd") + RandomUtils.RandomString(8, "0123456789");
 			var callbacks = Application.Ioc.ResolveMany<ISerialGenerateCallback>();
-			callbacks.ForEach(c => c.OnGenerate(data, ref serial);
+			callbacks.ForEach(c => c.OnGenerate(data, ref serial));
 			return serial;
 		}
 	}
