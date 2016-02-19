@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// <summary>
 		/// 交易创建后
 		/// </summary>
-		public void OnCreated(PaymentTransaction transaction) {
+		public void OnCreated(DatabaseContext context, PaymentTransaction transaction) {
 			throw new NotImplementedException();
 		}
 		

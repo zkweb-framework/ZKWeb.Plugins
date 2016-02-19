@@ -43,7 +43,16 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "Amount", "金额" },
 			{ "Payer", "付款人" },
 			{ "Payee", "收款人" },
-			{ "State", "状态" }
+			{ "State", "状态" },
+			{ "Test Payment Api", "测试支付接口" },
+			{ "Test payment api is usable", "测试支付接口是否可用" },
+			{ "Payment api not exist", "支付接口不存在" },
+			{ "Unknown transaction type {0}", "未知的交易类型" },
+			{ "Transaction amount must large than zero", "交易金额必须大于零" },
+			{ "Transaction description is required", "交易描述不能为空" },
+			{ "Selected payment api not support this transaction", "选择的支付接口不支持当前交易" },
+			{ "Selected payment api is deleted", "选择的支付接口已被删除，不能使用" },
+			{ "Transaction Created", "交易已创建" }
 		};
 
 		public bool CanTranslate(string code) {

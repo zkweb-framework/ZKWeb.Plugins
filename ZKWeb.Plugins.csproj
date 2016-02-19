@@ -316,6 +316,8 @@
     <Compile Include="Common.Region\src\Managers\RegionManager.cs" />
     <Compile Include="Common.Region\src\Translates\en_US.cs" />
     <Compile Include="Common.Region\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.SerialGenerate\src\Generator\SerialGenerator.cs" />
+    <Compile Include="Common.SerialGenerate\src\Model\ISerialGenerateCallback.cs" />
     <Compile Include="Common.SerialGenerate\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserContact\src\GenericFormsForUserPanel\ContactInfoForm.cs" />
     <Compile Include="Common.UserContact\src\AjaxTableCallbacks\AddColumnsToUserManageApp.cs" />
@@ -347,15 +349,19 @@
     <Compile Include="Finance.Payment\src\Database\PaymentApi.cs" />
     <Compile Include="Finance.Payment\src\Database\PaymentTransaction.cs" />
     <Compile Include="Finance.Payment\src\DataCallbacks\CannotChangeTypeOrOwnerAfterPaymentApiCreated.cs" />
+    <Compile Include="Finance.Payment\src\Extensions\PaymentTransactionExtensions.cs" />
     <Compile Include="Finance.Payment\src\Forms\PaymentApiEditForm.cs" />
+    <Compile Include="Finance.Payment\src\Forms\TestPaymentForm.cs" />
     <Compile Include="Finance.Payment\src\ListItemProviders\PaymentTransactionTypeListItemProvider.cs" />
     <Compile Include="Finance.Payment\src\ListItemProviders\PaymentApiTypeListItemProvider.cs" />
     <Compile Include="Finance.Payment\src\Model\AutoSendGoodsParameters.cs" />
     <Compile Include="Finance.Payment\src\Model\IPaymentApiHandler.cs" />
+    <Compile Include="Finance.Payment\src\Model\IPaymentTransactionChecker.cs" />
     <Compile Include="Finance.Payment\src\Model\IPaymentTransactionHandler.cs" />
     <Compile Include="Finance.Payment\src\Model\PaymentTransactionState.cs" />
     <Compile Include="Finance.Payment\src\PaymentApiHandlers\TestApiHandler.cs" />
     <Compile Include="Finance.Payment\src\PaymentTransactionHandlers\TestTransactionHandler.cs" />
+    <Compile Include="Finance.Payment\src\Repositories\TransactionRepository.cs" />
     <Compile Include="Finance.Payment\src\Translates\zh_CN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -369,6 +375,7 @@
     <Content Include="Common.Admin\static\common.admin.images\logo.png" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
+    <Content Include="Finance.Payment\templates\finance.payment\test_payment.html" />
     <None Include="Common.AdminSettings\plugin.json" />
     <None Include="Common.Admin\templates\common.admin.widgets\enter_admin_panel.widget" />
     <Content Include="Common.Admin\templates\common.admin.widgets\enter_admin_panel.html" />
@@ -613,7 +620,9 @@
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Finance.Payment\src\PaymentTransactionCheckers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

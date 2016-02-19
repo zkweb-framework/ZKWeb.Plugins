@@ -1,5 +1,6 @@
-﻿{
+﻿
+{
 	"Name": "PaymentApi",
 	"Description": "Support receive money through payment api",
-	"Dependencies": [ "Common.Admin", "Common.SerialGenerate" ]
+	"Dependencies": [ "Common.Admin", "Common.SerialGenerate", "Common.Currency" ]
 }

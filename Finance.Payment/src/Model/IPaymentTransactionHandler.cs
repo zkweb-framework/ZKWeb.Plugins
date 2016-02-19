@@ -22,7 +22,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// 交易创建后的处理
 		/// </summary>
 		/// <param name="transaction">支付交易</param>
-		void OnCreated(PaymentTransaction transaction);
+		void OnCreated(DatabaseContext context, PaymentTransaction transaction);
 
 		/// <summary>
 		/// 等待付款时的处理
