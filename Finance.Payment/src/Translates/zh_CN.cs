@@ -52,7 +52,15 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "Transaction description is required", "交易描述不能为空" },
 			{ "Selected payment api not support this transaction", "选择的支付接口不支持当前交易" },
 			{ "Selected payment api is deleted", "选择的支付接口已被删除，不能使用" },
-			{ "Transaction Created", "交易已创建" }
+			{ "Transaction Created", "交易已创建" },
+			{ "Payment transaction not found", "支付交易不存在" },
+			{ "Payment transaction {0} error: {1}", "支付交易{0}错误: {1}" },
+			{ "Payer of transaction not logged in", "交易的付款人未登陆" },
+			{ "Transaction not waiting for pay", "交易不在等待付款中" },
+			{ "Transaction not at initial state, can't set to waiting paying", "交易不在初始状态，无法设置成等待付款" },
+			{ "Transaction not waiting for pay or confirm, can't set to success", "交易不在等待付款或确认中，无法设置成交易成功" },
+			{ "Transaction already aborted, can't process again", "交易已中止，不能重复处理" },
+			{ "Only secured paid transaction can call send goods api", "只有担保交易已付款的交易可以调用发货接口" }
 		};
 
 		public bool CanTranslate(string code) {

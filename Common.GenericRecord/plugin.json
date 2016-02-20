@@ -1,0 +1,5 @@
+﻿{
+	"Name": "Generic Record",
+	"Description": "Generic records management",
+	"Dependencies": [ "Common.Admin" ]
+}

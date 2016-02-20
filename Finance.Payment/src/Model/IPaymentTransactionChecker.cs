@@ -27,6 +27,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 
 		/// <summary>
 		/// 判断交易是否可以处理等待付款
+		/// 交易已经是相同状态时应该跳过处理而不是调用这个函数
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
@@ -34,6 +35,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 
 		/// <summary>
 		/// 判断交易是否可以处理担保交易已付款
+		/// 交易已经是相同状态时应该跳过处理而不是调用这个函数
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
@@ -41,6 +43,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 
 		/// <summary>
 		/// 判断交易是否可以处理交易成功
+		/// 交易已经是相同状态时应该跳过处理而不是调用这个函数
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
@@ -48,13 +51,14 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 
 		/// <summary>
 		/// 判断交易是否可以处理交易中止
+		/// 交易已经是相同状态时应该跳过处理而不是调用这个函数
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
 		void CanProcessAborted(PaymentTransaction transaction, ref Tuple<bool, string> result);
 
 		/// <summary>
-		/// 判断交易是否可以进行发货
+		/// 判断交易是否可以调用发货接口
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>

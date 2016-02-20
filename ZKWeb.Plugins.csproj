@@ -282,6 +282,9 @@
     <Compile Include="Common.GenericClass\src\GenericClasses\DefaultClass.cs" />
     <Compile Include="Common.GenericClass\src\Repositories\GenericClassRepository.cs" />
     <Compile Include="Common.GenericClass\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.GenericRecord\src\Database\GenericRecord.cs" />
+    <Compile Include="Common.GenericRecord\src\Repositories\GenericRecordRepository.cs" />
+    <Compile Include="Common.GenericRecord\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericTag\src\Database\GenericTag.cs" />
     <Compile Include="Common.GenericTag\src\Scaffolding\GenericTagBuilder.cs" />
     <Compile Include="Common.GenericTag\src\Repositories\GenericTagRepository.cs" />
@@ -360,6 +363,7 @@
     <Compile Include="Finance.Payment\src\Model\IPaymentTransactionHandler.cs" />
     <Compile Include="Finance.Payment\src\Model\PaymentTransactionState.cs" />
     <Compile Include="Finance.Payment\src\PaymentApiHandlers\TestApiHandler.cs" />
+    <Compile Include="Finance.Payment\src\PaymentTransactionCheckers\DefaultTransactionChecker.cs" />
     <Compile Include="Finance.Payment\src\PaymentTransactionHandlers\TestTransactionHandler.cs" />
     <Compile Include="Finance.Payment\src\Repositories\TransactionRepository.cs" />
     <Compile Include="Finance.Payment\src\Translates\zh_CN.cs" />
@@ -417,6 +421,7 @@
     <None Include="Common.Currency\plugin.json" />
     <None Include="Common.CustomTranslate\plugin.json" />
     <None Include="Common.GenericClass\plugin.json" />
+    <None Include="Common.GenericRecord\plugin.json" />
     <None Include="Common.GenericTag\plugin.json" />
     <None Include="Common.MenuPageBase\plugin.json" />
     <None Include="Common.Region\plugin.json" />
@@ -620,10 +625,7 @@
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common.GenericRecord\" />
-    <Folder Include="Finance.Payment\src\PaymentTransactionCheckers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
