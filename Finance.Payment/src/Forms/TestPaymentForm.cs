@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -14,6 +15,8 @@ using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.Currency.src.Config;
 using ZKWeb.Plugins.Common.Currency.src.ListItemProviders;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Plugins.Finance.Payment.src.Managers;
+using ZKWeb.Plugins.Finance.Payment.src.Repositories;
 using ZKWeb.Server;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
@@ -80,7 +83,19 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		/// </summary>
 		/// <returns></returns>
 		protected override object OnSubmit() {
-			throw new NotImplementedException();
+			// 创建交易
+			var api = GetApiFromRequest();
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var payerId = sessionManager.GetSession().GetUser().Id;
+			var payeeId = api.Owner == null ? null : (long?)api.Owner.Id;
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var transaction = transactionManager.CreateTestTransaction(api.Id, Amount, Currency, payerId, payeeId, Description);
+			// 跳转到支付url地址
+			var url = transactionManager.GetPaymentUrl(transaction.Id);
+			return new {
+				message = new T("Create test transaction success, redirecting to payment page..."),
+				script = ScriptStrings.Redirect(url, 3000)
+			};
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using DryIocAttributes;
+﻿using DryIoc;
+using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Database;
+using ZKWeb.Logging;
+using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
+using ZKWeb.Plugins.Finance.Payment.src.Repositories;
+using ZKWeb.Templating;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 	/// <summary>
@@ -19,47 +25,61 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// 交易类型
 		/// </summary>
 		public string Type { get { return "TestTransaction"; } }
-		
+
 		/// <summary>
 		/// 交易创建后
 		/// </summary>
-		public void OnCreated(DatabaseContext context, PaymentTransaction transaction) {
-			throw new NotImplementedException();
+		public void OnCreated(
+			DatabaseContext context, PaymentTransaction transaction) {
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(string.Format("TestTransaction Created: {0}", transaction.Serial));
 		}
-		
+
 		/// <summary>
 		/// 等待付款时
 		/// </summary>
-		public void OnWaitingPaying(DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
-			throw new NotImplementedException();
+		public void OnWaitingPaying(
+			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(string.Format("TestTransaction Waiting Paying: {0}", transaction.Serial));
 		}
 
 		/// <summary>
 		/// 担保交易付款后
 		/// </summary>
-		public void OnSecuredPaid(DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState, ref AutoSendGoodsParameters autoSendGoodsParameters) {
-			throw new NotImplementedException();
+		public void OnSecuredPaid(
+			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			// 需要自动发货
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(string.Format("TestTransaction Secured Paid: {0}", transaction.Serial));
+			var repository = RepositoryResolver.Resolve<PaymentTransactionRepository, PaymentTransaction>(context);
+			repository.SendGoods(transaction.Id, "TestLogistics", "00000000");
 		}
 
 		/// <summary>
 		/// 交易成功时
 		/// </summary>
-		public void OnSuccess(DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
-			throw new NotImplementedException();
+		public void OnSuccess(
+			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(string.Format("TestTransaction Success: {0}", transaction.Serial));
 		}
 
 		/// <summary>
 		/// 交易终止时
 		/// </summary>
-		public void OnAbort(DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
-			throw new NotImplementedException();
+		public void OnAbort(
+			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(string.Format("TestTransaction Aborted: {0}", transaction.Serial));
 		}
 
 		/// <summary>
 		/// 获取显示交易结果的Html
 		/// </summary>
 		public void GetResultHtml(PaymentTransaction transaction, ref HtmlString html) {
-			throw new NotImplementedException();
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			html = new HtmlString(templateManager.RenderTemplate("finance.payment/test_transaction_result.html", null));
 		}
 	}
 }

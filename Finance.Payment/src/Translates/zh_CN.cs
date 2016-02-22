@@ -47,7 +47,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "Test Payment Api", "测试支付接口" },
 			{ "Test payment api is usable", "测试支付接口是否可用" },
 			{ "Payment api not exist", "支付接口不存在" },
-			{ "Unknown transaction type {0}", "未知的交易类型" },
+			{ "Unknown payment transaction type {0}", "未知的支付交易类型" },
+			{ "Unknown payment api type {0}", "未知的支付交易接口类型" },
 			{ "Transaction amount must large than zero", "交易金额必须大于零" },
 			{ "Transaction description is required", "交易描述不能为空" },
 			{ "Selected payment api not support this transaction", "选择的支付接口不支持当前交易" },
@@ -60,7 +61,16 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "Transaction not at initial state, can't set to waiting paying", "交易不在初始状态，无法设置成等待付款" },
 			{ "Transaction not waiting for pay or confirm, can't set to success", "交易不在等待付款或确认中，无法设置成交易成功" },
 			{ "Transaction already aborted, can't process again", "交易已中止，不能重复处理" },
-			{ "Only secured paid transaction can call send goods api", "只有担保交易已付款的交易可以调用发货接口" }
+			{ "Only secured paid transaction can call send goods api", "只有担保交易已付款的交易可以调用发货接口" },
+			{ "Unsupported transaction state: {0}", "不支持的交易状态: {0}" },
+			{ "InitialState", "初始状态" },
+			{ "WaitingPaying", "等待付款" },
+			{ "SecuredPaid", "担保交易已付款" },
+			{ "TransactionSuccess", "交易成功" },
+			{ "TransactionAborted", "交易中止" },
+			{ "Change transaction state to {0}", "切换交易状态到{0}" },
+			{ "Notify goods sent to payment api success", "通知支付接口已发货成功" },
+			{ "Create test transaction success, redirecting to payment page...", "创建测试交易成功，正在跳转到支付页……" }
 		};
 
 		public bool CanTranslate(string code) {

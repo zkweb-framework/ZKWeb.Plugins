@@ -4,25 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Web.ActionResults;
-using ZKWeb.Plugins.Common.Admin.src;
+using System.Web;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
-using ZKWeb.Plugins.Finance.Payment.src.Database;
-using ZKWeb.Web.Interfaces;
 using ZKWeb.Plugins.Finance.Payment.src.Forms;
-using System.Web;
+using ZKWeb.Web.ActionResults;
+using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 	/// <summary>
-	/// 测试支付用的控制器
-	/// 测试流程
-	/// 创建交易页面 => 支付页面 => 结果页面
+	/// 支付相关的控制器
 	/// </summary>
 	[ExportMany]
-	public class TestPaymentController : IController {
+	public class PaymentController : IController {
 		/// <summary>
-		/// 创建交易页面
+		/// 创建测试交易的页面
 		/// </summary>
 		/// <returns></returns>
 		[Action("admin/payment_apis/test_payment")]
@@ -36,6 +32,24 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 			} else {
 				return new JsonResult(form.Submit());
 			}
+		}
+
+		/// <summary>
+		/// 交易的支付页面
+		/// </summary>
+		/// <returns></returns>
+		[Action("payment/transaction/pay")]
+		public IActionResult Pay() {
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// 交易的支付结果页面
+		/// </summary>
+		/// <returns></returns>
+		[Action("payment/transaction/pay_result")]
+		public IActionResult PayResult() {
+			throw new NotImplementedException();
 		}
 	}
 }

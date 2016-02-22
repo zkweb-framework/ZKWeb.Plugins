@@ -14,6 +14,7 @@ using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.ListItemProviders;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWeb.Utils.Extensions;
@@ -66,7 +67,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 				var api = string.IsNullOrEmpty(id) ? null : repository.GetById(id);
 				var type = api == null ? null : api.Type;
 				type = type ?? HttpContext.Current.Request.GetParam<string>("type");
-				Handlers = Application.Ioc.ResolveMany<IPaymentApiHandler>().Where(h => h.Type == type).ToList();
+				Handlers = Application.Ioc.ResolvePaymentApiHandlers(type);
 			});
 			Handlers.ForEach(h => h.OnFormCreated(this));
 		}

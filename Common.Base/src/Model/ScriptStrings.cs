@@ -72,6 +72,18 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		}
 
 		/// <summary>
+		/// 在一定时间后重定向当前页面到指定地址
+		/// </summary>
+		/// <param name="url">重定向到的地址</param>
+		/// <param name="milliseconds">等待时间，单位是毫秒</param>
+		/// <returns></returns>
+		public static string Redirect(string url, int milliseconds = 1) {
+			return string.Format(
+				"setTimeout(function() {{ location.href = {0}; }}, {1});",
+				JsonConvert.SerializeObject(url), milliseconds);
+		}
+
+		/// <summary>
 		/// 更新模态框远程页面内容到指定的Url
 		/// </summary>
 		/// <param name="url">更新到的Url</param>

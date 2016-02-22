@@ -14,6 +14,7 @@ using ZKWeb.Plugins.Common.GenericRecord.src.Database;
 using ZKWeb.Plugins.Common.GenericRecord.src.Repositories;
 using ZKWeb.Plugins.Common.SerialGenerate.src.Generator;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWeb.Utils.Extensions;
 
@@ -22,7 +23,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 	/// 支付交易的数据仓储
 	/// </summary>
 	[ExportMany]
-	public class TransactionRepository : GenericRepository<PaymentTransaction> {
+	public class PaymentTransactionRepository : GenericRepository<PaymentTransaction> {
 		/// <summary>
 		/// 创建交易
 		/// </summary>
@@ -41,11 +42,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			decimal amount, string currencyType, long? payerId, long? payeeId,
 			long? releatedId, string description, object extraData = null) {
 			// 检查参数
-			var handlers = Application.Ioc.ResolveMany<IPaymentTransactionHandler>()
-				.Where(h => h.Type == transactionType).ToList();
-			if (!handlers.Any()) {
-				throw new HttpException(400, string.Format(new T("Unknown transaction type {0}"), transactionType));
-			} else if (amount <= 0) {
+			var handlers = Application.Ioc.ResolveTransactionHandlers(transactionType);
+			if (amount <= 0) {
 				throw new HttpException(400, "Transaction amount must large than zero");
 			} else if (string.IsNullOrEmpty(description)) {
 				throw new HttpException(400, "Transaction description is required");
@@ -95,7 +93,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 		/// <param name="creatorId">创建人Id</param>
 		/// <param name="content">内容</param>
 		/// <param name="extraData">附加数据</param>
-		public void AddDetailRecord(
+		public virtual void AddDetailRecord(
 			long transactionId, long? creatorId, string content, object extraData = null) {
 			var recordRepository = RepositoryResolver.Resolve<GenericRecordRepository, GenericRecord>(Context);
 			recordRepository.AddRecord(RecordType, transactionId, creatorId, content, null, extraData);
@@ -106,7 +104,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 		/// </summary>
 		/// <param name="transactionId">交易Id</param>
 		/// <returns></returns>
-		public List<GenericRecord> GetDetailRecords(long transactionId) {
+		public virtual List<GenericRecord> GetDetailRecords(long transactionId) {
 			var recordRepository = RepositoryResolver.Resolve<GenericRecordRepository, GenericRecord>(Context);
 			return recordRepository.FindRecords(RecordType, transactionId).ToList();
 		}
@@ -116,7 +114,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 		/// </summary>
 		/// <param name="transactionId">交易Id</param>
 		/// <param name="lastError">最后发生的错误</param>
-		public void SetLastError(long transactionId, string lastError) {
+		public virtual void SetLastError(long transactionId, string lastError) {
 			// 更新交易
 			var transaction = GetById(transactionId);
 			if (transaction == null) {
@@ -136,10 +134,84 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 		/// 尝试把交易切换到指定的交易状态
 		/// </summary>
 		/// <param name="transactionId">交易Id</param>
-		/// <param name="externalSerial">外部交易流水号</param>
+		/// <param name="externalSerial">外部交易流水号，等于空时不更新</param>
 		/// <param name="state">交易状态</param>
-		public void Process(long transactionId, string externalSerial, PaymentTransactionState state) {
+		public virtual void Process(long transactionId, string externalSerial, PaymentTransactionState state) {
+			// 获取交易
+			var transaction = GetById(transactionId);
+			if (transaction == null) {
+				throw new HttpException(400, new T("Payment transaction not found"));
+			}
+			// 判断是否可以处理指定的交易状态
+			// 已经是指定的交易状态时返回成功
+			Tuple<bool, string> result;
+			if (transaction.State == state) {
+				return;
+			} else if (transaction.State == PaymentTransactionState.WaitingPaying) {
+				result = transaction.Check(c => c.CanProcessWaitingPaying);
+			} else if (transaction.State == PaymentTransactionState.SecuredPaid) {
+				result = transaction.Check(c => c.CanProcessSecuredPaid);
+			} else if (transaction.State == PaymentTransactionState.Success) {
+				result = transaction.Check(c => c.CanProcessSuccess);
+			} else if (transaction.State == PaymentTransactionState.Aborted) {
+				result = transaction.Check(c => c.CanProcessAborted);
+			} else {
+				throw new HttpException(400, string.Format(new T("Unsupported transaction state: {0}"), state));
+			}
+			if (!result.Item1) {
+				throw new HttpException(400, result.Item2);
+			}
+			// 获取交易类型对应的处理器
+			var handlers = Application.Ioc.ResolveTransactionHandlers(transaction.Type);
+			// 设置交易状态
+			var previousState = transaction.State;
+			Context.Save(ref transaction, t => {
+				t.State = state;
+				t.LastError = null; // 清空最后发生的错误
+				t.LastUpdated = DateTime.UtcNow;
+				if (!string.IsNullOrEmpty(externalSerial)) {
+					t.ExternalSerial = externalSerial; // 更新外部流水号
+				}
+			});
+			// 使用处理器处理指定的交易状态
+			if (state == PaymentTransactionState.WaitingPaying) {
+				handlers.ForEach(h => h.OnWaitingPaying(Context, transaction, previousState));
+			} else if (state == PaymentTransactionState.SecuredPaid) {
+				handlers.ForEach(h => h.OnSecuredPaid(Context, transaction, previousState));
+			} else if (state == PaymentTransactionState.Success) {
+				handlers.ForEach(h => h.OnSuccess(Context, transaction, previousState));
+			} else if (state == PaymentTransactionState.Aborted) {
+				handlers.ForEach(h => h.OnAbort(Context, transaction, previousState));
+			} else {
+				throw new HttpException(400, string.Format(new T("Unsupported transaction state: {0}"), state));
+			}
+			// 成功时添加详细记录
+			AddDetailRecord(transactionId, null, string.Format(
+				new T("Change transaction state to {0}"), new T(transaction.State.GetDescription())));
+		}
 
+		/// <summary>
+		/// 担保交易时调用发货接口通知支付平台
+		/// </summary>
+		/// <param name="transactionId">交易Id</param>
+		/// <param name="logisticsName">快递或物流名称</param>
+		/// <param name="invoiceNo">快递单号</param>
+		public virtual void SendGoods(long transactionId, string logisticsName, string invoiceNo) {
+			// 获取交易
+			var transaction = GetById(transactionId);
+			if (transaction == null) {
+				throw new HttpException(400, new T("Payment transaction not found"));
+			}
+			// 判断是否可以发货
+			var result = transaction.Check(c => c.CanSendGoods);
+			if (!result.Item1) {
+				throw new HttpException(400, result.Item2);
+			}
+			// 调用支付接口的处理器处理发货
+			var handlers = Application.Ioc.ResolvePaymentApiHandlers(transaction.Api.Type);
+			handlers.ForEach(h => h.SendGoods(transaction, logisticsName, invoiceNo));
+			// 成功时添加详细记录
+			AddDetailRecord(transactionId, null, new T("Notify goods sent to payment api success"));
 		}
 	}
 }
