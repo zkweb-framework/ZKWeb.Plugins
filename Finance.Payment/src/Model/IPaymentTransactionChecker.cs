@@ -12,18 +12,19 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 	/// </summary>
 	public interface IPaymentTransactionChecker {
 		/// <summary>
-		/// 判断当前登录用户是否付款人的判断
-		/// </summary>
-		/// <param name="transaction">交易</param>
-		/// <param name="result">判断结果</param>
-		void IsPayerLoggedIn(PaymentTransaction transaction, ref Tuple<bool, string> result);
-
-		/// <summary>
 		/// 判断交易是否可以付款
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
 		void IsPayable(PaymentTransaction transaction, ref Tuple<bool, string> result);
+
+		/// <summary>
+		/// 判断当前登录的用户是否可以付款
+		/// 注意这个判断不包含IsPayable，需要分开调用
+		/// </summary>
+		/// <param name="transaction">交易</param>
+		/// <param name="result">判断结果</param>
+		void IsPayableByLoggedinUser(PaymentTransaction transaction, ref Tuple<bool, string> result);
 
 		/// <summary>
 		/// 判断交易是否可以处理等待付款

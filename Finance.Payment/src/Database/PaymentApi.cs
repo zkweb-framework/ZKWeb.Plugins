@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
 
@@ -75,7 +76,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString() {
-			return Name;
+			return new T(Name);
 		}
 	}
 

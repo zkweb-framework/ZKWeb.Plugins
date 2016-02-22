@@ -30,6 +30,11 @@ namespace ZKWeb.Plugins.Common.Currency.src.Model {
 	/// </summary>
 	public static class ICurrencyExtensions {
 		/// <summary>
+		/// 金额保留的小数位
+		/// </summary>
+		public static int RoundDecimals = 2;
+
+		/// <summary>
 		/// 格式化金额字符串
 		/// 前缀 + 金额 + 后缀
 		/// </summary>
@@ -37,6 +42,7 @@ namespace ZKWeb.Plugins.Common.Currency.src.Model {
 		/// <param name="amount">金额</param>
 		/// <returns></returns>
 		public static string Format(this ICurrency currency, decimal amount) {
+			amount = Math.Round(amount, RoundDecimals);
 			return string.Format("{0}{1}{2}", currency.Prefix, amount, currency.Suffix);
 		}
 	}

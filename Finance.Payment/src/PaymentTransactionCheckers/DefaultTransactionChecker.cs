@@ -17,20 +17,6 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionCheckers {
 	[ExportMany]
 	public class DefaultTransactionChecker : IPaymentTransactionChecker {
 		/// <summary>
-		/// 判断当前登录用户是否付款人的判断
-		/// </summary>
-		public void IsPayerLoggedIn(PaymentTransaction transaction, ref Tuple<bool, string> result) {
-			// 条件：付款人是空或付款人和当前登录用户一致
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var userId = sessionManager.GetSession().ReleatedId;
-			if (transaction.Payer == null || transaction.Payer.Id == userId) {
-				result = Tuple.Create(true, (string)null);
-			} else {
-				result = Tuple.Create(false, (string)new T("Payer of transaction not logged in"));
-			}
-		}
-
-		/// <summary>
 		/// 判断交易是否可以付款
 		/// </summary>
 		public void IsPayable(PaymentTransaction transaction, ref Tuple<bool, string> result) {
@@ -40,6 +26,20 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionCheckers {
 				result = Tuple.Create(true, (string)null);
 			} else {
 				result = Tuple.Create(false, (string)new T("Transaction not waiting for pay"));
+			}
+		}
+
+		/// <summary>
+		/// 判断当前登录的用户是否可以付款
+		/// </summary>
+		public void IsPayableByLoggedinUser(PaymentTransaction transaction, ref Tuple<bool, string> result) {
+			// 条件：付款人是空或付款人和当前登录用户一致
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var userId = sessionManager.GetSession().ReleatedId;
+			if (transaction.Payer == null || transaction.Payer.Id == userId) {
+				result = Tuple.Create(true, (string)null);
+			} else {
+				result = Tuple.Create(false, (string)new T("Payer of transaction not logged in"));
 			}
 		}
 

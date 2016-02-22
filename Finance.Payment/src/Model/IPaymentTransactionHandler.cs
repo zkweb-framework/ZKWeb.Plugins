@@ -46,10 +46,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <param name="context">数据库上下文</param>
 		/// <param name="transaction">支付交易</param>
 		/// <param name="previousState">原有的状态</param>
+		/// <param name="parameters">自动发货参数，需要自动发货时请设置这个参数</param>
 		void OnSecuredPaid(
 			DatabaseContext context,
 			PaymentTransaction transaction,
-			PaymentTransactionState previousState);
+			PaymentTransactionState previousState,
+			ref AutoSendGoodsParameters parameters);
 
 		/// <summary>
 		/// 交易成功时的处理

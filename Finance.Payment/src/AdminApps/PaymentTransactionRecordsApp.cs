@@ -17,6 +17,9 @@ using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Localize;
 using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Currency.src.Managers;
+using DryIoc;
+using ZKWeb.Plugins.Common.Currency.src.Model;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>
@@ -82,17 +85,19 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// </summary>
 			public void OnSelect(
 				AjaxTableSearchRequest request, List<KeyValuePair<PaymentTransaction, Dictionary<string, object>>> pairs) {
+				var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
 				foreach (var pair in pairs) {
 					var payer = pair.Key.Payer;
 					var payee = pair.Key.Payee;
 					var api = pair.Key.Api; // not nullable
+					var currency = currencyManager.GetCurrency(pair.Key.CurrencyType);
 					pair.Value["Id"] = pair.Key.Id;
 					pair.Value["Serial"] = pair.Key.Serial;
 					pair.Value["Type"] = new T(pair.Key.Type);
 					pair.Value["ApiName"] = new T(api.Name);
 					pair.Value["ApiId"] = api.Id;
 					pair.Value["ExternalSerial"] = pair.Key.ExternalSerial;
-					pair.Value["Amount"] = pair.Key.Amount;
+					pair.Value["Amount"] = currency.Format(pair.Key.Amount);
 					pair.Value["Payer"] = payer == null ? null : payer.Username;
 					pair.Value["Payee"] = payee == null ? null : payee.Username;
 					pair.Value["PayerId"] = payer == null ? null : (long?)payer.Id;

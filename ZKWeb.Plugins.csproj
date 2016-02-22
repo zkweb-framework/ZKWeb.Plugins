@@ -359,6 +359,7 @@
     <Compile Include="Finance.Payment\src\ListItemProviders\PaymentTransactionTypeListItemProvider.cs" />
     <Compile Include="Finance.Payment\src\ListItemProviders\PaymentApiTypeListItemProvider.cs" />
     <Compile Include="Finance.Payment\src\Managers\PaymentTransactionManager.cs" />
+    <Compile Include="Finance.Payment\src\Model\AutoSendGoodsParameters.cs" />
     <Compile Include="Finance.Payment\src\Model\IPaymentApiHandler.cs" />
     <Compile Include="Finance.Payment\src\Model\IPaymentTransactionChecker.cs" />
     <Compile Include="Finance.Payment\src\Model\IPaymentTransactionHandler.cs" />
@@ -380,8 +381,12 @@
     <Content Include="Common.Admin\static\common.admin.images\logo.png" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
+    <Content Include="Finance.Payment\templates\finance.payment\error_text.html" />
+    <Content Include="Finance.Payment\templates\finance.payment\test_api_pay.html" />
     <Content Include="Finance.Payment\templates\finance.payment\test_payment.html" />
     <Content Include="Finance.Payment\templates\finance.payment\test_transaction_result.html" />
+    <Content Include="Finance.Payment\templates\finance.payment\transaction_pay.html" />
+    <Content Include="Finance.Payment\templates\finance.payment\transaction_pay_result.html" />
     <None Include="Common.AdminSettings\plugin.json" />
     <None Include="Common.Admin\templates\common.admin.widgets\enter_admin_panel.widget" />
     <Content Include="Common.Admin\templates\common.admin.widgets\enter_admin_panel.html" />

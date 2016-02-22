@@ -60,7 +60,8 @@ namespace ZKWeb.Plugins.Finance.Payment.Tenpay.src.PaymentApiHandlers {
 		/// <summary>
 		/// 调用发货接口
 		/// </summary>
-		public void SendGoods(PaymentTransaction transaction, string logisticsName, string invoiceNo) {
+		public void SendGoods(
+			DatabaseContext context, PaymentTransaction transaction, string logisticsName, string invoiceNo) {
 			throw new NotImplementedException();
 		}
 

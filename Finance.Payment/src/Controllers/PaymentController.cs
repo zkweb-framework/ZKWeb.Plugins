@@ -1,13 +1,20 @@
-﻿using DryIocAttributes;
+﻿using DryIoc;
+using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Forms;
+using ZKWeb.Plugins.Finance.Payment.src.Managers;
+using ZKWeb.Utils.Extensions;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web.Interfaces;
 
@@ -35,21 +42,39 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		}
 
 		/// <summary>
-		/// 交易的支付页面
+		/// 使用测试接口支付指定交易
 		/// </summary>
 		/// <returns></returns>
-		[Action("payment/transaction/pay")]
-		public IActionResult Pay() {
+		[Action("admin/payment_apis/test_api_pay", HttpMethods.POST)]
+		public IActionResult TestApiPay() {
+			PrivilegesChecker.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
 			throw new NotImplementedException();
 		}
 
 		/// <summary>
+		/// 交易的支付页面
+		/// 这里不检查用户登录，在交易管理器中检查
+		/// </summary>
+		/// <returns></returns>
+		[Action("payment/transaction/pay")]
+		public IActionResult Pay() {
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var id = HttpContext.Current.Request.GetParam<long>("id");
+			var html = transactionManager.GetPaymentHtml(id);
+			return new TemplateResult("finance.payment/transaction_pay.html", new { html });
+		}
+
+		/// <summary>
 		/// 交易的支付结果页面
+		/// 这里不检查用户登录，在交易管理器中检查
 		/// </summary>
 		/// <returns></returns>
 		[Action("payment/transaction/pay_result")]
 		public IActionResult PayResult() {
-			throw new NotImplementedException();
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var id = HttpContext.Current.Request.GetParam<long>("id");
+			var html = transactionManager.GetResultHtml(id);
+			return new TemplateResult("finance.payment/transaction_pay_result.html", new { html });
 		}
 	}
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Admin.src.Database;
@@ -174,10 +175,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 				}
 			});
 			// 使用处理器处理指定的交易状态
+			AutoSendGoodsParameters parameters = null;
 			if (state == PaymentTransactionState.WaitingPaying) {
 				handlers.ForEach(h => h.OnWaitingPaying(Context, transaction, previousState));
 			} else if (state == PaymentTransactionState.SecuredPaid) {
-				handlers.ForEach(h => h.OnSecuredPaid(Context, transaction, previousState));
+				handlers.ForEach(h => h.OnSecuredPaid(Context, transaction, previousState, ref parameters));
 			} else if (state == PaymentTransactionState.Success) {
 				handlers.ForEach(h => h.OnSuccess(Context, transaction, previousState));
 			} else if (state == PaymentTransactionState.Aborted) {
@@ -186,8 +188,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 				throw new HttpException(400, string.Format(new T("Unsupported transaction state: {0}"), state));
 			}
 			// 成功时添加详细记录
-			AddDetailRecord(transactionId, null, string.Format(
+			AddDetailRecord(transaction.Id, null, string.Format(
 				new T("Change transaction state to {0}"), new T(transaction.State.GetDescription())));
+			// 需要自动发货时进行发货
+			if (parameters != null) {
+				SendGoods(transaction.Id, parameters.LogisticsName, parameters.InvoiceNo);
+			}
 		}
 
 		/// <summary>
@@ -209,7 +215,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			}
 			// 调用支付接口的处理器处理发货
 			var handlers = Application.Ioc.ResolvePaymentApiHandlers(transaction.Api.Type);
-			handlers.ForEach(h => h.SendGoods(transaction, logisticsName, invoiceNo));
+			handlers.ForEach(h => h.SendGoods(Context, transaction, logisticsName, invoiceNo));
 			// 成功时添加详细记录
 			AddDetailRecord(transactionId, null, new T("Notify goods sent to payment api success"));
 		}

@@ -92,6 +92,14 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// 备注
 		/// </summary>
 		public virtual string Remark { get; set; }
+
+		/// <summary>
+		/// 返回流水号
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() {
+			return Serial;
+		}
 	}
 
 	/// <summary>

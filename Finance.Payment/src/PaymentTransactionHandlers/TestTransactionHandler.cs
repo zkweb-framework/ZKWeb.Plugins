@@ -46,14 +46,14 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 
 		/// <summary>
 		/// 担保交易付款后
+		/// 付款后自动发货
 		/// </summary>
 		public void OnSecuredPaid(
-			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
-			// 需要自动发货
+			DatabaseContext context, PaymentTransaction transaction,
+			PaymentTransactionState previousState, ref AutoSendGoodsParameters parameters) {
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("TestTransaction Secured Paid: {0}", transaction.Serial));
-			var repository = RepositoryResolver.Resolve<PaymentTransactionRepository, PaymentTransaction>(context);
-			repository.SendGoods(transaction.Id, "TestLogistics", "00000000");
+			parameters = new AutoSendGoodsParameters() { LogisticsName = "TestLogistics", InvoiceNo = "00000000" };
 		}
 
 		/// <summary>

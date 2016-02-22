@@ -52,12 +52,13 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 
 		/// <summary>
 		/// 担保交易时对交易进行发货操作
-		/// 发货失败时可以抛出例外阻止事物提交
+		/// 发货失败时可以抛出例外阻止事务提交
 		/// 同一交易有可能会调用多次，是否可以发货已在外部判断，这个函数不需要判断
 		/// </summary>
+		/// <param name="context">数据库上下文</param>
 		/// <param name="transaction">支付交易</param>
 		/// <param name="logisticsName">快递或物流名称</param>
 		/// <param name="invoiceNo">发货单号</param>
-		void SendGoods(PaymentTransaction transaction, string logisticsName, string invoiceNo);
+		void SendGoods(DatabaseContext context, PaymentTransaction transaction, string logisticsName, string invoiceNo);
 	}
 }

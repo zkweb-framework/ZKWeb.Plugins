@@ -17,6 +17,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			{ "PaymentApi", "支付接口" },
+			{ "PaymentTransaction", "支付交易" },
 			{ "Support receive money through payment api", "支持通过支付接口进行收款" },
 			{ "PaymentApiManage", "支付接口管理" },
 			{ "TestPayment", "测试支付" },
@@ -70,7 +71,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "TransactionAborted", "交易中止" },
 			{ "Change transaction state to {0}", "切换交易状态到{0}" },
 			{ "Notify goods sent to payment api success", "通知支付接口已发货成功" },
-			{ "Create test transaction success, redirecting to payment page...", "创建测试交易成功，正在跳转到支付页……" }
+			{ "Create test transaction success, redirecting to payment page...", "创建测试交易成功，正在跳转到支付页……" },
+			{ "Pay", "支付" },
+			{ "Use test api to pay transaction created with other api type is not allowed", "不能使用测试接口支付选择了其他接口的交易" },
+			{ "TestApi Pay", "使用测试接口支付" },
+			{ "You need provide the password entered at test api creation, after submit transaction will be paid",
+				"您需要提供创建测试接口时填写的密码，提交后交易会变成已支付" }
 		};
 
 		public bool CanTranslate(string code) {

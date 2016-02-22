@@ -1,12 +1,17 @@
-﻿using DryIocAttributes;
+﻿using DryIoc;
+using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Repositories;
+using ZKWeb.Templating;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 	/// <summary>
@@ -39,6 +44,53 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 		/// </summary>
 		public virtual string GetResultUrl(long transactionId) {
 			return string.Format("/payment/transaction/pay_result?id={0}", transactionId);
+		}
+
+		/// <summary>
+		/// 获取支付时使用的Html
+		/// 交易不存在等错误发生时返回错误信息
+		/// </summary>
+		public virtual HtmlString GetPaymentHtml(long transactionId) {
+			// 获取交易和支付接口
+			PaymentTransaction transaction = null;
+			PaymentApi api = null;
+			UnitOfWork.ReadData<PaymentTransaction>(repository => {
+				transaction = repository.GetById(transactionId);
+				api = transaction == null ? null : transaction.Api;
+				var _ = api == null ? null : api.Type; // 在数据库连接关闭前抓取类型
+			});
+			// 检查交易和接口是否存在
+			var buildErrorHtml = new Func<string, HtmlString>(error => {
+				var templateManager = Application.Ioc.Resolve<TemplateManager>();
+				return new HtmlString(templateManager.RenderTemplate("finance.payment/error_text.html", new { error }));
+			});
+			if (transaction == null) {
+				return buildErrorHtml(new T("Payment transaction not found"));
+			} else if (api == null) {
+				return buildErrorHtml(new T("Payment api not exist"));
+			}
+			// 检查当前登录用户是否可以支付
+			var result = transaction.Check(c => c.IsPayableByLoggedinUser);
+			if (!result.Item1) {
+				return buildErrorHtml(result.Item2);
+			}
+			result = transaction.Check(c => c.IsPayable);
+			if (!result.Item1) {
+				return buildErrorHtml(result.Item2);
+			}
+			// 调用接口处理器生成支付html
+			var html = new HtmlString("No Result");
+			var handlers = Application.Ioc.ResolvePaymentApiHandlers(api.Type);
+			handlers.ForEach(h => h.GetPaymentHtml(transaction, ref html));
+			return html;
+		}
+
+		/// <summary>
+		/// 获取支付结果的html
+		/// 交易不存在等错误发生时返回错误信息
+		/// </summary>
+		public virtual HtmlString GetResultHtml(long transactionId) {
+			throw new NotImplementedException();
 		}
 	}
 }
