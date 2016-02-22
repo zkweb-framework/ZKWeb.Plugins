@@ -348,16 +348,17 @@
     <Compile Include="Finance.Payment.WeChat\src\Translates\zh_CN.cs" />
     <Compile Include="Finance.Payment\src\AdminApps\PaymentApiManageApp.cs" />
     <Compile Include="Finance.Payment\src\AdminApps\PaymentTransactionRecordsApp.cs" />
-    <Compile Include="Finance.Payment\src\Controllers\TestPaymentController.cs" />
+    <Compile Include="Finance.Payment\src\Controllers\PaymentController.cs" />
     <Compile Include="Finance.Payment\src\Database\PaymentApi.cs" />
     <Compile Include="Finance.Payment\src\Database\PaymentTransaction.cs" />
     <Compile Include="Finance.Payment\src\DataCallbacks\CannotChangeTypeOrOwnerAfterPaymentApiCreated.cs" />
+    <Compile Include="Finance.Payment\src\Extensions\IocExtensions.cs" />
     <Compile Include="Finance.Payment\src\Extensions\PaymentTransactionExtensions.cs" />
     <Compile Include="Finance.Payment\src\Forms\PaymentApiEditForm.cs" />
     <Compile Include="Finance.Payment\src\Forms\TestPaymentForm.cs" />
     <Compile Include="Finance.Payment\src\ListItemProviders\PaymentTransactionTypeListItemProvider.cs" />
     <Compile Include="Finance.Payment\src\ListItemProviders\PaymentApiTypeListItemProvider.cs" />
-    <Compile Include="Finance.Payment\src\Model\AutoSendGoodsParameters.cs" />
+    <Compile Include="Finance.Payment\src\Managers\PaymentTransactionManager.cs" />
     <Compile Include="Finance.Payment\src\Model\IPaymentApiHandler.cs" />
     <Compile Include="Finance.Payment\src\Model\IPaymentTransactionChecker.cs" />
     <Compile Include="Finance.Payment\src\Model\IPaymentTransactionHandler.cs" />
@@ -365,7 +366,7 @@
     <Compile Include="Finance.Payment\src\PaymentApiHandlers\TestApiHandler.cs" />
     <Compile Include="Finance.Payment\src\PaymentTransactionCheckers\DefaultTransactionChecker.cs" />
     <Compile Include="Finance.Payment\src\PaymentTransactionHandlers\TestTransactionHandler.cs" />
-    <Compile Include="Finance.Payment\src\Repositories\TransactionRepository.cs" />
+    <Compile Include="Finance.Payment\src\Repositories\PaymentTransactionRepository.cs" />
     <Compile Include="Finance.Payment\src\Translates\zh_CN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -380,6 +381,7 @@
     <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
     <Content Include="Finance.Payment\templates\finance.payment\test_payment.html" />
+    <Content Include="Finance.Payment\templates\finance.payment\test_transaction_result.html" />
     <None Include="Common.AdminSettings\plugin.json" />
     <None Include="Common.Admin\templates\common.admin.widgets\enter_admin_panel.widget" />
     <Content Include="Common.Admin\templates\common.admin.widgets\enter_admin_panel.html" />
