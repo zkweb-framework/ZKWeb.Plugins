@@ -352,6 +352,7 @@
     <Compile Include="Finance.Payment\src\Database\PaymentApi.cs" />
     <Compile Include="Finance.Payment\src\Database\PaymentTransaction.cs" />
     <Compile Include="Finance.Payment\src\DataCallbacks\CannotChangeTypeOrOwnerAfterPaymentApiCreated.cs" />
+    <Compile Include="Finance.Payment\src\DataCallbacks\DeleteReleatedDetailRecords.cs" />
     <Compile Include="Finance.Payment\src\Extensions\IocExtensions.cs" />
     <Compile Include="Finance.Payment\src\Extensions\PaymentTransactionExtensions.cs" />
     <Compile Include="Finance.Payment\src\Forms\PaymentApiEditForm.cs" />
