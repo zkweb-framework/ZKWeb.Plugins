@@ -81,7 +81,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 				"PaymentApi send goods: transaction {0} logisticsName {1} invoiceNo {2}",
 				transaction.Serial, logisticsName, invoiceNo));
 			var transactionRepository = RepositoryResolver.Resolve<PaymentTransactionRepository, PaymentTransaction>(context);
-			transactionRepository.SendGoods(transaction.Id, logisticsName, invoiceNo);
+			transactionRepository.Process(transaction.Id, null, PaymentTransactionState.Success);
 		}
 
 		/// <summary>
@@ -95,12 +95,21 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 			[StringLength(100, MinimumLength = 5)]
 			[PasswordField("PaymentPassword", "Password required to pay transactions")]
 			public string PaymentPassword { get; set; }
+
+			/// <summary>
+			/// 检查支付密码是否和设置的密码一致
+			/// </summary>
+			public void CheckPaymentPassword(string paymentPassword) {
+				if (string.IsNullOrEmpty(PaymentPassword) || paymentPassword != PaymentPassword) {
+					throw new HttpException(401, new T("Incorrect payment password"));
+				}
+			}
 		}
 
 		/// <summary>
 		/// 测试接口支付时使用的表单
 		/// </summary>
-		[Form("TestApiPayForm", "admin/payment_apis/test_api_pay")]
+		[Form("TestApiPayForm", "/admin/payment_apis/test_api_pay")]
 		public class TestApiPayForm : ModelFormBuilder {
 			/// <summary>
 			/// 需要支付的交易
@@ -134,32 +143,49 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 			/// <summary>
 			/// 支付密码
 			/// </summary>
+			[Required]
 			[PasswordField("PaymentPassword", "PaymentPassword")]
 			public string PaymentPassword { get; set; }
 			/// <summary>
 			/// 支付类型
 			/// 即时到账或担保交易
 			/// </summary>
-			[TextBoxField("Action")]
-			public string PayType { get; set; }
+			[Required]
+			[RadioButtonsField("PayType", typeof(ListItemFromEnum<PayTypes>))]
+			public int PayType { get; set; }
 
 			/// <summary>
 			/// 初始化
-			/// 在这里会进行安全检查
+			/// 绑定时使用
 			/// </summary>
-			/// <param name="transaction">需要支付的交易</param>
 			public TestApiPayForm(PaymentTransaction transaction) {
-				// 检查交易对应的接口类型是否测试接口
-				if (transaction.Api.Type != "TestApi") {
-					throw new HttpException(400,
-						new T("Use test api to pay transaction created with other api type is not allowed"));
-				}
-				// 检查当前登录用户是否可支付
-				var result = transaction.Check(c => c.IsPayableByLoggedinUser);
-				if (!result.Item1) {
-					throw new HttpException(400, result.Item2);
-				}
 				Transaction = transaction;
+			}
+
+			/// <summary>
+			/// 初始化
+			/// 提交时使用
+			/// </summary>
+			/// <param name="transactionId"></param>
+			public TestApiPayForm(long transactionId) {
+				UnitOfWork.ReadData<PaymentTransaction>(repository => {
+					var transaction = repository.GetById(transactionId);
+					// 检查交易是否为空
+					if (transaction == null) {
+						throw new HttpException(400, new T("Payment transaction not found"));
+					}
+					// 检查交易对应的接口类型是否测试接口
+					if (transaction.Api.Type != "TestApi") {
+						throw new HttpException(400,
+							new T("Use test api to pay transaction created with other api type is not allowed"));
+					}
+					// 检查当前登录用户是否可支付
+					var result = transaction.Check(c => c.IsPayableByLoggedinUser);
+					if (!result.Item1) {
+						throw new HttpException(400, result.Item2);
+					}
+					Transaction = transaction;
+				});
 			}
 
 			/// <summary>
@@ -174,7 +200,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 				Amount = currency.Format(Transaction.Amount);
 				Description = Transaction.Description;
 				PaymentPassword = null;
-				PayType = null;
+				PayType = (int)PayTypes.ImmediateArrival;
 			}
 
 			/// <summary>
@@ -182,8 +208,35 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 			/// </summary>
 			/// <returns></returns>
 			protected override object OnSubmit() {
-				throw new NotImplementedException();
+				// 检查支付密码是否正确
+				var apiData = Transaction.Api.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
+				apiData.CheckPaymentPassword(PaymentPassword);
+				// 按类型执行支付操作
+				UnitOfWork.WriteData<PaymentTransactionRepository, PaymentTransaction>(repository => {
+					var state = PayType == (int)PayTypes.ImmediateArrival ?
+						PaymentTransactionState.Success : PaymentTransactionState.SecuredPaid;
+					repository.Process(Transaction.Id, null, state);
+				});
+				// 返回成功并跳转到交易列表
+				return new {
+					message = new T("Payment Successfully, Redirecting to transaction records..."),
+					script = ScriptStrings.Redirect("/admin/payment_transactions", 3000)
+				};
 			}
+		}
+
+		/// <summary>
+		/// 支付类型
+		/// </summary>
+		public enum PayTypes {
+			/// <summary>
+			/// 即时到账
+			/// </summary>
+			ImmediateArrival = 0,
+			/// <summary>
+			/// 担保交易
+			/// </summary>
+			SecuredTransaction = 1,
 		}
 	}
 }

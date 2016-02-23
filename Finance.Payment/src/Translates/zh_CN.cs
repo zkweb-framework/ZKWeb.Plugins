@@ -76,7 +76,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "Use test api to pay transaction created with other api type is not allowed", "不能使用测试接口支付选择了其他接口的交易" },
 			{ "TestApi Pay", "使用测试接口支付" },
 			{ "You need provide the password entered at test api creation, after submit transaction will be paid",
-				"您需要提供创建测试接口时填写的密码，提交后交易会变成已支付" }
+				"您需要提供创建测试接口时填写的密码，提交后交易会变成已支付" },
+			{ "PayType", "支付类型" },
+			{ "ImmediateArrival", "即时到账" },
+			{ "SecuredTransaction", "担保交易" },
+			{ "Incorrect payment password", "支付密码不正确" },
+			{ "Payment Successfully, Redirecting to transaction records...", "支付成功，正在跳转到交易记录页……" }
 		};
 
 		public bool CanTranslate(string code) {

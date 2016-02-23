@@ -94,6 +94,13 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		public virtual string Remark { get; set; }
 
 		/// <summary>
+		/// 初始化
+		/// </summary>
+		public PaymentTransaction() {
+			ExtraData = new Dictionary<string, object>();
+		}
+
+		/// <summary>
 		/// 返回流水号
 		/// </summary>
 		/// <returns></returns>

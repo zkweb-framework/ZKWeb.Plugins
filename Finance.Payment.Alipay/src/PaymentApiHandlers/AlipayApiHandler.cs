@@ -19,7 +19,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.PaymentApiHandlers {
 	/// 支付宝接口的处理器
 	/// </summary>
 	[ExportMany]
-	public class TestApiHandler : IPaymentApiHandler {
+	public class AlipayApiHandler : IPaymentApiHandler {
 		/// <summary>
 		/// 接口类型
 		/// </summary>

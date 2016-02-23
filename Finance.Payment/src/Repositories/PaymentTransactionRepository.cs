@@ -148,13 +148,13 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			Tuple<bool, string> result;
 			if (transaction.State == state) {
 				return;
-			} else if (transaction.State == PaymentTransactionState.WaitingPaying) {
+			} else if (state == PaymentTransactionState.WaitingPaying) {
 				result = transaction.Check(c => c.CanProcessWaitingPaying);
-			} else if (transaction.State == PaymentTransactionState.SecuredPaid) {
+			} else if (state == PaymentTransactionState.SecuredPaid) {
 				result = transaction.Check(c => c.CanProcessSecuredPaid);
-			} else if (transaction.State == PaymentTransactionState.Success) {
+			} else if (state == PaymentTransactionState.Success) {
 				result = transaction.Check(c => c.CanProcessSuccess);
-			} else if (transaction.State == PaymentTransactionState.Aborted) {
+			} else if (state == PaymentTransactionState.Aborted) {
 				result = transaction.Check(c => c.CanProcessAborted);
 			} else {
 				throw new HttpException(400, string.Format(new T("Unsupported transaction state: {0}"), state));

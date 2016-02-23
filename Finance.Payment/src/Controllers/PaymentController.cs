@@ -14,6 +14,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Forms;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
+using ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web.Interfaces;
@@ -48,7 +49,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		[Action("admin/payment_apis/test_api_pay", HttpMethods.POST)]
 		public IActionResult TestApiPay() {
 			PrivilegesChecker.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
-			throw new NotImplementedException();
+			var id = HttpContext.Current.Request.GetParam<long>("id");
+			var form = new TestApiHandler.TestApiPayForm(id);
+			return new JsonResult(form.Submit());
 		}
 
 		/// <summary>
