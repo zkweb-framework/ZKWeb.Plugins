@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionCheckers {
 		/// <summary>
 		/// 判断当前登录的用户是否可以付款
 		/// </summary>
-		public void IsPayableByLoggedinUser(PaymentTransaction transaction, ref Tuple<bool, string> result) {
+		public void IsPayerLoggedIn(PaymentTransaction transaction, ref Tuple<bool, string> result) {
 			// 条件：付款人是空或付款人和当前登录用户一致
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var userId = sessionManager.GetSession().ReleatedId;

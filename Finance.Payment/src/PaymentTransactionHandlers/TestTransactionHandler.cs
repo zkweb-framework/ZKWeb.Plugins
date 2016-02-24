@@ -14,6 +14,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Repositories;
 using ZKWeb.Templating;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 	/// <summary>
@@ -79,7 +80,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// </summary>
 		public void GetResultHtml(PaymentTransaction transaction, ref HtmlString html) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			html = new HtmlString(templateManager.RenderTemplate("finance.payment/test_transaction_result.html", null));
+			var args = new { serial = transaction.Serial, state = transaction.State.GetDescription() };
+			html = new HtmlString(templateManager.RenderTemplate("finance.payment/test_transaction_result.html", args));
 		}
 	}
 }

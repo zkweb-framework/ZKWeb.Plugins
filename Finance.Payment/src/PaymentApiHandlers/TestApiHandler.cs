@@ -180,7 +180,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 							new T("Use test api to pay transaction created with other api type is not allowed"));
 					}
 					// 检查当前登录用户是否可支付
-					var result = transaction.Check(c => c.IsPayableByLoggedinUser);
+					var result = transaction.Check(c => c.IsPayerLoggedIn);
 					if (!result.Item1) {
 						throw new HttpException(400, result.Item2);
 					}
@@ -217,10 +217,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 						PaymentTransactionState.Success : PaymentTransactionState.SecuredPaid;
 					repository.Process(Transaction.Id, null, state);
 				});
-				// 返回成功并跳转到交易列表
+				// 返回成功并跳转到交易结果页
+				var resultUrl = string.Format("/payment/transaction/pay_result?id={0}", Transaction.Id);
 				return new {
-					message = new T("Payment Successfully, Redirecting to transaction records..."),
-					script = ScriptStrings.Redirect("/admin/payment_transactions", 3000)
+					message = new T("Payment Successfully, Redirecting to result page..."),
+					script = ScriptStrings.Redirect(resultUrl, 3000)
 				};
 			}
 		}

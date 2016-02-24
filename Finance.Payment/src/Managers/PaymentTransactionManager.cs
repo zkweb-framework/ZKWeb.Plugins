@@ -51,6 +51,14 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 		}
 
 		/// <summary>
+		/// 构建显示错误信息的Html
+		/// </summary>
+		protected virtual HtmlString BuildErrorHtml(string error) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			return new HtmlString(templateManager.RenderTemplate("finance.payment/error_text.html", new { error }));
+		}
+
+		/// <summary>
 		/// 获取支付时使用的Html
 		/// 交易不存在等错误发生时返回错误信息
 		/// </summary>
@@ -64,23 +72,19 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 				var _ = api == null ? null : api.Type; // 在数据库连接关闭前抓取类型
 			});
 			// 检查交易和接口是否存在
-			var buildErrorHtml = new Func<string, HtmlString>(error => {
-				var templateManager = Application.Ioc.Resolve<TemplateManager>();
-				return new HtmlString(templateManager.RenderTemplate("finance.payment/error_text.html", new { error }));
-			});
 			if (transaction == null) {
-				return buildErrorHtml(new T("Payment transaction not found"));
+				return BuildErrorHtml(new T("Payment transaction not found"));
 			} else if (api == null) {
-				return buildErrorHtml(new T("Payment api not exist"));
+				return BuildErrorHtml(new T("Payment api not exist"));
 			}
 			// 检查当前登录用户是否可以支付
-			var result = transaction.Check(c => c.IsPayableByLoggedinUser);
+			var result = transaction.Check(c => c.IsPayerLoggedIn);
 			if (!result.Item1) {
-				return buildErrorHtml(result.Item2);
+				return BuildErrorHtml(result.Item2);
 			}
 			result = transaction.Check(c => c.IsPayable);
 			if (!result.Item1) {
-				return buildErrorHtml(result.Item2);
+				return BuildErrorHtml(result.Item2);
 			}
 			// 调用接口处理器生成支付html
 			var html = new HtmlString("No Result");
@@ -94,7 +98,19 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 		/// 交易不存在等错误发生时返回错误信息
 		/// </summary>
 		public virtual HtmlString GetResultHtml(long transactionId) {
-			throw new NotImplementedException();
+			// 获取交易
+			PaymentTransaction transaction = null;
+			UnitOfWork.ReadData<PaymentTransaction>(repository => transaction = repository.GetById(transactionId));
+			// 检查当前登录用户是否可以查看
+			var result = transaction.Check(c => c.IsPayerLoggedIn);
+			if (!result.Item1) {
+				return BuildErrorHtml(result.Item2);
+			}
+			// 调用接口处理器生成结果html
+			var html = new HtmlString("No Result");
+			var handlers = Application.Ioc.ResolveTransactionHandlers(transaction.Type);
+			handlers.ForEach(h => h.GetResultHtml(transaction, ref html));
+			return html;
 		}
 
 		/// <summary>
