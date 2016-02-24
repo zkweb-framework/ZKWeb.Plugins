@@ -43,6 +43,10 @@ namespace ZKWeb.Plugins.Common.UserContact.src.AjaxTableCallbacks {
 		}
 
 		public void OnResponse(AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
+			var usernameColumn = response.Columns.FirstOrDefault(c => c.Key == "Username");
+			if (usernameColumn != null) {
+				usernameColumn.Width = "35%";
+			}
 			response.Columns.MoveAfter(response.Columns.AddMemberColumn("Tel"), "Username");
 			response.Columns.MoveAfter(response.Columns.AddMemberColumn("Mobile"), "Tel");
 		}

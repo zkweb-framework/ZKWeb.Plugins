@@ -20,6 +20,7 @@ using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Localize;
 using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Admin.src.AdminApps;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>
@@ -120,7 +121,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Name", "35%");
 				response.Columns.AddMemberColumn("Type");
-				response.Columns.AddMemberColumn("Owner");
+				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Owner", "OwnerId");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddMemberColumn("DisplayOrder");

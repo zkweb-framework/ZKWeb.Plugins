@@ -21,6 +21,7 @@ using ZKWeb.Plugins.Common.Currency.src.Managers;
 using DryIoc;
 using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
+using ZKWeb.Plugins.Common.Admin.src.AdminApps;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>
@@ -48,8 +49,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
 				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditActionForAdminApp<PaymentTransactionRecordsApp>(
-					titleTemplate: new T("View Transaction"));
+				table.MenuItems.AddEditActionForAdminApp<PaymentTransactionRecordsApp>();
 				searchBar.KeywordPlaceHolder = new T("Serial/Payer/Payee/Description/Remark");
 				searchBar.MenuItems.AddDivider();
 				searchBar.MenuItems.AddRecycleBin();
@@ -121,16 +121,15 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				response.Columns.AddMemberColumn("Serial");
 				response.Columns.AddMemberColumn("ExternalSerial");
 				response.Columns.AddMemberColumn("Type");
-				response.Columns.AddMemberColumn("ApiName");
+				response.Columns.AddEditColumnForAdminApp<PaymentApiManageApp>("ApiName", "ApiId");
 				response.Columns.AddMemberColumn("Amount");
-				response.Columns.AddMemberColumn("Payer");
-				response.Columns.AddMemberColumn("Payee");
+				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Payer", "PayerId");
+				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Payee", "PayeeId");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddEnumLabelColumn("State", typeof(PaymentTransactionState));
 				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditActionForAdminApp<PaymentTransactionRecordsApp>(
-					titleTemplate: new T("View Transaction"));
+				actionColumn.AddEditActionForAdminApp<PaymentTransactionRecordsApp>();
 				idColumn.AddDivider();
 				idColumn.AddDeleteActionsForAdminApp<PaymentTransactionRecordsApp>(request);
 			}

@@ -154,6 +154,53 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		}
 
 		/// <summary>
+		/// 添加点击时执行指定代码的列
+		/// </summary>
+		/// <param name="columns">列列表</param>
+		/// <param name="member">成员</param>
+		/// <param name="onClick">点击时执行的代码</param>
+		/// <param name="width">宽度</param>
+		/// <returns></returns>
+		public static AjaxTableColumn AddOnClickColumn(
+			this List<AjaxTableColumn> columns, string member, string onClick, string width = null) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var column = new AjaxTableColumn() {
+				Key = member,
+				Width = width,
+				HeadTemplate = HttpUtility.HtmlEncode(new T(member)),
+				CellTemplate = templateManager.RenderTemplate(
+					"common.base/tmpl.ajax_table.onclick_cell.html",
+					new { member, onClick })
+			};
+			columns.Add(column);
+			return column;
+		}
+
+		/// <summary>
+		/// 添加显示远程内容的模态框的列
+		/// </summary>
+		/// <param name="columns">列列表</param>
+		/// <param name="nameMember">名称成员</param>
+		/// <param name="titleTemplate">模态框标题的模板，格式是underscore.js的默认格式，参数传入row</param>
+		/// <param name="urlTemplate">远程链接的模板，格式是underscore.js的默认格式，参数传入row</param>
+		/// <param name="dialogParameters">用于覆盖传入给BootstrapDialog的参数</param>
+		/// <param name="width">宽度</param>
+		/// <returns></returns>
+		public static AjaxTableColumn AddRemoteModalColumn(
+			this List<AjaxTableColumn> columns, string nameMember,
+			string titleTemplate, string urlTemplate,
+			object dialogParameters = null, string width = null) {
+			var onclick = string.Format(@"
+				var table = $(this).closestAjaxTable();
+				var row = table.getBelongedRowData(this);
+				row && table.showRemoteModalForRow(row, {0}, {1}, {2});",
+				JsonConvert.SerializeObject(titleTemplate),
+				JsonConvert.SerializeObject(urlTemplate),
+				JsonConvert.SerializeObject(dialogParameters));
+			return columns.AddOnClickColumn(nameMember, onclick, width);
+		}
+
+		/// <summary>
 		/// 添加操作列
 		/// </summary>
 		/// <param name="columns">列列表</param>

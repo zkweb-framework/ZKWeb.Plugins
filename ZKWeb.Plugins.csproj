@@ -117,6 +117,7 @@
     <Compile Include="Common.AdminSettings\src\Model\IAdminSettingsMenuProvider.cs" />
     <Compile Include="Common.AdminSettings\src\Model\ILanguage.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.Admin\src\Extensions\AjaxTableColumnsExtensions.cs" />
     <Compile Include="Common.Admin\src\Scaffolding\AdminAppBuilder.cs" />
     <Compile Include="Common.Admin\src\AdminApps\UserManageApp.cs" />
     <Compile Include="Common.Admin\src\AdminApps\RoleManageApp.cs" />
@@ -383,6 +384,7 @@
     <Content Include="Common.Admin\static\common.admin.images\logo.png" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
+    <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.onclick_cell.html" />
     <Content Include="Demo\static\demo\demo_index.css" />
     <Content Include="Demo\templates\common.base\footer.html" />
     <Content Include="Demo\templates\common.base\header.html" />

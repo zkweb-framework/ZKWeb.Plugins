@@ -83,7 +83,6 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "Incorrect payment password", "支付密码不正确" },
 			{ "Redirecting to payment transaction records...", "正在跳转到交易记录页……" },
 			{ "Payment Successfully, Redirecting to result page...", "支付成功，正在跳转到结果页……" },
-			{ "View Transaction", "查看交易" },
 			{ "LastError", "最后发生的错误" },
 			{ "DetailRecords", "详细记录" },
 			{ "Creator", "创建人" },

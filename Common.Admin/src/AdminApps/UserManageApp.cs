@@ -99,7 +99,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				response.Columns.AddImageColumn("Avatar");
 				response.Columns.AddMemberColumn("Username", "45%");
 				response.Columns.AddMemberColumn("UserType");
-				response.Columns.AddMemberColumn("Role");
+				response.Columns.AddEditColumnForAdminApp<RoleManageApp>("Role", "RoleId");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
