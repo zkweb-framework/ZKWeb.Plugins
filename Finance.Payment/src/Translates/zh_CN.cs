@@ -81,7 +81,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "ImmediateArrival", "即时到账" },
 			{ "SecuredTransaction", "担保交易" },
 			{ "Incorrect payment password", "支付密码不正确" },
-			{ "Payment Successfully, Redirecting to transaction records...", "支付成功，正在跳转到交易记录页……" }
+			{ "Payment Successfully, Redirecting to transaction records...", "支付成功，正在跳转到交易记录页……" },
+			{ "View Transaction", "查看交易" },
+			{ "LastError", "最后发生的错误" },
+			{ "DetailRecords", "详细记录" },
+			{ "Creator", "创建人" },
+			{ "Contents", "内容" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -1,17 +1,21 @@
-﻿using DryIoc;
+﻿using Common.Minimal.Model.Extensions;
+using DryIoc;
 using DryIocAttributes;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.GenericRecord.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Repositories;
 using ZKWeb.Templating;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 	/// <summary>
@@ -91,6 +95,26 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 		/// </summary>
 		public virtual HtmlString GetResultHtml(long transactionId) {
 			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// 获取交易详细记录的html
+		/// </summary>
+		public virtual HtmlString GetDetailRecordsHtml(long transactionId) {
+			var table = new DataTable();
+			table.Columns.Add("CreateTime").ExtendedProperties["width"] = "150";
+			table.Columns.Add("Creator").ExtendedProperties["width"] = "150";
+			table.Columns.Add("Contents");
+			UnitOfWork.ReadData<PaymentTransactionRepository, PaymentTransaction>(repository => {
+				var records = repository.GetDetailRecords(transactionId);
+				foreach (var record in records) {
+					table.Rows.Add(
+						record.CreateTime.ToClientTime(),
+						record.Creator == null ? null : record.Creator.Username,
+						record.Content);
+				}
+			});
+			return table.ToHtml();
 		}
 	}
 }

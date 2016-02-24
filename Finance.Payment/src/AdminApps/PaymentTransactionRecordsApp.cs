@@ -20,6 +20,7 @@ using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Currency.src.Managers;
 using DryIoc;
 using ZKWeb.Plugins.Common.Currency.src.Model;
+using ZKWeb.Plugins.Finance.Payment.src.Managers;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>
@@ -47,7 +48,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
 				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditActionForAdminApp<PaymentTransactionRecordsApp>();
+				table.MenuItems.AddEditActionForAdminApp<PaymentTransactionRecordsApp>(
+					titleTemplate: new T("View Transaction"));
 				searchBar.KeywordPlaceHolder = new T("Serial/Payer/Payee/Description/Remark");
 				searchBar.MenuItems.AddDivider();
 				searchBar.MenuItems.AddRecycleBin();
@@ -127,7 +129,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddEnumLabelColumn("State", typeof(PaymentTransactionState));
 				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditActionForAdminApp<PaymentTransactionRecordsApp>();
+				actionColumn.AddEditActionForAdminApp<PaymentTransactionRecordsApp>(
+					titleTemplate: new T("View Transaction"));
 				idColumn.AddDivider();
 				idColumn.AddDeleteActionsForAdminApp<PaymentTransactionRecordsApp>(request);
 			}
@@ -138,17 +141,102 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 		/// </summary>
 		public class Form : TabDataEditFormBuilder<PaymentTransaction, Form> {
 			/// <summary>
+			/// 交易类型
+			/// </summary>
+			[LabelField("Type")]
+			public string Type { get; set; }
+			/// <summary>
+			/// 支付接口
+			/// </summary>
+			[LabelField("PaymentApi")]
+			public string PaymentApi { get; set; }
+			/// <summary>
+			/// 交易状态
+			/// </summary>
+			[LabelField("State")]
+			public string State { get; set; }
+			/// <summary>
+			/// 流水号
+			/// </summary>
+			[LabelField("Serial")]
+			public string Serial { get; set; }
+			/// <summary>
+			/// 外部流水号
+			/// </summary>
+			[LabelField("ExternalSerial")]
+			public string ExternalSerial { get; set; }
+			/// <summary>
+			/// 货币
+			/// </summary>
+			[LabelField("Currency")]
+			public string Currency { get; set; }
+			/// <summary>
+			/// 金额
+			/// </summary>
+			[LabelField("Amount")]
+			public string Amount { get; set; }
+			/// <summary>
+			/// 付款人
+			/// </summary>
+			[LabelField("Payer")]
+			public string Payer { get; set; }
+			/// <summary>
+			/// 收款人
+			/// </summary>
+			[LabelField("Payee")]
+			public string Payee { get; set; }
+			/// <summary>
+			/// 描述
+			/// </summary>
+			[LabelField("Description")]
+			public string Description { get; set; }
+			/// <summary>
+			/// 最后发生的错误
+			/// </summary>
+			[LabelField("LastError")]
+			public string LastError { get; set; }
+			/// <summary>
+			/// 详细记录
+			/// </summary>
+			[HtmlField("DetailRecords", Group = "DetailRecords")]
+			public HtmlString DetailRecords { get; set; }
+			/// <summary>
+			/// 备注
+			/// </summary>
+			[TextAreaField("Remark", 5, "Remark", Group = "Remark")]
+			public string Remark { get; set; }
+
+			/// <summary>
 			/// 绑定数据到表单
 			/// </summary>
 			protected override void OnBind(DatabaseContext context, PaymentTransaction bindFrom) {
-				throw new NotImplementedException();
+				var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
+				var currency = currencyManager.GetCurrency(bindFrom.CurrencyType);
+				var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+				Type = new T(bindFrom.Type);
+				PaymentApi = bindFrom.Api.ToString();
+				State = new T(bindFrom.State.GetDescription());
+				Serial = bindFrom.Serial;
+				ExternalSerial = bindFrom.ExternalSerial;
+				Currency = new T(bindFrom.CurrencyType);
+				Amount = currency.Format(bindFrom.Amount);
+				Payer = bindFrom.Payer == null ? null : bindFrom.Payer.Username;
+				Payee = bindFrom.Payee == null ? null : bindFrom.Payee.Username;
+				Description = bindFrom.Description;
+				LastError = bindFrom.LastError;
+				DetailRecords = transactionManager.GetDetailRecordsHtml(bindFrom.Id);
+				Remark = bindFrom.Remark;
 			}
 
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
 			protected override object OnSubmit(DatabaseContext context, PaymentTransaction saveTo) {
-				throw new NotImplementedException();
+				saveTo.Remark = Remark;
+				return new {
+					message = new T("Saved Successfully"),
+					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
+				};
 			}
 		}
 	}
