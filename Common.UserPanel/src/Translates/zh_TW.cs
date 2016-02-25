@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
+namespace ZKWeb.Plugins.Common.UserPanel.src.Translates {
 	/// <summary>
 	/// 繁体中文翻译
 	/// </summary>
@@ -16,8 +16,8 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-TW" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "Menu Page Base Functions", "菜單頁基礎功能" },
-			{ "Base functions for building menu page", "用於支持構建菜單頁的基礎功能" }
+			{ "Account Manage", "賬號管理" },
+			{ "Pages for user panel", "用戶中心的頁面" }
 		};
 
 		public bool CanTranslate(string code) {

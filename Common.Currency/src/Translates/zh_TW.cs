@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
+namespace ZKWeb.Plugins.Common.Currency.src.Translates {
 	/// <summary>
 	/// 繁体中文翻译
 	/// </summary>
@@ -16,8 +16,21 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-TW" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "Menu Page Base Functions", "菜單頁基礎功能" },
-			{ "Base functions for building menu page", "用於支持構建菜單頁的基礎功能" }
+			{ "Currency", "貨幣" },
+			{ "Provide currency types and related functions", "提供貨幣類型和相關的功能" },
+			{ "CurrencySettings", "貨幣設置" },
+			{ "DefaultCurrency", "默認貨幣" },
+			{ "CNY", "人民幣" },
+			{ "USD", "美元" },
+			{ "EUR", "歐元" },
+			{ "JPY", "日元" },
+			{ "HKD", "港元" },
+			{ "TWD", "新台幣" },
+			{ "KRW", "韓元" },
+			{ "RUB", "盧布" },
+			{ "THB", "泰銖" },
+			{ "CHF", "瑞士法郎" },
+			{ "CZK", "捷克克朗" }
 		};
 
 		public bool CanTranslate(string code) {

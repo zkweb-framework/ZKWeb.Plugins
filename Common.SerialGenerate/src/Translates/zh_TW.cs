@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
+namespace Common.SerialGenerate {
 	/// <summary>
 	/// 繁体中文翻译
 	/// </summary>
@@ -16,8 +16,8 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-TW" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "Menu Page Base Functions", "菜單頁基礎功能" },
-			{ "Base functions for building menu page", "用於支持構建菜單頁的基礎功能" }
+			{ "SerialGenerate", "流水號生成" },
+			{ "Support serial generation", "支持流水號生成" },
 		};
 
 		public bool CanTranslate(string code) {

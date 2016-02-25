@@ -87,7 +87,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Translates {
 			{ "DetailRecords", "详细记录" },
 			{ "Creator", "创建人" },
 			{ "Contents", "内容" },
-			{ "PayResult", "支付结果" }
+			{ "PayResult", "支付结果" },
+			{ "Test", "测试" }
 		};
 
 		public bool CanTranslate(string code) {

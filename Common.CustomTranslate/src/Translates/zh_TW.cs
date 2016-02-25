@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
+namespace ZKWeb.Plugins.Common.CustomTranslate.src.Translates {
 	/// <summary>
 	/// 繁体中文翻译
 	/// </summary>
@@ -16,8 +16,13 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-TW" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "Menu Page Base Functions", "菜單頁基礎功能" },
-			{ "Base functions for building menu page", "用於支持構建菜單頁的基礎功能" }
+			{ "CustomTranslate", "定制翻譯" },
+			{ "Support custom translate through admin panel", "支持在管理後台中設置定制翻譯" },
+			{ "Translation", "翻譯內容" },
+			{ "Origin/Translated", "原文/譯文" },
+			{ "OriginalText", "原文" },
+			{ "TranslatedText", "譯文" },
+			{ "Are you sure to delete this translation?", "確認要刪除這條翻譯內容？" }
 		};
 
 		public bool CanTranslate(string code) {
