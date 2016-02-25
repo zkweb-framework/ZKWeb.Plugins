@@ -117,6 +117,7 @@
     <Compile Include="Common.AdminSettings\src\Model\IAdminSettingsMenuProvider.cs" />
     <Compile Include="Common.AdminSettings\src\Model\ILanguage.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.AdminSettings\src\Translates\ko-KR.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\zh_TW.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Admin\src\Extensions\AjaxTableColumnsExtensions.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Common.Admin\src\Managers\PrivilegesChecker.cs" />
     <Compile Include="Common.Admin\src\Managers\PrivilegesTranslator.cs" />
     <Compile Include="Common.Admin\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.Admin\src\Translates\ko-KR.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Base\src\Extensions\DataTableExtensions.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="Common.Base\src\Repositories\UnitOfWork.cs" />
     <Compile Include="Common.Base\src\Translates\en_US.cs" />
     <Compile Include="Common.Base\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.Base\src\Translates\ko-KR.cs" />
     <Compile Include="Common.Base\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Base\src\TypeTraits\IsRecyclable.cs" />
     <Compile Include="Common.Admin\src\Managers\UserManager.cs" />
@@ -267,6 +270,7 @@
     <Compile Include="Common.Currency\src\ListItemProviders\CurrencyListItemProvider.cs" />
     <Compile Include="Common.Currency\src\Model\ICurrency.cs" />
     <Compile Include="Common.Currency\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.Currency\src\Translates\ko_KR.cs" />
     <Compile Include="Common.Currency\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Currency\src\Translates\zh_CN.cs" />
     <Compile Include="Common.CustomTranslate\src\Scaffolding\CustomTranslator.cs" />
@@ -287,6 +291,7 @@
     <Compile Include="Common.CustomTranslate\src\CustomTranslators\Chinese.cs" />
     <Compile Include="Common.CustomTranslate\src\Model\Translation.cs" />
     <Compile Include="Common.CustomTranslate\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.CustomTranslate\src\Translates\ko-KR.cs" />
     <Compile Include="Common.CustomTranslate\src\Translates\zh_TW.cs" />
     <Compile Include="Common.CustomTranslate\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericClass\src\Database\GenericClass.cs" />
@@ -294,11 +299,13 @@
     <Compile Include="Common.GenericClass\src\GenericClasses\DefaultClass.cs" />
     <Compile Include="Common.GenericClass\src\Repositories\GenericClassRepository.cs" />
     <Compile Include="Common.GenericClass\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.GenericClass\src\Translates\ko_KR.cs" />
     <Compile Include="Common.GenericClass\src\Translates\zh_TW.cs" />
     <Compile Include="Common.GenericClass\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericRecord\src\Database\GenericRecord.cs" />
     <Compile Include="Common.GenericRecord\src\Repositories\GenericRecordRepository.cs" />
     <Compile Include="Common.GenericRecord\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.GenericRecord\src\Translates\ko_KR.cs" />
     <Compile Include="Common.GenericRecord\src\Translates\zh_TW.cs" />
     <Compile Include="Common.GenericRecord\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericTag\src\Database\GenericTag.cs" />
@@ -306,6 +313,7 @@
     <Compile Include="Common.GenericTag\src\Repositories\GenericTagRepository.cs" />
     <Compile Include="Common.GenericTag\src\GenericTags\DefaultTag.cs" />
     <Compile Include="Common.GenericTag\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.GenericTag\src\Translates\ko-KR.cs" />
     <Compile Include="Common.GenericTag\src\Translates\zh_TW.cs" />
     <Compile Include="Common.GenericTag\src\Translates\zh_CN.cs" />
     <Compile Include="Common.MenuPageBase\src\Scaffolding\GenericFormForMenuPage.cs" />
@@ -313,6 +321,7 @@
     <Compile Include="Common.MenuPageBase\src\Scaffolding\GenericPageForMenuPage.cs" />
     <Compile Include="Common.MenuPageBase\src\Model\IMenuProvider.cs" />
     <Compile Include="Common.MenuPageBase\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.MenuPageBase\src\Translates\ko_KR.cs" />
     <Compile Include="Common.MenuPageBase\src\Translates\zh_CN.cs" />
     <Compile Include="Common.MenuPageBase\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Region\src\Config\RegionSettings.cs" />
@@ -339,11 +348,13 @@
     <Compile Include="Common.Region\src\Managers\RegionManager.cs" />
     <Compile Include="Common.Region\src\Translates\en_US.cs" />
     <Compile Include="Common.Region\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.Region\src\Translates\ko_KR.cs" />
     <Compile Include="Common.Region\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Region\src\Translates\zh_CN.cs" />
     <Compile Include="Common.SerialGenerate\src\Generator\SerialGenerator.cs" />
     <Compile Include="Common.SerialGenerate\src\Model\ISerialGenerateCallback.cs" />
     <Compile Include="Common.SerialGenerate\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.SerialGenerate\src\Translates\ko_KR.cs" />
     <Compile Include="Common.SerialGenerate\src\Translates\zh_TW.cs" />
     <Compile Include="Common.SerialGenerate\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserContact\src\GenericFormsForUserPanel\ContactInfoForm.cs" />
@@ -353,6 +364,7 @@
     <Compile Include="Common.UserContact\src\DataCallbacks\RemoveContactBeforeUserDelete.cs" />
     <Compile Include="Common.UserContact\src\DataEditFormCallbacks\AddContactEditorToUserManager.cs" />
     <Compile Include="Common.UserContact\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.UserContact\src\Translates\ko_KR.cs" />
     <Compile Include="Common.UserContact\src\Translates\zh_TW.cs" />
     <Compile Include="Common.UserContact\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserPanel\src\Controllers\ApiController.cs" />
@@ -362,11 +374,13 @@
     <Compile Include="Common.UserPanel\src\Model\IUserPanelMenuProvider.cs" />
     <Compile Include="Common.UserPanel\src\Plugin.cs" />
     <Compile Include="Common.UserPanel\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.UserPanel\src\Translates\ko_KR.cs" />
     <Compile Include="Common.UserPanel\src\Translates\zh_TW.cs" />
     <Compile Include="Common.UserPanel\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserPanel\src\UserPanelMenuProviders\UserPanelIndex.cs" />
     <Compile Include="Demo\src\DataCallbacks\PreventEditDemoAccount.cs" />
     <Compile Include="Demo\src\Translates\ja_JP.cs" />
+    <Compile Include="Demo\src\Translates\ko_KR.cs" />
     <Compile Include="Demo\src\Translates\zh_TW.cs" />
     <Compile Include="Demo\src\Translates\zh_CN.cs" />
     <Compile Include="Finance.Payment.Alipay\src\Model\AlipayServiceTypes.cs" />
@@ -400,6 +414,7 @@
     <Compile Include="Finance.Payment\src\PaymentTransactionHandlers\TestTransactionHandler.cs" />
     <Compile Include="Finance.Payment\src\Repositories\PaymentTransactionRepository.cs" />
     <Compile Include="Finance.Payment\src\Translates\ja_JP.cs" />
+    <Compile Include="Finance.Payment\src\Translates\ko_KR.cs" />
     <Compile Include="Finance.Payment\src\Translates\zh_TW.cs" />
     <Compile Include="Finance.Payment\src\Translates\zh_CN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
