@@ -21,8 +21,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Translates {
 			{ "Translation", "翻譯內容" },
 			{ "Origin/Translated", "原文/譯文" },
 			{ "OriginalText", "原文" },
-			{ "TranslatedText", "譯文" },
-			{ "Are you sure to delete this translation?", "確認要刪除這條翻譯內容？" }
+			{ "TranslatedText", "譯文" }
 		};
 
 		public bool CanTranslate(string code) {

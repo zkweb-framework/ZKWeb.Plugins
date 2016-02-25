@@ -7,17 +7,22 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
+namespace ZKWeb.Plugins.Common.GenericTag.src.Translates {
 	/// <summary>
-	/// 繁体中文翻译
+	/// 日本语翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class zh_TW : ITranslateProvider {
-		private static HashSet<string> Codes = new HashSet<string>() { "zh-TW" };
+	public class ja_JP : ITranslateProvider {
+		private static HashSet<string> Codes = new HashSet<string>() { "ja-JP" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "Menu Page Base Functions", "菜單頁基礎功能" },
-			{ "Base functions for building menu page", "用於支持構建菜單頁的基礎功能" }
+			{ "Generic Tag", "汎用タグ" },
+			{ "Generic tag management", "汎用タグの管理" },
+			{ "TagManage", "タグ管理" },
+			{ "DefaultTag", "デフォルトタグ" },
+			{ "Try to access tag that type not matched", "タグタイプが不正です" },
+			{ "DisplayOrder", "表示順番" },
+			{ "Order from small to large", "昇順" }
 		};
 
 		public bool CanTranslate(string code) {

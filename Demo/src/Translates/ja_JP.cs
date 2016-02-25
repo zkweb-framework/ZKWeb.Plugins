@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
+namespace ZKWeb.Plugins.Demo.src.Translates {
 	/// <summary>
-	/// 繁体中文翻译
+	/// 日本语翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class zh_TW : ITranslateProvider {
-		private static HashSet<string> Codes = new HashSet<string>() { "zh-TW" };
+	public class ja_JP : ITranslateProvider {
+		private static HashSet<string> Codes = new HashSet<string>() { "ja-JP" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "Menu Page Base Functions", "菜單頁基礎功能" },
-			{ "Base functions for building menu page", "用於支持構建菜單頁的基礎功能" }
+			{ "Demo", "デモ" },
+			{ "Trun website into demo mode", "デモモードを有効にする" },
+			{ "Edit or delete demo account is not allowed", "デモアカウントの編集と削除は許可されていません" },
+			{ "Background changed by demo plugin", "背景色はデモプラグインによって変更されています" }
 		};
 
 		public bool CanTranslate(string code) {

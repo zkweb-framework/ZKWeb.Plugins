@@ -9,15 +9,15 @@ using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.MenuPageBase.src.Translates {
 	/// <summary>
-	/// 繁体中文翻译
+	/// 中文翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class zh_TW : ITranslateProvider {
-		private static HashSet<string> Codes = new HashSet<string>() { "zh-TW" };
+	public class zh_CN : ITranslateProvider {
+		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "Menu Page Base Functions", "菜單頁基礎功能" },
-			{ "Base functions for building menu page", "用於支持構建菜單頁的基礎功能" }
+			{ "Menu Page Base Functions", "菜单页基础功能" },
+			{ "Base functions for building menu page", "用于支持构建菜单页的基础功能" }
 		};
 
 		public bool CanTranslate(string code) {
