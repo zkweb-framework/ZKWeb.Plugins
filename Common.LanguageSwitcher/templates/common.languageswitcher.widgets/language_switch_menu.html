@@ -1,0 +1,12 @@
+﻿{% fetch /api/get_switchable_languages > languages %}
+{% if languages.languages.size > 0 %}
+{% include_js "/static/common.languageswitcher.js/language_switcher.min.js" %}
+<li class="dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown">{{ "Switch Language" | trans }}</a>
+	<ul class="dropdown-menu pull-right">
+		{% for language in languages.languages %}
+		<li><a class="language-switcher" language="{{ language }}">{{ language | trans }}({{ language }})</a></li>
+		{% endfor %}
+	</ul>
+</li>
+{% endif %}

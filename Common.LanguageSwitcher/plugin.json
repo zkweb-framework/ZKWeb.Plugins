@@ -1,0 +1,5 @@
+﻿{
+	"Name": "Language Switcher",
+	"Description": "Provide manually language switch menu for visitor",
+	"Dependencies": [ "Common.Base", "Common.AdminSettings" ]
+}

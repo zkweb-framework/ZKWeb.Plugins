@@ -316,6 +316,14 @@
     <Compile Include="Common.GenericTag\src\Translates\ko-KR.cs" />
     <Compile Include="Common.GenericTag\src\Translates\zh_TW.cs" />
     <Compile Include="Common.GenericTag\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.LanguageSwitcher\src\Config\LanguageSwitcherSettings.cs" />
+    <Compile Include="Common.LanguageSwitcher\src\Controllers\ApiController.cs" />
+    <Compile Include="Common.LanguageSwitcher\src\GenericFormsForAdminSettings\LanguageSwitcherSettingsForm.cs" />
+    <Compile Include="Common.LanguageSwitcher\src\Plugin.cs" />
+    <Compile Include="Common.LanguageSwitcher\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.LanguageSwitcher\src\Translates\ko-KR.cs" />
+    <Compile Include="Common.LanguageSwitcher\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.LanguageSwitcher\src\Translates\zh_TW.cs" />
     <Compile Include="Common.MenuPageBase\src\Scaffolding\GenericFormForMenuPage.cs" />
     <Compile Include="Common.MenuPageBase\src\Scaffolding\GenericListForMenuPage.cs" />
     <Compile Include="Common.MenuPageBase\src\Scaffolding\GenericPageForMenuPage.cs" />
@@ -430,6 +438,10 @@
     <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.onclick_cell.html" />
+    <None Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\language_switch_menu.widget" />
+    <Content Include="Common.LanguageSwitcher\static\common.languageswitcher.js\language_switcher.js" />
+    <Content Include="Common.LanguageSwitcher\static\common.languageswitcher.js\language_switcher.min.js" />
+    <Content Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\language_switch_menu.html" />
     <Content Include="Demo\static\demo\demo_index.css" />
     <Content Include="Demo\templates\common.base\footer.html" />
     <Content Include="Demo\templates\common.base\header.html" />
@@ -482,6 +494,7 @@
     <None Include="Common.GenericClass\plugin.json" />
     <None Include="Common.GenericRecord\plugin.json" />
     <None Include="Common.GenericTag\plugin.json" />
+    <None Include="Common.LanguageSwitcher\plugin.json" />
     <None Include="Common.MenuPageBase\plugin.json" />
     <None Include="Common.Region\plugin.json" />
     <None Include="Common.Region\texts\regions_cn.json" />
