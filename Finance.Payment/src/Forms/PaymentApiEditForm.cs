@@ -51,7 +51,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		/// <summary>
 		/// 备注
 		/// </summary>
-		[TextAreaField("Remark", 5, "Remark", Group = "Please enter remark")]
+		[TextAreaField("Remark", 5, "Remark", Group = "Remark")]
 		public string Remark { get; set; }
 		/// <summary>
 		/// 使用的支付接口处理器列表
