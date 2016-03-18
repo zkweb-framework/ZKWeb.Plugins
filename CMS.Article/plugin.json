@@ -1,0 +1,5 @@
+﻿{
+	"Name": "Article",
+	"Description": "Article management",
+	"Dependencies": [ "Common.Base", "Common.Admin", "UI.CKEditor" ]
+}

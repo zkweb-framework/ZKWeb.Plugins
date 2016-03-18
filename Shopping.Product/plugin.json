@@ -1,0 +1,5 @@
+﻿{
+	"Name": "Product",
+	"Description": "Product management for ec site",
+	"Dependencies": [ "Common.Base", "Common.Admin", "UI.CKEditor" ]
+}

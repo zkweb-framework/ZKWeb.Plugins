@@ -1,0 +1,5 @@
+﻿{
+	"Name": "CKEditor",
+	"Description": "Provide ckeditor form field",
+	"Dependencies": [ "Common.Base" ]
+}

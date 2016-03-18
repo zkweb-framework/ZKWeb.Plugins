@@ -1,0 +1,5 @@
+﻿{
+	"Name": "AfterSales",
+	"Description": "AfterSales management for ec site",
+	"Dependencies": [ "Common.Base", "Common.Admin", "Shopping.Order" ]
+}

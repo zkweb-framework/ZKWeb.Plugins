@@ -439,6 +439,7 @@
     <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.onclick_cell.html" />
+    <None Include="CMS.Article\plugin.json" />
     <None Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\language_switch_menu.widget" />
     <Content Include="Common.LanguageSwitcher\static\common.languageswitcher.js\language_switcher.js" />
     <Content Include="Common.LanguageSwitcher\static\common.languageswitcher.js\language_switcher.min.js" />
@@ -693,12 +694,20 @@
     <None Include="Finance.Payment.Tenpay\plugin.json" />
     <None Include="Finance.Payment.WeChat\plugin.json" />
     <None Include="Finance.Payment\plugin.json" />
+    <None Include="Shopping.AfterSales\plugin.json" />
+    <None Include="Shopping.Order\plugin.json" />
+    <None Include="Shopping.Product\plugin.json" />
+    <None Include="UI.CKEditor\plugin.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UI.CKEditor\src\" />
+    <Folder Include="UI.CKEditor\static\" />
+    <Folder Include="UI.CKEditor\templates\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

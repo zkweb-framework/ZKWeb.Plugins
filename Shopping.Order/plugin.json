@@ -1,0 +1,5 @@
+﻿{
+	"Name": "Order",
+	"Description": "Order management for ec site",
+	"Dependencies": [ "Common.Base", "Common.Admin", "Shopping.Product" ]
+}
