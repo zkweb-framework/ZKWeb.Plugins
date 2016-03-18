@@ -70,8 +70,8 @@ namespace ZKWeb.Plugins.Common.UserContact.src.GenericFormsForUserPanel {
 			protected override void OnBind() {
 				var sessionManager = Application.Ioc.Resolve<SessionManager>();
 				var session = sessionManager.GetSession();
-				UnitOfWork.ReadData<UserContactRepository, Database.UserContact>(repository => {
-					var contact = repository.GetContact(session.ReleatedId);
+				UnitOfWork.ReadRepository<UserContactRepository>(r => {
+					var contact = r.GetContact(session.ReleatedId);
 					Tel = contact.Tel;
 					Mobile = contact.Mobile;
 					QQ = contact.QQ;
@@ -87,8 +87,8 @@ namespace ZKWeb.Plugins.Common.UserContact.src.GenericFormsForUserPanel {
 			protected override object OnSubmit() {
 				var sessionManager = Application.Ioc.Resolve<SessionManager>();
 				var session = sessionManager.GetSession();
-				UnitOfWork.WriteData<UserContactRepository, Database.UserContact>(repository => {
-					repository.SetContact(session.ReleatedId, c => {
+				UnitOfWork.WriteRepository<UserContactRepository>(r => {
+					r.SetContact(session.ReleatedId, c => {
 						c.Tel = Tel;
 						c.Mobile = Mobile;
 						c.QQ = QQ;

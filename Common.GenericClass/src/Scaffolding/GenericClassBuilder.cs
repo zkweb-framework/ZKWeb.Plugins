@@ -134,25 +134,23 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			var json = HttpContext.Current.Request.GetParam<string>("json");
 			var idList = JsonConvert.DeserializeObject<IList<object>>(json).Reverse().ToList();
 			// 检查是否所有Id都属于指定的类型，防止越权操作
-			bool isAllClassesTypeMatched = false;
-			UnitOfWork.ReadData<GenericClassRepository, Database.GenericClass>(repository => {
-				isAllClassesTypeMatched = repository.IsAllClassesTypeEqualTo(idList, Type);
+			var isAllClassesTypeMatched = UnitOfWork.ReadRepository<GenericClassRepository, bool>(r => {
+				return r.IsAllClassesTypeEqualTo(idList, Type);
 			});
 			if (!isAllClassesTypeMatched) {
 				throw new HttpException(403, new T("Try to access class that type not matched"));
 			}
 			// 执行批量操作
-			string message = null;
-			UnitOfWork.WriteData<Database.GenericClass>(repository => {
+			var message = UnitOfWork.WriteData<Database.GenericClass, string>(r => {
 				if (actionName == "delete_forever") {
-					repository.BatchDeleteForever(idList);
-					message = new T("Batch Delete Forever Successful");
+					r.BatchDeleteForever(idList);
+					return new T("Batch Delete Forever Successful");
 				} else if (actionName == "delete") {
-					repository.BatchDelete(idList);
-					message = new T("Batch Delete Successful");
+					r.BatchDelete(idList);
+					return new T("Batch Delete Successful");
 				} else if (actionName == "recover") {
-					repository.BatchRecover(idList);
-					message = new T("Batch Recover Successful");
+					r.BatchRecover(idList);
+					return new T("Batch Recover Successful");
 				} else {
 					throw new HttpException(404, string.Format(new T("Action {0} not exist"), actionName));
 				}

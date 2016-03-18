@@ -28,9 +28,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 		/// </summary>
 		public virtual PaymentTransaction CreateTestTransaction(
 			long apiId, decimal amount, string currency, long? payerId, long? payeeId, string description) {
-			PaymentTransaction transaction = null;
-			UnitOfWork.WriteData<PaymentTransactionRepository, PaymentTransaction>(repository => {
-				transaction = repository.CreateTransaction(
+			var transaction = UnitOfWork.WriteRepository<PaymentTransactionRepository, PaymentTransaction>(r => {
+				return r.CreateTransaction(
 					"TestTransaction", apiId, amount, currency, payerId, payeeId, payerId, description);
 			});
 			return transaction;
@@ -66,8 +65,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 			// 获取交易和支付接口
 			PaymentTransaction transaction = null;
 			PaymentApi api = null;
-			UnitOfWork.ReadData<PaymentTransaction>(repository => {
-				transaction = repository.GetById(transactionId);
+			UnitOfWork.ReadData<PaymentTransaction>(r => {
+				transaction = r.GetById(transactionId);
 				api = transaction == null ? null : transaction.Api;
 				var _ = api == null ? null : api.Type; // 在数据库连接关闭前抓取类型
 			});
@@ -99,8 +98,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 		/// </summary>
 		public virtual HtmlString GetResultHtml(long transactionId) {
 			// 获取交易
-			PaymentTransaction transaction = null;
-			UnitOfWork.ReadData<PaymentTransaction>(repository => transaction = repository.GetById(transactionId));
+			var transaction = UnitOfWork.ReadData<PaymentTransaction, PaymentTransaction>(
+				r => r.GetById(transactionId));
 			// 检查当前登录用户是否可以查看
 			var result = transaction.Check(c => c.IsPayerLoggedIn);
 			if (!result.Item1) {
@@ -121,8 +120,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 			table.Columns.Add("CreateTime").ExtendedProperties["width"] = "150";
 			table.Columns.Add("Creator").ExtendedProperties["width"] = "150";
 			table.Columns.Add("Contents");
-			UnitOfWork.ReadData<PaymentTransactionRepository, PaymentTransaction>(repository => {
-				var records = repository.GetDetailRecords(transactionId);
+			UnitOfWork.ReadRepository<PaymentTransactionRepository>(r => {
+				var records = r.GetDetailRecords(transactionId);
 				foreach (var record in records) {
 					table.Rows.Add(
 						record.CreateTime.ToClientTime(),

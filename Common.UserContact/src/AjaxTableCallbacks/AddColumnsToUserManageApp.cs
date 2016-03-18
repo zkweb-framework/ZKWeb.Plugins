@@ -31,10 +31,10 @@ namespace ZKWeb.Plugins.Common.UserContact.src.AjaxTableCallbacks {
 		public void OnSort(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) { }
 
 		public void OnSelect(AjaxTableSearchRequest request, List<KeyValuePair<User, Dictionary<string, object>>> pairs) {
-			Dictionary<long, Database.UserContact> contacts = null;
-			UnitOfWork.ReadData<UserContactRepository, Database.UserContact>(repository => {
-				contacts = repository.GetContacts(pairs.Select(p => p.Key.Id).ToList());
-			});
+			var contacts = UnitOfWork.ReadRepository<
+				UserContactRepository, Dictionary<long, Database.UserContact>>(r => {
+					return r.GetContacts(pairs.Select(p => p.Key.Id).ToList());
+				});
 			foreach (var pair in pairs) {
 				var contact = contacts.GetOrDefault(pair.Key.Id) ?? new Database.UserContact();
 				pair.Value["Tel"] = contact.Tel;

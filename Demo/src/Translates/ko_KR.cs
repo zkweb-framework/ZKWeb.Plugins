@@ -18,8 +18,7 @@ namespace ZKWeb.Plugins.Demo.src.Translates {
 		{
 			{ "Demo", "표시" },
 			{ "Trun website into demo mode", "데모 모드를 활성화 사이트" },
-			{ "Edit or delete demo account is not allowed", "편집하거나 데모 계정을 삭제할 수 없습니다" },
-			{ "Background changed by demo plugin", "배경 색상 위젯은 데모 수정되었습니다" }
+			{ "Edit or delete demo account is not allowed", "편집하거나 데모 계정을 삭제할 수 없습니다" }
 		};
 
 		public bool CanTranslate(string code) {

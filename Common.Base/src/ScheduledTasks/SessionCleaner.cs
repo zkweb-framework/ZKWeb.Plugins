@@ -36,10 +36,9 @@ namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 		/// 删除过期的会话
 		/// </summary>
 		public void Execute() {
-			long count = 0;
-			UnitOfWork.WriteData<Session>(repository => {
+			var count = UnitOfWork.WriteData<Session, long>(r => {
 				var now = DateTime.UtcNow;
-				count = repository.DeleteWhere(s => s.Expires < now);
+				return r.DeleteWhere(s => s.Expires < now);
 			});
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogInfo(string.Format(

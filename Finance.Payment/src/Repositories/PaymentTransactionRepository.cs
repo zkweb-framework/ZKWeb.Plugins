@@ -96,7 +96,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 		/// <param name="extraData">附加数据</param>
 		public virtual void AddDetailRecord(
 			long transactionId, long? creatorId, string content, object extraData = null) {
-			var recordRepository = RepositoryResolver.Resolve<GenericRecordRepository, GenericRecord>(Context);
+			var recordRepository = RepositoryResolver.ResolveRepository<GenericRecordRepository>(Context);
 			recordRepository.AddRecord(RecordType, transactionId, creatorId, content, null, extraData);
 		}
 
@@ -106,7 +106,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 		/// <param name="transactionId">交易Id</param>
 		/// <returns></returns>
 		public virtual List<GenericRecord> GetDetailRecords(long transactionId) {
-			var recordRepository = RepositoryResolver.Resolve<GenericRecordRepository, GenericRecord>(Context);
+			var recordRepository = RepositoryResolver.ResolveRepository<GenericRecordRepository>(Context);
 			return recordRepository.FindRecords(RecordType, transactionId).ToList();
 		}
 

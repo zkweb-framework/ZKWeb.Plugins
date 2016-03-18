@@ -251,9 +251,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			PrivilegesChecker.Check(AllowedUserTypes, DeletePrivilege);
 			var json = HttpContext.Current.Request.GetParam<string>("json");
 			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
-			UnitOfWork.WriteData<TData>(repository => {
-				repository.BatchDelete(idList);
-			});
+			UnitOfWork.WriteData<TData>(r => r.BatchDelete(idList));
 			return new JsonResult(new { message = new T("Batch Delete Successful") });
 		}
 
@@ -265,9 +263,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			PrivilegesChecker.Check(AllowedUserTypes, DeletePrivilege);
 			var json = HttpContext.Current.Request.GetParam<string>("json");
 			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
-			UnitOfWork.WriteData<TData>(repository => {
-				repository.BatchRecover(idList);
-			});
+			UnitOfWork.WriteData<TData>(r => r.BatchRecover(idList));
 			return new JsonResult(new { message = new T("Batch Recover Successful") });
 		}
 
@@ -279,9 +275,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			PrivilegesChecker.Check(AllowedUserTypes, DeleteForeverPrivilege);
 			var json = HttpContext.Current.Request.GetParam<string>("json");
 			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
-			UnitOfWork.WriteData<TData>(repository => {
-				repository.BatchDeleteForever(idList);
-			});
+			UnitOfWork.WriteData<TData>(r => r.BatchDeleteForever(idList));
 			return new JsonResult(new { message = new T("Batch Delete Forever Successful") });
 		}
 

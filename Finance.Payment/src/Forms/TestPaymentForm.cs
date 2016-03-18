@@ -56,9 +56,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		/// </summary>
 		/// <returns></returns>
 		protected PaymentApi GetApiFromRequest() {
-			PaymentApi api = null;
 			var id = HttpContext.Current.Request.GetParam<long>("id");
-			UnitOfWork.ReadData<PaymentApi>(repository => api = repository.GetById(id));
+			var api = UnitOfWork.ReadData<PaymentApi, PaymentApi>(r => r.GetById(id));
 			if (api == null) {
 				throw new HttpException(404, new T("Payment api not exist"));
 			}

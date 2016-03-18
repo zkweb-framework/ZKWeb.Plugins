@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 	/// <summary>
@@ -35,12 +36,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 如果注册了多个，返回最后一个注册的实例
 		/// </summary>
 		/// <typeparam name="TRepository">数据仓储类型</typeparam>
-		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="context">数据库上下文</param>
 		/// <returns></returns>
-		public static TRepository Resolve<TRepository, TData>(DatabaseContext context)
-			where TRepository : GenericRepository<TData>
-			where TData : class {
+		public static TRepository ResolveRepository<TRepository>(DatabaseContext context)
+			where TRepository : IRepository {
 			var repository = Application.Ioc.ResolveMany<TRepository>().Last();
 			repository.Context = context;
 			return repository;

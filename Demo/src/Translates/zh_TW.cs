@@ -18,8 +18,7 @@ namespace ZKWeb.Plugins.Demo.src.Translates {
 		{
 			{ "Demo", "演示" },
 			{ "Trun website into demo mode", "啟用網站的演示模式" },
-			{ "Edit or delete demo account is not allowed", "不允許編輯或刪除演示用的賬號" },
-			{ "Background changed by demo plugin", "背景顏色已被Demo插件修改" }
+			{ "Edit or delete demo account is not allowed", "不允許編輯或刪除演示用的賬號" }
 		};
 
 		public bool CanTranslate(string code) {

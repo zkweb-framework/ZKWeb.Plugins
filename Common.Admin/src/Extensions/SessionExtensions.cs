@@ -33,12 +33,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 				return pair.Item2;
 			}
 			// 从数据库中获取
-			User user = null;
-			UnitOfWork.ReadData<User>(repository => {
-				user = repository.GetById(session.ReleatedId);
-				if (user != null && user.Role != null) {
-					var _ = user.Role.Privileges;
+			var user = UnitOfWork.ReadData<User, User>(r => {
+				var u = r.GetById(session.ReleatedId);
+				if (u != null && u.Role != null) {
+					var _ = u.Role.Privileges;
 				}
+				return u;
 			});
 			if (user != null) {
 				HttpContextUtils.PutData(SessionUserKey, Tuple.Create(session, user));

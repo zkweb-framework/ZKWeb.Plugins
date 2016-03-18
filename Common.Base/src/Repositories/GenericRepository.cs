@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.TypeTraits;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
@@ -15,7 +16,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 	/// <summary>
 	/// 通用的数据仓储
 	/// </summary>
-	public class GenericRepository<TData>
+	public class GenericRepository<TData> : IRepository
 		where TData : class {
 		/// <summary>
 		/// Id成员名称

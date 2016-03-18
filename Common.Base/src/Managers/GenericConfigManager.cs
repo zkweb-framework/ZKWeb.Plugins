@@ -46,10 +46,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			var attribute = GetConfigAttribute<T>();
 			var key = attribute.Key;
 			// 保存到数据库
-			UnitOfWork.WriteData<GenericConfig>(repository => {
-				var config = repository.Get(c => c.Key == key);
+			UnitOfWork.WriteData<GenericConfig>(r => {
+				var config = r.Get(c => c.Key == key);
 				config = config ?? new GenericConfig() { Key = key };
-				repository.Save(ref config, c => {
+				r.Save(ref config, c => {
 					c.Value = JsonConvert.SerializeObject(value);
 					c.LastUpdated = DateTime.UtcNow;
 				});
@@ -73,8 +73,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 				return value;
 			}
 			// 从数据库获取，允许缓存时设置到缓存
-			UnitOfWork.ReadData<GenericConfig>(repository => {
-				var config = repository.Get(c => c.Key == key);
+			UnitOfWork.ReadData<GenericConfig>(r => {
+				var config = r.Get(c => c.Key == key);
 				if (config != null) {
 					value = JsonConvert.DeserializeObject<T>(config.Value);
 					if (attribute.CacheTime > 0) {
@@ -94,9 +94,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			// 从缓存删除
 			Cache.Remove(key);
 			// 从数据库删除
-			UnitOfWork.WriteData<GenericConfig>(repository => {
-				repository.DeleteWhere(c => c.Key == key);
-			});
+			UnitOfWork.WriteData<GenericConfig>(r => r.DeleteWhere(c => c.Key == key));
 		}
 	}
 }

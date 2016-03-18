@@ -84,13 +84,13 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 		/// </summary>
 		protected sealed override void OnBind() {
 			var id = GetRequestId();
-			UnitOfWork.ReadData<TData>(repository => {
-				var data = string.IsNullOrEmpty(id) ? new TData() : repository.GetById(id);
+			UnitOfWork.ReadData<TData>(r => {
+				var data = string.IsNullOrEmpty(id) ? new TData() : r.GetById(id);
 				if (data == null) {
 					throw new HttpException(404, string.Format(new T("Data with id {0} cannot be found"), id));
 				}
-				OnBind(repository.Context, data);
-				Callbacks.ForEach(c => c.OnBind((TForm)(object)this, repository.Context, data));
+				OnBind(r.Context, data);
+				Callbacks.ForEach(c => c.OnBind((TForm)(object)this, r.Context, data));
 			});
 		}
 
@@ -101,20 +101,21 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 		/// <returns></returns>
 		protected sealed override object OnSubmit() {
 			var id = GetRequestId();
-			object result = null;
-			UnitOfWork.WriteData<TData>(repository => {
-				var data = string.IsNullOrEmpty(id) ? new TData() : repository.GetById(id);
+			var result = UnitOfWork.WriteData<TData, object>(r => {
+				var data = string.IsNullOrEmpty(id) ? new TData() : r.GetById(id);
 				if (data == null) {
 					throw new HttpException(404, string.Format(new T("Data with id {0} cannot be found"), id));
 				}
 				// 保存时的处理
-				repository.Save(ref data, d => {
-					result = OnSubmit(repository.Context, d);
-					Callbacks.ForEach(c => c.OnSubmit((TForm)(object)this, repository.Context, d));
+				object formResult = null;
+				r.Save(ref data, d => {
+					formResult = OnSubmit(r.Context, d);
+					Callbacks.ForEach(c => c.OnSubmit((TForm)(object)this, r.Context, d));
 				});
 				// 保存后的处理
-				OnSubmitSaved(repository.Context, data);
-				Callbacks.ForEach(c => c.OnSubmitSaved((TForm)(object)this, repository.Context, data));
+				OnSubmitSaved(r.Context, data);
+				Callbacks.ForEach(c => c.OnSubmitSaved((TForm)(object)this, r.Context, data));
+				return formResult;
 			});
 			return result;
 		}

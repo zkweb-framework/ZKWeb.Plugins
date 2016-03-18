@@ -161,6 +161,7 @@
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroups.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxTree.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\HtmlField.cs" />
+    <Compile Include="Common.Base\src\Model\IRepository.cs" />
     <Compile Include="Common.Base\src\Repositories\GenericRepository.cs" />
     <Compile Include="Common.Base\src\Model\IFormFieldParseFromEnv.cs" />
     <Compile Include="Common.Base\src\Model\IListItemGroupsProvider.cs" />

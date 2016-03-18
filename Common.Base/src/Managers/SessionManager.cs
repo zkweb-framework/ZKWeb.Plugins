@@ -46,8 +46,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			}
 			// 当前没有会话时返回新的会话
 			if (session == null) {
-				session = new Session()
-				{
+				session = new Session() {
 					ReleatedId = 0,
 					IpAddress = HttpContextUtils.GetClientIpAddress(),
 					RememberLogin = false,
@@ -70,12 +69,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			}
 			// 添加或更新到数据库中
 			var cookieSessionId = HttpContextUtils.GetCookie(SessionKey);
-			UnitOfWork.WriteData<Session>(repository => {
+			UnitOfWork.WriteData<Session>(r => {
 				// 保存会话
-				repository.Save(ref session);
+				r.Save(ref session);
 				// 检测到会话Id有变化时删除原会话
 				if (cookieSessionId != session.Id) {
-					repository.DeleteWhere(s => s.Id == cookieSessionId);
+					r.DeleteWhere(s => s.Id == cookieSessionId);
 				}
 			});
 			// 发送会话Cookies到客户端
@@ -102,9 +101,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			if (string.IsNullOrEmpty(id)) {
 				return;
 			}
-			UnitOfWork.WriteData<Session>(repository => {
-				repository.DeleteWhere(s => s.Id == id);
-			});
+			UnitOfWork.WriteData<Session>(r => r.DeleteWhere(s => s.Id == id));
 			// 删除客户端中的会话Cookies
 			HttpContextUtils.RemoveCookie(SessionKey);
 		}

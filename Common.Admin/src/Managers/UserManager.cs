@@ -48,13 +48,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// </summary>
 		public virtual void Reg(
 			string username, string password, Action<User> update = null) {
-			UnitOfWork.WriteData<User>(repository => {
+			UnitOfWork.WriteData<User>(r => {
 				var user = new User();
 				user.Type = UserTypes.User;
 				user.Username = username;
 				user.SetPassword(password);
 				user.CreateTime = DateTime.UtcNow;
-				repository.Save(ref user, update);
+				r.Save(ref user, update);
 			});
 		}
 
@@ -207,14 +207,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// <param name="oldPassword">原密码</param>
 		/// <param name="newPassword">新密码</param>
 		public void ChangePassword(long userId, string oldPassword, string newPassword) {
-			UnitOfWork.WriteData<User>(repository => {
-				var user = repository.GetById(userId);
+			UnitOfWork.WriteData<User>(r => {
+				var user = r.GetById(userId);
 				if (user == null) {
 					throw new HttpException(400, new T("User not found"));
 				} else if (!user.CheckPassword(oldPassword)) {
 					throw new HttpException(400, new T("Incorrect old password"));
 				}
-				repository.Save(ref user, u => u.SetPassword(newPassword));
+				r.Save(ref user, u => u.SetPassword(newPassword));
 			});
 		}
 	}

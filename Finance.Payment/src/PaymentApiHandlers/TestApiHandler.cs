@@ -80,7 +80,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 			logManager.LogTransaction(string.Format(
 				"PaymentApi send goods: transaction {0} logisticsName {1} invoiceNo {2}",
 				transaction.Serial, logisticsName, invoiceNo));
-			var transactionRepository = RepositoryResolver.Resolve<PaymentTransactionRepository, PaymentTransaction>(context);
+			var transactionRepository = RepositoryResolver.ResolveRepository<PaymentTransactionRepository>(context);
 			transactionRepository.Process(transaction.Id, null, PaymentTransactionState.Success);
 		}
 
@@ -168,8 +168,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 			/// </summary>
 			/// <param name="transactionId"></param>
 			public TestApiPayForm(long transactionId) {
-				UnitOfWork.ReadData<PaymentTransaction>(repository => {
-					var transaction = repository.GetById(transactionId);
+				UnitOfWork.ReadData<PaymentTransaction>(r => {
+					var transaction = r.GetById(transactionId);
 					// 检查交易是否为空
 					if (transaction == null) {
 						throw new HttpException(400, new T("Payment transaction not found"));
@@ -212,10 +212,10 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 				var apiData = Transaction.Api.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
 				apiData.CheckPaymentPassword(PaymentPassword);
 				// 按类型执行支付操作
-				UnitOfWork.WriteData<PaymentTransactionRepository, PaymentTransaction>(repository => {
+				UnitOfWork.WriteRepository<PaymentTransactionRepository>(r => {
 					var state = PayType == (int)PayTypes.ImmediateArrival ?
 						PaymentTransactionState.Success : PaymentTransactionState.SecuredPaid;
-					repository.Process(Transaction.Id, null, state);
+					r.Process(Transaction.Id, null, state);
 				});
 				// 返回成功并跳转到交易结果页
 				var resultUrl = string.Format("/payment/transaction/pay_result?id={0}", Transaction.Id);

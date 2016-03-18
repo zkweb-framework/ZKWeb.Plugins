@@ -32,10 +32,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 				throw new HttpException(401, new T("Incorrect username or password"));
 			}
 			// 当前没有任何管理员时，把这个用户设置为超级管理员
-			UnitOfWork.WriteData<User>(repository => {
-				if (repository.Count(u => UserTypesGroup.Admin.Contains(u.Type)) <= 0) {
+			UnitOfWork.WriteData<User>(r => {
+				if (r.Count(u => UserTypesGroup.Admin.Contains(u.Type)) <= 0) {
 					user.Type = UserTypes.SuperAdmin;
-					repository.Save(ref user);
+					r.Save(ref user);
 				}
 			});
 			// 只允许管理员或合作伙伴登陆到后台
@@ -52,9 +52,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// <returns></returns>
 		public virtual string GetLoginWarning() {
 			// 当前没有任何管理员，第一次登录的用户将成为超级管理员
-			bool hasNoAdmin = false;
-			UnitOfWork.ReadData<User>(repository => {
-				hasNoAdmin = repository.Count(u => UserTypesGroup.Admin.Contains(u.Type)) <= 0;
+			var hasNoAdmin = UnitOfWork.ReadData<User, bool>(r => {
+				return r.Count(u => UserTypesGroup.Admin.Contains(u.Type)) <= 0;
 			});
 			if (hasNoAdmin) {
 				return new T("Website has no admin yet, the first login user will become super admin.");
