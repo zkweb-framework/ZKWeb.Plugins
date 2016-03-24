@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 		public override string Name { get { return "PaymentTransactionRecords"; } }
 		public override string Url { get { return "/admin/payment_transactions"; } }
 		public override string TileClass { get { return "tile bg-yellow-gold"; } }
-		public override string IconClass { get { return "fa fa fa-download"; } }
+		public override string IconClass { get { return "fa fa-download"; } }
 		protected override IAjaxTableCallback<PaymentTransaction> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() {
 			throw new HttpException(400, new T("Add transaction from admin panel is not supported"));

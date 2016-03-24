@@ -22,9 +22,6 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		/// <param name="field"></param>
-		/// <param name="htmlAttributes"></param>
-		/// <returns></returns>
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var attribute = (TextAreaFieldAttribute)field.Attribute;
@@ -43,9 +40,6 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		/// <param name="field"></param>
-		/// <param name="value"></param>
-		/// <returns></returns>
 		public object Parse(FormField field, string value) {
 			return value;
 		}
