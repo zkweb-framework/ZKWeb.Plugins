@@ -44,7 +44,6 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Database {
 		/// 初始化
 		/// </summary>
 		public GenericTag() {
-			// 设置默认显示顺序
 			DisplayOrder = 10000;
 		}
 

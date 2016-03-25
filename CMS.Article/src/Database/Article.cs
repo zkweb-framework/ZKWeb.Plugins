@@ -67,8 +67,9 @@ namespace ZKWeb.Plugins.CMS.Article.src.Database {
 		/// 初始化
 		/// </summary>
 		public Article() {
-			// 设置默认显示顺序
 			DisplayOrder = 10000;
+			Classes = new HashSet<GenericClass>();
+			Tags = new HashSet<GenericTag>();
 		}
 
 		/// <summary>

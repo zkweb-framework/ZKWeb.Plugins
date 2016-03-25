@@ -56,7 +56,7 @@ $(function () {
 		var $checkbox = $(this);
 		var $target = $($checkbox.attr("merge-to"));
 		var value = $checkbox.val();
-		var values = $target.data("values") || JSON.parse($target.val() || "[]");
+		var values = $target.data("values") || _.map(JSON.parse($target.val() || "[]"), String);
 		values = $checkbox.is(":checked") ? _.union(values, [value]) : _.without(values, value);
 		$target.data("values", values);
 		$target.val(JSON.stringify(values));
@@ -64,10 +64,10 @@ $(function () {
 
 	// 页面载入时自动绑定值
 	var setup = function (checkboxes, targetSource) {
-		$(checkboxes).each(function() {
+		$(checkboxes).each(function () {
 			var $checkbox = $(this);
 			var $target = $(targetSource).find($checkbox.attr("merge-to"));
-			var values = $target.data("values") || JSON.parse($target.val() || "[]");
+			var values = $target.data("values") || _.map(JSON.parse($target.val() || "[]"), String);
 			$target.data("values", values);
 			$checkbox.prop("checked", _.contains(values, $checkbox.val()));
 		});

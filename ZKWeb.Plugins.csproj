@@ -301,6 +301,8 @@
     <Compile Include="Common.CustomTranslate\src\Translates\zh_TW.cs" />
     <Compile Include="Common.CustomTranslate\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericClass\src\Database\GenericClass.cs" />
+    <Compile Include="Common.GenericClass\src\ListItemTreeProviders\GenericClassListItemTreeProvider.cs" />
+    <Compile Include="Common.GenericClass\src\Manager\GenericClassManager.cs" />
     <Compile Include="Common.GenericClass\src\Scaffolding\GenericClassBuilder.cs" />
     <Compile Include="Common.GenericClass\src\GenericClasses\DefaultClass.cs" />
     <Compile Include="Common.GenericClass\src\Repositories\GenericClassRepository.cs" />
@@ -315,6 +317,8 @@
     <Compile Include="Common.GenericRecord\src\Translates\zh_TW.cs" />
     <Compile Include="Common.GenericRecord\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericTag\src\Database\GenericTag.cs" />
+    <Compile Include="Common.GenericTag\src\ListItemProvider\GenericTagListItemProvider.cs" />
+    <Compile Include="Common.GenericTag\src\Manager\GenericTagManager.cs" />
     <Compile Include="Common.GenericTag\src\Scaffolding\GenericTagBuilder.cs" />
     <Compile Include="Common.GenericTag\src\Repositories\GenericTagRepository.cs" />
     <Compile Include="Common.GenericTag\src\GenericTags\DefaultTag.cs" />

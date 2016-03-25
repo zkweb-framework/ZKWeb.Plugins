@@ -22,31 +22,31 @@ namespace ZKWeb.Plugins.Common.UserContact.src.DataEditFormCallbacks {
 		/// <summary>
 		/// 电话
 		/// </summary>
-		[TextBoxField("Tel", Group = "Contact Information")]
+		[TextBoxField("Tel", "Tel", Group = "Contact Information")]
 		[RegularExpression(RegexUtils.Expressions.Tel)]
 		public string Tel { get; set; }
 		/// <summary>
 		/// 手机
 		/// </summary>
-		[TextBoxField("Mobile", Group = "Contact Information")]
+		[TextBoxField("Mobile", "Mobile", Group = "Contact Information")]
 		[RegularExpression(RegexUtils.Expressions.Tel)]
 		public string Mobile { get; set; }
 		/// <summary>
 		/// QQ
 		/// </summary>
-		[TextBoxField("QQ", Group = "Contact Information")]
+		[TextBoxField("QQ", "QQ", Group = "Contact Information")]
 		[RegularExpression(RegexUtils.Expressions.Digits)]
 		public string QQ { get; set; }
 		/// <summary>
 		/// 邮箱
 		/// </summary>
-		[TextBoxField("Email", Group = "Contact Information")]
+		[TextBoxField("Email", "Email", Group = "Contact Information")]
 		[RegularExpression(RegexUtils.Expressions.Email)]
 		public string Email { get; set; }
 		/// <summary>
 		/// 地址
 		/// </summary>
-		[TextBoxField("Address", Group = "Contact Information")]
+		[TextBoxField("Address", "Address", Group = "Contact Information")]
 		public string Address { get; set; }
 
 		/// <summary>

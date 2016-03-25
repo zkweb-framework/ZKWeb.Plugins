@@ -14,6 +14,18 @@ using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Localize;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.AdminApps;
+using ZKWeb.Plugins.UI.CKEditor.src.FormFieldAttributes;
+using System.ComponentModel.DataAnnotations;
+using ZKWeb.Plugins.Common.Base.src.Managers;
+using DryIoc;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.Admin.src.Database;
+using ZKWeb.Plugins.Common.GenericClass.src.Database;
+using ZKWeb.Plugins.Common.GenericTag.src.Database;
+using ZKWeb.Plugins.CMS.Article.src.GenericClasses;
+using ZKWeb.Plugins.Common.GenericClass.src.ListItemProviders;
+using ZKWeb.Plugins.CMS.Article.src.GenericTags;
+using ZKWeb.Plugins.Common.GenericTag.src.ListItemProvider;
 
 namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 	/// <summary>
@@ -26,8 +38,8 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 		public override string TileClass { get { return "tile bg-blue"; } }
 		public override string IconClass { get { return "fa fa-pencil"; } }
 		protected override IAjaxTableCallback<Database.Article> GetTableCallback() { return new TableCallback(); }
-		protected override IModelFormBuilder GetAddForm() { throw new NotImplementedException(); }
-		protected override IModelFormBuilder GetEditForm() { throw new NotImplementedException(); }
+		protected override IModelFormBuilder GetAddForm() { return new Form(); }
+		protected override IModelFormBuilder GetEditForm() { return new Form(); }
 
 		/// <summary>
 		/// 表格回调
@@ -97,17 +109,102 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
 				var idColumn = response.Columns.AddIdColumn("Id");
 				response.Columns.AddNoColumn();
-				response.Columns.AddMemberColumn("Title", "45%");
+				response.Columns.AddMemberColumn("Title", "25%");
 				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Author", "AuthorId");
 				response.Columns.AddMemberColumn("ArticleClass");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				var actionColumn = response.Columns.AddActionColumn("150");
+				var actionColumn = response.Columns.AddActionColumn();
 				actionColumn.AddEditActionForAdminApp<ArticleManageApp>();
 				idColumn.AddDivider();
 				idColumn.AddDeleteActionsForAdminApp<ArticleManageApp>(request);
+			}
+		}
+
+		/// <summary>
+		/// 添加和编辑使用的表单
+		/// </summary>
+		public class Form : TabDataEditFormBuilder<Database.Article, Form> {
+			/// <summary>
+			/// 标题
+			/// </summary>
+			[Required]
+			[StringLength(255, MinimumLength = 1)]
+			[TextBoxField("Title", "Title")]
+			public string Title { get; set; }
+			/// <summary>
+			/// 摘要
+			/// </summary>
+			[StringLength(255, MinimumLength = 1)]
+			[TextBoxField("Summary", "Summary")]
+			public string Summary { get; set; }
+			/// <summary>
+			/// 文章分类
+			/// </summary>
+			[CheckBoxTreeField("ArticleClass", typeof(GenericClassListItemTreeProvider<ArticleClass>))]
+			public HashSet<long> ArticleClass { get; set; }
+			/// <summary>
+			/// 文章标签
+			/// </summary>
+			[CheckBoxGroupField("ArticleTag", typeof(GenericTagListItemProvider<ArticleTag>))]
+			public HashSet<long> ArticleTag { get; set; }
+			/// <summary>
+			/// 显示顺序
+			/// </summary>
+			[Required]
+			[TextBoxField("DisplayOrder", "Order from small to large")]
+			public long DisplayOrder { get; set; }
+			/// <summary>
+			/// 内容
+			/// </summary>
+			[CKEditor("Contents")]
+			public string Contents { get; set; }
+			/// <summary>
+			/// 备注
+			/// </summary>
+			[CKEditor("Remark", Group = "Remark")]
+			public string Remark { get; set; }
+
+			/// <summary>
+			/// 绑定表单
+			/// </summary>
+			protected override void OnBind(DatabaseContext context, Database.Article bindFrom) {
+				Title = bindFrom.Title;
+				Summary = bindFrom.Summary;
+				ArticleClass = new HashSet<long>(bindFrom.Classes.Select(c => c.Id));
+				ArticleTag = new HashSet<long>(bindFrom.Tags.Select(t => t.Id));
+				DisplayOrder = bindFrom.DisplayOrder;
+				Contents = bindFrom.Contents;
+				Remark = bindFrom.Remark;
+			}
+
+			/// <summary>
+			/// 提交表单
+			/// </summary>
+			protected override object OnSubmit(DatabaseContext context, Database.Article saveTo) {
+				if (saveTo.Id <= 0) {
+					var sessionManager = Application.Ioc.Resolve<SessionManager>();
+					var session = sessionManager.GetSession();
+					var userRepository = RepositoryResolver.Resolve<User>(context);
+					saveTo.Author = userRepository.GetById(session.ReleatedId);
+					saveTo.CreateTime = DateTime.UtcNow;
+				}
+				saveTo.Title = Title;
+				saveTo.Summary = Summary;
+				var classRepository = RepositoryResolver.Resolve<GenericClass>(context);
+				var tagRepository = RepositoryResolver.Resolve<GenericTag>(context);
+				saveTo.Classes = new HashSet<GenericClass>(classRepository.GetMany(c => ArticleClass.Contains(c.Id)));
+				saveTo.Tags = new HashSet<GenericTag>(tagRepository.GetMany(t => ArticleTag.Contains(t.Id)));
+				saveTo.DisplayOrder = DisplayOrder;
+				saveTo.Contents = Contents;
+				saveTo.Remark = Remark;
+				saveTo.LastUpdated = DateTime.UtcNow;
+				return new {
+					message = new T("Saved Successfully"),
+					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
+				};
 			}
 		}
 	}

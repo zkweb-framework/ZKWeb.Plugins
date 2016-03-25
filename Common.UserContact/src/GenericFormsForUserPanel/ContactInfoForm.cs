@@ -37,31 +37,31 @@ namespace ZKWeb.Plugins.Common.UserContact.src.GenericFormsForUserPanel {
 			/// <summary>
 			/// 电话
 			/// </summary>
-			[TextBoxField("Tel")]
+			[TextBoxField("Tel", "Tel")]
 			[RegularExpression(RegexUtils.Expressions.Tel)]
 			public string Tel { get; set; }
 			/// <summary>
 			/// 手机
 			/// </summary>
-			[TextBoxField("Mobile")]
+			[TextBoxField("Mobile", "Mobile")]
 			[RegularExpression(RegexUtils.Expressions.Tel)]
 			public string Mobile { get; set; }
 			/// <summary>
 			/// QQ
 			/// </summary>
-			[TextBoxField("QQ")]
+			[TextBoxField("QQ", "QQ")]
 			[RegularExpression(RegexUtils.Expressions.Digits)]
 			public string QQ { get; set; }
 			/// <summary>
 			/// 邮箱
 			/// </summary>
-			[TextBoxField("Email")]
+			[TextBoxField("Email", "Email")]
 			[RegularExpression(RegexUtils.Expressions.Email)]
 			public string Email { get; set; }
 			/// <summary>
 			/// 地址
 			/// </summary>
-			[TextBoxField("Address")]
+			[TextBoxField("Address", "Address")]
 			public string Address { get; set; }
 
 			/// <summary>

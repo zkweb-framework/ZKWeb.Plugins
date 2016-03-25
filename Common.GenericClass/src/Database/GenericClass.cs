@@ -48,7 +48,6 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Database {
 		/// 初始化
 		/// </summary>
 		public GenericClass() {
-			// 设置默认显示顺序
 			DisplayOrder = 10000;
 		}
 

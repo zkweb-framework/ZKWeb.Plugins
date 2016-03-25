@@ -86,6 +86,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		}
 
 		/// <summary>
+		/// 获取符合条件的多个对象
+		/// </summary>
+		/// <param name="predicate">查询条件</param>
+		/// <returns></returns>
+		public virtual IQueryable<TData> GetMany(Expression<Func<TData, bool>> predicate) {
+			return Context.Query<TData>().Where(predicate);
+		}
+
+		/// <summary>
 		/// 批量删除
 		/// 返回删除的数量
 		/// 这个函数仅设置Deleted为true，不会从数据库中删除

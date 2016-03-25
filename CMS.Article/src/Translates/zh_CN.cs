@@ -23,7 +23,8 @@ namespace ZKWeb.Plugins.CMS.Article.src.Translates {
 			{ "ArticleClass", "文章分类" },
 			{ "ArticleTag", "文章标签" },
 			{ "Title", "标题" },
-			{ "Author", "作者" }
+			{ "Author", "作者" },
+			{ "Summary", "摘要" }
 		};
 
 		public bool CanTranslate(string code) {
