@@ -1,11 +1,13 @@
 ﻿using DryIoc;
 using DryIocAttributes;
+using Ganss.XSS;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.UI;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -26,7 +28,10 @@ namespace ZKWeb.Plugins.UI.CKEditor.src.FormFieldHandlers {
 			var attribute = (CKEditorAttribute)field.Attribute;
 			var html = new HtmlTextWriter(new StringWriter());
 			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttributes(provider.FormControlAttributes);
+			html.AddAttribute("require-script", "/static/ui.ckeditor.js/ckeditor-loader.min.js");
+			html.AddAttribute("class", "form-control ckeditor");
+			html.AddAttribute("data-ckeditor-config", attribute.Config);
+			html.AddAttributes(provider.FormControlAttributes.Where(a => a.Key != "class"));
 			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("textarea");
 			html.WriteEncodedText((field.Value ?? "").ToString());
@@ -41,8 +46,18 @@ namespace ZKWeb.Plugins.UI.CKEditor.src.FormFieldHandlers {
 		/// <param name="value"></param>
 		/// <returns></returns>
 		public object Parse(FormField field, string value) {
-			// FIXME: 进行安全处理
-			return value;
+			// 解码提交回来的Html内容
+			var html = HttpUtility.HtmlDecode(value);
+			// 过滤不安全的内容
+			var sanitizer = new HtmlSanitizer();
+			sanitizer.RemovingAttribute += (e, args) => {
+				// 允许base64图片，因为Uri有65520的长度限制，只能使用事件允许
+				if (args.Attribute.Key == "src" && args.Attribute.Value.StartsWith("data:")) {
+					args.Cancel = true;
+				}
+			};
+			html = sanitizer.Sanitize(html);
+			return html;
 		}
 	}
 }

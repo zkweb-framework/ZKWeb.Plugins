@@ -25,6 +25,8 @@
 // @koala-append "custom/_jquery.postLink.js"
 // @koala-append "custom/_jquery.refreshCaptcha.js"
 // @koala-append "custom/_jquery.refreshImage.js"
+// @koala-append "custom/_jquery.requireScript.js"
+// @koala-append "custom/_jquery.requireStyle.js"
 // @koala-append "custom/_jquery.select.js"
 // @koala-append "custom/_jquery.switchery.js"
 // @koala-append "custom/_jquery.toast.setup.js"

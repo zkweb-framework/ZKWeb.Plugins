@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsQuery, Version=1.3.5.124, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\CsQuery.1.3.5-beta5\lib\net40\CsQuery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CSScriptLibrary">
       <HintPath>..\ZKWeb\ZKWeb\bin\CSScriptLibrary.dll</HintPath>
     </Reference>
@@ -53,6 +57,11 @@
     </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\ZKWeb\ZKWeb\bin\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizer, Version=2.0.5623.30465, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\HtmlSanitizer.2.0.5623.30465\lib\net40\HtmlSanitizer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\ZKWeb\ZKWeb\bin\Iesi.Collections.dll</HintPath>
@@ -449,7 +458,11 @@
     <Content Include="Common.Admin\static\common.admin.images\logo.png" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.js" />
     <Content Include="Common.Admin\static\common.admin.js\about_me.min.js" />
+    <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireStyle.js" />
+    <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireScript.js" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.onclick_cell.html" />
+    <Content Include="UI.CKEditor\references\CsQuery.dll" />
+    <Content Include="UI.CKEditor\references\HtmlSanitizer.dll" />
     <Content Include="UI.CKEditor\static\ckeditor\build-config.js" />
     <Content Include="UI.CKEditor\static\ckeditor\ckeditor.js" />
     <Content Include="UI.CKEditor\static\ckeditor\config.js" />
@@ -620,6 +633,8 @@
     <Content Include="UI.CKEditor\static\ckeditor\skins\office2013\images\lock.png" />
     <Content Include="UI.CKEditor\static\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="UI.CKEditor\static\ckeditor\styles.js" />
+    <Content Include="UI.CKEditor\static\ui.ckeditor.js\ckeditor-loader.js" />
+    <Content Include="UI.CKEditor\static\ui.ckeditor.js\ckeditor-loader.min.js" />
     <None Include="CMS.Article\plugin.json" />
     <None Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\language_switch_menu.widget" />
     <Content Include="Common.LanguageSwitcher\static\common.languageswitcher.js\language_switcher.js" />
@@ -875,6 +890,7 @@
     <None Include="Finance.Payment.Tenpay\plugin.json" />
     <None Include="Finance.Payment.WeChat\plugin.json" />
     <None Include="Finance.Payment\plugin.json" />
+    <None Include="packages.config" />
     <None Include="Shopping.AfterSales\plugin.json" />
     <None Include="Shopping.Order\plugin.json" />
     <None Include="Shopping.Product\plugin.json" />
@@ -884,6 +900,7 @@
     <None Include="UI.CKEditor\static\ckeditor\plugins\base64image\LICENSE.md" />
     <None Include="UI.CKEditor\static\ckeditor\plugins\base64image\README.md" />
     <None Include="UI.CKEditor\static\ckeditor\README.md" />
+    <None Include="UI.CKEditor\static\ui.ckeditor.js\koala-config.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.Base\templates\common.base\footer.html" />

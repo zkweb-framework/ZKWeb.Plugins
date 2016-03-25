@@ -1,5 +1,6 @@
 ﻿{
 	"Name": "CKEditor",
 	"Description": "Provide ckeditor form field",
+	"References": [ "CsQuery", "HtmlSanitizer" ],
 	"Dependencies": [ "Common.Base" ]
 }
