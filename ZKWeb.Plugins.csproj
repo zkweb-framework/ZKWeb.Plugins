@@ -447,6 +447,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.CKEditor\src\FormFieldAttributes\CKEditorAttribute.cs" />
     <Compile Include="UI.CKEditor\src\FormFieldHandlers\CKEditor.cs" />
+    <Compile Include="UI.CKEditor\src\Translates\zh_CN.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.AdminSettings\templates\common.admin_settings\footer.html" />
@@ -906,10 +907,7 @@
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI.CKEditor\src\Translates\" />
-    <Folder Include="UI.CKEditor\templates\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
