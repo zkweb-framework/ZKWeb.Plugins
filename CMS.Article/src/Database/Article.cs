@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Database {
 		/// </summary>
 		public virtual string Summary { get; set; }
 		/// <summary>
-		/// 文章内容
+		/// 文章内容，格式是Html
 		/// </summary>
 		public virtual string Contents { get; set; }
 		/// <summary>
@@ -47,7 +47,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Database {
 		/// </summary>
 		public virtual long DisplayOrder { get; set; }
 		/// <summary>
-		/// 备注
+		/// 备注，格式是Html
 		/// </summary>
 		public virtual string Remark { get; set; }
 		/// <summary>
