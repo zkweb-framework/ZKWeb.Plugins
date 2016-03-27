@@ -171,6 +171,7 @@
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Base\src\Extensions\DataTableExtensions.cs" />
+    <Compile Include="Common.Base\src\Extensions\StringExtensions.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroup.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroups.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxTree.cs" />
@@ -310,6 +311,7 @@
     <Compile Include="Common.CustomTranslate\src\Translates\zh_TW.cs" />
     <Compile Include="Common.CustomTranslate\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericClass\src\Database\GenericClass.cs" />
+    <Compile Include="Common.GenericClass\src\ListItemProviders\GenericClassListItemProvider.cs" />
     <Compile Include="Common.GenericClass\src\ListItemTreeProviders\GenericClassListItemTreeProvider.cs" />
     <Compile Include="Common.GenericClass\src\Manager\GenericClassManager.cs" />
     <Compile Include="Common.GenericClass\src\Scaffolding\GenericClassBuilder.cs" />
@@ -450,13 +452,19 @@
     <Compile Include="Shopping.Product\src\Database\Product.cs" />
     <Compile Include="Shopping.Product\src\Database\ProductMatchedData.cs" />
     <Compile Include="Shopping.Product\src\Database\ProductToPropertyValue.cs" />
+    <Compile Include="Shopping.Product\src\Extensions\ProductExtensions.cs" />
+    <Compile Include="Shopping.Product\src\Extensions\ProductMatchedDataExtensions.cs" />
     <Compile Include="Shopping.Product\src\GenericClasses\ProductClass.cs" />
     <Compile Include="Shopping.Product\src\GenericFormsForAdminSettings\ProductAlbumSettingsForm.cs" />
     <Compile Include="Shopping.Product\src\GenericTags\ProductTag.cs" />
+    <Compile Include="Shopping.Product\src\ListItemProviders\ProductStateListItemProvider.cs" />
+    <Compile Include="Shopping.Product\src\ListItemProviders\ProductTypeListItemProvider.cs" />
     <Compile Include="Shopping.Product\src\Managers\ProductCategoryManager.cs" />
+    <Compile Include="Shopping.Product\src\Managers\ProductAlbumManager.cs" />
     <Compile Include="Shopping.Product\src\Model\IProductCategoryProvider.cs" />
     <Compile Include="Shopping.Product\src\Model\IProductState.cs" />
     <Compile Include="Shopping.Product\src\Model\IProductType.cs" />
+    <Compile Include="Shopping.Product\src\Model\ProductAlbumImageType.cs" />
     <Compile Include="Shopping.Product\src\Model\ProductCategory.cs" />
     <Compile Include="Shopping.Product\src\Model\ProductProperty.cs" />
     <Compile Include="Shopping.Product\src\Model\ProductPropertyControlType.cs" />
@@ -485,6 +493,7 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireStyle.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireScript.js" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.onclick_cell.html" />
+    <Content Include="Shopping.Product\templates\shopping.product\tmpl.product_summary.html" />
     <Content Include="Shopping.Product\tools\readme.txt" />
     <Content Include="UI.CKEditor\references\CsQuery.dll" />
     <Content Include="UI.CKEditor\references\HtmlSanitizer.dll" />

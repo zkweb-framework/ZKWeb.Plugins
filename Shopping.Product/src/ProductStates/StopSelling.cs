@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DryIocAttributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductStates {
 	/// <summary>
 	/// 已下架
 	/// </summary>
+	[ExportMany]
 	public class StopSelling : IProductState {
 		/// <summary>
 		/// 商品状态

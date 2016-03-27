@@ -97,7 +97,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// </summary>
 		/// <param name="category">类目</param>
 		/// <returns></returns>
-		public IEnumerable<ProductProperty> GetProperties(ProductCategory category) {
+		public virtual IEnumerable<ProductProperty> GetProperties(ProductCategory category) {
 			return category.PropertyIds
 				.Select(id => FindProperty(category.Id, id))
 				.Where(p => p != null);
@@ -108,7 +108,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// </summary>
 		/// <param name="property">属性</param>
 		/// <returns></returns>
-		public IEnumerable<ProductPropertyValue> GetPropertyValues(ProductProperty property) {
+		public virtual IEnumerable<ProductPropertyValue> GetPropertyValues(ProductProperty property) {
 			return property.PropertyValueIds
 				.Select(id => ProductPropertyValueMapping.Value.GetOrDefault(id))
 				.Where(v => v != null);

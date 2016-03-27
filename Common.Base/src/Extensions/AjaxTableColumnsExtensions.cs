@@ -73,6 +73,25 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		}
 
 		/// <summary>
+		/// 添加Html成员列
+		/// 成员值会作为Html嵌入到页面中，请做好安全处理
+		/// </summary>
+		/// <param name="columns">列列表</param>
+		/// <param name="member">成员</param>
+		/// <param name="width">宽度</param>
+		public static AjaxTableColumn AddHtmlColumn(
+			this List<AjaxTableColumn> columns, string member, string width = null) {
+			var column = new AjaxTableColumn() {
+				Key = member,
+				Width = width,
+				HeadTemplate = HttpUtility.HtmlEncode(new T(member)),
+				CellTemplate = string.Format("<%=row.{0}%>", HttpUtility.HtmlAttributeEncode(member))
+			};
+			columns.Add(column);
+			return column;
+		}
+
+		/// <summary>
 		/// 添加显示枚举值的标签列
 		/// </summary>
 		/// <param name="columns">列列表</param>
