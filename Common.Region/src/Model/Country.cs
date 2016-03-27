@@ -23,40 +23,50 @@ namespace ZKWeb.Plugins.Common.Region.src.Model {
 		/// </summary>
 		public abstract string Name { get; }
 		/// <summary>
-		/// 地区列表
-		/// 在回调中修改后注意需要调用ClearCache清理缓存
+		/// 地区列表的缓存
 		/// </summary>
-		public virtual List<Region> Regions { get; set; }
+		protected LazyCache<List<Region>> RegionsCache = null;
 		/// <summary>
 		/// 地区树的缓存
 		/// </summary>
-		protected virtual ITreeNode<Region> RegionsTreeCache { get; set; }
+		protected LazyCache<ITreeNode<Region>> RegionsTreeCache = null;
 		/// <summary>
 		/// 地区Id到地区树节点的缓存
 		/// </summary>
-		protected virtual IDictionary<long, ITreeNode<Region>> RegionsTreeNodeCache { get; set; }
+		protected LazyCache<Dictionary<long, ITreeNode<Region>>> RegionsTreeNodeCache = null;
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public Country() {
-			Regions = new List<Region>();
-			RegionsTreeCache = null;
-			RegionsTreeNodeCache = null;
+			RegionsCache = LazyCache.Create(() => new List<Region>());
+			RegionsTreeCache = LazyCache.Create(() => {
+				var regions = RegionsCache.Value;
+				var regionsMapping = regions.ToDictionary(r => r.Id);
+				return TreeUtils.CreateTree(regions,
+					r => r, r => regionsMapping.GetOrDefault(r.ParentId));
+			});
+			RegionsTreeNodeCache = LazyCache.Create(() => {
+				var tree = GetRegionsTree();
+				return tree.EnumerateAllNodes()
+					.Where(n => n.Value != null).ToDictionary(n => n.Value.Id);
+			});
+		}
+
+		/// <summary>
+		/// 获取地区列表
+		/// </summary>
+		/// <returns></returns>
+		public virtual IList<Region> GetRegions() {
+			return RegionsCache.Value;
 		}
 
 		/// <summary>
 		/// 获取地区树
 		/// </summary>
 		/// <returns></returns>
-		public ITreeNode<Region> GetRegionsTree() {
-			if (RegionsTreeCache == null) {
-				var regionsMapping = Regions.ToDictionary(r => r.Id);
-				var tree = TreeUtils.CreateTree(Regions,
-					r => r, r => regionsMapping.GetOrDefault(r.ParentId));
-				RegionsTreeCache = tree;
-			}
-			return RegionsTreeCache;
+		public virtual ITreeNode<Region> GetRegionsTree() {
+			return RegionsTreeCache.Value;
 		}
 
 		/// <summary>
@@ -64,26 +74,17 @@ namespace ZKWeb.Plugins.Common.Region.src.Model {
 		/// </summary>
 		/// <param name="regionId">地区Id</param>
 		/// <returns></returns>
-		public ITreeNode<Region> GetRegionsTreeNode(long regionId) {
-			if (RegionsTreeNodeCache == null) {
-				var tree = GetRegionsTree();
-				var cache = new Dictionary<long, ITreeNode<Region>>();
-				foreach (var node in tree.EnumerateAllNodes()) {
-					if (node.Value != null) {
-						cache[node.Value.Id] = node;
-					}
-				}
-				RegionsTreeNodeCache = cache;
-			}
-			return RegionsTreeNodeCache.GetOrDefault(regionId);
+		public virtual ITreeNode<Region> GetRegionsTreeNode(long regionId) {
+			return RegionsTreeNodeCache.Value.GetOrDefault(regionId);
 		}
 
 		/// <summary>
 		/// 清理缓存
 		/// </summary>
 		public void ClearCache() {
-			RegionsTreeCache = null;
-			RegionsTreeNodeCache = null;
+			RegionsCache.Reset();
+			RegionsTreeCache.Reset();
+			RegionsTreeNodeCache.Reset();
 		}
 	}
 }

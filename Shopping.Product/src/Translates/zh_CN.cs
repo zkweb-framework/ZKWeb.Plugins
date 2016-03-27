@@ -25,7 +25,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "StopSelling", "已下架" },
 			{ "WaitForSales", "准备上架" },
 			{ "ProductClass", "商品分类" },
-			{ "ProductTag", "商品标签" }
+			{ "ProductTag", "商品标签" },
+			{ "ProductAlbumSettings", "商品相册设置" },
+			{ "ProductSettings", "商品设置" },
+			{ "OriginalImageWidth", "原图宽度" },
+			{ "OriginalImageHeight", "原图高度" },
+			{ "ThumbnailImageWidth", "缩略图宽度" },
+			{ "ThumbnailImageHeight", "缩略图高度" }
 		};
 
 		public bool CanTranslate(string code) {

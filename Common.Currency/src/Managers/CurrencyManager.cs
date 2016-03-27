@@ -10,6 +10,7 @@ using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Currency.src.Config;
 using ZKWeb.Plugins.Common.Currency.src.Model;
+using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Currency.src.Managers {
@@ -21,7 +22,9 @@ namespace ZKWeb.Plugins.Common.Currency.src.Managers {
 		/// <summary>
 		/// 货币类型到货币信息的缓存
 		/// </summary>
-		protected IDictionary<string, ICurrency> CurrencyCache { get; set; }
+		protected LazyCache<Dictionary<string, ICurrency>> CurrencyCache = LazyCache.Create(() => {
+			return Application.Ioc.ResolveMany<ICurrency>().ToDictionary(c => c.Type);
+		});
 
 		/// <summary>
 		/// 获取默认的货币信息，找不到时返回null
@@ -39,18 +42,14 @@ namespace ZKWeb.Plugins.Common.Currency.src.Managers {
 		/// <param name="type">货币类型，区分大小写</param>
 		/// <returns></returns>
 		public virtual ICurrency GetCurrency(string type) {
-			if (CurrencyCache == null) {
-				var cache = Application.Ioc.ResolveMany<ICurrency>().ToDictionary(c => c.Type);
-				CurrencyCache = cache;
-			}
-			return CurrencyCache.GetOrDefault(type);
+			return CurrencyCache.Value.GetOrDefault(type);
 		}
 
 		/// <summary>
 		/// 清理缓存
 		/// </summary>
 		public void ClearCache() {
-			CurrencyCache = null;
+			CurrencyCache.Reset();
 		}
 	}
 }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Region.src.Model;
 using ZKWeb.Server;
+using ZKWeb.Utils.Collections;
 
 namespace ZKWeb.Plugins.Common.Region.src.Countries {
 	/// <summary>
@@ -19,13 +20,12 @@ namespace ZKWeb.Plugins.Common.Region.src.Countries {
 		public override string Name { get { return "CN"; } }
 
 		public CN() {
-			var pathManager = Application.Ioc.Resolve<PathManager>();
-			var path = pathManager.GetResourceFullPath("texts", "regions_cn.json");
-			if (path != null) {
+			RegionsCache = LazyCache.Create(() => {
+				var pathManager = Application.Ioc.Resolve<PathManager>();
+				var path = pathManager.GetResourceFullPath("texts", "regions_cn.json");
 				var json = File.ReadAllText(path);
-				var regions = JsonConvert.DeserializeObject<IEnumerable<Model.Region>>(json);
-				Regions.AddRange(regions);
-			}
+				return JsonConvert.DeserializeObject<List<Model.Region>>(json);
+			});
 		}
 	}
 }

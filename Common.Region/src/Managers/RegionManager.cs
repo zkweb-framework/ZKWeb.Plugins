@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Currency.src.Config;
 using ZKWeb.Plugins.Common.Region.src.Config;
 using ZKWeb.Plugins.Common.Region.src.Model;
+using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.Region.src.Managers {
@@ -22,7 +23,9 @@ namespace ZKWeb.Plugins.Common.Region.src.Managers {
 		/// <summary>
 		/// 国家/行政区名称到信息的缓存
 		/// </summary>
-		protected IDictionary<string, Country> CountryCache { get; set; }
+		protected LazyCache<Dictionary<string, Country>> CountryCache = LazyCache.Create(() => {
+			return Application.Ioc.ResolveMany<Country>().ToDictionary(c => c.Name);
+		});
 
 		/// <summary>
 		/// 获取默认的货币信息，找不到时返回null
@@ -40,18 +43,14 @@ namespace ZKWeb.Plugins.Common.Region.src.Managers {
 		/// <param name="name">国家/行政区名称，区分大小写</param>
 		/// <returns></returns>
 		public virtual Country GetCountry(string name) {
-			if (CountryCache == null) {
-				var cache = Application.Ioc.ResolveMany<Country>().ToDictionary(c => c.Name);
-				CountryCache = cache;
-			}
-			return CountryCache.GetOrDefault(name);
+			return CountryCache.Value.GetOrDefault(name);
 		}
 
 		/// <summary>
 		/// 清理缓存
 		/// </summary>
 		public void ClearCache() {
-			CountryCache = null;
+			CountryCache.Reset();
 		}
 	}
 }
