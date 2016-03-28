@@ -36,7 +36,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "OriginalImageWidth", "原图宽度" },
 			{ "OriginalImageHeight", "原图高度" },
 			{ "ThumbnailImageWidth", "缩略图宽度" },
-			{ "ThumbnailImageHeight", "缩略图高度" }
+			{ "ThumbnailImageHeight", "缩略图高度" },
+			{ "ProductAlbum", "商品相册" },
+			{ "ProductProperties", "规格属性" },
+			{ "ProductPriceAndStock", "价格库存" },
+			{ "ProductIntroduction", "商品介绍" }
 		};
 
 		public bool CanTranslate(string code) {

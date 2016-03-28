@@ -20,6 +20,8 @@ using ZKWeb.Plugins.Shopping.Product.src.GenericClasses;
 using ZKWeb.Plugins.Common.GenericTag.src.ListItemProvider;
 using ZKWeb.Plugins.Shopping.Product.src.GenericTags;
 using ZKWeb.Plugins.Common.GenericClass.src.ListItemProviders;
+using System.ComponentModel.DataAnnotations;
+using ZKWeb.Plugins.UI.CKEditor.src.FormFieldAttributes;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>
@@ -32,8 +34,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 		public override string TileClass { get { return "tile bg-green"; } }
 		public override string IconClass { get { return "fa fa-diamond"; } }
 		protected override IAjaxTableCallback<Database.Product> GetTableCallback() { return new TableCallback(); }
-		protected override IModelFormBuilder GetAddForm() { throw new NotImplementedException(); }
-		protected override IModelFormBuilder GetEditForm() { throw new NotImplementedException(); }
+		protected override IModelFormBuilder GetAddForm() { return new Form(); }
+		protected override IModelFormBuilder GetEditForm() { return new Form(); }
 
 		/// <summary>
 		/// 表格回调
@@ -149,6 +151,105 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				actionColumn.AddEditActionForAdminApp<ProductManageApp>();
 				idColumn.AddDivider();
 				idColumn.AddDeleteActionsForAdminApp<ProductManageApp>(request);
+			}
+		}
+
+		/// <summary>
+		/// 添加和编辑商品使用的表单
+		/// </summary>
+		public class Form : TabDataEditFormBuilder<Database.Product, Form> {
+			/// <summary>
+			/// 商品名称
+			/// </summary>
+			[Required]
+			[StringLength(500, MinimumLength = 1)]
+			[TextBoxField("Name", "Please enter name")]
+			public string Name { get; set; }
+			/// <summary>
+			/// 商品类型
+			/// </summary>
+			[Required]
+			[RadioButtonsField("ProductType", typeof(ProductTypeListItemProvider))]
+			public string Type { get; set; }
+			/// <summary>
+			/// 商品状态
+			/// </summary>
+			[Required]
+			[RadioButtonsField("ProductState", typeof(ProductStateListItemProvider))]
+			public string State { get; set; }
+			[Required]
+			[TextBoxField("DisplayOrder", "Order from small to large")]
+			public long DisplayOrder { get; set; }
+			/// <summary>
+			/// 商品分类
+			/// </summary>
+			[CheckBoxTreeField("ProductClass", typeof(GenericClassListItemTreeProvider<ProductClass>))]
+			public HashSet<long> ProductClass { get; set; }
+			/// <summary>
+			/// 商品标签
+			/// </summary>
+			[CheckBoxGroupField("ProductTag", typeof(GenericTagListItemProvider<ProductTag>))]
+			public HashSet<long> ProductTag { get; set; }
+			/// <summary>
+			/// 卖家
+			/// </summary>
+			[TextBoxField("Seller", "Seller")]
+			public string Seller { get; set; }
+			/// <summary>
+			/// 备注
+			/// </summary>
+			[CKEditor("Remark")]
+			public string Remark { get; set; }
+			/// <summary>
+			/// 商品相册
+			/// </summary>
+			[TextBoxField("ProductAlbum", "FIXME", Group = "ProductAlbum")]
+			public string ProductAlbum { get; set; }
+			/// <summary>
+			/// 类目，FIXME
+			/// </summary>
+			[TextBoxField("Category", "FIXME", Group = "ProductProperties")]
+			public long? Category { get; set; }
+			/// <summary>
+			/// 选中的属性值
+			/// </summary>
+			[TextBoxField("PropertyValues", "FIXME", Group = "ProductProperties")]
+			public string PropertyValues { get; set; }
+			/// <summary>
+			/// 价格库存，FIXME
+			/// </summary>
+			[TextBoxField("MatchedDatas", "FIXME", Group = "ProductPriceAndStock")]
+			public string MatchedDatas { get; set; }
+			/// <summary>
+			/// 商品介绍
+			/// </summary>
+			[CKEditor("ProductIntroduction", Group = "ProductIntroduction")]
+			public string Introduction { get; set; }
+
+			/// <summary>
+			/// 绑定表单
+			/// </summary>
+			protected override void OnBind(DatabaseContext context, Database.Product bindFrom) {
+				// 基本信息
+				Name = bindFrom.Name;
+				Type = bindFrom.Type;
+				State = bindFrom.State;
+				DisplayOrder = bindFrom.DisplayOrder;
+				ProductClass = new HashSet<long>(bindFrom.Classes.Select(c => c.Id));
+				ProductTag = new HashSet<long>(bindFrom.Tags.Select(t => t.Id));
+				Seller = bindFrom.Seller == null ? null : bindFrom.Seller.Username;
+				Remark = bindFrom.Remark;
+				// 商品相册
+				// 属性规格
+				// 价格库存
+				// 商品介绍
+			}
+
+			/// <summary>
+			/// 提交表单
+			/// </summary>
+			protected override object OnSubmit(DatabaseContext context, Database.Product saveTo) {
+				throw new NotImplementedException();
 			}
 		}
 	}

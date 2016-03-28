@@ -83,6 +83,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		/// 初始化
 		/// </summary>
 		public Product() {
+			DisplayOrder = 10000;
 			Classes = new HashSet<GenericClass>();
 			Tags = new HashSet<GenericTag>();
 			MatchedDatas = new HashSet<ProductMatchedData>();
