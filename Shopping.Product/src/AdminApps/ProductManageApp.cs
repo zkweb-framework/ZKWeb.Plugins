@@ -26,6 +26,14 @@ using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.GenericClass.src.Database;
 using ZKWeb.Plugins.Common.GenericTag.src.Database;
+using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
+using System.Web;
+using ZKWeb.Plugins.Shopping.Product.src.Managers;
+using DryIoc;
+using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Templating;
+using ZKWeb.Plugins.Shopping.Product.src.Config;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>
@@ -40,6 +48,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 		protected override IAjaxTableCallback<Database.Product> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() { return new Form(); }
 		protected override IModelFormBuilder GetEditForm() { return new Form(); }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public ProductManageApp() {
+			IncludeCss.Add("/static/shopping.product.css/product-list.css");
+			IncludeCss.Add("/static/shopping.product.css/product-edit.css");
+		}
 
 		/// <summary>
 		/// 表格回调
@@ -181,6 +197,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			[Required]
 			[RadioButtonsField("ProductState", typeof(ProductStateListItemProvider))]
 			public string State { get; set; }
+			/// <summary>
+			/// 显示顺序
+			/// </summary>
 			[Required]
 			[TextBoxField("DisplayOrder", "Order from small to large")]
 			public long DisplayOrder { get; set; }
@@ -205,10 +224,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			[CKEditor("Remark")]
 			public string Remark { get; set; }
 			/// <summary>
+			/// 商品相册的提示信息
+			/// </summary>
+			[HtmlField("ProductAlbumAlert", Group = "ProductAlbum")]
+			public HtmlString ProductAlbumAlert { get; set; }
+			/// <summary>
 			/// 商品相册
 			/// </summary>
-			[TextBoxField("ProductAlbum", "FIXME", Group = "ProductAlbum")]
-			public string ProductAlbum { get; set; }
+			[ProductAlbumUploader("ProductAlbum", Group = "ProductAlbum")]
+			public ProductAlbumUploadData ProductAlbum { get; set; }
 			/// <summary>
 			/// 类目，FIXME
 			/// </summary>
@@ -246,6 +270,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				Seller = bindFrom.Seller == null ? null : bindFrom.Seller.Username;
 				Remark = bindFrom.Remark;
 				// 商品相册
+				var templateManager = Application.Ioc.Resolve<TemplateManager>();
+				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
+				var albumSettings = configManager.GetData<ProductAlbumSettings>();
+				ProductAlbumAlert = new HtmlString(templateManager.RenderTemplate(
+					"shopping.product/tmpl.album_alert.html", new {
+						width = albumSettings.OriginalImageWidth,
+						height = albumSettings.OriginalImageHeight
+					}));
+				ProductAlbum = new ProductAlbumUploadData(bindFrom.Id);
 				// 属性规格
 				// 价格库存
 				// 商品介绍
@@ -278,6 +311,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 					message = new T("Saved Successfully"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
 				};
+			}
+
+			/// <summary>
+			/// 保存后的处理
+			/// </summary>
+			protected override void OnSubmitSaved(DatabaseContext context, Database.Product saved) {
+				ProductAlbum.SaveFiles(saved.Id);
 			}
 		}
 	}

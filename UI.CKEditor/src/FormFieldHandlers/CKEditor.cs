@@ -42,9 +42,6 @@ namespace ZKWeb.Plugins.UI.CKEditor.src.FormFieldHandlers {
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		/// <param name="field"></param>
-		/// <param name="value"></param>
-		/// <returns></returns>
 		public object Parse(FormField field, string value) {
 			// 解码提交回来的Html内容
 			var html = HttpUtility.HtmlDecode(value);

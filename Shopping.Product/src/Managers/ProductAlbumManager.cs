@@ -24,11 +24,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <summary>
 		/// 默认的商品相册图片的路径
 		/// </summary>
-		public const string DefaultAlbumImagePath = "/static/product/images/default.jpg";
+		public const string DefaultAlbumImagePath = "/static/shopping.product.images/default.jpg";
 		/// <summary>
 		/// 商品相册图片的路径格式 (Id, 序号, 后缀)
 		/// </summary>
-		public const string AlbumImagePathFormat = "/static/product/{0}/album_{1}{2}.jpg";
+		public const string AlbumImagePathFormat = "/static/shopping.product.images/{0}/album_{1}{2}.jpg";
 
 		/// <summary>
 		/// 获取商品相册图片的网页路径，不存在时返回默认路径
@@ -40,13 +40,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <returns></returns>
 		public virtual string GetAlbumImageWebPath(
 			long id, long? index, ProductAlbumImageType type, string defaultPath = DefaultAlbumImagePath) {
-			if (!File.Exists(GetAlbumImageStoragePath(id, index, type))) {
+			var storagePath = GetAlbumImageStoragePath(id, index, type);
+			var storagePathInfo = new FileInfo(storagePath);
+			if (!storagePathInfo.Exists) {
 				return defaultPath;
 			}
 			var pathManager = Application.Ioc.Resolve<PathManager>();
 			var indexString = index.HasValue ? index.Value.ToString() : "main";
 			var suffix = type.GetAttribute<ProductAlbumImageSuffixAttribute>().Suffix;
-			return string.Format(AlbumImagePathFormat, id, indexString, suffix);
+			var webPath = string.Format(AlbumImagePathFormat, id, indexString, suffix);
+			webPath += "?mtime=" + storagePathInfo.LastWriteTimeUtc.Ticks;
+			return webPath;
 		}
 
 		/// <summary>
@@ -62,7 +66,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 			var indexString = index.HasValue ? index.Value.ToString() : "main";
 			var suffix = type.GetAttribute<ProductAlbumImageSuffixAttribute>().Suffix;
 			var path = string.Format(AlbumImagePathFormat, id, indexString, suffix);
-			return pathManager.GetStorageFullPath(path);
+			return pathManager.GetStorageFullPath(path.Split('/').Skip(1).ToArray());
 		}
 
 		/// <summary>
@@ -106,8 +110,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// 删除相册图片
 		/// </summary>
 		/// <param name="id">商品Id</param>
-		/// <param name="index">图片序号</param>
-		public virtual void DeleteAlbumImage(long id, long index) {
+		/// <param name="index">图片序号，null时删除主图</param>
+		public virtual void DeleteAlbumImage(long id, long? index) {
 			foreach (ProductAlbumImageType type in Enum.GetValues(typeof(ProductAlbumImageType))) {
 				var path = GetAlbumImageStoragePath(id, index, type);
 				if (File.Exists(path)) {

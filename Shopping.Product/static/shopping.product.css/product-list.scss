@@ -1,0 +1,75 @@
+﻿/* 商品列表页的样式 */
+
+/* 过滤器样式 */
+.product-list-filter {
+	margin-top: 5px;
+	/* 过滤条件分组列表 */
+	.nav-groups {
+		border: 1px solid #E8E8E8;
+		/* 过滤条件分组 */
+		> .nav-group {
+			margin: 0px 8px;
+
+			> ul {
+				padding: 0px;
+				margin: 0px;
+
+				> li {
+					list-style: none;
+					border-top: 1px dashed #DEDEDE;
+				}
+			}
+			/* 首行不显示上边框 */
+			&:first-child > ul > li:first-child {
+				border-top: none;
+			}
+		}
+		/* 单行过滤条件 */
+		dl {
+			margin: 0px;
+
+			> dt {
+				float: left;
+				min-width: 100px;
+				line-height: 32px;
+
+				> a {
+					color: #333;
+					padding: 4px 8px;
+					font-weight: bold;
+
+					&:hover, &:active {
+						text-decoration: none;
+					}
+				}
+			}
+
+			> dd {
+				line-height: 32px;
+				margin-left: 100px;
+
+				> a {
+					color: #666;
+					padding: 4px 8px;
+					margin: 0px 8px 0px 0px;
+
+					&:hover, &:active {
+						color: #fff;
+						background-color: #E4393C;
+						text-decoration: none;
+					}
+				}
+			}
+		}
+	}
+	/* 过滤栏列表 */
+	.nav-bars {
+		border: 1px solid #E8E8E8;
+		margin: 15px 0px 0px 0px;
+		/* 排序栏 */
+		.sorting-bar {
+			line-height: 38px;
+			background-color: #F5F5F5;
+		}
+	}
+}
