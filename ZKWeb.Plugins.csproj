@@ -493,6 +493,7 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireStyle.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireScript.js" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.onclick_cell.html" />
+    <Content Include="Shopping.Product\static\product\images\default.jpg" />
     <Content Include="Shopping.Product\templates\shopping.product\tmpl.product_summary.html" />
     <Content Include="Shopping.Product\tools\readme.txt" />
     <Content Include="UI.CKEditor\references\CsQuery.dll" />

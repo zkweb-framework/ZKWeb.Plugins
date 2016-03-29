@@ -22,6 +22,10 @@ using ZKWeb.Plugins.Shopping.Product.src.GenericTags;
 using ZKWeb.Plugins.Common.GenericClass.src.ListItemProviders;
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.UI.CKEditor.src.FormFieldAttributes;
+using ZKWeb.Plugins.Common.Admin.src.Database;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.GenericClass.src.Database;
+using ZKWeb.Plugins.Common.GenericTag.src.Database;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>
@@ -115,7 +119,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 					var matchedDatas = pair.Key.MatchedDatas.ToList();
 					var seller = pair.Key.Seller;
 					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Name"] = pair.Key.GetSummaryHtml();
+					pair.Value["Name"] = pair.Key.GetSummaryHtml().ToString();
 					pair.Value["NameText"] = pair.Key.Name;
 					pair.Value["Price"] = matchedDatas.GetPriceString();
 					pair.Value["Stock"] = matchedDatas.GetTotalStockString();
@@ -232,8 +236,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			protected override void OnBind(DatabaseContext context, Database.Product bindFrom) {
 				// 基本信息
 				Name = bindFrom.Name;
-				Type = bindFrom.Type;
-				State = bindFrom.State;
+				Type = bindFrom.Type ??
+					new ProductTypeListItemProvider().GetItems().Select(i => i.Value).FirstOrDefault();
+				State = bindFrom.State ??
+					new ProductStateListItemProvider().GetItems().Select(i => i.Value).FirstOrDefault();
 				DisplayOrder = bindFrom.DisplayOrder;
 				ProductClass = new HashSet<long>(bindFrom.Classes.Select(c => c.Id));
 				ProductTag = new HashSet<long>(bindFrom.Tags.Select(t => t.Id));
@@ -243,13 +249,35 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				// 属性规格
 				// 价格库存
 				// 商品介绍
+				Introduction = bindFrom.Introduction;
 			}
 
 			/// <summary>
 			/// 提交表单
 			/// </summary>
 			protected override object OnSubmit(DatabaseContext context, Database.Product saveTo) {
-				throw new NotImplementedException();
+				if (saveTo.Id <= 0) {
+					saveTo.CreateTime = DateTime.UtcNow;
+				}
+				saveTo.CategoryId = Category;
+				saveTo.Name = Name;
+				saveTo.Introduction = Introduction;
+				saveTo.Type = Type;
+				saveTo.State = State;
+				saveTo.Seller = Seller == null ? null : context.Get<User>(u => u.Username == Seller);
+				saveTo.LastUpdated = DateTime.UtcNow;
+				saveTo.DisplayOrder = DisplayOrder;
+				saveTo.Remark = Remark;
+				var classRepository = RepositoryResolver.Resolve<GenericClass>(context);
+				var tagRepository = RepositoryResolver.Resolve<GenericTag>(context);
+				saveTo.Classes = new HashSet<GenericClass>(classRepository.GetMany(c => ProductClass.Contains(c.Id)));
+				saveTo.Tags = new HashSet<GenericTag>(tagRepository.GetMany(t => ProductTag.Contains(t.Id)));
+				saveTo.MatchedDatas = new HashSet<ProductMatchedData>();
+				saveTo.PropertyValues = new HashSet<ProductToPropertyValue>();
+				return new {
+					message = new T("Saved Successfully"),
+					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
+				};
 			}
 		}
 	}
