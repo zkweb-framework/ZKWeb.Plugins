@@ -45,7 +45,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "Clear", "清除" },
 			{ "Uploaded pictures will be scaled to [0]x[1], " +
 				"upload pictures of this size can achieve the best display effect",
-				"当前上传的图片会被缩放到[0]x[1]，上传此大小的图片可以达到最佳的显示效果" }
+				"当前上传的图片会被缩放到[0]x[1]，上传此大小的图片可以达到最佳的显示效果" },
+			{ "Category", "类目" }
 		};
 
 		public bool CanTranslate(string code) {

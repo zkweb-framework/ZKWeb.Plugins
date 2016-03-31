@@ -354,6 +354,8 @@ html, body {
 
 /* 高级下拉框的样式 */
 .advance-select {
+	position: relative;
+
 	.btn.dropdown-toggle {
 		width: 100%;
 		text-align: left;
@@ -370,7 +372,7 @@ html, body {
 	}
 
 	.dropdown-menu {
-		margin: 0px 15px;
+		margin: 0px 0px;
 		width: 95%;
 
 		.keyword {

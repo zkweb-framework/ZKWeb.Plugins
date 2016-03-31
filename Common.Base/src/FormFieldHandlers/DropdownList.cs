@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.UI;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
@@ -19,21 +20,19 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	[ExportMany(ContractKey = typeof(DropdownListFieldAttribute)), SingletonReuse]
 	public class DropdownList : IFormFieldHandler {
 		/// <summary>
-		/// 获取表单字段的html
+		/// 构建Select元素的Html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
-			var attribute = (DropdownListFieldAttribute)field.Attribute;
+		public static HtmlString BuildSelectHtml(DropdownListFieldAttribute attribute,
+			IEnumerable<KeyValuePair<string, string>> htmlAttributes, object value) {
 			var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
 			var listItems = listItemProvider.GetItems().ToList();
 			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttributes(provider.FormControlAttributes);
+			html.AddAttribute("name", attribute.Name);
 			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("select");
 			foreach (var item in listItems) {
 				html.AddAttribute("value", item.Value);
-				if (item.Value == field.Value.ConvertOrDefault<string>()) {
+				if (item.Value == value.ConvertOrDefault<string>()) {
 					html.AddAttribute("selected", "selected");
 				}
 				html.RenderBeginTag("option");
@@ -41,7 +40,18 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 				html.RenderEndTag();
 			}
 			html.RenderEndTag();
-			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());
+			return new HtmlString(html.InnerWriter.ToString());
+		}
+
+		/// <summary>
+		/// 获取表单字段的html
+		/// </summary>
+		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
+			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+			var attribute = (DropdownListFieldAttribute)field.Attribute;
+			var selectHtml = BuildSelectHtml(attribute,
+				provider.FormControlAttributes.Concat(htmlAttributes), field.Value);
+			return provider.FormGroupHtml(field, htmlAttributes, selectHtml.ToString());
 		}
 
 		/// <summary>

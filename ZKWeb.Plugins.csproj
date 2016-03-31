@@ -176,6 +176,7 @@
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroups.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxTree.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\HtmlField.cs" />
+    <Compile Include="Common.Base\src\FormFieldHandlers\SearchableDropdownList.cs" />
     <Compile Include="Common.Base\src\Model\IRepository.cs" />
     <Compile Include="Common.Base\src\Repositories\GenericRepository.cs" />
     <Compile Include="Common.Base\src\Model\IFormFieldParseFromEnv.cs" />
@@ -452,6 +453,7 @@
     <Compile Include="Shopping.Product\src\Database\Product.cs" />
     <Compile Include="Shopping.Product\src\Database\ProductMatchedData.cs" />
     <Compile Include="Shopping.Product\src\Database\ProductToPropertyValue.cs" />
+    <Compile Include="Shopping.Product\src\Extensions\ProductCategoryExtensions.cs" />
     <Compile Include="Shopping.Product\src\Extensions\ProductExtensions.cs" />
     <Compile Include="Shopping.Product\src\Extensions\ProductMatchedDataExtensions.cs" />
     <Compile Include="Shopping.Product\src\FormFieldAttributes\ProductAlbumUploaderAttribute.cs" />
@@ -459,6 +461,7 @@
     <Compile Include="Shopping.Product\src\GenericClasses\ProductClass.cs" />
     <Compile Include="Shopping.Product\src\GenericFormsForAdminSettings\ProductAlbumSettingsForm.cs" />
     <Compile Include="Shopping.Product\src\GenericTags\ProductTag.cs" />
+    <Compile Include="Shopping.Product\src\ListItemProviders\ProductCategoryListItemProvider.cs" />
     <Compile Include="Shopping.Product\src\ListItemProviders\ProductStateListItemProvider.cs" />
     <Compile Include="Shopping.Product\src\ListItemProviders\ProductTypeListItemProvider.cs" />
     <Compile Include="Shopping.Product\src\Managers\ProductCategoryManager.cs" />
@@ -496,6 +499,7 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireStyle.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireScript.js" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.onclick_cell.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.searchable_dropdown_list.html" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-edit.css" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-list.css" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-view.css" />

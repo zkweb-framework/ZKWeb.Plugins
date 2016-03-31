@@ -234,10 +234,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			[ProductAlbumUploader("ProductAlbum", Group = "ProductAlbum")]
 			public ProductAlbumUploadData ProductAlbum { get; set; }
 			/// <summary>
-			/// 类目，FIXME
+			/// 类目
 			/// </summary>
-			[TextBoxField("Category", "FIXME", Group = "ProductProperties")]
-			public long? Category { get; set; }
+			[SearchableDropdownListField("Category",
+				typeof(ListItemsWithOptional<ProductCategoryListItemProvider>),
+				Group = "ProductProperties")]
+			public long? CategoryId { get; set; }
 			/// <summary>
 			/// 选中的属性值
 			/// </summary>
@@ -280,7 +282,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 					}));
 				ProductAlbum = new ProductAlbumUploadData(bindFrom.Id);
 				// 属性规格
+				CategoryId = bindFrom.CategoryId;
+				PropertyValues = null;
 				// 价格库存
+				MatchedDatas = null;
 				// 商品介绍
 				Introduction = bindFrom.Introduction;
 			}
@@ -289,24 +294,28 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 提交表单
 			/// </summary>
 			protected override object OnSubmit(DatabaseContext context, Database.Product saveTo) {
+				// 基本信息
 				if (saveTo.Id <= 0) {
 					saveTo.CreateTime = DateTime.UtcNow;
 				}
-				saveTo.CategoryId = Category;
 				saveTo.Name = Name;
-				saveTo.Introduction = Introduction;
 				saveTo.Type = Type;
 				saveTo.State = State;
-				saveTo.Seller = Seller == null ? null : context.Get<User>(u => u.Username == Seller);
-				saveTo.LastUpdated = DateTime.UtcNow;
 				saveTo.DisplayOrder = DisplayOrder;
-				saveTo.Remark = Remark;
 				var classRepository = RepositoryResolver.Resolve<GenericClass>(context);
 				var tagRepository = RepositoryResolver.Resolve<GenericTag>(context);
 				saveTo.Classes = new HashSet<GenericClass>(classRepository.GetMany(c => ProductClass.Contains(c.Id)));
 				saveTo.Tags = new HashSet<GenericTag>(tagRepository.GetMany(t => ProductTag.Contains(t.Id)));
-				saveTo.MatchedDatas = new HashSet<ProductMatchedData>();
+				saveTo.Seller = Seller == null ? null : context.Get<User>(u => u.Username == Seller);
+				saveTo.Remark = Remark;
+				saveTo.LastUpdated = DateTime.UtcNow;
+				// 属性规格
+				saveTo.CategoryId = CategoryId;
 				saveTo.PropertyValues = new HashSet<ProductToPropertyValue>();
+				// 价格库存
+				saveTo.MatchedDatas = new HashSet<ProductMatchedData>();
+				// 商品介绍
+				saveTo.Introduction = Introduction;
 				return new {
 					message = new T("Saved Successfully"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
@@ -317,6 +326,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 保存后的处理
 			/// </summary>
 			protected override void OnSubmitSaved(DatabaseContext context, Database.Product saved) {
+				// 商品相册
 				ProductAlbum.SaveFiles(saved.Id);
 			}
 		}
