@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotLiquid;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// 不同类目下的商品属性即时Id一样内容也有可能不一样，获取时注意判断ParentCategoryIds
 	/// 这个对象中的值生成后不应该修改
 	/// </summary>
-	public class ProductProperty {
+	public class ProductProperty : ILiquidizable {
 		/// <summary>
 		/// 属性Id
 		/// </summary>
@@ -40,6 +41,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// 属性值的Id列表
 		/// </summary>
 		public IList<long> PropertyValueIds { get; set; }
+
+		/// <summary>
+		/// 支持描画到模板
+		/// </summary>
+		/// <returns></returns>
+		object ILiquidizable.ToLiquid() {
+			return new {
+				Id, Name, ParentCategoryIds,
+				IsSaleProperty, IsColorProperty, ControlType, PropertyValueIds
+			};
+		}
 
 		/// <summary>
 		/// 显示名称

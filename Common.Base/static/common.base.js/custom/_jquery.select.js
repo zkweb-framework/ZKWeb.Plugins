@@ -29,14 +29,12 @@ $(function () {
 	var setup = function ($elements) {
 		$elements.each(function () {
 			var $this = $(this);
-			console.log($this);
 			var size = $this.closest(advanceSelectSelector).data("select-size") || 5;
 			$this.attr("size", "5").change();
 		});
 	};
 	setup($(advanceSelectFieldSelector));
 	$(document).on("dynamicLoaded", function (e, contents) {
-		console.log("fucking", $(contents).find(advanceSelectFieldSelector));
 		setup($(contents).find(advanceSelectFieldSelector));
 	});
 });

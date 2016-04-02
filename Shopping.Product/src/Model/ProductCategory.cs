@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotLiquid;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// 商品类目
 	/// 这个对象中的值生成后不应该修改
 	/// </summary>
-	public class ProductCategory {
+	public class ProductCategory : ILiquidizable {
 		/// <summary>
 		/// 类目Id
 		/// </summary>
@@ -28,6 +29,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// 否则应该忽略该属性
 		/// </summary>
 		public IList<long> PropertyIds { get; set; }
+
+		/// <summary>
+		/// 支持描画到模板
+		/// </summary>
+		/// <returns></returns>
+		object ILiquidizable.ToLiquid() {
+			return new { Id, ParentId, Name, PropertyIds };
+		}
 
 		/// <summary>
 		/// 显示名称

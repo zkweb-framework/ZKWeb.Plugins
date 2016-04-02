@@ -46,7 +46,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "Uploaded pictures will be scaled to [0]x[1], " +
 				"upload pictures of this size can achieve the best display effect",
 				"当前上传的图片会被缩放到[0]x[1]，上传此大小的图片可以达到最佳的显示效果" },
-			{ "Category", "类目" }
+			{ "Category", "类目" },
+			{ "Category not exists", "类目不存在" },
+			{ "Non sales properties", "属性" },
+			{ "Sales properties", "规格" },
+			{ "Sure to change category? The properties you selected will lost!",
+				"确认需要修改类目？当前选择的规格和属性将会丢失！"}
 		};
 
 		public bool CanTranslate(string code) {

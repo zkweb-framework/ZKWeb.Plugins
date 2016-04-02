@@ -55,6 +55,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 		public ProductManageApp() {
 			IncludeCss.Add("/static/shopping.product.css/product-list.css");
 			IncludeCss.Add("/static/shopping.product.css/product-edit.css");
+			IncludeJs.Add("/static/shopping.product.js/product-edit.min.js");
 		}
 
 		/// <summary>
@@ -234,17 +235,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			[ProductAlbumUploader("ProductAlbum", Group = "ProductAlbum")]
 			public ProductAlbumUploadData ProductAlbum { get; set; }
 			/// <summary>
-			/// 类目
+			/// 类目Id，没有时等于null
 			/// </summary>
 			[SearchableDropdownListField("Category",
 				typeof(ListItemsWithOptional<ProductCategoryListItemProvider>),
 				Group = "ProductProperties")]
-			public long? CategoryId { get; set; }
+			public long? Category { get; set; }
 			/// <summary>
 			/// 选中的属性值
 			/// </summary>
-			[TextBoxField("PropertyValues", "FIXME", Group = "ProductProperties")]
-			public string PropertyValues { get; set; }
+			[ProductPropertiesEditor("PropertyValues", "Category", Group = "ProductProperties")]
+			public List<SelectedPropertyValue> PropertyValues { get; set; }
 			/// <summary>
 			/// 价格库存，FIXME
 			/// </summary>
@@ -282,8 +283,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 					}));
 				ProductAlbum = new ProductAlbumUploadData(bindFrom.Id);
 				// 属性规格
-				CategoryId = bindFrom.CategoryId;
-				PropertyValues = null;
+				Category = bindFrom.CategoryId;
+				PropertyValues = bindFrom.PropertyValues.ToEditList();
 				// 价格库存
 				MatchedDatas = null;
 				// 商品介绍
@@ -310,10 +311,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				saveTo.Remark = Remark;
 				saveTo.LastUpdated = DateTime.UtcNow;
 				// 属性规格
-				saveTo.CategoryId = CategoryId;
-				saveTo.PropertyValues = new HashSet<ProductToPropertyValue>();
+				saveTo.CategoryId = Category;
+				saveTo.PropertyValues.Clear();
+				saveTo.PropertyValues.AddRange(PropertyValues.ToDatabaseSet(saveTo));
 				// 价格库存
-				saveTo.MatchedDatas = new HashSet<ProductMatchedData>();
+				saveTo.MatchedDatas.Clear();
+				saveTo.MatchedDatas.AddRange(new HashSet<ProductMatchedData>());
 				// 商品介绍
 				saveTo.Introduction = Introduction;
 				return new {

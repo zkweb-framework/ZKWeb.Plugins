@@ -122,8 +122,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 			Map(p => p.Deleted);
 			HasManyToMany(p => p.Classes);
 			HasManyToMany(p => p.Tags);
-			HasMany(p => p.MatchedDatas);
-			HasMany(p => p.PropertyValues);
+			HasMany(p => p.MatchedDatas).Cascade.AllDeleteOrphan();
+			HasMany(p => p.PropertyValues).Cascade.AllDeleteOrphan();
 		}
 	}
 }
