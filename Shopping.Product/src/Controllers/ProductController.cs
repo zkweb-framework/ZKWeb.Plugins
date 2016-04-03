@@ -44,5 +44,25 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 			return new TemplateResult("shopping.product/property_editor.html",
 				new { salesProperties, nonSalesProperties });
 		}
+
+		/// <summary>
+		/// 获取类目对应的商品匹配数据的绑定器列表
+		/// 这里仅用于获取绑定器的Json，不绑定数据也不检查权限
+		/// </summary>
+		/// <returns></returns>
+		[Action("product/matched_data_binders")]
+		public IActionResult MatchedDataBinders() {
+			var categoryId = HttpContext.Current.Request.GetParam<long?>("categoryId");
+			var conditionBinders = Application.Ioc
+				.ResolveMany<ProductMatchedDataConditionBinder>()
+				.Where(b => b.Init(categoryId)).ToList();
+			var affectsBinders = Application.Ioc
+				.ResolveMany<ProductMatchedDataAffectsBinder>()
+				.Where(b => b.Init(categoryId)).ToList();
+			return new JsonResult(new {
+				ConditionBinders = conditionBinders,
+				AffectsBinders = affectsBinders
+			});
+		}
 	}
 }

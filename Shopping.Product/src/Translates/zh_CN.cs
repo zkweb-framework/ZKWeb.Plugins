@@ -51,7 +51,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "Non sales properties", "属性" },
 			{ "Sales properties", "规格" },
 			{ "Sure to change category? The properties you selected will lost!",
-				"确认需要修改类目？当前选择的规格和属性将会丢失！"}
+				"确认需要修改类目？当前选择的规格和属性将会丢失！"},
+			{ "Condition", "条件" },
+			{ "Default", "默认" },
+			{ "Order count >=", "订购数量 >=" },
+			{ "InhertIfEmpty", "留空时继承" },
+			{ "PriceCurrency", "价格货币" },
+			{ "OrderCountGE", "订购数量 >=" },
+			{ "All", "全部" },
+			{ "Weight", "重量" }
 		};
 
 		public bool CanTranslate(string code) {

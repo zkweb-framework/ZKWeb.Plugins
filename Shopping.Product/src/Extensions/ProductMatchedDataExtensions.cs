@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Currency.src.Managers;
 using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 	/// <summary>
@@ -55,6 +57,59 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 			return matchedDatas.Select(d => d.Stock)
 				.Where(s => s != null)
 				.Select(s => s.Value).Sum().ToString();
+		}
+
+		/// <summary>
+		/// 转换到编辑使用的列表
+		/// </summary>
+		/// <param name="values">数据库中的商品匹配数据列表</param>
+		/// <returns></returns>
+		public static List<EditingMatchedData> ToEditList(this ISet<ProductMatchedData> values) {
+			if (values == null) {
+				return null;
+			}
+			return values.OrderBy(v => v.MatchOrder).Select(v => {
+				// 部分特殊字段需要手动设置到Affects中
+				var data = new EditingMatchedData() {
+					Conditions = v.Conditions,
+					Affects = v.Affects
+				};
+				data.Affects["Price"] = v.Price;
+				data.Affects["PriceCurrency"] = v.PriceCurrency;
+				data.Affects["Weight"] = v.Weight;
+				data.Affects["Stock"] = v.Stock;
+				data.Affects["Remark"] = v.Remark;
+				return data;
+			}).ToList();
+		}
+
+		/// <summary>
+		/// 转换到数据库使用的集合
+		/// </summary>
+		/// <param name="values">编辑后的商品匹配数据列表</param>
+		/// <param name="product">商品</param>
+		/// <returns></returns>
+		public static ISet<ProductMatchedData> ToDatabaseSet(
+			this List<EditingMatchedData> values, Database.Product product) {
+			if (values == null || product.CategoryId == null) {
+				return new HashSet<ProductMatchedData>();
+			}
+			long matchOrder = 0;
+			return new HashSet<ProductMatchedData>(values.Select(v => {
+				// 部分特殊字段需要手动设置字段中
+				var data = new ProductMatchedData() {
+					Product = product,
+					Conditions = v.Conditions,
+					Affects = v.Affects,
+					Price = v.Affects.GetOrDefault<decimal?>("Price"),
+					PriceCurrency = v.Affects.GetOrDefault<string>("PriceCurrency"),
+					Weight = v.Affects.GetOrDefault<decimal?>("Weight"),
+					Stock = v.Affects.GetOrDefault<long?>("Stock"),
+					MatchOrder = matchOrder++,
+					Remark = v.Affects.GetOrDefault<string>("Remark")
+				};
+				return data;
+			}));
 		}
 	}
 }

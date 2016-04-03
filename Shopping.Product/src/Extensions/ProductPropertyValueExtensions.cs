@@ -14,13 +14,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// <summary>
 		/// 转换到编辑使用的列表
 		/// </summary>
-		/// <param name="values">数据中的商品属性值列表</param>
+		/// <param name="values">数据库中的商品属性值列表</param>
 		/// <returns></returns>
-		public static List<SelectedPropertyValue> ToEditList(this ISet<ProductToPropertyValue> values) {
+		public static List<EditingPropertyValue> ToEditList(this ISet<ProductToPropertyValue> values) {
 			if (values == null) {
 				return null;
 			}
-			return values.Select(v => new SelectedPropertyValue() {
+			return values.Select(v => new EditingPropertyValue() {
 				propertyId = v.PropertyId,
 				propertyValueId = v.PropertyValueId,
 				name = v.PropertyValueName
@@ -34,7 +34,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// <param name="product">商品</param>
 		/// <returns></returns>
 		public static ISet<ProductToPropertyValue> ToDatabaseSet(
-			this List<SelectedPropertyValue> values, Database.Product product) {
+			this List<EditingPropertyValue> values, Database.Product product) {
 			if (values == null || product.CategoryId == null) {
 				return new HashSet<ProductToPropertyValue>();
 			}

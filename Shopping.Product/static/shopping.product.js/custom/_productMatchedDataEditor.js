@@ -5,13 +5,12 @@
 // 商品匹配数据编辑器
 // 例 $("#Editor").productMatchedDataEditor();
 // 元素需要有以下属性
-//	data-category-id-selector 储存类目Id的元素的选择器
-//	data-matched-data-json-selector 储存匹配数据列表的Json的元素的选择器
+//	data-category-id-name 储存类目Id的字段名称
+//	data-matched-datas-name 储存匹配数据列表的Json的字段名称
 // 元素可以有以下属性
 //	data-table-class 表格的Css类
 //	data-table-header-class 表格头部的Css类
-//	data-resources-condition "条件"的本地化显示名称
-//	data-resources-default "默认"的本地化显示名称
+//	data-translations 翻译文本
 $.fn.productMatchedDataEditor = function () {
 	var $editor = $(this);
 	// 避免重复初始化
@@ -20,8 +19,8 @@ $.fn.productMatchedDataEditor = function () {
 	}
 	$editor.data("initialized", true);
 	// 获取类目Id和匹配数据列表Json的元素，不存在时返回
-	var $categoryId = $($editor.attr("data-category-id-selector"));
-	var $matchedDataJson = $($editor.attr("data-matched-data-json-selector"));
+	var $categoryId = $editor.closest("form").find("[name='" + $editor.attr("data-category-id-name") + "']");
+	var $matchedDataJson = $editor.closest("form").find("[name='" + $editor.attr("data-matched-datas-name") + "']");
 	if (!$categoryId.length || !$matchedDataJson.length) {
 		console.warn("init product matched data editor failed", $categoryId, $matchedDataJson);
 		return;
@@ -53,8 +52,8 @@ $.fn.productMatchedDataEditor = function () {
 		$tableHeader.addClass($editor.attr("data-table-header-class"));
 		// 添加表格列
 		// 条件列, 根据影响数据绑定器生成的列..., 操作列
-		$tableHeader.append($("<th width='30%'>").append(
-			$editor.attr("data-resources-condition")));
+		var translations = $editor.data("translations") || {};
+		$tableHeader.append($("<th width='30%'>").append(translations["Condition"] || "Condition"));
 		_.each(binders.AffectsBinders, function (affectsBinder) {
 			$tableHeader.append($("<th>").append(affectsBinder.Header));
 		});
@@ -93,9 +92,10 @@ $.fn.productMatchedDataEditor = function () {
 				$conditionCell.find(".condition-binder").each(function () {
 					var $binder = $(this);
 					conditionString += $binder.data("DisplayFunction")($binder, data.Conditions || {});
+					conditionString += " ";
 				});
 				$conditionCell.find(".condition-string").text(
-					conditionString.trim() || $editor.attr("data-resources-default") || "Default");
+					conditionString.trim() || translations["Default"] || "Default");
 			});
 			$conditionCell.trigger(conditionCellUpdateEventName);
 			$row.append($conditionCell);
@@ -191,7 +191,7 @@ $.fn.productMatchedDataEditor = function () {
 		}
 		$editor.data("categoryId", categoryId);
 		// 远程载入类目对应的绑定器
-		$.get("/admin_products/matched_data_binders?categoryId=" + categoryId, function (remoteBinders) {
+		$.get("/product/matched_data_binders?categoryId=" + categoryId, function (remoteBinders) {
 			// 更新绑定器，绑定器中的函数需要预先编译
 			var evalFunc = function (body) { return eval("(" + body + " || function() {})"); };
 			_.each(remoteBinders.ConditionBinders, function (conditionBinder) {
@@ -215,3 +215,15 @@ $.fn.productMatchedDataEditor = function () {
 	$categoryId.on("change", onCategoryIdChanged);
 	onCategoryIdChanged.call($categoryId);
 };
+
+// 自动初始化带[data-toggle='product-matched-data-editor']属性的编辑器
+$(function () {
+	var setup = function ($elements) {
+		$elements.each(function () { $(this).productMatchedDataEditor(); });
+	};
+	var productMatchedDataEditorSelector = "[data-toggle='product-matched-data-editor']";
+	setup($(productMatchedDataEditorSelector));
+	$(document).on("dynamicLoaded", function (e, contents) {
+		setup($(contents).find(productMatchedDataEditorSelector));
+	});
+});

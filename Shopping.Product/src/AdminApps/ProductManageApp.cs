@@ -245,12 +245,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 选中的属性值
 			/// </summary>
 			[ProductPropertiesEditor("PropertyValues", "Category", Group = "ProductProperties")]
-			public List<SelectedPropertyValue> PropertyValues { get; set; }
+			public List<EditingPropertyValue> PropertyValues { get; set; }
 			/// <summary>
-			/// 价格库存，FIXME
+			/// 价格库存
 			/// </summary>
-			[TextBoxField("MatchedDatas", "FIXME", Group = "ProductPriceAndStock")]
-			public string MatchedDatas { get; set; }
+			[ProductMatchedDatasEditor("MatchedDatas", "Category", Group = "ProductPriceAndStock")]
+			public List<EditingMatchedData> MatchedDatas { get; set; }
 			/// <summary>
 			/// 商品介绍
 			/// </summary>
@@ -286,7 +286,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				Category = bindFrom.CategoryId;
 				PropertyValues = bindFrom.PropertyValues.ToEditList();
 				// 价格库存
-				MatchedDatas = null;
+				MatchedDatas = bindFrom.MatchedDatas.ToEditList();
 				// 商品介绍
 				Introduction = bindFrom.Introduction;
 			}
@@ -316,7 +316,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				saveTo.PropertyValues.AddRange(PropertyValues.ToDatabaseSet(saveTo));
 				// 价格库存
 				saveTo.MatchedDatas.Clear();
-				saveTo.MatchedDatas.AddRange(new HashSet<ProductMatchedData>());
+				saveTo.MatchedDatas.AddRange(MatchedDatas.ToDatabaseSet(saveTo));
 				// 商品介绍
 				saveTo.Introduction = Introduction;
 				return new {

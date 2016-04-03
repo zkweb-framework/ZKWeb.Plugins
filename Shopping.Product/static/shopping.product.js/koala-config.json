@@ -2,7 +2,7 @@
 {
 	// Add the ignore rules that Koala will not search them.
 	// e.g. ["*.json", "*.txt", "test", "path/libs"]
-	"ignores": [],
+	"ignores": [ "affects_binders", "condition_binders" ],
 
 	// Options of Compilers.
 	"options": {

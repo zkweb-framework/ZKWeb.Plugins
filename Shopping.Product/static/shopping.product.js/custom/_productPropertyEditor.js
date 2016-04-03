@@ -6,7 +6,7 @@
 // 例 $("#Editor").productPropertyEditor();
 // 元素需要有以下属性
 //	data-category-id-name 储存类目Id的字段名称
-//	data-property-values-name 储存属性值列表的Json的元素的选择器
+//	data-property-values-name 储存属性值列表的Json的字段名称
 // 元素可以有以下属性
 //	data-translations 翻译文本
 $.fn.productPropertyEditor = function () {
@@ -165,7 +165,7 @@ $.fn.productPropertyEditor = function () {
 	onCategoryIdChanged.call($categoryId);
 };
 
-// 自动初始化带[data-toggle='product-property-editor']属性的商品编辑器
+// 自动初始化带[data-toggle='product-property-editor']属性的编辑器
 $(function () {
 	var setup = function ($elements) {
 		$elements.each(function () { $(this).productPropertyEditor(); });

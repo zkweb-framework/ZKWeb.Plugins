@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// <summary>
-	/// 商品选中的属性值信息
+	/// 用于编辑的商品属性值信息
 	/// 这个值用于反序列化编辑商品传回的数据
 	/// 格式 { propertyId: 属性Id, propertyValueId: 属性值Id, name: 属性值名称 }
 	/// 例
@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	///		{ propertyId: 尺码的Id, propertyValueId: S的Id, name: "S" }
 	/// ]
 	/// </summary>
-	public class SelectedPropertyValue {
+	public class EditingPropertyValue {
 		/// <summary>
 		/// 属性Id
 		/// </summary>

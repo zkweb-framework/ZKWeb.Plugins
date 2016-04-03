@@ -17,20 +17,20 @@ using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 	/// <summary>
-	/// 商品属性编辑器
+	/// 商品匹配数据编辑器
 	/// </summary>
-	[ExportMany(ContractKey = typeof(ProductPropertiesEditorAttribute)), SingletonReuse]
-	public class ProductPropertiesEditor : IFormFieldHandler {
+	[ExportMany(ContractKey = typeof(ProductMatchedDatasEditorAttribute)), SingletonReuse]
+	public class ProductMatchedDataEditor : IFormFieldHandler {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
-			var attribute = (ProductPropertiesEditorAttribute)field.Attribute;
+			var attribute = (ProductMatchedDatasEditorAttribute)field.Attribute;
 			var html = new HtmlTextWriter(new StringWriter());
 			var translations = new Dictionary<string, string>() {
-				{ "Sure to change category? The properties you selected will lost!",
-					new T("Sure to change category? The properties you selected will lost!") }
+				{ "Condition", new T("Condition") },
+				{ "Default", new T("Default") }
 			};
 			html.AddAttribute("name", field.Attribute.Name);
 			html.AddAttribute("value", JsonConvert.SerializeObject(field.Value));
@@ -39,10 +39,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("input");
 			html.RenderEndTag();
-			html.AddAttribute("class", "product-property-editor");
-			html.AddAttribute("data-toggle", "product-property-editor");
+			html.AddAttribute("class", "product-matched-data-editor");
+			html.AddAttribute("data-toggle", "product-matched-data-editor");
 			html.AddAttribute("data-category-id-name", attribute.CategoryFieldName);
-			html.AddAttribute("data-property-values-name", attribute.Name);
+			html.AddAttribute("data-matched-datas-name", attribute.Name);
+			html.AddAttribute("data-table-class", "table table-striped table-hover");
+			html.AddAttribute("data-table-header-class", "heading");
 			html.AddAttribute("data-translations", JsonConvert.SerializeObject(translations));
 			html.RenderBeginTag("div");
 			html.RenderEndTag();
@@ -53,7 +55,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 		/// 解析提交的字段的值
 		/// </summary>
 		public object Parse(FormField field, string value) {
-			return JsonConvert.DeserializeObject<List<EditingPropertyValue>>(value);
+			return JsonConvert.DeserializeObject<List<EditingMatchedData>>(value);
 		}
 	}
 }
