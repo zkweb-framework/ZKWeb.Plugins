@@ -42,8 +42,8 @@ $(function () {
 				selectedMapping[propertyId] = selectedList;
 			}
 		});
-		// 设置商品匹配数据编辑器的规格下拉框样式
-		// 粗体显示选中的规格值，修改别名颜色
+		// 设置商品匹配数据编辑器的规格下拉框选项
+		// 隐藏没有选中的规格值
 		// console.log(selectedMapping);
 		$productMatchedDataEditor.find(".condition-binder [data-property-id]").each(function () {
 			var $property = $(this);
@@ -51,9 +51,11 @@ $(function () {
 			var selectedValueMapping = _.indexBy(selectedMapping[propertyId], "propertyValueId");
 			$property.find("option").each(function () {
 				var $option = $(this);
+				if (!$option.val()) {
+					return;
+				}
 				var selectValue = selectedValueMapping[$option.val()];
-				$option.css("font-weight", selectValue ? "bold" : ""); // 选中时粗体
-				$option.css("color", selectValue ? selectValue.color : ""); // 修改别名颜色
+				selectValue ? $option.show() : $option.hide(); // 隐藏没有选中的规格值
 				selectValue && $option.text(selectValue.name); // 修改名称，对应别名的修改
 			});
 		});
