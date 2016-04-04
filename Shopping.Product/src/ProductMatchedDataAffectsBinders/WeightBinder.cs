@@ -13,9 +13,9 @@ using ZKWeb.Templating;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchedDataAffectsBinders {
 	/// <summary>
-	/// 备注
-	/// 值名 Remark
-	/// 格式 字符串
+	/// 重量
+	/// 值名 Weight
+	/// 格式 小数
 	/// </summary>
 	[ExportMany]
 	public class WeightBinder : ProductMatchedDataAffectsBinder {
@@ -25,7 +25,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchedDataAffectsBinders {
 		public override bool Init(long? categoryId) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var pathManager = Application.Ioc.Resolve<PathManager>();
-			Header = new T("Weight");
+			Header = new T("Weight(g)");
 			Contents = templateManager.RenderTemplate(
 				 "shopping.product/affects_binder.weight.html", null);
 			Bind = File.ReadAllText(pathManager.GetResourceFullPath(

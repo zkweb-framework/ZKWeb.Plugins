@@ -1,0 +1,5 @@
+﻿{
+	"Name": "Logistics",
+	"Description": "Logistics management",
+	"Dependencies": [ "Common.Base", "Common.Admin" ]
+}

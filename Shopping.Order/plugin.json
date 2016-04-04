@@ -1,5 +1,11 @@
 ﻿{
 	"Name": "Order",
 	"Description": "Order management for ec site",
-	"Dependencies": [ "Common.Base", "Common.Admin", "Shopping.Product" ]
+	"Dependencies": [
+		"Common.Base",
+		"Common.Admin",
+		"Finance.Payment",
+		"Shopping.Product",
+		"Shopping.Logistics"
+	]
 }

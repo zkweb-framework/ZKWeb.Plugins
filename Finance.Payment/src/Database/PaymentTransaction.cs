@@ -119,7 +119,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// </summary>
 		public PaymentTransactionMap() {
 			Id(t => t.Id);
-			Map(t => t.Serial).Index("Idx_Serial").Unique();
+			Map(t => t.Serial).Not.Nullable().Unique();
 			Map(t => t.Type).Index("Idx_Type");
 			References(t => t.Api).Not.Nullable();
 			Map(t => t.ExternalSerial).Index("Idx_ExternalSerial");

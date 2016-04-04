@@ -59,7 +59,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "PriceCurrency", "价格货币" },
 			{ "OrderCountGE", "订购数量 >=" },
 			{ "All", "全部" },
-			{ "Weight", "重量" }
+			{ "Weight", "重量" },
+			{ "Weight(g)", "重量(克)" }
 		};
 
 		public bool CanTranslate(string code) {
