@@ -10,7 +10,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWeb.Plugins.Common.Base.src.TemplateTags;
-using ZKWeb.Templating.Diy;
+using ZKWeb.Templating.AreaSupport;
 using ZKWeb.Plugin.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Base.src {
@@ -34,8 +34,8 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			// 注册模板可描画类型
 			Template.RegisterSafeType(typeof(MenuItem), s => s);
 			// 注册默认模块
-			var diyManager = Application.Ioc.Resolve<DiyManager>();
-			diyManager.GetArea("header_logobar").DefaultWidgets.Add("common.base.widgets/logo");
+			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
+			areaManager.GetArea("header_logobar").DefaultWidgets.Add("common.base.widgets/logo");
 		}
 	}
 }

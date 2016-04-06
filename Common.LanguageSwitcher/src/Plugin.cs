@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Plugin.Interfaces;
-using ZKWeb.Templating.Diy;
+using ZKWeb.Templating.AreaSupport;
 
 namespace ZKWeb.Plugins.Common.LanguageSwitcher.src {
 	/// <summary>
@@ -19,8 +19,8 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src {
 		/// </summary>
 		public Plugin() {
 			// 注册默认模块
-			var diyManager = Application.Ioc.Resolve<DiyManager>();
-			var navbarRight = diyManager.GetArea("header_navbar_right");
+			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
+			var navbarRight = areaManager.GetArea("header_navbar_right");
 			navbarRight.DefaultWidgets.Add("common.languageswitcher.widgets/language_switch_menu");
 		}
 	}
