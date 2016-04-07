@@ -1,0 +1,118 @@
+﻿/* 表格载入中样式 */
+.ajax-table.loading {
+	background: #FFF url('../common.base.images/ajax-loading.gif') no-repeat scroll center center;
+	min-height: 300px;
+
+	> * {
+		display: none;
+	}
+}
+
+/* 表格样式 */
+.table {
+	/* 选中行样式 */
+	tr.selected {
+		background-color: #4B8DF8 !important;
+		color: #FFF;
+	}
+	/* 表格头部不使用底边框 */
+	&.table-striped > thead > tr > th {
+		border-bottom: none;
+	}
+	/* 表格标题栏字体大小 */
+	> thead > tr > th {
+		font-size: $font-size-normal;
+	}
+}
+
+/* 表格树样式 */
+.table-tree-container {
+	.pagination-panel {
+		display: none;
+	}
+
+	.treenode {
+		cursor: pointer;
+
+		> i {
+			padding-right: 5px;
+
+			&:before {
+				content: "\f078";
+			}
+		}
+	}
+
+	.collapsed > td > .treenode > i:before {
+		content: "\f054";
+	}
+
+	.treenode.no-childs > i:before {
+		content: "\f068";
+	}
+
+	.collapsed > td > .treenode.no-childs > i:before {
+		content: "\f068";
+	}
+}
+
+/* 要求横向滚动的表格 */
+.table-scroller {
+	overflow-x: auto;
+	/* 让absolute的弹出菜单最少能显示一点，无其他解决办法了，参考
+		http://stackoverflow.com/questions/4605715/position-absolute-and-overflow-hidden
+		http://stackoverflow.com/questions/5072467/why-does-overflow-yhidden-affect-the-visibility-of-items-overflowing-on-the-x */
+	min-height: 200px;
+
+	> table {
+		min-width: 768px;
+	}
+}
+
+/* 表格分页控件 */
+.pagination-panel {
+	.pagination-panel-input {
+		display: inline-block;
+		vertical-align: middle;
+		width: 45px !important;
+		text-align: center;
+		margin: 0 5px;
+	}
+}
+
+/* 高级搜索样式 */
+.advanced-search {
+	.form-horizontal {
+		padding: 12px 0px 0px;
+
+		.form-group {
+			/* 文本和控件 */
+			@media (min-width: 992px) {
+				/* 相当于col-md-4 */
+				.control-label {
+					float: left;
+					width: 33.33333333%;
+				}
+				/* 相当于col-md-8 */
+				.form-controls {
+					float: left;
+					width: 66.66666667%;
+				}
+			}
+		}
+	}
+
+	.form-actions {
+		min-width: 280px;
+		padding-right: 20px !important;
+
+		.btn {
+			float: right;
+		}
+	}
+}
+
+/* 搜索按钮的对齐 */
+.actions .btn {
+	padding: 7px 13px 8px;
+}

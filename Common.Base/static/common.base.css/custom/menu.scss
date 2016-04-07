@@ -1,0 +1,20 @@
+﻿/* 下拉菜单样式 */
+.dropdown-menu {
+	font-size: $font-size-normal;
+	/* 菜单项高度 */
+	li > a {
+		line-height: 12px;
+	}
+	/* 分割线高度 */
+	.divider {
+		margin: 7px 0px;
+	}
+	/* 激活的菜单项 */
+	li > .active {
+		color: #5B9BD1 !important;
+
+		i {
+			color: #5B9BD1 !important;
+		}
+	}
+}

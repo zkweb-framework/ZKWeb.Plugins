@@ -29,7 +29,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	public class RoleManageApp : AdminAppBuilder<UserRole, RoleManageApp> {
 		public override string Name { get { return "Role Manage"; } }
 		public override string Url { get { return "/admin/roles"; } }
-		public override string TileClass { get { return "tile bg-blue-hoki"; } }
+		public override string TileClass { get { return "tile bg-blue"; } }
 		public override string IconClass { get { return "fa fa-legal"; } }
 		public override UserTypes[] AllowedUserTypes { get { return new[] { UserTypes.SuperAdmin }; } }
 		protected override IAjaxTableCallback<UserRole> GetTableCallback() { return new SearchCallback(); }

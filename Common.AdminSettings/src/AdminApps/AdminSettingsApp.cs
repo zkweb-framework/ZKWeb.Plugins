@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.AdminApps {
 	public class AdminSettingsApp : AdminApp {
 		public override string Name { get { return "Settings"; } }
 		public override string Url { get { return "/admin/settings"; } }
-		public override string TileClass { get { return "tile bg-blue-hoki"; } }
+		public override string TileClass { get { return "tile bg-blue"; } }
 		public override string IconClass { get { return "fa fa-wrench"; } }
 		public override UserTypes[] AllowedUserTypes { get { return UserTypesGroup.AdminOrParter; } }
 

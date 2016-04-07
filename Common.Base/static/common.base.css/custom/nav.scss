@@ -1,0 +1,74 @@
+﻿/* 顶部栏的样式 */
+.top-navbar {
+	background-color: #f7f7f7;
+	line-height: 28px;
+	height: 28px;
+	border-top: 1px solid #eee;
+	margin-bottom: 15px;
+	box-shadow: 0px 0px 0px 1px #fff, 0px 0px 0px 2px #dfdfdf, 0px 0px 5px 3px #f0f0f0;
+	/* 右侧菜单的样式 */
+	.nav.pull-right > .diy_area {
+		.diy_widget {
+			float: left;
+			padding: 0px 5px;
+		}
+	}
+	/* 链接的样式 */
+	a {
+		color: #666;
+		background-color: transparent;
+		/* 选中时改变颜色和添加下划线 */
+		&:hover, &:focus {
+			color: #C40000;
+			text-decoration: underline;
+		}
+	}
+}
+
+/* 顶部Logo栏的样式 */
+.top-logobar {
+	height: 90px;
+
+	.logo {
+		float: left;
+
+		img {
+			height: 75px;
+		}
+	}
+}
+
+/* 顶部菜单栏的样式 */
+.top-menubar {
+	height: 42px;
+	line-height: 42px;
+	background-color: #E4393C;
+	/* 菜单的样式 */
+	.nav {
+		float: left;
+	}
+
+	.nav > li {
+		float: left;
+		/* 链接的样式 */
+		> a {
+			padding: 0px 15px;
+			font-size: 14px;
+			color: #FFF;
+
+			&:hover, &:focus {
+				background-color: #C40000;
+			}
+		}
+	}
+}
+
+/* 底部栏的样式 */
+.page-bottom {
+	margin-top: 20px;
+	/* 底部版权信息栏的样式 */
+	.copyright-bar {
+		line-height: 24px;
+		padding: 4px 0px;
+	}
+}

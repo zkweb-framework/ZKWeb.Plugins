@@ -1,0 +1,72 @@
+﻿/* 设置html和body的高度等于100%*/
+html, body {
+	font-size: $font-size-normal;
+	height: 100%;
+}
+
+/* 支持在大分辨率时居中 */
+.screen-center-block {
+	max-width: 1200px;
+	margin: auto !important;
+}
+
+/* 重新实现page-container */
+.page-container {
+	margin: 0px;
+	padding: 20px 20px 0 20px;
+	position: relative;
+}
+
+@media (max-width: 767px) {
+	.page-container {
+		margin: 0;
+		padding: 0;
+	}
+}
+
+/* 重新实现portlet */
+.portlet {
+	padding: 12px 20px 15px 20px;
+
+	.portlet-title {
+		padding: 0;
+		min-height: 38px;
+		border-bottom: 1px solid #eee;
+		border-radius: 4px 4px 0 0;
+		margin-bottom: 10px;
+	}
+
+	> .portlet-title > .caption {
+		> i {
+			color: #3c8dbc !important;
+		}
+
+		> .caption-subject {
+			font-size: 14px;
+			color: #3c8dbc !important;
+			text-transform: uppercase !important;
+			font-weight: bold !important;
+		}
+	}
+
+	> .portlet-title > .btn {
+		margin: 5px 0px 0px 5px;
+	}
+}
+
+/* 修复使用全屏功能时backdrop的优先度比模态框的优先度要高的问题 */
+.page-portlet-fullscreen .modal .modal-dialog {
+	z-index: $zindex-modal + 11;
+}
+
+/* 页面内容的标题 */
+.body-title {
+	font-size: 25px;
+	border-bottom: 1px solid rgb(0, 0, 0);
+	padding-bottom: 8px;
+	margin: 15px;
+
+	> i {
+		font-size: 25px;
+	}
+}

@@ -19,7 +19,7 @@ $bg-color: #364150;
 
 .login .content {
 	background-color: #eceef1;
-	@include border-radius(7px);
+	border-radius: 0 0 7px 7px;
 	width: 400px;
 	margin: 40px auto 10px auto;
 	padding: 30px;
@@ -45,8 +45,6 @@ $bg-color: #364150;
 	&:active {
 		border: 1px solid #c3ccda;
 	}
-
-	@include placeholder(#8290a3);
 }
 
 .login .content select.form-control {

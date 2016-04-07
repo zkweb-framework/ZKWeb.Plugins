@@ -43,7 +43,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 			html.AddAttribute("data-toggle", "product-matched-data-editor");
 			html.AddAttribute("data-category-id-name", attribute.CategoryFieldName);
 			html.AddAttribute("data-matched-datas-name", attribute.Name);
-			html.AddAttribute("data-table-class", "table table-striped table-hover");
+			html.AddAttribute("data-table-class", "table table-bordered table-hover");
 			html.AddAttribute("data-table-header-class", "heading");
 			html.AddAttribute("data-translations", JsonConvert.SerializeObject(translations));
 			html.RenderBeginTag("div");

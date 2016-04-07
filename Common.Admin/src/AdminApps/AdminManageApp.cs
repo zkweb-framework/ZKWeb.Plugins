@@ -30,7 +30,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	public class AdminManageApp : AdminAppBuilder<User, AdminManageApp> {
 		public override string Name { get { return "Admin Manage"; } }
 		public override string Url { get { return "/admin/admins"; } }
-		public override string TileClass { get { return "tile bg-blue-hoki"; } }
+		public override string TileClass { get { return "tile bg-blue"; } }
 		public override string IconClass { get { return "fa fa-user-secret"; } }
 		public override string TypeName { get { return "Admin"; } }
 		public override UserTypes[] AllowedUserTypes { get { return new[] { UserTypes.SuperAdmin }; } }

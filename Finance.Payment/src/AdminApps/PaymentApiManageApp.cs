@@ -30,7 +30,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	public class PaymentApiManageApp : AdminAppBuilder<PaymentApi, PaymentApiManageApp> {
 		public override string Name { get { return "PaymentApiManage"; } }
 		public override string Url { get { return "/admin/payment_apis"; } }
-		public override string TileClass { get { return "tile bg-yellow-gold"; } }
+		public override string TileClass { get { return "tile bg-yellow"; } }
 		public override string IconClass { get { return "fa fa-arrow-circle-o-down"; } }
 		protected override IAjaxTableCallback<PaymentApi> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() {

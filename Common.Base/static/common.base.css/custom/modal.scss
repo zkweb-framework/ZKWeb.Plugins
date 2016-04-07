@@ -1,0 +1,55 @@
+﻿/* 支持全屏的模态框，注意使用这个类后将不支持bootstrap-dialog的动态切换大小 */
+.bootstrap-dialog.size-fullscreen {
+	padding-left: 0px !important;
+
+	.modal-dialog {
+		margin: 0px;
+		width: 100%;
+		height: 100%;
+
+		.modal-content {
+			min-height: 100%;
+		}
+	}
+}
+
+/* 模态框载入远程内容时的样式 */
+.bootstrap-dialog-message .remote-contents.loading {
+	background: #FFF url('../common.base.images/ajax-loading.gif') no-repeat scroll center center;
+	min-height: 300px;
+}
+
+/* 弹出框中默认的字体大小 */
+.bootstrap-dialog {
+	.bootstrap-dialog-message {
+		font-size: $font-size-normal;
+	}
+
+	.bootstrap-dialog-title {
+		font-size: 14px;
+	}
+}
+
+/* 使用当前主题的弹出框样式 */
+.dialog.dialog-themed {
+	border: 1px solid #E4393C;
+	border-radius: 2px;
+	background-color: #fff;
+
+	.title {
+		height: 28px;
+		line-height: 28px;
+		text-align: right;
+		background-color: #E4393C;
+
+		> a {
+			color: #FFF;
+			text-decoration: none;
+			margin-right: 10px;
+		}
+	}
+
+	.contents {
+		color: #666;
+	}
+}

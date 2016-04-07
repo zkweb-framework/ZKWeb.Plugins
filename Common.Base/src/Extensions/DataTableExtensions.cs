@@ -19,13 +19,13 @@ namespace Common.Minimal.Model.Extensions {
 		/// 表格行中的数据如果类型是HtmlString将会直接描画，否则进行html编码后描画
 		/// </summary>
 		/// <param name="table">表格数据</param>
-		/// <param name="tableClass">表格的css类，默认是table table-striped table-hover</param>
+		/// <param name="tableClass">表格的css类，默认是table table-bordered table-hover</param>
 		/// <param name="tableHeadRowClass">表格头部行的css类，默认是heading</param>
 		/// <returns></returns>
 		public static HtmlString ToHtml(this DataTable table,
 			string tableClass = null, string tableHeadRowClass = null) {
 			var htmlBuilder = new StringBuilder();
-			tableClass = HttpUtility.HtmlAttributeEncode(tableClass ?? "table table-striped table-hover");
+			tableClass = HttpUtility.HtmlAttributeEncode(tableClass ?? "table table-bordered table-hover");
 			tableHeadRowClass = HttpUtility.HtmlAttributeEncode(tableHeadRowClass ?? "heading");
 			htmlBuilder.AppendFormat("<table class='{0}'>", tableClass);
 			htmlBuilder.AppendFormat("<thead><tr role='row' class='{0}'>", tableHeadRowClass);

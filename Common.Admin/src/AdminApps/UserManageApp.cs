@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	public class UserManageApp : AdminAppBuilder<User, UserManageApp> {
 		public override string Name { get { return "User Manage"; } }
 		public override string Url { get { return "/admin/users"; } }
-		public override string TileClass { get { return "tile bg-blue-hoki"; } }
+		public override string TileClass { get { return "tile bg-blue"; } }
 		public override string IconClass { get { return "fa fa-user"; } }
 		protected override IAjaxTableCallback<User> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() { return new AddForm(); }

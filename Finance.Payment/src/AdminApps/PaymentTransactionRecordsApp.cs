@@ -31,7 +31,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	public class PaymentTransactionRecordsApp : AdminAppBuilder<PaymentTransaction, PaymentTransactionRecordsApp> {
 		public override string Name { get { return "PaymentTransactionRecords"; } }
 		public override string Url { get { return "/admin/payment_transactions"; } }
-		public override string TileClass { get { return "tile bg-yellow-gold"; } }
+		public override string TileClass { get { return "tile bg-yellow"; } }
 		public override string IconClass { get { return "fa fa-download"; } }
 		protected override IAjaxTableCallback<PaymentTransaction> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() {
