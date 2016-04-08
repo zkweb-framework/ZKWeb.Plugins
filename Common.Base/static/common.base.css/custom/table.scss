@@ -114,9 +114,21 @@
 
 /* 搜索栏 */
 .portlet > .portlet-title > .actions {
-	padding: 0px;
+	padding: 0px 0px 7px 0px;
 	float: right;
 	display: inline-block;
+
+	> .portlet-input {
+		max-width: 230px;
+
+		.input-group-btn {
+			width: auto;
+		}
+	}
+
+	> .btn-group {
+		margin: 0px -4px 0px 0px;
+	}
 
 	.btn {
 		float: left;
