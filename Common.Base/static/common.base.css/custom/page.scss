@@ -37,6 +37,12 @@ html, body {
 	}
 
 	> .portlet-title > .caption {
+		float: left;
+		display: inline-block;
+		font-size: 18px;
+		line-height: 18px;
+		font-weight: 300;
+
 		> i {
 			color: #3c8dbc !important;
 		}
@@ -69,4 +75,9 @@ html, body {
 	> i {
 		font-size: 25px;
 	}
+}
+
+/* 全局label样式 */
+label {
+	font-weight: normal;
 }

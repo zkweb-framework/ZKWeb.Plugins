@@ -39,11 +39,9 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		}
 
 		/// <summary>
-		/// 解析提交的字段的值
+		/// 解析上传的文件
 		/// </summary>
-		public object Parse(FormField field, string value) {
-			var attribute = (FileUploaderFieldAttribute)field.Attribute;
-			var file = HttpContext.Current.Request.Files[field.Attribute.Name];
+		public HttpPostedFileBase Parse(HttpPostedFile file, FileUploaderFieldAttribute attribute) {
 			if (file == null) {
 				return null;
 			} else if (!attribute.Extensions.Contains(
@@ -59,6 +57,15 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 					FileUtils.GetSizeDisplayName((int)attribute.MaxContentsLength)));
 			}
 			return new HttpPostedFileWrapper(file);
+		}
+
+		/// <summary>
+		/// 解析提交的字段的值
+		/// </summary>
+		public object Parse(FormField field, string value) {
+			var attribute = (FileUploaderFieldAttribute)field.Attribute;
+			var file = HttpContext.Current.Request.Files[field.Attribute.Name];
+			return Parse(file, attribute);
 		}
 	}
 }

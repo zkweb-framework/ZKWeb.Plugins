@@ -15,3 +15,8 @@
 .nav-tabs > li > a {
 	font-size: $font-size-normal;
 }
+
+/* 标签内容的边距 */
+.tabbable-line > .tab-content {
+	padding: 15px 0;
+}

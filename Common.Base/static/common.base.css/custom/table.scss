@@ -112,7 +112,14 @@
 	}
 }
 
-/* 搜索按钮的对齐 */
-.actions .btn {
-	padding: 7px 13px 8px;
+/* 搜索栏 */
+.portlet > .portlet-title > .actions {
+	padding: 0px;
+	float: right;
+	display: inline-block;
+
+	.btn {
+		float: left;
+		padding: 7px 13px 8px;
+	}
 }

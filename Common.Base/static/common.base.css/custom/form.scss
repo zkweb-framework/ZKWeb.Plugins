@@ -41,7 +41,7 @@
 	margin-left: 0px;
 	/* 字段名称 */
 	label.control-label {
-		padding: 7px 12px 0px 0px;
+		padding: 5px 12px 0px 0px;
 		margin: 0px 0px 5px 0px;
 		text-align: right;
 		margin-top: 1px;
@@ -244,4 +244,11 @@ input[type="text"], input[type="password"], select, textarea {
 	.form-actions .btn[type='submit'] {
 		width: 100%;
 	}
+}
+
+/* input-line类的样式 */
+.input-inline {
+	display: inline-block;
+	width: auto;
+	vertical-align: middle;
 }

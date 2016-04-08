@@ -10,13 +10,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes {
 	/// <summary>
 	/// 商品相册上传器的属性
 	/// </summary>
-	public class ProductAlbumUploaderAttribute : FormFieldAttribute,
-		IFormFieldParseFromEnv, IFormFieldRequireMultiPart {
+	public class ProductAlbumUploaderAttribute : FileUploaderFieldAttribute {
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		/// <param name="name">字段名称</param>
-		public ProductAlbumUploaderAttribute(string name) {
+		public ProductAlbumUploaderAttribute(string name) : base(name) {
 			Name = name;
 		}
 	}

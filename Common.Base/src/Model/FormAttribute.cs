@@ -45,7 +45,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// 初始化
 		/// </summary>
 		/// <param name="name">表单名称</param>
-		/// <param name="action">提交到的url，默认是空（和请求的url相同）</param>
+		/// <param name="action">提交到的url，默认和请求的url相同</param>
 		/// <param name="method">提交类型，默认是POST</param>
 		public FormAttribute(string name, string action = null, string method = HttpMethods.POST) {
 			Name = name;

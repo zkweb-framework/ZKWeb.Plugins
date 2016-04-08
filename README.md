@@ -12,6 +12,9 @@ If you have any license issue please contact 303248153@qq.com.
 
 --------------------------------------------------------------------
 
+Default plugin set is for online shopping site, you can disable plugins you don't need in App_Data\config.json
+The theme used for admin dashboard is AdminLTE.
+
 Plugin States:<br/>
 CMS.Article: 70%<br/>
 Common.Admin: 100%<br/>
@@ -34,6 +37,8 @@ Finance.Payment.Alipay: 20%<br/>
 Finance.Payment.Tenpay: 20%<br/>
 Finance.Payment.WeChat: 20%<br/>
 Shopping.AfterSales: 0%<br/>
-Shopping.Order: 0%<br/>
-Shopping.Product: 5%<br/>
+Shopping.Logistics: 5%<br/>
+Shopping.Order: 5%<br/>
+Shopping.Product: 70%<br/>
 UI.CKEditor: 100%<br/>
+UnitTest.WebTester: 0%<br/>

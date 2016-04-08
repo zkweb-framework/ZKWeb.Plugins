@@ -103,8 +103,6 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 			// 处理表单绑定或提交
 			var form = new Form(Type);
 			var request = HttpContext.Current.Request;
-			var attribute = ((IModelFormBuilder)form).GetFormAttribute();
-			attribute.Action = attribute.Action ?? request.Url.PathAndQuery;
 			if (request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {

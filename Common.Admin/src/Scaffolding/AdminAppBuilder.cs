@@ -185,8 +185,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		protected virtual IActionResult AddAction() {
 			var form = GetAddForm();
 			var request = HttpContext.Current.Request;
-			var attribute = form.GetFormAttribute();
-			attribute.Action = attribute.Action ?? request.Url.PathAndQuery;
 			if (request.HttpMethod == HttpMethods.POST) {
 				// 检查权限
 				PrivilegesChecker.Check(AllowedUserTypes, EditPrivilege);
@@ -208,8 +206,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		protected virtual IActionResult EditAction() {
 			var form = GetEditForm();
 			var request = HttpContext.Current.Request;
-			var attribute = form.GetFormAttribute();
-			attribute.Action = attribute.Action ?? request.Url.PathAndQuery;
 			if (request.HttpMethod == HttpMethods.POST) {
 				// 检查权限
 				PrivilegesChecker.Check(AllowedUserTypes, EditPrivilege);

@@ -65,7 +65,7 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 		/// <param name="html">html构建器</param>
 		protected virtual void RenderFormBeginTag(HtmlTextWriter html) {
 			html.AddAttribute("name", Attribute.Name ?? "");
-			html.AddAttribute("action", Attribute.Action ?? "");
+			html.AddAttribute("action", Attribute.Action ?? HttpContext.Current.Request.Url.PathAndQuery);
 			html.AddAttribute("method", Attribute.Method ?? HttpMethods.POST);
 			html.AddAttribute("role", "form");
 			html.AddAttribute("ajax", Attribute.EnableAjaxSubmit ? "true" : "false");
@@ -180,7 +180,7 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 		public static void BindValuesFromAnonymousObject(this FormBuilder builder, object obj) {
 			builder.BindValues(Hash.FromAnonymousObject(obj));
 		}
-		
+
 		/// <summary>
 		/// 解析提交上来的值
 		/// 同时检查csrf校验和值是否符合验证器的规则
