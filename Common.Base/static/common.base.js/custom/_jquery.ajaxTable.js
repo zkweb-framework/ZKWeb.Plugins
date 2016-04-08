@@ -56,7 +56,7 @@ $.fn.ajaxTable = function (options) {
 				table.container.html(table.compiledTemplate({ result: data }));
 				table.container.removeClass(options.loadingClass);
 				// 绑定分页事件
-				var $pagination = table.container.find(".pagination-panel");
+				var $pagination = table.container.find(".pagination");
 				(data.PageSize > 0x7fffffff) && $pagination.addClass("hide"); // 只显示单页时，隐藏分页控件
 				(data.PageIndex == 0) && $pagination.find(".to-first, .to-prev").addClass("disabled"); // 当前是首页
 				(data.IsLastPage) && $pagination.find(".to-last, .to-next").addClass("disabled"); // 当前是末页
@@ -64,7 +64,7 @@ $.fn.ajaxTable = function (options) {
 				$pagination.find(".to-prev").on("click", function () { table.toPrevPage(); }); // 到上一页
 				$pagination.find(".to-next").on("click", function () { table.toNextPage(); }); // 到下一页
 				$pagination.find(".to-last").on("click", function () { table.toPage(0x7fffffff); }); // 到末页
-				$pagination.find(".pagination-panel-input").on("keydown", function (e) {
+				$pagination.find(".pagination-input").on("keydown", function (e) {
 					(e.keyCode == 13) && table.toPage(parseInt($(this).val() - 1));
 				}).val(data.PageIndex + 1); // 到指定页
 				// 触发载入后事件

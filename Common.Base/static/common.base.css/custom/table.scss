@@ -23,6 +23,14 @@
 	> thead > tr > th {
 		font-size: $font-size-normal;
 	}
+	/* 操作按钮样式 */
+	> tbody > tr > td .btn {
+		margin: 0px 0px 0px 5px;
+
+		> i {
+			font-size: 13px;
+		}
+	}
 }
 
 /* 表格树样式 */
@@ -70,13 +78,25 @@
 }
 
 /* 表格分页控件 */
-.pagination-panel {
-	.pagination-panel-input {
-		display: inline-block;
+.pagination {
+	margin: 0px 0px 10px 0px;
+
+	> li > a {
+		height: 30px;
+
+		&.disabled {
+			cursor: default;
+			pointer-events: none;
+			background-color: #f4f4f4;
+		}
+	}
+
+	.pagination-input {
+		float: left;
 		vertical-align: middle;
 		width: 45px !important;
 		text-align: center;
-		margin: 0 5px;
+		margin: 0px 0px 0px -1px;
 	}
 }
 
@@ -104,7 +124,8 @@
 
 	.form-actions {
 		min-width: 280px;
-		padding-right: 20px !important;
+		padding: 12px 0px;
+		border-top: 1px solid #e5e5e5;
 
 		.btn {
 			float: right;
@@ -131,7 +152,6 @@
 	}
 
 	.btn {
-		float: left;
 		padding: 7px 13px 8px;
 	}
 }

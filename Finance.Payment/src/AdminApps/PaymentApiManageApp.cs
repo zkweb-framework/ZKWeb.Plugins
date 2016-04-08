@@ -126,9 +126,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				var actionColumn = response.Columns.AddActionColumn("150");
+				var actionColumn = response.Columns.AddActionColumn("155");
 				actionColumn.AddButtonForOpenLink(
-					new T("TestPayment"), "btn btn-xs default", "fa fa-edit",
+					new T("TestPayment"), "btn btn-xs btn-warning", "fa fa-edit",
 					"/admin/payment_apis/test_payment?id=<%-row.Id%>");
 				actionColumn.AddEditActionForAdminApp<PaymentApiManageApp>();
 				idColumn.AddDivider();

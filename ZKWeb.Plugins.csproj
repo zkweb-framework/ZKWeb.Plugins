@@ -940,7 +940,7 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.switchery.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.toast.setup.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.validate.additional.js" />
-    <Content Include="Common.Base\static\common.base.js\custom\_metronic.fullscreen.js" />
+    <Content Include="Common.Base\static\common.base.js\custom\_jquery.fullscreen.js" />
     <Content Include="Common.Base\static\favicon.ico" />
     <Content Include="Common.Base\templates\common.base.widgets\logo.html" />
     <None Include="Common.Base\static\common.base.fonts\fontawesome-webfont.eot" />

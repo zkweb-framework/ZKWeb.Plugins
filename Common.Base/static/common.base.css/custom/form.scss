@@ -65,7 +65,12 @@
 	}
 
 	.checkbox-list > label {
+		display: block;
 		cursor: pointer;
+
+		&.checkbox-inline {
+			display: inline-block;
+		}
 	}
 
 	.checkbox-group {

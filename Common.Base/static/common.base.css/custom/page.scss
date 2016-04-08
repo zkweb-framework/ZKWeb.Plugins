@@ -61,9 +61,23 @@ html, body {
 	}
 }
 
-/* 修复使用全屏功能时backdrop的优先度比模态框的优先度要高的问题 */
-.page-portlet-fullscreen .modal .modal-dialog {
-	z-index: $zindex-modal + 11;
+/* 全屏功能 */
+.portlet.portlet-fullscreen {
+	z-index: $zindex-modal - 1;
+	margin: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+}
+
+/* 模态框 */
+.modal {
+	z-index: $zindex-modal;
 }
 
 /* 页面内容的标题 */
@@ -81,4 +95,9 @@ html, body {
 /* 全局label样式 */
 label {
 	font-weight: normal;
+}
+
+/* 全局链接样式 */
+a {
+	cursor: pointer;
 }

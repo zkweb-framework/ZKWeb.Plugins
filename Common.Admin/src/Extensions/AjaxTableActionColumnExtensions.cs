@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 			string titleTemplate = null, string urlTemplate = null, object dialogParameters = null) {
 			column.AddRemoteModalForBelongedRow(
 				name ?? new T("View"),
-				buttonClass ?? "btn btn-xs default",
+				buttonClass ?? "btn btn-xs btn-info",
 				iconClass ?? "fa fa-edit",
 				titleTemplate ?? string.Format(new T("Edit {0}"), new T(typeName)),
 				urlTemplate ?? (editUrl + "?id=<%-row.Id%>"),
