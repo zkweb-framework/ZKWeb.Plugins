@@ -60,6 +60,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Database {
 		/// </summary>
 		public Logistics() {
 			PriceRules = new List<PriceRule>();
+			DisplayOrder = 10000;
 		}
 
 		/// <summary>

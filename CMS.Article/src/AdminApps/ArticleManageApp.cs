@@ -35,7 +35,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 	public class ArticleManageApp : AdminAppBuilder<Database.Article, ArticleManageApp> {
 		public override string Name { get { return "ArticleManage"; } }
 		public override string Url { get { return "/admin/articles"; } }
-		public override string TileClass { get { return "tile bg-blue"; } }
+		public override string TileClass { get { return "tile bg-green"; } }
 		public override string IconClass { get { return "fa fa-pencil"; } }
 		protected override IAjaxTableCallback<Database.Article> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() { return new Form(); }
