@@ -104,6 +104,9 @@
     <Compile Include="CMS.Article\src\Database\Article.cs" />
     <Compile Include="CMS.Article\src\GenericClasses\ArticleClass.cs" />
     <Compile Include="CMS.Article\src\GenericTags\ArticleTag.cs" />
+    <Compile Include="CMS.Article\src\Translates\ko_KR.cs" />
+    <Compile Include="CMS.Article\src\Translates\ja_JP.cs" />
+    <Compile Include="CMS.Article\src\Translates\zh_TW.cs" />
     <Compile Include="CMS.Article\src\Translates\zh_CN.cs" />
     <Compile Include="Common.AdminSettings\src\AdminApps\AdminSettingsApp.cs" />
     <Compile Include="Common.AdminSettings\src\Controllers\ApiController.cs" />
@@ -131,7 +134,7 @@
     <Compile Include="Common.AdminSettings\src\Model\IAdminSettingsMenuProvider.cs" />
     <Compile Include="Common.AdminSettings\src\Model\ILanguage.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\ja_JP.cs" />
-    <Compile Include="Common.AdminSettings\src\Translates\ko-KR.cs" />
+    <Compile Include="Common.AdminSettings\src\Translates\ko_KR.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\zh_TW.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Admin\src\Extensions\AjaxTableColumnsExtensions.cs" />
@@ -167,7 +170,7 @@
     <Compile Include="Common.Admin\src\Managers\PrivilegesChecker.cs" />
     <Compile Include="Common.Admin\src\Managers\PrivilegesTranslator.cs" />
     <Compile Include="Common.Admin\src\Translates\ja_JP.cs" />
-    <Compile Include="Common.Admin\src\Translates\ko-KR.cs" />
+    <Compile Include="Common.Admin\src\Translates\ko_KR.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Base\src\Extensions\DataTableExtensions.cs" />
@@ -193,7 +196,7 @@
     <Compile Include="Common.Base\src\Repositories\UnitOfWork.cs" />
     <Compile Include="Common.Base\src\Translates\en_US.cs" />
     <Compile Include="Common.Base\src\Translates\ja_JP.cs" />
-    <Compile Include="Common.Base\src\Translates\ko-KR.cs" />
+    <Compile Include="Common.Base\src\Translates\ko_KR.cs" />
     <Compile Include="Common.Base\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Base\src\TypeTraits\IsRecyclable.cs" />
     <Compile Include="Common.Admin\src\Managers\UserManager.cs" />
@@ -308,7 +311,7 @@
     <Compile Include="Common.CustomTranslate\src\CustomTranslators\Chinese.cs" />
     <Compile Include="Common.CustomTranslate\src\Model\Translation.cs" />
     <Compile Include="Common.CustomTranslate\src\Translates\ja_JP.cs" />
-    <Compile Include="Common.CustomTranslate\src\Translates\ko-KR.cs" />
+    <Compile Include="Common.CustomTranslate\src\Translates\ko_KR.cs" />
     <Compile Include="Common.CustomTranslate\src\Translates\zh_TW.cs" />
     <Compile Include="Common.CustomTranslate\src\Translates\zh_CN.cs" />
     <Compile Include="Common.GenericClass\src\Database\GenericClass.cs" />
@@ -335,7 +338,7 @@
     <Compile Include="Common.GenericTag\src\Repositories\GenericTagRepository.cs" />
     <Compile Include="Common.GenericTag\src\GenericTags\DefaultTag.cs" />
     <Compile Include="Common.GenericTag\src\Translates\ja_JP.cs" />
-    <Compile Include="Common.GenericTag\src\Translates\ko-KR.cs" />
+    <Compile Include="Common.GenericTag\src\Translates\ko_KR.cs" />
     <Compile Include="Common.GenericTag\src\Translates\zh_TW.cs" />
     <Compile Include="Common.GenericTag\src\Translates\zh_CN.cs" />
     <Compile Include="Common.LanguageSwitcher\src\Config\LanguageSwitcherSettings.cs" />
@@ -343,7 +346,7 @@
     <Compile Include="Common.LanguageSwitcher\src\GenericFormsForAdminSettings\LanguageSwitcherSettingsForm.cs" />
     <Compile Include="Common.LanguageSwitcher\src\Plugin.cs" />
     <Compile Include="Common.LanguageSwitcher\src\Translates\ja_JP.cs" />
-    <Compile Include="Common.LanguageSwitcher\src\Translates\ko-KR.cs" />
+    <Compile Include="Common.LanguageSwitcher\src\Translates\ko_KR.cs" />
     <Compile Include="Common.LanguageSwitcher\src\Translates\zh_CN.cs" />
     <Compile Include="Common.LanguageSwitcher\src\Translates\zh_TW.cs" />
     <Compile Include="Common.MenuPageBase\src\Scaffolding\GenericFormForMenuPage.cs" />
@@ -525,6 +528,9 @@
     <Compile Include="Shopping.Product\src\Translates\zh_CN.cs" />
     <Compile Include="UI.CKEditor\src\FormFieldAttributes\CKEditorAttribute.cs" />
     <Compile Include="UI.CKEditor\src\FormFieldHandlers\CKEditor.cs" />
+    <Compile Include="UI.CKEditor\src\Translates\ko_KR.cs" />
+    <Compile Include="UI.CKEditor\src\Translates\ja_JP.cs" />
+    <Compile Include="UI.CKEditor\src\Translates\zh_TW.cs" />
     <Compile Include="UI.CKEditor\src\Translates\zh_CN.cs" />
   </ItemGroup>
   <ItemGroup>
