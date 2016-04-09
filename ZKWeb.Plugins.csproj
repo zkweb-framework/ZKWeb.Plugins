@@ -460,6 +460,9 @@
     <Compile Include="Shopping.Logistics\src\LogisticsTypes\SurfaceMail.cs" />
     <Compile Include="Shopping.Logistics\src\Model\ILogisticsType.cs" />
     <Compile Include="Shopping.Logistics\src\Model\PriceRule.cs" />
+    <Compile Include="Shopping.Logistics\src\Translates\ko_KR.cs" />
+    <Compile Include="Shopping.Logistics\src\Translates\ja_JP.cs" />
+    <Compile Include="Shopping.Logistics\src\Translates\zh_TW.cs" />
     <Compile Include="Shopping.Logistics\src\Translates\zh_CN.cs" />
     <Compile Include="Shopping.Order\src\Database\CartProduct.cs" />
     <Compile Include="Shopping.Order\src\Database\Order.cs" />
@@ -525,6 +528,9 @@
     <Compile Include="Shopping.Product\src\ProductStates\WaitForSales.cs" />
     <Compile Include="Shopping.Product\src\ProductTypes\RealProduct.cs" />
     <Compile Include="Shopping.Product\src\ProductTypes\VirtualProduct.cs" />
+    <Compile Include="Shopping.Product\src\Translates\ko_KR.cs" />
+    <Compile Include="Shopping.Product\src\Translates\ja_JP.cs" />
+    <Compile Include="Shopping.Product\src\Translates\zh_TW.cs" />
     <Compile Include="Shopping.Product\src\Translates\zh_CN.cs" />
     <Compile Include="UI.CKEditor\src\FormFieldAttributes\CKEditorAttribute.cs" />
     <Compile Include="UI.CKEditor\src\FormFieldHandlers\CKEditor.cs" />
