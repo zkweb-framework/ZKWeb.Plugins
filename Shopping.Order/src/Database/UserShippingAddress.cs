@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// <summary>
 		/// 地区Id
 		/// </summary>
-		public virtual long? AreaId { get; set; }
+		public virtual long? RegionId { get; set; }
 		/// <summary>
 		/// 邮政编码
 		/// </summary>
@@ -92,7 +92,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 			Id(a => a.Id);
 			References(a => a.User).Not.Nullable();
 			Map(a => a.Country).Not.Nullable();
-			Map(a => a.AreaId);
+			Map(a => a.RegionId);
 			Map(a => a.ZipCode);
 			Map(a => a.DetailedAddress).Length(0xffff);
 			Map(a => a.ReceiverName).Length(0xffff);

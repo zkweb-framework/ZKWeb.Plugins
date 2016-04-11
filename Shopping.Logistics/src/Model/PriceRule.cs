@@ -36,7 +36,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Model {
 		/// <summary>
 		/// 地区Id，匹配所有时等于null
 		/// </summary>
-		public long? AreaId { get; set; }
+		public long? RegionId { get; set; }
 		/// <summary>
 		/// 是否不允许在该地区使用
 		/// </summary>

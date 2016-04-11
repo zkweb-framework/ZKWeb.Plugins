@@ -358,6 +358,7 @@
     <Compile Include="Common.MenuPageBase\src\Translates\zh_CN.cs" />
     <Compile Include="Common.MenuPageBase\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Region\src\Config\RegionSettings.cs" />
+    <Compile Include="Common.Region\src\Controllers\ApiController.cs" />
     <Compile Include="Common.Region\src\Countries\CN.cs" />
     <Compile Include="Common.Region\src\Countries\FR.cs" />
     <Compile Include="Common.Region\src\Countries\DE.cs" />
@@ -378,6 +379,7 @@
     <Compile Include="Common.Region\src\FormFieldHandlers\RegionEditor.cs" />
     <Compile Include="Common.Region\src\GenericFormsForAdminSettings\CountrySettingsForm.cs" />
     <Compile Include="Common.Region\src\ListItemProviders\CountryListItemProvider.cs" />
+    <Compile Include="Common.Region\src\Model\CountryAndRegion.cs" />
     <Compile Include="Common.Region\src\Model\Region.cs" />
     <Compile Include="Common.Region\src\Model\Country.cs" />
     <Compile Include="Common.Region\src\Managers\RegionManager.cs" />
