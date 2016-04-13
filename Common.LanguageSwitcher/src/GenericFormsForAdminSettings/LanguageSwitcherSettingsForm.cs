@@ -38,6 +38,16 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.GenericFormsForAdminSettings
 			[Required]
 			[CheckBoxGroupField("SwitchableLanguages", typeof(LanguageListItemProvider))]
 			public List<string> SwitchableLanguages { get; set; }
+			/// <summary>
+			/// 在前台页面显示语言切换器
+			/// </summary>
+			[CheckBoxField("DisplayLanguageSwitcherOnFrontPages")]
+			public bool DisplaySwitcherOnFrontPages { get; set; }
+			/// <summary>
+			/// 在后台页面显示语言切换器
+			/// </summary>
+			[CheckBoxField("DisplayLanguageSwitcherOnAdminPanel")]
+			public bool DisplaySwitcherOnAdminPanel { get; set; }
 
 			/// <summary>
 			/// 绑定表单
@@ -46,6 +56,8 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.GenericFormsForAdminSettings
 				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 				var settings = configManager.GetData<LanguageSwitcherSettings>();
 				SwitchableLanguages = settings.SwitchableLanguages;
+				DisplaySwitcherOnFrontPages = settings.DisplaySwitcherOnFrontPages;
+				DisplaySwitcherOnAdminPanel = settings.DisplaySwitcherOnAdminPanel;
 			}
 
 			/// <summary>
@@ -56,6 +68,8 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.GenericFormsForAdminSettings
 				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 				var settings = configManager.GetData<LanguageSwitcherSettings>();
 				settings.SwitchableLanguages = SwitchableLanguages ?? new List<string>();
+				settings.DisplaySwitcherOnFrontPages = DisplaySwitcherOnFrontPages;
+				settings.DisplaySwitcherOnAdminPanel = DisplaySwitcherOnAdminPanel;
 				configManager.PutData(settings);
 				return new { message = new T("Saved Successfully") };
 			}

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.LanguageSwitcher.src.Config;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
@@ -23,11 +24,11 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.Controllers {
 		/// 获取可切换的语言列表
 		/// </summary>
 		/// <returns></returns>
-		[Action("api/locale/switchable_languages")]
+		[Action("api/locale/language_switcher_settings")]
 		public IActionResult GetSwitchableLanguages() {
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var settings = configManager.GetData<LanguageSwitcherSettings>();
-			return new JsonResult(new { languages = settings.SwitchableLanguages });
+			return new JsonResult(settings);
 		}
 
 		/// <summary>
@@ -38,7 +39,7 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.Controllers {
 		public IActionResult SwitchToLanguage() {
 			var language = HttpContext.Current.Request.GetParam<string>("language");
 			HttpContextUtils.PutCookie(LocaleUtils.LanguageKey, language);
-			return new JsonResult(null);
+			return new JsonResult(new { script = ScriptStrings.RefreshAfter(0) });
 		}
 	}
 }

@@ -24,8 +24,10 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			var navbarLeft = areaManager.GetArea("header_navbar_left");
 			var navbarRight = areaManager.GetArea("header_navbar_right");
+			var adminNavBar = areaManager.GetArea("admin_navbar");
 			navbarLeft.DefaultWidgets.Add("common.admin.widgets/user_login_info");
 			navbarRight.DefaultWidgets.Add("common.admin.widgets/enter_admin_panel");
+			adminNavBar.DefaultWidgets.Add("common.admin.widgets/admin_apps_menu");
 		}
 	}
 }

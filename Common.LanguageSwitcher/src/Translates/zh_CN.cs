@@ -16,11 +16,14 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
+			{ "Language", "语言" },
 			{ "Language Switcher", "语言切换器" },
 			{ "Provide manually language switch menu for visitor", "提供给访问者手动切换语言的菜单" },
 			{ "LanguageSwitcherSettings", "语言切换设置" },
 			{ "SwitchableLanguages", "可切换到的语言" },
-			{ "Switch Language", "切换语言" }
+			{ "Switch Language", "切换语言" },
+			{ "DisplayLanguageSwitcherOnFrontPages", "在前台页面显示语言切换器" },
+			{ "DisplayLanguageSwitcherOnAdminPanel", "在后台页面显示语言切换器" }
 		};
 
 		public bool CanTranslate(string code) {

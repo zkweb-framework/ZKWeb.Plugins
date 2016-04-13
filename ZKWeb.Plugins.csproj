@@ -173,6 +173,7 @@
     <Compile Include="Common.Admin\src\Translates\ko_KR.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
+    <Content Include="Common.Admin\templates\common.admin.widgets\admin_apps_menu.html" />
     <Compile Include="Common.Base\src\Extensions\DataTableExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\StringExtensions.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBoxGroup.cs" />
@@ -556,6 +557,7 @@
     <Content Include="Common.Base\static\common.base.css\adminLTE\skins\skin-black-light.min.css" />
     <Content Include="Common.Base\static\common.base.css\adminLTE\skins\skin-black.css" />
     <Content Include="Common.Base\static\common.base.css\adminLTE\skins\skin-black.min.css" />
+    <None Include="Common.Admin\templates\common.admin.widgets\admin_apps_menu.widget" />
     <None Include="Common.Base\static\common.base.css\adminLTE\skins\_skin_default.scss" />
     <Content Include="Common.Base\static\common.base.css\adminLTE\skins\skin-blue-light.css" />
     <Content Include="Common.Base\static\common.base.css\adminLTE\skins\skin-blue-light.min.css" />
@@ -584,6 +586,7 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireScript.js" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.onclick_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.searchable_dropdown_list.html" />
+    <Content Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\admin_language_switch_menu.html" />
     <Content Include="Common.Region\static\common.region.css\region-editor.css" />
     <Content Include="Common.Region\static\common.region.js\region-editor.js" />
     <Content Include="Common.Region\static\common.region.js\region-editor.min.js" />
@@ -835,9 +838,8 @@
     <None Include="Common.Base\static\common.base.css\custom\toast.scss" />
     <None Include="Common.Base\static\common.base.css\custom\variables.scss" />
     <None Include="Common.Base\static\common.base.css\koala-config.json" />
+    <None Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\admin_language_switch_menu.widget" />
     <None Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\language_switch_menu.widget" />
-    <Content Include="Common.LanguageSwitcher\static\common.languageswitcher.js\language_switcher.js" />
-    <Content Include="Common.LanguageSwitcher\static\common.languageswitcher.js\language_switcher.min.js" />
     <Content Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\language_switch_menu.html" />
     <Content Include="Demo\static\demo\demo_index.css" />
     <Content Include="Demo\templates\common.base\footer.html" />

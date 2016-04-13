@@ -21,7 +21,9 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src {
 			// 注册默认模块
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			var navbarRight = areaManager.GetArea("header_navbar_right");
+			var adminNavBar = areaManager.GetArea("admin_navbar");
 			navbarRight.DefaultWidgets.Add("common.languageswitcher.widgets/language_switch_menu");
+			adminNavBar.DefaultWidgets.Add("common.languageswitcher.widgets/admin_language_switch_menu");
 		}
 	}
 }
