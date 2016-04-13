@@ -1,4 +1,4 @@
-﻿{% fetch /api/user_login_info > login_info %}
+﻿{% fetch /api/user/login_info > login_info %}
 {% if login_info.userIsAdminOrParter > 0 %}
 <a href="/admin">{{ "Admin Panel" | trans }}</a>
 {% endif %}

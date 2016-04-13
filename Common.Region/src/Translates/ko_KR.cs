@@ -20,6 +20,7 @@ namespace ZKWeb.Plugins.Common.Region.src.Translates {
 			{ "Provide regions and related functions", "지역 목록 및 관련 기능" },
 			{ "RegionSettings", "장소" },
 			{ "DefaultCountry", "기본 국가/관리" },
+			{ "DisplayCountryDropdown", "디스플레이 국가 / 관리 지역 드롭 다운 상자" },
 			{ "CN", "중화 인민 공화국" },
 			{ "US", "미국" },
 			{ "FR", "프랑스" },

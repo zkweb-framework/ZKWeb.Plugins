@@ -584,6 +584,9 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireScript.js" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.onclick_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.searchable_dropdown_list.html" />
+    <Content Include="Common.Region\static\common.region.css\region-editor.css" />
+    <Content Include="Common.Region\static\common.region.js\region-editor.js" />
+    <Content Include="Common.Region\static\common.region.js\region-editor.min.js" />
     <Content Include="Shopping.Logistics\templates\shopping.logistics\tmpl.price_rules_alert.html" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-edit.css" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-list.css" />
@@ -891,6 +894,9 @@
     <None Include="Common.LanguageSwitcher\plugin.json" />
     <None Include="Common.MenuPageBase\plugin.json" />
     <None Include="Common.Region\plugin.json" />
+    <None Include="Common.Region\static\common.region.css\koala-config.json" />
+    <None Include="Common.Region\static\common.region.css\region-editor.scss" />
+    <None Include="Common.Region\static\common.region.js\koala-config.json" />
     <None Include="Common.Region\texts\regions_cn.json" />
     <None Include="Common.SerialGenerate\plugin.json" />
     <None Include="Common.UserPanel\templates\common.user_panel.widgets\enter_user_panel.widget" />

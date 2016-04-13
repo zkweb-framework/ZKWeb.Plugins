@@ -30,6 +30,7 @@ namespace ZKWeb.Plugins.UI.CKEditor.src.FormFieldHandlers {
 			html.AddAttribute("name", field.Attribute.Name);
 			html.AddAttribute("require-script", "/static/ui.ckeditor.js/ckeditor-loader.min.js");
 			html.AddAttribute("class", "form-control ckeditor");
+			html.AddAttribute("data-trigger", "ckeditor");
 			html.AddAttribute("data-ckeditor-config", attribute.Config);
 			html.AddAttributes(provider.FormControlAttributes.Where(a => a.Key != "class"));
 			html.AddAttributes(htmlAttributes);

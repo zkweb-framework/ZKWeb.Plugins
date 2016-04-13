@@ -20,6 +20,7 @@ namespace ZKWeb.Plugins.Common.Region.src.Translates {
 			{ "Provide regions and related functions", "提供区域列表和相关的功能" },
 			{ "RegionSettings", "地区设置" },
 			{ "DefaultCountry", "默认国家/行政区" },
+			{ "DisplayCountryDropdown", "显示国家/行政区下拉框" },
 			{ "CN", "中华人民共和国" },
 			{ "US", "美利坚合众国" },
 			{ "FR", "法国" },

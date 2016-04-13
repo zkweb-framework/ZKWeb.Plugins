@@ -29,7 +29,7 @@ $(function () {
 			// 防止ckeditor焦点无法捕捉的BUG
 			$("[tabindex]").removeAttr("tabindex");
 		};
-		var rule = "textarea.ckeditor";
+		var rule = "[data-trigger=ckeditor]";
 		$(rule).each(function () { initCKEditor(this); });
 		$(document).on("dynamicLoaded", function (e, contents) {
 			$(contents).find(rule).each(function () { initCKEditor(this); });

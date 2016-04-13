@@ -1,4 +1,4 @@
-﻿{% fetch /api/get_switchable_languages > languages %}
+﻿{% fetch /api/locale/switchable_languages > languages %}
 {% if languages.languages.size > 0 %}
 {% include_js "/static/common.languageswitcher.js/language_switcher.min.js" %}
 <li class="dropdown">

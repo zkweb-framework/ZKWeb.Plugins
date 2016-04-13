@@ -29,7 +29,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// 获取当前登陆的用户信息
 		/// </summary>
 		/// <returns></returns>
-		[Action("api/user_login_info", HttpMethods.POST)]
+		[Action("api/user/login_info", HttpMethods.POST)]
 		public IActionResult UserLoginInfo() {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser() ?? new User();
@@ -50,7 +50,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// 要求本地访问或管理员登陆
 		/// </summary>
 		/// <returns></returns>
-		[Action("api/clear_cache", HttpMethods.POST)]
+		[Action("api/cache/clear", HttpMethods.POST)]
 		public IActionResult ClearCache() {
 			var request = HttpContext.Current.Request;
 			if (!request.IsLocal) {

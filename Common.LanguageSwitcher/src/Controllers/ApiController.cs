@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.Controllers {
 		/// 获取可切换的语言列表
 		/// </summary>
 		/// <returns></returns>
-		[Action("api/get_switchable_languages")]
+		[Action("api/locale/switchable_languages")]
 		public IActionResult GetSwitchableLanguages() {
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var settings = configManager.GetData<LanguageSwitcherSettings>();
@@ -34,7 +34,7 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.Controllers {
 		/// 切换到指定语言
 		/// </summary>
 		/// <returns></returns>
-		[Action("api/switch_to_language", HttpMethods.POST)]
+		[Action("api/locale/switch_to_language", HttpMethods.POST)]
 		public IActionResult SwitchToLanguage() {
 			var language = HttpContext.Current.Request.GetParam<string>("language");
 			HttpContextUtils.PutCookie(LocaleUtils.LanguageKey, language);

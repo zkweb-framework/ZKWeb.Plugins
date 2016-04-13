@@ -11,9 +11,9 @@ namespace ZKWeb.Plugins.Common.Region.src.Model {
 	/// </summary>
 	public class CountryAndRegion {
 		/// <summary>
-		/// 国家Id
+		/// 国家
 		/// </summary>
-		public long CountryId { get; set; }
+		public string Country { get; set; }
 		/// <summary>
 		/// 地区Id
 		/// </summary>
@@ -28,10 +28,10 @@ namespace ZKWeb.Plugins.Common.Region.src.Model {
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		/// <param name="countryId">国家Id</param>
+		/// <param name="country">国家Id</param>
 		/// <param name="regionId">地区Id</param>
-		public CountryAndRegion(long countryId, long? regionId) {
-			CountryId = countryId;
+		public CountryAndRegion(string country, long? regionId) {
+			Country = country;
 			RegionId = regionId;
 		}
 	}

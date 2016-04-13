@@ -9,7 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
+using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Region.src.Config;
 using ZKWeb.Plugins.Common.Region.src.FormFieldAttributes;
 using ZKWeb.Plugins.Common.Region.src.Model;
 using ZKWeb.Utils.Extensions;
@@ -26,9 +28,16 @@ namespace ZKWeb.Plugins.Common.Region.src.FormFieldHandlers {
 		/// </summary>
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+			var attribute = (RegionEditorAttribute)field.Attribute;
+			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
+			var regionSettings = configManager.GetData<RegionSettings>();
 			var html = new HtmlTextWriter(new StringWriter());
 			html.AddAttribute("require-script", "/static/common.region.js/region-editor.min.js");
+			html.AddAttribute("require-style", "/static/common.region.css/region-editor.css");
+			html.AddAttribute("class", "region-editor");
 			html.AddAttribute("data-trigger", "region-editor");
+			html.AddAttribute("data-display-country-dropdown", JsonConvert.SerializeObject(
+				attribute.DisplayCountryDropdown ?? regionSettings.DisplayCountryDropdown));
 			html.RenderBeginTag("div");
 			html.AddAttribute("name", field.Attribute.Name);
 			html.AddAttribute("value", JsonConvert.SerializeObject(field.Value));
@@ -38,7 +47,7 @@ namespace ZKWeb.Plugins.Common.Region.src.FormFieldHandlers {
 			html.RenderBeginTag("input");
 			html.RenderEndTag(); // input
 			html.RenderEndTag(); // div
-			return html.InnerWriter.ToString();
+			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());
 		}
 
 		/// <summary>

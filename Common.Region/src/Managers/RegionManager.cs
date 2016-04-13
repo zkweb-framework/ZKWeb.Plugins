@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Common.Region.src.Managers {
 		});
 
 		/// <summary>
-		/// 获取默认的货币信息，找不到时返回null
+		/// 获取默认的国家/行政区信息，找不到时返回null
 		/// </summary>
 		/// <returns></returns>
 		public virtual Country GetDefaultCountry() {

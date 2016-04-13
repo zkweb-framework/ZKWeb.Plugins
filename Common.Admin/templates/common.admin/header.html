@@ -20,7 +20,7 @@
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
 					<li class="dropdown user user-menu">
-						{% fetch /api/user_login_info > login_info %}
+						{% fetch /api/user/login_info > login_info %}
 						<a aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<img src="{{ login_info.avatar }}" class="user-image" alt="">
 							<span class="hidden-xs">{{ login_info.username }}</span>
@@ -38,7 +38,7 @@
 									<a href="/admin/about_website" target="">{{ "About Website" | trans }}</a>
 								</div>
 								<div class="col-xs-4 text-center">
-									<a post-href="/api/clear_cache" ajax="true">{{ "Clear Cache" | trans }}</a>
+									<a post-href="/api/cache/clear" ajax="true">{{ "Clear Cache" | trans }}</a>
 								</div>
 							</li>
 							<li class="user-footer">

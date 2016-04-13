@@ -24,7 +24,7 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Controllers {
 		/// 获取用户中心的菜单项分组列表
 		/// </summary>
 		/// <returns></returns>
-		[Action("api/user_panel_menu_groups")]
+		[Action("api/user/panel/menu_groups")]
 		public IActionResult UserPanelMenuGroups() {
 			PrivilegesChecker.Check(UserTypesGroup.All);
 			var groups = new List<MenuItemGroup>();

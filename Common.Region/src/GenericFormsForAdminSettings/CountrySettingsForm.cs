@@ -43,6 +43,11 @@ namespace ZKWeb.Plugins.Common.Region.src.GenericFormsForAdminSettings {
 			[Required]
 			[DropdownListField("DefaultCountry", typeof(CountryListItemProvider))]
 			public string DefaultCountry { get; set; }
+			/// <summary>
+			/// 显示国家下拉框
+			/// </summary>
+			[CheckBoxField("DisplayCountryDropdown")]
+			public bool DisplayCountryDropdown { get; set; }
 
 			/// <summary>
 			/// 绑定表单
@@ -51,6 +56,7 @@ namespace ZKWeb.Plugins.Common.Region.src.GenericFormsForAdminSettings {
 				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 				var settings = configManager.GetData<RegionSettings>();
 				DefaultCountry = settings.DefaultCountry;
+				DisplayCountryDropdown = settings.DisplayCountryDropdown;
 			}
 
 			/// <summary>
@@ -61,6 +67,7 @@ namespace ZKWeb.Plugins.Common.Region.src.GenericFormsForAdminSettings {
 				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 				var settings = configManager.GetData<RegionSettings>();
 				settings.DefaultCountry = DefaultCountry;
+				settings.DisplayCountryDropdown = DisplayCountryDropdown;
 				configManager.PutData(settings);
 				return new { message = new T("Saved Successfully") };
 			}

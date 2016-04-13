@@ -24,6 +24,17 @@ namespace ZKWeb.Plugins.Common.Region.src.Config {
 			set { _DefaultCountry = value; }
 		}
 		private string _DefaultCountry;
+		/// <summary>
+		/// 是否显示国家下拉框
+		/// </summary>
+		public bool DisplayCountryDropdown { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public RegionSettings() {
+			DisplayCountryDropdown = true;
+		}
 
 		/// <summary>
 		/// 默认语言转换到默认国家/行政区的索引

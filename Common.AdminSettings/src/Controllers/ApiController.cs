@@ -24,7 +24,7 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Controllers {
 		/// 获取后台管理的菜单项分组列表
 		/// </summary>
 		/// <returns></returns>
-		[Action("api/admin_settings_menu_groups")]
+		[Action("api/admin/settings/menu_groups")]
 		public IActionResult AdminSettingsMenuGroups() {
 			PrivilegesChecker.Check(UserTypesGroup.AdminOrParter);
 			var groups = new List<MenuItemGroup>();
