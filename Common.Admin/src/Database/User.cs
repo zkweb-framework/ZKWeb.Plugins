@@ -36,10 +36,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		/// </summary>
 		public virtual DateTime CreateTime { get; set; }
 		/// <summary>
-		/// 关联的用户角色
-		/// </summary>
-		public virtual UserRole Role { get; set; }
-		/// <summary>
 		/// 附加数据
 		/// </summary>
 		public virtual Dictionary<string, object> Items { get; set; }
@@ -47,12 +43,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		/// 是否已删除
 		/// </summary>
 		public virtual bool Deleted { get; set; }
+		/// <summary>
+		/// 关联的用户角色
+		/// </summary>
+		public virtual ISet<UserRole> Roles { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public User() {
 			Items = new Dictionary<string, object>();
+			Roles = new HashSet<UserRole>();
 		}
 
 		/// <summary>
@@ -107,7 +108,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 			Map(u => u.Username).Unique();
 			Map(u => u.Password);
 			Map(u => u.CreateTime);
-			References(u => u.Role);
+			HasManyToMany(u => u.Roles);
 			Map(u => u.Items).CustomType<JsonSerializedType<Dictionary<string, object>>>();
 			Map(u => u.Deleted);
 		}

@@ -35,8 +35,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 			// 从数据库中获取
 			var user = UnitOfWork.ReadData<User, User>(r => {
 				var u = r.GetById(session.ReleatedId);
-				if (u != null && u.Role != null) {
-					var _ = u.Role.Privileges;
+				if (u != null) {
+					var _ = u.Roles.SelectMany(role => role.Privileges).ToList(); // 预读数据
 				}
 				return u;
 			});

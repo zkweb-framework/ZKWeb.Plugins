@@ -63,6 +63,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "User Manage", "用户管理" },
 			{ "Role Manage", "角色管理" },
 			{ "Role", "角色" },
+			{ "Roles", "角色" },
 			{ "UserRole", "角色" },
 			{ "View", "查看" },
 			{ "Edit", "编辑" },

@@ -77,13 +77,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				AjaxTableSearchRequest request, List<KeyValuePair<User, Dictionary<string, object>>> pairs) {
 				var userManager = Application.Ioc.Resolve<UserManager>();
 				foreach (var pair in pairs) {
-					var role = pair.Key.Role;
 					pair.Value["Id"] = pair.Key.Id;
 					pair.Value["Avatar"] = userManager.GetAvatarWebPath(pair.Key.Id);
 					pair.Value["Username"] = pair.Key.Username;
 					pair.Value["UserType"] = new T(pair.Key.Type.GetDescription());
-					pair.Value["Role"] = role == null ? null : role.Name;
-					pair.Value["RoleId"] = role == null ? null : (long?)role.Id;
+					pair.Value["Roles"] = string.Join(", ", pair.Key.Roles.Select(r => r.Name));
 					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
 					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
@@ -99,7 +97,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				response.Columns.AddImageColumn("Avatar");
 				response.Columns.AddMemberColumn("Username", "45%");
 				response.Columns.AddMemberColumn("UserType");
-				response.Columns.AddEditColumnForAdminApp<RoleManageApp>("Role", "RoleId");
+				response.Columns.AddMemberColumn("Roles");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();

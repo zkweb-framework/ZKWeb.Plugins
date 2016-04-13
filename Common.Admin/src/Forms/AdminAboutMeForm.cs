@@ -29,8 +29,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 		/// <summary>
 		/// 角色
 		/// </summary>
-		[LabelField("Role")]
-		public string Role { get; set; }
+		[LabelField("Roles")]
+		public string Roles { get; set; }
 		/// <summary>
 		/// 超级管理员
 		/// </summary>
@@ -77,9 +77,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			Username = user.Username;
-			Role = user.Role == null ? new T("No Role") : user.Role.Name;
+			Roles = string.Join(", ", user.Roles.Select(r => r.Name));
 			SuperAdmin = new T(user.Type == UserTypes.SuperAdmin ? "Yes" : "No");
-			Privileges = user.Role == null ? new HashSet<string>() : user.Role.Privileges;
+			Privileges = new HashSet<string>(user.Roles.SelectMany(r => r.Privileges));
 			if (user.Type == UserTypes.SuperAdmin) {
 				// 超级管理员时勾选所有权限
 				var providers = Application.Ioc.ResolveMany<IPrivilegesProvider>();

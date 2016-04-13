@@ -20,6 +20,7 @@ using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Localize;
 using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
 
 namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// <summary>
@@ -82,12 +83,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				AjaxTableSearchRequest request, List<KeyValuePair<User, Dictionary<string, object>>> pairs) {
 				var userManager = Application.Ioc.Resolve<UserManager>();
 				foreach (var pair in pairs) {
-					var role = pair.Key.Role;
 					pair.Value["Id"] = pair.Key.Id;
 					pair.Value["Avatar"] = userManager.GetAvatarWebPath(pair.Key.Id);
 					pair.Value["Username"] = pair.Key.Username;
-					pair.Value["Role"] = role == null ? null : role.Name;
-					pair.Value["RoleId"] = role == null ? null : (long?)role.Id;
+					pair.Value["Roles"] = string.Join(", ", pair.Key.Roles.Select(r => r.Name));
 					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
 					pair.Value["SuperAdmin"] = (
 						pair.Key.Type == UserTypes.SuperAdmin ? EnumBool.True : EnumBool.False);
@@ -104,7 +103,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				response.Columns.AddNoColumn();
 				response.Columns.AddImageColumn("Avatar");
 				response.Columns.AddMemberColumn("Username", "45%");
-				response.Columns.AddEditColumnForAdminApp<RoleManageApp>("Role", "RoleId");
+				response.Columns.AddMemberColumn("Roles");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddEnumLabelColumn("SuperAdmin", typeof(EnumBool));
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
@@ -139,8 +138,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 角色
 			/// </summary>
-			[DropdownListField("Role", typeof(ListItemsWithOptional<ListItemFromDataNotDeleted<UserRole>>))]
-			public long? RoleId { get; set; }
+			[CheckBoxGroupField("Roles", typeof(ListItemFromDataNotDeleted<UserRole>))]
+			public HashSet<long> Roles { get; set; }
 
 			/// <summary>
 			/// 绑定数据到表单
@@ -148,7 +147,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			protected override void OnBind(DatabaseContext context, User bindFrom) {
 				Password = null;
 				IsSuperAdmin = bindFrom.Type == UserTypes.SuperAdmin;
-				RoleId = bindFrom.Role == null ? null : (long?)bindFrom.Role.Id;
+				Roles = new HashSet<long>(bindFrom.Roles.Select(r => r.Id));
 			}
 
 			/// <summary>
@@ -176,7 +175,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				if (sessionManager.GetSession().ReleatedId == saveTo.Id && saveTo.Type != UserTypes.SuperAdmin) {
 					throw new HttpException(400, new T("You can't downgrade yourself to normal admin"));
 				}
-				saveTo.Role = RoleId == null ? null : context.Get<UserRole>(r => r.Id == RoleId);
+				// 设置角色
+				var roleRepository = RepositoryResolver.Resolve<UserRole>(context);
+				saveTo.Roles = new HashSet<UserRole>(roleRepository.GetMany(r => Roles.Contains(r.Id)));
 				return new {
 					message = new T("Saved Successfully"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal

@@ -74,10 +74,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 				return true;
 			}
 			if (privileges != null && privileges.Length > 0) {
-				var role = user.Role;
-				if (role == null || !privileges.All(p => role.Privileges.Contains(p))) {
-					// 无角色或未包含指定的所有权限
-					return false;
+				foreach (var privilege in privileges) {
+					if (!user.Roles.Any(r => r.Privileges.Contains(privilege))) {
+						// 未包含指定的所有权限
+						return false;
+					}
 				}
 			}
 			// 检查通过
