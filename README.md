@@ -16,7 +16,7 @@ Default plugin set is for online shopping site, you can disable plugins you don'
 The theme used for admin dashboard is AdminLTE.
 
 Plugin States:<br/>
-CMS.Article: 70%<br/>
+CMS.Article: 70% (Front page not done)<br/>
 Common.Admin: 100%<br/>
 Common.AdminSettings: 100%<br/>
 Common.Base: 100%<br/>
@@ -27,18 +27,18 @@ Common.GenericRecord: 100%<br/>
 Common.GenericTag: 100%<br/>
 Common.LanguageSwitcher: 100%<br/>
 Common.MenuPageBase: 100%<br/>
-Common.Region: 80%<br/>
+Common.Region: 100%<br/>
 Common.SerialGenerate: 100%<br/>
 Common.UserContact: 100%<br/>
 Common.UserPanel: 100%<br/>
 Demo: --<br/>
 Finance.Payment: 100%<br/>
-Finance.Payment.Alipay: 20%<br/>
-Finance.Payment.Tenpay: 20%<br/>
-Finance.Payment.WeChat: 20%<br/>
-Shopping.AfterSales: 0%<br/>
-Shopping.Logistics: 5%<br/>
-Shopping.Order: 5%<br/>
-Shopping.Product: 70%<br/>
+Finance.Payment.Alipay: 20% (Some features not implemented)<br/>
+Finance.Payment.Tenpay: 20% (Some features not implemented)<br/>
+Finance.Payment.WeChat: 20% (Some features not implemented)<br/>
+Shopping.AfterSales: 0% (Features not implemented)<br/>
+Shopping.Logistics: 5% (Some features not implemented)<br/>
+Shopping.Order: 5% (Some features not implemented)<br/>
+Shopping.Product: 70% (Front page not done)<br/>
 UI.CKEditor: 100%<br/>
-UnitTest.WebTester: 0%<br/>
+UnitTest.WebTester: 0% (Features not implemented)<br/>
