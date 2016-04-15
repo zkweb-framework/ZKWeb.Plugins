@@ -1,5 +1,5 @@
 ﻿/*
-	支持刷新验证码，用在form对象中
+	验证码支持
 */
 
 $(function () {
@@ -13,4 +13,12 @@ $(function () {
 	var refresh = function () { $(this).find(".captcha").click(); };
 	$(document).on("success", "form[ajax=true]", refresh);
 	$(document).on("error", "form[ajax=true]", refresh);
+	// 播放语音提示
+	$(document).on("click", "form .captcha-audio", function () {
+		var $captchaAudio = $(this);
+		var url = $captchaAudio.data("audio");
+		var uri = new Uri(url);
+		uri.replaceQueryParam("timestamp", new Date().getTime());
+		new Audio(uri + "").play();
+	});
 });

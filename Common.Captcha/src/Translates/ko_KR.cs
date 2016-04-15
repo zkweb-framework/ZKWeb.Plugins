@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.UI.CKEditor.src.Translates {
+namespace ZKWeb.Plugins.Common.Captcha.src.Translates {
 	/// <summary>
 	/// 韩语翻译
 	/// </summary>
@@ -16,8 +16,12 @@ namespace ZKWeb.Plugins.UI.CKEditor.src.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "ko-KR" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "CKEditor", "CKEditor" },
-			{ "Provide ckeditor form field", "CKEditor 양식 필드를 제공" }
+			{ "Captcha", "코드" },
+			{ "Click to change captcha image", "확인 코드 이미지를 대체 하려면 클릭" },
+			{ "Please enter captcha", "제발 입력 검증 코드" },
+			{ "Incorrect captcha", "코드 오류를 확인, 입력 해 주세요는" },
+			{ "Provide captcha form field and validation", "인증 코드 양식 필드 및 검증" },
+			{ "Captcha Audio", "음성 인증 코드" }
 		};
 
 		public bool CanTranslate(string code) {

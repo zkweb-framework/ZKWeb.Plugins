@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Captcha.src.FormFieldAttributes;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 	/// <summary>

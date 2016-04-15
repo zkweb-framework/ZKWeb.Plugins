@@ -1,15 +1,19 @@
-﻿/* 验证码图片 */
+﻿/* 输入框组 */
 .input-group {
 	.input-group-addon {
 		padding: 0px 4px;
 	}
 
+	.input-group-addon:not(:first-child):not(:last-child) {
+		border-left: none;
+	}
+	/* 验证码样式 */
 	.captcha {
 		height: 30px;
 	}
 }
 
-/*验证信息显示*/
+/* 验证信息显示 */
 .input-validation-error {
 	border-color: #f3565d;
 }

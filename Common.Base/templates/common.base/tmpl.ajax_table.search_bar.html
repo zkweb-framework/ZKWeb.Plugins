@@ -1,6 +1,6 @@
 ﻿<div class="actions search-bar ajax-table-search-bar" ajax-table="#{{ tableId }}">
 	<div class="btn-group">
-		<a class="btn btn-default btn-circle" aria-expanded="true" data-toggle="dropdown">
+		<a class="btn btn-default btn-circle" aria-expanded="true" data-toggle="dropdown" title="{{ "Menu" | trans }}">
 			<i class="fa fa-angle-down"></i>
 		</a>
 		<ul class="dropdown-menu pull-right ajax-table-menu" ajax-table="#{{ tableId }}">
@@ -13,12 +13,12 @@
 		<div class="input-group">
 			<input class="form-control keyword" placeholder="{{ placeholder }}" type="text">
 			<div class="input-group-btn">
-				<a class="btn btn-default search-button">
+				<a class="btn btn-default search-button" title="{{ "Search" | trans }}">
 					<i class="fa fa-search"></i>
 				</a>
 				{% if conditions.size > 0 %}
 				<div class="btn-group">
-					<a class="btn btn-default" aria-expanded="true" data-toggle="dropdown">
+					<a class="btn btn-default" aria-expanded="true" data-toggle="dropdown" title="{{ "AdvanceSearch" | trans }}">
 						<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu pull-right">
@@ -29,7 +29,7 @@
 								{% endfor %}
 								<div class="form-actions bottom">
 									<a class="btn btn-success advance-search-button" type="submit">
-										<i class="fa fa-search"></i>{{ "Advance search" | trans }}
+										<i class="fa fa-search"></i>{{ "AdvanceSearch" | trans }}
 									</a>
 									<div class="clearfix"></div>
 								</div>

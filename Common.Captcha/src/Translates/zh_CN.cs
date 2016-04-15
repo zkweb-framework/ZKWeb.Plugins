@@ -7,17 +7,21 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.UI.CKEditor.src.Translates {
+namespace ZKWeb.Plugins.Common.Captcha.src.Translates {
 	/// <summary>
 	/// 中文翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class ja_JP : ITranslateProvider {
-		private static HashSet<string> Codes = new HashSet<string>() { "ja-JP" };
+	public class zh_CN : ITranslateProvider {
+		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "CKEditor", "CKEditor" },
-			{ "Provide ckeditor form field", "CKEditorフォームフィールドを提供する" }
+			{ "Captcha", "验证码" },
+			{ "Click to change captcha image", "点击更换验证码图片" },
+			{ "Please enter captcha", "请填写验证码" },
+			{ "Incorrect captcha", "验证码错误，请重新填写" },
+			{ "Provide captcha form field and validation", "提供验证码表单字段和验证功能" },
+			{ "Captcha Audio", "验证码语音" }
 		};
 
 		public bool CanTranslate(string code) {

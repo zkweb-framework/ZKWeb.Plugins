@@ -40,7 +40,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Pagination Settings", "페이지 설정" },
 			{ "[0] Records per page", "페이지 [0]" },
 			{ "Please enter keyword", "키워드를 입력 해 주십시오" },
-			{ "Advance search", "고급 검색" },
+			{ "Search", "수색" },
+			{ "AdvanceSearch", "고급 검색" },
 			{ "Data with id {0} cannot be found", "데이터 Id가 {0}를 찾을 수 없습니다" },
 			{ "True", "예" },
 			{ "False", "여부" },
@@ -61,7 +62,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Base functions and template pages", "기능 및 서식 파일을 기반으로 페이지" },
 			{ "{0} format is incorrect", "{0}가 올바른 형식이" },
 			{ "Expand/Collapse All", "모두 확장/축소" },
-			{ "Type", "유형" }
+			{ "Type", "유형" },
+			{ "Menu", "메뉴" },
+			{ "BatchActions", "일괄 작업" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -17,7 +17,7 @@ $(function () {
 				return; // 防止重复加载
 			}
 			loadedScripts.push(script);
-			$.getScript(loadedScripts);
+			$.ajax({ dataType: "script", cache: true, url: script });
 		});
 	};
 	loadRequiredScripts(document);

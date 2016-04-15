@@ -12,7 +12,7 @@
 </head>
 <body class="skin-default">
 	<header class="main-header">
-		<a href="/admin" class="logo">
+		<a href="/admin" class="logo" title="logo">
 			<img src="/static/common.admin.images/logo.png" alt="logo">
 		</a>
 		<nav class="navbar navbar-static-top" role="navigation">
@@ -21,13 +21,13 @@
 				<ul class="nav navbar-nav">
 					<li class="dropdown user user-menu">
 						{% fetch /api/user/login_info > login_info %}
-						<a aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<img src="{{ login_info.avatar }}" class="user-image" alt="">
+						<a aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" title="{{ "Menu" | trans }}">
+							<img src="{{ login_info.avatar }}" class="user-image" alt="{{ "Avatar" | trans }}">
 							<span class="hidden-xs">{{ login_info.username }}</span>
 						</a>
 						<ul class="dropdown-menu">
 							<li class="user-header">
-								<img src="{{ login_info.avatar }}" class="img-circle" alt="">
+								<img src="{{ login_info.avatar }}" class="img-circle" alt="{{ "Avatar" | trans }}">
 								<p>{{ login_info.username }}</p>
 							</li>
 							<li class="user-body">

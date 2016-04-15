@@ -40,7 +40,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Pagination Settings", "ページング設定" },
 			{ "[0] Records per page", "ページごとに[0]項目" },
 			{ "Please enter keyword", "キーワードを入力してください" },
-			{ "Advance search", "高度な検索" },
+			{ "Search", "検索" },
+			{ "AdvanceSearch", "高度な検索" },
 			{ "Data with id {0} cannot be found", "Idが{0}のデータを見つかりませんでした" },
 			{ "True", "真" },
 			{ "False", "偽" },
@@ -61,7 +62,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Base functions and template pages", "基本機能とテンプレートページ" },
 			{ "{0} format is incorrect", "{0}のフォーマットが正しくありません" },
 			{ "Expand/Collapse All", "すべて展開/折り畳み" },
-			{ "Type", "タイプ" }
+			{ "Type", "タイプ" },
+			{ "Menu", "メニュー" },
+			{ "BatchActions", "バッチアクション" }
 		};
 
 		public bool CanTranslate(string code) {

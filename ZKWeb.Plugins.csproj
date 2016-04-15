@@ -85,6 +85,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -203,8 +204,9 @@
     <Compile Include="Common.Admin\src\Managers\UserManager.cs" />
     <Compile Include="Common.Base\src\HtmlBuilder\AjaxTableBuilder.cs" />
     <Compile Include="Common.Base\src\HtmlBuilder\AjaxTableSearchBarBuilder.cs" />
-    <Compile Include="Common.Base\src\Managers\CaptchaManager.cs" />
-    <Compile Include="Common.Base\src\Controllers\CaptchaController.cs" />
+    <Compile Include="Common.Captcha\src\FormFieldAttributes\CaptchaFieldAttribute.cs" />
+    <Compile Include="Common.Captcha\src\Managers\CaptchaManager.cs" />
+    <Compile Include="Common.Captcha\src\Controllers\CaptchaController.cs" />
     <Compile Include="Common.Base\src\Controllers\IndexController.cs" />
     <Compile Include="Common.Base\src\HtmlBuilder\DataEditFormBuilder.cs" />
     <Compile Include="Common.Base\src\Extensions\AjaxTableActionColumn.cs" />
@@ -214,7 +216,7 @@
     <Compile Include="Common.Base\src\Extensions\AjaxTableIdColumnExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\MenuItemsExtensions.cs" />
     <Compile Include="Common.Base\src\HtmlBuilder\FormBuilder.cs" />
-    <Compile Include="Common.Base\src\FormFieldHandlers\Captcha.cs" />
+    <Compile Include="Common.Captcha\src\FormFieldHandlers\Captcha.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBox.cs" />
     <Compile Include="Common.Base\src\HtmlBuilder\FormHtmlProvider.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\DropdownList.cs" />
@@ -274,6 +276,11 @@
     <Compile Include="Common.Base\src\TemplateTags\WebsiteName.cs" />
     <Compile Include="Common.Base\src\TemplateTags\UseTitle.cs" />
     <Compile Include="Common.Base\src\Translates\zh_CN.cs" />
+    <Content Include="Common.Captcha\static\common.captcha.js\captcha.js" />
+    <Compile Include="Common.Captcha\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.Captcha\src\Translates\ko_KR.cs" />
+    <Compile Include="Common.Captcha\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.Captcha\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Currency\src\Config\CurrencySettings.cs" />
     <Compile Include="Common.Currency\src\Currencies\THB.cs" />
     <Compile Include="Common.Currency\src\Currencies\CZK.cs" />
@@ -586,6 +593,7 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.requireScript.js" />
     <Content Include="Common.Base\templates\common.base\tmpl.ajax_table.onclick_cell.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.searchable_dropdown_list.html" />
+    <Content Include="Common.Captcha\static\common.captcha.js\captcha.min.js" />
     <Content Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\admin_language_switch_menu.html" />
     <Content Include="Common.Region\static\common.region.css\region-editor.css" />
     <Content Include="Common.Region\static\common.region.js\region-editor.js" />
@@ -838,6 +846,7 @@
     <None Include="Common.Base\static\common.base.css\custom\toast.scss" />
     <None Include="Common.Base\static\common.base.css\custom\variables.scss" />
     <None Include="Common.Base\static\common.base.css\koala-config.json" />
+    <None Include="Common.Captcha\plugin.json" />
     <None Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\admin_language_switch_menu.widget" />
     <None Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\language_switch_menu.widget" />
     <Content Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\language_switch_menu.html" />
@@ -962,7 +971,6 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.commonAjaxForm.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.load.setup.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.numberInput.js" />
-    <Content Include="Common.Base\static\common.base.js\custom\_jquery.refreshCaptcha.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.refreshImage.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.select.js" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.switchery.js" />

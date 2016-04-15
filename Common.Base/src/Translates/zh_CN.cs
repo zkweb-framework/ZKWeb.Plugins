@@ -40,7 +40,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Pagination Settings", "分页设置" },
 			{ "[0] Records per page", "每页[0]条" },
 			{ "Please enter keyword", "请填写关键词" },
-			{ "Advance search", "高级搜索" },
+			{ "Search", "搜索" },
+			{ "AdvanceSearch", "高级搜索" },
 			{ "Data with id {0} cannot be found", "无法找到Id是{0}的数据" },
 			{ "True", "是" },
 			{ "False", "否" },
@@ -61,7 +62,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Base functions and template pages", "基础的功能和模板页面" },
 			{ "{0} format is incorrect", "{0}的格式不正确" },
 			{ "Expand/Collapse All", "展开/折叠全部" },
-			{ "Type", "类型" }
+			{ "Type", "类型" },
+			{ "Menu", "菜单" },
+			{ "BatchActions", "批量操作" }
 		};
 
 		public bool CanTranslate(string code) {

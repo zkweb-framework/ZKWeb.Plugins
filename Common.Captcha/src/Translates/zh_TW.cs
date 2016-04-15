@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.UI.CKEditor.src.Translates {
+namespace ZKWeb.Plugins.Common.Captcha.src.Translates {
 	/// <summary>
 	/// 繁体中文翻译
 	/// </summary>
@@ -16,8 +16,12 @@ namespace ZKWeb.Plugins.UI.CKEditor.src.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-TW" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "CKEditor", "CKEditor" },
-			{ "Provide ckeditor form field", "提供CKEditor表單字段" },
+			{ "Captcha", "驗證碼" },
+			{ "Click to change captcha image", "點擊更換驗證碼圖片" },
+			{ "Please enter captcha", "請填寫驗證碼" },
+			{ "Incorrect captcha", "驗證碼錯誤，請重新填寫" },
+			{ "Provide captcha form field and validation", "提供驗證碼表單字段和驗證功能" },
+			{ "Captcha Audio", "驗證碼語音" }
 		};
 
 		public bool CanTranslate(string code) {

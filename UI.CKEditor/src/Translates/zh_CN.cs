@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.UI.CKEditor.Article.src.Translates {
+namespace ZKWeb.Plugins.UI.CKEditor.src.Translates {
 	/// <summary>
 	/// 中文翻译
 	/// </summary>

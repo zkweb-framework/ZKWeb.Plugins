@@ -20,6 +20,7 @@ CMS.Article: 70% (Front page not done)<br/>
 Common.Admin: 100%<br/>
 Common.AdminSettings: 100%<br/>
 Common.Base: 100%<br/>
+Common.Captcha: 100%<br/>
 Common.Currency: 100%<br/>
 Common.CustomTranslate: 100%<br/>
 Common.GenericClass: 100%<br/>

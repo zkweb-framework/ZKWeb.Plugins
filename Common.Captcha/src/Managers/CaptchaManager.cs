@@ -4,14 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
+using System.Speech.Synthesis;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Database;
+using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 
-namespace ZKWeb.Plugins.Common.Base.src.Managers {
+namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 	/// <summary>
 	/// 验证码管理器
 	/// </summary>
@@ -53,6 +59,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// 保存到会话时使用的键名前缀
 		/// </summary>
 		public const string SessionItemKeyPrefix = "Common.Base.Captcha.";
+		/// <summary>
+		/// 验证码语音参数的缓存时间
+		/// </summary>
+		public const int CaptchaAudioPromptCacheTime = 15;
+		/// <summary>
+		/// 验证码语音参数的缓存
+		/// </summary>
+		private MemoryCache<string, PromptBuilder> CaptchaAudioPromptCache =
+			new MemoryCache<string, PromptBuilder>();
 
 		/// <summary>
 		/// 生成验证码并储存验证码到会话中
@@ -114,6 +129,57 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			sessionManager.SaveSession();
 			// 返回图片对象
 			return image;
+		}
+
+		/// <summary>
+		/// 获取当前验证码的语音提示
+		/// </summary>
+		/// <param name="key">使用的键名</param>
+		/// <returns></returns>
+		public virtual MemoryStream GetAudioStream(string key) {
+			var captcha = GetWithoutRemove(key) ?? "";
+			var stream = new MemoryStream();
+			// 生成语音到内存
+			// 需要使用独立线程否则会提示当前线程不支持异步操作
+			// http://stackoverflow.com/questions/10783127/how-to-implement-custom-audio-capcha-in-asp-net
+			var cultureInfo = Thread.CurrentThread.CurrentCulture;
+			var thread = new Thread(() => {
+				try {
+					// 设置线程语言，语音提示会自动选择对应的语言
+					Thread.CurrentThread.CurrentCulture = cultureInfo;
+					Thread.CurrentThread.CurrentUICulture = cultureInfo;
+					// 构建语音
+					// 参数缓存一定时间，防止多次尝试攻击
+					var prompt = CaptchaAudioPromptCache.GetOrDefault(captcha);
+					if (prompt == null) {
+						prompt = new PromptBuilder();
+						var promptRates = new[] { PromptRate.Slow, PromptRate.Medium, PromptRate.Fast };
+						var voiceGenders = new[] { VoiceGender.Male, VoiceGender.Female, VoiceGender.Neutral };
+						var voiceAges = new[] { VoiceAge.Adult, VoiceAge.Child, VoiceAge.Senior, VoiceAge.Teen };
+						foreach (var c in captcha) {
+							prompt.StartVoice(
+								RandomUtils.RandomSelection(voiceGenders),
+								RandomUtils.RandomSelection(voiceAges));
+							prompt.AppendText(c.ToString(), RandomUtils.RandomSelection(promptRates));
+							prompt.AppendBreak(TimeSpan.FromMilliseconds(RandomUtils.RandomInt(50, 450)));
+							prompt.EndVoice();
+						}
+						CaptchaAudioPromptCache.Put(captcha, prompt,
+							TimeSpan.FromSeconds(CaptchaAudioPromptCacheTime));
+					}
+					// 写入语音到数据流
+					var synthesizer = new SpeechSynthesizer();
+					synthesizer.SetOutputToWaveStream(stream);
+					synthesizer.Speak(prompt);
+				} catch (Exception e) {
+					var logManager = Application.Ioc.Resolve<LogManager>();
+					logManager.LogError(e.ToString());
+				}
+			});
+			thread.Start();
+			thread.Join();
+			stream.Seek(0, SeekOrigin.Begin);
+			return stream;
 		}
 
 		/// <summary>

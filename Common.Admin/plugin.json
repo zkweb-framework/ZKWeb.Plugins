@@ -1,5 +1,5 @@
 ﻿{
 	"Name": "Admin Panel",
 	"Description": "Admin panel and users management",
-	"Dependencies": [ "Common.Base" ]
+	"Dependencies": [ "Common.Base", "Commin.Captcha" ]
 }

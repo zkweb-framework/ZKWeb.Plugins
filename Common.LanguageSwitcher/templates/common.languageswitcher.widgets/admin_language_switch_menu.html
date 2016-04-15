@@ -1,7 +1,7 @@
 ﻿{% fetch /api/locale/language_switcher_settings > settings %}
 {% if settings.SwitchableLanguages.size > 0 and settings.DisplaySwitcherOnAdminPanel %}
 <li class="dropdown">
-	<a class="dropdown-toggle" data-toggle="dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" title="{{ "Language" | trans }}">
 		<i class="fa fa-font"></i>
 		{{ "Language" | trans }}
 	</a>
