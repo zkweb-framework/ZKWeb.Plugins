@@ -119,7 +119,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Plugin List", "プラグインリスト" },
 			{ "Admin panel and users management", "管理者パネルとユーザー・ロールの管理" },
 			{ "Clear Cache", "キャッシュ消去" },
-			{ "Clear Cache Successfully", "キャッシュ消去成功" }
+			{ "Clear Cache Successfully", "キャッシュ消去成功" },
+			{ "Server Username", "サーバのユーザ名" }
 		};
 
 		public bool CanTranslate(string code) {

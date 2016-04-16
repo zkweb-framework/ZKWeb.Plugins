@@ -68,6 +68,21 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 		/// </summary>
 		private MemoryCache<string, PromptBuilder> CaptchaAudioPromptCache =
 			new MemoryCache<string, PromptBuilder>();
+		/// <summary>
+		/// 当前环境是否支持验证码语音
+		/// 注意：
+		/// 目前IIS环境中部署会出现调用TTS时线程锁死无法结束的问题，原因无法找到
+		/// 也无法找到任何办法预先检测当前环境是否会出现这个问题
+		/// 如果碰到这个问题时请在代码里面设置这个成员为false
+		/// </summary>
+		public bool SupportCaptchaAudio { get; set; }
+
+		/// <summary>
+		/// 验证码管理器
+		/// </summary>
+		public CaptchaManager() {
+			SupportCaptchaAudio = true;
+		}
 
 		/// <summary>
 		/// 生成验证码并储存验证码到会话中
@@ -132,16 +147,50 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 		}
 
 		/// <summary>
+		/// 获取当前验证码，但不删除
+		/// 这个函数一般只用于单元测试或语音提示，检查请使用Check函数
+		/// </summary>
+		/// <param name="key">使用的键名</param>
+		/// <returns></returns>
+		public virtual string GetWithoutRemove(string key) {
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var session = sessionManager.GetSession();
+			return session.Items.GetOrDefault<string>(SessionItemKeyPrefix + key);
+		}
+
+		/// <summary>
+		/// 检查验证码是否正确，检查后删除原验证码
+		/// </summary>
+		/// <param name="key">使用的键名</param>
+		/// <param name="actualCode">收到的验证码</param>
+		/// <returns></returns>
+		public virtual bool Check(string key, string actualCode) {
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var session = sessionManager.GetSession();
+			var itemKey = SessionItemKeyPrefix + key;
+			var exceptedCode = session.Items.GetOrDefault<string>(itemKey);
+			session.Items.Remove(itemKey);
+			sessionManager.SaveSession();
+			return !string.IsNullOrEmpty(exceptedCode) &&
+				!string.IsNullOrEmpty(actualCode) &&
+				actualCode.ToLower() == exceptedCode.ToLower();
+		}
+
+		/// <summary>
 		/// 获取当前验证码的语音提示
 		/// </summary>
 		/// <param name="key">使用的键名</param>
 		/// <returns></returns>
 		public virtual MemoryStream GetAudioStream(string key) {
-			var captcha = GetWithoutRemove(key) ?? "";
-			var stream = new MemoryStream();
+			// 检查是否支持
+			if (!SupportCaptchaAudio) {
+				throw new NotSupportedException("TTS is not support on this environment");
+			}
 			// 生成语音到内存
 			// 需要使用独立线程否则会提示当前线程不支持异步操作
 			// http://stackoverflow.com/questions/10783127/how-to-implement-custom-audio-capcha-in-asp-net
+			var captcha = GetWithoutRemove(key) ?? "";
+			var stream = new MemoryStream();
 			var cultureInfo = Thread.CurrentThread.CurrentCulture;
 			var thread = new Thread(() => {
 				try {
@@ -180,36 +229,6 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 			thread.Join();
 			stream.Seek(0, SeekOrigin.Begin);
 			return stream;
-		}
-
-		/// <summary>
-		/// 获取当前验证码，但不删除
-		/// 这个函数一般只用于单元测试或语音提示，检查请使用Check函数
-		/// </summary>
-		/// <param name="key">使用的键名</param>
-		/// <returns></returns>
-		public virtual string GetWithoutRemove(string key) {
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var session = sessionManager.GetSession();
-			return session.Items.GetOrDefault<string>(SessionItemKeyPrefix + key);
-		}
-
-		/// <summary>
-		/// 检查验证码是否正确，检查后删除原验证码
-		/// </summary>
-		/// <param name="key">使用的键名</param>
-		/// <param name="actualCode">收到的验证码</param>
-		/// <returns></returns>
-		public virtual bool Check(string key, string actualCode) {
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var session = sessionManager.GetSession();
-			var itemKey = SessionItemKeyPrefix + key;
-			var exceptedCode = session.Items.GetOrDefault<string>(itemKey);
-			session.Items.Remove(itemKey);
-			sessionManager.SaveSession();
-			return !string.IsNullOrEmpty(exceptedCode) &&
-				!string.IsNullOrEmpty(actualCode) &&
-				actualCode.ToLower() == exceptedCode.ToLower();
 		}
 	}
 }

@@ -123,6 +123,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var pluginManager = Application.Ioc.Resolve<PluginManager>();
 			var websiteSettings = configManager.GetData<WebsiteSettings>();
 			var localeSettings = configManager.GetData<LocaleSettings>();
+			var serverUsername = Environment.UserName;
 			var serverVariables = HttpContext.Current.Request.ServerVariables;
 			var hostingInfoTable = new DataTable();
 			hostingInfoTable.Columns.Add("Name");
@@ -139,6 +140,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 				websiteName = websiteSettings.WebsiteName,
 				defaultLanguage = localeSettings.DefaultLanguage,
 				defaultTimeZone = localeSettings.DefaultTimezone,
+				serverUsername = serverUsername,
 				hostingInfoTable = hostingInfoTable.ToHtml(),
 				pluginInfoTable = pluginInfoTable.ToHtml()
 			});

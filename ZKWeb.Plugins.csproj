@@ -423,6 +423,7 @@
     <Compile Include="Common.UserPanel\src\Translates\zh_TW.cs" />
     <Compile Include="Common.UserPanel\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserPanel\src\UserPanelMenuProviders\UserPanelIndex.cs" />
+    <Compile Include="Demo\src\Plugin.cs" />
     <Compile Include="Demo\src\DataCallbacks\PreventEditDemoAccount.cs" />
     <Compile Include="Demo\src\Translates\ja_JP.cs" />
     <Compile Include="Demo\src\Translates\ko_KR.cs" />

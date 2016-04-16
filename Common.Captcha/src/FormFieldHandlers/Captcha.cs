@@ -53,17 +53,20 @@ namespace ZKWeb.Plugins.Common.Captcha.src.FormFieldHandlers {
 			html.RenderEndTag(); // img
 			html.RenderEndTag();
 			// 语音提示
-			html.AddAttribute("class", "input-group-addon");
-			html.RenderBeginTag("span");
-			html.AddAttribute("class", "captcha-audio");
-			html.AddAttribute("title", new T("Captcha Audio"));
-			html.AddAttribute("data-audio", "/captcha/audio?key=" + attribute.Key);
-			html.RenderBeginTag("a");
-			html.AddAttribute("class", "fa fa-music");
-			html.RenderBeginTag("i");
-			html.RenderEndTag(); // i
-			html.RenderEndTag(); // a
-			html.RenderEndTag(); // span
+			var captchaManager = Application.Ioc.Resolve<CaptchaManager>();
+			if (captchaManager.SupportCaptchaAudio) {
+				html.AddAttribute("class", "input-group-addon");
+				html.RenderBeginTag("span");
+				html.AddAttribute("class", "captcha-audio");
+				html.AddAttribute("title", new T("Captcha Audio"));
+				html.AddAttribute("data-audio", "/captcha/audio?key=" + attribute.Key);
+				html.RenderBeginTag("a");
+				html.AddAttribute("class", "fa fa-music");
+				html.RenderBeginTag("i");
+				html.RenderEndTag(); // i
+				html.RenderEndTag(); // a
+				html.RenderEndTag(); // span
+			}
 			html.RenderEndTag(); // div
 			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());
 		}

@@ -120,7 +120,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Plugin List", "플러그인 목록" },
 			{ "Admin panel and users management", "관리자 패널 및 사용자 관리" },
 			{ "Clear Cache", "캐시 지우기" },
-			{ "Clear Cache Successfully", "성공적으로 캐시 지우기" }
+			{ "Clear Cache Successfully", "성공적으로 캐시 지우기" },
+			{ "Server Username", "서버 사용자" }
 		};
 
 		public bool CanTranslate(string code) {
