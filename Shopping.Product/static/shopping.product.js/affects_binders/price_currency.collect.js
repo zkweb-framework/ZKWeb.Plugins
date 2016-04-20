@@ -1,3 +1,3 @@
 ﻿(function ($binder, affects) {
-	affects.PriceCurrency = parseInt($binder.find("select").val()) || "";
+	affects.PriceCurrency = $binder.find("select").val() || "";
 })

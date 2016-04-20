@@ -24,7 +24,12 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Translates {
 				"送料は以下のルールをもって計算されます，照合順番は上から下へ" },
 			{ "LogisticsType", "物流タイプ" },
 			{ "Express", "速達郵便" },
-			{ "SurfaceMail", "船便" }
+			{ "SurfaceMail", "船便" },
+			{ "FirstHeavyUnit(g)", "第一段階の重さ(グラム)" },
+			{ "FirstHeavyCost", "第一段階の費用" },
+			{ "ContinuedHeavyUnit(g)", "続く段階ごとの重さ(グラム)" },
+			{ "ContinuedHeavyCost", "続く段階ごとの費用" },
+			{ "Disabled", "禁止" }
 		};
 
 		public bool CanTranslate(string code) {

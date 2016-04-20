@@ -24,7 +24,12 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Translates {
 				"물류화물은 위에서 아래로 순서와 일치 다음 설정에 따라 결정됩니다" },
 			{ "LogisticsType", "물류 유형" },
 			{ "Express", "특급 배달" },
-			{ "SurfaceMail", "물류" }
+			{ "SurfaceMail", "물류" },
+			{ "FirstHeavyUnit(g)", "먼저 무거운 단위(그램)" },
+			{ "FirstHeavyCost", "먼저 중공업 비용" },
+			{ "ContinuedHeavyUnit(g)", "계속 무거운 단위(그램)" },
+			{ "ContinuedHeavyCost", "계속 무거운 비용" },
+			{ "Disabled", "장애인" }
 		};
 
 		public bool CanTranslate(string code) {

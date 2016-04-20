@@ -276,6 +276,7 @@
     <Compile Include="Common.Base\src\TemplateTags\WebsiteName.cs" />
     <Compile Include="Common.Base\src\TemplateTags\UseTitle.cs" />
     <Compile Include="Common.Base\src\Translates\zh_CN.cs" />
+    <Content Include="Common.Base\static\common.base.js\custom\_jquery.editableTable.js" />
     <Content Include="Common.Captcha\static\common.captcha.js\captcha.js" />
     <Compile Include="Common.Captcha\src\Translates\ja_JP.cs" />
     <Compile Include="Common.Captcha\src\Translates\ko_KR.cs" />
@@ -466,6 +467,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shopping.Logistics\src\AdminApps\LogisticsManageApp.cs" />
     <Compile Include="Shopping.Logistics\src\Database\Logistics.cs" />
+    <Compile Include="Shopping.Logistics\src\FormFieldAttributes\LogisticsPriceRulesEditorAttribute.cs" />
+    <Compile Include="Shopping.Logistics\src\FormFieldHandlers\LogisticsPriceRulesEditor.cs" />
     <Compile Include="Shopping.Logistics\src\ListItemProviders\LogisticsTypeListItemProvider.cs" />
     <Compile Include="Shopping.Logistics\src\LogisticsTypes\Express.cs" />
     <Compile Include="Shopping.Logistics\src\LogisticsTypes\SurfaceMail.cs" />
@@ -475,6 +478,8 @@
     <Compile Include="Shopping.Logistics\src\Translates\ja_JP.cs" />
     <Compile Include="Shopping.Logistics\src\Translates\zh_TW.cs" />
     <Compile Include="Shopping.Logistics\src\Translates\zh_CN.cs" />
+    <Content Include="Shopping.Logistics\static\shopping.logistics.css\logistics-edit.css" />
+    <Content Include="Shopping.Logistics\static\shopping.logistics.js\custom\_logisticsPriceRulesEditor.js" />
     <Compile Include="Shopping.Order\src\Database\CartProduct.cs" />
     <Compile Include="Shopping.Order\src\Database\Order.cs" />
     <Compile Include="Shopping.Order\src\Database\OrderComment.cs" />
@@ -599,6 +604,8 @@
     <Content Include="Common.Region\static\common.region.css\region-editor.css" />
     <Content Include="Common.Region\static\common.region.js\region-editor.js" />
     <Content Include="Common.Region\static\common.region.js\region-editor.min.js" />
+    <Content Include="Shopping.Logistics\static\shopping.logistics.js\logistics-edit.js" />
+    <Content Include="Shopping.Logistics\static\shopping.logistics.js\logistics-edit.min.js" />
     <Content Include="Shopping.Logistics\templates\shopping.logistics\tmpl.price_rules_alert.html" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-edit.css" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-list.css" />
@@ -998,6 +1005,9 @@
     <None Include="packages.config" />
     <None Include="Shopping.AfterSales\plugin.json" />
     <None Include="Shopping.Logistics\plugin.json" />
+    <None Include="Shopping.Logistics\static\shopping.logistics.css\koala-config.json" />
+    <None Include="Shopping.Logistics\static\shopping.logistics.css\logistics-edit.scss" />
+    <None Include="Shopping.Logistics\static\shopping.logistics.js\koala-config.json" />
     <None Include="Shopping.Order\plugin.json" />
     <None Include="Shopping.Product\plugin.json" />
     <None Include="Shopping.Product\static\shopping.product.css\koala-config.json" />

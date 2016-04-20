@@ -24,7 +24,12 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Translates {
 				"物流的运费由以下设置决定，匹配顺序是从上到下" },
 			{ "LogisticsType", "物流类型" },
 			{ "Express", "快递" },
-			{ "SurfaceMail", "物流" }
+			{ "SurfaceMail", "物流" },
+			{ "FirstHeavyUnit(g)", "首重(克)" },
+			{ "FirstHeavyCost", "首重费用" },
+			{ "ContinuedHeavyUnit(g)", "续重(克)" },
+			{ "ContinuedHeavyCost", "续重费用" },
+			{ "Disabled", "已禁用" }
 		};
 
 		public bool CanTranslate(string code) {

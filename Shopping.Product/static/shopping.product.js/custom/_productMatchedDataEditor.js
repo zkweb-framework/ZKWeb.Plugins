@@ -25,17 +25,20 @@ $.fn.productMatchedDataEditor = function () {
 		console.warn("init product matched data editor failed", $categoryId, $matchedDataJson);
 		return;
 	}
+	// 生成可编辑的表格
+	var bindLockName = "bindLock.editableTable"; // 防止绑定时触发收集事件
+	var binders = { ConditionBinders: null, AffectsBinders: null }; // 从远程载入的绑定器
+	var addRowEventName = "addRow.editableTable"; // 属于$table
+	var bindEventName = "bind.editableTable"; // 属于$table
+	var collectEventName = "collect.editableTable"; // 属于$table
+	var conditionCellUpdateEventName = "update.productMatchedDataEditor"; // 属于.condition-cell
+	var $table = $editor.editableTable();
 	// 绑定匹配数据表格的事件
 	// 根据$matchedDataJson的内容绑定匹配数据表格
 	// 远程载入绑定器后需要触发这个事件
-	var bindEventName = "bind.productMatchedDataEditor"; // 属于$editor
-	var bindingLockName = "bindingLock"; // 绑定锁的名称
-	var binders = { ConditionBinders: null, AffectsBinders: null }; // 从远程载入的绑定器
-	var collectEventName = "collect.productMatchedDataEditor"; // 属于$editor
-	var conditionCellUpdateEventName = "update.productMatchedDataEditor"; // 属于".condition-cell"
-	$editor.on(bindEventName, function () {
-		// 设置绑定锁，绑定时不能触发收集事件
-		$editor.data(bindingLockName, true);
+	$table.on(bindEventName, function () {
+		// 设置绑定锁
+		$table.data(bindLockName, true);
 		// 获取匹配数据列表，并添加默认条件
 		// 添加后再设置回去（添加商品时不操作这个编辑器也可以传回默认条件）
 		var matchedData = JSON.parse($matchedDataJson.val() || "[]");
@@ -43,26 +46,20 @@ $.fn.productMatchedDataEditor = function () {
 			matchedData.push({}); // 自动添加默认条件到最后
 		}
 		$matchedDataJson.val(JSON.stringify(matchedData));
-		// 添加表格，原表格会被删除
-		$editor.html("<table><thead><tr></tr></thead><tbody></tbody></table>");
-		var $table = $editor.find("table");
-		var $tableHeader = $table.find("thead > tr");
-		var $tableBody = $table.find("tbody");
-		$table.addClass($editor.attr("data-table-class"));
-		$tableHeader.addClass($editor.attr("data-table-header-class"));
+		// 清空原表格
+		var $tableHead = $table.find("thead > tr").empty();
+		var $tableBody = $table.find("tbody").empty();
 		// 添加表格列
 		// 条件列, 根据影响数据绑定器生成的列..., 操作列
 		var translations = $editor.data("translations") || {};
-		$tableHeader.append($("<th width='30%'>").append(translations["Condition"] || "Condition"));
+		$tableHead.append($("<th width='30%'>").append(translations["Condition"] || "Condition"));
 		_.each(binders.AffectsBinders, function (affectsBinder) {
-			$tableHeader.append($("<th>").append(affectsBinder.Header));
+			$tableHead.append($("<th>").addClass("heading").append(affectsBinder.Header));
 		});
-		$tableHeader.append($("<th width='100'>").append($("<div class='actions'>").append(
-			"<a class='btn-xs btn-primary add-data'><i class='fa fa-plus'></i></a>")));
+		$tableHead.append($table.data("actionsHead").clone());
 		// 添加表格行
 		// 一条匹配数据对应一行，每行有 条件单元格, 根据影响数据绑定器生成的单元格..., 操作单元格
-		// addRow函数在点击添加按钮时也会触发，prepend等于true
-		var addRow = function (data, prepend) {
+		$table.off(addRowEventName).on(addRowEventName, function (e, data) {
 			var $row = $("<tr>");
 			// 添加条件单元格
 			var $conditionCell = $("<td class='condition-cell'>" +
@@ -108,58 +105,28 @@ $.fn.productMatchedDataEditor = function () {
 				$row.append($binder);
 			});
 			// 添加操作按钮，包括上下删除
-			$row.append($("<td>").append($("<div class='actions'>")
-				.append("<a class='btn-xs btn-primary up-data'><i class='fa fa-arrow-up'></i></a>")
-				.append("<a class='btn-xs btn-primary down-data'><i class='fa fa-arrow-down'></i></a>")
-				.append("<a class='btn-xs btn-primary remove-data'><i class='fa fa-remove'></i></a>")));
-			// 绑定所有文本框和下拉框的改变事件
-			// 改变后需要触发收集事件
-			$row.find("input, select").on("change", function () {
-				$editor.trigger(collectEventName);
-			});
-			// 绑定上下删除按钮的事件
-			// 执行后需要触发收集事件
-			$row.find(".actions .up-data").on("click", function () {
-				var $prev = $row.prev();
-				$prev.length && $prev.before($row);
-				$editor.trigger(collectEventName);
-			});
-			$row.find(".actions .down-data").on("click", function () {
-				var $next = $row.next();
-				$next.length && $next.after($row);
-				$editor.trigger(collectEventName);
-			});
-			$row.find(".actions .remove-data").on("click", function () {
-				$row.remove();
-				$editor.trigger(collectEventName);
-			});
+			$row.append($table.data("actionsCell").clone());
 			// 添加行到单元格中
-			prepend ? $tableBody.prepend($row) : $tableBody.append($row);
-		};
-		_.each(matchedData, function (data) { addRow(data); });
+			$.isEmptyObject(data) ? $tableBody.prepend($row) : $tableBody.append($row);
+		});
+		_.each(matchedData, function (data) { $table.trigger(addRowEventName, [data]); });
 		// 最后一行隐藏下拉编辑框
 		$table.find("> tbody > tr").last().find(".condition-cell .btn-group").hide();
-		// 绑定添加按钮的事件
-		// 添加后需要触发收集事件
-		$table.find(".add-data").off("click").on("click", function () {
-			addRow({}, true);
-			$editor.trigger(collectEventName);
-		});
 		// 解除绑定锁
 		// console.log("bind done", binders, matchedData);
-		$editor.data(bindingLockName, false);
+		$table.data(bindLockName, false);
 	});
 	// 收集匹配数据的事件
 	// 收集到的匹配数据保存在$matchedDataJson中
 	// 匹配数据表格中的输入框改变后需要触发这个事件
-	$editor.on(collectEventName, function () {
+	$table.on(collectEventName, function () {
 		// 绑定时跳过收集事件
-		if ($editor.data(bindingLockName)) {
+		if ($table.data(bindLockName)) {
 			return;
 		}
 		// 枚举表格中的行
 		var matchedData = [];
-		var $rows = $editor.find("table > tbody > tr");
+		var $rows = $table.find("tbody > tr");
 		$rows.each(function () {
 			var $row = $(this);
 			var data = { Conditions: {}, Affects: {} };
@@ -209,7 +176,7 @@ $.fn.productMatchedDataEditor = function () {
 			if (previousCategoryId && previousCategoryId != categoryId) {
 				$matchedDataJson.val("");
 			}
-			$editor.trigger(bindEventName);
+			$table.trigger(bindEventName);
 		});
 	};
 	$categoryId.on("change", onCategoryIdChanged);

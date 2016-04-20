@@ -23,6 +23,8 @@ using ZKWeb.Utils.Extensions;
 using ZKWeb.Plugins.Common.Region.src.FormFieldAttributes;
 using ZKWeb.Plugins.Common.Region.src.Model;
 using Newtonsoft.Json;
+using ZKWeb.Plugins.Shopping.Logistics.src.Model;
+using ZKWeb.Plugins.Shopping.Logistics.src.FormFieldAttributes;
 
 namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 	/// <summary>
@@ -37,6 +39,16 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 		protected override IAjaxTableCallback<Database.Logistics> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() { return new Form(); }
 		protected override IModelFormBuilder GetEditForm() { return new Form(); }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public LogisticsManageApp() {
+			IncludeCss.Add("/static/common.region.css/region-editor.css");
+			IncludeCss.Add("/static/shopping.logistics.css/logistics-edit.css");
+			IncludeJs.Add("/static/common.region.js/region-editor.min.js");
+			IncludeJs.Add("/static/shopping.logistics.js/logistics-edit.min.js");
+		}
 
 		/// <summary>
 		/// 表格回调
@@ -158,11 +170,8 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// <summary>
 			/// 运费规则
 			/// </summary>
-			[TextBoxField("FIXME", Group = "LogisticsPriceRules")]
-			public string PriceRules { get; set; }
-
-			[RegionEditor("TestRegionEditor", Group = "LogisticsPriceRules")]
-			public CountryAndRegion TestRegionEditor { get; set; }
+			[LogisticsPriceRulesEditor("PriceRules", Group = "LogisticsPriceRules")]
+			public List<PriceRule> PriceRules { get; set; }
 
 			/// <summary>
 			/// 绑定表单
@@ -174,13 +183,10 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 				Owner = bindFrom.Owner == null ? null : bindFrom.Owner.Username;
 				DisplayOrder = bindFrom.DisplayOrder;
 				Remark = bindFrom.Remark;
-				TestRegionEditor = string.IsNullOrEmpty(bindFrom.Remark) ?
-					new CountryAndRegion() :
-					JsonConvert.DeserializeObject<CountryAndRegion>(bindFrom.Remark);
 				var templateManager = Application.Ioc.Resolve<TemplateManager>();
 				PriceRulesAlert = new HtmlString(templateManager.RenderTemplate(
 					"shopping.logistics/tmpl.price_rules_alert.html", null));
-				PriceRules = null;
+				PriceRules = bindFrom.PriceRules;
 			}
 
 			/// <summary>
@@ -195,9 +201,8 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 				saveTo.Owner = Owner == null ? null : context.Get<User>(u => u.Username == Owner);
 				saveTo.DisplayOrder = DisplayOrder;
 				saveTo.Remark = Remark;
-				saveTo.PriceRules = new List<Model.PriceRule>();
+				saveTo.PriceRules = PriceRules;
 				saveTo.LastUpdated = DateTime.UtcNow;
-				saveTo.Remark = JsonConvert.SerializeObject(TestRegionEditor);
 				return new {
 					message = new T("Saved Successfully"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal

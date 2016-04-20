@@ -55,7 +55,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 		/// 解析提交的字段的值
 		/// </summary>
 		public object Parse(FormField field, string value) {
-			return JsonConvert.DeserializeObject<List<EditingMatchedData>>(value);
+			return JsonConvert.DeserializeObject<List<EditingMatchedData>>(value) ??
+				new List<EditingMatchedData>();
 		}
 	}
 }

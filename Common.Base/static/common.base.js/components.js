@@ -20,6 +20,7 @@
 // @koala-append "custom/_jquery.ajaxTableExtensions.js"
 // @koala-append "custom/_jquery.checkbox.js"
 // @koala-append "custom/_jquery.commonAjaxForm.js"
+// @koala-append "custom/_jquery.editableTable.js"
 // @koala-append "custom/_jquery.load.setup.js"
 // @koala-append "custom/_jquery.numberInput.js"
 // @koala-append "custom/_jquery.postLink.js"

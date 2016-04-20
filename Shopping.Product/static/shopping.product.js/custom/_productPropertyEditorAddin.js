@@ -8,8 +8,8 @@
 // 触发条件
 // 已获取到商品属性编辑器和匹配数据编辑器
 // 以下事件执行
-//		bind.productMatchedDataEditor
-//		collect.productMatchedDataEditor
+//		bind.editableTable (table元素)
+//		collect.editableTable (table元素)
 //		bind.productPropertyEditor
 //		collect.productPropertyEditor
 // 注意
@@ -64,11 +64,11 @@ $(function () {
 		// 更新完毕
 		// console.log("options style updated");
 	};
-	$(document).on("bind.productMatchedDataEditor", ".product-matched-data-editor", function () {
+	$(document).on("bind.editableTable", ".product-matched-data-editor table", function () {
 		$productMatchedDataEditor = $(this);
 		updateOptionsStyle();
 	});
-	$(document).on("collect.productMatchedDataEditor", ".product-matched-data-editor", function () {
+	$(document).on("collect.editableTable", ".product-matched-data-editor table", function () {
 		$productMatchedDataEditor = $(this);
 		updateOptionsStyle();
 	});
