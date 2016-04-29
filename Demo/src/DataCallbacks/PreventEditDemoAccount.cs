@@ -18,8 +18,6 @@ namespace ZKWeb.Plugins.Demo.src.DataCallbacks {
 	/// </summary>
 	[ExportMany]
 	public class PreventDeleteSelf : IDataDeleteCallback<User>, IDataSaveCallback<User> {
-		private string OldPassword = null;
-
 		public void AfterDelete(DatabaseContext context, User data) { }
 		public void AfterSave(DatabaseContext context, User data) { }
 

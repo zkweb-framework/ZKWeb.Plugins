@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
