@@ -21,6 +21,7 @@ using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Localize;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.AdminApps;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>
@@ -34,8 +35,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 		public override string IconClass { get { return "fa fa-arrow-circle-o-down"; } }
 		protected override IAjaxTableCallback<PaymentApi> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() {
-			var request = HttpContext.Current.Request;
-			var type = request.GetParam<string>("type"); //支付接口类型，没有传入时需要先选择
+			var request = HttpContextUtils.CurrentContext.Request;
+			var type = request.Get<string>("type"); //支付接口类型，没有传入时需要先选择
 			if (string.IsNullOrEmpty(type)) {
 				return new SelectTypeForAddForm();
 			}

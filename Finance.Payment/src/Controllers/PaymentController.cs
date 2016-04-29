@@ -16,6 +16,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Forms;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web.Interfaces;
 
@@ -34,7 +35,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		public IActionResult TestPayment() {
 			PrivilegesChecker.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
 			var form = new TestPaymentForm();
-			if (HttpContext.Current.Request.HttpMethod == HttpMethods.GET) {
+			if (HttpContextUtils.CurrentContext.Request.HttpMethod == HttpMethods.GET) {
 				form.Bind();
 				return new TemplateResult("finance.payment/test_payment.html", new { form });
 			} else {
@@ -49,7 +50,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		[Action("admin/payment_apis/test_api_pay", HttpMethods.POST)]
 		public IActionResult TestApiPay() {
 			PrivilegesChecker.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
-			var id = HttpContext.Current.Request.GetParam<long>("id");
+			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
 			var form = new TestApiHandler.TestApiPayForm(id);
 			return new JsonResult(form.Submit());
 		}
@@ -62,7 +63,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		[Action("payment/transaction/pay")]
 		public IActionResult Pay() {
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
-			var id = HttpContext.Current.Request.GetParam<long>("id");
+			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
 			var html = transactionManager.GetPaymentHtml(id);
 			return new TemplateResult("finance.payment/transaction_pay.html", new { html });
 		}
@@ -75,7 +76,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		[Action("payment/transaction/pay_result")]
 		public IActionResult PayResult() {
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
-			var id = HttpContext.Current.Request.GetParam<long>("id");
+			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
 			var html = transactionManager.GetResultHtml(id);
 			return new TemplateResult("finance.payment/transaction_pay_result.html", new { html });
 		}

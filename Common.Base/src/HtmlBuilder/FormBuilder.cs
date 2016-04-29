@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 	///		form.BindValuesFromAnonymousObject(new { Username = "TestUser", Password = "TestPassword" });
 	///		return new TemplateResult("test_form.html", new { form });
 	///	提交的例子
-	///		var values = form.ParseValues(HttpContext.Current.Request.GetParams());
+	///		var values = form.ParseValues(HttpContextUtils.CurrentContext.Request.GetParams());
 	///		var username = values.GetOrDefault[string]("Username");
 	///		var password = values.GetOrDefault[string]("Password");
 	/// </summary>
@@ -64,8 +64,9 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 		/// </summary>
 		/// <param name="html">html构建器</param>
 		protected virtual void RenderFormBeginTag(HtmlTextWriter html) {
+			var request = HttpContextUtils.CurrentContext.Request;
 			html.AddAttribute("name", Attribute.Name ?? "");
-			html.AddAttribute("action", Attribute.Action ?? HttpContext.Current.Request.Url.PathAndQuery);
+			html.AddAttribute("action", Attribute.Action ?? request.Url.PathAndQuery);
 			html.AddAttribute("method", Attribute.Method ?? HttpMethods.POST);
 			html.AddAttribute("role", "form");
 			html.AddAttribute("ajax", Attribute.EnableAjaxSubmit ? "true" : "false");

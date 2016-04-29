@@ -15,6 +15,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Templating;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 	/// <summary>
@@ -48,13 +49,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 		public object Parse(FormField field, string value) {
 			var data = new ProductAlbumUploadData();
 			var attribute = (ProductAlbumUploaderAttribute)field.Attribute;
-			var request = HttpContext.Current.Request;
+			var request = HttpContextUtils.CurrentContext.Request;
 			var uploadHandler = new FileUploader();
-			data.MainImageIndex = request.GetParam<long>(attribute.Name + "_MainImageIndex");
+			data.MainImageIndex = request.Get<long>(attribute.Name + "_MainImageIndex");
 			for (int x = 1; x <= ProductAlbumUploadData.MaxImageCount; ++x) {
 				var image = request.Files[attribute.Name + "_Image_" + x];
-				var deleteImage = request.GetParam<bool>(attribute.Name + "_DeleteImage_" + x);
-				data.UploadedImages.Add(image == null ? null : uploadHandler.Parse(image, attribute));
+				var deleteImage = request.Get<bool>(attribute.Name + "_DeleteImage_" + x);
+				uploadHandler.Check(image, attribute);
+				data.UploadedImages.Add(image);
 				data.DeleteImages.Add(deleteImage);
 			}
 			return data;

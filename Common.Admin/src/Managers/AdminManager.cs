@@ -13,6 +13,7 @@ using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>
@@ -72,7 +73,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// </summary>
 		/// <returns></returns>
 		public virtual string GetUrlRedirectAfterLogin() {
-			var request = HttpContext.Current.Request;
+			var request = HttpContextUtils.CurrentContext.Request;
 			var referrer = request.UrlReferrer;
 			// 来源于同一站点时，跳转到来源页面
 			if (referrer != null && referrer.Host == request.Url.Host &&

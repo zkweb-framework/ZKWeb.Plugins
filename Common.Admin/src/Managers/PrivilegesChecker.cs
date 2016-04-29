@@ -12,6 +12,7 @@ using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
@@ -38,7 +39,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		public static void Check(UserTypes[] types, params string[] privileges) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var context = HttpContext.Current;
+			var context = HttpContextUtils.CurrentContext;
 			if (context != null && context.Request.HttpMethod == HttpMethods.GET &&
 				(user == null || !types.Contains(user.Type))) {
 				// 包含普通用户时跳转到前台登陆页面，否则跳转到后台登陆页面

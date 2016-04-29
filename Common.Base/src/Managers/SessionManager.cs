@@ -19,7 +19,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 	[ExportMany, SingletonReuse]
 	public class SessionManager {
 		/// <summary>
-		/// 用于HttpContext.Items时，储存Session对象
+		/// 用于Items时，储存Session对象
 		/// 用于Cookies时，储存会话Id
 		/// </summary>
 		public const string SessionKey = "Common.Base.Session";
@@ -30,7 +30,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// </summary>
 		/// <returns></returns>
 		public virtual Session GetSession() {
-			// 从HttpContext中获取会话
+			// 从http上下文中获取会话
 			// 因为一次请求中可能会调用多次GetSession，应该确保返回同一个对象
 			var session = HttpContextUtils.GetData<Session>(SessionKey, null);
 			if (session != null) {
@@ -94,7 +94,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// 同时删除浏览器中的Cookie
 		/// </summary>
 		public virtual void RemoveSession() {
-			// 删除HttpContext中的会话
+			// 删除http上下文中的会话
 			HttpContextUtils.RemoveData(SessionKey);
 			// 删除数据库中的会话
 			string id = HttpContextUtils.GetCookie(SessionKey);

@@ -18,6 +18,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.ListItemProviders;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 	/// <summary>
@@ -66,7 +67,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 			Handlers = UnitOfWork.ReadData<PaymentApi, List<IPaymentApiHandler>>(r => {
 				var api = string.IsNullOrEmpty(id) ? null : r.GetById(id);
 				var type = api == null ? null : api.Type;
-				type = type ?? HttpContext.Current.Request.GetParam<string>("type");
+				type = type ?? HttpContextUtils.CurrentContext.Request.Get<string>("type");
 				return Application.Ioc.ResolvePaymentApiHandlers(type);
 			});
 			Handlers.ForEach(h => h.OnFormCreated(this));
@@ -77,7 +78,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		/// </summary>
 		protected override void OnBind(DatabaseContext context, PaymentApi bindFrom) {
 			// 获取接口类型
-			var type = bindFrom.Type ?? HttpContext.Current.Request.GetParam<string>("type");
+			var type = bindFrom.Type ?? HttpContextUtils.CurrentContext.Request.Get<string>("type");
 			if (string.IsNullOrEmpty(type)) {
 				throw new ArgumentException(new T("Payment api type not specificed"));
 			}
@@ -97,7 +98,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		protected override object OnSubmit(DatabaseContext context, PaymentApi saveTo) {
 			// 添加接口时设置类型和创建时间
 			if (saveTo.Id <= 0) {
-				saveTo.Type = HttpContext.Current.Request.GetParam<string>("type");
+				saveTo.Type = HttpContextUtils.CurrentContext.Request.Get<string>("type");
 				saveTo.CreateTime = DateTime.UtcNow;
 			}
 			// 保存表单

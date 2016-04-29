@@ -104,7 +104,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 处理表单绑定或提交
 			var form = new Form(Type);
-			var request = HttpContext.Current.Request;
+			var request = HttpContextUtils.CurrentContext.Request;
 			if (request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
@@ -122,14 +122,14 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			// 检查权限
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 拒绝处理非ajax提交的请求，防止跨站攻击
-			var request = HttpContext.Current.Request;
+			var request = HttpContextUtils.CurrentContext.Request;
 			if (!request.IsAjaxRequest()) {
 				throw new HttpException(403, new T("Non ajax request batch action is not secure"));
 			}
 			// 获取参数
 			// 其中Id列表需要把顺序倒转，用于先删除子分类再删除上级分类
-			var actionName = request.GetParam<string>("action");
-			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var actionName = request.Get<string>("action");
+			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var idList = JsonConvert.DeserializeObject<IList<object>>(json).Reverse().ToList();
 			// 检查是否所有Id都属于指定的类型，防止越权操作
 			var isAllClassesTypeMatched = UnitOfWork.ReadRepository<GenericClassRepository, bool>(r => {
@@ -327,7 +327,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// 这个函数只在添加时使用
 			/// </summary>
 			protected Database.GenericClass GetParentClass(DatabaseContext context) {
-				var parentId = HttpContext.Current.Request.GetParam<long>("parentId");
+				var parentId = HttpContextUtils.CurrentContext.Request.Get<long>("parentId");
 				if (parentId <= 0) {
 					return null;
 				}

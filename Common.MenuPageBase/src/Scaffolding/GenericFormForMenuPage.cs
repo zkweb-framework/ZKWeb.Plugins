@@ -14,6 +14,7 @@ using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Web.Interfaces;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 	/// <summary>
@@ -39,7 +40,7 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 处理绑定和提交
 			var form = GetForm();
-			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
+			if (HttpContextUtils.CurrentContext.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();

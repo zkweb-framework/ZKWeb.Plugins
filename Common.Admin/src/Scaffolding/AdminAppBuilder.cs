@@ -168,7 +168,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			// 检查权限
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取参数并转换到搜索请求
-			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
 			// 表格回调，内置+使用Ioc注册的额外回调
 			var callbacks = new List<IAjaxTableCallback<TData>>() { GetTableCallback() };
@@ -184,7 +184,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult AddAction() {
 			var form = GetAddForm();
-			var request = HttpContext.Current.Request;
+			var request = HttpContextUtils.CurrentContext.Request;
 			if (request.HttpMethod == HttpMethods.POST) {
 				// 检查权限
 				PrivilegesChecker.Check(AllowedUserTypes, EditPrivilege);
@@ -205,7 +205,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult EditAction() {
 			var form = GetEditForm();
-			var request = HttpContext.Current.Request;
+			var request = HttpContextUtils.CurrentContext.Request;
 			if (request.HttpMethod == HttpMethods.POST) {
 				// 检查权限
 				PrivilegesChecker.Check(AllowedUserTypes, EditPrivilege);
@@ -225,12 +225,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchAction() {
-			var request = HttpContext.Current.Request;
+			var request = HttpContextUtils.CurrentContext.Request;
 			if (!request.IsAjaxRequest()) {
 				// 非ajax提交的请求有跨站攻击的危险，这里拒绝处理
 				throw new HttpException(403, new T("Non ajax request batch action is not secure"));
 			}
-			var actionName = request.GetParam<string>("action");
+			var actionName = request.Get<string>("action");
 			var action = BatchActions.GetOrDefault(actionName);
 			if (action == null) {
 				// 找不到对应的操作
@@ -245,7 +245,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult BatchActionForDelete() {
 			PrivilegesChecker.Check(AllowedUserTypes, DeletePrivilege);
-			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
 			UnitOfWork.WriteData<TData>(r => r.BatchDelete(idList));
 			return new JsonResult(new { message = new T("Batch Delete Successful") });
@@ -257,7 +257,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult BatchActionForRecover() {
 			PrivilegesChecker.Check(AllowedUserTypes, DeletePrivilege);
-			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
 			UnitOfWork.WriteData<TData>(r => r.BatchRecover(idList));
 			return new JsonResult(new { message = new T("Batch Recover Successful") });
@@ -269,7 +269,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult BatchActionForDeleteForever() {
 			PrivilegesChecker.Check(AllowedUserTypes, DeleteForeverPrivilege);
-			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
 			UnitOfWork.WriteData<TData>(r => r.BatchDeleteForever(idList));
 			return new JsonResult(new { message = new T("Batch Delete Forever Successful") });

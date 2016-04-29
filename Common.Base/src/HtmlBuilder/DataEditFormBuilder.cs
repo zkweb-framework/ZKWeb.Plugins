@@ -73,8 +73,8 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual string GetRequestId() {
-			var request = HttpContext.Current.Request;
-			var id = request.GetParam<string>("id") ?? request.GetParam<string>("Id");
+			var request = HttpContextUtils.CurrentContext.Request;
+			var id = request.Get<string>("id") ?? request.Get<string>("Id");
 			return id;
 		}
 

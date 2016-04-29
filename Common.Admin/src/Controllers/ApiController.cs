@@ -18,6 +18,7 @@ using ZKWeb.Utils.Extensions;
 using ZKWeb.Web.Interfaces;
 using ZKWeb.Plugin.Interfaces;
 using ZKWeb.Localize;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -52,7 +53,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		[Action("api/cache/clear", HttpMethods.POST)]
 		public IActionResult ClearCache() {
-			var request = HttpContext.Current.Request;
+			var request = HttpContextUtils.CurrentContext.Request;
 			if (!request.IsLocal) {
 				PrivilegesChecker.Check(UserTypesGroup.Admin);
 			}

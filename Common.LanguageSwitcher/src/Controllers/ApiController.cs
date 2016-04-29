@@ -37,7 +37,7 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.Controllers {
 		/// <returns></returns>
 		[Action("api/locale/switch_to_language", HttpMethods.POST)]
 		public IActionResult SwitchToLanguage() {
-			var language = HttpContext.Current.Request.GetParam<string>("language");
+			var language = HttpContextUtils.CurrentContext.Request.Get<string>("language");
 			HttpContextUtils.PutCookie(LocaleUtils.LanguageKey, language);
 			return new JsonResult(new { script = ScriptStrings.RefreshAfter(0) });
 		}

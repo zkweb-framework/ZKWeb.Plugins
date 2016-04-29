@@ -114,7 +114,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
             // 检查权限
             PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
             // 获取参数并转换到搜索请求
-            var json = HttpContext.Current.Request.GetParam<string>("json");
+            var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
             var request = AjaxTableSearchRequest.FromJson(json);
             // 构建搜索回应
             var response = new AjaxTableSearchResponse() { PageIndex = 0, PageSize = 0x7fffffff, IsLastPage = true };
@@ -156,7 +156,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
             PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
             // 处理表单绑定或提交
             var form = new Form(this);
-            var request = HttpContext.Current.Request;
+            var request = HttpContextUtils.CurrentContext.Request;
             if (request.HttpMethod == HttpMethods.POST) {
                 return new JsonResult(form.Submit());
             } else {
@@ -173,12 +173,12 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
             // 检查权限
             PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
             // 拒绝处理非ajax提交的请求，防止跨站攻击
-            var request = HttpContext.Current.Request;
+            var request = HttpContextUtils.CurrentContext.Request;
             if (!request.IsAjaxRequest()) {
                 throw new HttpException(403, new T("Non ajax request batch action is not secure"));
             }
             // 获取参数并执行删除
-            var json = HttpContext.Current.Request.GetParam<string>("json");
+            var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
             var original = JsonConvert.DeserializeObject<IList<string>>(json).FirstOrDefault();
             if (!string.IsNullOrEmpty(original)) {
                 Translates.Remove(original);
@@ -278,7 +278,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
             /// 绑定表单
             /// </summary>
             protected override void OnBind() {
-                OriginalText = HttpUtility.UrlDecode(HttpContext.Current.Request.GetParam<string>("Id"));
+                OriginalText = HttpUtility.UrlDecode(HttpContextUtils.CurrentContext.Request.Get<string>("Id"));
                 TranslatedText = Translator.Translates.GetOrDefault(OriginalText);
             }
 
@@ -287,7 +287,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
             /// </summary>
             /// <returns></returns>
             protected override object OnSubmit() {
-                var oldOriginalText = HttpUtility.UrlDecode(HttpContext.Current.Request.GetParam<string>("Id"));
+                var oldOriginalText = HttpUtility.UrlDecode(HttpContextUtils.CurrentContext.Request.Get<string>("Id"));
                 if (!string.IsNullOrEmpty(oldOriginalText)) {
                     Translator.Translates.Remove(oldOriginalText);
                 }

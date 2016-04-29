@@ -2,6 +2,7 @@
 using DryIoc;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 	/// <summary>
@@ -105,7 +107,7 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 		/// <returns></returns>
 		public object Submit() {
 			// 把提交的值设置到模型
-			var submitValues = HttpContext.Current.Request.GetParams();
+			var submitValues = HttpContextUtils.CurrentContext.Request.GetAll();
 			var values = Form.ParseValues(submitValues);
 			foreach (var field in Form.Fields) {
 				var value = values.GetOrDefault(field.Attribute.Name);

@@ -26,6 +26,7 @@ using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Web.Interfaces;
 using ZKWeb.Plugin;
 using ZKWeb.Localize;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>
@@ -65,7 +66,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			}
 			// 否则显示登陆表单
 			var form = new AdminLoginForm();
-			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
+			var context = HttpContextUtils.CurrentContext;
+			if (context.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
@@ -104,7 +106,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		public IActionResult AboutMe() {
 			PrivilegesChecker.Check(UserTypesGroup.AdminOrParter);
 			var form = new AdminAboutMeForm();
-			if (HttpContext.Current.Request.HttpMethod == HttpMethods.POST) {
+			var context = HttpContextUtils.CurrentContext;
+			if (context.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
@@ -124,7 +127,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var websiteSettings = configManager.GetData<WebsiteSettings>();
 			var localeSettings = configManager.GetData<LocaleSettings>();
 			var serverUsername = Environment.UserName;
-			var serverVariables = HttpContext.Current.Request.ServerVariables;
+			var serverVariables = HttpContextUtils.CurrentContext.Request.ServerVariables;
 			var hostingInfoTable = new DataTable();
 			hostingInfoTable.Columns.Add("Name");
 			hostingInfoTable.Columns.Add("Value");

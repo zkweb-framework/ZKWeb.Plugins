@@ -18,6 +18,7 @@ using ZKWeb.Utils.Extensions;
 using ZKWeb.Web.Interfaces;
 using ZKWeb.Localize;
 using ZKWeb.Web;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 	/// <summary>
@@ -80,7 +81,7 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 			// 检查权限
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取参数并转换到搜索请求
-			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
 			// 表格回调，内置+使用Ioc注册的额外回调
 			var callbacks = new List<IAjaxTableCallback<TData>>() { GetTableCallback() };

@@ -39,11 +39,11 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		}
 
 		/// <summary>
-		/// 解析上传的文件
+		/// 检查上传的文件
 		/// </summary>
-		public HttpPostedFileBase Parse(HttpPostedFile file, FileUploaderFieldAttribute attribute) {
+		public void Check(HttpPostedFileBase file, FileUploaderFieldAttribute attribute) {
 			if (file == null) {
-				return null;
+				return;
 			} else if (!attribute.Extensions.Contains(
 				Path.GetExtension(file.FileName).Substring(1))) {
 				// 检查后缀
@@ -56,7 +56,6 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 					new T("Please upload file size not greater than {0}"),
 					FileUtils.GetSizeDisplayName((int)attribute.MaxContentsLength)));
 			}
-			return new HttpPostedFileWrapper(file);
 		}
 
 		/// <summary>
@@ -64,8 +63,9 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// </summary>
 		public object Parse(FormField field, string value) {
 			var attribute = (FileUploaderFieldAttribute)field.Attribute;
-			var file = HttpContext.Current.Request.Files[field.Attribute.Name];
-			return Parse(file, attribute);
+			var file = HttpContextUtils.CurrentContext.Request.Files[field.Attribute.Name];
+			Check(file, attribute);
+			return file;
 		}
 	}
 }

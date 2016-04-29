@@ -11,6 +11,7 @@ using ZKWeb.Web.ActionResults;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Server;
 using ZKWeb.Web.Interfaces;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>
@@ -32,7 +33,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// 处理请求
 		/// </summary>
 		public void OnRequest() {
-			var context = HttpContext.Current;
+			var context = HttpContextUtils.CurrentContext;
 			var path = context.Request.Path;
 			if (path.StartsWith(Prefix)) {
 				var pathManager = Application.Ioc.Resolve<PathManager>();

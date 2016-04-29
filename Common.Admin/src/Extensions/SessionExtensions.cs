@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 			if (session.ReleatedId <= 0) {
 				return null;
 			}
-			// 从HttpContext中获取，确保保存时的会话和获取时的会话是同一个
+			// 从http上下文中获取，确保保存时的会话和获取时的会话是同一个
 			var pair = HttpContextUtils.GetData<Tuple<Session, User>>(SessionUserKey);
 			if (pair != null && pair.Item1 == session) {
 				return pair.Item2;

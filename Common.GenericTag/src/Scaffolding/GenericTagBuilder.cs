@@ -28,6 +28,7 @@ using ZKWeb.Localize;
 using ZKWeb.Web.Interfaces;
 using ZKWeb.Web;
 using ZKWeb.Database;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 	/// <summary>
@@ -102,7 +103,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 处理表单绑定或提交
 			var form = new Form(Type);
-			var request = HttpContext.Current.Request;
+			var request = HttpContextUtils.CurrentContext.Request;
 			if (request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
@@ -120,13 +121,13 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 			// 检查权限
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 拒绝处理非ajax提交的请求，防止跨站攻击
-			var request = HttpContext.Current.Request;
+			var request = HttpContextUtils.CurrentContext.Request;
 			if (!request.IsAjaxRequest()) {
 				throw new HttpException(403, new T("Non ajax request batch action is not secure"));
 			}
 			// 获取参数
-			var actionName = request.GetParam<string>("action");
-			var json = HttpContext.Current.Request.GetParam<string>("json");
+			var actionName = request.Get<string>("action");
+			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
 			// 检查是否所有Id都属于指定的类型，防止越权操作
 			var isAllTagTypeMatched = UnitOfWork.ReadRepository<GenericTagRepository, bool>(r => {

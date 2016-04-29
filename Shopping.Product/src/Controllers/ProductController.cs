@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web.Interfaces;
 
@@ -27,7 +28,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// <returns></returns>
 		[Action("product/property_editor")]
 		public IActionResult PropertyEditor() {
-			var categoryId = HttpContext.Current.Request.GetParam<long>("categoryId");
+			var categoryId = HttpContextUtils.CurrentContext.Request.Get<long>("categoryId");
 			var categoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
 			// 获取类目
 			var category = categoryManager.FindCategory(categoryId);
@@ -52,7 +53,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// <returns></returns>
 		[Action("product/matched_data_binders")]
 		public IActionResult MatchedDataBinders() {
-			var categoryId = HttpContext.Current.Request.GetParam<long?>("categoryId");
+			var categoryId = HttpContextUtils.CurrentContext.Request.Get<long?>("categoryId");
 			var conditionBinders = Application.Ioc
 				.ResolveMany<ProductMatchedDataConditionBinder>()
 				.Where(b => b.Init(categoryId)).ToList();

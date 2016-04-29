@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Region.src.Config;
 using ZKWeb.Plugins.Common.Region.src.ListItemProviders;
 using ZKWeb.Plugins.Common.Region.src.Managers;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web.Interfaces;
 
@@ -40,7 +41,7 @@ namespace ZKWeb.Plugins.Common.Region.src.Controllers {
 		/// <returns></returns>
 		[Action("api/region/region_tree_from_country", HttpMethods.POST)]
 		public IActionResult RegionTreeFromCountry() {
-			var countryName = HttpContext.Current.Request.GetParam<string>("country");
+			var countryName = HttpContextUtils.CurrentContext.Request.Get<string>("country");
 			var regionManager = Application.Ioc.Resolve<RegionManager>();
 			var country = regionManager.GetCountry(countryName);
 			var tree = country == null ? null : country.GetRegionsTree();
