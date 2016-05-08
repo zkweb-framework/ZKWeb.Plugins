@@ -175,6 +175,8 @@
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="UnitTest.WebTester\src\AdminApps\WebTesterApp.cs" />
+    <Compile Include="UnitTest.WebTester\src\Managers\WebTesterManager.cs" />
+    <Compile Include="UnitTest.WebTester\src\Translates\zh_CN.cs" />
     <Content Include="Common.Admin\templates\common.admin.widgets\admin_apps_menu.html" />
     <Compile Include="Common.Base\src\Extensions\DataTableExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\StringExtensions.cs" />
@@ -1033,9 +1035,7 @@
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UnitTest.WebTester\src\Translates\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
