@@ -105,7 +105,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
 			WebTesterManager.UpdateInformation(assemblyName, testInfo => {
 				testInfo.Skiped += 1;
-				testInfo.SkipedMessage = string.Format(
+				testInfo.SkipedMessage += string.Format(
 					"Test {0} skiped: {1}\r\n\r\n", info.Method.GetFullName(), info.Exception.Message);
 				testInfo.Updated();
 			});
