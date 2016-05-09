@@ -26,11 +26,15 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Translates {
 			{ "Failed", "失败" },
 			{ "ErrorMessage", "错误消息" },
 			{ "DebugMessage", "除错消息" },
+			{ "Start", "开始" },
 			{ "StartAll", "全部开始" },
+			{ "ResetAll", "全部重置" },
 			{ "NotRunning", "未运行" },
 			{ "WaitingToRun", "等待运行" },
 			{ "Running", "运行中" },
-			{ "FinishedRunning", "运行完毕" }
+			{ "FinishedRunning", "运行完毕" },
+			{ "Getting", "获取中" },
+			{ "Request submitted, wait processing", "请求已提交，正在等待处理" }
 		};
 
 		public bool CanTranslate(string code) {

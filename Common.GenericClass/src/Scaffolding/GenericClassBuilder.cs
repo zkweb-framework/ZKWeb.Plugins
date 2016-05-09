@@ -26,6 +26,7 @@ using ZKWeb.Localize;
 using ZKWeb.Database;
 using ZKWeb.Web.Interfaces;
 using ZKWeb.Web;
+using ZKWeb.Plugins.Common.Base.src.Managers;
 
 namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 	/// <summary>
@@ -120,14 +121,11 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult BatchAction() {
 			// 检查权限
+			HttpRequestChecker.RequieAjaxRequest();
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
-			// 拒绝处理非ajax提交的请求，防止跨站攻击
-			var request = HttpContextUtils.CurrentContext.Request;
-			if (!request.IsAjaxRequest()) {
-				throw new HttpException(403, new T("Non ajax request batch action is not secure"));
-			}
 			// 获取参数
 			// 其中Id列表需要把顺序倒转，用于先删除子分类再删除上级分类
+			var request = HttpContextUtils.CurrentContext.Request;
 			var actionName = request.Get<string>("action");
 			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var idList = JsonConvert.DeserializeObject<IList<object>>(json).Reverse().ToList();

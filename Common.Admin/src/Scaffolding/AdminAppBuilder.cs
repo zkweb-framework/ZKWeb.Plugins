@@ -20,6 +20,7 @@ using ZKWeb.Utils.Functions;
 using ZKWeb.Web.Interfaces;
 using ZKWeb.Web;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.Managers;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>
@@ -224,11 +225,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchAction() {
+			HttpRequestChecker.RequieAjaxRequest();
 			var request = HttpContextUtils.CurrentContext.Request;
-			if (!request.IsAjaxRequest()) {
-				// 非ajax提交的请求有跨站攻击的危险，这里拒绝处理
-				throw new HttpException(403, new T("Non ajax request batch action is not secure"));
-			}
 			var actionName = request.Get<string>("action");
 			var action = BatchActions.GetOrDefault(actionName);
 			if (action == null) {

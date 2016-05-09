@@ -98,7 +98,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Batch Delete Forever", "영구적으로 삭제 하는 대량" },
 			{ "Sure to delete following {0} forever?", "다음 {0}의 영구 삭제를 확인？이 작업은 복원 되지 않습니다！" },
 			{ "Delete yourself is not allowed", "자신의 사용자를 삭제할 수 없습니다" },
-			{ "Non ajax request batch action is not secure", "대량 작업에 의해 비-Ajax 보안을 제출 하지는, 코드 수정" },
 			{ "Action {0} not exist", "{0}에 대 한 원하는 작업을 찾을 수 없습니다" },
 			{ "Delete Successful", "성공적으로 삭제" },
 			{ "Batch Delete Successful", "대량 삭제 성공" },

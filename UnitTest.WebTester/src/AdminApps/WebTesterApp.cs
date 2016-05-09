@@ -1,5 +1,6 @@
 ﻿using DryIoc;
 using DryIocAttributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,10 @@ using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.UnitTest.WebTester.src.Managers;
 using ZKWeb.Templating;
+using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web.Interfaces;
@@ -19,13 +23,13 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 	/// 网页上运行单元测试
 	/// 功能：
 	/// - 显示测试表格
-	/// - 定时从服务器抓取测试状态
+	/// - 定时向服务器抓取测试信息
 	///   ?action=fetch
-	/// - 清空测试结果
-	///   ?action=clear
+	/// - 重置测试结果
+	///   ?action=reset_all
 	/// - 运行指定项或全部项
-	///   ?action=execute&assembly=name
-	///   ?action=execute_all
+	///   ?action=start&assembly=name
+	///   ?action=start_all
 	/// </summary>
 	[ExportMany]
 	public class WebTesterApp : AdminApp {
@@ -34,20 +38,67 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 		public override string TileClass { get { return "tile bg-black"; } }
 		public override string IconClass { get { return "fa fa-bug"; } }
 		public override string[] RequiredPrivileges { get { return new[] { Name + ":Run" }; } }
+		protected Lazy<WebTesterManager> WebTesterManager { get; set; }
 
-		protected virtual IActionResult PostAction() {
-			return null;
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public WebTesterApp(Lazy<WebTesterManager> webTesterManager) {
+			WebTesterManager = webTesterManager;
 		}
 
+		/// <summary>
+		/// 处理POST请求
+		/// </summary>
+		/// <returns></returns>
+		protected virtual IActionResult PostAction() {
+			HttpRequestChecker.RequieAjaxRequest();
+			var request = HttpContextUtils.CurrentContext.Request;
+			var action = request.Get<string>("action");
+			if (action == "fetch") {
+				// 抓取测试信息
+				var lastUpdateds = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+					request.Get<string>("lastUpdateds")) ?? new Dictionary<string, string>();
+				var informations = WebTesterManager.Value.GetInformations(lastUpdateds);
+				return new JsonResult(new { informations });
+			} else if (action == "reset_all") {
+				// 重置测试结果
+				WebTesterManager.Value.ResetInformations();
+				return new JsonResult(new { message = new T("Request submitted, wait processing") });
+			} else if (action == "start_all") {
+				// 开始全部测试
+				WebTesterManager.Value.RunAllAssemblyTestBackground();
+				return new JsonResult(new { message = new T("Request submitted, wait processing") });
+			} else if (action == "start") {
+				// 开始单项测试
+				var assemblyName = request.Get<string>("assembly");
+				WebTesterManager.Value.RunAssemblyTestBackground(assemblyName);
+				return new JsonResult(new { message = new T("Request submitted, wait processing") });
+			}
+			throw new ArgumentException(string.Format("unknown action {0}", action));
+		}
+
+		/// <summary>
+		/// 处理请求
+		/// </summary>
+		/// <returns></returns>
 		protected override IActionResult Action() {
 			var request = HttpContextUtils.CurrentContext.Request;
 			if (request.HttpMethod == HttpMethods.POST) {
 				return PostAction();
 			}
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var table = templateManager.RenderTemplate("unittest.webtester/tests_table.html", new { });
-			return new TemplateResult("common.admin/generic_list.html",
-				new { iconClass = IconClass, title = new T(Name), table = new HtmlString(table) });
+			var assemblyNames = WebTesterManager.Value.GetInformations()
+				.Select(info => info.AssemblyName).ToList();
+			var table = templateManager.RenderTemplate(
+				"unittest.webtester/tests_table.html", new { assemblyNames });
+			return new TemplateResult("common.admin/generic_list.html", new {
+				iconClass = IconClass,
+				title = new T(Name),
+				table = new HtmlString(table),
+				includeJs = new[] { "/static/unittest.webtester.js/webtester.min.js" },
+				includeCss = new[] { "/static/unittest.webtester.css/webtester.css" }
+			});
 		}
 	}
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Localize;
 using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
@@ -19,6 +20,10 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 		/// 测试状态
 		/// </summary>
 		public AssemblyTestState State { get; set; }
+		/// <summary>
+		/// 状态名称
+		/// </summary>
+		public string StateName { get { return new T(State.GetDescription()); } }
 		/// <summary>
 		/// 通过数量
 		/// </summary>
@@ -48,9 +53,14 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 		/// </summary>
 		public string DebugMessage { get; set; }
 		/// <summary>
-		/// 更新时间
+		/// 更新时间 (Ticks)
 		/// </summary>
-		public DateTime LastUpdated { get; set; }
+		public string LastUpdated { get; set; }
+
+		/// <summary>
+		/// 初始化，反序列化时使用
+		/// </summary>
+		public AssemblyTestInfo() { }
 
 		/// <summary>
 		/// 初始化
@@ -59,21 +69,29 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 		public AssemblyTestInfo(Assembly assembly) {
 			AssemblyName = assembly.GetName().Name;
 			State = AssemblyTestState.NotRunning;
+			Updated();
 		}
 
 		/// <summary>
 		/// 设置更新时间
 		/// </summary>
 		public void Updated() {
-			LastUpdated = DateTime.UtcNow.Truncate();
+			LastUpdated = DateTime.UtcNow.Ticks.ToString();
+		}
+
+		/// <summary>
+		/// 判断信息是否可重置
+		/// </summary>
+		public bool Resetable() {
+			return State == AssemblyTestState.FinishedRunning;
 		}
 
 		/// <summary>
 		/// 重置信息，仅运行完毕后可以执行这个函数
 		/// </summary>
 		public void Reset() {
-			if (State != AssemblyTestState.FinishedRunning) {
-				throw new NotSupportedException("test information not resetable if state isn't finished running");
+			if (!Resetable()) {
+				throw new NotSupportedException("test information is not resetable now");
 			}
 			State = AssemblyTestState.NotRunning;
 			Passed = 0;
@@ -84,6 +102,22 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 			ErrorMessage = null;
 			DebugMessage = null;
 			Updated();
+		}
+
+		/// <summary>
+		/// 尝试等待开始运行
+		/// 返回是否成功设置了状态
+		/// </summary>
+		/// <returns></returns>
+		public bool TryWaitingToRun() {
+			if (Resetable()) {
+				Reset();
+			}
+			if (State == AssemblyTestState.NotRunning) {
+				State = AssemblyTestState.WaitingToRun;
+				return true;
+			}
+			return false;
 		}
 	}
 }

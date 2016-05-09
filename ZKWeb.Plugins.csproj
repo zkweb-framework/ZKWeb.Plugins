@@ -139,6 +139,7 @@
     <Compile Include="Common.AdminSettings\src\Translates\zh_TW.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Admin\src\Extensions\AjaxTableColumnsExtensions.cs" />
+    <Compile Include="Common.Base\src\Managers\HttpRequestChecker.cs" />
     <Compile Include="Common.Admin\src\Scaffolding\AdminAppBuilder.cs" />
     <Compile Include="Common.Admin\src\AdminApps\UserManageApp.cs" />
     <Compile Include="Common.Admin\src\AdminApps\RoleManageApp.cs" />
@@ -175,10 +176,11 @@
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="UnitTest.WebTester\src\AdminApps\WebTesterApp.cs" />
-    <Compile Include="UnitTest.WebTester\src\Managers\UnitTestWebEventHandler.cs" />
+    <Compile Include="UnitTest.WebTester\src\UnitTestEventHandlers\UnitTestWebEventHandler.cs" />
     <Compile Include="UnitTest.WebTester\src\Managers\WebTesterManager.cs" />
     <Compile Include="UnitTest.WebTester\src\Model\AssemblyTestInfo.cs" />
     <Compile Include="UnitTest.WebTester\src\Model\AssemblyTestState.cs" />
+    <Compile Include="UnitTest.WebTester\src\Tests\CustomTest.cs" />
     <Compile Include="UnitTest.WebTester\src\Translates\zh_CN.cs" />
     <Content Include="Common.Admin\templates\common.admin.widgets\admin_apps_menu.html" />
     <Compile Include="Common.Base\src\Extensions\DataTableExtensions.cs" />
@@ -560,6 +562,9 @@
     <Compile Include="UI.CKEditor\src\Translates\ja_JP.cs" />
     <Compile Include="UI.CKEditor\src\Translates\zh_TW.cs" />
     <Compile Include="UI.CKEditor\src\Translates\zh_CN.cs" />
+    <Content Include="UnitTest.WebTester\static\unittest.webtester.css\webtester.css" />
+    <Content Include="UnitTest.WebTester\static\unittest.webtester.js\webtester.js" />
+    <Content Include="UnitTest.WebTester\static\unittest.webtester.js\webtester.min.js" />
     <Content Include="UnitTest.WebTester\templates\unittest.webtester\tests_table.html" />
   </ItemGroup>
   <ItemGroup>
@@ -1034,6 +1039,9 @@
     <None Include="UI.CKEditor\static\ckeditor\README.md" />
     <None Include="UI.CKEditor\static\ui.ckeditor.js\koala-config.json" />
     <None Include="UnitTest.WebTester\plugin.json" />
+    <None Include="UnitTest.WebTester\static\unittest.webtester.css\koala-config.json" />
+    <None Include="UnitTest.WebTester\static\unittest.webtester.css\webtester.scss" />
+    <None Include="UnitTest.WebTester\static\unittest.webtester.js\koala-config.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.Base\templates\common.base\footer.html" />

@@ -97,7 +97,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Batch Delete Forever", "批量永久删除" },
 			{ "Sure to delete following {0} forever?", "确认永久删除以下{0}？此操作将不可恢复！" },
 			{ "Delete yourself is not allowed", "不能删除你自身的用户" },
-			{ "Non ajax request batch action is not secure", "非Ajax提交的批量操作不安全，请修改相关代码" },
 			{ "Action {0} not exist", "找不到{0}对应的操作" },
 			{ "Delete Successful", "删除成功" },
 			{ "Batch Delete Successful", "批量删除成功" },

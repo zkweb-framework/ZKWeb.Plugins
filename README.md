@@ -42,4 +42,4 @@ Shopping.Logistics: 70% (Some features not implemented)<br/>
 Shopping.Order: 5% (Some features not implemented)<br/>
 Shopping.Product: 70% (Front page not done)<br/>
 UI.CKEditor: 100%<br/>
-UnitTest.WebTester: 0% (Features not implemented)<br/>
+UnitTest.WebTester: 90% (Lack of translation)<br/>

@@ -97,7 +97,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Batch Delete Forever", "バッチ完全削除" },
 			{ "Sure to delete following {0} forever?", "本当に以下の{0}を完全削除しますか？一度削除したら戻れません！" },
 			{ "Delete yourself is not allowed", "自身を削除することはできません" },
-			{ "Non ajax request batch action is not secure", "非Ajaxのバッチアクションリクエストは安全ではありません" },
 			{ "Action {0} not exist", "アクション{0}を見つかりませんでした" },
 			{ "Delete Successful", "削除成功" },
 			{ "Batch Delete Successful", "バッチ削除成功" },
