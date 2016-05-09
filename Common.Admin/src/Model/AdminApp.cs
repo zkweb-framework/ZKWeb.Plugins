@@ -16,7 +16,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 	/// <summary>
 	/// 后台应用的基础类
 	/// </summary>
-	public abstract class AdminApp : IWebsiteStartHandler, ILiquidizable {
+	public abstract class AdminApp :
+		IPrivilegesProvider, IWebsiteStartHandler, ILiquidizable {
 		/// <summary>
 		/// 应用名称
 		/// </summary>
@@ -65,6 +66,16 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 				"common.admin/app_tile.html",
 				new { name = new T(Name), tileClass = TileClass, url = Url, iconClass = IconClass });
 			return html;
+		}
+
+		/// <summary>
+		/// 获取权限列表
+		/// </summary>
+		/// <returns></returns>
+		public virtual IEnumerable<string> GetPrivileges() {
+			foreach (var privilege in RequiredPrivileges) {
+				yield return privilege;
+			}
 		}
 
 		/// <summary>

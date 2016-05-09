@@ -19,7 +19,18 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Translates {
 			{ "WebTester", "网页单元测试器" },
 			{ "Support running unit test from admin panel", "支持在管理员后台运行单元测试" },
 			{ "UnitTest", "单元测试" },
-			{ "Execute", "运行" }
+			{ "Run", "运行" },
+			{ "Assembly", "程序集" },
+			{ "Passed", "通过" },
+			{ "Skiped", "跳过" },
+			{ "Failed", "失败" },
+			{ "ErrorMessage", "错误消息" },
+			{ "DebugMessage", "除错消息" },
+			{ "StartAll", "全部开始" },
+			{ "NotRunning", "未运行" },
+			{ "WaitingToRun", "等待运行" },
+			{ "Running", "运行中" },
+			{ "FinishedRunning", "运行完毕" }
 		};
 
 		public bool CanTranslate(string code) {

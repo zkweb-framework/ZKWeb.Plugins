@@ -175,7 +175,10 @@
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="UnitTest.WebTester\src\AdminApps\WebTesterApp.cs" />
+    <Compile Include="UnitTest.WebTester\src\Managers\UnitTestWebEventHandler.cs" />
     <Compile Include="UnitTest.WebTester\src\Managers\WebTesterManager.cs" />
+    <Compile Include="UnitTest.WebTester\src\Model\AssemblyTestInfo.cs" />
+    <Compile Include="UnitTest.WebTester\src\Model\AssemblyTestState.cs" />
     <Compile Include="UnitTest.WebTester\src\Translates\zh_CN.cs" />
     <Content Include="Common.Admin\templates\common.admin.widgets\admin_apps_menu.html" />
     <Compile Include="Common.Base\src\Extensions\DataTableExtensions.cs" />
@@ -557,6 +560,7 @@
     <Compile Include="UI.CKEditor\src\Translates\ja_JP.cs" />
     <Compile Include="UI.CKEditor\src\Translates\zh_TW.cs" />
     <Compile Include="UI.CKEditor\src\Translates\zh_CN.cs" />
+    <Content Include="UnitTest.WebTester\templates\unittest.webtester\tests_table.html" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common.AdminSettings\templates\common.admin_settings\footer.html" />

@@ -40,8 +40,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <typeparam name="TData">管理的数据类型</typeparam>
 	/// <typeparam name="TApp">继承类自身的类型</typeparam>
 	[ExportMany]
-	public abstract class AdminAppBuilder<TData, TApp> :
-		AdminApp, IAdminAppBuilder, IPrivilegesProvider
+	public abstract class AdminAppBuilder<TData, TApp> : AdminApp, IAdminAppBuilder
 		where TData : class {
 		/// <summary>
 		/// 获取搜索结果的Url
@@ -287,7 +286,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// 获取权限列表
 		/// </summary>
 		/// <returns></returns>
-		public virtual IEnumerable<string> GetPrivileges() {
+		public override IEnumerable<string> GetPrivileges() {
 			yield return ViewPrivilege;
 			yield return EditPrivilege;
 			if (IsRecyclable<TData>.Value) {
