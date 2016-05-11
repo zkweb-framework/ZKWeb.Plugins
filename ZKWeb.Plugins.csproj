@@ -175,6 +175,11 @@
     <Compile Include="Common.Admin\src\Translates\ko_KR.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
+    <Compile Include="Shopping.Product\src\Controllers\ApiController.cs" />
+    <Compile Include="Shopping.Product\src\Model\ProductApiInfo.cs" />
+    <None Include="Shopping.Product\templates\shopping.product.widgets\product_details.widget" />
+    <Content Include="Shopping.Product\templates\shopping.product.widgets\product_details.html" />
+    <Compile Include="Shopping.Product\src\Plugin.cs" />
     <Compile Include="UnitTest.WebTester\src\AdminApps\WebTesterApp.cs" />
     <Compile Include="UnitTest.WebTester\src\UnitTestEventHandlers\UnitTestWebEventHandler.cs" />
     <Compile Include="UnitTest.WebTester\src\Managers\WebTesterManager.cs" />
@@ -562,6 +567,12 @@
     <Compile Include="UI.CKEditor\src\Translates\ja_JP.cs" />
     <Compile Include="UI.CKEditor\src\Translates\zh_TW.cs" />
     <Compile Include="UI.CKEditor\src\Translates\zh_CN.cs" />
+    <None Include="Shopping.Product\templates\shopping.product.widgets\product_gallery.widget" />
+    <None Include="Shopping.Product\templates\shopping.product.widgets\product_sales_info.widget" />
+    <Content Include="Shopping.Product\templates\shopping.product.widgets\product_sales_info.html" />
+    <Content Include="Shopping.Product\templates\shopping.product.widgets\product_gallery.html" />
+    <Content Include="Shopping.Product\templates\shopping.product\product_list.html" />
+    <Content Include="Shopping.Product\templates\shopping.product\product_view.html" />
     <Content Include="UnitTest.WebTester\static\unittest.webtester.css\webtester.css" />
     <Content Include="UnitTest.WebTester\static\unittest.webtester.js\webtester.js" />
     <Content Include="UnitTest.WebTester\static\unittest.webtester.js\webtester.min.js" />
