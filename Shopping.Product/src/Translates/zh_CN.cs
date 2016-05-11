@@ -60,7 +60,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "OrderCountGE", "订购数量 >=" },
 			{ "All", "全部" },
 			{ "Weight", "重量" },
-			{ "Weight(g)", "重量(克)" }
+			{ "Weight(g)", "重量(克)" },
+			// 以下未复制到其他语言
+			{ "ProductList", "商品列表" },
+			{ "Preview", "预览" },
+			{ "The product you are visiting does not exist.", "您查看的商品不存在" }
 		};
 
 		public bool CanTranslate(string code) {

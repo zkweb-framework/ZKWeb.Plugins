@@ -1,0 +1,32 @@
+﻿using DryIocAttributes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
+using ZKWeb.Web.ActionResults;
+using ZKWeb.Web.Interfaces;
+
+namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
+	/// <summary>
+	/// Api控制器
+	/// </summary>
+	[ExportMany]
+	public class ApiController : IController {
+		/// <summary>
+		/// 获取商品信息
+		/// 不存在时返回null
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/product/info", HttpMethods.POST)]
+		public IActionResult ProductInfo() {
+			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
+			var info = new ProductApiInfo();
+			info.Name = "id is " + id;
+			return new JsonResult(info);
+		}
+	}
+}

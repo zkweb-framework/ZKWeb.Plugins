@@ -168,7 +168,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Seller", "SellerId");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				var actionColumn = response.Columns.AddActionColumn();
+				var actionColumn = response.Columns.AddActionColumn("150");
+				actionColumn.AddButtonForOpenLink(new T("Preview"),
+					"btn btn-xs btn-success", "fa fa-eye", "/product/view?id=<%-row.Id%>", "_blank");
 				actionColumn.AddEditActionForAdminApp<ProductManageApp>();
 				idColumn.AddDivider();
 				idColumn.AddDeleteActionsForAdminApp<ProductManageApp>(request);

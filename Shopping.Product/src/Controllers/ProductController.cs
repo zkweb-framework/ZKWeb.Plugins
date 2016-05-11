@@ -65,5 +65,23 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 				AffectsBinders = affectsBinders
 			});
 		}
+
+		/// <summary>
+		/// 前台商品详情页
+		/// </summary>
+		/// <returns></returns>
+		[Action("product/view")]
+		public IActionResult View() {
+			return new TemplateResult("shopping.product/product_view.html");
+		}
+
+		/// <summary>
+		/// 前台商品列表页
+		/// </summary>
+		/// <returns></returns>
+		[Action("product/list")]
+		public IActionResult List() {
+			return new TemplateResult("shopping.product/product_list.html");
+		}
 	}
 }

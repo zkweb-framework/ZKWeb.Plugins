@@ -1,0 +1,21 @@
+﻿{% fetch /api/product/info?id={id} > productInfo %}
+{% use_title productInfo.Name -%}
+{% include common.base/header.html %}
+<div class="screen-center-block">
+	{% unless productInfo %}
+	<div class="text-center-row">
+		{{ "The product you are visiting does not exist." | trans }}
+	</div>
+	{% else %}
+	<div class="product-view">
+		<div class="product-summary">
+			{% area product_gallery %}
+			{% area product_sales_info %}
+		</div>
+		<div class="product-details">
+			{% area product_details %}
+		</div>
+	</div>
+	{% endunless %}
+</div>
+{% include common.base/footer.html %}
