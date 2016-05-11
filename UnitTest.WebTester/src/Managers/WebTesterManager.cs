@@ -44,17 +44,13 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Managers {
 		/// 优先级大于InformationsLock
 		/// </summary>
 		protected object RunningThreadLock { get; set; }
-		/// <summary>
-		/// 单元测试管理器
-		/// </summary>
-		protected UnitTestManager UnitTestManager { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		public WebTesterManager(UnitTestManager unitTestManager) {
-			UnitTestManager = unitTestManager;
-			var assemblies = UnitTestManager.GetAssembliesForTest();
+		public WebTesterManager() {
+			var unitTestManager = Application.Ioc.Resolve<UnitTestManager>();
+			var assemblies = unitTestManager.GetAssembliesForTest();
 			Informations = assemblies.Select(a => new AssemblyTestInfo(a)).ToList();
 			InformationsLock = new object();
 			RunningThread = null;
@@ -99,8 +95,9 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Managers {
 				// 运行测试
 				var assembly = AppDomain.CurrentDomain.GetAssemblies()
 					.First(a => a.GetName().Name == assemblyToRun);
-				var eventHandler = new UnitTestWebEventHandler(this);
-				UnitTestManager.RunAssemblyTest(assembly, eventHandler);
+				var eventHandler = new UnitTestWebEventHandler();
+				var unitTestManager = Application.Ioc.Resolve<UnitTestManager>();
+				unitTestManager.RunAssemblyTest(assembly, eventHandler);
 			}
 		}
 

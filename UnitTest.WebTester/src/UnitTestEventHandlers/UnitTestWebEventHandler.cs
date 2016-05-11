@@ -14,23 +14,12 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 	/// </summary>
 	public class UnitTestWebEventHandler : IUnitTestEventHandler {
 		/// <summary>
-		/// 网页上运行单元测试使用的管理器
-		/// </summary>
-		protected WebTesterManager WebTesterManager { get; set; }
-
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		public UnitTestWebEventHandler(WebTesterManager webTesterManager) {
-			WebTesterManager = webTesterManager;
-		}
-
-		/// <summary>
 		/// 程序集测试开始
 		/// </summary>
 		public void OnAllTestStarting(AllTestStartingInfo info) {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
-			WebTesterManager.UpdateInformation(assemblyName, testInfo => {
+			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
+			webTesterManager.UpdateInformation(assemblyName, testInfo => {
 				testInfo.State = Model.AssemblyTestState.Running;
 				testInfo.Updated();
 			});
@@ -41,7 +30,8 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 		/// </summary>
 		public void OnAllTestCompleted(AllTestCompletedInfo info) {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
-			WebTesterManager.UpdateInformation(assemblyName, testInfo => {
+			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
+			webTesterManager.UpdateInformation(assemblyName, testInfo => {
 				testInfo.State = Model.AssemblyTestState.FinishedRunning;
 				testInfo.Passed = info.Passed;
 				testInfo.Skiped = info.Skiped;
@@ -55,7 +45,8 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 		/// </summary>
 		public void OnDebugMessage(DebugMessageInfo info) {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
-			WebTesterManager.UpdateInformation(assemblyName, testInfo => {
+			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
+			webTesterManager.UpdateInformation(assemblyName, testInfo => {
 				testInfo.DebugMessage += info.Message;
 				testInfo.DebugMessage += "\r\n";
 				testInfo.Updated();
@@ -67,7 +58,8 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 		/// </summary>
 		public void OnErrorMessage(ErrorMessageInfo info) {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
-			WebTesterManager.UpdateInformation(assemblyName, testInfo => {
+			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
+			webTesterManager.UpdateInformation(assemblyName, testInfo => {
 				testInfo.ErrorMessage += info.Message;
 				testInfo.ErrorMessage += "\r\n";
 				testInfo.Updated();
@@ -79,7 +71,8 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 		/// </summary>
 		public void OnTestFailed(TestFailedInfo info) {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
-			WebTesterManager.UpdateInformation(assemblyName, testInfo => {
+			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
+			webTesterManager.UpdateInformation(assemblyName, testInfo => {
 				testInfo.Failed += 1;
 				testInfo.FailedMessage += string.Format(
 					"Test {0} failed:\r\n{1}\r\n\r\n", info.Method.GetFullName(), info.Exception);
@@ -92,7 +85,8 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 		/// </summary>
 		public void OnTestPassed(TestPassedInfo info) {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
-			WebTesterManager.UpdateInformation(assemblyName, testInfo => {
+			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
+			webTesterManager.UpdateInformation(assemblyName, testInfo => {
 				testInfo.Passed += 1;
 				testInfo.Updated();
 			});
@@ -103,7 +97,8 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 		/// </summary>
 		public void OnTestSkipped(TestSkippedInfo info) {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
-			WebTesterManager.UpdateInformation(assemblyName, testInfo => {
+			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
+			webTesterManager.UpdateInformation(assemblyName, testInfo => {
 				testInfo.Skiped += 1;
 				testInfo.SkipedMessage += string.Format(
 					"Test {0} skiped: {1}\r\n\r\n", info.Method.GetFullName(), info.Exception.Message);

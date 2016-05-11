@@ -38,14 +38,6 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 		public override string TileClass { get { return "tile bg-black"; } }
 		public override string IconClass { get { return "fa fa-bug"; } }
 		public override string[] RequiredPrivileges { get { return new[] { Name + ":Run" }; } }
-		protected Lazy<WebTesterManager> WebTesterManager { get; set; }
-
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		public WebTesterApp(Lazy<WebTesterManager> webTesterManager) {
-			WebTesterManager = webTesterManager;
-		}
 
 		/// <summary>
 		/// 处理POST请求
@@ -55,24 +47,25 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 			HttpRequestChecker.RequieAjaxRequest();
 			var request = HttpContextUtils.CurrentContext.Request;
 			var action = request.Get<string>("action");
+			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
 			if (action == "fetch") {
 				// 抓取测试信息
 				var lastUpdateds = JsonConvert.DeserializeObject<Dictionary<string, string>>(
 					request.Get<string>("lastUpdateds")) ?? new Dictionary<string, string>();
-				var informations = WebTesterManager.Value.GetInformations(lastUpdateds);
+				var informations = webTesterManager.GetInformations(lastUpdateds);
 				return new JsonResult(new { informations });
 			} else if (action == "reset_all") {
 				// 重置测试结果
-				WebTesterManager.Value.ResetInformations();
+				webTesterManager.ResetInformations();
 				return new JsonResult(new { message = new T("Request submitted, wait processing") });
 			} else if (action == "start_all") {
 				// 开始全部测试
-				WebTesterManager.Value.RunAllAssemblyTestBackground();
+				webTesterManager.RunAllAssemblyTestBackground();
 				return new JsonResult(new { message = new T("Request submitted, wait processing") });
 			} else if (action == "start") {
 				// 开始单项测试
 				var assemblyName = request.Get<string>("assembly");
-				WebTesterManager.Value.RunAssemblyTestBackground(assemblyName);
+				webTesterManager.RunAssemblyTestBackground(assemblyName);
 				return new JsonResult(new { message = new T("Request submitted, wait processing") });
 			}
 			throw new ArgumentException(string.Format("unknown action {0}", action));
@@ -88,7 +81,8 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 				return PostAction();
 			}
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var assemblyNames = WebTesterManager.Value.GetInformations()
+			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
+			var assemblyNames = webTesterManager.GetInformations()
 				.Select(info => info.AssemblyName).ToList();
 			var table = templateManager.RenderTemplate(
 				"unittest.webtester/tests_table.html", new { assemblyNames });
