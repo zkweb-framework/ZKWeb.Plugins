@@ -176,8 +176,10 @@
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Shopping.Product\src\Controllers\ApiController.cs" />
-    <Compile Include="Shopping.Product\src\Model\ProductApiInfo.cs" />
+    <Compile Include="Shopping.Product\src\Managers\ProductManager.cs" />
     <None Include="Shopping.Product\templates\shopping.product.widgets\product_details.widget" />
+    <None Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.widget" />
+    <Content Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.html" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_details.html" />
     <Compile Include="Shopping.Product\src\Plugin.cs" />
     <Compile Include="UnitTest.WebTester\src\AdminApps\WebTesterApp.cs" />

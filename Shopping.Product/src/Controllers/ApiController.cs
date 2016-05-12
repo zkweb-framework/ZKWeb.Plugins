@@ -1,9 +1,11 @@
-﻿using DryIocAttributes;
+﻿using DryIoc;
+using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
@@ -24,8 +26,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		[Action("api/product/info", HttpMethods.POST)]
 		public IActionResult ProductInfo() {
 			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
-			var info = new ProductApiInfo();
-			info.Name = "id is " + id;
+			var productManager = Application.Ioc.Resolve<ProductManager>();
+			var info = productManager.GetProductApiInfo(id);
 			return new JsonResult(info);
 		}
 	}

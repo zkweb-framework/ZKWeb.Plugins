@@ -152,19 +152,19 @@
 		}
 	}
 	/* 商品介绍行的样式 */
-	.product-introduction-row {
+	.product-details-row {
 		border: 1px solid #DDD;
 		margin: 20px 4px 0px 4px;
 		overflow-x: auto;
 		/* 商品介绍的样式 */
-		.product-introduction {
+		.product-details {
 			.contents {
 				padding: 20px;
 			}
 		}
 		/* 低分辨率时缩小内容 */
 		@media (max-width: 768px) {
-			.product-introduction .contents {
+			.product-details .contents {
 				transform: scale(0.75);
 				transform-origin: left top 0px;
 			}

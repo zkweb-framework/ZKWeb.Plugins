@@ -29,6 +29,22 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// 商品相册图片的路径格式 (Id, 序号, 后缀)
 		/// </summary>
 		public const string AlbumImagePathFormat = "/static/shopping.product.images/{0}/album_{1}{2}.jpg";
+		
+		/// <summary>
+		/// 获取商品相册图片的储存路径，路径不一定存在
+		/// </summary>
+		/// <param name="id">商品Id</param>
+		/// <param name="index">图片序号，null时返回主图的路径</param>
+		/// <param name="type">商品相册的图片类型，原图或缩略图等</param>
+		/// <returns></returns>
+		public virtual string GetAlbumImageStoragePath(
+			long id, long? index, ProductAlbumImageType type) {
+			var pathManager = Application.Ioc.Resolve<PathManager>();
+			var indexString = index.HasValue ? index.Value.ToString() : "main";
+			var suffix = type.GetAttribute<ProductAlbumImageSuffixAttribute>().Suffix;
+			var path = string.Format(AlbumImagePathFormat, id, indexString, suffix);
+			return pathManager.GetStorageFullPath(path.Split('/').Skip(1).ToArray());
+		}
 
 		/// <summary>
 		/// 获取商品相册图片的网页路径，不存在时返回默认路径
@@ -54,19 +70,26 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		}
 
 		/// <summary>
-		/// 获取商品相册图片的储存路径，路径不一定存在
+		/// 获取商品相册图片的网页路径列表
+		/// 不存在的图片不会包含在列表中
 		/// </summary>
 		/// <param name="id">商品Id</param>
-		/// <param name="index">图片序号，null时返回主图的路径</param>
-		/// <param name="type">商品相册的图片类型，原图或缩略图等</param>
 		/// <returns></returns>
-		public virtual string GetAlbumImageStoragePath(
-			long id, long? index, ProductAlbumImageType type) {
-			var pathManager = Application.Ioc.Resolve<PathManager>();
-			var indexString = index.HasValue ? index.Value.ToString() : "main";
-			var suffix = type.GetAttribute<ProductAlbumImageSuffixAttribute>().Suffix;
-			var path = string.Format(AlbumImagePathFormat, id, indexString, suffix);
-			return pathManager.GetStorageFullPath(path.Split('/').Skip(1).ToArray());
+		public virtual List<Dictionary<ProductAlbumImageType, string>> GetExistAlbumImageWebPaths(long id) {
+			var result = new List<Dictionary<ProductAlbumImageType, string>>();
+			for (int i = 1; i < ProductAlbumUploadData.MaxImageCount; ++i) {
+				var dict = new Dictionary<ProductAlbumImageType, string>();
+				foreach (ProductAlbumImageType type in Enum.GetValues(typeof(ProductAlbumImageType))) {
+					var path = GetAlbumImageWebPath(id, i, type, null);
+					if (path != null) {
+						dict[type] = path;
+					}
+				}
+				if (dict.Count > 0) {
+					result.Add(dict);
+				}
+			}
+			return result;
 		}
 
 		/// <summary>
