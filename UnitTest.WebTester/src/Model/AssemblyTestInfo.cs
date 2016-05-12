@@ -31,7 +31,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 		/// <summary>
 		/// 跳过数量
 		/// </summary>
-		public ulong Skiped { get; set; }
+		public ulong Skipped { get; set; }
 		/// <summary>
 		/// 失败数量
 		/// </summary>
@@ -39,7 +39,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 		/// <summary>
 		/// 跳过时输出的信息
 		/// </summary>
-		public string SkipedMessage { get; set; }
+		public string SkippedMessage { get; set; }
 		/// <summary>
 		/// 失败时输出的信息
 		/// </summary>
@@ -95,9 +95,9 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 			}
 			State = AssemblyTestState.NotRunning;
 			Passed = 0;
-			Skiped = 0;
+			Skipped = 0;
 			Failed = 0;
-			SkipedMessage = null;
+			SkippedMessage = null;
 			FailedMessage = null;
 			ErrorMessage = null;
 			DebugMessage = null;
@@ -115,6 +115,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 			}
 			if (State == AssemblyTestState.NotRunning) {
 				State = AssemblyTestState.WaitingToRun;
+				Updated();
 				return true;
 			}
 			return false;

@@ -22,7 +22,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Translates {
 			{ "Run", "运行" },
 			{ "Assembly", "程序集" },
 			{ "Passed", "通过" },
-			{ "Skiped", "跳过" },
+			{ "Skipped", "跳过" },
 			{ "Failed", "失败" },
 			{ "ErrorMessage", "错误消息" },
 			{ "DebugMessage", "除错消息" },

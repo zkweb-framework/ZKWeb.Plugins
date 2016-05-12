@@ -17,11 +17,11 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Tests {
 		}
 
 		public void TestSkipped() {
-			Assert.Skiped("just test it could skipped");
+			Assert.Skipped("just test it could skipped");
 		}
 
 		public void TestMoreSkipped() {
-			Assert.Skiped("just test it could skipped");
+			Assert.Skipped("just test it could skipped");
 		}
 
 		public void TestPassed() {
