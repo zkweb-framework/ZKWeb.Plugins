@@ -184,6 +184,9 @@
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_details.html" />
     <Compile Include="Shopping.Product\src\Plugin.cs" />
     <Compile Include="UnitTest.WebTester\src\AdminApps\WebTesterApp.cs" />
+    <Compile Include="UnitTest.WebTester\src\Translates\ko_KR.cs" />
+    <Compile Include="UnitTest.WebTester\src\Translates\ja_JP.cs" />
+    <Compile Include="UnitTest.WebTester\src\Translates\zh_TW.cs" />
     <Compile Include="UnitTest.WebTester\src\UnitTestEventHandlers\UnitTestWebEventHandler.cs" />
     <Compile Include="UnitTest.WebTester\src\Managers\WebTesterManager.cs" />
     <Compile Include="UnitTest.WebTester\src\Model\AssemblyTestInfo.cs" />
