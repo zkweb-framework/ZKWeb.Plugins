@@ -91,7 +91,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// <returns></returns>
 		public static ISet<ProductMatchedData> ToDatabaseSet(
 			this List<EditingMatchedData> values, Database.Product product) {
-			if (values == null || product.CategoryId == null) {
+			if (values == null) {
 				return new HashSet<ProductMatchedData>();
 			}
 			long matchOrder = 0;

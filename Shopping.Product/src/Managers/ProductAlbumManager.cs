@@ -77,7 +77,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <returns></returns>
 		public virtual List<Dictionary<ProductAlbumImageType, string>> GetExistAlbumImageWebPaths(long id) {
 			var result = new List<Dictionary<ProductAlbumImageType, string>>();
-			for (int i = 1; i < ProductAlbumUploadData.MaxImageCount; ++i) {
+			for (int i = 1; i <= ProductAlbumUploadData.MaxImageCount; ++i) {
 				var dict = new Dictionary<ProductAlbumImageType, string>();
 				foreach (ProductAlbumImageType type in Enum.GetValues(typeof(ProductAlbumImageType))) {
 					var path = GetAlbumImageWebPath(id, i, type, null);
