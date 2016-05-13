@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Localize;
 using ZKWeb.Plugin.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.Collections;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
@@ -25,10 +26,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		public TimeSpan ProductApiInfoCacheTime { get; set; }
 		/// <summary>
 		/// Api使用的商品信息的缓存
-		/// { (用户Id, 商品Id): 商品信息, ... }
 		/// </summary>
-		protected MemoryCache<Tuple<long, long>, object> ProductApiInfoCache =
-			new MemoryCache<Tuple<long, long>, object>();
+		protected MemoryCacheByIdentityAndLocale<long, object> ProductApiInfoCache =
+			new MemoryCacheByIdentityAndLocale<long, object>();
 
 		/// <summary>
 		/// 初始化
@@ -45,10 +45,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <returns></returns>
 		public virtual object GetProductApiInfo(long productId) {
 			// 从缓存中获取
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var userId = sessionManager.GetSession().ReleatedId;
-			var key = Tuple.Create(userId, productId);
-			var info = ProductApiInfoCache.GetOrDefault(key);
+			var info = ProductApiInfoCache.GetOrDefault(productId);
 			if (info != null) {
 				return info;
 			}
@@ -62,12 +59,16 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 				var productCategoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
 				var category = product.CategoryId == null ? null :
 					productCategoryManager.FindCategory(product.CategoryId.Value);
-				// 商品相册信息
+				// 相册信息
 				var productAlbumManager = Application.Ioc.Resolve<ProductAlbumManager>();
 				var mainImageWebPath = productAlbumManager.GetAlbumImageWebPath(
 					product.Id, null, ProductAlbumImageType.Normal);
 				var imageWebPaths = productAlbumManager.GetExistAlbumImageWebPaths(product.Id)
 					.Select(d => d.ToDictionary(p => p.Key.ToString(), p => p.Value)).ToList();
+				// 销售信息
+				var salesInfoDisplayFields = Application.Ioc.ResolveMany<IProductSalesInfoDisplayField>()
+					.Select(d => new { name = new T(d.Name), html = d.GetDisplayHtml(r.Context, product) })
+					.Where(d => !string.IsNullOrEmpty(d.html)).ToList();
 				// 卖家信息
 				var seller = product.Seller;
 				info = new {
@@ -84,10 +85,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 					classes = product.Classes.Select(c => new { id = c.Id, name = c.Name }).ToList(),
 					tags = product.Tags.Select(t => new { id = t.Id, name = t.Name }).ToList(),
 					mainImageWebPath = mainImageWebPath,
-					imageWebPaths = imageWebPaths
+					imageWebPaths = imageWebPaths,
+					salesInfoDisplayFields = salesInfoDisplayFields
 				};
 				// 保存到缓存中
-				ProductApiInfoCache.Put(key, info, ProductApiInfoCacheTime);
+				ProductApiInfoCache.Put(productId, info, ProductApiInfoCacheTime);
 			});
 			return info;
 		}

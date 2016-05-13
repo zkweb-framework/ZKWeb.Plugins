@@ -1,1 +1,30 @@
-﻿<p>product sales info</p>
+﻿<div class="product-sales-info">
+	<div class="product-name">
+		{{ product_info.name }}
+	</div>
+	<div class="product-price">
+		<dl>
+			<dt>{{ "Price" | trans }}</dt>
+			<dd>
+				<span class="prefix"></span>
+				<span class="price"></span>
+				<span class="suffix"></span>
+			</dd>
+		</dl>
+	</div>
+	<div class="product-properties">
+		<ul>
+			{% for field in product_info.salesInfoDisplayFields %}
+			<li>
+				<dl>
+					<dt>{{ field.name }}</dt>
+					<dd>{% raw_html field.html %}</dd>
+				</dl>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="product-estimation">
+
+	</div>
+</div>

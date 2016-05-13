@@ -4,6 +4,7 @@
 	"Dependencies": [
 		"Common.Base",
 		"Common.Admin",
+		"Common.AdminSettings",
 		"Common.Currency",
 		"UI.CKEditor",
 		"Common.GenericClass",

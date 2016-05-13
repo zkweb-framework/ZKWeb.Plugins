@@ -64,7 +64,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			// 以下未复制到其他语言
 			{ "ProductList", "商品列表" },
 			{ "Preview", "预览" },
-			{ "The product you are visiting does not exist.", "您查看的商品不存在" }
+			{ "The product you are visiting does not exist.", "您查看的商品不存在" },
+			{ "Brand", "品牌" },
+			{ "ModelNumber", "货号" }
 		};
 
 		public bool CanTranslate(string code) {

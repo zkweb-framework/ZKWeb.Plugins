@@ -5,7 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using ZKWeb.Localize;
+using ZKWeb.Localize.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Templating;
@@ -34,6 +37,34 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 				nameTruncated = product.Name.TruncateWithSuffix(truncateSize)
 			});
 			return new HtmlString(html);
+		}
+
+		/// <summary>
+		/// 根据名称查找商品的属性
+		/// 属性名包含指定的名称时返回该属性
+		/// </summary>
+		/// <param name="product">商品</param>
+		/// <param name="name">属性名称，可以是翻译之前的</param>
+		/// <returns></returns>
+		public static IEnumerable<ProductToPropertyValue> FindPropertyValuesWhereNameContains(
+			this Database.Product product, string name) {
+			// 获取属性名称的所有翻译
+			var translateManager = Application.Ioc.Resolve<TranslateManager>();
+			var languages = Application.Ioc.ResolveMany<ILanguage>();
+			var translatedNames = new HashSet<string>(
+				languages.Select(l => translateManager.Translate(name, l.Name)));
+			// 过滤包含指定名称的属性，并返回属性值
+			var productCategoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
+			foreach (var propertyValue in product.PropertyValues) {
+				var property = productCategoryManager.FindProperty(
+					product.CategoryId ?? 0, propertyValue.PropertyId);
+				if (property == null) {
+					continue;
+				}
+				if (translatedNames.Any(n => property.Name.Contains(n))) {
+					yield return propertyValue;
+				}
+			}
 		}
 	}
 }

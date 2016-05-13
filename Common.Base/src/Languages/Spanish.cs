@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Plugins.Common.AdminSettings.src.Model;
+using ZKWeb.Localize.Interfaces;
 
-namespace ZKWeb.Plugins.Common.AdminSettings.src.Languages {
+namespace ZKWeb.Plugins.Common.Base.src.Languages {
 	/// <summary>
 	/// 西班牙语
 	/// </summary>
