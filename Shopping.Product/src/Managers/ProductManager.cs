@@ -107,6 +107,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 					categoryId = product.CategoryId,
 					categoryName = category == null ? null : category.Name,
 					name = product.Name,
+					introduction = product.Introduction,
 					type = product.Type,
 					typeName = new T(product.Type),
 					state = product.State,

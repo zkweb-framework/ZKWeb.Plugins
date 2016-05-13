@@ -59,12 +59,12 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 			foreach (var group in groups) {
 				if (firstGroup) {
 					html.AddAttribute("class", "active");
+					html.AddAttribute("aria-expanded", "true");
 					firstGroup = false;
 				}
 				html.RenderBeginTag("li");
 				html.AddAttribute("href", "#" + GetTabId(group.Key));
 				html.AddAttribute("data-toggle", "tab");
-				html.AddAttribute("aria-expanded", "true");
 				html.RenderBeginTag("a");
 				html.WriteEncodedText(new T(group.Key));
 				html.RenderEndTag(); // a

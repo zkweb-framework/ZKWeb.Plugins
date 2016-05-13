@@ -161,6 +161,10 @@
 			.contents {
 				padding: 20px;
 			}
+
+			.nav.nav-tabs {
+				margin: -1px 0px 0px -1px;
+			}
 		}
 		/* 低分辨率时缩小内容 */
 		@media (max-width: 768px) {
