@@ -17,10 +17,19 @@ namespace ZKWeb.Plugins.Demo.src.DatabaseInitializeHandlers {
 	[ExportMany]
 	public class DatabaseInitializeHandlerDemo : IDatabaseInitializeHandler {
 		/// <summary>
+		/// 是否启用
+		/// 启用后原有的数据表内容不会自动迁移到现有的数据表，请务必做好备份
+		/// </summary>
+		public static readonly bool Enabled = false;
+
+		/// <summary>
 		/// 数据库初始化时的处理
 		/// </summary>
 		/// <param name="configuration">配置对象</param>
 		public void OnInitialize(FluentConfiguration configuration) {
+			if (!Enabled) {
+				return;
+			}
 			configuration.Mappings(m => {
 				m.FluentMappings.Conventions.Add(
 					ConventionBuilder.Class.Always(x =>
