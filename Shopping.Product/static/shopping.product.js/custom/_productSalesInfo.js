@@ -25,13 +25,6 @@ $(function () {
 			$this.data(matchedDataDataKey, matchedData);
 			// console.log(matchedData);
 		}
-		var currencyInfoMappingDataKey = "currencyInfoMapping";
-		var currencyInfoMapping = $this.data(currencyInfoMappingDataKey);
-		if (!currencyInfoMapping) {
-			currencyInfoMapping = JSON.parse($this.find("[name='currencyInfoMappingJson']").val() || "{}");
-			$this.data(currencyInfoMappingDataKey, currencyInfoMapping);
-			// console.log(currencyInfoMapping);
-		}
 		// 获取匹配器列表，只获取一次
 		var matchersDataKey = "matchers";
 		var matchers = $this.data(matchersDataKey);
@@ -59,18 +52,19 @@ $(function () {
 		// 没有匹配器时，所有数据都不应该匹配
 		var price = null;
 		var currency = 0;
+		var currencyInfo = {};
 		var stock = null;
 		matchers && _.each(matchedData, function (data) {
 			var matched = _.all(matchers, function (matcher) { return matcher(parameters, data); });
 			if (price === null && matched && data.Price !== null) {
 				price = data.Price;
 				currency = data.PriceCurrency;
+				currencyInfo = data.PriceCurrencyInfo;
 			}
 			if (stock === null && matched && data.Stock !== null) {
 				stock = data.Stock;
 			}
 		});
-		var currencyInfo = currencyInfoMapping[currency] || {};
 		$this.find(".product-price .prefix").text(currencyInfo.Prefix || "");
 		$this.find(".product-price .price").text(price || 0);
 		$this.find(".product-price .suffix").text(currencyInfo.Suffix || "");

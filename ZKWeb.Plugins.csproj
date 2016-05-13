@@ -182,9 +182,14 @@
     <None Include="Shopping.Product\templates\shopping.product.widgets\product_details.widget" />
     <None Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.widget" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.html" />
+    <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\order_count.matcher.js" />
+    <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\property.matcher.js" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_details.html" />
+    <Compile Include="Shopping.Product\src\Model\IProductMatchedDataMatcher.cs" />
     <Compile Include="Shopping.Product\src\Model\IProductSalesInfoDisplayField.cs" />
     <Compile Include="Shopping.Product\src\Plugin.cs" />
+    <Compile Include="Shopping.Product\src\ProductMatchedDataMatchers\OrderCountMatcher.cs" />
+    <Compile Include="Shopping.Product\src\ProductMatchedDataMatchers\PropertyMatcher.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\BrandDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\ModelNumberDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\WeightDisplayField.cs" />

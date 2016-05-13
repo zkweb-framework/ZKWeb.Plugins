@@ -30,5 +30,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 			var info = productManager.GetProductApiInfo(id);
 			return new JsonResult(info);
 		}
+
+		/// <summary>
+		/// 获取商品匹配数据的匹配器列表
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/product/matched_data_matchers", HttpMethods.POST)]
+		public IActionResult MatchedDataMatchers() {
+			var matchers = Application.Ioc.ResolveMany<IProductMatchedDataMatcher>();
+			return new JsonResult(matchers.Select(m => m.GetJavascriptMatchFunction()).ToList());
+		}
 	}
 }

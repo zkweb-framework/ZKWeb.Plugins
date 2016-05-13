@@ -1,4 +1,5 @@
-﻿<div class="product-sales-info">
+﻿{% fetch /api/product/matched_data_matchers > product_matched_data_matchers %}
+<div class="product-sales-info">
 	<div class="product-name">
 		{{ product_info.name }}
 	</div>
@@ -25,6 +26,27 @@
 		</ul>
 	</div>
 	<div class="product-estimation">
-
+		<input type="hidden" name="matchedDataJson" value="{{ product_info.matchedDataJson }}" />
+		<input type="hidden" value="" data-match-parameter="Properties" />
+		{% for function in product_matched_data_matchers %}
+		<script type="text/productMatchedDataMatcher" data-body="{{ function }}">
+		</script>
+		{% endfor %}
+		<ul>
+			{% for pair in product_info.saleProperties %}
+			<li>
+				<dl>
+					<dt>{{ pair.property.name }}</dt>
+					<dd data-property-id="{{ pair.property.id }}">
+						{% for value in pair.values %}
+						<a title="{{ value.name }}" data-property-value-id="{{ value.id }}">
+							{{ value.name }}
+						</a>
+						{% endfor %}
+					</dd>
+				</dl>
+			</li>
+			{% endfor %}
+		</ul>
 	</div>
 </div>
