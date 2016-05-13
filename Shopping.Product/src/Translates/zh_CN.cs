@@ -67,8 +67,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "The product you are visiting does not exist.", "您查看的商品不存在" },
 			{ "Brand", "品牌" },
 			{ "ModelNumber", "货号" },
-			{ "{0} gram", "{0} 克(g)" },
-			{ "{0}~{1} gram", "{0}~{1} 克(g)" }
+			{ "{0:F2} gram", "{0:F2} 克(g)" },
+			{ "{0:F2}~{1:F2} gram", "{0:F2}~{1:F2} 克(g)" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -32,9 +32,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 			if (min == max && min == 0) {
 				return null;
 			} else if (min == max) {
-				return string.Format(new T("{0} gram"), min);
+				return string.Format(new T("{0:F2} gram"), min);
 			}
-			return string.Format(new T("{0}~{1} gram"), min, max);
+			return string.Format(new T("{0:F2}~{1:F2} gram"), min, max);
 		}
 	}
 }
