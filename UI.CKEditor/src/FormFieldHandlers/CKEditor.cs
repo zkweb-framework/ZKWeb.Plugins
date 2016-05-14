@@ -1,6 +1,7 @@
 ﻿using DryIoc;
 using DryIocAttributes;
 using Ganss.XSS;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,7 +32,7 @@ namespace ZKWeb.Plugins.UI.CKEditor.src.FormFieldHandlers {
 			html.AddAttribute("require-script", "/static/ui.ckeditor.js/ckeditor-loader.min.js");
 			html.AddAttribute("class", "form-control ckeditor");
 			html.AddAttribute("data-trigger", "ckeditor");
-			html.AddAttribute("data-ckeditor-config", attribute.Config);
+			html.AddAttribute("data-ckeditor-config", JsonConvert.SerializeObject(attribute.Config));
 			html.AddAttributes(provider.FormControlAttributes.Where(a => a.Key != "class"));
 			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("textarea");
