@@ -1,11 +1,14 @@
 ﻿/* 支持全屏的模态框，注意使用这个类后将不支持bootstrap-dialog的动态切换大小 */
 .bootstrap-dialog.size-fullscreen {
 	padding-left: 0px !important;
+	overflow-y: hidden;
 
 	.modal-dialog {
 		margin: 0px;
 		width: 100%;
 		height: 100%;
+		/* 让滚动条在里层显示 */
+		overflow-y: auto;
 
 		.modal-content {
 			min-height: 100%;

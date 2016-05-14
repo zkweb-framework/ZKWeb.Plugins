@@ -23,3 +23,7 @@ BootstrapDialog.showRemote = function (title, url, extendParameters) {
 	// 等待模态框加到DOM后再读取远程数据
 	setTimeout(function () { $contents.trigger("reload"); }, 1);
 };
+
+/* 防止误关模态框 */
+BootstrapDialog.defaultOptions.closeByBackdrop = false;
+BootstrapDialog.defaultOptions.closeByKeyboard = false;

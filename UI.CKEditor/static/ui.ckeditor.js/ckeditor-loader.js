@@ -27,6 +27,9 @@ $(function () {
 			$form.on("submit", function () { instance.updateElement(); });
 			$form.on("form-pre-serialize", function () { instance.updateElement(); });
 			// 防止ckeditor焦点无法捕捉的BUG
+			// 还需要指定模态框的overflow-y等于hidden，让滚动条在模态框里层显示
+			// https://dev.ckeditor.com/ticket/5779
+			// http://stackoverflow.com/questions/22637455/how-to-use-ckeditor-in-a-bootstrap-modal
 			$("[tabindex]").removeAttr("tabindex");
 		};
 		var rule = "[data-trigger=ckeditor]";
