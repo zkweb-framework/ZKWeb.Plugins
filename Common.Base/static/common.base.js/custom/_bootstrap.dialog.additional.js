@@ -27,3 +27,6 @@ BootstrapDialog.showRemote = function (title, url, extendParameters) {
 /* 防止误关模态框 */
 BootstrapDialog.defaultOptions.closeByBackdrop = false;
 BootstrapDialog.defaultOptions.closeByKeyboard = false;
+
+/* 设置关闭图标 */
+BootstrapDialog.defaultOptions.closeIcon = "<i class='fa fa-arrow-left'></i>";
