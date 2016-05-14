@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
 
@@ -18,8 +19,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.ListItemProviders {
 		/// <returns></returns>
 		public IEnumerable<IGrouping<string, ListItem>> GetGroups() {
 			// 获取所有权限
-			var privilegeProviders = Application.Ioc.ResolveMany<IPrivilegesProvider>();
-			var privileges = privilegeProviders.SelectMany(p => p.GetPrivileges());
+			var privileges = Application.Ioc.ResolvePrivileges();
 			// 如果权限中包含':'，则以前半部分为分组名称，否则分组名称为Other
 			return privileges.Select(p => {
 				var index = p.IndexOf(':');

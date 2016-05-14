@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 	/// 这个抽象类需要再次继承，请勿直接使用
 	/// 目前集成这个类的类有GenericFormForMenuPage, GenericListForMenuPage
 	/// </summary>
-	public abstract class GenericPageForMenuPage : IWebsiteStartHandler {
+	public abstract class GenericPageForMenuPage : IPrivilegesProvider, IWebsiteStartHandler {
 		/// <summary>
 		/// 所属分组
 		/// </summary>
@@ -86,6 +86,16 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回模板页
 			return new TemplateResult(TemplatePath);
+		}
+
+		/// <summary>
+		/// 获取权限列表
+		/// </summary>
+		/// <returns></returns>
+		public virtual IEnumerable<string> GetPrivileges() {
+			foreach (var privilege in RequiredPrivileges) {
+				yield return privilege;
+			}
 		}
 
 		/// <summary>

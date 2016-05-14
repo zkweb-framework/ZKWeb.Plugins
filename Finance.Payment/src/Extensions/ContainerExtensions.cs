@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Extensions {
 	/// <summary>
 	/// Ioc容器的扩展函数
 	/// </summary>
-	public static class IocExtensions {
+	public static class ContainerExtensions {
 		/// <summary>
 		/// 根据类型获取对应的支付接口处理器
 		/// 没有时抛出未知类型的例外

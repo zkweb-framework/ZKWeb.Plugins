@@ -115,6 +115,7 @@
     <Compile Include="Common.AdminSettings\src\GenericFormsForAdminSettings\WebsiteSettingsForm.cs" />
     <Compile Include="Common.AdminSettings\src\Scaffolding\GenericFormForAdminSettings.cs" />
     <Compile Include="Common.AdminSettings\src\Scaffolding\GenericListForAdminSettings.cs" />
+    <Compile Include="Common.Admin\src\Extensions\ContainerExtensions.cs" />
     <Compile Include="Common.Base\src\Collections\MemoryCacheByIdentity.cs" />
     <Compile Include="Common.Base\src\Collections\MemoryCacheByIdentityAndLocale.cs" />
     <Compile Include="Common.Base\src\Languages\Italian.cs" />
@@ -194,6 +195,8 @@
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\ModelNumberDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\WeightDisplayField.cs" />
     <Compile Include="UI.CKEditor\src\Controllers\CKEditorController.cs" />
+    <Compile Include="UI.CKEditor\src\Model\ICKEditorImageBrowser.cs" />
+    <Compile Include="UI.CKEditor\src\Scaffolding\GenericCKEditorImageBrowser.cs" />
     <Compile Include="UnitTest.WebTester\src\AdminApps\WebTesterApp.cs" />
     <Compile Include="UnitTest.WebTester\src\Translates\ko_KR.cs" />
     <Compile Include="UnitTest.WebTester\src\Translates\ja_JP.cs" />
@@ -474,7 +477,7 @@
     <Compile Include="Finance.Payment\src\Database\PaymentTransaction.cs" />
     <Compile Include="Finance.Payment\src\DataCallbacks\CannotChangeTypeOrOwnerAfterPaymentApiCreated.cs" />
     <Compile Include="Finance.Payment\src\DataCallbacks\DeleteReleatedDetailRecords.cs" />
-    <Compile Include="Finance.Payment\src\Extensions\IocExtensions.cs" />
+    <Compile Include="Finance.Payment\src\Extensions\ContainerExtensions.cs" />
     <Compile Include="Finance.Payment\src\Extensions\PaymentTransactionExtensions.cs" />
     <Compile Include="Finance.Payment\src\Forms\PaymentApiEditForm.cs" />
     <Compile Include="Finance.Payment\src\Forms\TestPaymentForm.cs" />

@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	/// }
 	/// </summary>
 	public abstract class GenericFormForAdminSettings :
-		GenericFormForMenuPage, IAdminSettingsMenuProvider, IPrivilegesProvider {
+		GenericFormForMenuPage, IAdminSettingsMenuProvider {
 		/// <summary>
 		/// 使用的权限
 		/// </summary>
@@ -50,13 +50,5 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 		/// 模板路径
 		/// </summary>
 		public override string TemplatePath { get { return "common.admin_settings/generic_form.html"; } }
-
-		/// <summary>
-		/// 获取权限列表
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerable<string> GetPrivileges() {
-			yield return Privilege;
-		}
 	}
 }

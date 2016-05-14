@@ -42,6 +42,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// 头像高度
 		/// </summary>
 		public const int AvatarHeight = 150;
+		/// <summary>
+		/// 头像图片质量
+		/// </summary>
+		public const int AvatarImageQuality = 90;
 
 		/// <summary>
 		/// 注册用户
@@ -185,7 +189,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 				Directory.CreateDirectory(Path.GetDirectoryName(path));
 				using (var newImage = image.Resize(
 					AvatarWidth, AvatarHeight, ImageResizeMode.Padding, Color.White)) {
-					newImage.SaveJpeg(path, 90);
+					newImage.SaveAuto(path, AvatarImageQuality);
 				}
 			}
 		}

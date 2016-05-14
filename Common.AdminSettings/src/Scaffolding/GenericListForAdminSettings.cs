@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	/// <typeparam name="TData">列表中的数据类型</typeparam>
 	/// <typeparam name="TPage">继承这个类的类型</typeparam>
 	public abstract class GenericListForAdminSettings<TData, TPage>
-		: GenericListForMenuPage<TData, TPage>, IAdminSettingsMenuProvider, IPrivilegesProvider
+		: GenericListForMenuPage<TData, TPage>, IAdminSettingsMenuProvider
 		where TData : class {
 		/// <summary>
 		/// 使用的权限
@@ -45,13 +45,5 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 		/// 模板路径
 		/// </summary>
 		public override string TemplatePath { get { return "common.admin_settings/generic_list.html"; } }
-
-		/// <summary>
-		/// 获取权限列表
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerable<string> GetPrivileges() {
-			yield return Privilege;
-		}
 	}
 }

@@ -21,7 +21,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchedDataMatchers {
 		/// <summary>
 		/// 属性条件或参数的格式
 		/// </summary>
-		class PropertyCondition { public long PropertyId; public long PropertyValueId; }
+		class PropertyCondition {
+			public long PropertyId { get; set; }
+			public long PropertyValueId { get; set; }
+		}
 
 		/// <summary>
 		/// 判断是否匹配

@@ -29,7 +29,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// 商品相册图片的路径格式 (Id, 序号, 后缀)
 		/// </summary>
 		public const string AlbumImagePathFormat = "/static/shopping.product.images/{0}/album_{1}{2}.jpg";
-		
+		/// <summary>
+		/// 商品相册图片质量
+		/// </summary>
+		public const int AlbumImageQuality = 90;
+
 		/// <summary>
 		/// 获取商品相册图片的储存路径，路径不一定存在
 		/// </summary>
@@ -117,14 +121,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 					(int)settings.OriginalImageHeight, ImageResizeMode.Cut, Color.White)) {
 					var path = GetAlbumImageStoragePath(id, index, ProductAlbumImageType.Normal);
 					Directory.CreateDirectory(Path.GetDirectoryName(path));
-					newImage.SaveJpeg(path, 90);
+					newImage.SaveAuto(path, AlbumImageQuality);
 				}
 				// 保存缩略图
 				using (var newImage = image.Resize((int)settings.ThumbnailImageWidth,
 					(int)settings.ThumbnailImageHeight, ImageResizeMode.Cut, Color.White)) {
 					var path = GetAlbumImageStoragePath(id, index, ProductAlbumImageType.Thumbnail);
 					Directory.CreateDirectory(Path.GetDirectoryName(path));
-					newImage.SaveJpeg(path, 90);
+					newImage.SaveAuto(path, AlbumImageQuality);
 				}
 			}
 		}
