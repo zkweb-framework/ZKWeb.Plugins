@@ -29,4 +29,4 @@ BootstrapDialog.defaultOptions.closeByBackdrop = false;
 BootstrapDialog.defaultOptions.closeByKeyboard = false;
 
 /* 设置关闭图标 */
-BootstrapDialog.defaultOptions.closeIcon = "<i class='fa fa-arrow-left'></i>";
+BootstrapDialog.defaultOptions.closeIcon = "<i class='fa fa-remove'></i>";
