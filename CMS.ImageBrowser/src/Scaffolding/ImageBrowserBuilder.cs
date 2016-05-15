@@ -11,7 +11,9 @@ using ZKWeb.Plugins.CMS.ImageBrowser.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
+using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
@@ -94,6 +96,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 		/// <returns></returns>
 		public virtual IActionResult UploadAction() {
 			// 检查权限
+			HttpRequestChecker.RequieAjaxRequest();
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回上传结果
 			var form = new Form(CategoryLower, UploadUrl);
@@ -106,6 +109,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 		/// <returns></returns>
 		public virtual IActionResult RemoveAction() {
 			// 检查权限
+			HttpRequestChecker.RequieAjaxRequest();
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回删除结果
 			throw new NotImplementedException();
@@ -134,7 +138,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 
 		/// <summary>
 		/// 图片上传表单
-		/// 需要支持直接上传，这里不开启CSRF校验
+		/// 需要支持直接上传，这里不开启CSRF校验（上面会检查是否ajax请求）
 		/// </summary>
 		[Form("ImageUploadForm", EnableCsrfToken = false)]
 		public class Form : ModelFormBuilder {
@@ -174,8 +178,9 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			/// <returns></returns>
 			protected override object OnSubmit() {
 				// 需要支持直接上传，这里不根据名称获取
-				var imageFile = HttpContextUtils.CurrentContext.Request.Files[0];
-				if (imageFile == null) {
+				var files = HttpContextUtils.CurrentContext.Request.Files;
+				var imageFile = files.Count <= 0 ? null : files[0];
+				if (imageFile == null || imageFile.InputStream == null) {
 					throw new HttpException(400, new T("Please select image file"));
 				}
 				var filename = string.IsNullOrEmpty(CustomName) ? imageFile.FileName : CustomName;
