@@ -74,15 +74,23 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 		}
 
 		/// <summary>
+		/// 判断图片是否存在
+		/// </summary>
+		/// <param name="category">类别</param>
+		/// <param name="name">名称，不应该带后缀名</param>
+		/// <returns></returns>
+		public virtual bool Exists(string category, string name) {
+			var imagePath = GetImageStoragePath(category, name, ImageExtension);
+			return File.Exists(imagePath);
+		}
+
+		/// <summary>
 		/// 保存图片文件
 		/// </summary>
 		/// <param name="imageStream">读取图片的数据流</param>
 		/// <param name="category">类别</param>
-		/// <param name="filename">文件名，指定的后缀名会被忽略</param>
-		public virtual void Save(Stream imageStream, string category, string filename) {
-			// 忽略原有的后缀名
-			filename = Path.GetFileNameWithoutExtension(filename);
-			// 读取图片
+		/// <param name="name">名称，不应该带后缀名</param>
+		public virtual void Save(Stream imageStream, string category, string name) {
 			Image image;
 			try {
 				image = Image.FromStream(imageStream);
@@ -91,14 +99,14 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 			}
 			using (image) {
 				// 保存原图
-				var imagePath = GetImageStoragePath(category, filename, ImageExtension);
+				var imagePath = GetImageStoragePath(category, name, ImageExtension);
 				Directory.CreateDirectory(Path.GetDirectoryName(imagePath));
 				image.SaveAuto(imagePath, ImageQuality);
 				// 保存缩略图
 				var thumbnailSize = ImageThumbnailSize;
 				using (var thumbnailImage = image.Resize(thumbnailSize.Width,
 					thumbnailSize.Height, ImageResizeMode.Padding, Color.White)) {
-					var thumbnailPath = GetImageStoragePath(category, filename, ImageThumbnailExtension);
+					var thumbnailPath = GetImageStoragePath(category, name, ImageThumbnailExtension);
 					Directory.CreateDirectory(Path.GetDirectoryName(thumbnailPath));
 					thumbnailImage.SaveAuto(thumbnailPath, ImageQuality);
 				}
@@ -109,14 +117,12 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 		/// 删除图片文件
 		/// </summary>
 		/// <param name="category">类别</param>
-		/// <param name="filename">文件名，指定的后缀名会被忽略</param>
-		public virtual void Remove(string category, string filename) {
-			// 忽略原有的后缀名
-			filename = Path.GetFileNameWithoutExtension(filename);
+		/// <param name="name">名称，不应该带后缀名</param>
+		public virtual void Remove(string category, string name) {
 			// 删除原图
-			File.Delete(GetImageStoragePath(category, filename, ImageExtension));
+			File.Delete(GetImageStoragePath(category, name, ImageExtension));
 			// 删除缩略图
-			File.Delete(GetImageStoragePath(category, filename, ImageThumbnailExtension));
+			File.Delete(GetImageStoragePath(category, name, ImageThumbnailExtension));
 		}
 	}
 }

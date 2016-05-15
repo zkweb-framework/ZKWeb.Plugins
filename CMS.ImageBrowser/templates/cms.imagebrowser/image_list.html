@@ -1,1 +1,40 @@
-﻿asdasdasdas
+﻿<!DOCTYPE html>
+<html lang="{% html_lang %}">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<meta charset="utf-8" />
+	<link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
+	<title>{{ "ImageBrowser" | trans }}</title>
+	<link href="/static/common.base.css/components.css" rel="stylesheet" type="text/css" />
+	<link href="/static/cms.imagebrowser.css/image_browser.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div class="page-container image-browser-container">
+		<div class="portlet image-upload-portlet">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-image"></i>
+					<span class="caption-subject">{{ "ImageUpload" | trans }}</span>
+				</div>
+			</div>
+			<div class="portlet-body">
+				{{ form }}
+			</div>
+		</div>
+		<div class="portlet image-browse-portlet">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-image"></i>
+					<span class="caption-subject">{{ "ImageBrowse" | trans }}</span>
+				</div>
+				{{ searchBar }}
+			</div>
+			<div class="portlet-body">
+				{{ table }}
+			</div>
+		</div>
+	</div>
+	<script src="/static/common.base.js/components.min.js" type="text/javascript"></script>
+	<script src="/static/cms.imagebrowser.js/image_browser.min.js" type="text/javascript"></script>
+</body>
+</html>
