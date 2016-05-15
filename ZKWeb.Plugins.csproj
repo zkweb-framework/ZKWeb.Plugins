@@ -105,10 +105,13 @@
     <Compile Include="CMS.Article\src\Database\Article.cs" />
     <Compile Include="CMS.Article\src\GenericClasses\ArticleClass.cs" />
     <Compile Include="CMS.Article\src\GenericTags\ArticleTag.cs" />
+    <Compile Include="CMS.Article\src\ImageBrowsers\ArticleImageBrowser.cs" />
     <Compile Include="CMS.Article\src\Translates\ko_KR.cs" />
     <Compile Include="CMS.Article\src\Translates\ja_JP.cs" />
     <Compile Include="CMS.Article\src\Translates\zh_TW.cs" />
     <Compile Include="CMS.Article\src\Translates\zh_CN.cs" />
+    <Compile Include="CMS.ImageBrowser\src\Managers\ImageManager.cs" />
+    <Compile Include="CMS.ImageBrowser\src\Scaffolding\ImageBrowserBuilder.cs" />
     <Compile Include="Common.AdminSettings\src\AdminApps\AdminSettingsApp.cs" />
     <Compile Include="Common.AdminSettings\src\Controllers\ApiController.cs" />
     <Compile Include="Common.AdminSettings\src\GenericFormsForAdminSettings\LocaleSettingsForm.cs" />
@@ -180,8 +183,10 @@
     <Compile Include="Demo\src\DatabaseInitializeHandlers\DatabaseInitializeHandlerDemo.cs" />
     <Compile Include="Shopping.Product\src\Controllers\ApiController.cs" />
     <Compile Include="Shopping.Product\src\Managers\ProductManager.cs" />
+    <None Include="CMS.ImageBrowser\plugin.json" />
     <None Include="Shopping.Product\templates\shopping.product.widgets\product_details.widget" />
     <None Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.widget" />
+    <Content Include="CMS.ImageBrowser\templates\cms.imagebrowser\image_list.html" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.html" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\order_count.matcher.js" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\property.matcher.js" />
@@ -194,9 +199,6 @@
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\BrandDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\ModelNumberDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\WeightDisplayField.cs" />
-    <Compile Include="CMS.CKEditor\src\Controllers\CKEditorController.cs" />
-    <Compile Include="CMS.CKEditor\src\Model\ICKEditorImageBrowser.cs" />
-    <Compile Include="CMS.CKEditor\src\Scaffolding\GenericCKEditorImageBrowser.cs" />
     <Compile Include="UnitTest.WebTester\src\AdminApps\WebTesterApp.cs" />
     <Compile Include="UnitTest.WebTester\src\Translates\ko_KR.cs" />
     <Compile Include="UnitTest.WebTester\src\Translates\ja_JP.cs" />
@@ -678,7 +680,7 @@
     <Content Include="CMS.CKEditor\static\ckeditor\plugins\div\dialogs\div.js" />
     <Content Include="CMS.CKEditor\static\ckeditor\plugins\icons.png" />
     <Content Include="CMS.CKEditor\static\ckeditor\plugins\icons_hidpi.png" />
-    <Content Include="CMS.CKEditor\static\ckeditor\plugins\imageuploader\plugin.js" />
+    <Content Include="CMS.CKEditor\static\ckeditor\plugins\imagebrowser\plugin.js" />
     <Content Include="CMS.CKEditor\static\ckeditor\plugins\image\dialogs\image.js" />
     <Content Include="CMS.CKEditor\static\ckeditor\plugins\image\images\noimage.png" />
     <Content Include="CMS.CKEditor\static\ckeditor\plugins\link\dialogs\anchor.js" />

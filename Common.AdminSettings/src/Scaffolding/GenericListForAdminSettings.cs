@@ -34,11 +34,11 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 		/// </summary>
 		public abstract string Privilege { get; }
 		/// <summary>
-		/// 默认需要拥有管理员权限
+		/// 默认需要管理员权限
 		/// </summary>
 		public override UserTypes[] AllowedUserTypes { get { return UserTypesGroup.Admin; } }
 		/// <summary>
-		/// 默认需要拥有使用的权限
+		/// 默认需要使用的权限
 		/// </summary>
 		public override string[] RequiredPrivileges { get { return new[] { Privilege }; } }
 		/// <summary>

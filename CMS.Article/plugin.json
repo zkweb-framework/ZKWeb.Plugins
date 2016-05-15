@@ -1,5 +1,12 @@
 ﻿{
 	"Name": "Article",
 	"Description": "Article management",
-	"Dependencies": [ "Common.Base", "Common.Admin", "CMS.CKEditor", "Common.GenericClass", "Common.GenericTag" ]
+	"Dependencies": [
+		"Common.Base",
+		"Common.Admin",
+		"CMS.CKEditor",
+		"CMS.ImageBrowser",
+		"Common.GenericClass",
+		"Common.GenericTag"
+	]
 }

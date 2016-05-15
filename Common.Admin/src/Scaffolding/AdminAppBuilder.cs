@@ -84,13 +84,25 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// </summary>
 		public virtual string DeleteForeverPrivilege { get { return Name + ":DeleteForever"; } }
 		/// <summary>
-		/// 默认需要拥有管理员权限
+		/// 默认需要管理员权限
 		/// </summary>
 		public override UserTypes[] AllowedUserTypes { get { return UserTypesGroup.Admin; } }
 		/// <summary>
-		/// 默认需要拥有查看权限
+		/// 默认需要查看权限
 		/// </summary>
 		public override string[] RequiredPrivileges { get { return new[] { ViewPrivilege }; } }
+		/// <summary>
+		/// 列表页的模板路径
+		/// </summary>
+		public virtual string ListTemplatePath { get { return "common.admin/generic_list.html"; } }
+		/// <summary>
+		/// 添加页的模板路径
+		/// </summary>
+		public virtual string AddTemplatePath { get { return "common.admin/generic_add.html"; } }
+		/// <summary>
+		/// 编辑页的模板路径
+		/// </summary>
+		public virtual string EditTemplatePath { get { return "common.admin/generic_edit.html"; } }
 		/// <summary>
 		/// 显示列表页时引用的Css文件路径
 		/// </summary>
@@ -99,6 +111,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// 显示列表页时引用的Js文件路径
 		/// </summary>
 		protected virtual List<string> IncludeJs { get; set; }
+		/// <summary>
+		/// 批量操作对应的函数
+		/// </summary>
+		protected virtual Dictionary<string, Func<IActionResult>> BatchActions { get; set; }
+
 		/// <summary>
 		/// 获取表格回调
 		/// </summary>
@@ -113,10 +130,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// </summary>
 		/// <returns></returns>
 		protected abstract IModelFormBuilder GetEditForm();
-		/// <summary>
-		/// 批量操作对应的函数
-		/// </summary>
-		protected virtual Dictionary<string, Func<IActionResult>> BatchActions { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -150,7 +163,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
 			searchBar.TableId = table.Id;
 			callbacks.ForEach(s => s.OnBuildTable(table, searchBar));
-			return new TemplateResult("common.admin/generic_list.html", new {
+			return new TemplateResult(ListTemplatePath, new {
 				includeCss = IncludeCss,
 				includeJs = IncludeJs,
 				title = new T(Name),
@@ -195,7 +208,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 				PrivilegesChecker.Check(AllowedUserTypes, ViewPrivilege);
 				// 绑定表单
 				form.Bind();
-				return new TemplateResult("common.admin/generic_add.html", new { form });
+				return new TemplateResult(AddTemplatePath, new { form });
 			}
 		}
 
@@ -216,7 +229,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 				PrivilegesChecker.Check(AllowedUserTypes, ViewPrivilege);
 				// 绑定表单
 				form.Bind();
-				return new TemplateResult("common.admin/generic_edit.html", new { form });
+				return new TemplateResult(EditTemplatePath, new { form });
 			}
 		}
 

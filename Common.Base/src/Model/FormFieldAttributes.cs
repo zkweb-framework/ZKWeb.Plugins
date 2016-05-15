@@ -219,10 +219,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="extensions">允许的文件后缀，默认是图片后缀</param>
 		/// <param name="maxContentsLength">允许上传的最大长度，单位是字节，默认是1MB</param>
 		public FileUploaderFieldAttribute(
-			string name, string extensions = "png,jpg,jpeg,gif", int maxContentsLength = 1048576) {
+			string name, string extensions = null, int maxContentsLength = 0) {
 			Name = name;
-			Extensions = new HashSet<string>(extensions.Split(','));
-			MaxContentsLength = maxContentsLength;
+			Extensions = new HashSet<string>((extensions ?? "png,jpg,jpeg,gif").Split(','));
+			MaxContentsLength = (maxContentsLength > 0) ? maxContentsLength : 1048576;
 		}
 	}
 

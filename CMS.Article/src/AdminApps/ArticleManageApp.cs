@@ -159,12 +159,12 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 			/// <summary>
 			/// 内容
 			/// </summary>
-			[CKEditor("Contents", ImageUploadCategory = "Article")]
+			[CKEditor("Contents", ImageBrowserUrl = "/image_browser/article")]
 			public string Contents { get; set; }
 			/// <summary>
 			/// 备注
 			/// </summary>
-			[CKEditor("Remark", ImageUploadCategory = "Article", Group = "Remark")]
+			[CKEditor("Remark", ImageBrowserUrl = "/image_browser/article", Group = "Remark")]
 			public string Remark { get; set; }
 
 			/// <summary>

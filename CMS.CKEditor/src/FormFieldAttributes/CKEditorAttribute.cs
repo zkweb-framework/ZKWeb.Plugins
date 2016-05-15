@@ -19,9 +19,9 @@ namespace ZKWeb.Plugins.CMS.CKEditor.src.FormFieldAttributes {
 		/// <summary>
 		/// 图片上传类目，指定时可以启用图片上传功能
 		/// </summary>
-		public string ImageUploadCategory {
-			get { return Config.GetOrDefault<string>("imageUploadCategory"); }
-			set { Config["imageUploadCategory"] = value; }
+		public string ImageBrowserUrl {
+			get { return Config.GetOrDefault<string>("imageBrowserUrl"); }
+			set { Config["imageBrowserUrl"] = value; }
 		}
 
 		/// <summary>
