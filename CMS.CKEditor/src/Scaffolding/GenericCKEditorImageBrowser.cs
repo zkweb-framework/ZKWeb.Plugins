@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.UI.CKEditor.src.Model;
+using ZKWeb.Plugins.CMS.CKEditor.src.Model;
 using ZKWeb.Server;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 
-namespace ZKWeb.Plugins.UI.CKEditor.src.Scaffolding {
+namespace ZKWeb.Plugins.CMS.CKEditor.src.Scaffolding {
 	/// <summary>
 	/// 通用的图片浏览器
 	/// 导出时需要指定Key等于图片上传类目

@@ -6,7 +6,7 @@
 		"Common.Admin",
 		"Common.AdminSettings",
 		"Common.Currency",
-		"UI.CKEditor",
+		"CMS.CKEditor",
 		"Common.GenericClass",
 		"Common.GenericTag"
 	]

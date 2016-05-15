@@ -14,7 +14,7 @@ using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Localize;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.AdminApps;
-using ZKWeb.Plugins.UI.CKEditor.src.FormFieldAttributes;
+using ZKWeb.Plugins.CMS.CKEditor.src.FormFieldAttributes;
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using DryIoc;

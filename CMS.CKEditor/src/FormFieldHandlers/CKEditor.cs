@@ -12,10 +12,10 @@ using System.Web;
 using System.Web.UI;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.UI.CKEditor.src.FormFieldAttributes;
+using ZKWeb.Plugins.CMS.CKEditor.src.FormFieldAttributes;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.UI.CKEditor.src.FormFieldHandlers {
+namespace ZKWeb.Plugins.CMS.CKEditor.src.FormFieldHandlers {
 	/// <summary>
 	/// CKEditor编辑器
 	/// </summary>
@@ -29,7 +29,7 @@ namespace ZKWeb.Plugins.UI.CKEditor.src.FormFieldHandlers {
 			var attribute = (CKEditorAttribute)field.Attribute;
 			var html = new HtmlTextWriter(new StringWriter());
 			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttribute("require-script", "/static/ui.ckeditor.js/ckeditor-loader.min.js");
+			html.AddAttribute("require-script", "/static/CMS.CKEditor.js/ckeditor-loader.min.js");
 			html.AddAttribute("class", "form-control ckeditor");
 			html.AddAttribute("data-trigger", "ckeditor");
 			html.AddAttribute("data-ckeditor-config", JsonConvert.SerializeObject(attribute.Config));

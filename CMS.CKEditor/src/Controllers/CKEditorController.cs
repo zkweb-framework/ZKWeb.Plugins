@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web.Interfaces;
 
-namespace ZKWeb.Plugins.UI.CKEditor.src.Controllers {
+namespace ZKWeb.Plugins.CMS.CKEditor.src.Controllers {
 	/// <summary>
 	/// CKEditor使用的控制器
 	/// 上传图片功能

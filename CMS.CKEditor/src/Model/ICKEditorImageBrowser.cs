@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Base.src.Model;
 
-namespace ZKWeb.Plugins.UI.CKEditor.src.Model {
+namespace ZKWeb.Plugins.CMS.CKEditor.src.Model {
 	/// <summary>
 	/// CKEditor使用的图片浏览器接口
 	/// </summary>

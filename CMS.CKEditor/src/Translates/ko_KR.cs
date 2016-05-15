@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.UI.CKEditor.src.Translates {
+namespace ZKWeb.Plugins.CMS.CKEditor.src.Translates {
 	/// <summary>
-	/// 中文翻译
+	/// 韩语翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class ja_JP : ITranslateProvider {
-		private static HashSet<string> Codes = new HashSet<string>() { "ja-JP" };
+	public class ko_KR : ITranslateProvider {
+		private static HashSet<string> Codes = new HashSet<string>() { "ko-KR" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			{ "CKEditor", "CKEditor" },
-			{ "Provide ckeditor form field", "CKEditorフォームフィールドを提供する" }
+			{ "Provide ckeditor form field", "CKEditor 양식 필드를 제공" }
 		};
 
 		public bool CanTranslate(string code) {

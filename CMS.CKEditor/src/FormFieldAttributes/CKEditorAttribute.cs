@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
 
-namespace ZKWeb.Plugins.UI.CKEditor.src.FormFieldAttributes {
+namespace ZKWeb.Plugins.CMS.CKEditor.src.FormFieldAttributes {
 	/// <summary>
 	/// CKEditor编辑器的属性
 	/// </summary>

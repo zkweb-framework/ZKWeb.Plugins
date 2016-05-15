@@ -21,7 +21,7 @@ using ZKWeb.Plugins.Common.GenericTag.src.ListItemProvider;
 using ZKWeb.Plugins.Shopping.Product.src.GenericTags;
 using ZKWeb.Plugins.Common.GenericClass.src.ListItemProviders;
 using System.ComponentModel.DataAnnotations;
-using ZKWeb.Plugins.UI.CKEditor.src.FormFieldAttributes;
+using ZKWeb.Plugins.CMS.CKEditor.src.FormFieldAttributes;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.GenericClass.src.Database;
