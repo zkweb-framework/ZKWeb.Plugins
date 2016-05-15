@@ -1,5 +1,6 @@
 // Author: 303248153@github
 // License: MIT License
+// This plugin is for integration with zkweb ckeditor and image browser plugin
 //
 
 (function () {
