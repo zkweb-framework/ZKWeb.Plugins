@@ -881,8 +881,8 @@
     <Content Include="Shopping.Product\tools\readme.txt" />
     <Content Include="CMS.CKEditor\references\CsQuery.dll" />
     <Content Include="CMS.CKEditor\references\HtmlSanitizer.dll" />
-    <Content Include="CMS.CKEditor\static\ui.ckeditor.js\ckeditor-loader.js" />
-    <Content Include="CMS.CKEditor\static\ui.ckeditor.js\ckeditor-loader.min.js" />
+    <Content Include="CMS.CKEditor\static\cms.ckeditor.js\ckeditor-loader.js" />
+    <Content Include="CMS.CKEditor\static\cms.ckeditor.js\ckeditor-loader.min.js" />
     <None Include="CMS.Article\plugin.json" />
     <None Include="Common.Admin\static\common.admin.css\custom\_variables.scss" />
     <None Include="Common.Base\static\common.base.css\adminLTE\AdminLTE.scss" />
@@ -1078,7 +1078,7 @@
     <None Include="CMS.CKEditor\static\ckeditor\plugins\base64image\LICENSE.md" />
     <None Include="CMS.CKEditor\static\ckeditor\plugins\base64image\README.md" />
     <None Include="CMS.CKEditor\static\ckeditor\README.md" />
-    <None Include="CMS.CKEditor\static\ui.ckeditor.js\koala-config.json" />
+    <None Include="CMS.CKEditor\static\cms.ckeditor.js\koala-config.json" />
     <None Include="UnitTest.WebTester\plugin.json" />
     <None Include="UnitTest.WebTester\static\unittest.webtester.css\koala-config.json" />
     <None Include="UnitTest.WebTester\static\unittest.webtester.css\webtester.scss" />

@@ -42,6 +42,6 @@ CKEDITOR.editorConfig = function (config) {
 	config.baseFloatZIndex = 10500; // 提高全屏的优先度
 	config.allowedContent = true; // 允许自定义html内容
 	config.htmlEncodeOutput = true; // 提交到服务器前用html编码避免触发跨站检测
-	config.extraPlugins = "imageuploader"; // 指定额外的插件
+	config.extraPlugins = "imagebrowser"; // 指定额外的插件
 	config.font_names += ";Microsoft YaHei; sans-serif"; // 添加字体
 };

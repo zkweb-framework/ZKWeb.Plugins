@@ -29,7 +29,7 @@ namespace ZKWeb.Plugins.CMS.CKEditor.src.FormFieldHandlers {
 			var attribute = (CKEditorAttribute)field.Attribute;
 			var html = new HtmlTextWriter(new StringWriter());
 			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttribute("require-script", "/static/CMS.CKEditor.js/ckeditor-loader.min.js");
+			html.AddAttribute("require-script", "/static/cms.ckeditor.js/ckeditor-loader.min.js");
 			html.AddAttribute("class", "form-control ckeditor");
 			html.AddAttribute("data-trigger", "ckeditor");
 			html.AddAttribute("data-ckeditor-config", JsonConvert.SerializeObject(attribute.Config));
