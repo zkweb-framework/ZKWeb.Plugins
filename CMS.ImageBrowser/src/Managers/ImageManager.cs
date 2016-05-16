@@ -9,8 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Localize;
+using ZKWeb.Plugin.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Server;
+using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 
@@ -19,28 +21,50 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 	/// 图片管理器
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class ImageManager {
+	public class ImageManager : ICacheCleaner {
 		/// <summary>
 		/// 图片保存质量，默认是90
 		/// </summary>
-		public virtual int ImageQuality { get { return 90; } }
+		public int ImageQuality { get; set; }
 		/// <summary>
-		/// 图片后缀
+		/// 图片后缀，默认是.jpg
 		/// </summary>
-		public virtual string ImageExtension { get { return ".jpg"; } }
+		public string ImageExtension { get; set; }
 		/// <summary>
-		/// 图片缩略图的后缀
+		/// 图片缩略图的后缀，默认是.thumb.jpg
 		/// </summary>
-		public virtual string ImageThumbnailExtension { get { return ".thumb.jpg"; } }
+		public string ImageThumbnailExtension { get; set; }
 		/// <summary>
 		/// 图片基础路径的格式
 		/// 参数: 类别
 		/// </summary>
-		public virtual string ImageBasePathFormat { get { return "/static/cms.image_browser.images/{0}"; } }
+		public string ImageBasePathFormat { get; set; }
 		/// <summary>
-		/// 图片缩略图的大小
+		/// 图片缩略图的大小，默认是135x135
 		/// </summary>
-		public virtual Size ImageThumbnailSize { get { return new Size(135, 135); } }
+		public Size ImageThumbnailSize { get; set; }
+		/// <summary>
+		/// 同一类别下的图片名的缓存时间，默认是15秒
+		/// </summary>
+		public int ImageNamesCacheTime { get; set; }
+		/// <summary>
+		/// 同一类别下的图片名的缓存
+		/// { 类别: [图片名, ...], ... }
+		/// </summary>
+		protected MemoryCache<string, List<string>> ImageNamesCache { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public ImageManager() {
+			ImageQuality = 90;
+			ImageExtension = ".jpg";
+			ImageThumbnailExtension = ".thumb.jpg";
+			ImageBasePathFormat = "/static/cms.image_browser.images/{0}";
+			ImageThumbnailSize = new Size(135, 135);
+			ImageNamesCacheTime = 15;
+			ImageNamesCache = new MemoryCache<string, List<string>>();
+		}
 
 		/// <summary>
 		/// 获取图片的本地基础路径
@@ -111,6 +135,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 					thumbnailImage.SaveAuto(thumbnailPath, ImageQuality);
 				}
 			}
+			// 删除缓存
+			ImageNamesCache.Remove(category);
 		}
 
 		/// <summary>
@@ -123,6 +149,38 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 			File.Delete(GetImageStoragePath(category, name, ImageExtension));
 			// 删除缩略图
 			File.Delete(GetImageStoragePath(category, name, ImageThumbnailExtension));
+			// 删除缓存
+			ImageNamesCache.Remove(category);
+		}
+
+		/// <summary>
+		/// 查询类别下的图片名称列表
+		/// 按最后修改的时间排序
+		/// 返回的结果仅图片名称，不带路径和后缀
+		/// </summary>
+		/// <param name="category">图片类别</param>
+		/// <returns></returns>
+		public virtual IReadOnlyList<string> Query(string category) {
+			// 获取类别对应的文件夹下的所有图片名称
+			var baseDir = GetImageStorageBasePath(category);
+			var names = ImageNamesCache.GetOrDefault(category);
+			if (names == null) {
+				names = Directory.EnumerateFiles(baseDir)
+					.Where(path => path.EndsWith(ImageExtension) &&
+						!path.EndsWith(ImageThumbnailExtension))
+					.OrderByDescending(path => File.GetLastWriteTimeUtc(path))
+					.Select(path => Path.GetFileNameWithoutExtension(path))
+					.ToList();
+				ImageNamesCache.Put(category, names, TimeSpan.FromSeconds(ImageNamesCacheTime));
+			}
+			return names;
+		}
+
+		/// <summary>
+		/// 清除缓存
+		/// </summary>
+		public void ClearCache() {
+			ImageNamesCache.Clear();
 		}
 	}
 }

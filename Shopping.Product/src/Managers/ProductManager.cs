@@ -29,14 +29,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <summary>
 		/// Api使用的商品信息的缓存
 		/// </summary>
-		protected MemoryCacheByIdentityAndLocale<long, object> ProductApiInfoCache =
-			new MemoryCacheByIdentityAndLocale<long, object>();
+		protected MemoryCacheByIdentityAndLocale<long, object> ProductApiInfoCache { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public ProductManager() {
 			ProductApiInfoCacheTime = TimeSpan.FromSeconds(15);
+			ProductApiInfoCache = new MemoryCacheByIdentityAndLocale<long, object>();
 		}
 
 		/// <summary>

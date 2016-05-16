@@ -17,11 +17,12 @@
 		}
 	});
 
-	var overrideQuickUploadButton = function (editor, elements) {
-		// modify quick upload button onclick event
+	var overrideDialogDefinition = function (editor, elements) {
 		for (var i = 0; i < elements.length; ++i) {
 			var element = elements[i];
-			element.elements && overrideQuickUploadButton(editor, element.elements);
+			element.elements && overrideDialogDefinition(editor, element.elements);
+			// modify quick upload button onclick event
+			// use the result from ajax response
 			if (element.type === "fileButton" && element.filebrowser &&
 				element.filebrowser.url === editor.config.filebrowserImageUploadUrl) {
 				var onClickPrev = element.onClick;
@@ -44,6 +45,15 @@
 					return false;
 				};
 			}
+			// handle file browser selected event
+			// use the result from event posted by child window
+			if (element.type === "button" && element.filebrowser &&
+				element.filebrowser.url === editor.config.filebrowserImageBrowseUrl) {
+				var eventName = "selected.imageBrowser";
+				$(document).off(eventName).on(eventName, function (e, path) {
+					CKEDITOR.tools.callFunction(editor._.filebrowserFn, path);
+				});
+			}
 		}
 	};
 
@@ -52,7 +62,7 @@
 		var editor = e.editor;
 		for (var i = 0; i < definition.contents.length; ++i) {
 			var element = definition.contents[i];
-			element && element.elements && overrideQuickUploadButton(editor, element.elements);
+			element && element.elements && overrideDialogDefinition(editor, element.elements);
 		}
 	});
 })();

@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// </summary>
 	public class AjaxTableSearchResponse {
 		/// <summary>
-		/// 返回的页面序号
+		/// 返回的页面序号，从0开始
 		/// </summary>
 		public int PageIndex { get; set; }
 		/// <summary>

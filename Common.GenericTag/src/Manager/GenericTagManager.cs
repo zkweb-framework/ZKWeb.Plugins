@@ -14,14 +14,21 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Manager {
 	[ExportMany, SingletonReuse]
 	public class GenericTagManager {
 		/// <summary>
-		/// 通用标签列表的缓存时间
+		/// 通用标签列表的缓存时间，默认是15秒
 		/// </summary>
-		public const int TagCacheTime = 15;
+		public int TagCacheTime { get; set; }
 		/// <summary>
 		/// 通用标签列表的缓存，{ 类型: 标签列表 }
 		/// </summary>
-		private MemoryCache<string, IList<Database.GenericTag>> TagCache =
-			new MemoryCache<string, IList<Database.GenericTag>>();
+		private MemoryCache<string, IList<Database.GenericTag>> TagCache { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public GenericTagManager() {
+			TagCacheTime = 15;
+			TagCache = new MemoryCache<string, IList<Database.GenericTag>>();
+		}
 
 		/// <summary>
 		/// 获取指定类型的标签列表

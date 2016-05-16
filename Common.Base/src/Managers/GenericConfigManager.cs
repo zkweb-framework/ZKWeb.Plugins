@@ -23,7 +23,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// <summary>
 		/// 配置值的缓存
 		/// </summary>
-		private MemoryCache<string, object> Cache = new MemoryCache<string, object>();
+		protected MemoryCache<string, object> Cache { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public GenericConfigManager() {
+			Cache = new MemoryCache<string, object>();
+		}
 
 		/// <summary>
 		/// 获取类型标记的配置属性

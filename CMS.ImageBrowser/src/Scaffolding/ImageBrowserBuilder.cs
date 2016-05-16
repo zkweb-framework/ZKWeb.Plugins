@@ -28,6 +28,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 	public abstract class ImageBrowserBuilder : IPrivilegesProvider, IWebsiteStartHandler {
 		/// <summary>
 		/// 图片类别
+		/// 保存到文件系统时使用小写
 		/// </summary>
 		public abstract string Category { get; }
 		public string CategoryLower { get { return Category.ToLower(); } }
@@ -56,6 +57,12 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 		/// </summary>
 		public virtual string TemplatePath { get { return "cms.imagebrowser/image_list.html"; } }
 		/// <summary>
+		/// Ajax图片列表使用的模板路径
+		/// </summary>
+		public virtual string AjaxTableTemplatePath {
+			get { return "/static/cms.imagebrowser.tmpl/imageList.tmpl"; }
+		}
+		/// <summary>
 		/// 默认需要管理员权限
 		/// </summary>
 		public virtual UserTypes[] AllowedUserTypes { get { return UserTypesGroup.Admin; } }
@@ -76,7 +83,11 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = TableId;
 			table.Target = SearchUrl;
-			return new TemplateResult(TemplatePath, new { form, table });
+			table.Template = AjaxTableTemplatePath;
+			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
+			searchBar.TableId = TableId;
+			searchBar.KeywordPlaceHolder = new T("Name");
+			return new TemplateResult(TemplatePath, new { form, table, searchBar });
 		}
 
 		/// <summary>
@@ -86,8 +97,49 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 		public virtual IActionResult SearchAction() {
 			// 检查权限
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			// 获取搜索请求
+			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
+			var request = AjaxTableSearchRequest.FromJson(json);
+			// 搜索图片列表
+			// 分页时如果没有结果，使用最后一页的结果
+			var imageManager = Application.Ioc.Resolve<ImageManager>();
+			var pageIndex = request.PageIndex;
+			var names = imageManager.Query(CategoryLower);
+			if (!string.IsNullOrEmpty(request.Keyword)) {
+				names = names.Where(name => name.Contains(request.Keyword)).ToList();
+			}
+			var page = request.PageIndex;
+			var pageSize = request.PageSize;
+			var lastPage = (names.Count > 0) ? ((names.Count - 1) / pageSize) : 0;
+			var pagedNames = names.Skip(pageSize * page).Take(pageSize);
+			if (!pagedNames.Any()) {
+				page = lastPage;
+				pagedNames = names.Skip(pageSize * page).Take(pageSize);
+			}
 			// 返回搜索结果
-			throw new NotImplementedException();
+			var response = new AjaxTableSearchResponse();
+			response.PageIndex = page;
+			response.PageSize = pageSize;
+			response.IsLastPage = page == lastPage;
+			response.Rows.AddRange(pagedNames.Select(name => {
+				var path = imageManager.GetImageWebPath(
+					CategoryLower, name, imageManager.ImageExtension);
+				var thumbnailPath = imageManager.GetImageWebPath(
+					CategoryLower, name, imageManager.ImageThumbnailExtension);
+				var storagePath = imageManager.GetImageStoragePath(
+					CategoryLower, name, imageManager.ImageExtension);
+				var fileInfo = new FileInfo(storagePath);
+				var lastWriteTime = fileInfo.LastWriteTimeUtc.ToClientTimeString();
+				var fileSize = FileUtils.GetSizeDisplayName(fileInfo.Length);
+				return new Dictionary<string, object>() {
+					{ "name", name },
+					{ "path", path },
+					{ "thumbnailPath", thumbnailPath },
+					{ "lastWriteTime", lastWriteTime },
+					{ "fileSize", fileSize }
+				};
+			}));
+			return new JsonResult(response);
 		}
 
 		/// <summary>

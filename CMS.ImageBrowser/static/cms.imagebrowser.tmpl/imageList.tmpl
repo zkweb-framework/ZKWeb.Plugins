@@ -1,0 +1,26 @@
+﻿<div class="table-container inbox-content">
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<ul class="pagination pagination-sm pull-right">
+				<li><a class="to-first" title="<<"><i class="fa fa-angle-double-left"></i></a></li>
+				<li><a class="to-prev" title="<"><i class="fa fa-angle-left"></i></a></li>
+				<li><input type="text" class="pagination-input form-control input-sm" /></li>
+				<li><a class="to-next" title=">"><i class="fa fa-angle-right"></i></a></li>
+				<li><a class="to-last" title=">>"><i class="fa fa-angle-double-right"></i></a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="image-tiles">
+		<% _.each(result.Rows, function(row, index) { %>
+			<div class="image-tile">
+				<img title="<%- row.name %>" alt="<%- row.name %>" src="<%- row.thumbnailPath %>" data-src-original="<%- row.path %>">
+				<div title="<%- row.name %>" class="image-name"><%- row.name %></div>
+				<div title="<%- row.name %>" class="image-last-write-time"><%- row.lastWriteTime %></div>
+				<div class="image-actions">
+					<a class="btn btn-xs btn-success use-this-image"><%- $(".translations .use-this-image").text() %></a>
+					<a class="btn btn-xs btn-danger remove"><%- $(".translations .remove").text() %></a>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+</div>

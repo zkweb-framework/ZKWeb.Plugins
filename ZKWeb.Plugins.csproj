@@ -190,6 +190,7 @@
     <Content Include="CMS.ImageBrowser\static\cms.imagebrowser.js\image_browser.js" />
     <None Include="CMS.ImageBrowser\static\cms.imagebrowser.css\koala-config.json" />
     <None Include="CMS.ImageBrowser\static\cms.imagebrowser.js\koala-config.json" />
+    <None Include="CMS.ImageBrowser\static\cms.imagebrowser.tmpl\imageList.tmpl" />
     <None Include="Shopping.Product\templates\shopping.product.widgets\product_details.widget" />
     <None Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.widget" />
     <Content Include="CMS.ImageBrowser\static\cms.imagebrowser.js\image_browser.min.js" />

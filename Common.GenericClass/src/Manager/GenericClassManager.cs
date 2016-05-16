@@ -15,14 +15,21 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 	[ExportMany, SingletonReuse]
 	public class GenericClassManager {
 		/// <summary>
-		/// 通用分类列表的缓存时间
+		/// 通用分类列表的缓存时间，默认是15秒
 		/// </summary>
-		public const int ClassCacheTime = 15;
+		public int ClassCacheTime { get; set; }
 		/// <summary>
 		/// 通用分类列表的缓存，{ 类型: 分类列表 }
 		/// </summary>
-		private MemoryCache<string, IList<Database.GenericClass>> ClassCache =
-			new MemoryCache<string, IList<Database.GenericClass>>();
+		protected MemoryCache<string, IList<Database.GenericClass>> ClassCache { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public GenericClassManager() {
+			ClassCacheTime = 15;
+			ClassCache = new MemoryCache<string, IList<Database.GenericClass>>();
+		}
 
 		/// <summary>
 		/// 获取指定类型的分类列表

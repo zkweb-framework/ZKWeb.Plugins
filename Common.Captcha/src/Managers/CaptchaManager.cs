@@ -60,14 +60,13 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 		/// </summary>
 		public const string SessionItemKeyPrefix = "Common.Base.Captcha.";
 		/// <summary>
-		/// 验证码语音参数的缓存时间
+		/// 验证码语音参数的缓存时间，默认是15秒
 		/// </summary>
-		public const int CaptchaAudioPromptCacheTime = 15;
+		public int CaptchaAudioPromptCacheTime { get; set; }
 		/// <summary>
 		/// 验证码语音参数的缓存
 		/// </summary>
-		private MemoryCache<string, PromptBuilder> CaptchaAudioPromptCache =
-			new MemoryCache<string, PromptBuilder>();
+		protected MemoryCache<string, PromptBuilder> CaptchaAudioPromptCache { get; set; }
 		/// <summary>
 		/// 当前环境是否支持验证码语音
 		/// 注意：
@@ -81,6 +80,8 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 		/// 验证码管理器
 		/// </summary>
 		public CaptchaManager() {
+			CaptchaAudioPromptCacheTime = 15;
+			CaptchaAudioPromptCache = new MemoryCache<string, PromptBuilder>();
 			SupportCaptchaAudio = true;
 		}
 

@@ -22,7 +22,10 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Translates {
 			{ "CustomName", "自定义名称" },
 			{ "Please select image file", "请选择图片文件" },
 			{ "ImageUpload", "图片上传" },
-			{ "ImageBrowse", "图片浏览" }
+			{ "ImageBrowse", "图片浏览" },
+			{ "Upload Successfully", "上传成功" },
+			{ "Use This Image", "使用这张图片" },
+			{ "Remove", "删除" }
 		};
 
 		public bool CanTranslate(string code) {
