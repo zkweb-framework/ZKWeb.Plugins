@@ -87,7 +87,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
 			searchBar.TableId = TableId;
 			searchBar.KeywordPlaceHolder = new T("Name");
-			return new TemplateResult(TemplatePath, new { form, table, searchBar });
+			return new TemplateResult(TemplatePath,
+				new { form, table, searchBar, removeUrl = RemoveUrl });
 		}
 
 		/// <summary>
@@ -164,7 +165,10 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			HttpRequestChecker.RequieAjaxRequest();
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回删除结果
-			throw new NotImplementedException();
+			var imageManager = Application.Ioc.Resolve<ImageManager>();
+			var name = HttpContextUtils.CurrentContext.Request.Get<string>("name");
+			imageManager.Remove(CategoryLower, name);
+			return new JsonResult(new { message = new T("Remove Successfully") });
 		}
 
 		/// <summary>

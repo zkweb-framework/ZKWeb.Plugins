@@ -18,7 +18,7 @@ The theme used for admin dashboard is AdminLTE.
 Plugin States:<br/>
 CMS.Article: 70% (Front page not done)<br/>
 CMS.CKEditor: 100%<br/>
-CMS.ImageBrowser: 20% (Writing)<br/>
+CMS.ImageBrowser: 100%<br/>
 Common.Admin: 100%<br/>
 Common.AdminSettings: 100%<br/>
 Common.Base: 100%<br/>

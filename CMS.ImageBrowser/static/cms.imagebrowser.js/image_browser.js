@@ -22,6 +22,15 @@ $(function () {
 
 	// 删除图片的处理
 	$container.on("click", ".image-actions .remove", function () {
-		alert("remove");
+		var confirmMessage = $container.find(".translations .sure-to-remove").text();
+		if (confirm(confirmMessage)) {
+			var removeUrl = $container.find(".variables").data("removeUrl");
+			var $tile = $(this).closest(".image-tile");
+			var name = $tile.find("img").attr("title");
+			$.post(removeUrl, { name: name }, function (data) {
+				$.handleAjaxResult(data);
+				$(".image-browse-portlet .ajax-table").ajaxTable().refresh();
+			});
+		}
 	});
 });

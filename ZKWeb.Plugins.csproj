@@ -112,6 +112,9 @@
     <Compile Include="CMS.Article\src\Translates\zh_CN.cs" />
     <Compile Include="CMS.ImageBrowser\src\Managers\ImageManager.cs" />
     <Compile Include="CMS.ImageBrowser\src\Scaffolding\ImageBrowserBuilder.cs" />
+    <Compile Include="CMS.ImageBrowser\src\Translates\ko_KR.cs" />
+    <Compile Include="CMS.ImageBrowser\src\Translates\ja_JP.cs" />
+    <Compile Include="CMS.ImageBrowser\src\Translates\zh_TW.cs" />
     <Compile Include="CMS.ImageBrowser\src\Translates\zh_CN.cs" />
     <Compile Include="Common.AdminSettings\src\AdminApps\AdminSettingsApp.cs" />
     <Compile Include="Common.AdminSettings\src\Controllers\ApiController.cs" />
