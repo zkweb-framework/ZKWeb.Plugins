@@ -165,6 +165,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 			var baseDir = GetImageStorageBasePath(category);
 			var names = ImageNamesCache.GetOrDefault(category);
 			if (names == null) {
+				Directory.CreateDirectory(baseDir);
 				names = Directory.EnumerateFiles(baseDir)
 					.Where(path => path.EndsWith(ImageExtension) &&
 						!path.EndsWith(ImageThumbnailExtension))

@@ -224,7 +224,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// <summary>
 			/// 备注
 			/// </summary>
-			[CKEditor("Remark")]
+			[CKEditor("Remark", ImageBrowserUrl = "/image_browser/product")]
 			public string Remark { get; set; }
 			/// <summary>
 			/// 商品相册的提示信息
@@ -256,7 +256,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// <summary>
 			/// 商品介绍
 			/// </summary>
-			[CKEditor("ProductIntroduction", Group = "ProductIntroduction")]
+			[CKEditor("ProductIntroduction",
+				ImageBrowserUrl = "/image_browser/product", Group = "ProductIntroduction")]
 			public string Introduction { get; set; }
 
 			/// <summary>

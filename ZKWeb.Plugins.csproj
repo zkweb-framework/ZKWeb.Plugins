@@ -186,6 +186,7 @@
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Demo\src\DatabaseInitializeHandlers\DatabaseInitializeHandlerDemo.cs" />
     <Compile Include="Shopping.Product\src\Controllers\ApiController.cs" />
+    <Compile Include="Shopping.Product\src\ImageBrowsers\ProductImageBrowser.cs" />
     <Compile Include="Shopping.Product\src\Managers\ProductManager.cs" />
     <None Include="CMS.ImageBrowser\plugin.json" />
     <None Include="CMS.ImageBrowser\static\cms.imagebrowser.css\image_browser.scss" />

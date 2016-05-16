@@ -27,7 +27,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Translates {
 			{ "Use This Image", "この画像を使う" },
 			{ "Remove", "削除" },
 			{ "Sure to remove this image?", "この画像を削除しますか？" },
-			{ "Remove Successfully", "削除成功しました" }
+			{ "Remove Successfully", "削除成功しました" },
+			{ "ImageManage", "画像管理" }
 		};
 
 		public bool CanTranslate(string code) {
