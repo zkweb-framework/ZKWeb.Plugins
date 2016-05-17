@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
@@ -39,32 +40,12 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		}
 
 		/// <summary>
-		/// 检查上传的文件
-		/// </summary>
-		public void Check(HttpPostedFileBase file, FileUploaderFieldAttribute attribute) {
-			if (file == null) {
-				return;
-			} else if (!attribute.Extensions.Contains(
-				Path.GetExtension(file.FileName).Substring(1))) {
-				// 检查后缀
-				throw new Exception(string.Format(
-					new T("Only {0} files are allowed"),
-					string.Join(",", attribute.Extensions)));
-			} else if (file.ContentLength > attribute.MaxContentsLength) {
-				// 检查大小
-				throw new Exception(string.Format(
-					new T("Please upload file size not greater than {0}"),
-					FileUtils.GetSizeDisplayName((int)attribute.MaxContentsLength)));
-			}
-		}
-
-		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
 		public object Parse(FormField field, string value) {
 			var attribute = (FileUploaderFieldAttribute)field.Attribute;
 			var file = HttpContextUtils.CurrentContext.Request.Files[field.Attribute.Name];
-			Check(file, attribute);
+			attribute.Check(file);
 			return file;
 		}
 	}

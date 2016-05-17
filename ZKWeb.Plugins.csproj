@@ -125,6 +125,7 @@
     <Compile Include="Common.Admin\src\Extensions\ContainerExtensions.cs" />
     <Compile Include="Common.Base\src\Collections\MemoryCacheByIdentity.cs" />
     <Compile Include="Common.Base\src\Collections\MemoryCacheByIdentityAndLocale.cs" />
+    <Compile Include="Common.Base\src\Extensions\FileUploaderFieldAttributeExtensions.cs" />
     <Compile Include="Common.Base\src\Languages\Italian.cs" />
     <Compile Include="Common.Base\src\Languages\Greek.cs" />
     <Compile Include="Common.Base\src\Languages\Arabic.cs" />

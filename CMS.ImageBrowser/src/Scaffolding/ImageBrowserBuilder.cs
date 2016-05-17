@@ -10,6 +10,7 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.CMS.ImageBrowser.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -70,6 +71,13 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 		/// 默认需要按类别生成的权限
 		/// </summary>
 		public virtual string[] RequiredPrivileges { get { return new[] { "ImageManage:" + Category }; } }
+		/// <summary>
+		/// 获取图片上传表单
+		/// </summary>
+		/// <returns></returns>
+		public virtual IModelFormBuilder GetForm() {
+			return new Form(CategoryLower, new FileUploaderFieldAttribute(""), UploadUrl);
+		}
 
 		/// <summary>
 		/// 浏览图片
@@ -79,7 +87,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			// 检查权限
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回模板页
-			var form = new Form(CategoryLower, UploadUrl);
+			var form = GetForm();
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = TableId;
 			table.Target = SearchUrl;
@@ -152,7 +160,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			HttpRequestChecker.RequieAjaxRequest();
 			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回上传结果
-			var form = new Form(CategoryLower, UploadUrl);
+			var form = GetForm();
 			return new JsonResult(form.Submit());
 		}
 
@@ -218,7 +226,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			/// </summary>
 			/// <param name="category">图片类别</param>
 			/// <param name="uploadUrl">上传地址</param>
-			public Form(string category, string uploadUrl) {
+			public Form(
+				string category, FileUploaderFieldAttribute uploadAttribute, string uploadUrl) {
 				Category = category;
 				Form.Attribute.Action = uploadUrl;
 			}
@@ -234,11 +243,14 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			/// <returns></returns>
 			protected override object OnSubmit() {
 				// 需要支持直接上传，这里不根据名称获取
+				// 如果是直接上传，文件大小和后缀不会经过事先的检查，这里手动再检查一遍
 				var files = HttpContextUtils.CurrentContext.Request.Files;
 				var imageFile = files.Count <= 0 ? null : files[0];
 				if (imageFile == null || imageFile.InputStream == null) {
 					throw new HttpException(400, new T("Please select image file"));
 				}
+				((FileUploaderFieldAttribute)this.Form.Fields.First(
+					f => f.Attribute.Name == "Image").Attribute).Check(imageFile);
 				var filename = string.IsNullOrEmpty(CustomName) ? imageFile.FileName : CustomName;
 				// 调用管理器保存
 				// 文件名有重复时自动向后添加(数字)
