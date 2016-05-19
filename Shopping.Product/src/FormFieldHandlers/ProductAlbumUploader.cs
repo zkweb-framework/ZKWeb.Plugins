@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.FormFieldHandlers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
@@ -55,7 +56,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 			for (int x = 1; x <= ProductAlbumUploadData.MaxImageCount; ++x) {
 				var image = request.Files[attribute.Name + "_Image_" + x];
 				var deleteImage = request.Get<bool>(attribute.Name + "_DeleteImage_" + x);
-				uploadHandler.Check(image, attribute);
+				attribute.Check(image);
 				data.UploadedImages.Add(image);
 				data.DeleteImages.Add(deleteImage);
 			}
