@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Config {
 	/// <summary>
 	/// 网站设置
 	/// </summary>
-	[GenericConfig("Common.Minimal.WebsiteSettings", CacheTime = 15)]
+	[GenericConfig("Common.Base.WebsiteSettings", CacheTime = 15)]
 	public class WebsiteSettings {
 		/// <summary>
 		/// 网站名称

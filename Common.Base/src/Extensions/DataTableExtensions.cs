@@ -8,7 +8,7 @@ using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Utils.Extensions;
 
-namespace Common.Minimal.Model.Extensions {
+namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 	/// <summary>
 	/// 数据表格的扩展函数
 	/// </summary>

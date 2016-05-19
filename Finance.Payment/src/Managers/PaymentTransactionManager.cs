@@ -1,5 +1,4 @@
-﻿using Common.Minimal.Model.Extensions;
-using DryIoc;
+﻿using DryIoc;
 using DryIocAttributes;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.GenericRecord.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Database;

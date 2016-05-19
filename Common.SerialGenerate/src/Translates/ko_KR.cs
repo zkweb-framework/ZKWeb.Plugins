@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Utils.Extensions;
 
-namespace Common.SerialGenerate {
+namespace ZKWeb.Plugins.Common.SerialGenerate.src.Translates {
 	/// <summary>
 	/// 韩语翻译
 	/// </summary>
