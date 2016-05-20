@@ -29,7 +29,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 		/// <summary>
 		/// 格式的css类名
 		/// </summary>
-		public virtual string TileClass { get { return "tile bg-grey-gallery"; } }
+		public virtual string TileClass { get { return "tile bg-navy"; } }
 		/// <summary>
 		/// 图标的css类名
 		/// </summary>

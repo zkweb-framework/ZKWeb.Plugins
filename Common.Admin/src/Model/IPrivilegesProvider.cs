@@ -10,10 +10,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 	/// 推荐使用的权限字符串的格式
 	///		Group:Name
 	/// 例如
-	///		Admin Manage:View
-	///		Admin Manage:Edit
-	///		Admin Manage:Delete
-	///		Admin Manage:DeleteForever
+	///		AdminManage:View
+	///		AdminManage:Edit
+	///		AdminManage:Delete
+	///		AdminManage:DeleteForever
 	/// 不使用此格式时权限会被归到"其他"分组下
 	/// </summary>
 	public interface IPrivilegesProvider {
