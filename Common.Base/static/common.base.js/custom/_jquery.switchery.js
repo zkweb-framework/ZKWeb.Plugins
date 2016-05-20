@@ -15,7 +15,7 @@ $.fn.Switchery = function (config) {
 
 /* 加载页面时自动设置表单中，css类带switchery的勾选框 */
 $(function () {
-	var rule = "form input.switchery[type=checkbox]";
+	var rule = "input.switchery[type=checkbox]";
 	$(rule).Switchery();
 	$(document).on("dynamicLoaded", function (e, contents) {
 		$(contents).find(rule).Switchery();

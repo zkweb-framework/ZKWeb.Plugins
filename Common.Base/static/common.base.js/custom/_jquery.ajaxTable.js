@@ -115,7 +115,11 @@ $.fn.ajaxTable = function (options) {
 			var $this = $(this);
 			var key = $this.attr("name");
 			if (isAdvanceSearch) {
-				conditions[key] = $this.val();
+				if ($this.attr("type") == "checkbox") {
+					conditions[key] = $this.is(":checked") ? $this.val() : null;
+				} else {
+					conditions[key] = $this.val();
+				}
 			} else {
 				delete conditions[key];
 			}
