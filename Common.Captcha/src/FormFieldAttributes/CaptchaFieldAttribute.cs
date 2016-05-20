@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Common.Captcha.src.FormFieldAttributes {
 	/// <summary>
 	/// 图片验证码
 	/// </summary>
-	public class CaptchaFieldAttribute : TextBoxFieldAttribute {
+	public class CaptchaFieldAttribute : TextBoxFieldAttribute, IFormFieldParseFromEnv {
 		/// <summary>
 		/// 用于区分各个验证码的键值
 		/// </summary>
