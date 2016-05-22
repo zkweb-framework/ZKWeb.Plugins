@@ -128,7 +128,7 @@ $.fn.productPropertyEditor = function () {
 		}
 		$editor.data("categoryId", categoryId);
 		// 远程载入类目对应的属性编辑器
-		$editor.load("/product/property_editor?categoryId=" + categoryId, function () {
+		$editor.load("/api/product/property_editor?categoryId=" + categoryId, function () {
 			// 编辑属性值名称的事件
 			var aliasSelector = ".property-value-alias";
 			$editor.find(aliasSelector + ' .alias-edit-btn').on("click", function () {

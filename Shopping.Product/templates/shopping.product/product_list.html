@@ -1,6 +1,15 @@
 ﻿{% use_title "ProductList" -%}
+{% include_css "/static/shopping.product.css/product-list.css" %}
+{% include_js "/static/shopping.product.js/product-list.min.js" %}
 {% include common.base/header.html %}
 <div class="screen-center-block">
-	{{ "working on..." | trans }}
+	<div class="product-list">
+		<div class="product-list-filter-row">
+			{% area product_list_filter %}
+		</div>
+		<div class="product-list-table-row">
+			{% area product_list_table %}
+		</div>
+	</div>
 </div>
 {% include common.base/footer.html %}

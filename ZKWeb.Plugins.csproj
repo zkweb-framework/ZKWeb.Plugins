@@ -204,6 +204,11 @@
     <Content Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.html" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\order_count.matcher.js" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\property.matcher.js" />
+    <None Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_class.widget" />
+    <None Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_tag.widget" />
+    <None Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_price_and_order.widget" />
+    <Content Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_price_and_order.html" />
+    <Content Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_tag.html" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_details.html" />
     <Compile Include="Shopping.Product\src\Model\IProductMatchedDataMatcher.cs" />
     <Compile Include="Shopping.Product\src\Model\IProductSalesInfoDisplayField.cs" />
@@ -213,6 +218,7 @@
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\BrandDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\ModelNumberDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\WeightDisplayField.cs" />
+    <Content Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_class.html" />
     <Compile Include="UnitTest.WebTester\src\AdminApps\WebTesterApp.cs" />
     <Compile Include="UnitTest.WebTester\src\Translates\ko_KR.cs" />
     <Compile Include="UnitTest.WebTester\src\Translates\ja_JP.cs" />
@@ -605,6 +611,8 @@
     <Compile Include="CMS.CKEditor\src\Translates\zh_CN.cs" />
     <None Include="Shopping.Product\templates\shopping.product.widgets\product_gallery.widget" />
     <None Include="Shopping.Product\templates\shopping.product.widgets\product_sales_info.widget" />
+    <None Include="Shopping.Product\templates\shopping.product.widgets\product_list_table.widget" />
+    <Content Include="Shopping.Product\templates\shopping.product.widgets\product_list_table.html" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_sales_info.html" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_gallery.html" />
     <Content Include="Shopping.Product\templates\shopping.product\product_list.html" />

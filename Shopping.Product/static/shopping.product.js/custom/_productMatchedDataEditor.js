@@ -158,7 +158,7 @@ $.fn.productMatchedDataEditor = function () {
 		}
 		$editor.data("categoryId", categoryId);
 		// 远程载入类目对应的绑定器
-		$.get("/product/matched_data_binders?categoryId=" + categoryId, function (remoteBinders) {
+		$.get("/api/product/matched_data_binders?categoryId=" + categoryId, function (remoteBinders) {
 			// 更新绑定器，绑定器中的函数需要预先编译
 			var evalFunc = function (body) { return eval("(" + body + " || function() {})"); };
 			_.each(remoteBinders.ConditionBinders, function (conditionBinder) {
