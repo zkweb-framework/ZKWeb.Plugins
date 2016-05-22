@@ -25,11 +25,9 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.ListItemProviders {
 		public ITreeNode<ListItem> GetTree() {
 			var type = new TClass().Type;
 			var manager = Application.Ioc.Resolve<GenericClassManager>();
-			var classes = manager.GetClasses(type);
-			var classMap = classes.ToDictionary(c => c.Id);
-			var tree = TreeUtils.CreateTree(classes,
-				c => new ListItem(c.Name, c.Id.ToString()),
-				c => c.Parent == null ? null : classMap.GetOrDefault(c.Parent.Id));
+			var classTree = manager.GetClassTree(type);
+			var tree = TreeUtils.Transform(classTree,
+				c => c == null ? null : new ListItem(c.Name, c.Id.ToString()));
 			return tree;
 		}
 	}

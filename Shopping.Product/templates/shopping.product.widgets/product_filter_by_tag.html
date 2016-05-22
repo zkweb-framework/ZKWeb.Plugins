@@ -1,1 +1,19 @@
-﻿<p>product_filter_by_tag</p>
+﻿{% fetch /api/product/tag_filter_info > tag_filter_info %}
+<div class="product-filter-by-tag">
+	<ul>
+		<li>
+			<dl>
+				<dt>
+					{{ "ProductTag" | trans }}
+				</dt>
+				<dd>
+					{% for tag in tag_filter_info.tags %}
+					<a class="product-filter" data-filter-key="tag" data-filter-value="{{ tag.Id }}">
+						{{ tag.Name | trans }}
+					</a>
+					{% endfor %}
+				</dd>
+			</dl>
+		</li>
+	</ul>
+</div>

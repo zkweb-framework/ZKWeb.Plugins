@@ -6,7 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using ZKWeb.Plugins.Common.GenericClass.src.Manager;
+using ZKWeb.Plugins.Common.GenericTag.src.Manager;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.GenericClasses;
+using ZKWeb.Plugins.Shopping.Product.src.GenericTags;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Utils.Extensions;
@@ -94,7 +98,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// <returns></returns>
 		[Action("api/product/class_filter_info", HttpMethods.POST)]
 		public IActionResult ClassFilterInfo() {
-			throw new NotImplementedException();
+			var classManager = Application.Ioc.Resolve<GenericClassManager>();
+			var classTree = classManager.GetClassTree(new ProductClass().Type);
+			var tree = TreeUtils.Transform(classTree, c => c == null ? null : new { c.Id, c.Name });
+			return new JsonResult(new { tree = tree });
 		}
 
 		/// <summary>
@@ -103,7 +110,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// <returns></returns>
 		[Action("api/product/tag_filter_info", HttpMethods.POST)]
 		public IActionResult TagFilterInfo() {
-			throw new NotImplementedException();
+			var tagManager = Application.Ioc.Resolve<GenericTagManager>();
+			var tags = tagManager.GetTags(new ProductTag().Type)
+				.Select(t => new { t.Id, t.Name }).ToList();
+			return new JsonResult(new { tags });
 		}
 
 		/// <summary>
