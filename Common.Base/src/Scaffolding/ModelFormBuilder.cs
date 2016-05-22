@@ -13,7 +13,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 
-namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
+namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// 从模型构建表单的构建器
 	/// 例子

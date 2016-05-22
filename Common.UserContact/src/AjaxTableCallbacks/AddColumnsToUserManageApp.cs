@@ -10,7 +10,7 @@ using ZKWeb.Plugins.Common.Admin.src.AdminApps;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
+using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.UserContact.src.Repositories;
@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.UserContact.src.AjaxTableCallbacks {
 	///		手机
 	/// </summary>
 	[ExportMany]
-	public class AddColumnsToUserManageApp : IAjaxTableCallbackFor<User, UserManageApp> {
+	public class AddColumnsToUserManageApp : IAjaxTableCallbackExtension<User, UserManageApp.TableCallback> {
 		public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) { }
 
 		public void OnQuery(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) { }

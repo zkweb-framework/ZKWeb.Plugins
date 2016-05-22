@@ -10,7 +10,7 @@ using ZKWeb.Plugins.Common.Base.src.FormFieldValidators;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Templating;
 
-namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
+namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// 表单html提供器
 	///	这个类可以通过Ioc替换，使用时注意要通过Ioc获取

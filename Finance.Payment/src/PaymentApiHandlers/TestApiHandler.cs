@@ -10,7 +10,7 @@ using System.Web;
 using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Logging;
-using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
+using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.Currency.src.Managers;

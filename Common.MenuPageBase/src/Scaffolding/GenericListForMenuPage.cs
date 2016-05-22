@@ -12,7 +12,7 @@ using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
+using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Web.Interfaces;
@@ -58,9 +58,8 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = TableId;
 			table.Target = SearchUrl;
-			// 表格回调，内置+使用Ioc注册的额外回调
-			var callbacks = new List<IAjaxTableCallback<TData>>() { GetTableCallback() };
-			callbacks.AddRange(Application.Ioc.ResolveMany<IAjaxTableCallbackFor<TData, TPage>>());
+			// 表格回调，内置+使用Ioc注册的扩展回调
+			var callbacks = GetTableCallback().WithExtensions();
 			// 搜索栏构建器
 			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
 			searchBar.TableId = table.Id;
@@ -83,9 +82,8 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 			// 获取参数并转换到搜索请求
 			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
-			// 表格回调，内置+使用Ioc注册的额外回调
-			var callbacks = new List<IAjaxTableCallback<TData>>() { GetTableCallback() };
-			callbacks.AddRange(Application.Ioc.ResolveMany<IAjaxTableCallbackFor<TData, TPage>>());
+			// 表格回调，内置+使用Ioc注册的扩展回调
+			var callbacks = GetTableCallback().WithExtensions();
 			// 构建搜索回应
 			var response = AjaxTableSearchResponse.FromRequest(request, callbacks);
 			return new JsonResult(response);

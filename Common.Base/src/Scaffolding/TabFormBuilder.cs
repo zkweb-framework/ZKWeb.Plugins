@@ -8,7 +8,7 @@ using System.Web.UI;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 
-namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
+namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// 表单构建器，支持多标签
 	/// 按字段的Group分组，没有指定Group的字段分到"基本信息"中

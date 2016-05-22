@@ -7,18 +7,11 @@ using ZKWeb.Database;
 
 namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
-	/// 用于编辑指定数据的表单的回调
-	/// 使用这个回调可以扩展原有的表单
-	/// 例子
-	/// [ExportMany]
-	/// public class EditFormCallback :
-	///		IDataEditFormCallback[Product, ProductEditFormForSeller] {
-	///		// 实现函数
-	///	}
+	/// 扩展指定的数据编辑表单使用的接口
 	/// </summary>
 	/// <typeparam name="TData">编辑的数据类型</typeparam>
 	/// <typeparam name="TForm">指定表单的类型</typeparam>
-	public interface IDataEditFormCallback<TData, TForm>
+	public interface IDataEditFormExtension<TData, TForm>
 		where TData : class, new() {
 		/// <summary>
 		/// 表单创建时的处理

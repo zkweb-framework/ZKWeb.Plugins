@@ -14,7 +14,7 @@ using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Templating;
 
-namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
+namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// Ajax表格搜索栏构建器
 	/// 这个类可以通过Ioc替换，使用时注意要通过Ioc获取

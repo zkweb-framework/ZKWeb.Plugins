@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Database;
-using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
+using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 
 namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>

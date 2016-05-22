@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.Common.UserContact.src.DataEditFormCallbacks {
 	/// 添加联系信息到后台的用户编辑页中
 	/// </summary>
 	[ExportMany]
-	public class AddContactEditorToUserManager : IDataEditFormCallback<User, UserManageApp.BaseForm> {
+	public class AddContactEditorToUserManager : IDataEditFormExtension<User, UserManageApp.BaseForm> {
 		/// <summary>
 		/// 电话
 		/// </summary>

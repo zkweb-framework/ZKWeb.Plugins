@@ -11,7 +11,7 @@ using ZKWeb.Plugins.CMS.ImageBrowser.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.HtmlBuilder;
+using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;

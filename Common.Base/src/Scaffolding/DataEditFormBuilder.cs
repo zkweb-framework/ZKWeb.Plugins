@@ -13,7 +13,7 @@ using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 
-namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
+namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// 用于编辑指定数据的表单
 	/// 例子
@@ -34,16 +34,16 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 	public abstract class DataEditFormBuilder<TData, TForm> : ModelFormBuilder
 		where TData : class, new() {
 		/// <summary>
-		/// 回调列表
+		/// 扩展列表
 		/// </summary>
-		protected List<IDataEditFormCallback<TData, TForm>> Callbacks { get; set; }
+		protected List<IDataEditFormExtension<TData, TForm>> Extensions { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public DataEditFormBuilder(FormBuilder form = null) : base(form) {
-			Callbacks = Application.Ioc.ResolveMany<IDataEditFormCallback<TData, TForm>>().ToList();
-			Callbacks.ForEach(c => c.OnCreated((TForm)(object)this));
+			Extensions = Application.Ioc.ResolveMany<IDataEditFormExtension<TData, TForm>>().ToList();
+			Extensions.ForEach(c => c.OnCreated((TForm)(object)this));
 		}
 
 		/// <summary>
@@ -80,7 +80,7 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 
 		/// <summary>
 		/// 绑定时的处理
-		/// 支持通过回调修改表单
+		/// 支持通过扩展修改表单
 		/// </summary>
 		protected sealed override void OnBind() {
 			var id = GetRequestId();
@@ -90,13 +90,13 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 					throw new HttpException(404, string.Format(new T("Data with id {0} cannot be found"), id));
 				}
 				OnBind(r.Context, data);
-				Callbacks.ForEach(c => c.OnBind((TForm)(object)this, r.Context, data));
+				Extensions.ForEach(c => c.OnBind((TForm)(object)this, r.Context, data));
 			});
 		}
 
 		/// <summary>
 		/// 提交时的处理，返回处理结果
-		/// 支持通过回调保存数据，支持使用IDataSaveCallback检测数据的修改
+		/// 支持通过扩展保存数据，支持使用IDataSaveCallback检测数据的修改
 		/// </summary>
 		/// <returns></returns>
 		protected sealed override object OnSubmit() {
@@ -110,11 +110,11 @@ namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
 				object formResult = null;
 				r.Save(ref data, d => {
 					formResult = OnSubmit(r.Context, d);
-					Callbacks.ForEach(c => c.OnSubmit((TForm)(object)this, r.Context, d));
+					Extensions.ForEach(c => c.OnSubmit((TForm)(object)this, r.Context, d));
 				});
 				// 保存后的处理
 				OnSubmitSaved(r.Context, data);
-				Callbacks.ForEach(c => c.OnSubmitSaved((TForm)(object)this, r.Context, data));
+				Extensions.ForEach(c => c.OnSubmitSaved((TForm)(object)this, r.Context, data));
 				return formResult;
 			});
 			return result;

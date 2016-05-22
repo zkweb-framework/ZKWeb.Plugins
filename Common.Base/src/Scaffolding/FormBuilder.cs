@@ -15,7 +15,7 @@ using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Web.Interfaces;
 
-namespace ZKWeb.Plugins.Common.Base.src.HtmlBuilder {
+namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// 表单构建器
 	/// 这个类可以通过Ioc替换，使用时注意要通过Ioc获取
