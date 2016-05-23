@@ -24,7 +24,10 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 	/// <summary>
 	/// 图片浏览器的构建器
 	/// 例：
-	///	TODO: 待补充
+	/// [ExportMany]
+	/// public class ExampleImageBrowser : ImageBrowserBuilder {
+	///		public override string Category { get { return "Example"; } }
+	/// }
 	/// </summary>
 	public abstract class ImageBrowserBuilder : IPrivilegesProvider, IWebsiteStartHandler {
 		/// <summary>

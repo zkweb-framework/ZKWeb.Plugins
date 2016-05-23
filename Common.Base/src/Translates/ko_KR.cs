@@ -64,7 +64,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Expand/Collapse All", "모두 확장/축소" },
 			{ "Type", "유형" },
 			{ "Menu", "메뉴" },
-			{ "BatchActions", "일괄 작업" }
+			{ "BatchActions", "일괄 작업" },
+			{ "FirstPage", "첫" },
+			{ "PrevPage", "이전" },
+			{ "NextPage", "다음" },
+			{ "LastPage", "마지막" }
 		};
 
 		public bool CanTranslate(string code) {
