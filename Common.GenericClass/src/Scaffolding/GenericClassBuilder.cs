@@ -188,6 +188,8 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
+				table.ExtraOptions["pageSize"] = int.MaxValue;
+				table.ExtraOptions["hidePagination"] = true;
 				table.MenuItems.AddToggleAllForAjaxTableTree("Level");
 				table.MenuItems.AddDivider();
 				table.MenuItems.AddEditAction(

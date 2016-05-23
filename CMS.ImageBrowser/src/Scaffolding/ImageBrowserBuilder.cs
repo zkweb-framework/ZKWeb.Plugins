@@ -112,25 +112,16 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			// 搜索图片列表
 			// 分页时如果没有结果，使用最后一页的结果
 			var imageManager = Application.Ioc.Resolve<ImageManager>();
-			var pageIndex = request.PageIndex;
 			var names = imageManager.Query(CategoryLower);
 			if (!string.IsNullOrEmpty(request.Keyword)) {
 				names = names.Where(name => name.Contains(request.Keyword)).ToList();
 			}
-			var page = request.PageIndex;
-			var pageSize = request.PageSize;
-			var lastPage = (names.Count > 0) ? ((names.Count - 1) / pageSize) : 0;
-			var pagedNames = names.Skip(pageSize * page).Take(pageSize);
-			if (!pagedNames.Any()) {
-				page = lastPage;
-				pagedNames = names.Skip(pageSize * page).Take(pageSize);
-			}
-			// 返回搜索结果
 			var response = new AjaxTableSearchResponse();
-			response.PageIndex = page;
-			response.PageSize = pageSize;
-			response.IsLastPage = page == lastPage;
-			response.Rows.AddRange(pagedNames.Select(name => {
+			var result = response.Pagination.Paging(request, names);
+			// 返回搜索结果
+			response.PageIndex = request.PageIndex;
+			response.PageSize = request.PageSize;
+			response.Rows.AddRange(result.Select(name => {
 				var path = imageManager.GetImageWebPath(
 					CategoryLower, name, imageManager.ImageExtension);
 				var thumbnailPath = imageManager.GetImageWebPath(

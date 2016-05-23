@@ -85,7 +85,7 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 			// 表格回调，内置+使用Ioc注册的扩展回调
 			var callbacks = GetTableCallback().WithExtensions();
 			// 构建搜索回应
-			var response = AjaxTableSearchResponse.FromRequest(request, callbacks);
+			var response = request.BuildResponseFromDatabase(callbacks);
 			return new JsonResult(response);
 		}
 

@@ -21,6 +21,7 @@ $.fn.ajaxTable = function (options) {
 		conditions: {},
 		target: null,
 		loadingClass: "loading",
+		hidePagination: false,
 		template: "/static/common.base.tmpl/ajaxTable.tmpl"
 	}, options || {});
 	// 创建新的Ajax表格对象
@@ -54,20 +55,31 @@ $.fn.ajaxTable = function (options) {
 				table.searchRequest.PageIndex = data.PageIndex;
 				table.searchRequest.PageSize = data.PageSize;
 				table.container.html(table.compiledTemplate({ result: data }));
-				table.container.removeClass(options.loadingClass);
 				// 绑定分页事件
 				var $pagination = table.container.find(".pagination");
-				(data.PageSize > 0x7fffffff) && $pagination.addClass("hide"); // 只显示单页时，隐藏分页控件
-				(data.PageIndex == 0) && $pagination.find(".to-first, .to-prev").addClass("disabled"); // 当前是首页
-				(data.IsLastPage) && $pagination.find(".to-last, .to-next").addClass("disabled"); // 当前是末页
-				$pagination.find(".to-first").on("click", function () { table.toPage(0); }); // 到首页
-				$pagination.find(".to-prev").on("click", function () { table.toPrevPage(); }); // 到上一页
-				$pagination.find(".to-next").on("click", function () { table.toNextPage(); }); // 到下一页
-				$pagination.find(".to-last").on("click", function () { table.toPage(0x7fffffff); }); // 到末页
-				$pagination.find(".pagination-input").on("keydown", function (e) {
-					(e.keyCode == 13) && table.toPage(parseInt($(this).val() - 1));
-				}).val(data.PageIndex + 1); // 到指定页
+				$pagination.on("click", ".enabled", function () {
+					var page = $(this).attr("data-page");
+					if (page == "first") {
+						table.toPage(0); // 到首页
+					} else if (page == "prev") {
+						table.toPrevPage(); // 到上一页
+					} else if (page == "next") {
+						table.toNextPage(); // 到下一页
+					} else if (page == "last") {
+						table.toPage(0x7fffffff); // 到末页
+					} else {
+						table.toPage(parseInt(page) || 0); // 到指定页
+					}
+				});
+				$pagination.on("keydown", ".pagination-input", function (e) {
+					(e.keyCode == 13) && table.toPage(parseInt($(this).val() - 1)); // 到指定页
+				});
+				// 需要时隐藏分页
+				if (table.options.hidePagination) {
+					$pagination.hide();
+				}
 				// 触发载入后事件
+				table.container.removeClass(options.loadingClass);
 				table.container.trigger("loaded.ajaxTable");
 			};
 			if (table.compiledTemplate) {
@@ -160,9 +172,10 @@ $(function () {
 			target: $table.attr("ajax-table-target"),
 			template: $table.attr("ajax-table-template") || undefined
 		};
-		if (options.target) {
-			$table.ajaxTable(options).refresh();
-		}
+		options = $.extend(options,
+			JSON.parse($table.attr("ajax-table-extra-options") || "{}") || {});
+		var table = $table.ajaxTable(options)
+		options.target && table.refresh();
 	});
 	// ajax表格菜单功能
 	// 刷新

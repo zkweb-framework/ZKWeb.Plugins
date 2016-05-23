@@ -125,8 +125,10 @@
     <Compile Include="Common.Admin\src\Extensions\ContainerExtensions.cs" />
     <Compile Include="Common.Base\src\Collections\MemoryCacheByIdentity.cs" />
     <Compile Include="Common.Base\src\Collections\MemoryCacheByIdentityAndLocale.cs" />
+    <Compile Include="Common.Base\src\Extensions\AjaxTableSearchRequestExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\FileUploaderFieldAttributeExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\IAjaxTableCallbackExtensions.cs" />
+    <Compile Include="Common.Base\src\Extensions\PaginationExtensions.cs" />
     <Compile Include="Common.Base\src\Languages\Italian.cs" />
     <Compile Include="Common.Base\src\Languages\Greek.cs" />
     <Compile Include="Common.Base\src\Languages\Arabic.cs" />
@@ -186,6 +188,10 @@
     <Compile Include="Common.Admin\src\Translates\ko_KR.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.Base\src\Model\Pagination.cs" />
+    <Compile Include="Common.Base\src\Model\StaticTableSearchRequest.cs" />
+    <Compile Include="Common.Base\src\Model\StaticTableSearchResponse.cs" />
+    <Compile Include="Common.Base\src\Tests\Extensions\PaginationExtensionsTest.cs" />
     <Compile Include="Demo\src\DatabaseInitializeHandlers\DatabaseInitializeHandlerDemo.cs" />
     <Compile Include="Shopping.Product\src\Controllers\ApiController.cs" />
     <Compile Include="Shopping.Product\src\ImageBrowsers\ProductImageBrowser.cs" />
@@ -297,7 +303,7 @@
     <Compile Include="Common.Base\src\Model\EnumBool.cs" />
     <Compile Include="Common.Base\src\Model\EnumDeleted.cs" />
     <Compile Include="Common.Base\src\Model\IAjaxTableCallback.cs" />
-    <Compile Include="Common.Base\src\Model\AjaxTableSearchRequest.cs" />
+    <Compile Include="Common.Base\src\Managers\AjaxTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\AjaxTableSearchResponse.cs" />
     <Compile Include="Common.Base\src\Model\FormAttribute.cs" />
     <Compile Include="Common.Base\src\Model\FormField.cs" />
@@ -1068,7 +1074,6 @@
     <None Include="Common.Base\static\common.base.fonts\fontawesome-webfont.woff2" />
     <None Include="Common.Base\static\common.base.js\koala-config.json" />
     <None Include="Common.Base\static\common.base.tmpl\ajaxTable.tmpl" />
-    <None Include="Common.Base\static\common.base.tmpl\ajaxTableSimple.tmpl" />
     <None Include="Common.Base\templates\common.base.widgets\logo.widget" />
     <None Include="Common.UserPanel\plugin.json" />
     <None Include="Common.UserContact\plugin.json" />

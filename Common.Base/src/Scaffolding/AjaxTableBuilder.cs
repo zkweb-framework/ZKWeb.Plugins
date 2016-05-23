@@ -1,6 +1,7 @@
 ﻿using DotLiquid;
 using DryIoc;
 using DryIocAttributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -45,6 +46,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// 右键菜单项列表，默认包含刷新和全屏
 		/// </summary>
 		public List<MenuItem> MenuItems { get; protected set; }
+		/// <summary>
+		/// 附加选项
+		/// </summary>
+		public Dictionary<string, object> ExtraOptions { get; protected set; }
 
 		/// <summary>
 		/// 初始化
@@ -53,6 +58,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			MenuItems = new List<MenuItem>();
 			MenuItems.AddRefresh();
 			MenuItems.AddFullscreen();
+			ExtraOptions = new Dictionary<string, object>();
 		}
 
 		/// <summary>
@@ -77,7 +83,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 				target = Target,
 				template = Template,
 				menuId = Id + MenuIdSuffix,
-				menuItems = MenuItems
+				menuItems = MenuItems,
+				extraOptions = JsonConvert.SerializeObject(ExtraOptions)
 			});
 			return html;
 		}

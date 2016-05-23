@@ -11,6 +11,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// </summary>
 	public class AjaxTableSearchRequest {
 		/// <summary>
+		/// 最大允许的每页显示数量
+		/// </summary>
+		public static int MaxPageSize = 10000;
+		/// <summary>
 		/// 请求的页面序号，从0开始
 		/// </summary>
 		public int PageIndex { get; set; }
@@ -42,7 +46,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public static AjaxTableSearchRequest FromJson(string json) {
 			var request = JsonConvert.DeserializeObject<AjaxTableSearchRequest>(json);
 			request.PageIndex = Math.Max(request.PageIndex, 0);
-			request.PageSize = Math.Min(Math.Max(request.PageSize, 1), 10000);
+			request.PageSize = Math.Min(Math.Max(request.PageSize, 1), MaxPageSize);
 			request.Conditions = request.Conditions ?? new Dictionary<string, object>();
 			return request;
 		}

@@ -89,12 +89,22 @@
 			pointer-events: none;
 			background-color: #f4f4f4;
 		}
+
+		&.ellipsis {
+			cursor: default;
+			pointer-events: none;
+			border-top: none;
+			border-bottom: none;
+		}
 	}
 
 	.pagination-input {
 		float: left;
 		vertical-align: middle;
 		width: 45px !important;
+		height: 30px !important;
+		color: #3c8dbc;
+		font-weight: bold;
 		text-align: center;
 		margin: 0px 0px 0px -1px;
 	}

@@ -1,15 +1,4 @@
-﻿<div class="table-container inbox-content">
-	<div class="row">
-		<div class="col-md-12 col-sm-12">
-			<ul class="pagination pagination-sm pull-right">
-				<li><a class="to-first" title="<<"><i class="fa fa-angle-double-left"></i></a></li>
-				<li><a class="to-prev" title="<"><i class="fa fa-angle-left"></i></a></li>
-				<li><input type="text" class="pagination-input form-control input-sm" /></li>
-				<li><a class="to-next" title=">"><i class="fa fa-angle-right"></i></a></li>
-				<li><a class="to-last" title=">>"><i class="fa fa-angle-double-right"></i></a></li>
-			</ul>
-		</div>
-	</div>
+﻿<div class="table-container ajax-table-container">
 	<div class="table-scroller">
 		<table class="table table-bordered table-hover dataTable">
 			<thead>
@@ -32,5 +21,18 @@
 				<% }); %>
 			</tbody>
 		</table>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<ul class="pagination pull-right">
+				<% _.each(result.Pagination.Links, function(link) { %>
+					<% if (link.State == "active") { %>
+						<li><input type="text" class="pagination-input form-control" value="<%-link.Name%>" /></li>
+					<% } else { %>
+						<li><a class="<%-link.State%>" data-page="<%-link.Page%>" title="<%-link.Name%>"><%-link.Name%></a></li>
+					<% } %>
+				<% }); %>
+			</ul>
+		</div>
 	</div>
 </div>

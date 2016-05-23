@@ -118,19 +118,20 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
 			// 构建搜索回应
-			var response = new AjaxTableSearchResponse() { PageIndex = 0, PageSize = 0x7fffffff, IsLastPage = true };
 			var query = Translates.Select(t => new Translation() { Original = t.Key, Translated = t.Value });
 			if (!string.IsNullOrEmpty(request.Keyword)) {
 				query = query.Where(q => q.Original.Contains(request.Keyword) || q.Translated.Contains(request.Keyword));
 			}
-			foreach (var translation in query) {
-				response.Rows.Add(new Dictionary<string, object>() {
-					{ "Id", HttpUtility.UrlEncode(translation.Original) },
-					{ "OriginalText", translation.Original },
-					{ "TranslatedText", translation.Translated },
-					{ "ToString", translation.ToString() }
-				});
-			}
+			var response = new AjaxTableSearchResponse();
+			var result = response.Pagination.Paging(request, query);
+			response.PageIndex = request.PageIndex;
+			response.PageSize = request.PageSize;
+			response.Rows.AddRange(result.Select(translation => new Dictionary<string, object>() {
+				{ "Id", HttpUtility.UrlEncode(translation.Original) },
+				{ "OriginalText", translation.Original },
+				{ "TranslatedText", translation.Translated },
+				{ "ToString", translation.ToString() }
+			}));
 			response.Columns.AddNoColumn();
 			response.Columns.AddMemberColumn("OriginalText");
 			response.Columns.AddMemberColumn("TranslatedText");

@@ -64,7 +64,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Translates {
 			{ "Expand/Collapse All", "展开/折叠全部" },
 			{ "Type", "类型" },
 			{ "Menu", "菜单" },
-			{ "BatchActions", "批量操作" }
+			{ "BatchActions", "批量操作" },
+			// TODO:，未翻译到其他语言
+			{ "FirstPage", "首页" },
+			{ "PrevPage", "上一页" },
+			{ "NextPage", "下一页" },
+			{ "LastPage", "末页" }
 		};
 
 		public bool CanTranslate(string code) {
