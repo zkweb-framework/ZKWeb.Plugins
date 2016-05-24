@@ -304,7 +304,7 @@
     <Compile Include="Common.Base\src\Model\EnumBool.cs" />
     <Compile Include="Common.Base\src\Model\EnumDeleted.cs" />
     <Compile Include="Common.Base\src\Model\IAjaxTableCallback.cs" />
-    <Compile Include="Common.Base\src\Managers\AjaxTableSearchRequest.cs" />
+    <Compile Include="Common.Base\src\Model\AjaxTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\AjaxTableSearchResponse.cs" />
     <Compile Include="Common.Base\src\Model\FormAttribute.cs" />
     <Compile Include="Common.Base\src\Model\FormField.cs" />

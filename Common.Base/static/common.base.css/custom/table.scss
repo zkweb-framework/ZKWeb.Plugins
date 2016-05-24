@@ -14,6 +14,10 @@
 	tr.selected {
 		background-color: #4B8DF8 !important;
 		color: #FFF;
+		/* 链接字体的颜色 */
+		a {
+			color: #FFF;
+		}
 	}
 	/* 表格头部不使用底边框 */
 	&.table-striped > thead > tr > th {
