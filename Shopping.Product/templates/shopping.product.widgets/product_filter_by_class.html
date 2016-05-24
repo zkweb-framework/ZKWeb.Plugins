@@ -5,13 +5,13 @@
 		<li>
 			<dl>
 				<dt>
-					<a class="product-filter" data-filter-key="class" data-filter-value="{{ classL1.Value.Id }}">
+					<a data-trigger="set-url-param" data-key="class" data-value="{{ classL1.Value.Id }}">
 						{{ classL1.Value.Name | trans }}
 					</a>
 				</dt>
 				<dd>
 					{% for classL2 in classL1.Childs %}
-					<a class="product-filter" data-filter-key="class" data-filter-value="{{ classL2.Value.Id }}">
+					<a data-trigger="set-url-param" data-key="class" data-value="{{ classL2.Value.Id }}">
 						{{ classL2.Value.Name | trans }}
 					</a>
 					{% endfor %}

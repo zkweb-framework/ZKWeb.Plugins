@@ -1,1 +1,13 @@
-﻿<p>product_filter_by_price_and_order</p>
+﻿<div class="product-filter-by-price-and-order nav-group">
+	<div class="nav">
+		<a data-trigger="set-url-param" data-key="order" data-value="default">{{ "Default" | trans }}</a>
+		<a data-trigger="set-url-param" data-key="order" data-value="best_sales">{{ "BestSales" | trans }}</a>
+		<a data-trigger="set-url-param" data-key="order" data-value="lower_price">{{ "LowerPrice" | trans }}</a>
+		<a data-trigger="set-url-param" data-key="order" data-value="higher_price">{{ "HigherPrice" | trans }}</a>
+		<a data-trigger="set-url-param" data-key="order" data-value="newest_on_sale">{{ "NewestOnSale" | trans }}</a>
+		<input class="form-control price-lower-bound" value="0" />
+		<span>&nbsp;-&nbsp;</span>
+		<input class="form-control price-upper-bound" value="0" />
+		<a class="price-filter" data-trigger="set-url-param" data-value="0,0">{{ "FilterByPrice" | trans }}</a>
+	</div>
+</div>

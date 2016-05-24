@@ -3,7 +3,7 @@
 /* 过滤器样式 */
 .product-list-filter-row {
 	margin-top: 5px;
-	/* 过滤条件分组 */
+	/* 导航组 */
 	.nav-group {
 		border: 1px solid #E8E8E8;
 		margin: 8px 8px;
@@ -59,14 +59,43 @@
 			}
 		}
 	}
-	/* 过滤栏列表 */
-	.nav-bars {
-		border: 1px solid #E8E8E8;
-		margin: 15px 0px 0px 0px;
-		/* 排序栏 */
-		.sorting-bar {
+	/* 排序和价格导航栏 */
+	.product-filter-by-price-and-order.nav-group {
+		.nav {
 			line-height: 38px;
 			background-color: #F5F5F5;
+			padding: 0px 8px;
+
+			> a {
+				color: #000;
+				background-color: #fff;
+				border: 1px solid #cecece;
+				padding: 4px 8px;
+				margin: 0px 8px 0px 0px;
+
+				&:hover, &:active {
+					color: #fff;
+					border: none;
+					background-color: #E4393C;
+					text-decoration: none;
+				}
+			}
+
+			> input {
+				display: inline-block;
+				width: 50px;
+				height: 24px;
+				text-align: center;
+				padding: 0px;
+
+				&.price-lower-bound {
+					margin: 0px 0px 0px 4px;
+				}
+
+				&.price-upper-bound {
+					margin: 0px 4px 0px 0px;
+				}
+			}
 		}
 	}
 }
