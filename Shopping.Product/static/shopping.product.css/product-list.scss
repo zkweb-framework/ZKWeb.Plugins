@@ -1,28 +1,25 @@
 ﻿/* 商品列表页的样式 */
 
 /* 过滤器样式 */
-.product-list-filter {
+.product-list-filter-row {
 	margin-top: 5px;
-	/* 过滤条件分组列表 */
-	.nav-groups {
+	/* 过滤条件分组 */
+	.nav-group {
 		border: 1px solid #E8E8E8;
-		/* 过滤条件分组 */
-		> .nav-group {
-			margin: 0px 8px;
+		margin: 8px 8px;
 
-			> ul {
-				padding: 0px;
-				margin: 0px;
+		> ul {
+			padding: 0px;
+			margin: 0px;
 
-				> li {
-					list-style: none;
-					border-top: 1px dashed #DEDEDE;
-				}
+			> li {
+				list-style: none;
+				border-top: 1px dashed #DEDEDE;
 			}
-			/* 首行不显示上边框 */
-			&:first-child > ul > li:first-child {
-				border-top: none;
-			}
+		}
+		/* 首行不显示上边框 */
+		&:first-child > ul > li:first-child {
+			border-top: none;
 		}
 		/* 单行过滤条件 */
 		dl {

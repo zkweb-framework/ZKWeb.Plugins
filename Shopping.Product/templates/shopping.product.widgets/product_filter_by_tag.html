@@ -1,10 +1,10 @@
 ﻿{% fetch /api/product/tag_filter_info > tag_filter_info %}
-<div class="product-filter-by-tag">
+<div class="product-filter-by-tag nav-group">
 	<ul>
 		<li>
 			<dl>
 				<dt>
-					{{ "ProductTag" | trans }}
+					<a>{{ "ProductTag" | trans }}</a>
 				</dt>
 				<dd>
 					{% for tag in tag_filter_info.tags %}
