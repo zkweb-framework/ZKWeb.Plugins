@@ -58,6 +58,15 @@
 				}
 			}
 		}
+		/* 选中的过滤条件 */
+		a.selected {
+			border: 2px solid #C00 !important;
+
+			> i {
+				margin: 0px 0px 0px 4px;
+				color: #C00;
+			}
+		}
 	}
 	/* 排序和价格导航栏 */
 	.product-filter-by-price-and-order.nav-group {

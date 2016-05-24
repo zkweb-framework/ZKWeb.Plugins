@@ -1,12 +1,21 @@
 ﻿/*
 	商品列表页使用的功能
-	页面结构
-		待补充
-	关键字
-		从[condition-key='Keyword']获取，并自动设置到搜索框中
-		搜索框在ProductSearchBox元素中，类未定义
-	搜索实现
-		待补充
-	事件
-		待补充
+	商品列表页已通过静态表格和set-url-param实现了过滤商品和分页功能
+	
+	这个脚本只需要实现以下功能
+	- 标记已选择的条件，再次点击时可以取消这个条件
 */
+
+$(function () {
+	// 标记已选择的条件，再次点击时可以取消这个条件
+	var $filters = $(".product-list-filter-row [data-trigger='set-url-param']");
+	var uri = new Uri(location.href);
+	$filters.each(function () {
+		var $filter = $(this);
+		var key = $filter.data("key");
+		var value = $filter.data("value");
+		if (value && uri.getQueryParamValue(key) == value) {
+			$filter.data("value", "").addClass("selected").append("<i class='fa fa-remove'></i>");
+		}
+	});
+});
