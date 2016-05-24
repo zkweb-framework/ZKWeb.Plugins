@@ -207,6 +207,7 @@
     <None Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.widget" />
     <Content Include="CMS.ImageBrowser\static\cms.imagebrowser.js\image_browser.min.js" />
     <Content Include="CMS.ImageBrowser\templates\cms.imagebrowser\image_list.html" />
+    <Content Include="Common.Base\static\common.base.js\custom\_jquery.setUrlParam.js" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.html" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\order_count.matcher.js" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\property.matcher.js" />

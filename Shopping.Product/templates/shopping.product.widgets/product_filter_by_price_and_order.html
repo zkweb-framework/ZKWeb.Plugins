@@ -6,8 +6,8 @@
 		<a data-trigger="set-url-param" data-key="order" data-value="higher_price">{{ "HigherPrice" | trans }}</a>
 		<a data-trigger="set-url-param" data-key="order" data-value="newest_on_sale">{{ "NewestOnSale" | trans }}</a>
 		<input class="form-control price-lower-bound" value="0" />
-		<span>&nbsp;-&nbsp;</span>
+		<span>&nbsp;~&nbsp;</span>
 		<input class="form-control price-upper-bound" value="0" />
-		<a class="price-filter" data-trigger="set-url-param" data-value="0,0">{{ "FilterByPrice" | trans }}</a>
+		<a class="price-filter" data-trigger="set-url-param" data-key="price_range" data-value="0~0">{{ "FilterByPrice" | trans }}</a>
 	</div>
 </div>

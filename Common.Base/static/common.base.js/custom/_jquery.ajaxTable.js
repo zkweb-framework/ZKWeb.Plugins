@@ -58,18 +58,7 @@ $.fn.ajaxTable = function (options) {
 				// 绑定分页事件
 				var $pagination = table.container.find(".pagination");
 				$pagination.on("click", ".enabled", function () {
-					var page = $(this).attr("data-page");
-					if (page == "first") {
-						table.toPage(0); // 到首页
-					} else if (page == "prev") {
-						table.toPrevPage(); // 到上一页
-					} else if (page == "next") {
-						table.toNextPage(); // 到下一页
-					} else if (page == "last") {
-						table.toPage(0x7fffffff); // 到末页
-					} else {
-						table.toPage(parseInt(page) || 0); // 到指定页
-					}
+					table.toPage($(this).data("page"));
 				});
 				$pagination.on("keydown", ".pagination-input", function (e) {
 					(e.keyCode == 13) && table.toPage(parseInt($(this).val() - 1)); // 到指定页

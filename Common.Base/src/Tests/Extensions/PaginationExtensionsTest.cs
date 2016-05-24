@@ -22,7 +22,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			Assert.Equals(pagination.ReachableLastPage, 2);
 			Assert.IsTrue(!pagination.ReachableLastPageIsLastPage);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.Page).SequenceEqual(
-				new[] { "first", "prev", "0", "1", "2", "ellipsis", "next", "last" }),
+				new[] { 0, 0, 0, 1, 2, int.MaxValue, 1, int.MaxValue }),
 				pagination.Links);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.State).SequenceEqual(
 				new[] { "disabled", "disabled",
@@ -36,7 +36,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			Assert.Equals(pagination.ReachableLastPage, 1);
 			Assert.IsTrue(!pagination.ReachableLastPageIsLastPage);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.Page).SequenceEqual(
-				new[] { "first", "prev", "1", "next", "last" }),
+				new[] { 0, 0, 1, 2, int.MaxValue }),
 				pagination.Links);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.State).SequenceEqual(
 				new[] { "enabled", "enabled", "active", "enabled", "enabled" }),
@@ -49,7 +49,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			Assert.Equals(pagination.ReachableLastPage, 9);
 			Assert.IsTrue(pagination.ReachableLastPageIsLastPage);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.Page).SequenceEqual(
-				new[] { "first", "prev", "ellipsis", "5", "6", "7", "8", "9", "next", "last" }),
+				new[] { 0, 6, 0, 5, 6, 7, 8, 9, 8, int.MaxValue }),
 				pagination.Links);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.State).SequenceEqual(
 				new[] { "enabled", "enabled", "ellipsis",
@@ -63,7 +63,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			Assert.Equals(pagination.ReachableLastPage, 9);
 			Assert.IsTrue(pagination.ReachableLastPageIsLastPage);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.Page).SequenceEqual(
-				new[] { "first", "prev", "ellipsis", "7", "8", "9", "next", "last" }),
+				new[] { 0, 8, 0, 7, 8, 9, 9, int.MaxValue }),
 				pagination.Links);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.State).SequenceEqual(
 				new[] { "enabled", "enabled", "ellipsis",

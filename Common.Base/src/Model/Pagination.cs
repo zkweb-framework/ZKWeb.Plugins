@@ -20,6 +20,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <summary>
 		/// 总数量
 		/// 因为影响性能，不一定会获取
+		/// 不获取时等于null
 		/// </summary>
 		public long? TotalCount { get; set; }
 		/// <summary>
@@ -40,13 +41,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public class Link {
 			/// <summary>
 			/// 页面序号
-			/// 如果序号是数字，从0开始
-			/// 可能是: ["first", "prev", "0", "ellipsis", "next", "last"]
+			/// 从0开始
 			/// </summary>
-			public string Page { get; set; }
+			public int Page { get; set; }
 			/// <summary>
 			/// 页面名称
-			/// 如果序号是数字，从1开始（需要显示序号+1）
+			/// 如果是数字，从1开始（需要显示序号+1）
 			/// 可能是: ["首页", "上一页", "1", "...", "下一页", "末页"]
 			/// </summary>
 			public string Name { get; set; }
@@ -64,7 +64,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			/// <summary>
 			/// 初始化
 			/// </summary>
-			public Link(string page, string name, string state) {
+			public Link(int page, string name, string state) {
 				Page = page;
 				Name = name;
 				State = state;

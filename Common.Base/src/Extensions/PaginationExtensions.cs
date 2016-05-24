@@ -32,30 +32,32 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			// 首页, 上一页
 			bool isFirstPage = pageIndex == 0;
 			pagination.Links.Add(new Pagination.Link(
-				"first", new T("FirstPage"), isFirstPage ? "disabled" : "enabled"));
+				0, new T("FirstPage"), isFirstPage ? "disabled" : "enabled"));
 			pagination.Links.Add(new Pagination.Link(
-				"prev", new T("PrevPage"), isFirstPage ? "disabled" : "enabled"));
+				isFirstPage ? pageIndex : (pageIndex - 1),
+				new T("PrevPage"), isFirstPage ? "disabled" : "enabled"));
 			// 省略号，如果开始页大于0，且有分页范围
 			int fromPage = (linkRange >= pageIndex) ? 0 : (pageIndex - linkRange);
 			if (fromPage > 0 && linkRange > 0) {
-				pagination.Links.Add(new Pagination.Link("ellipsis", "...", "ellipsis"));
+				pagination.Links.Add(new Pagination.Link(0, "...", "ellipsis"));
 			}
 			// 指定范围内的分页链接
 			for (int i = fromPage; i <= pagination.ReachableLastPage; ++i) {
 				pagination.Links.Add(new Pagination.Link(
-					i.ToString(), (i + 1).ToString(), (i == pageIndex) ? "active" : "enabled"));
+					i, (i + 1).ToString(), (i == pageIndex) ? "active" : "enabled"));
 			}
 			// 省略号，如果可到达的最后一页不是真正的最后一页，且有分页范围
 			if (!pagination.ReachableLastPageIsLastPage && linkRange > 0) {
-				pagination.Links.Add(new Pagination.Link("ellipsis", "...", "ellipsis"));
+				pagination.Links.Add(new Pagination.Link(int.MaxValue, "...", "ellipsis"));
 			}
 			// 下一页，末页
 			bool isLastPage = (
 				pageIndex == pagination.ReachableLastPage && pagination.ReachableLastPageIsLastPage);
 			pagination.Links.Add(new Pagination.Link(
-				"next", new T("NextPage"), isLastPage ? "disabled" : "enabled"));
+				isLastPage ? pageIndex : (pageIndex + 1),
+				new T("NextPage"), isLastPage ? "disabled" : "enabled"));
 			pagination.Links.Add(new Pagination.Link(
-				"last", new T("LastPage"), isLastPage ? "disabled" : "enabled"));
+				int.MaxValue, new T("LastPage"), isLastPage ? "disabled" : "enabled"));
 		}
 
 		/// <summary>
