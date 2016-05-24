@@ -8,6 +8,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// 静态表格数据的搜索请求
 	/// </summary>
-	public class StaticTableSearchRequest {
+	public class StaticTableSearchRequest : BaseTableSearchRequest {
 	}
 }

@@ -66,6 +66,10 @@
 				margin: 0px 0px 0px 4px;
 				color: #C00;
 			}
+
+			&:hover > i, &:active > i {
+				color: #fff;
+			}
 		}
 	}
 	/* 排序和价格导航栏 */
