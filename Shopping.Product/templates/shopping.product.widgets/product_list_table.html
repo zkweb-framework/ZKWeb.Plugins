@@ -1,1 +1,10 @@
-﻿<p>product_list_table</p>
+﻿{% fetch /api/product/search?{QUERY_STRING} > product_search_result %}
+<div class="table-container static-table-container">
+	<div class="product-list-table">
+		{% for row in product_search_result.response.Rows %}
+		<div class="product-cell">
+			{{ row }}
+		</div>
+		{% endfor %}
+	</div>
+</div>

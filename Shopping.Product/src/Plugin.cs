@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Plugin.Interfaces;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.ProductStates;
+using ZKWeb.Plugins.Shopping.Product.src.TypeTraits;
 using ZKWeb.Templating.AreaSupport;
 
 namespace ZKWeb.Plugins.Shopping.Product.src {
@@ -20,6 +22,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src {
 		/// 初始化
 		/// </summary>
 		public Plugin() {
+			// 注册商品状态的特征
+			Application.Ioc.RegisterInstance(
+				new ProductStateTrait() { VisibleFromProductList = true },
+				serviceKey: typeof(OnSale));
 			// 注册默认模块
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			// 商品详情页

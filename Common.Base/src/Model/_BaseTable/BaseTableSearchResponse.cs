@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotLiquid;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// 表格数据的搜索回应的基础类
 	/// </summary>
-	public abstract class BaseTableSearchResponse {
+	public abstract class BaseTableSearchResponse : ILiquidizable {
 		/// <summary>
 		/// 返回的页面序号，从0开始
 		/// </summary>
@@ -32,6 +33,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public BaseTableSearchResponse() {
 			Pagination = new Pagination();
 			Rows = new List<Dictionary<string, object>>();
+		}
+
+		/// <summary>
+		/// 允许描画到模板
+		/// </summary>
+		/// <returns></returns>
+		object ILiquidizable.ToLiquid() {
+			return new { PageIndex, PageSize, Pagination, Rows };
 		}
 	}
 }

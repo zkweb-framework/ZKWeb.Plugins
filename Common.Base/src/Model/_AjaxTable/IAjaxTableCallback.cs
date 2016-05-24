@@ -10,6 +10,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// Ajax表格回调
 	/// </summary>
+	/// <typeparam name="T">数据类型</typeparam>
 	public interface IAjaxTableCallback<T> {
 		/// <summary>
 		/// 构建表格时的处理

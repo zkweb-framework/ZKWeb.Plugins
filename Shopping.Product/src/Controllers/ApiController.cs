@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.GenericClass.src.Manager;
 using ZKWeb.Plugins.Common.GenericTag.src.Manager;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
@@ -13,6 +15,7 @@ using ZKWeb.Plugins.Shopping.Product.src.GenericClasses;
 using ZKWeb.Plugins.Shopping.Product.src.GenericTags;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Web.ActionResults;
@@ -117,12 +120,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		}
 
 		/// <summary>
-		/// 商品列表表格信息
+		/// 搜索商品列表
 		/// </summary>
 		/// <returns></returns>
-		[Action("api/product/list_table_info", HttpMethods.POST)]
-		public IActionResult ProductListTableInfo() {
-			throw new NotImplementedException();
+		[Action("api/product/search", HttpMethods.POST)]
+		public IActionResult ProductSearch() {
+			var request = StaticTableSearchRequest.FromHttpRequest();
+			var callbacks = new ProductTableCallback().WithExtensions();
+			var response = request.BuildResponseFromDatabase(callbacks);
+			return new JsonResult(new { response });
 		}
 	}
 }

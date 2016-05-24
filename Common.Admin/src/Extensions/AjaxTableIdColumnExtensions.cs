@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 			bool addBatchDelete = false;
 			bool addBatchRecover = false;
 			bool addBatchDeleteForever = false;
-			if (IsRecyclable.Value(dataType)) {
+			if (RecyclableTrait.For(dataType).IsRecyclable) {
 				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
 				addBatchDelete = !deleted;
 				addBatchRecover = deleted;

@@ -1,0 +1,88 @@
+﻿using DryIoc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.Database;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.TypeTraits;
+using ZKWeb.Utils.Extensions;
+
+namespace ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks {
+	/// <summary>
+	/// 前台商品列表使用的商品表格的回调
+	/// </summary>
+	public class ProductTableCallback : IStaticTableCallback<Database.Product> {
+		/// <summary>
+		/// 过滤数据
+		/// </summary>
+		public void OnQuery(
+			StaticTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Product> query) {
+			// 按分类
+			var classId = request.Conditions.GetOrDefault<long?>("class");
+			if (classId != null) {
+				query = query.Where(q => q.Classes.Any(c => c.Id == classId));
+			}
+			// 按标签
+			var tagId = request.Conditions.GetOrDefault<long?>("tag");
+			if (tagId != null) {
+				query = query.Where(q => q.Tags.Any(t => t.Id == tagId));
+			}
+			// 按价格范围（这里不考虑货币）
+			var priceRange = request.Conditions.GetOrDefault<string>("price_range");
+			if (!string.IsNullOrEmpty(priceRange) && priceRange.Contains('~')) {
+				var priceBounds = priceRange.Split('~'); ;
+				var lowerBound = priceBounds[0].ConvertOrDefault<decimal>();
+				var upperBound = priceBounds[1].ConvertOrDefault<decimal>();
+				query = query.Where(q => q.MatchedDatas.Any(d => d.Price != null && d.Price >= lowerBound));
+				if (upperBound > 0) {
+					query = query.Where(q => q.MatchedDatas.Any(d => d.Price != null && d.Price <= upperBound));
+				}
+			}
+			// 只显示未删除且允许显示的商品
+			var visibleStates = Application.Ioc.ResolveMany<IProductState>()
+				.Where(s => ProductStateTrait.For(s.GetType()).VisibleFromProductList)
+				.Select(s => s.State).ToList();
+			query = query.Where(q => !q.Deleted && visibleStates.Contains(q.State));
+		}
+
+		/// <summary>
+		/// 排序数据
+		/// </summary>
+		public void OnSort(
+			StaticTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Product> query) {
+			var order = request.Conditions.GetOrDefault<string>("order");
+			if (order == "lower_price") {
+				// 更低价格
+				query = query.Select(
+					q => new { q, minPrice = q.MatchedDatas.Where(m => m.Price != null).Min(m => m.Price) })
+					.Where(q => q.minPrice != null).OrderBy(q => q.minPrice).Select(q => q.q);
+			} else if (order == "higher_price") {
+				// 更高价格
+				query = query.Select(
+					q => new { q, maxPrice = q.MatchedDatas.Where(m => m.Price != null).Max(m => m.Price) })
+					.Where(q => q.maxPrice != null).OrderByDescending(q => q.maxPrice).Select(q => q.q);
+			} else if (order == "newest_on_sale") {
+				// 最新上架
+				query = query.OrderByDescending(q => q.LastUpdated);
+			} else {
+				// 默认排序，先按显示顺序再按更新时间
+				query = query.OrderBy(q => q.DisplayOrder).ThenByDescending(q => q.LastUpdated);
+			}
+		}
+
+		/// <summary>
+		/// 选择数据
+		/// </summary>
+		public void OnSelect(
+			StaticTableSearchRequest request, List<KeyValuePair<Database.Product, Dictionary<string, object>>> pairs) {
+			foreach (var pair in pairs) {
+				pair.Value["Id"] = pair.Key.Id;
+				pair.Value["Name"] = pair.Key.Name;
+			}
+		}
+	}
+}

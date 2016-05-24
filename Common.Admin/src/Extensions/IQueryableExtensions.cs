@@ -22,8 +22,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		public static IQueryable<TData> FilterByRecycleBin<TData>(
 			this IQueryable<TData> query, AjaxTableSearchRequest request) {
 			var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
-			return query.Where(ExpressionUtils.MakeMemberEqualiventExpression<TData>(
-				IsRecyclable.PropertyName, deleted));
+			var propertyName = RecyclableTrait.For<TData>().PropertyName;
+			return query.Where(
+				ExpressionUtils.MakeMemberEqualiventExpression<TData>(propertyName, deleted));
 		}
 	}
 }

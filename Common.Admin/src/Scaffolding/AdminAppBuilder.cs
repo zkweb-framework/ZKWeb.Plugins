@@ -140,7 +140,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			IncludeJs = new List<string>();
 			BatchActions = new Dictionary<string, Func<IActionResult>>();
 			BatchActions["delete_forever"] = BatchActionForDeleteForever;
-			if (IsRecyclable<TData>.Value) {
+			if (RecyclableTrait.For<TData>().IsRecyclable) {
 				BatchActions["delete"] = BatchActionForDelete;
 				BatchActions["recover"] = BatchActionForRecover;
 			}
@@ -299,7 +299,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		public override IEnumerable<string> GetPrivileges() {
 			yield return ViewPrivilege;
 			yield return EditPrivilege;
-			if (IsRecyclable<TData>.Value) {
+			if (RecyclableTrait.For<TData>().IsRecyclable) {
 				yield return DeletePrivilege;
 			}
 			yield return DeleteForeverPrivilege;

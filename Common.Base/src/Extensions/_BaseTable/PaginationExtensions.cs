@@ -132,11 +132,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// </summary>
 		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="pagination">分页信息</param>
-		/// <param name="request">Ajax表格的搜索请求</param>
+		/// <param name="request">表格的搜索请求</param>
 		/// <param name="query">需要分页的数据</param>
 		/// <returns></returns>
 		public static IList<TData> Paging<TData>(
-			this Pagination pagination, AjaxTableSearchRequest request, IEnumerable<TData> query) {
+			this Pagination pagination, BaseTableSearchRequest request, IEnumerable<TData> query) {
 			int pageIndex = request.PageIndex;
 			int pageSize = request.PageSize;
 			int? linkRange = request.Conditions.GetOrDefault<int?>(AjaxTablePaginationLinkRangeKey);

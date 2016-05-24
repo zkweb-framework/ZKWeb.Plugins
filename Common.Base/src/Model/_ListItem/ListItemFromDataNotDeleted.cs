@@ -22,10 +22,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <returns></returns>
 		public IEnumerable<ListItem> GetItems() {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			var exp = ExpressionUtils.MakeMemberEqualiventExpression<TData>(
-				IsRecyclable.PropertyName, false);
+			var propertyName = RecyclableTrait.For<TData>().PropertyName;
+			var expression = ExpressionUtils.MakeMemberEqualiventExpression<TData>(propertyName, false);
 			using (var context = databaseManager.GetContext()) {
-				foreach (var data in context.Query<TData>().Where(exp)) {
+				foreach (var data in context.Query<TData>().Where(expression)) {
 					yield return new ListItem(
 						data.ToString(),
 						ListItemFromData<TData>.GetId.Value(data).ToString());

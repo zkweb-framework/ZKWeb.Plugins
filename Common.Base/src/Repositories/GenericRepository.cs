@@ -103,7 +103,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <param name="idList">Id列表</param>
 		public virtual long BatchDelete(IEnumerable<object> idList) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			var setter = ReflectionUtils.MakeSetter<TData, bool>(IsRecyclable.PropertyName);
+			var propertyName = RecyclableTrait.For<TData>().PropertyName;
+			var setter = ReflectionUtils.MakeSetter<TData, bool>(propertyName);
 			long count = 0;
 			foreach (var id in idList) {
 				var data = Context.Get(ExpressionUtils.MakeMemberEqualiventExpression<TData>(IdMember, id));
@@ -124,7 +125,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <returns></returns>
 		public virtual long BatchRecover(IEnumerable<object> idList) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			var setter = ReflectionUtils.MakeSetter<TData, bool>(IsRecyclable.PropertyName);
+			var propertyName = RecyclableTrait.For<TData>().PropertyName;
+			var setter = ReflectionUtils.MakeSetter<TData, bool>(propertyName);
 			long count = 0;
 			foreach (var id in idList) {
 				var data = Context.Get(ExpressionUtils.MakeMemberEqualiventExpression<TData>(IdMember, id));
@@ -146,7 +148,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <returns></returns>
 		public virtual long BatchDeleteForever(IEnumerable<object> idList) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			var setter = ReflectionUtils.MakeSetter<TData, bool>(IsRecyclable.PropertyName);
 			long count = 0;
 			foreach (var id in idList) {
 				count += Context.DeleteWhere(
