@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// [ExportMany]
 		/// class UserRepository : GenericRepository[TData] { }
 		/// 则返回这个类的实例，否则使用默认的仓储对象
-		/// 如果注册了多个，返回最后一个注册的实例
+		/// 如果注册了多个，返回最后一个注册的类型
 		/// </summary>
 		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="context">数据库上下文</param>

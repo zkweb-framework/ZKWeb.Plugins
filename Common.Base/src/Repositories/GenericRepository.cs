@@ -15,17 +15,11 @@ using ZKWeb.Utils.Functions;
 namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 	/// <summary>
 	/// 通用的数据仓储
+	/// 需要在创建后由外部指定数据库上下文，但不负责数据库上下文的提交和释放
+	/// 注册这个类型到IoC容器时不可以使用单例，否则多线程下会出现问题
 	/// </summary>
 	public class GenericRepository<TData> : IRepository
 		where TData : class {
-		/// <summary>
-		/// Id成员名称
-		/// </summary>
-		public virtual string IdMember { get { return "Id"; } }
-		/// <summary>
-		/// Id成员类型
-		/// </summary>
-		public virtual Type IdType { get { return typeof(TData).GetProperty(IdMember).PropertyType; } }
 		/// <summary>
 		/// 数据库上下文，需要在创建后设置
 		/// </summary>
@@ -81,8 +75,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <param name="id">数据Id</param>
 		/// <returns></returns>
 		public virtual TData GetById(object id) {
-			id = id.ConvertOrDefault(IdType, null);
-			return Get(ExpressionUtils.MakeMemberEqualiventExpression<TData>(IdMember, id));
+			var trait = EntityTrait.For<TData>();
+			id = id.ConvertOrDefault(trait.PrimaryKeyType, null);
+			return Get(ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
 		}
 
 		/// <summary>
@@ -105,9 +100,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			var propertyName = RecyclableTrait.For<TData>().PropertyName;
 			var setter = ReflectionUtils.MakeSetter<TData, bool>(propertyName);
+			var trait = EntityTrait.For<TData>();
 			long count = 0;
 			foreach (var id in idList) {
-				var data = Context.Get(ExpressionUtils.MakeMemberEqualiventExpression<TData>(IdMember, id));
+				var data = Context.Get(
+					ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
 				if (data != null) {
 					Context.Save(ref data, d => setter(d, true));
 					++count;
@@ -127,9 +124,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			var propertyName = RecyclableTrait.For<TData>().PropertyName;
 			var setter = ReflectionUtils.MakeSetter<TData, bool>(propertyName);
+			var trait = EntityTrait.For<TData>();
 			long count = 0;
 			foreach (var id in idList) {
-				var data = Context.Get(ExpressionUtils.MakeMemberEqualiventExpression<TData>(IdMember, id));
+				var data = Context.Get(
+					ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
 				if (data != null) {
 					Context.Save(ref data, d => setter(d, false));
 					++count;
@@ -148,10 +147,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <returns></returns>
 		public virtual long BatchDeleteForever(IEnumerable<object> idList) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
+			var trait = EntityTrait.For<TData>();
 			long count = 0;
 			foreach (var id in idList) {
 				count += Context.DeleteWhere(
-					ExpressionUtils.MakeMemberEqualiventExpression<TData>(IdMember, id));
+					ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
 			}
 			return count;
 		}

@@ -12,9 +12,8 @@ using ZKWeb.Utils.Functions;
 namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// 根据未删除的数据提供选项列表
-	/// 要求数据拥有Id和Deleted成员
 	/// </summary>
-	/// <typeparam name="TData"></typeparam>
+	/// <typeparam name="TData">数据类型</typeparam>
 	public class ListItemFromDataNotDeleted<TData> : IListItemProvider where TData : class {
 		/// <summary>
 		/// 获取选项列表
@@ -26,9 +25,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			var expression = ExpressionUtils.MakeMemberEqualiventExpression<TData>(propertyName, false);
 			using (var context = databaseManager.GetContext()) {
 				foreach (var data in context.Query<TData>().Where(expression)) {
-					yield return new ListItem(
-						data.ToString(),
-						ListItemFromData<TData>.GetId.Value(data).ToString());
+					yield return new ListItem(data.ToString(), EntityTrait.GetPrimaryKey(data).ToString());
 				}
 			}
 		}

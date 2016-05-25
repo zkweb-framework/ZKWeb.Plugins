@@ -7,6 +7,7 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.TypeTraits;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 	/// <summary>
@@ -67,11 +68,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// <param name="iconClass">图标的Css类，不指定时使用默认值</param>
 		/// <param name="titleTemplate">标题的模板，格式是underscore.js的格式，参数传入rows</param>
 		/// <param name="urlTemplate">编辑Url的模板，格式是underscore.js的格式，参数传入rows</param>
+		/// <param name="primaryKey">数据Id保存的名称，不指定时使用默认值</param>
 		/// <param name="dialogParameters">弹出框的参数，不指定时使用默认值</param>
 		public static void AddDeleteAction(
 			this AjaxTableActionColumn column, string typeName, string deleteUrl,
 			string name = null, string buttonClass = null, string iconClass = null,
-			string titleTemplate = null, string urlTemplate = null, object dialogParameters = null) {
+			string titleTemplate = null, string urlTemplate = null,
+			string primaryKey = null, object dialogParameters = null) {
+			primaryKey = primaryKey ?? EntityTrait.For<object>().PrimaryKey;
 			column.AddConfirmActionForBelongedRow(
 				name ?? new T("Delete"),
 				buttonClass ?? "btn btn-xs btn-danger",
@@ -79,7 +83,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 				titleTemplate ?? string.Format(new T("Delete {0}"), new T(typeName)),
 				ScriptStrings.ConfirmMessageTemplateForMultiSelected(
 					string.Format(new T("Sure to delete following {0}?"), new T(typeName)), "ToString"),
-				ScriptStrings.PostConfirmedActionForMultiSelected("Id", deleteUrl),
+				ScriptStrings.PostConfirmedActionForMultiSelected(primaryKey, deleteUrl),
 				dialogParameters);
 		}
 	}

@@ -42,6 +42,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 			}
 			// 添加批量删除
 			typeName = new T(typeName);
+			var entityTrait = EntityTrait.For(dataType);
 			if (addBatchDelete) {
 				column.AddConfirmActionForMultiChecked(
 					new T("Batch Delete"),
@@ -51,7 +52,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 					ScriptStrings.ConfirmMessageTemplateForMultiSelected(
 						string.Format(new T("Sure to delete following {0}?"), typeName), "ToString"),
 					ScriptStrings.PostConfirmedActionForMultiSelected(
-						"Id", batchUrl + "?action=delete"),
+						entityTrait.PrimaryKey, batchUrl + "?action=delete"),
 					new { type = "type-danger" });
 			}
 			// 添加批量恢复
@@ -64,7 +65,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 					ScriptStrings.ConfirmMessageTemplateForMultiSelected(
 						string.Format(new T("Sure to recover following {0}?"), typeName), "ToString"),
 					ScriptStrings.PostConfirmedActionForMultiSelected(
-						"Id", batchUrl + "?action=recover"));
+						entityTrait.PrimaryKey, batchUrl + "?action=recover"));
 			}
 			// 添加批量永久删除
 			if (addBatchDeleteForever) {
@@ -76,7 +77,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 					ScriptStrings.ConfirmMessageTemplateForMultiSelected(
 						string.Format(new T("Sure to delete following {0} forever?"), typeName), "ToString"),
 					ScriptStrings.PostConfirmedActionForMultiSelected(
-						"Id", batchUrl + "?action=delete_forever"),
+						entityTrait.PrimaryKey, batchUrl + "?action=delete_forever"),
 					new { type = "type-danger" });
 			}
 		}
