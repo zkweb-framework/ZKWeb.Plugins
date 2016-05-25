@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Config {
 	/// <summary>
 	/// 商品相册设置
 	/// </summary>
-	[GenericConfig("Common.Shopping.ProductAlbumSettings", CacheTime = 15)]
+	[GenericConfig("Shopping.Product.ProductAlbumSettings", CacheTime = 15)]
 	public class ProductAlbumSettings {
 		/// <summary>
 		/// 原图宽度

@@ -7,9 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.GenericClass.src.Manager;
 using ZKWeb.Plugins.Common.GenericTag.src.Manager;
+using ZKWeb.Plugins.Shopping.Product.src.Config;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.GenericClasses;
 using ZKWeb.Plugins.Shopping.Product.src.GenericTags;
@@ -125,7 +127,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// <returns></returns>
 		[Action("api/product/search", HttpMethods.POST)]
 		public IActionResult ProductSearch() {
-			var request = StaticTableSearchRequest.FromHttpRequest();
+			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
+			var productListSettings = configManager.GetData<ProductListSettings>();
+			var request = StaticTableSearchRequest.FromHttpRequest(
+				productListSettings.ProductsPerPage);
 			var callbacks = new ProductTableCallback().WithExtensions();
 			var response = request.BuildResponseFromDatabase(callbacks);
 			return new JsonResult(new { response });

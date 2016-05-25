@@ -79,17 +79,19 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			if (value != null) {
 				return value;
 			}
-			// 从数据库获取，允许缓存时设置到缓存
+			// 从数据库获取
 			UnitOfWork.ReadData<GenericConfig>(r => {
 				var config = r.Get(c => c.Key == key);
 				if (config != null) {
 					value = JsonConvert.DeserializeObject<T>(config.Value);
-					if (attribute.CacheTime > 0) {
-						Cache.Put(key, value, TimeSpan.FromSeconds(attribute.CacheTime));
-					}
 				}
 			});
-			return value ?? new T();
+			// 允许缓存时设置到缓存
+			value = value ?? new T();
+			if (attribute.CacheTime > 0) {
+				Cache.Put(key, value, TimeSpan.FromSeconds(attribute.CacheTime));
+			}
+			return value;
 		}
 
 		/// <summary>

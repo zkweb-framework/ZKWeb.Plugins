@@ -201,7 +201,9 @@
     <Compile Include="Common.Base\src\TypeTraits\EntityTrait.cs" />
     <Compile Include="Common.Base\src\TypeTraits\RecyclableTrait.cs" />
     <Compile Include="Demo\src\DatabaseInitializeHandlers\DatabaseInitializeHandlerDemo.cs" />
+    <Compile Include="Shopping.Product\src\Config\ProductListSettings.cs" />
     <Compile Include="Shopping.Product\src\Controllers\ApiController.cs" />
+    <Compile Include="Shopping.Product\src\GenericFormsForAdminSettings\ProductListSettingsForm.cs" />
     <Compile Include="Shopping.Product\src\ImageBrowsers\ProductImageBrowser.cs" />
     <Compile Include="Shopping.Product\src\Managers\ProductManager.cs" />
     <None Include="CMS.ImageBrowser\plugin.json" />
