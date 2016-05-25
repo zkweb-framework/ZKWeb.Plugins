@@ -13,6 +13,11 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 using ZKWeb.Localize;
+using System.Web;
+using System.Drawing;
+using ZKWeb.Utils.Extensions;
+using System.IO;
+using ZKWeb.Plugins.Common.Admin.src.Managers;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.GenericFormsForAdminSettings {
 	/// <summary>
@@ -49,6 +54,26 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.GenericFormsForAdminSettings {
 			/// </summary>
 			[TextBoxField("CopyrightText", "CopyrightText")]
 			public string CopyrightText { get; set; }
+			/// <summary>
+			/// 前台Logo
+			/// </summary>
+			[FileUploaderField("FrontPageLogo")]
+			public HttpPostedFileBase FrontPageLogo { get; set; }
+			/// <summary>
+			/// 后台Logo
+			/// </summary>
+			[FileUploaderField("AdminPanelLogo")]
+			public HttpPostedFileBase AdminPanelLogo { get; set; }
+			/// <summary>
+			/// 恢复默认前台Logo
+			/// </summary>
+			[CheckBoxField("RestoreDefaultFrontPageLogo")]
+			public bool RestoreDefaultFrontPageLogo { get; set; }
+			/// <summary>
+			/// 恢复默认后台Logo
+			/// </summary>
+			[CheckBoxField("RestoreDefaultAdminPanelLogo")]
+			public bool RestoreDefaultAdminPanelLogo { get; set; }
 
 			/// <summary>
 			/// 提交表单
@@ -66,12 +91,25 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.GenericFormsForAdminSettings {
 			/// </summary>
 			/// <returns></returns>
 			protected override object OnSubmit() {
+				// 保存设置
 				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 				var settings = configManager.GetData<WebsiteSettings>();
 				settings.WebsiteName = WebsiteName;
 				settings.DocumentTitleFormat = DocumentTitleFormat;
 				settings.CopyrightText = CopyrightText;
 				configManager.PutData(settings);
+				// 保存Logo
+				var logoManager = Application.Ioc.Resolve<LogoManager>();
+				if (RestoreDefaultFrontPageLogo) {
+					logoManager.RestoreDefaultFrontPageLogo();
+				} else if (FrontPageLogo != null) {
+					logoManager.SaveFrontPageLogo(FrontPageLogo.InputStream);
+				}
+				if (RestoreDefaultAdminPanelLogo) {
+					logoManager.RestoreDefaultAdminPageLogo();
+				} else if (AdminPanelLogo != null) {
+					logoManager.SaveAdminPanelLogo(AdminPanelLogo.InputStream);
+				}
 				return new { message = new T("Saved Successfully") };
 			}
 		}

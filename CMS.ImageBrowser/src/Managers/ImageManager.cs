@@ -124,14 +124,12 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 			using (image) {
 				// 保存原图
 				var imagePath = GetImageStoragePath(category, name, ImageExtension);
-				Directory.CreateDirectory(Path.GetDirectoryName(imagePath));
 				image.SaveAuto(imagePath, ImageQuality);
 				// 保存缩略图
 				var thumbnailSize = ImageThumbnailSize;
 				using (var thumbnailImage = image.Resize(thumbnailSize.Width,
 					thumbnailSize.Height, ImageResizeMode.Padding, Color.White)) {
 					var thumbnailPath = GetImageStoragePath(category, name, ImageThumbnailExtension);
-					Directory.CreateDirectory(Path.GetDirectoryName(thumbnailPath));
 					thumbnailImage.SaveAuto(thumbnailPath, ImageQuality);
 				}
 			}
@@ -164,8 +162,10 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 			// 获取类别对应的文件夹下的所有图片名称
 			var baseDir = GetImageStorageBasePath(category);
 			var names = ImageNamesCache.GetOrDefault(category);
-			if (names == null) {
-				Directory.CreateDirectory(baseDir);
+			if (names != null) {
+			} else if (!Directory.Exists(baseDir)) {
+				names = new List<string>();
+			} else {
 				names = Directory.EnumerateFiles(baseDir)
 					.Where(path => path.EndsWith(ImageExtension) &&
 						!path.EndsWith(ImageThumbnailExtension))

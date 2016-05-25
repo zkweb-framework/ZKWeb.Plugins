@@ -120,14 +120,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 				using (var newImage = image.Resize((int)settings.OriginalImageWidth,
 					(int)settings.OriginalImageHeight, ImageResizeMode.Cut, Color.White)) {
 					var path = GetAlbumImageStoragePath(id, index, ProductAlbumImageType.Normal);
-					Directory.CreateDirectory(Path.GetDirectoryName(path));
 					newImage.SaveAuto(path, AlbumImageQuality);
 				}
 				// 保存缩略图
 				using (var newImage = image.Resize((int)settings.ThumbnailImageWidth,
 					(int)settings.ThumbnailImageHeight, ImageResizeMode.Cut, Color.White)) {
 					var path = GetAlbumImageStoragePath(id, index, ProductAlbumImageType.Thumbnail);
-					Directory.CreateDirectory(Path.GetDirectoryName(path));
 					newImage.SaveAuto(path, AlbumImageQuality);
 				}
 			}

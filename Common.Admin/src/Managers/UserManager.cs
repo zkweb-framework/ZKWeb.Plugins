@@ -186,7 +186,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			}
 			using (image) {
 				var path = GetAvatarStoragePath(userId);
-				Directory.CreateDirectory(Path.GetDirectoryName(path));
 				using (var newImage = image.Resize(
 					AvatarWidth, AvatarHeight, ImageResizeMode.Padding, Color.White)) {
 					newImage.SaveAuto(path, AvatarImageQuality);
