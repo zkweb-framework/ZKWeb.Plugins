@@ -8,6 +8,7 @@
 		<input class="form-control price-lower-bound" value="0" />
 		<span>&nbsp;~&nbsp;</span>
 		<input class="form-control price-upper-bound" value="0" />
-		<a class="price-filter" data-trigger="set-url-param" data-key="price_range" data-value="0~0">{{ "FilterByPrice" | trans }}</a>
+		<a class="price-filter" data-trigger="set-url-param" data-key="price_range">{{ "FilterByPrice" | trans }}</a>
+		<a class="price-filter-cancel hide" data-trigger="set-url-param" data-key="price_range">{{ "Cancel" | trans }}</a>
 	</div>
 </div>
