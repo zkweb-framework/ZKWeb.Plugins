@@ -3,7 +3,21 @@
 	<div class="product-list-table">
 		{% for row in product_search_result.response.Rows %}
 		<div class="product-cell">
-			{{ row }}
+			<dl>
+				<dt class="main-album">
+					<a href="/product/view?id={{ row.Id }}" target="_blank" title="{{ row.Name }}">
+						<img src="{{ row.MainAlbumThumbnail }}" />
+					</a>
+				</dt>
+				<dd class="product-price">
+					<div title="{{ row.Price }}">{{ row.Price }}</div>
+				</dd>
+				<dd class="product-name">
+					<a href="/product/view?id={{ row.Id }}" target="_blank" title="{{ row.Name }}">
+						{{ row.Name }}
+					</a>
+				</dd>
+			</dl>
 		</div>
 		{% endfor %}
 	</div>

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
+using ZKWeb.Plugins.Shopping.Product.src.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.TypeTraits;
 using ZKWeb.Utils.Extensions;
@@ -55,7 +57,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks {
 		public void OnSort(
 			StaticTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Product> query) {
 			var order = request.Conditions.GetOrDefault<string>("order");
-			if (order == "lower_price") {
+			if (order == "best_sales") {
+				// 最佳销量
+				// 商品插件中不处理这个排序，有需要请使用其他插件处理
+				query = query.OrderByDescending(q => q.Id);
+			} else if (order == "lower_price") {
 				// 更低价格
 				query = query.Select(
 					q => new { q, minPrice = q.MatchedDatas.Where(m => m.Price != null).Min(m => m.Price) })
@@ -79,9 +85,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks {
 		/// </summary>
 		public void OnSelect(
 			StaticTableSearchRequest request, List<KeyValuePair<Database.Product, Dictionary<string, object>>> pairs) {
+			var albumManager = Application.Ioc.Resolve<ProductAlbumManager>();
 			foreach (var pair in pairs) {
+				var seller = pair.Key.Seller;
 				pair.Value["Id"] = pair.Key.Id;
 				pair.Value["Name"] = pair.Key.Name;
+				pair.Value["MainAlbumThumbnail"] = (
+					albumManager.GetAlbumImageWebPath(pair.Key.Id, null, ProductAlbumImageType.Thumbnail));
+				pair.Value["Price"] = pair.Key.MatchedDatas.GetPriceString();
+				pair.Value["Seller"] = seller == null ? null : seller.Username;
 			}
 		}
 	}

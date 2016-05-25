@@ -34,8 +34,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Config {
 		public ProductAlbumSettings() {
 			OriginalImageWidth = 800;
 			OriginalImageHeight = 800;
-			ThumbnailImageWidth = 200;
-			ThumbnailImageHeight = 200;
+			ThumbnailImageWidth = 400;
+			ThumbnailImageHeight = 400;
 		}
 	}
 }
