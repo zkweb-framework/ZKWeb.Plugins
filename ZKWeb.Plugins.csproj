@@ -197,6 +197,7 @@
     <Compile Include="Common.Base\src\Model\_BaseTable\Pagination.cs" />
     <Compile Include="Common.Base\src\Model\_StaticTable\StaticTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\_StaticTable\StaticTableSearchResponse.cs" />
+    <Compile Include="Common.Base\src\TemplateTags\UrlPagination.cs" />
     <Compile Include="Common.Base\src\Tests\Extensions\PaginationExtensionsTest.cs" />
     <Compile Include="Common.Base\src\TypeTraits\EntityTrait.cs" />
     <Compile Include="Common.Base\src\TypeTraits\RecyclableTrait.cs" />
@@ -218,6 +219,7 @@
     <Content Include="CMS.ImageBrowser\static\cms.imagebrowser.js\image_browser.min.js" />
     <Content Include="CMS.ImageBrowser\templates\cms.imagebrowser\image_list.html" />
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.setUrlParam.js" />
+    <Content Include="Common.Base\templates\common.base\tmpl.url_pagination.html" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.html" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\order_count.matcher.js" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\property.matcher.js" />

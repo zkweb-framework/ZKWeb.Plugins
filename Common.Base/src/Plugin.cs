@@ -28,6 +28,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			// 注册模板标签和过滤器
 			Template.RegisterTag<IncludeCss>("include_css");
 			Template.RegisterTag<IncludeJs>("include_js");
+			Template.RegisterTag<UrlPagination>("url_pagination");
 			Template.RegisterTag<UseTitle>("use_title");
 			Template.RegisterTag<WebsiteName>("website_name");
 			Template.RegisterFilter(typeof(Filters));

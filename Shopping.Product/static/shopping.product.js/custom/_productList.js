@@ -17,7 +17,7 @@ $(function () {
 		var key = $filter.data("key");
 		var value = $filter.data("value");
 		if (value && uri.getQueryParamValue(key) == value) {
-			$filter.data("value", "").addClass("selected").append("<i class='fa fa-remove'></i>");
+			$filter.attr("data-value", "").addClass("selected").append("<i class='fa fa-remove'></i>");
 		}
 	});
 });

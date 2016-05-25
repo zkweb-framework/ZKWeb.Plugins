@@ -20,5 +20,10 @@
 			</dl>
 		</div>
 		{% endfor %}
+		<div class="clearfix"></div>
+	</div>
+	<div class="product-list-table-pagination">
+		{% url_pagination product_search_result.response.Pagination %}
+		<div class="clearfix"></div>
 	</div>
 </div>

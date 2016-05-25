@@ -7,8 +7,8 @@
 $(function () {
 	$(document).on("click", "[data-trigger='set-url-param']", function () {
 		var $this = $(this);
-		var key = $this.data("key");
-		var value = $this.data("value");
+		var key = $this.attr("data-key");
+		var value = $this.attr("data-value");
 		var uri = new Uri(location.href);
 		value ? uri.replaceQueryParam(key, value) : uri.deleteQueryParam(key);
 		location.href = uri.path() + uri.query();
