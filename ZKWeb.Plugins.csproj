@@ -237,6 +237,7 @@
     <Compile Include="Shopping.Product\src\ProductMatchedDataMatchers\PropertyMatcher.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\BrandDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\ModelNumberDisplayField.cs" />
+    <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\SellerDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\WeightDisplayField.cs" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_class.html" />
     <Compile Include="Shopping.Product\src\StaticTableCallbacks\ProductTableCallback.cs" />
