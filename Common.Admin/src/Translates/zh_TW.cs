@@ -119,7 +119,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Admin panel and users management", "提供管理後台和用戶角色管理等功能" },
 			{ "Clear Cache", "清理緩存" },
 			{ "Clear Cache Successfully", "清理緩存成功" },
-			{ "Server Username", "服務器用戶" }
+			{ "Server Username", "服務器用戶" },
+			{ "Version", "版本" },
+			{ "FullVersion", "完整版本" },
+			{ "ZKWeb Version", "ZKWeb版本" },
+			{ "ZKWeb Full Version", "ZKWeb完整版本" }
 		};
 
 		public bool CanTranslate(string code) {

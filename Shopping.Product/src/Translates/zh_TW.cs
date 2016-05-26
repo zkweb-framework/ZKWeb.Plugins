@@ -60,7 +60,21 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "OrderCountGE", "訂購數量 >=" },
 			{ "All", "全部" },
 			{ "Weight", "重量" },
-			{ "Weight(g)", "重量(克)" }
+			{ "Weight(g)", "重量(克)" },
+			{ "ProductList", "商品列表" },
+			{ "Preview", "預覽" },
+			{ "The product you are visiting does not exist.", "您查看的商品不存在" },
+			{ "Brand", "品牌" },
+			{ "ModelNumber", "貨號" },
+			{ "{0:F2} gram", "{0:F2} 克(g)" },
+			{ "{0:F2}~{1:F2} gram", "{0:F2}~{1:F2} 克(g)" },
+			{ "BestSales", "最佳銷量" },
+			{ "LowerPrice", "更低價格" },
+			{ "HigherPrice", "更高價格" },
+			{ "NewestOnSale", "最新上架" },
+			{ "FilterByPrice", "按價格過濾" },
+			{ "ProductListSettings", "商品列表設置" },
+			{ "ProductsPerPage", "每頁顯示的商品數量" }
 		};
 
 		public bool CanTranslate(string code) {

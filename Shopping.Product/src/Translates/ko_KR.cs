@@ -60,7 +60,21 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "OrderCountGE", "수량 >=" },
 			{ "All", "완전한" },
 			{ "Weight", "무게" },
-			{ "Weight(g)", "무게(그램)" }
+			{ "Weight(g)", "무게(그램)" },
+			{ "ProductList", "제품 목록" },
+			{ "Preview", "시사" },
+			{ "The product you are visiting does not exist.", "사용자는 상품이 존재하지 않는 볼" },
+			{ "Brand", "브랜드" },
+			{ "ModelNumber", "모델 번호" },
+			{ "{0:F2} gram", "{0:F2} 그램(g)" },
+			{ "{0:F2}~{1:F2} gram", "{0:F2}~{1:F2} 그램(g)" },
+			{ "BestSales", "최고의 판매" },
+			{ "LowerPrice", "낮은 가격" },
+			{ "HigherPrice", "높은 가격" },
+			{ "NewestOnSale", "새로운 도착" },
+			{ "FilterByPrice", "가격 필터" },
+			{ "ProductListSettings", "제품 목록 설정" },
+			{ "ProductsPerPage", "페이지 당 표시되는 항목의 수" }
 		};
 
 		public bool CanTranslate(string code) {

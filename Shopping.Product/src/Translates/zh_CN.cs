@@ -61,7 +61,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "All", "全部" },
 			{ "Weight", "重量" },
 			{ "Weight(g)", "重量(克)" },
-			// TODO: 以下未复制到其他语言
 			{ "ProductList", "商品列表" },
 			{ "Preview", "预览" },
 			{ "The product you are visiting does not exist.", "您查看的商品不存在" },

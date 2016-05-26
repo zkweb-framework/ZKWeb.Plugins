@@ -60,7 +60,21 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "OrderCountGE", "注文数 >=" },
 			{ "All", "全部" },
 			{ "Weight", "重量" },
-			{ "Weight(g)", "重量(グラム)" }
+			{ "Weight(g)", "重量(グラム)" },
+			{ "ProductList", "商品リスト" },
+			{ "Preview", "プレビュー" },
+			{ "The product you are visiting does not exist.", "ご覧の商品は存在しません。" },
+			{ "Brand", "ブランド" },
+			{ "ModelNumber", "モデル番号" },
+			{ "{0:F2} gram", "{0:F2} グラム(g)" },
+			{ "{0:F2}~{1:F2} gram", "{0:F2}~{1:F2} グラム(g)" },
+			{ "BestSales", "ベストセールス" },
+			{ "LowerPrice", "より低い価格" },
+			{ "HigherPrice", "より高い価格" },
+			{ "NewestOnSale", "最新販売中" },
+			{ "FilterByPrice", "価格フィルタを適用" },
+			{ "ProductListSettings", "商品リスト設定" },
+			{ "ProductsPerPage", "ページごとに表示する商品数" }
 		};
 
 		public bool CanTranslate(string code) {

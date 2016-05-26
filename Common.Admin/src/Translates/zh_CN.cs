@@ -120,7 +120,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Clear Cache", "清理缓存" },
 			{ "Clear Cache Successfully", "清理缓存成功" },
 			{ "Server Username", "服务器用户" },
-			// TODO: 以下未翻译到其他语言
 			{ "Version", "版本" },
 			{ "FullVersion", "完整版本" },
 			{ "ZKWeb Version", "ZKWeb版本" },

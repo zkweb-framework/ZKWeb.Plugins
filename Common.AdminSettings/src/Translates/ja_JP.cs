@@ -44,7 +44,11 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Translates {
 			{ "ru-RU", "ロシア語" },
 			{ "es-ES", "スペイン語" },
 			{ "th-TH", "タイ語" },
-			{ "zh-TW", "中国語繁体字" }
+			{ "zh-TW", "中国語繁体字" },
+			{ "FrontPageLogo", "フロントページのロゴ" },
+			{ "AdminPanelLogo", "管理者パネルのロゴ" },
+			{ "RestoreDefaultFrontPageLogo", "フロントページのロゴをデフォルトに戻す" },
+			{ "RestoreDefaultAdminPanelLogo", "管理者パネルのロゴをデフォルトに戻す" }
 		};
 
 		public bool CanTranslate(string code) {
