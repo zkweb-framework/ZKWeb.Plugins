@@ -7,14 +7,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugin.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Collections;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Shopping.Product.src.Config;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
-using ZKWeb.Utils.Collections;
+using ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks;
+using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 	/// <summary>
@@ -23,13 +28,21 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 	[ExportMany, SingletonReuse]
 	public class ProductManager : ICacheCleaner {
 		/// <summary>
-		/// Api使用的商品信息的缓存时间，默认是15秒
+		/// 商品信息的缓存时间，默认是15秒
 		/// </summary>
 		public TimeSpan ProductApiInfoCacheTime { get; set; }
 		/// <summary>
-		/// Api使用的商品信息的缓存
+		/// 商品信息的缓存
 		/// </summary>
 		protected MemoryCacheByIdentityAndLocale<long, object> ProductApiInfoCache { get; set; }
+		/// <summary>
+		/// 商品搜索结果的缓存时间，默认是15秒
+		/// </summary>
+		public TimeSpan ProductSearchResultCacheTime { get; set; }
+		/// <summary>
+		/// 商品搜索结果的缓存
+		/// </summary>
+		protected MemoryCacheByIdentityAndLocale<string, StaticTableSearchResponse> ProductSearchResultCache { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -37,11 +50,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		public ProductManager() {
 			ProductApiInfoCacheTime = TimeSpan.FromSeconds(15);
 			ProductApiInfoCache = new MemoryCacheByIdentityAndLocale<long, object>();
+			ProductSearchResultCacheTime = TimeSpan.FromSeconds(15);
+			ProductSearchResultCache = new MemoryCacheByIdentityAndLocale<string, StaticTableSearchResponse>();
 		}
 
 		/// <summary>
-		/// 获取Api使用的商品信息
+		/// 获取商品信息
 		/// 商品不存在时返回null，但商品已下架或等待销售时仍然返回信息
+		/// 结果会按商品Id和当前登录用户缓存一定时间
 		/// </summary>
 		/// <param name="productId">商品Id</param>
 		/// <returns></returns>
@@ -130,10 +146,36 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		}
 
 		/// <summary>
+		/// 根据当前http请求获取搜索结果
+		/// 结果会按请求参数和当前登录用户缓存一定时间
+		/// </summary>
+		/// <returns></returns>
+		public virtual StaticTableSearchResponse GetProductSearchResponseFromHttpRequest() {
+			// 从缓存获取
+			var request = HttpContextUtils.CurrentContext.Request;
+			var key = request.Url.PathAndQuery;
+			var searchResponse = ProductSearchResultCache.GetOrDefault(key);
+			if (searchResponse != null) {
+				return searchResponse;
+			}
+			// 从数据库获取
+			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
+			var productListSettings = configManager.GetData<ProductListSettings>();
+			var searchRequest = StaticTableSearchRequest.FromHttpRequest(
+				productListSettings.ProductsPerPage);
+			var callbacks = new ProductTableCallback().WithExtensions();
+			searchResponse = searchRequest.BuildResponseFromDatabase(callbacks);
+			// 保存到缓存中并返回
+			ProductSearchResultCache.Put(key, searchResponse, ProductSearchResultCacheTime);
+			return searchResponse;
+		}
+
+		/// <summary>
 		/// 清理缓存
 		/// </summary>
 		public virtual void ClearCache() {
 			ProductApiInfoCache.Clear();
+			ProductSearchResultCache.Clear();
 		}
 	}
 }

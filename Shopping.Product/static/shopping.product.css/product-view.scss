@@ -82,10 +82,14 @@
 				}
 
 				dt {
-					width: 50px;
+					width: 100px;
+					height: 30px;
 					margin: 0px 10px;
 					color: #999;
 					font-weight: normal;
+					white-space: pre;
+					overflow: hidden;
+					text-overflow: ellipsis;
 				}
 			}
 			/* 规格和数量选择 */

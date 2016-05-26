@@ -11,13 +11,11 @@ using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.GenericClass.src.Manager;
 using ZKWeb.Plugins.Common.GenericTag.src.Manager;
-using ZKWeb.Plugins.Shopping.Product.src.Config;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.GenericClasses;
 using ZKWeb.Plugins.Shopping.Product.src.GenericTags;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
-using ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Web.ActionResults;
@@ -127,12 +125,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// <returns></returns>
 		[Action("api/product/search", HttpMethods.POST)]
 		public IActionResult ProductSearch() {
-			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
-			var productListSettings = configManager.GetData<ProductListSettings>();
-			var request = StaticTableSearchRequest.FromHttpRequest(
-				productListSettings.ProductsPerPage);
-			var callbacks = new ProductTableCallback().WithExtensions();
-			var response = request.BuildResponseFromDatabase(callbacks);
+			var productManager = Application.Ioc.Resolve<ProductManager>();
+			var response = productManager.GetProductSearchResponseFromHttpRequest();
 			return new JsonResult(new { response });
 		}
 	}
