@@ -13,11 +13,9 @@ using ZKWeb.Web.Interfaces;
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>
 	/// 设置语言和时区
-	/// 注意这里设置的语言和时区只能应用于更早注册的处理器
-	/// 如果其他插件使用IHttpRequestHandler返回网页将不受这个处理器的影响
 	/// </summary>
-	[ExportMany]
-	public class ApplicationBeginRequestSetLocaleCallback : IHttpRequestHandler {
+	[ExportMany, SingletonReuse]
+	public class LocaleHandler : IHttpRequestPreHandler {
 		/// <summary>
 		/// 处理请求
 		/// </summary>
