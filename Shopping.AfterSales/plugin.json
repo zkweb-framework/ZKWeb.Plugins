@@ -1,5 +1,6 @@
 ﻿{
 	"Name": "AfterSales",
+	"Version": "0.0 not done",
 	"Description": "AfterSales management for ec site",
 	"Dependencies": [ "Common.Base", "Common.Admin", "Shopping.Order" ]
 }

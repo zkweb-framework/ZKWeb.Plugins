@@ -1,46 +1,49 @@
-Plugins of ZKWeb<br />
-This project is for manage plugin files,<br />
-you don't need to compile it after modification,<br />
-just edit and refresh browser you can see the newest result.<br />
+Default plugins for zkweb framework.<br />
+This project is for manage plugin files.<br />
 
-Plugins not support c# 6.0 features yet,<br />
-because the plugin system use codedom not roslyn.
+Framework: http://github.com/zkweb-framework/ZKWeb<br/>
+Document: http://zkweb-framework.github.io (Chinese only)<br/>
+
+Plugins information:<br/>
+
+| Directory Name          | Name                     | Version | Full Version | Description                                                  |
+|-------------------------|--------------------------|---------|--------------|--------------------------------------------------------------|
+| Common.Base             | Base Functions           | 0.9     | 0.9 testing  | Base functions and template pages                            |
+| Common.Captcha          | Captcha                  | 0.9     | 0.9 testing  | Provide captcha form field and validation                    |
+| Common.Admin            | Admin Panel              | 0.9     | 0.9 testing  | Admin panel and users management                             |
+| Common.MenuPageBase     | Menu Page Base Functions | 0.9     | 0.9 testing  | Base functions for building menu page                        |
+| Common.AdminSettings    | Admin Settings           | 0.9     | 0.9 testing  | Centralized management for admin settings                    |
+| Common.UserPanel        | User Panel               | 0.9     | 0.9 testing  | Pages for user panel                                         |
+| Common.UserContact      | User Contact             | 0.9     | 0.9 testing  | Manage contact information for users                         |
+| Common.GenericClass     | Generic Class            | 0.9     | 0.9 testing  | Generic class/catalog management                             |
+| Common.GenericTag       | Generic Tag              | 0.9     | 0.9 testing  | Generic tag management                                       |
+| Common.GenericRecord    | Generic Record           | 0.9     | 0.9 testing  | Generic records management                                   |
+| Common.LanguageSwitcher | Language Switcher        | 0.9     | 0.9 testing  | Provide manually language switch menu for visitor            |
+| Common.Currency         | Currency                 | 0.9     | 0.9 testing  | Provide currency types and related functions                 |
+| Common.Region           | Region                   | 0.9     | 0.9 testing  | Provide regions and related functions                        |
+| Common.SerialGenerate   | Serial Generate          | 0.9     | 0.9 testing  | Support serial generation                                    |
+| Finance.Payment         | Payment Api              | 0.9     | 0.9 testing  | Support receive money through payment api                    |
+| Finance.Payment.Alipay  | Alipay Payment Api       | 0.0     | 0.0 not done | Support pay transactions by alipay                           |
+| Finance.Payment.Tenpay  | Tenpay Payment Api       | 0.0     | 0.0 not done | Support pay transactions by tenpay                           |
+| Finance.Payment.WeChat  | Wechat Payment Api       | 0.0     | 0.0 not done | Support pay transactions by wechat                           |
+| CMS.CKEditor            | CKEditor                 | 0.9     | 0.9 testing  | Provide ckeditor form field                                  |
+| CMS.ImageBrowser        | Image Browser            | 0.9     | 0.9 testing  | Provide image browse and upload functions                    |
+| CMS.Article             | Article                  | 0.0     | 0.0 not done | Article management                                           |
+| Shopping.Product        | Product                  | 0.9     | 0.9 testing  | Product management for ec site                               |
+| Shopping.Logistics      | Logistics                | 0.0     | 0.0 not done | Logistics management                                         |
+| Shopping.Order          | Order                    | 0.0     | 0.0 not done | Order management for ec site                                 |
+| Shopping.AfterSales     | After Sales              | 0.0     | 0.0 not done | After Sales management for ec site                           |
+| UnitTest.WebTester      | Web Tester               | 0.9     | 0.9 testing  | Support running unit test from admin panel                   |
+| Common.CustomTranslate  | Custom Translate         | 0.9     | 0.9 testing  | Support custom translate through admin pane                  |
+
+| Status   | Meanning                                                                      |
+|----------|-------------------------------------------------------------------------------|
+| not done | main features are not implemented                                             |
+| testing  | main features are implemented, but backward compatibility is not provided yet |
+| stable   | main features are implemented, and backward compatibility is provided         |
+
+(Thanks [Tables Generator](http://www.tablesgenerator.com/markdown_tables))
 
 MIT License<br />
 Copyright © 2016 303248153@github<br />
 If you have any license issue please contact 303248153@qq.com.
-
---------------------------------------------------------------------
-
-Default plugin set is for online shopping site, you can disable plugins you don't need in App_Data\config.json
-The theme used for admin dashboard is AdminLTE.
-
-Plugin States:<br/>
-CMS.Article: 70% (Front page not done)<br/>
-CMS.CKEditor: 100%<br/>
-CMS.ImageBrowser: 100%<br/>
-Common.Admin: 100%<br/>
-Common.AdminSettings: 100%<br/>
-Common.Base: 100%<br/>
-Common.Captcha: 100%<br/>
-Common.Currency: 100%<br/>
-Common.CustomTranslate: 100%<br/>
-Common.GenericClass: 100%<br/>
-Common.GenericRecord: 100%<br/>
-Common.GenericTag: 100%<br/>
-Common.LanguageSwitcher: 100%<br/>
-Common.MenuPageBase: 100%<br/>
-Common.Region: 100%<br/>
-Common.SerialGenerate: 100%<br/>
-Common.UserContact: 100%<br/>
-Common.UserPanel: 100%<br/>
-Demo: --<br/>
-Finance.Payment: 100%<br/>
-Finance.Payment.Alipay: 20% (Some features not implemented)<br/>
-Finance.Payment.Tenpay: 20% (Some features not implemented)<br/>
-Finance.Payment.WeChat: 20% (Some features not implemented)<br/>
-Shopping.AfterSales: 0% (Features not implemented)<br/>
-Shopping.Logistics: 70% (Some features not implemented)<br/>
-Shopping.Order: 5% (Some features not implemented)<br/>
-Shopping.Product: 70% (Front page not done)<br/>
-UnitTest.WebTester: 100%

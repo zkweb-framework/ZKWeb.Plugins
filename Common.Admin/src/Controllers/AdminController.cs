@@ -130,20 +130,25 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var hostingInfoTable = new DataTable();
 			hostingInfoTable.Columns.Add("Name");
 			hostingInfoTable.Columns.Add("Value");
-			serverVariables.AllKeys.ForEach(k =>
-				hostingInfoTable.Rows.Add(k, serverVariables[k]));
+			serverVariables.AllKeys.ForEach(k => hostingInfoTable.Rows.Add(k, serverVariables[k]));
+			var zkwebVersion = Application.Version;
+			var zkwebFullVersion = Application.FullVersion;
 			var pluginInfoTable = new DataTable();
 			pluginInfoTable.Columns.Add("DirectoryName");
 			pluginInfoTable.Columns.Add("Name");
+			pluginInfoTable.Columns.Add("Version");
+			pluginInfoTable.Columns.Add("FullVersion");
 			pluginInfoTable.Columns.Add("Description");
-			pluginManager.Plugins.ForEach(p =>
-				pluginInfoTable.Rows.Add(p.DirectoryName(), new T(p.Name), new T(p.Description)));
+			pluginManager.Plugins.ForEach(p => pluginInfoTable.Rows.Add(
+				p.DirectoryName(), new T(p.Name), p.VersionObject(), p.Version, new T(p.Description)));
 			return new TemplateResult("common.admin/about_website.html", new {
 				websiteName = websiteSettings.WebsiteName,
 				defaultLanguage = localeSettings.DefaultLanguage,
 				defaultTimeZone = localeSettings.DefaultTimezone,
 				serverUsername = serverUsername,
 				hostingInfoTable = hostingInfoTable.ToHtml(),
+				zkwebVersion = zkwebVersion.ToString(),
+				zkwebFullVersion = zkwebFullVersion,
 				pluginInfoTable = pluginInfoTable.ToHtml()
 			});
 		}

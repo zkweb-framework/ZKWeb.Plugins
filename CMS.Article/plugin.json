@@ -1,5 +1,6 @@
 ﻿{
 	"Name": "Article",
+	"Version": "0.0 not done",
 	"Description": "Article management",
 	"Dependencies": [
 		"Common.Base",
