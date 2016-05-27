@@ -44,6 +44,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks {
 					query = query.Where(q => q.MatchedDatas.Any(d => d.Price != null && d.Price <= upperBound));
 				}
 			}
+			// 按关键词
+			if (!string.IsNullOrEmpty(request.Keyword)) {
+				query = query.Where(q => q.Name.Contains(request.Keyword));
+			}
 			// 只显示未删除且允许显示的商品
 			var visibleStates = Application.Ioc.ResolveMany<IProductState>()
 				.Where(s => ProductStateTrait.For(s.GetType()).VisibleFromProductList)

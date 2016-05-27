@@ -39,6 +39,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src {
 			productListFilter.DefaultWidgets.Add("shopping.product.widgets/product_filter_by_tag");
 			productListFilter.DefaultWidgets.Add("shopping.product.widgets/product_filter_by_price_and_order");
 			productListTable.DefaultWidgets.Add("shopping.product.widgets/product_list_table");
+			// 商品搜索框
+			var logobar = areaManager.GetArea("header_logobar");
+			logobar.DefaultWidgets.Add("shopping.product.widgets/product_search_bar");
 		}
 	}
 }
