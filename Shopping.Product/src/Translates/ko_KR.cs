@@ -74,7 +74,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "NewestOnSale", "새로운 도착" },
 			{ "FilterByPrice", "가격 필터" },
 			{ "ProductListSettings", "제품 목록 설정" },
-			{ "ProductsPerPage", "페이지 당 표시되는 항목의 수" }
+			{ "ProductsPerPage", "페이지 당 표시되는 항목의 수" },
+			{ "Please enter product name", "제품 이름을 입력하세요" },
+			{ "All Products", "모든 제품" }
 		};
 
 		public bool CanTranslate(string code) {
