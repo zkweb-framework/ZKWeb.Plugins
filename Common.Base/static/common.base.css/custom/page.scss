@@ -101,3 +101,24 @@ label {
 a {
 	cursor: pointer;
 }
+
+/* 页面内容占除顶部和底部外的所有空间 */
+body {
+	display: flex;
+	flex-direction: column;
+
+	> .page-body {
+		flex: 1;
+	}
+}
+
+/* 首页内容的边距 */
+.index-page-container {
+	padding: 0px;
+}
+
+@media (max-width: 1200px) {
+	.index-page-container {
+		padding: 0px 4px;
+	}
+}

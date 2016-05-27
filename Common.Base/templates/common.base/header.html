@@ -10,26 +10,29 @@
 	{% raw_html __css %}
 </head>
 <body>
-	<div class="top-navbar">
-		<div class="screen-center-block">
-			<div class="pull-left">
-				{% area header_navbar_left %}
+	<div class="page-header">
+		<div class="top-navbar">
+			<div class="screen-center-block">
+				<div class="pull-left">
+					{% area header_navbar_left %}
+				</div>
+				<div class="nav pull-right">
+					{% area header_navbar_right %}
+				</div>
+				<div class="clearfix"></div>
 			</div>
-			<div class="nav pull-right">
-				{% area header_navbar_right %}
+		</div>
+		<div class="top-logobar">
+			<div class="screen-center-block">
+				{% area header_logobar %}
+				<div class="clearfix"></div>
 			</div>
-			<div class="clearfix"></div>
+		</div>
+		<div class="top-menubar">
+			<div class="screen-center-block">
+				{% area header_menubar %}
+				<div class="clearfix"></div>
+			</div>
 		</div>
 	</div>
-	<div class="top-logobar">
-		<div class="screen-center-block">
-			{% area header_logobar %}
-			<div class="clearfix"></div>
-		</div>
-	</div>
-	<div class="top-menubar">
-		<div class="screen-center-block">
-			{% area header_menubar %}
-			<div class="clearfix"></div>
-		</div>
-	</div>
+	<div class="page-body">

@@ -37,6 +37,8 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			// 注册默认模块
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			areaManager.GetArea("header_logobar").DefaultWidgets.Add("common.base.widgets/logo");
+			areaManager.GetArea("index_top_area_1").DefaultWidgets.Add("common.base.widgets/index_help");
+			areaManager.GetArea("footer_area_3").DefaultWidgets.Add("common.base.widgets/copyright");
 		}
 	}
 }

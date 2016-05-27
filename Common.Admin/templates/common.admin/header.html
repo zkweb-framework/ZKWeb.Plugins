@@ -11,49 +11,52 @@
 	{% raw_html __css %}
 </head>
 <body class="skin-default">
-	<header class="main-header">
-		<a href="/admin" class="logo" title="logo">
-			<img src="/static/common.admin.images/logo.png" alt="logo">
-		</a>
-		<nav class="navbar navbar-static-top" role="navigation">
-			{% area admin_navbar %}
-			<div class="navbar-custom-menu">
-				<ul class="nav navbar-nav">
-					<li class="dropdown user user-menu">
-						{% fetch /api/user/login_info > login_info %}
-						<a aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" title="{{ "Menu" | trans }}">
-							<img src="{{ login_info.avatar }}" class="user-image" alt="{{ "Avatar" | trans }}">
-							<span class="hidden-xs">{{ login_info.username }}</span>
-						</a>
-						<ul class="dropdown-menu">
-							<li class="user-header">
-								<img src="{{ login_info.avatar }}" class="img-circle" alt="{{ "Avatar" | trans }}">
-								<p>{{ login_info.username }}</p>
-							</li>
-							<li class="user-body">
-								<div class="col-xs-4 text-center">
-									<a href="/" target="_blank">{{ "Website Index" | trans }}</a>
-								</div>
-								<div class="col-xs-4 text-center">
-									<a href="/admin/about_website" target="">{{ "About Website" | trans }}</a>
-								</div>
-								<div class="col-xs-4 text-center">
-									<a post-href="/api/cache/clear" ajax="true">{{ "Clear Cache" | trans }}</a>
-								</div>
-							</li>
-							<li class="user-footer">
-								<div class="pull-left">
-									<a class="btn btn-default btn-flat" href="/admin/about_me" target="">{{ "About Me" | trans }}</a>
-								</div>
-								<div class="pull-right">
-									<a class="btn btn-default btn-flat" post-href="/admin/logout">{{ "Logout" | trans }}</a>
-								</div>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</nav>
-	</header>
-	<div class="page-container admin-page-container">
-		<div class="portlet">
+	<div class="page-header">
+		<header class="main-header">
+			<a href="/admin" class="logo" title="logo">
+				<img src="/static/common.admin.images/logo.png" alt="logo">
+			</a>
+			<nav class="navbar navbar-static-top" role="navigation">
+				{% area admin_navbar %}
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+						<li class="dropdown user user-menu">
+							{% fetch /api/user/login_info > login_info %}
+							<a aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" title="{{ "Menu" | trans }}">
+								<img src="{{ login_info.avatar }}" class="user-image" alt="{{ "Avatar" | trans }}">
+								<span class="hidden-xs">{{ login_info.username }}</span>
+							</a>
+							<ul class="dropdown-menu">
+								<li class="user-header">
+									<img src="{{ login_info.avatar }}" class="img-circle" alt="{{ "Avatar" | trans }}">
+									<p>{{ login_info.username }}</p>
+								</li>
+								<li class="user-body">
+									<div class="col-xs-4 text-center">
+										<a href="/" target="_blank">{{ "Website Index" | trans }}</a>
+									</div>
+									<div class="col-xs-4 text-center">
+										<a href="/admin/about_website" target="">{{ "About Website" | trans }}</a>
+									</div>
+									<div class="col-xs-4 text-center">
+										<a post-href="/api/cache/clear" ajax="true">{{ "Clear Cache" | trans }}</a>
+									</div>
+								</li>
+								<li class="user-footer">
+									<div class="pull-left">
+										<a class="btn btn-default btn-flat" href="/admin/about_me" target="">{{ "About Me" | trans }}</a>
+									</div>
+									<div class="pull-right">
+										<a class="btn btn-default btn-flat" post-href="/admin/logout">{{ "Logout" | trans }}</a>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+	</div>
+	<div class="page-body">
+		<div class="page-container admin-page-container">
+			<div class="portlet">
