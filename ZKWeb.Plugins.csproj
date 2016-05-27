@@ -225,6 +225,10 @@
     <Content Include="Common.Base\templates\common.base.widgets\copyright.html" />
     <Content Include="Common.Base\templates\common.base.widgets\index_help.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.url_pagination.html" />
+    <None Include="Demo\templates\demo.widgets\demo_index.widget" />
+    <Content Include="Demo\templates\demo.widgets\demo_index.html" />
+    <None Include="Demo\templates\demo.widgets\demo_nav_menu.widget" />
+    <Content Include="Demo\templates\demo.widgets\demo_nav_menu.html" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.html" />
     <None Include="Shopping.Product\static\shopping.product.css\product-widgets.scss" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-widgets.css" />
@@ -966,9 +970,6 @@
     <None Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\admin_language_switch_menu.widget" />
     <None Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\language_switch_menu.widget" />
     <Content Include="Common.LanguageSwitcher\templates\common.languageswitcher.widgets\language_switch_menu.html" />
-    <Content Include="Demo\static\demo\demo_index.css" />
-    <Content Include="Demo\templates\common.base\footer.html" />
-    <Content Include="Demo\templates\common.base\header.html" />
     <Content Include="Finance.Payment\templates\finance.payment\error_text.html" />
     <Content Include="Finance.Payment\templates\finance.payment\test_api_pay.html" />
     <Content Include="Finance.Payment\templates\finance.payment\test_payment.html" />

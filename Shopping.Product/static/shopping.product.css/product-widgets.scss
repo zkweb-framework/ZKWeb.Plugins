@@ -55,6 +55,13 @@
 		width: 240px;
 		text-align: center;
 	}
+	/* 低分辨率时缩短按钮长度 */
+	@media (max-width: 767px) {
+		.nav .dropdown > .dropdown-toggle {
+			width: 120px;
+			text-align: center;
+		}
+	}
 	/* 悬浮菜单 */
 	.nav .dropdown > .dropdown-menu {
 		border: 2px solid #E4393C;
