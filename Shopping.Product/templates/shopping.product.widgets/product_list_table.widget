@@ -1,1 +1,5 @@
-﻿{ "Name": "ProductListTable" }
+﻿{
+	"Name": "ProductListTable",
+	"CacheTime": 15,
+	"CacheBy": "IdentAndLocaleAndUrl"
+}

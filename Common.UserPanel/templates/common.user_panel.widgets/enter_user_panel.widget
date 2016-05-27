@@ -1,1 +1,5 @@
-﻿{ "Name": "Enter User Panel" }
+﻿{
+	"Name": "Enter User Panel",
+	"CacheTime": 15,
+	"CacheBy": "IdentAndLocale"
+}

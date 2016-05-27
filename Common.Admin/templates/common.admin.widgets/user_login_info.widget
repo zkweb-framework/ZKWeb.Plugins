@@ -1,1 +1,5 @@
-﻿{ "Name": "User Login Info" }
+﻿{
+	"Name": "UserLoginInfo",
+	"CacheTime": 15,
+	"CacheBy": "IdentAndLocale"
+}

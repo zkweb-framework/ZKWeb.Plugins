@@ -1,4 +1,5 @@
 ﻿{
 	"Name": "ProductNavMenu",
-	"CacheTime": 15
+	"CacheTime": 15,
+	"CacheBy": "Locale"
 }

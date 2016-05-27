@@ -16,9 +16,9 @@ using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Web.Interfaces;
-using ZKWeb.Plugin.Interfaces;
 using ZKWeb.Localize;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Cache.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>

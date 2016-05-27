@@ -1,1 +1,5 @@
-﻿{ Name: "Enter Admin Panel" }
+﻿{
+	"Name": "EnterAdminPanel",
+	"CacheTime": 15,
+	"CacheBy": "IdentAndLocale"
+}

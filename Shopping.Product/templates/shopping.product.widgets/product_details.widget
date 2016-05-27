@@ -1,1 +1,5 @@
-﻿{ "Name": "ProductDetails" }
+﻿{
+	"Name": "ProductDetails",
+	"CacheTime": 15,
+	"CacheBy": "IdentAndLocaleAndUrl"
+}

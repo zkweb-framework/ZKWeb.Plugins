@@ -1,1 +1,5 @@
-﻿{ "Name": "ProductFilterByPriceAndOrder" }
+﻿{
+	"Name": "ProductFilterByPriceAndOrder",
+	"CacheTime": 15,
+	"CacheBy": "Locale"
+}

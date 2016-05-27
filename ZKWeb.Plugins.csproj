@@ -124,8 +124,10 @@
     <Compile Include="Common.AdminSettings\src\Scaffolding\GenericListForAdminSettings.cs" />
     <Compile Include="Common.Admin\src\Extensions\ContainerExtensions.cs" />
     <Compile Include="Common.Admin\src\Managers\LogoManager.cs" />
-    <Compile Include="Common.Base\src\Collections\MemoryCacheByIdentity.cs" />
-    <Compile Include="Common.Base\src\Collections\MemoryCacheByIdentityAndLocale.cs" />
+    <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByLocale.cs" />
+    <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByIdentAndLocale.cs" />
+    <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByIdent.cs" />
+    <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByIdentAndLocaleAndUrl.cs" />
     <Compile Include="Common.Base\src\Extensions\_StaticTable\IStaticTableCallbackExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\_StaticTable\StaticTableSearchRequestExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\_AjaxTable\AjaxTableSearchRequestExtensions.cs" />

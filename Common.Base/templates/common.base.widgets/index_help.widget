@@ -1,1 +1,5 @@
-﻿{ "Name": "IndexHelp" }
+﻿{
+	"Name": "IndexHelp",
+	"CacheTime": 15,
+	"CacheBy": "Locale"
+}
