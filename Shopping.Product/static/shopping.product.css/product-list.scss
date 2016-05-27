@@ -50,7 +50,9 @@
 				> a {
 					color: #666;
 					padding: 4px 8px;
-					margin: 0px 8px 0px 0px;
+					margin: 4px 8px 4px 0px;
+					display: inline-block;
+					line-height: 14px;
 
 					&:hover, &:active {
 						color: #fff;
@@ -87,6 +89,8 @@
 				border: 1px solid #cecece;
 				padding: 4px 8px;
 				margin: 0px 8px 0px 0px;
+				display: inline-block;
+				line-height: 14px;
 
 				&:hover, &:active {
 					color: #fff;

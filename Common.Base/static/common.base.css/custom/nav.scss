@@ -2,9 +2,10 @@
 .top-navbar {
 	background-color: #f7f7f7;
 	line-height: 28px;
-	height: 28px;
+	min-height: 28px;
+	padding: 0px 4px;
+	margin: 0px 0px 15px 0px;
 	border-top: 1px solid #eee;
-	margin-bottom: 15px;
 	box-shadow: 0px 0px 0px 1px #fff, 0px 0px 0px 2px #dfdfdf, 0px 0px 5px 3px #f0f0f0;
 	/* 右侧菜单的样式 */
 	.nav.pull-right > .template_area {
@@ -27,7 +28,7 @@
 
 /* 顶部Logo栏的样式 */
 .top-logobar {
-	height: 90px;
+	min-height: 90px;
 
 	.template_widget {
 		float: left;

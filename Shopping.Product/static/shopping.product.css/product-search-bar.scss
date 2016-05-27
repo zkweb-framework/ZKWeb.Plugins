@@ -23,3 +23,22 @@
 		margin: 4px 0px 0px 0px;
 	}
 }
+
+/* 手机支持 */
+@media (max-width: 767px) {
+	.product-search-bar {
+		margin: 8px 0px 0px 8px;
+
+		.keyword {
+			width: 240px;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.product-search-bar {
+		.keyword {
+			width: 120px;
+		}
+	}
+}

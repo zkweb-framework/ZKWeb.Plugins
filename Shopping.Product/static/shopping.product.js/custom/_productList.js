@@ -5,7 +5,7 @@
 	这个脚本只需要实现以下功能
 	- 标记已选择的条件，再次点击时可以取消这个条件
 	- 支持按价格过滤
-	- 遇到商品搜索框提交时，合并关键字到当前的条件中而不是直接提交
+	- 支持商品搜索框
 */
 
 // 标记已选择的条件，再次点击时可以取消这个条件
@@ -57,4 +57,19 @@ $(function () {
 	};
 	$priceLowerBound.on("keydown", onPriceBoundKeyDown);
 	$priceUpperBound.on("keydown", onPriceBoundKeyDown);
+});
+
+// 支持商品搜索框
+$(function () {
+	var $searchBar = $(".product-search-bar");
+	var $keyword = $searchBar.find(".keyword");
+	// 设置当前关键字
+	var uri = new Uri(location.href);
+	$keyword.val(uri.getQueryParamValue("keyword"));
+	// 提交时替换当前关键词，但保留其他参数
+	$searchBar.find("form").on("submit", function () {
+		uri.replaceQueryParam("keyword", $keyword.val());
+		location.href = uri.path() + uri.query();
+		return false;
+	});
 });
