@@ -1,0 +1,97 @@
+﻿/* 商品搜索栏的样式 */
+.product-search-bar {
+	margin: 8px 0px 0px 120px;
+
+	.keyword {
+		width: 410px;
+		line-height: 38px;
+		height: 38px;
+		padding: 0px 5px;
+		border: 3px solid #E4393C;
+	}
+
+	.submit {
+		border: 3px solid #E4393C;
+		height: 38px;
+		background-color: #E4393C;
+		color: #fff;
+		font-size: 14px;
+		margin: -5px;
+		padding: 0px 12px;
+	}
+
+	.tags {
+		margin: 4px 0px 0px 0px;
+	}
+}
+
+/* 商品搜索栏的样式 - 手机支持 */
+@media (max-width: 767px) {
+	.product-search-bar {
+		margin: 8px 0px 0px 8px;
+
+		.keyword {
+			width: 240px;
+		}
+
+		.submit {
+			padding: 0px 4px;
+		}
+	}
+}
+
+@media (max-width: 480px) {
+	.product-search-bar {
+		.keyword {
+			width: 120px;
+		}
+	}
+}
+
+/* 商品导航菜单的样式 */
+.product-nav-menu {
+	/* 按钮 */
+	.nav .dropdown > .dropdown-toggle {
+		width: 240px;
+		text-align: center;
+	}
+	/* 悬浮菜单 */
+	.nav .dropdown > .dropdown-menu {
+		border: 2px solid #E4393C;
+		border-radius: 0px;
+		width: 240px;
+		margin: -2px 0px 0px 0px;
+
+		> li {
+			padding: 4px 0px 8px 8px;
+			border-bottom: 1px dotted #000;
+
+			&:last-child {
+				border-bottom: none;
+			}
+
+			> dl {
+				margin: 0px;
+
+				> dt > a, > dd > a {
+					color: #666;
+
+					&:hover, &:focus, &:active {
+						color: #C40000;
+						text-decoration: underline;
+					}
+				}
+
+				> dt > a {
+					font-size: 14px;
+					font-weight: bold;
+				}
+
+				> dd > a {
+					margin: 4px 8px 4px 0px;
+					display: inline-block;
+				}
+			}
+		}
+	}
+}

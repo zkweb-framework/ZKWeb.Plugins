@@ -19,7 +19,7 @@
 		color: #666;
 		background-color: transparent;
 		/* 选中时改变颜色和添加下划线 */
-		&:hover, &:focus {
+		&:hover, &:focus, &:active {
 			color: #C40000;
 			text-decoration: underline;
 		}
@@ -56,8 +56,9 @@
 			padding: 0px 15px;
 			font-size: 14px;
 			color: #FFF;
-
-			&:hover, &:focus {
+			background-color: #E4393C;
+			/* 选中时改变背景 */
+			&:hover, &:focus, &:active {
 				background-color: #C40000;
 			}
 		}

@@ -66,9 +66,11 @@ $(function () {
 	// 设置当前关键字
 	var uri = new Uri(location.href);
 	$keyword.val(uri.getQueryParamValue("keyword"));
-	// 提交时替换当前关键词，但保留其他参数
+	// 提交时替换表单提交的参数，但保留其他参数
 	$searchBar.find("form").on("submit", function () {
-		uri.replaceQueryParam("keyword", $keyword.val());
+		_.each($(this).serializeArray(), function (arg) {
+			uri.replaceQueryParam(arg.name, arg.value);
+		});
 		location.href = uri.path() + uri.query();
 		return false;
 	});

@@ -222,8 +222,8 @@
     <Content Include="Common.Base\static\common.base.js\custom\_jquery.setUrlParam.js" />
     <Content Include="Common.Base\templates\common.base\tmpl.url_pagination.html" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.html" />
-    <None Include="Shopping.Product\static\shopping.product.css\product-search-bar.scss" />
-    <Content Include="Shopping.Product\static\shopping.product.css\product-search-bar.css" />
+    <None Include="Shopping.Product\static\shopping.product.css\product-widgets.scss" />
+    <Content Include="Shopping.Product\static\shopping.product.css\product-widgets.css" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\order_count.matcher.js" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\property.matcher.js" />
     <None Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_class.widget" />
@@ -638,6 +638,8 @@
     <None Include="Shopping.Product\templates\shopping.product.widgets\product_sales_info.widget" />
     <None Include="Shopping.Product\templates\shopping.product.widgets\product_list_table.widget" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_list_table.html" />
+    <None Include="Shopping.Product\templates\shopping.product.widgets\product_nav_menu.widget" />
+    <Content Include="Shopping.Product\templates\shopping.product.widgets\product_nav_menu.html" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_sales_info.html" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_gallery.html" />
     <None Include="Shopping.Product\templates\shopping.product.widgets\product_search_bar.widget" />

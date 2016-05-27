@@ -42,6 +42,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src {
 			// 商品搜索框
 			var logobar = areaManager.GetArea("header_logobar");
 			logobar.DefaultWidgets.Add("shopping.product.widgets/product_search_bar");
+			// 商品导航栏
+			var menubar = areaManager.GetArea("header_menubar");
+			menubar.DefaultWidgets.Add("shopping.product.widgets/product_nav_menu");
 		}
 	}
 }

@@ -76,7 +76,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "ProductListSettings", "商品列表设置" },
 			{ "ProductsPerPage", "每页显示的商品数量" },
 			// TODO: 以下未翻译到其他语言
-			{ "Please enter product name", "请填写商品名称" }
+			{ "Please enter product name", "请填写商品名称" },
+			{ "All Classes", "全部分类" }
 		};
 
 		public bool CanTranslate(string code) {
