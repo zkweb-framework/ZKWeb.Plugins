@@ -1,1 +1,4 @@
-﻿{ "Name": "ProductNavMenu" }
+﻿{
+	"Name": "ProductNavMenu",
+	"CacheTime": 15
+}

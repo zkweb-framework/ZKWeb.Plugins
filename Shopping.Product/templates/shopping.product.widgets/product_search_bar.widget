@@ -1,1 +1,4 @@
-﻿{ "Name": "ProductSearchBar" }
+﻿{
+	"Name": "ProductSearchBar",
+	"CacheTime": 15
+}
