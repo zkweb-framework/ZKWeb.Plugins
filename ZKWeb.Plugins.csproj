@@ -111,6 +111,7 @@
     <Compile Include="CMS.Article\src\Translates\zh_TW.cs" />
     <Compile Include="CMS.Article\src\Translates\zh_CN.cs" />
     <Compile Include="CMS.ImageBrowser\src\Managers\ImageManager.cs" />
+    <Compile Include="CMS.ImageBrowser\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="CMS.ImageBrowser\src\Scaffolding\ImageBrowserBuilder.cs" />
     <Compile Include="CMS.ImageBrowser\src\Translates\ko_KR.cs" />
     <Compile Include="CMS.ImageBrowser\src\Translates\ja_JP.cs" />
@@ -204,6 +205,9 @@
     <Compile Include="Common.Base\src\Tests\Extensions\PaginationExtensionsTest.cs" />
     <Compile Include="Common.Base\src\TypeTraits\EntityTrait.cs" />
     <Compile Include="Common.Base\src\TypeTraits\RecyclableTrait.cs" />
+    <Compile Include="Common.Captcha\src\Model\ExtraConfigKeys.cs" />
+    <Compile Include="Common.GenericClass\src\Model\ExtraConfigKeys.cs" />
+    <Compile Include="Common.GenericTag\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Demo\src\DatabaseInitializeHandlers\DatabaseInitializeHandlerDemo.cs" />
     <Compile Include="Shopping.Product\src\Config\ProductListSettings.cs" />
     <Compile Include="Shopping.Product\src\Controllers\ApiController.cs" />
@@ -242,6 +246,7 @@
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_price_and_order.html" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_tag.html" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_details.html" />
+    <Compile Include="Shopping.Product\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Shopping.Product\src\Model\IProductMatchedDataMatcher.cs" />
     <Compile Include="Shopping.Product\src\Model\IProductSalesInfoDisplayField.cs" />
     <Compile Include="Shopping.Product\src\Plugin.cs" />

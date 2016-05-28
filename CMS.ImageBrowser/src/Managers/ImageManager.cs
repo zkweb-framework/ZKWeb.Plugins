@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Cache.Interfaces;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.CMS.ImageBrowser.src.Model;
 using ZKWeb.Server;
 using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
@@ -43,9 +44,10 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 		/// </summary>
 		public Size ImageThumbnailSize { get; set; }
 		/// <summary>
-		/// 同一类别下的图片名的缓存时间，默认是15秒
+		/// 同一类别下的图片名的缓存时间
+		/// 默认是15秒，可通过网站配置指定
 		/// </summary>
-		public int ImageNamesCacheTime { get; set; }
+		public TimeSpan ImageNamesCacheTime { get; set; }
 		/// <summary>
 		/// 同一类别下的图片名的缓存
 		/// { 类别: [图片名, ...], ... }
@@ -56,12 +58,14 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 		/// 初始化
 		/// </summary>
 		public ImageManager() {
+			var configManager = Application.Ioc.Resolve<ConfigManager>();
 			ImageQuality = 90;
 			ImageExtension = ".jpg";
 			ImageThumbnailExtension = ".thumb.jpg";
 			ImageBasePathFormat = "/static/cms.image_browser.images/{0}";
 			ImageThumbnailSize = new Size(135, 135);
-			ImageNamesCacheTime = 15;
+			ImageNamesCacheTime = TimeSpan.FromSeconds(
+				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ImageNamesCacheTime, 15));
 			ImageNamesCache = new MemoryCache<string, List<string>>();
 		}
 
@@ -171,7 +175,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 					.OrderByDescending(path => File.GetLastWriteTimeUtc(path))
 					.Select(path => Path.GetFileNameWithoutExtension(path))
 					.ToList();
-				ImageNamesCache.Put(category, names, TimeSpan.FromSeconds(ImageNamesCacheTime));
+				ImageNamesCache.Put(category, names, ImageNamesCacheTime);
 			}
 			return names;
 		}

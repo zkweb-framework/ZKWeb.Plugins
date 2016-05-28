@@ -1,4 +1,5 @@
-﻿using DryIocAttributes;
+﻿using DryIoc;
+using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Cache.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.GenericClass.src.Model;
+using ZKWeb.Server;
 using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
@@ -17,7 +20,8 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 	[ExportMany, SingletonReuse]
 	public class GenericClassManager : ICacheCleaner {
 		/// <summary>
-		/// 通用分类列表的缓存时间，默认是15秒
+		/// 通用分类列表的缓存时间
+		/// 默认是15秒，可通过网站配置指定
 		/// </summary>
 		public TimeSpan ClassCacheTime { get; set; }
 		/// <summary>
@@ -33,7 +37,9 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 		/// 初始化
 		/// </summary>
 		public GenericClassManager() {
-			ClassCacheTime = TimeSpan.FromSeconds(15);
+			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			ClassCacheTime = TimeSpan.FromSeconds(
+				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ClassCacheTime, 15));
 			ClassCache = new MemoryCache<string, IList<Database.GenericClass>>();
 			ClassTreeCache = new MemoryCache<string, ITreeNode<Database.GenericClass>>();
 		}

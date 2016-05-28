@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Captcha.src.Model;
+using ZKWeb.Server;
 using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
@@ -58,31 +60,35 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 		/// <summary>
 		/// 保存到会话时使用的键名前缀
 		/// </summary>
-		public const string SessionItemKeyPrefix = "Common.Base.Captcha.";
-		/// <summary>
-		/// 验证码语音参数的缓存时间，默认是15秒
-		/// </summary>
-		public int CaptchaAudioPromptCacheTime { get; set; }
-		/// <summary>
-		/// 验证码语音参数的缓存
-		/// </summary>
-		protected MemoryCache<string, PromptBuilder> CaptchaAudioPromptCache { get; set; }
+		public const string SessionItemKeyPrefix = "Common.Captcha.";
 		/// <summary>
 		/// 当前环境是否支持验证码语音
 		/// 注意：
 		/// 目前IIS环境中部署会出现调用TTS时线程锁死无法结束的问题，原因无法找到
 		/// 也无法找到任何办法预先检测当前环境是否会出现这个问题
-		/// 如果碰到这个问题时请在代码里面设置这个成员为false
+		/// 如果碰到此问题请在网站配置中禁用验证码语音
 		/// </summary>
 		public bool SupportCaptchaAudio { get; set; }
+		/// <summary>
+		/// 验证码语音参数的缓存时间
+		/// 默认是15秒，可通过网站配置指定
+		/// </summary>
+		public TimeSpan CaptchaAudioPromptCacheTime { get; set; }
+		/// <summary>
+		/// 验证码语音参数的缓存
+		/// </summary>
+		protected MemoryCache<string, PromptBuilder> CaptchaAudioPromptCache { get; set; }
 
 		/// <summary>
 		/// 验证码管理器
 		/// </summary>
 		public CaptchaManager() {
-			CaptchaAudioPromptCacheTime = 15;
+			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			SupportCaptchaAudio = configManager.WebsiteConfig
+				.Extra.GetOrDefault<bool?>(ExtraConfigKeys.SupportCaptchaAudio) ?? true;
+			CaptchaAudioPromptCacheTime = TimeSpan.FromSeconds(
+				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.CaptchaAudioPromptCacheTime, 15));
 			CaptchaAudioPromptCache = new MemoryCache<string, PromptBuilder>();
-			SupportCaptchaAudio = true;
 		}
 
 		/// <summary>
@@ -214,8 +220,7 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 							prompt.AppendBreak(TimeSpan.FromMilliseconds(RandomUtils.RandomInt(50, 450)));
 							prompt.EndVoice();
 						}
-						CaptchaAudioPromptCache.Put(captcha, prompt,
-							TimeSpan.FromSeconds(CaptchaAudioPromptCacheTime));
+						CaptchaAudioPromptCache.Put(captcha, prompt, CaptchaAudioPromptCacheTime);
 					}
 					// 写入语音到数据流
 					var synthesizer = new SpeechSynthesizer();

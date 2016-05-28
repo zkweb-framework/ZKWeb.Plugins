@@ -19,6 +19,8 @@ using ZKWeb.Plugins.Shopping.Product.src.Config;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks;
+using ZKWeb.Server;
+using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
@@ -28,7 +30,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 	[ExportMany, SingletonReuse]
 	public class ProductManager : ICacheCleaner {
 		/// <summary>
-		/// 商品信息的缓存时间，默认是15秒
+		/// 商品信息的缓存时间
+		/// 默认是15秒，可通过网站配置指定
 		/// </summary>
 		public TimeSpan ProductApiInfoCacheTime { get; set; }
 		/// <summary>
@@ -36,7 +39,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// </summary>
 		protected IsolatedMemoryCache<long, object> ProductApiInfoCache { get; set; }
 		/// <summary>
-		/// 商品搜索结果的缓存时间，默认是15秒
+		/// 商品搜索结果的缓存时间
+		/// 默认是15秒，可通过网站配置指定
 		/// </summary>
 		public TimeSpan ProductSearchResultCacheTime { get; set; }
 		/// <summary>
@@ -48,9 +52,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// 初始化
 		/// </summary>
 		public ProductManager() {
-			ProductApiInfoCacheTime = TimeSpan.FromSeconds(15);
+			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			ProductApiInfoCacheTime = TimeSpan.FromSeconds(
+				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ProductApiInfoCacheTime, 15));
 			ProductApiInfoCache = new IsolatedMemoryCache<long, object>("IdentAndLocale");
-			ProductSearchResultCacheTime = TimeSpan.FromSeconds(15);
+			ProductSearchResultCacheTime = TimeSpan.FromSeconds(
+				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ProductSearchResultCacheTime, 15));
 			ProductSearchResultCache = new IsolatedMemoryCache<string, StaticTableSearchResponse>("IdentAndLocale");
 		}
 

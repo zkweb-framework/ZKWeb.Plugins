@@ -1,4 +1,5 @@
-﻿using DryIocAttributes;
+﻿using DryIoc;
+using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Cache.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.GenericTag.src.Model;
+using ZKWeb.Server;
 using ZKWeb.Utils.Collections;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Common.GenericTag.src.Manager {
 	/// <summary>
@@ -15,9 +19,10 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Manager {
 	[ExportMany, SingletonReuse]
 	public class GenericTagManager : ICacheCleaner {
 		/// <summary>
-		/// 通用标签列表的缓存时间，默认是15秒
+		/// 通用标签列表的缓存时间
+		/// 默认是15秒，可通过网站配置指定
 		/// </summary>
-		public int TagCacheTime { get; set; }
+		public TimeSpan TagCacheTime { get; set; }
 		/// <summary>
 		/// 通用标签列表的缓存，{ 类型: 标签列表 }
 		/// </summary>
@@ -27,7 +32,9 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Manager {
 		/// 初始化
 		/// </summary>
 		public GenericTagManager() {
-			TagCacheTime = 15;
+			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			TagCacheTime = TimeSpan.FromSeconds(
+				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.TagCacheTime, 15));
 			TagCache = new MemoryCache<string, IList<Database.GenericTag>>();
 		}
 
@@ -45,7 +52,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Manager {
 				return r.GetMany(c => c.Type == type && !c.Deleted)
 					.OrderBy(t => t.DisplayOrder).ToList();
 			});
-			TagCache.Put(type, tags, TimeSpan.FromSeconds(TagCacheTime));
+			TagCache.Put(type, tags, TagCacheTime);
 			return tags;
 		}
 
