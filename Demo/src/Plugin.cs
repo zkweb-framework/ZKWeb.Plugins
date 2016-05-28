@@ -19,9 +19,6 @@ namespace ZKWeb.Plugins.Demo.src {
 		/// 初始化
 		/// </summary>
 		public Plugin() {
-			// 当前DEMO环境不支持TTS语音，手动设置不支持
-			var captchaManager = Application.Ioc.Resolve<CaptchaManager>();
-			captchaManager.SupportCaptchaAudio = false;
 			// 注册默认模块
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			areaManager.GetArea("header_menubar").DefaultWidgets.Add("demo.widgets/demo_nav_menu");
