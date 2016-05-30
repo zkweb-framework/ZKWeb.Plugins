@@ -40,11 +40,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src {
 			productListFilter.DefaultWidgets.Add("shopping.product.widgets/product_filter_by_price_and_order");
 			productListTable.DefaultWidgets.Add("shopping.product.widgets/product_list_table");
 			// 商品搜索框
-			var logobar = areaManager.GetArea("header_logobar");
-			logobar.DefaultWidgets.Add("shopping.product.widgets/product_search_bar");
+			areaManager.GetArea("header_logobar").DefaultWidgets.Add("shopping.product.widgets/product_search_bar");
 			// 商品导航栏
-			var menubar = areaManager.GetArea("header_menubar");
-			menubar.DefaultWidgets.Add("shopping.product.widgets/product_nav_menu");
+			areaManager.GetArea("header_menubar").DefaultWidgets.Insert(
+				0, new TemplateWidget("shopping.product.widgets/product_nav_menu"));
 		}
 	}
 }

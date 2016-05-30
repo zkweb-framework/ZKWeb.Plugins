@@ -104,7 +104,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 			var classManager = Application.Ioc.Resolve<GenericClassManager>();
 			var classTree = classManager.GetClassTree(new ProductClass().Type);
 			var tree = TreeUtils.Transform(classTree, c => c == null ? null : new { c.Id, c.Name });
-			return new JsonResult(new { tree = tree });
+			return new JsonResult(new { tree });
 		}
 
 		/// <summary>

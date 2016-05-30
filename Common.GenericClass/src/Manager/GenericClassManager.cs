@@ -25,9 +25,13 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 		/// </summary>
 		public TimeSpan ClassCacheTime { get; set; }
 		/// <summary>
+		/// 通用分类的缓存，{ Id: 分类 }
+		/// </summary>
+		protected MemoryCache<long, Database.GenericClass> ClassCache { get; set; }
+		/// <summary>
 		/// 通用分类列表的缓存，{ 类型: 分类列表 }
 		/// </summary>
-		protected MemoryCache<string, IList<Database.GenericClass>> ClassCache { get; set; }
+		protected MemoryCache<string, IList<Database.GenericClass>> ClassListCache { get; set; }
 		/// <summary>
 		/// 通用分类树的缓存，{ 类型: 分类树 }
 		/// </summary>
@@ -40,18 +44,41 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 			var configManager = Application.Ioc.Resolve<ConfigManager>();
 			ClassCacheTime = TimeSpan.FromSeconds(
 				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ClassCacheTime, 15));
-			ClassCache = new MemoryCache<string, IList<Database.GenericClass>>();
+			ClassCache = new MemoryCache<long, Database.GenericClass>();
+			ClassListCache = new MemoryCache<string, IList<Database.GenericClass>>();
 			ClassTreeCache = new MemoryCache<string, ITreeNode<Database.GenericClass>>();
 		}
 
 		/// <summary>
-		/// 获取指定类型的分类列表，按显示顺序返回
+		/// 获取指定分类
+		/// 不存在或已删除时返回null
+		/// </summary>
+		/// <param name="classId">分类Id</param>
+		/// <returns></returns>
+		public virtual Database.GenericClass GetClass(long classId) {
+			// 从缓存获取
+			var classObj = ClassCache.GetOrDefault(classId);
+			if (classObj != null) {
+				return classObj;
+			}
+			// 从数据库获取
+			UnitOfWork.ReadData<Database.GenericClass>(r => {
+				classObj = r.Get(c => c.Id == classId && !c.Deleted);
+				// 保存到缓存
+				ClassCache.Put(classId, classObj, ClassCacheTime);
+			});
+			return classObj;
+		}
+
+		/// <summary>
+		/// 获取指定类型的分类列表
+		/// 按显示顺序返回，不包括已删除的分类
 		/// </summary>
 		/// <param name="type">分类类型</param>
 		/// <returns></returns>
 		public virtual IList<Database.GenericClass> GetClasses(string type) {
 			// 从缓存获取
-			var classes = ClassCache.GetOrDefault(type);
+			var classes = ClassListCache.GetOrDefault(type);
 			if (classes != null) {
 				return classes;
 			}
@@ -63,12 +90,13 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 					.Select(c => c.c).ToList();
 			});
 			// 保存到缓存并返回
-			ClassCache.Put(type, classes, ClassCacheTime);
+			ClassListCache.Put(type, classes, ClassCacheTime);
 			return classes;
 		}
 
 		/// <summary>
 		/// 获取指定类型的分类树
+		/// 不包括已删除的分类
 		/// </summary>
 		/// <param name="type">分类类型</param>
 		/// <returns></returns>
@@ -93,6 +121,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 		/// </summary>
 		public virtual void ClearCache() {
 			ClassCache.Clear();
+			ClassListCache.Clear();
 			ClassTreeCache.Clear();
 		}
 	}

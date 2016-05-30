@@ -102,10 +102,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CMS.Article\src\AdminApps\ArticleManageApp.cs" />
+    <Compile Include="CMS.Article\src\Config\ArticleListSettings.cs" />
+    <Compile Include="CMS.Article\src\Controllers\ApiController.cs" />
+    <Compile Include="CMS.Article\src\Controllers\ArticleController.cs" />
     <Compile Include="CMS.Article\src\Database\Article.cs" />
     <Compile Include="CMS.Article\src\GenericClasses\ArticleClass.cs" />
     <Compile Include="CMS.Article\src\GenericTags\ArticleTag.cs" />
     <Compile Include="CMS.Article\src\ImageBrowsers\ArticleImageBrowser.cs" />
+    <Compile Include="CMS.Article\src\Managers\ArticleManager.cs" />
+    <Compile Include="CMS.Article\src\Model\ExtraConfigKeys.cs" />
+    <Compile Include="CMS.Article\src\Plugin.cs" />
+    <Compile Include="CMS.Article\src\StaticTableCallbacks\ArticleTableCallback.cs" />
     <Compile Include="CMS.Article\src\Translates\ko_KR.cs" />
     <Compile Include="CMS.Article\src\Translates\ja_JP.cs" />
     <Compile Include="CMS.Article\src\Translates\zh_TW.cs" />
@@ -214,8 +221,16 @@
     <Compile Include="Shopping.Product\src\GenericFormsForAdminSettings\ProductListSettingsForm.cs" />
     <Compile Include="Shopping.Product\src\ImageBrowsers\ProductImageBrowser.cs" />
     <Compile Include="Shopping.Product\src\Managers\ProductManager.cs" />
+    <Content Include="CMS.Article\templates\cms.article.widgets\article_nav_menu.html" />
+    <Content Include="CMS.Article\templates\cms.article.widgets\article_list_nav.html" />
+    <Content Include="CMS.Article\templates\cms.article.widgets\article_list_table.html" />
+    <None Include="CMS.Article\templates\cms.article.widgets\article_list_table.widget" />
+    <None Include="CMS.Article\templates\cms.article.widgets\article_nav_menu.widget" />
+    <None Include="CMS.Article\templates\cms.article.widgets\article_list_nav.widget" />
     <None Include="CMS.ImageBrowser\plugin.json" />
     <None Include="CMS.ImageBrowser\static\cms.imagebrowser.css\image_browser.scss" />
+    <Content Include="CMS.Article\templates\cms.article\article_view.html" />
+    <Content Include="CMS.Article\templates\cms.article\article_list.html" />
     <Content Include="CMS.ImageBrowser\static\cms.imagebrowser.css\image_browser.css" />
     <Content Include="CMS.ImageBrowser\static\cms.imagebrowser.js\image_browser.js" />
     <None Include="CMS.ImageBrowser\static\cms.imagebrowser.css\koala-config.json" />
