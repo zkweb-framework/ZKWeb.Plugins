@@ -124,7 +124,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Version", "해제" },
 			{ "FullVersion", "풀 버전" },
 			{ "ZKWeb Version", "ZKWeb 버전" },
-			{ "ZKWeb Full Version", "ZKWeb 풀 버전" }
+			{ "ZKWeb Full Version", "ZKWeb 풀 버전" },
+			{ "Memory Usage", "메모리 사용량" },
 		};
 
 		public bool CanTranslate(string code) {

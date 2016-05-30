@@ -133,6 +133,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			serverVariables.AllKeys.ForEach(k => hostingInfoTable.Rows.Add(k, serverVariables[k]));
 			var zkwebVersion = Application.Version;
 			var zkwebFullVersion = Application.FullVersion;
+			var memoryUsage = SystemUtils.GetUsedMemoryBytes() / 1024 / 1024;
 			var pluginInfoTable = new DataTable();
 			pluginInfoTable.Columns.Add("DirectoryName");
 			pluginInfoTable.Columns.Add("Name");
@@ -149,6 +150,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 				hostingInfoTable = hostingInfoTable.ToHtml(),
 				zkwebVersion = zkwebVersion.ToString(),
 				zkwebFullVersion = zkwebFullVersion,
+				memoryUsage = memoryUsage,
 				pluginInfoTable = pluginInfoTable.ToHtml()
 			});
 		}

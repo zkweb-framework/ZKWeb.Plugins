@@ -123,7 +123,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "Version", "バージョン" },
 			{ "FullVersion", "フルバージョン" },
 			{ "ZKWeb Version", "ZKWebのバージョン" },
-			{ "ZKWeb Full Version", "ZKWebのフルバージョン" }
+			{ "ZKWeb Full Version", "ZKWebのフルバージョン" },
+			{ "Memory Usage", "メモリ使用量" },
 		};
 
 		public bool CanTranslate(string code) {
