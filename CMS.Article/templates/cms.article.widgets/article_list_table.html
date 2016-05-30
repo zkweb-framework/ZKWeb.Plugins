@@ -12,6 +12,16 @@
 		</div>
 	</div>
 	<div class="portlet-body">
-
+		<ul class="article-list-table">
+			{% for article in article_search_result.response.Rows %}
+			<li class="article-cell">
+				<p>{{ article.Title }}</p>
+			</li>
+			{% endfor %}
+		</ul>
+		<div class="article-list-table-pagination">
+			{% url_pagination article_search_result.response.Pagination %}
+			<div class="clearfix"></div>
+		</div>
 	</div>
 </div>
