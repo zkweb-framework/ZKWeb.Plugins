@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.CMS.Article.src {
 			// 注册默认模块
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			// 文章详情页
-
+			areaManager.GetArea("article_contents").DefaultWidgets.Add("cms.article.widgets/article_contents");
 			// 文章列表页
 			areaManager.GetArea("article_list_nav").DefaultWidgets.Add("cms.article.widgets/article_list_nav");
 			areaManager.GetArea("article_list_table").DefaultWidgets.Add("cms.article.widgets/article_list_table");

@@ -31,7 +31,9 @@ namespace ZKWeb.Plugins.CMS.Article.src.Translates {
 			{ "Posted on", "发表在" },
 			{ "Read More", "阅读更多" },
 			{ "No matched articles found, please change the condition and search again.",
-				"没有找到匹配的文章，请使用其他条件再次搜索。"}
+				"没有找到匹配的文章，请使用其他条件再次搜索。"},
+			{ "The article you are visiting does not exist.", "您查看的文章不存在" },
+			{ "Preview", "预览" }
 		};
 
 		public bool CanTranslate(string code) {

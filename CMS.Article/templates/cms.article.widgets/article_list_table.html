@@ -48,7 +48,7 @@
 					{% if article.Author %}
 					<span class="author">{{ "Author" | trans }}: {{ article.Author }}</span>
 					{% endif %}
-					<span>{{ "Posted on" | trans }}: {{ article.CreateTime }}</span>
+					<span class="post-on">{{ "Posted on" | trans }}: {{ article.CreateTime }}</span>
 					<div class="tags pull-right">
 						{% for tag in article.Tags %}
 						<a class="tag" href="/article/list?tag={{ tag.Id }}">{{ tag.Name | trans }}</a>

@@ -1,0 +1,40 @@
+﻿<div class="article-contents">
+	<div class="portlet">
+		<div class="portlet-title">
+			<div class="caption">
+				<div class="article-title">
+					<span class="title">{{ article_info.title }}</span>
+				</div>
+				<div class="article-metadata">
+					{% if article_info.authorName %}
+					<span class="author">{{ "Author" | trans }}: {{ article_info.authorName }}</span>
+					{% endif %}
+					<span class="post-on">{{ "Posted on" | trans }}: {{ article_info.createTime }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="portlet-body">
+			<div class="article-contents-body">
+				{% raw_html article_info.contents %}
+			</div>
+			<div class="article-contents-bottom">
+				{% if article_info.classes.size > 0 %}
+				<div class="article-classes">
+					<span>{{ "Classes" | trans }}: </span>
+					{% for class in article_info.classes %}
+					<a href="/article/list?class={{ class.id }}">{{ class.name | trans }}</a>
+					{% endfor %}
+				</div>
+				{% endif %}
+				{% if article_info.tags.size > 0 %}
+				<div class="article-tags">
+					<span>{{ "Tags" | trans }}: </span>
+					{% for tag in article_info.tags %}
+					<a href="/article/list?tag={{ tag.id }}">{{ tag.name | trans }}</a>
+					{% endfor %}
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>

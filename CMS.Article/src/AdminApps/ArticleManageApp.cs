@@ -116,7 +116,9 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				var actionColumn = response.Columns.AddActionColumn();
+				var actionColumn = response.Columns.AddActionColumn("150");
+				actionColumn.AddButtonForOpenLink(new T("Preview"),
+					"btn btn-xs btn-success", "fa fa-eye", "/article/view?id=<%-row.Id%>", "_blank");
 				actionColumn.AddEditActionForAdminApp<ArticleManageApp>();
 				idColumn.AddDivider();
 				idColumn.AddDeleteActionsForAdminApp<ArticleManageApp>(request);

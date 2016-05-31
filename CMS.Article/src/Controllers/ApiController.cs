@@ -47,6 +47,18 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 		}
 
 		/// <summary>
+		/// 获取指定文章的信息
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/article/info", HttpMethods.POST)]
+		public IActionResult ArticleInfo() {
+			var articleId = HttpContextUtils.CurrentContext.Request.Get<long>("id");
+			var articleManager = Application.Ioc.Resolve<ArticleManager>();
+			var info = articleManager.GetArticleApiInfo(articleId);
+			return new JsonResult(info);
+		}
+
+		/// <summary>
 		/// 搜索文章列表
 		/// </summary>
 		/// <returns></returns>

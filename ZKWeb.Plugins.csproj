@@ -117,6 +117,10 @@
     <Compile Include="CMS.Article\src\Translates\ja_JP.cs" />
     <Compile Include="CMS.Article\src\Translates\zh_TW.cs" />
     <Compile Include="CMS.Article\src\Translates\zh_CN.cs" />
+    <Content Include="CMS.Article\static\cms.article.css\article-view.css" />
+    <Content Include="CMS.Article\templates\cms.article.widgets\article_contents.html" />
+    <None Include="CMS.Article\static\cms.article.css\article-view.scss" />
+    <None Include="CMS.Article\templates\cms.article.widgets\article_contents.widget" />
     <Compile Include="CMS.ImageBrowser\src\Managers\ImageManager.cs" />
     <Compile Include="CMS.ImageBrowser\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="CMS.ImageBrowser\src\Scaffolding\ImageBrowserBuilder.cs" />
