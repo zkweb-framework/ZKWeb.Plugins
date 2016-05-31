@@ -76,7 +76,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "ProductListSettings", "商品リスト設定" },
 			{ "ProductsPerPage", "ページごとに表示する商品数" },
 			{ "Please enter product name", "商品名を入力してください" },
-			{ "All Products", "商品一覧" }
+			{ "All Products", "商品一覧" },
+			{ "No matching products found, please change the condition and search again.",
+				"条件に合った商品が見つかりません、条件を変えて再度検索してください。"}
 		};
 
 		public bool CanTranslate(string code) {

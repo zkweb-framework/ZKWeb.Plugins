@@ -24,7 +24,15 @@ namespace ZKWeb.Plugins.CMS.Article.src.Translates {
 			{ "ArticleTag", "기술 자료 태그" },
 			{ "Title", "표제" },
 			{ "Author", "저자" },
-			{ "Summary", "개요" }
+			{ "Summary", "개요" },
+			{ "ArticleList", "기사 목록" },
+			{ "AllArticles", "전체 기사" },
+			{ "Posted on", "에 게시 됨" },
+			{ "Read More", "자세히보기" },
+			{ "No matching articles found, please change the condition and search again.",
+				"찾지 일치 기사, 조건을 변경하지 않고 다시 검색하시기 바랍니다."},
+			{ "The article you are visiting does not exist.", "존재하지 않는 방문 기사" },
+			{ "Preview", "시사" }
 		};
 
 		public bool CanTranslate(string code) {

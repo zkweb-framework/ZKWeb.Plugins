@@ -27,7 +27,6 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Translates {
 			{ "Add Top Level Class", "添加顶级分类" },
 			{ "Add Same Level Class", "添加同级分类" },
 			{ "Add Child Class", "添加子分类" },
-			// TODO: 以下未翻译到其他语言
 			{ "Class", "分类" },
 			{ "Classes", "分类" },
 		};

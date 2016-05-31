@@ -24,7 +24,15 @@ namespace ZKWeb.Plugins.CMS.Article.src.Translates {
 			{ "ArticleTag", "文章タグ" },
 			{ "Title", "タイトル" },
 			{ "Author", "作者" },
-			{ "Summary", "概要" }
+			{ "Summary", "概要" },
+			{ "ArticleList", "文章リスト" },
+			{ "AllArticles", "文章一覧" },
+			{ "Posted on", "発表時刻" },
+			{ "Read More", "続きを読む" },
+			{ "No matching articles found, please change the condition and search again.",
+				"条件に合った文章が見つかりません、条件を変えて再度検索してください。"},
+			{ "The article you are visiting does not exist.", "ご覧の文章は存在しません。" },
+			{ "Preview", "プレビュー" }
 		};
 
 		public bool CanTranslate(string code) {

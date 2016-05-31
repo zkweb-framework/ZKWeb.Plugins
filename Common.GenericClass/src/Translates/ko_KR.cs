@@ -26,7 +26,9 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Translates {
 			{ "ParentClass", "하위 제목" },
 			{ "Add Top Level Class", "상위 카테고리 추가" },
 			{ "Add Same Level Class", "형제 분류 추가" },
-			{ "Add Child Class", "하위 카테고리를 추가" }
+			{ "Add Child Class", "하위 카테고리를 추가" },
+			{ "Class", "수업" },
+			{ "Classes", "수업" },
 		};
 
 		public bool CanTranslate(string code) {

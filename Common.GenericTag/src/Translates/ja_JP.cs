@@ -22,7 +22,9 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Translates {
 			{ "DefaultTag", "デフォルトタグ" },
 			{ "Try to access tag that type not matched", "タグタイプが不正です" },
 			{ "DisplayOrder", "表示順番" },
-			{ "Order from small to large", "昇順" }
+			{ "Order from small to large", "昇順" },
+			{ "Tag", "タグ" },
+			{ "Tags", "タグ" },
 		};
 
 		public bool CanTranslate(string code) {

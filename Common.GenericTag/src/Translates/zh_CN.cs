@@ -23,7 +23,6 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Translates {
 			{ "Try to access tag that type not matched", "尝试操作类型不匹配的标签" },
 			{ "DisplayOrder", "显示顺序" },
 			{ "Order from small to large", "从小到大排列" },
-			// TODO: 以下未翻译到其他语言
 			{ "Tag", "标签" },
 			{ "Tags", "标签" },
 		};

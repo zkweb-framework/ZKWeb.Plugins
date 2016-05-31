@@ -28,7 +28,7 @@ Plugins information:<br/>
 | Finance.Payment.WeChat  | Wechat Payment Api       | 0.0     | 0.0 not done | Support pay transactions by wechat                           |
 | CMS.CKEditor            | CKEditor                 | 0.9     | 0.9 testing  | Provide ckeditor form field                                  |
 | CMS.ImageBrowser        | Image Browser            | 0.9     | 0.9 testing  | Provide image browse and upload functions                    |
-| CMS.Article             | Article                  | 0.0     | 0.0 not done | Article management                                           |
+| CMS.Article             | Article                  | 0.9     | 0.9 testing  | Article management                                           |
 | Shopping.Product        | Product                  | 0.9     | 0.9 testing  | Product management for ec site                               |
 | Shopping.Logistics      | Logistics                | 0.0     | 0.0 not done | Logistics management                                         |
 | Shopping.Order          | Order                    | 0.0     | 0.0 not done | Order management for ec site                                 |

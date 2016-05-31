@@ -25,12 +25,11 @@ namespace ZKWeb.Plugins.CMS.Article.src.Translates {
 			{ "Title", "标题" },
 			{ "Author", "作者" },
 			{ "Summary", "摘要" },
-			// TODO: 以下未翻译到其他语言
 			{ "ArticleList", "文章列表" },
 			{ "AllArticles", "全部文章" },
 			{ "Posted on", "发表在" },
 			{ "Read More", "阅读更多" },
-			{ "No matched articles found, please change the condition and search again.",
+			{ "No matching articles found, please change the condition and search again.",
 				"没有找到匹配的文章，请使用其他条件再次搜索。"},
 			{ "The article you are visiting does not exist.", "您查看的文章不存在" },
 			{ "Preview", "预览" }

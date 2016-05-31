@@ -77,8 +77,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "ProductsPerPage", "每页显示的商品数量" },
 			{ "Please enter product name", "请填写商品名称" },
 			{ "All Products", "全部商品" },
-			// TODO: 以下未翻译到其他语言
-			{ "No matched products found, please change the condition and search again.",
+			{ "No matching products found, please change the condition and search again.",
 				"没有找到匹配的商品，请使用其他条件再次搜索。"}
 		};
 

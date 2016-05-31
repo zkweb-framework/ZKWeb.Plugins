@@ -24,7 +24,15 @@ namespace ZKWeb.Plugins.CMS.Article.src.Translates {
 			{ "ArticleTag", "文章標簽" },
 			{ "Title", "標題" },
 			{ "Author", "作者" },
-			{ "Summary", "摘要" }
+			{ "Summary", "摘要" },
+			{ "ArticleList", "文章列表" },
+			{ "AllArticles", "全部文章" },
+			{ "Posted on", "發表在" },
+			{ "Read More", "閱讀更多" },
+			{ "No matching articles found, please change the condition and search again.",
+				"沒有找到匹配的文章，請使用其他條件再次搜索。"},
+			{ "The article you are visiting does not exist.", "您查看的文章不存在" },
+			{ "Preview", "預覽" }
 		};
 
 		public bool CanTranslate(string code) {

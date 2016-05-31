@@ -22,7 +22,9 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Translates {
 			{ "DefaultTag", "기본 탭" },
 			{ "Try to access tag that type not matched", "레이블과 일치하지 않는 작업의 유형을보십시오" },
 			{ "DisplayOrder", "표시 순서" },
-			{ "Order from small to large", "정렬" }
+			{ "Order from small to large", "정렬" },
+			{ "Tag", "꼬리표" },
+			{ "Tags", "꼬리표" },
 		};
 
 		public bool CanTranslate(string code) {
