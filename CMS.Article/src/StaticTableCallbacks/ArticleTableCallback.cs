@@ -32,7 +32,8 @@ namespace ZKWeb.Plugins.CMS.Article.src.StaticTableCallbacks {
 			if (!string.IsNullOrEmpty(request.Keyword)) {
 				query = query.Where(q =>
 					q.Title.Contains(request.Keyword) ||
-					q.Summary.Contains(request.Keyword));
+					q.Summary.Contains(request.Keyword) ||
+					q.Author.Username == request.Keyword);
 			}
 			// 只显示未删除的文章
 			query = query.Where(q => !q.Deleted);
@@ -53,9 +54,17 @@ namespace ZKWeb.Plugins.CMS.Article.src.StaticTableCallbacks {
 		public void OnSelect(
 			StaticTableSearchRequest request, List<KeyValuePair<Database.Article, Dictionary<string, object>>> pairs) {
 			foreach (var pair in pairs) {
+				var author = pair.Key.Author;
+				var lastClass = pair.Key.Classes.OrderByDescending(c => c.Id).LastOrDefault();
 				pair.Value["Id"] = pair.Key.Id;
 				pair.Value["Title"] = pair.Key.Title;
 				pair.Value["Summary"] = pair.Key.Summary;
+				pair.Value["Author"] = author == null ? null : author.Username;
+				pair.Value["AuthorId"] = author == null ? null : (long?)author.Id;
+				pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
+				pair.Value["LastClass"] = lastClass == null ? null : lastClass.Name;
+				pair.Value["LastClassId"] = lastClass == null ? null : (long?)lastClass.Id;
+				pair.Value["Tags"] = pair.Key.Tags.Select(t => new { t.Id, t.Name }).ToList();
 			}
 		}
 	}

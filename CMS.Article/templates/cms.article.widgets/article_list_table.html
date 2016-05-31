@@ -10,15 +10,59 @@
 			<span class="caption-subject">{{ "AllArticles" | trans }}</span>
 			{% endif %}
 		</div>
+		<div class="actions search-bar article-search-bar">
+			<div class="portlet-input input-inline input-medium">
+				<div class="input-group">
+					<input class="form-control keyword" placeholder="{{ "Title/Summary/Author" | trans }}" type="text">
+					<div class="input-group-btn">
+						<a class="btn btn-default search-button" title="{{ "Search" | trans }}">
+							<i class="fa fa-search"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="portlet-body">
+		{% if article_search_result.response.Rows.size > 0 %}
 		<ul class="article-list-table">
 			{% for article in article_search_result.response.Rows %}
 			<li class="article-cell">
-				<p>{{ article.Title }}</p>
+				<div class="top">
+					<h4>
+						<a class="title" href="/article/view?id={{ article.Id }}">
+							{% if article.LastClass %}
+							[{{ article.LastClass }}]
+							{% endif %}
+							{{ article.Title }}
+						</a>
+					</h4>
+				</div>
+				<div class="summary">
+					{% if article.Summary != "" %}
+					{{ article.Summary }}&nbsp;
+					{% endif %}
+					<a href="/article/view?id={{ article.Id }}">{{ "Read More" | trans }}</a>
+				</div>
+				<div class="bottom">
+					{% if article.Author %}
+					<span class="author">{{ "Author" | trans }}: {{ article.Author }}</span>
+					{% endif %}
+					<span>{{ "Posted on" | trans }}: {{ article.CreateTime }}</span>
+					<div class="tags pull-right">
+						{% for tag in article.Tags %}
+						<a class="tag" href="/article/list?tag={{ tag.Id }}">{{ tag.Name | trans }}</a>
+						{% endfor %}
+					</div>
+				</div>
 			</li>
 			{% endfor %}
 		</ul>
+		{% else %}
+		<div class="no-matched-records no-matched-articles">
+			{{ "No matched articles found, please change the condition and search again." | trans }}
+		</div>
+		{% endif %}
 		<div class="article-list-table-pagination">
 			{% url_pagination article_search_result.response.Pagination %}
 			<div class="clearfix"></div>

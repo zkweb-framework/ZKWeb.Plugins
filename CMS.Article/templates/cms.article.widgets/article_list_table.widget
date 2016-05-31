@@ -1,5 +1,5 @@
 ﻿{
 	"Name": "ArticleListTable",
-	"CacheTime": 15,
+	"CacheTime": 1,
 	"CacheBy": "IdentAndLocaleAndUrl"
 }
