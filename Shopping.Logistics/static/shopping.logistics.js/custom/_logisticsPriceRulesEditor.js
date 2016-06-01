@@ -33,7 +33,7 @@ $.fn.logisticsPriceRulesEditor = function () {
 		return;
 	}
 	// 获取翻译
-	var T = function (text) { return translations[text] || text };
+	var T = function (text) { return translations[text] || text; };
 	var T_Default = T("Default");
 	var T_Region = T("Region");
 	var T_FirstHeavyUnit = T("FirstHeavyUnit(g)");

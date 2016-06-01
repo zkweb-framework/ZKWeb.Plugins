@@ -14,7 +14,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// <summary>
 		/// 转换到编辑使用的列表
 		/// </summary>
-		/// <param name="values">数据库中的商品属性值列表</param>
+		/// <param name="values">数据库中的商品对应的属性值列表</param>
 		/// <returns></returns>
 		public static List<ProductToPropertyValueForEdit> ToEditList(
 			this ISet<ProductToPropertyValue> values) {
@@ -31,7 +31,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// <summary>
 		/// 转换到数据库使用的集合
 		/// </summary>
-		/// <param name="values">编辑后的商品属性值列表</param>
+		/// <param name="values">编辑后的商品对应的属性值列表</param>
 		/// <param name="product">商品</param>
 		/// <returns></returns>
 		public static ISet<ProductToPropertyValue> ToDatabaseSet(

@@ -69,7 +69,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		public ProductPropertyValueMap() {
 			Id(p => p.Id);
 			Map(p => p.Name).Length(0xffff);
-			References(p => p.Property).Not.Nullable();
+			References(p => p.Property);
 			Map(p => p.DisplayOrder);
 			Map(p => p.CreateTime);
 			Map(p => p.LastUpdated);

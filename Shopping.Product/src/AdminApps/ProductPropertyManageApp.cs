@@ -16,6 +16,7 @@ using ZKWeb.Utils.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
+using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>
@@ -171,7 +172,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				Name = bindFrom.Name;
 				IsSaleProperty = bindFrom.IsSaleProperty;
 				ControlType = bindFrom.ControlType;
-				// PropertyValues = null;
+				PropertyValues = bindFrom.PropertyValues.ToEditList();
 				DisplayOrder = bindFrom.DisplayOrder;
 				Remark = bindFrom.Remark;
 			}
@@ -186,7 +187,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				saveTo.Name = Name;
 				saveTo.IsSaleProperty = IsSaleProperty;
 				saveTo.ControlType = ControlType;
-				// saveTo.PropertyValues = null;
+				saveTo.PropertyValues = PropertyValues.ToDatabaseSet(saveTo);
 				saveTo.DisplayOrder = DisplayOrder;
 				saveTo.LastUpdated = DateTime.UtcNow;
 				saveTo.Remark = Remark;

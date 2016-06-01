@@ -226,6 +226,7 @@
     <Compile Include="Shopping.Product\src\AdminApps\ProductPropertyManageApp.cs" />
     <Compile Include="Shopping.Product\src\Config\ProductListSettings.cs" />
     <Compile Include="Shopping.Product\src\Controllers\ApiController.cs" />
+    <Compile Include="Shopping.Product\src\Extensions\ProductPropertyValueExtensions.cs" />
     <Compile Include="Shopping.Product\src\FormFieldAttributes\ProductPropertyValuesEditorAttribute.cs" />
     <Compile Include="Shopping.Product\src\FormFieldHandlers\ProductPropertyValuesEditor.cs" />
     <Compile Include="Shopping.Product\src\GenericFormsForAdminSettings\ProductListSettingsForm.cs" />

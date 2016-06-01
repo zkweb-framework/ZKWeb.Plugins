@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
@@ -29,7 +30,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 			var attribute = (ProductPropertyValuesEditorAttribute)field.Attribute;
 			var html = new HtmlTextWriter(new StringWriter());
 			var translations = new Dictionary<string, string>() {
-
+				{ "Name", new T("Name") },
+				{ "Remark", new T("Remark") }
 			};
 			html.AddAttribute("name", field.Attribute.Name);
 			html.AddAttribute("value", JsonConvert.SerializeObject(field.Value));

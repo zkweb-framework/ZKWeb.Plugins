@@ -18,9 +18,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	public class ProductPropertyValueForEdit {
 		/// <summary>
 		/// 属性值Id
-		/// 新添加的属性Id等于0，修改原有的属性Id等于原值
+		/// 新添加的属性Id等于null，修改原有的属性Id等于原值
 		/// </summary>
-		public long Id { get; set; }
+		public long? Id { get; set; }
 		/// <summary>
 		/// 属性值名称
 		/// </summary>
