@@ -54,7 +54,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				searchBar.MenuItems.AddDivider();
 				searchBar.MenuItems.AddRecycleBin();
 				searchBar.MenuItems.AddAddActionForAdminApp<ProductPropertyManageApp>();
-				searchBar.Conditions.Add(new FormField(new CheckBoxFieldAttribute("IsSaleProperty")));
+				searchBar.Conditions.Add(new FormField(new CheckBoxFieldAttribute("IsSalesProperty")));
 			}
 
 			/// <summary>
@@ -71,10 +71,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 						q.Remark.Contains(request.Keyword));
 				}
 				// 按是否销售属性
-				// TODO: 检查这个条件是否有效
-				var isSaleProperty = request.Conditions.GetOrDefault<bool?>("isSalePropery");
-				if (isSaleProperty != null) {
-					query = query.Where(q => q.IsSaleProperty == isSaleProperty);
+				if (request.Conditions.ContainsKey("IsSalesProperty")) {
+					var isSalesProperty = request.Conditions.GetOrDefault<string>("IsSalesProperty") == "on";
+					query = query.Where(q => q.IsSalesProperty == isSalesProperty);
 				}
 			}
 
@@ -94,7 +93,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				foreach (var pair in pairs) {
 					pair.Value["Id"] = pair.Key.Id;
 					pair.Value["Name"] = pair.Key.Name;
-					pair.Value["IsSaleProperty"] = pair.Key.IsSaleProperty ? EnumBool.True : EnumBool.False;
+					pair.Value["IsSalesProperty"] = pair.Key.IsSalesProperty ? EnumBool.True : EnumBool.False;
 					pair.Value["ControlType"] = new T(pair.Key.ControlType.GetDescription());
 					pair.Value["PropertyValues"] = string.Join(",", pair.Key.PropertyValues.Select(p => p.Name));
 					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
@@ -112,7 +111,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				var idColumn = response.Columns.AddIdColumn("Id");
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Name", "15%");
-				response.Columns.AddEnumLabelColumn("IsSaleProperty", typeof(EnumBool));
+				response.Columns.AddEnumLabelColumn("IsSalesProperty", typeof(EnumBool));
 				response.Columns.AddMemberColumn("ControlType");
 				response.Columns.AddMemberColumn("PropertyValues", "20%");
 				response.Columns.AddMemberColumn("CreateTime");
@@ -140,8 +139,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// <summary>
 			/// 是否销售属性
 			/// </summary>
-			[CheckBoxField("IsSaleProperty")]
-			public bool IsSaleProperty { get; set; }
+			[CheckBoxField("IsSalesProperty")]
+			public bool IsSalesProperty { get; set; }
 			/// <summary>
 			/// 控件类型
 			/// </summary>
@@ -170,7 +169,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			protected override void OnBind(DatabaseContext context, ProductProperty bindFrom) {
 				Name = bindFrom.Name;
-				IsSaleProperty = bindFrom.IsSaleProperty;
+				IsSalesProperty = bindFrom.IsSalesProperty;
 				ControlType = bindFrom.ControlType;
 				PropertyValues = bindFrom.PropertyValues.ToEditList();
 				DisplayOrder = bindFrom.DisplayOrder;
@@ -185,7 +184,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 					saveTo.CreateTime = DateTime.UtcNow;
 				}
 				saveTo.Name = Name;
-				saveTo.IsSaleProperty = IsSaleProperty;
+				saveTo.IsSalesProperty = IsSalesProperty;
 				saveTo.ControlType = ControlType;
 				saveTo.PropertyValues = PropertyValues.ToDatabaseSet(saveTo);
 				saveTo.DisplayOrder = DisplayOrder;

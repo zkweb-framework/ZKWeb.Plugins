@@ -25,7 +25,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		/// 是否销售属性
 		/// 销售属性时买家在购买时必须选择该属性的值
 		/// </summary>
-		public virtual bool IsSaleProperty { get; set; }
+		public virtual bool IsSalesProperty { get; set; }
 		/// <summary>
 		/// 输入控件类型
 		/// </summary>
@@ -71,7 +71,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		object ILiquidizable.ToLiquid() {
 			return new {
 				Id, Name,
-				IsSaleProperty, ControlType, PropertyValues
+				IsSalesProperty, ControlType, PropertyValues
 			};
 		}
 
@@ -94,7 +94,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		public ProductPropertyMap() {
 			Id(p => p.Id);
 			Map(p => p.Name);
-			Map(p => p.IsSaleProperty);
+			Map(p => p.IsSalesProperty);
 			Map(p => p.ControlType);
 			HasMany(p => p.PropertyValues).Cascade.AllDeleteOrphan();
 			Map(p => p.DisplayOrder);

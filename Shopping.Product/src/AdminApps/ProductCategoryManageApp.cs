@@ -5,17 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Database;
+using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>
 	/// 商品类目管理
 	/// </summary>
 	[ExportMany]
-	public class ProductCategoryManageApp : AdminAppBuilder<ProductCategory, ProductPropertyManageApp> {
+	public class ProductCategoryManageApp : AdminAppBuilder<ProductCategory, ProductCategoryManageApp> {
 		public override string Name { get { return "ProductCategoryManage"; } }
 		public override string Url { get { return "/admin/product_categories"; } }
 		public override string TileClass { get { return "tile bg-red"; } }
@@ -32,7 +36,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 构建表格
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				throw new NotImplementedException();
+				table.MenuItems.AddDivider();
+				table.MenuItems.AddEditActionForAdminApp<ProductCategoryManageApp>();
+				table.MenuItems.AddAddActionForAdminApp<ProductCategoryManageApp>();
+				searchBar.KeywordPlaceHolder = new T("Name/Remark");
+				searchBar.MenuItems.AddDivider();
+				searchBar.MenuItems.AddRecycleBin();
+				searchBar.MenuItems.AddAddActionForAdminApp<ProductCategoryManageApp>();
 			}
 
 			/// <summary>
@@ -40,7 +50,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnQuery(
 				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<ProductCategory> query) {
-				throw new NotImplementedException();
+				// 按回收站
+				query = query.FilterByRecycleBin(request);
+				// 按关键字
+				if (!string.IsNullOrEmpty(request.Keyword)) {
+					query = query.Where(q =>
+						q.Name.Contains(request.Keyword) ||
+						q.Remark.Contains(request.Keyword));
+				}
 			}
 
 			/// <summary>
@@ -48,7 +65,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnSort(
 				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<ProductCategory> query) {
-				throw new NotImplementedException();
+				query = query.OrderByDescending(q => q.Id);
 			}
 
 			/// <summary>
@@ -56,7 +73,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnSelect(
 				AjaxTableSearchRequest request, List<KeyValuePair<ProductCategory, Dictionary<string, object>>> pairs) {
-				throw new NotImplementedException();
+				foreach (var pair in pairs) {
+					pair.Value["Id"] = pair.Key.Id;
+					pair.Value["Name"] = pair.Key.Name;
+					pair.Value["SalesProperties"] = string.Join(",",
+						pair.Key.Properties.Where(p => p.IsSalesProperty).Select(p => p.Name));
+					pair.Value["NonSalesProperties"] = string.Join(",",
+						pair.Key.Properties.Where(p => !p.IsSalesProperty).Select(p => p.Name));
+					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
+					pair.Value["LastUpdated"] = pair.Key.LastUpdated.ToClientTimeString();
+					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+				}
 			}
 
 			/// <summary>
@@ -64,7 +91,18 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				throw new NotImplementedException();
+				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddNoColumn();
+				response.Columns.AddMemberColumn("Name", "15%");
+				response.Columns.AddMemberColumn("SalesProperties", "15%");
+				response.Columns.AddMemberColumn("NonSalesProperties", "15%");
+				response.Columns.AddMemberColumn("CreateTime");
+				response.Columns.AddMemberColumn("LastUpdated");
+				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
+				var actionColumn = response.Columns.AddActionColumn();
+				actionColumn.AddEditActionForAdminApp<ProductCategoryManageApp>();
+				idColumn.AddDivider();
+				idColumn.AddDeleteActionsForAdminApp<ProductCategoryManageApp>(request);
 			}
 		}
 

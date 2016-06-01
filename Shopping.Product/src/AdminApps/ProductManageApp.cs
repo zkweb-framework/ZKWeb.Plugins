@@ -29,7 +29,6 @@ using ZKWeb.Plugins.Common.GenericTag.src.Database;
 using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using System.Web;
-using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using DryIoc;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Templating;

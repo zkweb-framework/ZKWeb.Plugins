@@ -46,7 +46,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 			var nonSalesProperties = new List<HtmlString>();
 			foreach (var property in category.Properties) {
 				var html = property.GetEditHtml(category);
-				(property.IsSaleProperty ? salesProperties : nonSalesProperties).Add(html);
+				(property.IsSalesProperty ? salesProperties : nonSalesProperties).Add(html);
 			}
 			return new TemplateResult("shopping.product/property_editor.html",
 				new { salesProperties, nonSalesProperties });

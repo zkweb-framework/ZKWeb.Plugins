@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchedDataConditionBinders 
 			var categoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
 			var category = categoryManager.FindCategory(categoryId ?? 0);
 			var salesProperties = (category != null) ?
-				category.Properties.Where(p => p.IsSaleProperty).ToList() :
+				category.Properties.Where(p => p.IsSalesProperty).ToList() :
 				new List<ProductProperty>();
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var pathManager = Application.Ioc.Resolve<PathManager>();

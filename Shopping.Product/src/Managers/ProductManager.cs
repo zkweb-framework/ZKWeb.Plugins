@@ -119,7 +119,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 							name = new T(e.PropertyValueName)
 						}).ToList()
 					};
-					(property.IsSaleProperty ? saleProperties : nonSaleProperties).Add(obj);
+					(property.IsSalesProperty ? saleProperties : nonSaleProperties).Add(obj);
 				}
 				info = new {
 					id = product.Id,
