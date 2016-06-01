@@ -108,18 +108,28 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 						MatchOrder = d.MatchOrder
 					}).OrderBy(d => d.MatchOrder));
 				// 销售和非销售属性
+				// 添加时遵守原有的显示顺序
 				var saleProperties = new List<object>();
 				var nonSaleProperties = new List<object>();
-				foreach (var group in product.PropertyValues.GroupBy(p => p.Property.Id)) {
-					var property = group.First().Property;
+				var groups = product.PropertyValues.GroupBy(p => p.Property.Id).Select(g => new {
+					property = g.First().Property,
+					propertyValues = g,
+				}).OrderBy(g => g.property.DisplayOrder);
+				foreach (var group in groups) {
 					var obj = new {
-						property = new { id = property.Id, name = new T(property.Name) },
-						values = group.Select(e => new {
-							id = e.PropertyValue == null ? null : (long?)e.PropertyValue.Id,
-							name = new T(e.PropertyValueName)
-						}).ToList()
+						property = new {
+							id = group.property.Id,
+							name = new T(group.property.Name)
+						},
+						values = group.propertyValues
+							.OrderBy(value =>
+								value.PropertyValue == null ? 0 : value.PropertyValue.DisplayOrder)
+							.Select(value => new {
+								id = value.PropertyValue == null ? null : (long?)value.PropertyValue.Id,
+								name = new T(value.PropertyValueName)
+							}).ToList()
 					};
-					(property.IsSalesProperty ? saleProperties : nonSaleProperties).Add(obj);
+					(group.property.IsSalesProperty ? saleProperties : nonSaleProperties).Add(obj);
 				}
 				info = new {
 					id = product.Id,

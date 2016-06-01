@@ -1,4 +1,5 @@
-﻿using DryIocAttributes;
+﻿using DryIoc;
+using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Model;
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.Managers;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>
@@ -82,7 +84,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnSort(
 				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<ProductProperty> query) {
-				query = query.OrderByDescending(q => q.Id);
+				query = query.OrderBy(q => q.DisplayOrder).ThenByDescending(q => q.LastUpdated);
 			}
 
 			/// <summary>
@@ -95,7 +97,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 					pair.Value["Name"] = pair.Key.Name;
 					pair.Value["IsSalesProperty"] = pair.Key.IsSalesProperty ? EnumBool.True : EnumBool.False;
 					pair.Value["ControlType"] = new T(pair.Key.ControlType.GetDescription());
-					pair.Value["PropertyValues"] = string.Join(",", pair.Key.PropertyValues.Select(p => p.Name));
+					pair.Value["PropertyValues"] = string.Join(",",
+						pair.Key.OrderedPropertyValues().Select(p => p.Name));
 					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
 					pair.Value["LastUpdated"] = pair.Key.LastUpdated.ToClientTimeString();
 					pair.Value["DisplayOrder"] = pair.Key.DisplayOrder;
@@ -190,6 +193,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				saveTo.DisplayOrder = DisplayOrder;
 				saveTo.LastUpdated = DateTime.UtcNow;
 				saveTo.Remark = Remark;
+				// 编辑后清除类目管理器的缓存
+				Application.Ioc.Resolve<ProductCategoryManager>().ClearCache();
 				return new {
 					message = new T("Saved successfully"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal

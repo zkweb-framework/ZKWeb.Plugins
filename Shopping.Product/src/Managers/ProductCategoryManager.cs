@@ -33,6 +33,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// 缓存中的类目不包含属性和属性值
 		/// </summary>
 		protected MemoryCache<int, List<ProductCategory>> CategoryListCache { get; set; }
+		/// <summary>
+		/// 属性列表的缓存
+		/// 缓存中的属性不包括属性值
+		/// </summary>
+		protected MemoryCache<int, List<ProductProperty>> PropertyListCache { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -43,6 +48,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ProductCategoryCacheTime, 180));
 			CategoryCache = new MemoryCache<long, ProductCategory>();
 			CategoryListCache = new MemoryCache<int, List<ProductCategory>>();
+			PropertyListCache = new MemoryCache<int, List<ProductProperty>>();
 		}
 
 		/// <summary>
@@ -50,7 +56,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// </summary>
 		/// <param name="categoryId">类目Id</param>
 		/// <returns></returns>
-		public virtual ProductCategory FindCategory(long categoryId) {
+		public virtual ProductCategory GetCategory(long categoryId) {
 			// 从缓存获取
 			var category = CategoryCache.GetOrDefault(categoryId);
 			if (category != null) {
@@ -89,11 +95,34 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		}
 
 		/// <summary>
+		/// 获取属性列表
+		/// </summary>
+		/// <returns></returns>
+		public virtual IReadOnlyList<ProductProperty> GetPropertyList() {
+			// 从缓存获取
+			var propertyList = PropertyListCache.GetOrDefault(0);
+			if (propertyList != null) {
+				return propertyList;
+			}
+			// 从数据库获取
+			// 按显示顺序 +更新时间排序
+			propertyList = UnitOfWork.ReadData<ProductProperty, List<ProductProperty>>(r => {
+				return r.GetMany(p => !p.Deleted)
+					.OrderBy(p => p.DisplayOrder)
+					.ThenByDescending(p => p.LastUpdated).ToList();
+			});
+			// 保存到缓存
+			PropertyListCache.Put(0, propertyList, CategoryCacheTime);
+			return propertyList;
+		}
+
+		/// <summary>
 		/// 清理缓存
 		/// </summary>
 		public virtual void ClearCache() {
 			CategoryCache.Clear();
 			CategoryListCache.Clear();
+			PropertyListCache.Clear();
 		}
 	}
 }

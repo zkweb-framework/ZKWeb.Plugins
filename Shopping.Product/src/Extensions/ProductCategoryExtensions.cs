@@ -29,5 +29,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 			}
 			return string.Join(delimiter, names.Reverse<string>());
 		}
+
+		/// <summary>
+		/// 获取经过排序的属性列表
+		/// </summary>
+		/// <param name="category">类目</param>
+		/// <returns></returns>
+		public static IEnumerable<ProductProperty> OrderedProperties(
+			this ProductCategory category) {
+			return category.Properties.OrderBy(p => p.DisplayOrder).ThenByDescending(p => p.CreateTime);
+		}
 	}
 }

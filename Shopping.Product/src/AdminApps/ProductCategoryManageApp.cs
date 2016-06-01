@@ -1,6 +1,8 @@
-﻿using DryIocAttributes;
+﻿using DryIoc;
+using DryIocAttributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +12,12 @@ using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
+using ZKWeb.Plugins.Shopping.Product.src.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.ListItemProviders;
+using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
@@ -77,9 +83,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 					pair.Value["Id"] = pair.Key.Id;
 					pair.Value["Name"] = pair.Key.Name;
 					pair.Value["SalesProperties"] = string.Join(",",
-						pair.Key.Properties.Where(p => p.IsSalesProperty).Select(p => p.Name));
+						pair.Key.OrderedProperties().Where(p => p.IsSalesProperty).Select(p => p.Name));
 					pair.Value["NonSalesProperties"] = string.Join(",",
-						pair.Key.Properties.Where(p => !p.IsSalesProperty).Select(p => p.Name));
+						pair.Key.OrderedProperties().Where(p => !p.IsSalesProperty).Select(p => p.Name));
 					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
 					pair.Value["LastUpdated"] = pair.Key.LastUpdated.ToClientTimeString();
 					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
@@ -111,17 +117,66 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 		/// </summary>
 		public class Form : TabDataEditFormBuilder<ProductCategory, Form> {
 			/// <summary>
+			/// 名称
+			/// </summary>
+			[Required]
+			[StringLength(100, MinimumLength = 1)]
+			[TextBoxField("Name", "Name")]
+			public string Name { get; set; }
+			/// <summary>
+			/// 销售属性
+			/// </summary>
+			[CheckBoxGroupField("SalesProperties", typeof(ProductSalesPropertyListItemProvider))]
+			public HashSet<long> SalesProperties { get; set; }
+			/// <summary>
+			/// 非销售属性
+			/// </summary>
+			[CheckBoxGroupField("NonSalesProperties", typeof(ProductNonSalesPropertyListItemProvider))]
+			public HashSet<long> NonSalesProperties { get; set; }
+			/// <summary>
+			/// 备注
+			/// </summary>
+			[TextAreaField("Remark", 5, "Remark")]
+			public string Remark { get; set; }
+
+			/// <summary>
 			/// 绑定表单
 			/// </summary>
 			protected override void OnBind(DatabaseContext context, ProductCategory bindFrom) {
-				throw new NotImplementedException();
+				Name = bindFrom.Name;
+				SalesProperties = new HashSet<long>(
+					bindFrom.OrderedProperties().Where(p => p.IsSalesProperty).Select(p => p.Id));
+				NonSalesProperties = new HashSet<long>(
+					bindFrom.OrderedProperties().Where(p => !p.IsSalesProperty).Select(p => p.Id));
+				Remark = bindFrom.Remark;
 			}
 
 			/// <summary>
 			/// 提交表单
 			/// </summary>
 			protected override object OnSubmit(DatabaseContext context, ProductCategory saveTo) {
-				throw new NotImplementedException();
+				if (saveTo.Id <= 0) {
+					saveTo.CreateTime = DateTime.UtcNow;
+				}
+				saveTo.Name = Name;
+				var propertyRepository = RepositoryResolver.Resolve<ProductProperty>(context);
+				var selected = new List<long>();
+				if (SalesProperties != null) {
+					selected.AddRange(SalesProperties);
+				}
+				if (NonSalesProperties != null) {
+					selected.AddRange(NonSalesProperties);
+				}
+				saveTo.Properties.Clear();
+				saveTo.Properties.AddRange(propertyRepository.GetMany(p => selected.Contains(p.Id)));
+				saveTo.Remark = Remark;
+				saveTo.LastUpdated = DateTime.UtcNow;
+				// 编辑后清除类目管理器的缓存
+				Application.Ioc.Resolve<ProductCategoryManager>().ClearCache();
+				return new {
+					message = new T("Saved successfully"),
+					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
+				};
 			}
 		}
 	}

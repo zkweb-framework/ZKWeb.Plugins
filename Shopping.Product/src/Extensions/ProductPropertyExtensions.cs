@@ -24,7 +24,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		public static HtmlString GetEditHtml(this ProductProperty property, ProductCategory category) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var categoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
-			var propertyValues = property.PropertyValues;
+			var propertyValues = property.OrderedPropertyValues().ToList();
 			string templatePath = null;
 			if (property.ControlType == ProductPropertyControlType.TextBox) {
 				// 文本框
@@ -44,6 +44,16 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 			}
 			return new HtmlString(templateManager.RenderTemplate(
 				templatePath, new { property, propertyValues, category }));
+		}
+
+		/// <summary>
+		/// 获取经过排序的属性值列表
+		/// </summary>
+		/// <param name="property">商品属性</param>
+		/// <returns></returns>
+		public static IEnumerable<ProductPropertyValue> OrderedPropertyValues(
+			this ProductProperty property) {
+			return property.PropertyValues.OrderBy(p => p.DisplayOrder);
 		}
 	}
 }

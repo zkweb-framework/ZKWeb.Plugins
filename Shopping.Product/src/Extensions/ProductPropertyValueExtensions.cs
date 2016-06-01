@@ -21,11 +21,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 			if (values == null) {
 				return null;
 			}
-			return values.Select(v => new ProductPropertyValueForEdit() {
-				Id = v.Id,
-				Name = v.Name,
-				Remark = v.Remark
-			}).ToList();
+			return values.OrderBy(v => v.DisplayOrder)
+				.Select(v => new ProductPropertyValueForEdit() {
+					Id = v.Id,
+					Name = v.Name,
+					Remark = v.Remark
+				}).ToList();
 		}
 
 		/// <summary>

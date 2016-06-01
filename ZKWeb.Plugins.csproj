@@ -232,6 +232,8 @@
     <Compile Include="Shopping.Product\src\GenericFormsForAdminSettings\ProductListSettingsForm.cs" />
     <Compile Include="Shopping.Product\src\ImageBrowsers\ProductImageBrowser.cs" />
     <Compile Include="Shopping.Product\src\ListItemProviders\ProductCategoryListItemProvider.cs" />
+    <Compile Include="Shopping.Product\src\ListItemProviders\ProductNonSalesPropertyListItemProvider.cs" />
+    <Compile Include="Shopping.Product\src\ListItemProviders\ProductSalesPropertyListItemProvider.cs" />
     <Compile Include="Shopping.Product\src\Managers\ProductManager.cs" />
     <Content Include="CMS.Article\static\cms.article.css\article-list.css" />
     <Content Include="CMS.Article\static\cms.article.js\article-list.js" />

@@ -37,14 +37,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 			var categoryId = HttpContextUtils.CurrentContext.Request.Get<long>("categoryId");
 			var categoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
 			// 获取类目
-			var category = categoryManager.FindCategory(categoryId);
+			var category = categoryManager.GetCategory(categoryId);
 			if (category == null) {
 				return new PlainResult("");
 			}
 			// 获取销售和非销售属性的Html列表
 			var salesProperties = new List<HtmlString>();
 			var nonSalesProperties = new List<HtmlString>();
-			foreach (var property in category.Properties) {
+			foreach (var property in category.OrderedProperties()) {
 				var html = property.GetEditHtml(category);
 				(property.IsSalesProperty ? salesProperties : nonSalesProperties).Add(html);
 			}

@@ -21,10 +21,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 			if (values == null) {
 				return null;
 			}
-			return values.Select(v => new ProductToPropertyValueForEdit() {
-				propertyId = v.Property.Id,
-				propertyValueId = v.PropertyValue.Id,
-				name = v.PropertyValueName
+			return values.Select(value => new ProductToPropertyValueForEdit() {
+				propertyId = value.Property.Id,
+				propertyValueId = value.PropertyValue == null ? null : (long?)value.PropertyValue.Id,
+				name = value.PropertyValueName
 			}).ToList();
 		}
 
