@@ -19,7 +19,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// 商品类目管理
 	/// </summary>
 	[ExportMany]
-	public class ProductCategoryManageApp : AdminAppBuilder<ProductCategory, ProductCategoryManageApp> {
+	public class ProductCategoryManageApp : AdminAppBuilder<ProductCategory> {
 		public override string Name { get { return "ProductCategoryManage"; } }
 		public override string Url { get { return "/admin/product_categories"; } }
 		public override string TileClass { get { return "tile bg-red"; } }

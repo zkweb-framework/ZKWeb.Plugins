@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// 支付接口管理
 	/// </summary>
 	[ExportMany]
-	public class PaymentApiManageApp : AdminAppBuilder<PaymentApi, PaymentApiManageApp> {
+	public class PaymentApiManageApp : AdminAppBuilder<PaymentApi> {
 		public override string Name { get { return "PaymentApiManage"; } }
 		public override string Url { get { return "/admin/payment_apis"; } }
 		public override string TileClass { get { return "tile bg-yellow"; } }

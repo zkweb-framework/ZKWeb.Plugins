@@ -25,7 +25,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// 用户管理
 	/// </summary>
 	[ExportMany]
-	public class UserManageApp : AdminAppBuilder<User, UserManageApp> {
+	public class UserManageApp : AdminAppBuilder<User> {
 		public override string Name { get { return "User Manage"; } }
 		public override string Url { get { return "/admin/users"; } }
 		public override string TileClass { get { return "tile bg-blue"; } }

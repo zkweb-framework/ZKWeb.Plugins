@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.AdminApps {
 	/// 订单管理
 	/// </summary>
 	[ExportMany]
-	public class OrderManageApp : AdminAppBuilder<Database.Order, OrderManageApp> {
+	public class OrderManageApp : AdminAppBuilder<Database.Order> {
 		public override string Name { get { return "OrderManage"; } }
 		public override string Url { get { return "/admin/orders"; } }
 		public override string TileClass { get { return "tile bg-aqua"; } }

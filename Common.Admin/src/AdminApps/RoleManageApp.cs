@@ -26,7 +26,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// 要求超级管理员
 	/// </summary>
 	[ExportMany]
-	public class RoleManageApp : AdminAppBuilder<UserRole, RoleManageApp> {
+	public class RoleManageApp : AdminAppBuilder<UserRole> {
 		public override string Name { get { return "Role Manage"; } }
 		public override string Url { get { return "/admin/roles"; } }
 		public override string TileClass { get { return "tile bg-blue"; } }

@@ -40,9 +40,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// }
 	/// </summary>
 	/// <typeparam name="TData">管理的数据类型</typeparam>
-	/// <typeparam name="TApp">继承类自身的类型</typeparam>
 	[ExportMany]
-	public abstract class AdminAppBuilder<TData, TApp> : AdminApp, IAdminAppBuilder
+	public abstract class AdminAppBuilder<TData> : AdminApp, IAdminAppBuilder
 		where TData : class {
 		/// <summary>
 		/// 获取搜索结果的Url

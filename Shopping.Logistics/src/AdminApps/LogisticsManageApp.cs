@@ -31,7 +31,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 	/// 物流管理
 	/// </summary>
 	[ExportMany]
-	public class LogisticsManageApp : AdminAppBuilder<Database.Logistics, LogisticsManageApp> {
+	public class LogisticsManageApp : AdminAppBuilder<Database.Logistics> {
 		public override string Name { get { return "LogisticsManage"; } }
 		public override string Url { get { return "/admin/logistics"; } }
 		public override string TileClass { get { return "tile bg-aqua"; } }

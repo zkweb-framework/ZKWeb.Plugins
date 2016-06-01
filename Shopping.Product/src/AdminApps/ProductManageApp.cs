@@ -39,7 +39,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// 商品管理
 	/// </summary>
 	[ExportMany]
-	public class ProductManageApp : AdminAppBuilder<Database.Product, ProductManageApp> {
+	public class ProductManageApp : AdminAppBuilder<Database.Product> {
 		public override string Name { get { return "ProductManage"; } }
 		public override string Url { get { return "/admin/products"; } }
 		public override string TileClass { get { return "tile bg-red"; } }

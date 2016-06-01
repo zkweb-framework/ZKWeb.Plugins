@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 	/// 文章管理
 	/// </summary>
 	[ExportMany]
-	public class ArticleManageApp : AdminAppBuilder<Database.Article, ArticleManageApp> {
+	public class ArticleManageApp : AdminAppBuilder<Database.Article> {
 		public override string Name { get { return "ArticleManage"; } }
 		public override string Url { get { return "/admin/articles"; } }
 		public override string TileClass { get { return "tile bg-green"; } }

@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// 支付交易记录
 	/// </summary>
 	[ExportMany]
-	public class PaymentTransactionRecordsApp : AdminAppBuilder<PaymentTransaction, PaymentTransactionRecordsApp> {
+	public class PaymentTransactionRecordsApp : AdminAppBuilder<PaymentTransaction> {
 		public override string Name { get { return "PaymentTransactionRecords"; } }
 		public override string Url { get { return "/admin/payment_transactions"; } }
 		public override string TileClass { get { return "tile bg-yellow"; } }
