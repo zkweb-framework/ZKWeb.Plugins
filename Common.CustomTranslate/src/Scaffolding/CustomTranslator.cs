@@ -26,6 +26,7 @@ using ZKWeb.Localize;
 using ZKWeb.Web;
 using ZKWeb.Localize.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Cache.Interfaces;
 
 namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 	/// <summary>
@@ -38,7 +39,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 	/// }
 	/// </summary>
 	public abstract class CustomTranslator :
-		GenericListForAdminSettings<Translation, CustomTranslator>, ITranslateProvider {
+		GenericListForAdminSettings<Translation, CustomTranslator>, ITranslateProvider, ICacheCleaner {
 		/// <summary>
 		/// 使用的权限
 		/// </summary>
@@ -204,7 +205,8 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 		public virtual string TranslatesPath {
 			get {
 				var pathManager = Application.Ioc.Resolve<PathManager>();
-				return pathManager.GetStorageFullPath("texts", "common.custom_translate", string.Format("{0}.json", Name));
+				return pathManager.GetStorageFullPath(
+					"texts", "common.custom_translate", string.Format("{0}.json", Name));
 			}
 		}
 
@@ -229,20 +231,28 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 					_Translates = value ?? new Dictionary<string, string>(), Formatting.Indented));
 			}
 		}
-		protected Dictionary<string, string> _Translates;
+		protected Dictionary<string, string> _Translates { get; set; }
 
 		/// <summary>
 		/// 判断是否可以翻译指定语言
 		/// </summary>
-		public bool CanTranslate(string code) {
+		public virtual bool CanTranslate(string code) {
 			return code == Name;
 		}
 
 		/// <summary>
 		/// 翻译文本
 		/// </summary>
-		public string Translate(string text) {
+		public virtual string Translate(string text) {
 			return Translates.GetOrDefault(text);
+		}
+
+		/// <summary>
+		/// 清理缓存
+		/// 手动编辑后可以清理缓存让翻译器读取文件内容
+		/// </summary>
+		public virtual void ClearCache() {
+			_Translates = null;
 		}
 
 		/// <summary>

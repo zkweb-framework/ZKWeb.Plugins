@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
@@ -21,7 +22,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ListItemProviders {
 			var categoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
 			foreach (var property in categoryManager.GetPropertyList()) {
 				if (property.IsSalesProperty) {
-					yield return new ListItem(property.Name, property.Id.ToString());
+					yield return new ListItem(new T(property.Name), property.Id.ToString());
 				}
 			}
 		}

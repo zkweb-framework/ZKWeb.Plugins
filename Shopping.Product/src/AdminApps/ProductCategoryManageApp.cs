@@ -174,7 +174,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				// 编辑后清除类目管理器的缓存
 				Application.Ioc.Resolve<ProductCategoryManager>().ClearCache();
 				return new {
-					message = new T("Saved successfully"),
+					message = new T("Saved Successfully"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
 				};
 			}
