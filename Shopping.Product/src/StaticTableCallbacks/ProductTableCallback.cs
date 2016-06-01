@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Database;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
@@ -93,7 +94,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks {
 			foreach (var pair in pairs) {
 				var seller = pair.Key.Seller;
 				pair.Value["Id"] = pair.Key.Id;
-				pair.Value["Name"] = pair.Key.Name;
+				pair.Value["Name"] = new T(pair.Key.Name);
 				pair.Value["MainAlbumThumbnail"] = (
 					albumManager.GetAlbumImageWebPath(pair.Key.Id, null, ProductAlbumImageType.Thumbnail));
 				pair.Value["Price"] = pair.Key.MatchedDatas.GetPriceString();
