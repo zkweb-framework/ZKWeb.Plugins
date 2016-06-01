@@ -12,6 +12,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Templating;
+using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 	/// <summary>
@@ -55,13 +56,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 				languages.Select(l => translateManager.Translate(name, l.Name)));
 			// 过滤包含指定名称的属性，并返回属性值
 			var productCategoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
+			var propertyNames = product.Category.Properties.ToDictionary(p => p.Id, p => p.Name);
 			foreach (var propertyValue in product.PropertyValues) {
-				var property = productCategoryManager.FindProperty(
-					product.CategoryId ?? 0, propertyValue.PropertyId);
-				if (property == null) {
-					continue;
-				}
-				if (translatedNames.Any(n => property.Name.Contains(n))) {
+				var propertyName = propertyValue.Property.Name ?? "";
+				if (translatedNames.Any(n => propertyName.Contains(n))) {
 					yield return propertyValue;
 				}
 			}

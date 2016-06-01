@@ -84,8 +84,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 				var seller = product.Seller;
 				// 类目信息
 				var productCategoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
-				var category = product.CategoryId == null ? null :
-					productCategoryManager.FindCategory(product.CategoryId.Value);
+				var category = product.Category;
 				// 相册信息
 				var productAlbumManager = Application.Ioc.Resolve<ProductAlbumManager>();
 				var mainImageWebPath = productAlbumManager.GetAlbumImageWebPath(
@@ -111,15 +110,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 				// 销售和非销售属性
 				var saleProperties = new List<object>();
 				var nonSaleProperties = new List<object>();
-				foreach (var group in product.PropertyValues.GroupBy(p => p.PropertyId)) {
-					var property = productCategoryManager.FindProperty(product.CategoryId ?? 0, group.Key);
-					if (property == null) {
-						continue;
-					}
+				foreach (var group in product.PropertyValues.GroupBy(p => p.Property.Id)) {
+					var property = group.First().Property;
 					var obj = new {
 						property = new { id = property.Id, name = new T(property.Name) },
 						values = group.Select(e => new {
-							id = e.PropertyValueId,
+							id = e.PropertyValue == null ? null : (long?)e.PropertyValue.Id,
 							name = new T(e.PropertyValueName)
 						}).ToList()
 					};
@@ -127,7 +123,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 				}
 				info = new {
 					id = product.Id,
-					categoryId = product.CategoryId,
+					categoryId = category == null ? null : (long?)category.Id,
 					categoryName = category == null ? null : category.Name,
 					name = product.Name,
 					introduction = product.Introduction,

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 	/// <summary>
@@ -21,17 +22,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		/// </summary>
 		public virtual Product Product { get; set; }
 		/// <summary>
-		/// 类目Id
+		/// 类目
 		/// </summary>
-		public virtual long CategoryId { get; set; }
+		public virtual ProductCategory Category { get; set; }
 		/// <summary>
-		/// 属性Id
+		/// 属性
 		/// </summary>
-		public virtual long PropertyId { get; set; }
+		public virtual ProductProperty Property { get; set; }
 		/// <summary>
-		/// 属性值Id，手工输入时等于null
+		/// 属性值，手工输入时等于null
 		/// </summary>
-		public virtual long? PropertyValueId { get; set; }
+		public virtual ProductPropertyValue PropertyValue { get; set; }
 		/// <summary>
 		/// 属性值名称，允许手动修改
 		/// </summary>
@@ -49,9 +50,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		public ProductToPropertyValueMap() {
 			Id(v => v.Id);
 			References(v => v.Product);
-			Map(v => v.CategoryId);
-			Map(v => v.PropertyId);
-			Map(v => v.PropertyValueId);
+			References(v => v.Category).Not.Nullable();
+			References(v => v.Property).Not.Nullable();
+			References(v => v.PropertyValue);
 			Map(v => v.PropertyValueName).Length(0xffff);
 		}
 	}

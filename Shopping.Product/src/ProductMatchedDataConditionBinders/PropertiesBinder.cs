@@ -1,13 +1,12 @@
 ﻿using DryIoc;
 using DryIocAttributes;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Localize;
+using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Server;
@@ -28,13 +27,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchedDataConditionBinders 
 			var categoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
 			var category = categoryManager.FindCategory(categoryId ?? 0);
 			var salesProperties = (category != null) ?
-				categoryManager.GetProperties(category).Where(p => p.IsSaleProperty).ToList() :
+				category.Properties.Where(p => p.IsSaleProperty).ToList() :
 				new List<ProductProperty>();
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var pathManager = Application.Ioc.Resolve<PathManager>();
 			Contents = string.Join("", salesProperties.Select(property => {
 				// 规格下拉框
-				var propertyValues = categoryManager.GetPropertyValues(property);
+				var propertyValues = property.PropertyValues;
 				return templateManager.RenderTemplate(
 					"shopping.product/condition_binder.property.dropdown.html",
 					new { property, propertyValues });

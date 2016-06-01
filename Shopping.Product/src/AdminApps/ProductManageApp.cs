@@ -286,7 +286,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 					}));
 				ProductAlbum = new ProductAlbumUploadData(bindFrom.Id);
 				// 属性规格
-				Category = bindFrom.CategoryId;
+				Category = bindFrom.Category == null ? null : (long?)bindFrom.Category.Id;
 				PropertyValues = bindFrom.PropertyValues.ToEditList();
 				// 价格库存
 				MatchedDatas = bindFrom.MatchedDatas.ToEditList();
@@ -314,7 +314,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				saveTo.Remark = Remark;
 				saveTo.LastUpdated = DateTime.UtcNow;
 				// 属性规格
-				saveTo.CategoryId = Category;
+				var categoryRepository = RepositoryResolver.Resolve<ProductCategory>(context);
+				saveTo.Category = categoryRepository.GetById(Category);
 				saveTo.PropertyValues.Clear();
 				saveTo.PropertyValues.AddRange(PropertyValues.ToDatabaseSet(saveTo));
 				// 价格库存

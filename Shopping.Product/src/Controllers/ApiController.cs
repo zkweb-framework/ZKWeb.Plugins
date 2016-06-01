@@ -44,7 +44,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 			// 获取销售和非销售属性的Html列表
 			var salesProperties = new List<HtmlString>();
 			var nonSalesProperties = new List<HtmlString>();
-			foreach (var property in categoryManager.GetProperties(category)) {
+			foreach (var property in category.Properties) {
 				var html = property.GetEditHtml(category);
 				(property.IsSaleProperty ? salesProperties : nonSalesProperties).Add(html);
 			}

@@ -20,9 +20,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ListItemProviders {
 		/// <returns></returns>
 		public IEnumerable<ListItem> GetItems() {
 			var categoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
-			var tree = categoryManager.GetCategoryTree();
-			foreach (var node in tree.EnumerateAllNodes().Where(t => t.Value != null)) {
-				yield return new ListItem(node.GetFullName(), node.Value.Id.ToString());
+			var categoryList = categoryManager.GetCategoryList();
+			foreach (var category in categoryList) {
+				yield return new ListItem(category.Name, category.Id.ToString());
 			}
 		}
 	}

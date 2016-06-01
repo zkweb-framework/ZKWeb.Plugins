@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.GenericClass.src.Database;
 using ZKWeb.Plugins.Common.GenericTag.src.Database;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 	/// <summary>
@@ -19,9 +20,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		/// </summary>
 		public virtual long Id { get; set; }
 		/// <summary>
-		/// 商品类目Id，可以等于null
+		/// 商品类目，没有时等于null
 		/// </summary>
-		public virtual long? CategoryId { get; set; }
+		public virtual ProductCategory Category { get; set; }
 		/// <summary>
 		/// 商品名称
 		/// </summary>
@@ -109,7 +110,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		/// </summary>
 		public ProductMap() {
 			Id(p => p.Id);
-			Map(p => p.CategoryId).Index("Idx_Category");
+			References(p => p.Category).Index("Idx_Category");
 			Map(p => p.Name).Length(0xffff);
 			Map(p => p.Introduction).Length(0xffff);
 			Map(p => p.Type).Not.Nullable().Index("Idx_Type");

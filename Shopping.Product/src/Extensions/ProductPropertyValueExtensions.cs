@@ -21,8 +21,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 				return null;
 			}
 			return values.Select(v => new EditingPropertyValue() {
-				propertyId = v.PropertyId,
-				propertyValueId = v.PropertyValueId,
+				propertyId = v.Property.Id,
+				propertyValueId = v.PropertyValue.Id,
 				name = v.PropertyValueName
 			}).ToList();
 		}
@@ -35,15 +35,19 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// <returns></returns>
 		public static ISet<ProductToPropertyValue> ToDatabaseSet(
 			this List<EditingPropertyValue> values, Database.Product product) {
-			if (values == null || product.CategoryId == null) {
+			if (values == null || product.Category == null) {
 				return new HashSet<ProductToPropertyValue>();
 			}
-			return new HashSet<ProductToPropertyValue>(values.Select(v => new ProductToPropertyValue() {
-				Product = product,
-				CategoryId = product.CategoryId.Value,
-				PropertyId = v.propertyId,
-				PropertyValueId = v.propertyValueId,
-				PropertyValueName = v.name
+			return new HashSet<ProductToPropertyValue>(values.Select(value => {
+				var property = product.Category.Properties.First(p => p.Id == value.propertyId);
+				var propertyValue = property.PropertyValues.FirstOrDefault(p => p.Id == value.propertyValueId);
+				return new ProductToPropertyValue() {
+					Product = product,
+					Category = product.Category,
+					Property = property,
+					PropertyValue = propertyValue,
+					PropertyValueName = value.name
+				};
 			}));
 		}
 	}

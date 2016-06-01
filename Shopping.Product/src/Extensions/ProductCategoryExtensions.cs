@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {

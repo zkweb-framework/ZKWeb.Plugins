@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Templating;
@@ -23,7 +24,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		public static HtmlString GetEditHtml(this ProductProperty property, ProductCategory category) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var categoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
-			var propertyValues = categoryManager.GetPropertyValues(property).ToList();
+			var propertyValues = property.PropertyValues;
 			string templatePath = null;
 			if (property.ControlType == ProductPropertyControlType.TextBox) {
 				// 文本框
