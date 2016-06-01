@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// <summary>
-	/// 用于编辑的商品属性值信息
-	/// 这个值用于反序列化编辑商品传回的数据
+	/// 商品关联的属性值数据，用于反序列化客户端传回的值
+	/// 编辑商品时使用
 	/// 格式 { propertyId: 属性Id, propertyValueId: 属性值Id, name: 属性值名称 }
 	/// 例
 	/// 类目 [ 服装 ]
@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	///		{ propertyId: 尺码的Id, propertyValueId: S的Id, name: "S" }
 	/// ]
 	/// </summary>
-	public class EditingPropertyValue {
+	public class ProductToPropertyValueForEdit {
 		/// <summary>
 		/// 属性Id
 		/// </summary>

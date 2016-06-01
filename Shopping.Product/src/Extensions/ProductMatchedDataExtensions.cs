@@ -64,13 +64,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// </summary>
 		/// <param name="values">数据库中的商品匹配数据列表</param>
 		/// <returns></returns>
-		public static List<EditingMatchedData> ToEditList(this ISet<ProductMatchedData> values) {
+		public static List<ProductMatchedDataForEdit> ToEditList(this ISet<ProductMatchedData> values) {
 			if (values == null) {
 				return null;
 			}
 			return values.OrderBy(v => v.MatchOrder).Select(v => {
 				// 部分特殊字段需要手动设置到Affects中
-				var data = new EditingMatchedData() {
+				var data = new ProductMatchedDataForEdit() {
 					Conditions = v.Conditions,
 					Affects = v.Affects
 				};
@@ -90,7 +90,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// <param name="product">商品</param>
 		/// <returns></returns>
 		public static ISet<ProductMatchedData> ToDatabaseSet(
-			this List<EditingMatchedData> values, Database.Product product) {
+			this List<ProductMatchedDataForEdit> values, Database.Product product) {
 			if (values == null) {
 				return new HashSet<ProductMatchedData>();
 			}

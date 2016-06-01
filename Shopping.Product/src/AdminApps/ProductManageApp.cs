@@ -246,13 +246,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// <summary>
 			/// 选中的属性值
 			/// </summary>
-			[ProductPropertiesEditor("PropertyValues", "Category", Group = "ProductProperties")]
-			public List<EditingPropertyValue> PropertyValues { get; set; }
+			[ProductToProperyValuesEditor("PropertyValues", "Category", Group = "ProductProperties")]
+			public List<ProductToPropertyValueForEdit> PropertyValues { get; set; }
 			/// <summary>
 			/// 价格库存
 			/// </summary>
 			[ProductMatchedDatasEditor("MatchedDatas", "Category", Group = "ProductPriceAndStock")]
-			public List<EditingMatchedData> MatchedDatas { get; set; }
+			public List<ProductMatchedDataForEdit> MatchedDatas { get; set; }
 			/// <summary>
 			/// 商品介绍
 			/// </summary>

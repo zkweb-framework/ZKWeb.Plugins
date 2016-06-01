@@ -10,17 +10,18 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 	/// <summary>
 	/// 商品属性值的扩展函数
 	/// </summary>
-	public static class ProductPropertyValueExtensions {
+	public static class ProductToPropertyValueExtensions {
 		/// <summary>
 		/// 转换到编辑使用的列表
 		/// </summary>
 		/// <param name="values">数据库中的商品属性值列表</param>
 		/// <returns></returns>
-		public static List<EditingPropertyValue> ToEditList(this ISet<ProductToPropertyValue> values) {
+		public static List<ProductToPropertyValueForEdit> ToEditList(
+			this ISet<ProductToPropertyValue> values) {
 			if (values == null) {
 				return null;
 			}
-			return values.Select(v => new EditingPropertyValue() {
+			return values.Select(v => new ProductToPropertyValueForEdit() {
 				propertyId = v.Property.Id,
 				propertyValueId = v.PropertyValue.Id,
 				name = v.PropertyValueName
@@ -34,7 +35,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// <param name="product">商品</param>
 		/// <returns></returns>
 		public static ISet<ProductToPropertyValue> ToDatabaseSet(
-			this List<EditingPropertyValue> values, Database.Product product) {
+			this List<ProductToPropertyValueForEdit> values, Database.Product product) {
 			if (values == null || product.Category == null) {
 				return new HashSet<ProductToPropertyValue>();
 			}
@@ -43,7 +44,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 				var propertyValue = property.PropertyValues.FirstOrDefault(p => p.Id == value.propertyValueId);
 				return new ProductToPropertyValue() {
 					Product = product,
-					Category = product.Category,
 					Property = property,
 					PropertyValue = propertyValue,
 					PropertyValueName = value.name

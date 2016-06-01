@@ -17,16 +17,17 @@ using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 	/// <summary>
-	/// 商品属性编辑器
+	/// 商品关联的属性值的编辑器
+	/// 编辑商品时使用
 	/// </summary>
-	[ExportMany(ContractKey = typeof(ProductPropertiesEditorAttribute)), SingletonReuse]
-	public class ProductPropertiesEditor : IFormFieldHandler {
+	[ExportMany(ContractKey = typeof(ProductToProperyValuesEditorAttribute)), SingletonReuse]
+	public class ProductToProperyValuesEditor : IFormFieldHandler {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
 			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
-			var attribute = (ProductPropertiesEditorAttribute)field.Attribute;
+			var attribute = (ProductToProperyValuesEditorAttribute)field.Attribute;
 			var html = new HtmlTextWriter(new StringWriter());
 			var translations = new Dictionary<string, string>() {
 				{ "Sure to change category? The properties you selected will lost!",
@@ -39,8 +40,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("input");
 			html.RenderEndTag();
-			html.AddAttribute("class", "product-property-editor");
-			html.AddAttribute("data-toggle", "product-property-editor");
+			html.AddAttribute("class", "product-to-property-values-editor");
+			html.AddAttribute("data-toggle", "product-to-property-values-editor");
 			html.AddAttribute("data-category-id-name", attribute.CategoryFieldName);
 			html.AddAttribute("data-property-values-name", attribute.Name);
 			html.AddAttribute("data-translations", JsonConvert.SerializeObject(translations));
@@ -53,8 +54,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 		/// 解析提交的字段的值
 		/// </summary>
 		public object Parse(FormField field, string value) {
-			return JsonConvert.DeserializeObject<List<EditingPropertyValue>>(value) ??
-				new List<EditingPropertyValue>();
+			return JsonConvert.DeserializeObject<List<ProductToPropertyValueForEdit>>(value) ??
+				new List<ProductToPropertyValueForEdit>();
 		}
 	}
 }

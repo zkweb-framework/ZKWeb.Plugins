@@ -22,10 +22,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		/// </summary>
 		public virtual Product Product { get; set; }
 		/// <summary>
-		/// 类目
-		/// </summary>
-		public virtual ProductCategory Category { get; set; }
-		/// <summary>
 		/// 属性
 		/// </summary>
 		public virtual ProductProperty Property { get; set; }
@@ -50,7 +46,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		public ProductToPropertyValueMap() {
 			Id(v => v.Id);
 			References(v => v.Product);
-			References(v => v.Category).Not.Nullable();
 			References(v => v.Property).Not.Nullable();
 			References(v => v.PropertyValue);
 			Map(v => v.PropertyValueName).Length(0xffff);

@@ -83,7 +83,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "ProductProperty", "商品属性" },
 			{ "ProductPropertyManage", "商品属性管理" },
 			{ "ProductCategory", "商品类目" },
-			{ "ProductCategoryManage", "商品类目管理" }
+			{ "ProductCategoryManage", "商品类目管理" },
+			{ "IsSaleProperty", "是否销售属性" },
+			{ "PropertyValues", "属性值" },
+			{ "ControlType", "控件类型" },
+			{ "TextBox", "文本框" },
+			{ "CheckBox", "多选框" },
+			{ "RadioButton", "单选框" },
+			{ "DropdownList", "下拉列表" },
+			{ "EditableDropdownList", "可编辑的下拉列表" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -21,6 +21,7 @@ using ZKWeb.Utils.Functions;
 namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 	/// <summary>
 	/// 商品相册上传器
+	/// 编辑商品时使用
 	/// </summary>
 	[ExportMany(ContractKey = typeof(ProductAlbumUploaderAttribute)), SingletonReuse]
 	public class ProductAlbumUploader : IFormFieldHandler {

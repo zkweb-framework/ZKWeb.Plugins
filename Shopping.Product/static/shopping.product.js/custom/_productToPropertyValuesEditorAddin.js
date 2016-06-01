@@ -1,5 +1,6 @@
 ﻿/*
-	商品属性编辑器的扩展
+	商品关联的属性值的编辑器的扩展
+	编辑商品时使用
 	功能有
 		设置商品匹配数据编辑器的规格下拉框样式，粗体显示选中的规格值，修改别名颜色
 */
@@ -10,22 +11,22 @@
 // 以下事件执行
 //		bind.editableTable (table元素)
 //		collect.editableTable (table元素)
-//		bind.productPropertyEditor
-//		collect.productPropertyEditor
+//		bind.productToPropertyValuesEditor
+//		collect.productToPropertyValuesEditor
 // 注意
 // 不适用于一个页面上有多个编辑器的情况
-// 编辑器必须有product-matched-data-editor和product-property-editor的Css类，否则不会生效
+// 编辑器必须有product-matched-data-editor和product-to-property-values-editor的Css类，否则不会生效
 $(function () {
 	var $productMatchedDataEditor = null;
-	var $productPropertyEditor = null;
+	var $productToPropertyValuesEditor = null;
 	var updateOptionsStyle = function () {
-		if (!$productMatchedDataEditor || !$productPropertyEditor) {
+		if (!$productMatchedDataEditor || !$productToPropertyValuesEditor) {
 			return;
 		}
 		// 获取选中的多选项和别名
 		// 数据格式 { 属性Id: [{ PropertyValueId: 属性值Id, name: 名称, color: 名称的颜色 }, ...] }
 		var selectedMapping = {};
-		$productPropertyEditor.find("[data-property-type]").each(function () {
+		$productToPropertyValuesEditor.find("[data-property-type]").each(function () {
 			var $property = $(this);
 			var propertyType = $property.attr("data-property-type");
 			var propertyId = $property.data("property-id");
@@ -72,12 +73,12 @@ $(function () {
 		$productMatchedDataEditor = $(this);
 		updateOptionsStyle();
 	});
-	$(document).on("bind.productPropertyEditor", ".product-property-editor", function () {
-		$productPropertyEditor = $(this);
+	$(document).on("bind.productToPropertyValuesEditor", ".product-to-property-values-editor", function () {
+		$productToPropertyValuesEditor = $(this);
 		updateOptionsStyle();
 	});
-	$(document).on("collect.productPropertyEditor", ".product-property-editor", function () {
-		$productPropertyEditor = $(this);
+	$(document).on("collect.productToPropertyValuesEditor", ".product-to-property-values-editor", function () {
+		$productToPropertyValuesEditor = $(this);
 		updateOptionsStyle();
 	});
 })

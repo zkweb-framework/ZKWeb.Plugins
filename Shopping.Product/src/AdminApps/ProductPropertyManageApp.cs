@@ -9,6 +9,13 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Admin.src.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
+using ZKWeb.Localize;
+using ZKWeb.Utils.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
+using System.ComponentModel.DataAnnotations;
+using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>
@@ -25,6 +32,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 		protected override IModelFormBuilder GetEditForm() { return new Form(); }
 
 		/// <summary>
+		/// 初始化
+		/// </summary>
+		public ProductPropertyManageApp() {
+			IncludeJs.Add("/static/shopping.product.js/product-property-edit.min.js");
+		}
+
+		/// <summary>
 		/// 表格回调
 		/// </summary>
 		public class TableCallback : IAjaxTableCallback<ProductProperty> {
@@ -32,7 +46,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 构建表格
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				throw new NotImplementedException();
+				table.MenuItems.AddDivider();
+				table.MenuItems.AddEditActionForAdminApp<ProductPropertyManageApp>();
+				table.MenuItems.AddAddActionForAdminApp<ProductPropertyManageApp>();
+				searchBar.KeywordPlaceHolder = new T("Name/Remark");
+				searchBar.MenuItems.AddDivider();
+				searchBar.MenuItems.AddRecycleBin();
+				searchBar.MenuItems.AddAddActionForAdminApp<ProductPropertyManageApp>();
+				searchBar.Conditions.Add(new FormField(new CheckBoxFieldAttribute("IsSaleProperty")));
 			}
 
 			/// <summary>
@@ -40,7 +61,20 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnQuery(
 				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<ProductProperty> query) {
-				throw new NotImplementedException();
+				// 按回收站
+				query = query.FilterByRecycleBin(request);
+				// 按关键字
+				if (!string.IsNullOrEmpty(request.Keyword)) {
+					query = query.Where(q =>
+						q.Name.Contains(request.Keyword) ||
+						q.Remark.Contains(request.Keyword));
+				}
+				// 按是否销售属性
+				// TODO: 检查这个条件是否有效
+				var isSaleProperty = request.Conditions.GetOrDefault<bool?>("isSalePropery");
+				if (isSaleProperty != null) {
+					query = query.Where(q => q.IsSaleProperty == isSaleProperty);
+				}
 			}
 
 			/// <summary>
@@ -48,7 +82,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnSort(
 				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<ProductProperty> query) {
-				throw new NotImplementedException();
+				query = query.OrderByDescending(q => q.Id);
 			}
 
 			/// <summary>
@@ -56,7 +90,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnSelect(
 				AjaxTableSearchRequest request, List<KeyValuePair<ProductProperty, Dictionary<string, object>>> pairs) {
-				throw new NotImplementedException();
+				foreach (var pair in pairs) {
+					pair.Value["Id"] = pair.Key.Id;
+					pair.Value["Name"] = pair.Key.Name;
+					pair.Value["IsSaleProperty"] = pair.Key.IsSaleProperty ? EnumBool.True : EnumBool.False;
+					pair.Value["ControlType"] = new T(pair.Key.ControlType.GetDescription());
+					pair.Value["PropertyValues"] = string.Join(",", pair.Key.PropertyValues.Select(p => p.Name));
+					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
+					pair.Value["LastUpdated"] = pair.Key.LastUpdated.ToClientTimeString();
+					pair.Value["DisplayOrder"] = pair.Key.DisplayOrder;
+					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+				}
 			}
 
 			/// <summary>
@@ -64,7 +108,20 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				throw new NotImplementedException();
+				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddNoColumn();
+				response.Columns.AddMemberColumn("Name", "15%");
+				response.Columns.AddEnumLabelColumn("IsSaleProperty", typeof(EnumBool));
+				response.Columns.AddMemberColumn("ControlType");
+				response.Columns.AddMemberColumn("PropertyValues", "20%");
+				response.Columns.AddMemberColumn("CreateTime");
+				response.Columns.AddMemberColumn("LastUpdated");
+				response.Columns.AddMemberColumn("DisplayOrder");
+				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
+				var actionColumn = response.Columns.AddActionColumn();
+				actionColumn.AddEditActionForAdminApp<ProductPropertyManageApp>();
+				idColumn.AddDivider();
+				idColumn.AddDeleteActionsForAdminApp<ProductPropertyManageApp>(request);
 			}
 		}
 
@@ -73,17 +130,70 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 		/// </summary>
 		public class Form : TabDataEditFormBuilder<ProductProperty, Form> {
 			/// <summary>
+			/// 名称
+			/// </summary>
+			[Required]
+			[StringLength(100, MinimumLength = 1)]
+			[TextBoxField("Name", "Name")]
+			public string Name { get; set; }
+			/// <summary>
+			/// 是否销售属性
+			/// </summary>
+			[CheckBoxField("IsSaleProperty")]
+			public bool IsSaleProperty { get; set; }
+			/// <summary>
+			/// 控件类型
+			/// </summary>
+			[Required]
+			[DropdownListField("ControlType", typeof(ListItemFromEnum<ProductPropertyControlType>))]
+			public ProductPropertyControlType ControlType { get; set; }
+			/// <summary>
+			/// 属性值
+			/// </summary>
+			[ProductPropertyValuesEditor("PropertyValues", Group = "PropertyValues")]
+			public List<ProductPropertyValueForEdit> PropertyValues { get; set; }
+			/// <summary>
+			/// 显示顺序
+			/// </summary>
+			[Required]
+			[TextBoxField("DisplayOrder", "Order from small to large")]
+			public long DisplayOrder { get; set; }
+			/// <summary>
+			/// 备注
+			/// </summary>
+			[TextAreaField("Remark", 5, "Remark")]
+			public string Remark { get; set; }
+
+			/// <summary>
 			/// 绑定表单
 			/// </summary>
 			protected override void OnBind(DatabaseContext context, ProductProperty bindFrom) {
-				throw new NotImplementedException();
+				Name = bindFrom.Name;
+				IsSaleProperty = bindFrom.IsSaleProperty;
+				ControlType = bindFrom.ControlType;
+				// PropertyValues = null;
+				DisplayOrder = bindFrom.DisplayOrder;
+				Remark = bindFrom.Remark;
 			}
 
 			/// <summary>
 			/// 提交表单
 			/// </summary>
 			protected override object OnSubmit(DatabaseContext context, ProductProperty saveTo) {
-				throw new NotImplementedException();
+				if (saveTo.Id <= 0) {
+					saveTo.CreateTime = DateTime.UtcNow;
+				}
+				saveTo.Name = Name;
+				saveTo.IsSaleProperty = IsSaleProperty;
+				saveTo.ControlType = ControlType;
+				// saveTo.PropertyValues = null;
+				saveTo.DisplayOrder = DisplayOrder;
+				saveTo.LastUpdated = DateTime.UtcNow;
+				saveTo.Remark = Remark;
+				return new {
+					message = new T("Saved successfully"),
+					script = ScriptStrings.AjaxtableUpdatedAndCloseModal
+				};
 			}
 		}
 	}

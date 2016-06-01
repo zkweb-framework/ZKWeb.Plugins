@@ -30,9 +30,11 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 			html.AddAttribute("name", attribute.Name);
 			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("select");
+			var valueString = (value is Enum) ?
+				((int)value).ToString() : value.ConvertOrDefault<string>();
 			foreach (var item in listItems) {
 				html.AddAttribute("value", item.Value);
-				if (item.Value == value.ConvertOrDefault<string>()) {
+				if (item.Value == valueString) {
 					html.AddAttribute("selected", "selected");
 				}
 				html.RenderBeginTag("option");

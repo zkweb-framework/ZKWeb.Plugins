@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// <summary>
-	/// 用于编辑的商品匹配数据
-	/// 这个值用于反序列化编辑商品传回的数据
+	/// 商品关联的匹配数据，用于反序列化客户端传回的值
+	/// 编辑商品时使用
 	/// 例
 	/// 条件								价格		货币		重量		库存		备注		调整
 	/// 颜色: 蓝, 大小 M, 订购数量 >= 1	120		默认		继承		100		新版		上下
@@ -41,7 +41,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// }
 	/// ]
 	/// </summary>
-	public class EditingMatchedData {
+	public class ProductMatchedDataForEdit {
 		/// <summary>
 		/// 匹配条件
 		/// </summary>
@@ -54,7 +54,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		public EditingMatchedData() {
+		public ProductMatchedDataForEdit() {
 			Conditions = new Dictionary<string, object>();
 			Affects = new Dictionary<string, object>();
 		}

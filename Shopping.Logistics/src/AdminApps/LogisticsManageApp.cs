@@ -160,7 +160,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// <summary>
 			/// 备注
 			/// </summary>
-			[TextAreaField("Remark", 5)]
+			[TextAreaField("Remark", 5, "Remark")]
 			public string Remark { get; set; }
 			/// <summary>
 			/// 运费规则的提示信息

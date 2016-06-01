@@ -7,9 +7,10 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes {
 	/// <summary>
-	/// 商品属性编辑器的属性
+	/// 商品关联的属性值的编辑器的属性
+	/// 编辑商品时使用
 	/// </summary>
-	public class ProductPropertiesEditorAttribute : FormFieldAttribute {
+	public class ProductToProperyValuesEditorAttribute : FormFieldAttribute {
 		/// <summary>
 		/// 类目Id的字段名称
 		/// </summary>
@@ -20,7 +21,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes {
 		/// </summary>
 		/// <param name="name">字段名称</param>
 		/// <param name="categoryFieldName">类目Id的字段名称</param>
-		public ProductPropertiesEditorAttribute(string name, string categoryFieldName) {
+		public ProductToProperyValuesEditorAttribute(string name, string categoryFieldName) {
 			Name = name;
 			CategoryFieldName = categoryFieldName;
 		}

@@ -1,15 +1,16 @@
 ﻿/*
-	商品属性编辑器
+	商品关联的属性值的编辑器
+	编辑商品时使用
 */
 
-// 商品属性编辑器
-// 例 $("#Editor").productPropertyEditor();
+// 商品关联的属性值的编辑器
+// 例 $("#Editor").productToPropertyValuesEditor();
 // 元素需要有以下属性
 //	data-category-id-name 储存类目Id的字段名称
 //	data-property-values-name 储存属性值列表的Json的字段名称
 // 元素可以有以下属性
 //	data-translations 翻译文本
-$.fn.productPropertyEditor = function () {
+$.fn.productToPropertyValuesEditor = function () {
 	var $editor = $(this);
 	// 避免重复初始化
 	if ($editor.data("initialized")) {
@@ -26,7 +27,7 @@ $.fn.productPropertyEditor = function () {
 	// 绑定属性值的事件
 	// 根据$propertyValuesJson的内容绑定属性值控件
 	// 远程载入属性编辑器后需要触发这个事件
-	var bindEventName = "bind.productPropertyEditor";
+	var bindEventName = "bind.productToPropertyValuesEditor";
 	var bindingLockName = "bindingLock";
 	var propertyTypeAttribute = "data-property-type";
 	var propertyTypeSelector = "[" + propertyTypeAttribute + "]";
@@ -73,7 +74,7 @@ $.fn.productPropertyEditor = function () {
 	// 收集属性值的事件
 	// 收集到的属性值保存在$propertyValuesJson中
 	// 属性值的输入框改变后需要触发这个事件
-	var collectEventName = "collect.productPropertyEditor";
+	var collectEventName = "collect.productToPropertyValuesEditor";
 	$editor.on(collectEventName, function () {
 		if ($editor.data(bindingLockName)) {
 			return; // 绑定时跳过收集事件
@@ -165,14 +166,14 @@ $.fn.productPropertyEditor = function () {
 	onCategoryIdChanged.call($categoryId);
 };
 
-// 自动初始化带[data-toggle='product-property-editor']属性的编辑器
+// 自动初始化带[data-toggle='product-to-property-values-editor']属性的编辑器
 $(function () {
 	var setup = function ($elements) {
-		$elements.each(function () { $(this).productPropertyEditor(); });
+		$elements.each(function () { $(this).productToPropertyValuesEditor(); });
 	};
-	var productPropertyEditorSelector = "[data-toggle='product-property-editor']";
-	setup($(productPropertyEditorSelector));
+	var rule = "[data-toggle='product-to-property-values-editor']";
+	setup($(rule));
 	$(document).on("dynamicLoaded", function (e, contents) {
-		setup($(contents).find(productPropertyEditorSelector));
+		setup($(contents).find(rule));
 	});
 });

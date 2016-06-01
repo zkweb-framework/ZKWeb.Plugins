@@ -29,9 +29,11 @@
 		Finance.Accounting
 	结算功能
 		Finance.Settlement
-	供货商管理商品
+	供货商管理
+	供货商后台 (用户类型: 合作伙伴)
 		Shopping.MultiSeller
-	供货商货款结算
+		商品管理
+		货款管理
 	短信功能
 		SMS.Base
 		SMS.GuangXin
