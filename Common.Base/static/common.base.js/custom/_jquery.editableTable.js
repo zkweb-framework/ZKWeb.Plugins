@@ -25,7 +25,7 @@ $.fn.editableTable = function (options) {
 	// 设置默认选项
 	options = $.extend({
 		columns: [],
-		tableClass: "table table-bordered table-hover",
+		tableClass: "table table-bordered table-hover table-editable",
 		tableHeaderClass: "heading"
 	}, options || {});
 	// 添加表格元素

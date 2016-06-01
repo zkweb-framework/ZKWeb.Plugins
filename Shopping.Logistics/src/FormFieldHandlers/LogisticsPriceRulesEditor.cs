@@ -50,10 +50,11 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.FormFieldHandlers {
 			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("input");
 			html.RenderEndTag();
-			html.AddAttribute("class", "logistics-price-rules-editor");
+			html.AddAttribute("class", "logistics-price-rules-editor table-scroller");
 			html.AddAttribute("data-toggle", "logistics-price-rules-editor");
 			html.AddAttribute("data-price-rules-name", field.Attribute.Name);
-			html.AddAttribute("data-table-class", "table table-bordered table-hover");
+			html.AddAttribute("data-table-class",
+				 "table table-bordered table-hover table-editable table-editable-always-keep-last-row");
 			html.AddAttribute("data-table-header-class", "heading");
 			html.AddAttribute("data-display-country-dropdown", JsonConvert.SerializeObject(
 				attribute.DisplayCountryDropdown ?? regionSettings.DisplayCountryDropdown));

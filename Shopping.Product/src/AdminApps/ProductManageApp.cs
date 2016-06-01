@@ -315,7 +315,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				saveTo.LastUpdated = DateTime.UtcNow;
 				// 属性规格
 				var categoryRepository = RepositoryResolver.Resolve<ProductCategory>(context);
-				saveTo.Category = categoryRepository.GetById(Category);
+				saveTo.Category = Category == null ? null : categoryRepository.GetById(Category);
 				saveTo.PropertyValues.Clear();
 				saveTo.PropertyValues.AddRange(PropertyValues.ToDatabaseSet(saveTo));
 				// 价格库存

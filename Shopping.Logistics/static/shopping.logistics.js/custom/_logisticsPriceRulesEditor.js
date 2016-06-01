@@ -3,8 +3,8 @@
 	格式
 	<div data-trigger='logistics-price-rules-editor'
 		data-price-rules-name='储存规则的字段名称'
-		data-table-class='表格使用的css类'
-		data-table-header-class='表格头使用的css类'
+		data-table-class='表格使用的css类，可选'
+		data-table-header-class='表格头使用的css类，可选'
 		data-display-country-dropdown='是否显示国家下拉框'
 		data-currency-list-items='货币的选项列表'
 		data-default-price-rule='默认运费规则'
@@ -44,6 +44,8 @@ $.fn.logisticsPriceRulesEditor = function () {
 	var T_Disabled = T("Disabled");
 	// 添加表格元素
 	var $table = $editor.editableTable({
+		tableClass: tableClass,
+		tableHeaderClass: tableHeaderClass,
 		columns: [
 			T_Region, T_FirstHeavyUnit, T_FirstHeavyCost,
 			T_ContinuedHeavyUnit, T_ContinuedHeavyCost, T_Currency, T_Disabled]

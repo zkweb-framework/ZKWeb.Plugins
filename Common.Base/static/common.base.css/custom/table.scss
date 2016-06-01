@@ -68,6 +68,36 @@
 	}
 }
 
+/* 可编辑的表格样式 */
+.table.table-editable {
+	/* 输入框最小宽度 */
+	/* 已禁用列的最小宽度 */
+	td > .form-control, .disabled {
+		min-width: 70px;
+	}
+	/* 操作按钮的禁用 */
+	> tbody {
+		/* 第一行禁用向上按钮，最后一行禁止向下按钮 */
+		tr:first-child .actions .up-data,
+		tr:last-child .actions .down-data {
+			background-color: grey;
+			pointer-events: none;
+			cursor: not-allowed;
+		}
+	}
+	/* 需要保留最后一行时，最后一行禁止所有操作按钮，最后一行的上一行禁用向下按钮 */
+	&.table-editable-always-keep-last-row > tbody {
+		tr:last-child .actions .up-data,
+		tr:last-child .actions .down-data,
+		tr:last-child .actions .remove-data,
+		tr:nth-last-child(2) .actions .down-data {
+			background-color: grey;
+			pointer-events: none;
+			cursor: not-allowed;
+		}
+	}
+}
+
 /* 要求横向滚动的表格 */
 .table-scroller {
 	overflow-x: auto;

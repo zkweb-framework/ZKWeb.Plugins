@@ -33,7 +33,9 @@ $.fn.productMatchedDataEditor = function () {
 	var bindEventName = "bind.editableTable"; // 属于$table
 	var collectEventName = "collect.editableTable"; // 属于$table
 	var conditionCellUpdateEventName = "update.productMatchedDataEditor"; // 属于.condition-cell
-	var $table = $editor.editableTable();
+	var tableClass = $editor.data("table-class");
+	var tableHeaderClass = $editor.data("table-header-class");
+	var $table = $editor.editableTable({ tableClass: tableClass, tableHeaderClass: tableHeaderClass });
 	// 绑定匹配数据表格的事件
 	// 根据$matchedDataJson的内容绑定匹配数据表格
 	// 远程载入绑定器后需要触发这个事件

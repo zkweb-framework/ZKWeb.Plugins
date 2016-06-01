@@ -1,32 +1,11 @@
 ﻿/* 物理管理编辑页的样式 */
 /* 运费规则编辑器 */
 .logistics-price-rules-editor {
-	overflow-x: auto;
 
 	table {
 		/* 地区编辑器最低宽度 */
 		td.region {
 			min-width: 350px;
-		}
-		/* 输入框最小宽度 */
-		/* 已禁用列的最小宽度 */
-		td > .form-control, .disabled {
-			min-width: 70px;
-		}
-		/* 操作按钮的禁用 */
-		tbody {
-			/* 第一行禁用向上按钮 */
-			/* 最后一行是默认条件，隐藏下拉编辑框和禁用所有操作按钮 */
-			/* 最后一行的上一行禁用向下按钮 */
-			tr:first-child .actions .up-data,
-			tr:last-child .actions .up-data,
-			tr:last-child .actions .down-data,
-			tr:last-child .actions .remove-data,
-			tr:nth-last-child(2) .actions .down-data {
-				background-color: grey;
-				pointer-events: none;
-				cursor: not-allowed;
-			}
 		}
 	}
 }

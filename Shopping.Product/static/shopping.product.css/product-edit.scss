@@ -61,21 +61,6 @@
 			}
 		}
 	}
-	/* 操作按钮的禁用 */
-	table > tbody {
-		/* 第一行禁用向上按钮 */
-		/* 最后一行是默认条件，隐藏下拉编辑框和禁用所有操作按钮 */
-		/* 最后一行的上一行禁用向下按钮 */
-		tr:first-child .actions .up-data,
-		tr:last-child .actions .up-data,
-		tr:last-child .actions .down-data,
-		tr:last-child .actions .remove-data,
-		tr:nth-last-child(2) .actions .down-data {
-			background-color: grey;
-			pointer-events: none;
-			cursor: not-allowed;
-		}
-	}
 	/* 条件编辑按钮 */
 	.condition-cell .btn-group a {
 		margin-left: 5px;
