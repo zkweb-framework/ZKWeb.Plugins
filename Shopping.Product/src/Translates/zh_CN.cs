@@ -79,7 +79,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "All Products", "全部商品" },
 			{ "No matching products found, please change the condition and search again.",
 				"没有找到匹配的商品，请使用其他条件再次搜索。"},
-			// TODO: 以下未翻译到其他语言
 			{ "ProductProperty", "商品属性" },
 			{ "ProductPropertyManage", "商品属性管理" },
 			{ "ProductCategory", "商品类目" },

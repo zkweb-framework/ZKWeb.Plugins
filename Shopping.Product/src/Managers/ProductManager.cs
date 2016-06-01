@@ -135,7 +135,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 					id = product.Id,
 					categoryId = category == null ? null : (long?)category.Id,
 					categoryName = category == null ? null : category.Name,
-					name = product.Name,
+					name = new T(product.Name),
 					introduction = product.Introduction,
 					type = product.Type,
 					typeName = new T(product.Type),

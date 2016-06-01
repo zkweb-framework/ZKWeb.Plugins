@@ -78,7 +78,19 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "Please enter product name", "商品名を入力してください" },
 			{ "All Products", "商品一覧" },
 			{ "No matching products found, please change the condition and search again.",
-				"条件に合った商品が見つかりません、条件を変えて再度検索してください。"}
+				"条件に合った商品が見つかりません、条件を変えて再度検索してください。"},
+			{ "ProductProperty", "商品属性" },
+			{ "ProductPropertyManage", "商品属性管理" },
+			{ "ProductCategory", "商品カテゴリ" },
+			{ "ProductCategoryManage", "商品カテゴリ管理" },
+			{ "IsSalesProperty", "規格か" },
+			{ "PropertyValues", "属性値" },
+			{ "ControlType", "コントロールタイプ" },
+			{ "TextBox", "テキストボックス" },
+			{ "CheckBox", "チェックボックス" },
+			{ "RadioButton", "ラジオボタン" },
+			{ "DropdownList", "ドロップダウンリスト" },
+			{ "EditableDropdownList", "編集可能なドロップダウンリスト" }
 		};
 
 		public bool CanTranslate(string code) {

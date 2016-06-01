@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Translates {
 		{
 			{ "Article", "기사" },
 			{ "ArticleManage", "문서 관리" },
-			{ "Article management", "문서 관리" },
+			{ "Article management and display", "문서 관리 및 표시" },
 			{ "Title/Summary/Author", "표제/개요/저자" },
 			{ "ArticleClass", "제 카테고리" },
 			{ "ArticleTag", "기술 자료 태그" },
@@ -32,7 +32,10 @@ namespace ZKWeb.Plugins.CMS.Article.src.Translates {
 			{ "No matching articles found, please change the condition and search again.",
 				"찾지 일치 기사, 조건을 변경하지 않고 다시 검색하시기 바랍니다."},
 			{ "The article you are visiting does not exist.", "존재하지 않는 방문 기사" },
-			{ "Preview", "시사" }
+			{ "Preview", "시사" },
+			{ "ArticleSettings", "기사 설정" },
+			{ "ArticleListSettings", "제리스트 세트" },
+			{ "ArticlesPerPage", "페이지 당 기사의 수" }
 		};
 
 		public bool CanTranslate(string code) {

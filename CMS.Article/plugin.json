@@ -1,7 +1,7 @@
 ﻿{
 	"Name": "Article",
 	"Version": "0.9 testing",
-	"Description": "Article management",
+	"Description": "Article management and display",
 	"Dependencies": [
 		"Common.Base",
 		"Common.Admin",

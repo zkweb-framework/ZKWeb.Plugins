@@ -9,16 +9,16 @@ using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 	/// <summary>
-	/// 中文翻译
+	/// 繁体中文翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class zh_CN : ITranslateProvider {
-		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
+	public class zh_TW : ITranslateProvider {
+		private static HashSet<string> Codes = new HashSet<string>() { "zh-TW" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "Order", "订单" },
-			{ "OrderManage", "订单管理" },
-			{ "Order management for ec site", "商城使用的订单管理功能" }
+			{ "Order", "訂單" },
+			{ "OrderManage", "訂單管理" },
+			{ "Order management for ec site", "商城使用的訂單管理功能" }
 		};
 
 		public bool CanTranslate(string code) {

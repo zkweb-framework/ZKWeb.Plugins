@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Translates {
 		{
 			{ "Article", "文章" },
 			{ "ArticleManage", "文章管理" },
-			{ "Article management", "文章管理" },
+			{ "Article management and display", "提供文章管理和展示功能" },
 			{ "Title/Summary/Author", "标题/摘要/作者" },
 			{ "ArticleClass", "文章分类" },
 			{ "ArticleTag", "文章标签" },
@@ -32,7 +32,10 @@ namespace ZKWeb.Plugins.CMS.Article.src.Translates {
 			{ "No matching articles found, please change the condition and search again.",
 				"没有找到匹配的文章，请使用其他条件再次搜索。"},
 			{ "The article you are visiting does not exist.", "您查看的文章不存在" },
-			{ "Preview", "预览" }
+			{ "Preview", "预览" },
+			{ "ArticleSettings", "文章设置" },
+			{ "ArticleListSettings", "文章列表设置" },
+			{ "ArticlesPerPage", "每页显示的文章数量" }
 		};
 
 		public bool CanTranslate(string code) {

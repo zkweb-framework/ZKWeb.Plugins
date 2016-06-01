@@ -78,7 +78,19 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "Please enter product name", "請填寫商品名稱" },
 			{ "All Products", "全部商品" },
 			{ "No matching products found, please change the condition and search again.",
-				"沒有找到匹配的商品，請使用其他條件再次搜索。"}
+				"沒有找到匹配的商品，請使用其他條件再次搜索。"},
+			{ "ProductProperty", "商品屬性" },
+			{ "ProductPropertyManage", "商品屬性管理" },
+			{ "ProductCategory", "商品類目" },
+			{ "ProductCategoryManage", "商品類目管理" },
+			{ "IsSalesProperty", "是否銷售屬性" },
+			{ "PropertyValues", "屬性值" },
+			{ "ControlType", "控件類型" },
+			{ "TextBox", "文本框" },
+			{ "CheckBox", "多選框" },
+			{ "RadioButton", "單選框" },
+			{ "DropdownList", "下拉列表" },
+			{ "EditableDropdownList", "可編輯的下拉列表" }
 		};
 
 		public bool CanTranslate(string code) {

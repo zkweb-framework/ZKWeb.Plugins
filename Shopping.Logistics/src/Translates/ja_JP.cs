@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Translates {
 		{
 			{ "Logistics", "物流" },
 			{ "LogisticsManage", "物流管理" },
-			{ "Logistics management", "物流管理" },
+			{ "Logistics management for ec site", "オンラインショッピングサイトが使う物流管理機能" },
 			{ "LogisticsPriceRules", "送料ルール" },
 			{ "Logistics cost is determined by the following settings, match order is from top to bottom",
 				"送料は以下のルールをもって計算されます，照合順番は上から下へ" },

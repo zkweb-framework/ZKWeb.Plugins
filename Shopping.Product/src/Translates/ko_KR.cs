@@ -9,7 +9,7 @@ using ZKWeb.Utils.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 	/// <summary>
-	/// 繁体中文翻译
+	/// 韩语翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
 	public class ko_KR : ITranslateProvider {
@@ -78,7 +78,19 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "Please enter product name", "제품 이름을 입력하세요" },
 			{ "All Products", "모든 제품" },
 			{ "No matching products found, please change the condition and search again.",
-				"일치하는 제품을 찾을 수는 조건을 변경하지 않고 다시 검색하시기 바랍니다."}
+				"일치하는 제품을 찾을 수는 조건을 변경하지 않고 다시 검색하시기 바랍니다."},
+			{ "ProductProperty", "상용 부동산" },
+			{ "ProductPropertyManage", "상용 부동산 관리" },
+			{ "ProductCategory", "제품 카테고리" },
+			{ "ProductCategoryManage", "제품 카테고리 관리" },
+			{ "IsSalesProperty", "부동산 판매" },
+			{ "PropertyValues", "속성 값" },
+			{ "ControlType", "제어 유형" },
+			{ "TextBox", "텍스트 상자" },
+			{ "CheckBox", "확인란" },
+			{ "RadioButton", "단일 상자" },
+			{ "DropdownList", "드롭 다운 목록을" },
+			{ "EditableDropdownList", "드롭 다운 목록을 편집 할 수 있습니다" }
 		};
 
 		public bool CanTranslate(string code) {

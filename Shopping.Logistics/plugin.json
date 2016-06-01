@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "Logistics",
 	"Version": "0.0 not done",
-	"Description": "Logistics management",
+	"Description": "Logistics management for ec site",
 	"Dependencies": [ "Common.Base", "Common.Admin" ]
 }
