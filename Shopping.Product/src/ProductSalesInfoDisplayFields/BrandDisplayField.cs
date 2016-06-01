@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 			// 没有时返回null
 			var value = product.FindPropertyValuesWhereNameContains(Name).FirstOrDefault();
 			if (value != null) {
-				return HttpUtility.HtmlEncode(value.PropertyValueName);
+				return HttpUtility.HtmlEncode(new T(value.PropertyValueName));
 			}
 			return null;
 		}
