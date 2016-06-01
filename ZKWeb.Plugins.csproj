@@ -220,6 +220,10 @@
     <Compile Include="Common.GenericClass\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Common.GenericTag\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Demo\src\DatabaseInitializeHandlers\DatabaseInitializeHandlerDemo.cs" />
+    <Compile Include="Shopping.Order\src\AdminApps\OrderManageApp.cs" />
+    <Compile Include="Shopping.Order\src\Translates\zh_CN.cs" />
+    <Compile Include="Shopping.Product\src\AdminApps\ProductCategoryManageApp.cs" />
+    <Compile Include="Shopping.Product\src\AdminApps\ProductPropertyManageApp.cs" />
     <Compile Include="Shopping.Product\src\Config\ProductListSettings.cs" />
     <Compile Include="Shopping.Product\src\Controllers\ApiController.cs" />
     <Compile Include="Shopping.Product\src\GenericFormsForAdminSettings\ProductListSettingsForm.cs" />

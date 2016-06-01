@@ -34,7 +34,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 	public class LogisticsManageApp : AdminAppBuilder<Database.Logistics, LogisticsManageApp> {
 		public override string Name { get { return "LogisticsManage"; } }
 		public override string Url { get { return "/admin/logistics"; } }
-		public override string TileClass { get { return "tile bg-green"; } }
+		public override string TileClass { get { return "tile bg-aqua"; } }
 		public override string IconClass { get { return "fa fa-truck"; } }
 		protected override IAjaxTableCallback<Database.Logistics> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() { return new Form(); }

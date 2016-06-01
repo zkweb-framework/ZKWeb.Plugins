@@ -43,7 +43,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	public class ProductManageApp : AdminAppBuilder<Database.Product, ProductManageApp> {
 		public override string Name { get { return "ProductManage"; } }
 		public override string Url { get { return "/admin/products"; } }
-		public override string TileClass { get { return "tile bg-green"; } }
+		public override string TileClass { get { return "tile bg-red"; } }
 		public override string IconClass { get { return "fa fa-diamond"; } }
 		protected override IAjaxTableCallback<Database.Product> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() { return new Form(); }
