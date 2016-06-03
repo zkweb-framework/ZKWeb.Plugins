@@ -95,6 +95,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 				var salesInfoDisplayFields = Application.Ioc.ResolveMany<IProductSalesInfoDisplayField>()
 					.Select(d => new { name = new T(d.Name), html = d.GetDisplayHtml(r.Context, product) })
 					.Where(d => !string.IsNullOrEmpty(d.html)).ToList();
+				// 分类和标签
+				var classes = product.Classes.Select(c => new { id = c.Id, name = c.Name }).ToList();
+				var tags = product.Tags.Select(t => new { id = t.Id, name = t.Name }).ToList();
+				var keywords = classes.Select(c => c.name).Concat(tags.Select(t => t.name)).ToList();
 				// 匹配数据
 				var matchedDataJson = JsonConvert.SerializeObject(
 					product.MatchedDatas.Select(d => new {
@@ -143,8 +147,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 					stateName = new T(product.State),
 					sellerId = seller == null ? null : (long?)seller.Id,
 					sellerName = seller == null ? null : seller.Username,
-					classes = product.Classes.Select(c => new { id = c.Id, name = c.Name }).ToList(),
-					tags = product.Tags.Select(t => new { id = t.Id, name = t.Name }).ToList(),
+					classes,
+					tags,
+					keywords,
 					mainImageWebPath,
 					imageWebPaths,
 					salesInfoDisplayFields,

@@ -9,21 +9,21 @@ using System.Web;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
-	/// 设置SEO使用的页面关键词
+	/// 设置页面描述
 	/// 例子
-	/// {% use_seo_keywords "keywords" %}
-	/// {% use_seo_keywords variable %}
+	/// {% use_meta_description "description" %}
+	/// {% use_meta_description variable %}
 	/// </summary>
-	public class UseSeoKeywords : Tag {
+	public class UseMetaDescription : Tag {
 		/// <summary>
-		/// 设置SEO使用的页面关键词
+		/// 设置页面描述
 		/// </summary>
 		public override void Render(Context context, TextWriter result) {
 			var metadata = (context[RenderMetadata.Key] ?? "").ToString();
-			var keywords = (context[Markup.Trim()] ?? "").ToString();
+			var description = (context[Markup.Trim()] ?? "").ToString();
 			metadata += string.Format(
-				"<meta name='keywords' content='{0}' />",
-				HttpUtility.HtmlAttributeEncode(keywords));
+				"<meta name='description' content='{0}' />\r\n",
+				HttpUtility.HtmlAttributeEncode(description));
 			context.Environments[0][RenderMetadata.Key] = metadata; // 设置到顶级空间
 		}
 	}

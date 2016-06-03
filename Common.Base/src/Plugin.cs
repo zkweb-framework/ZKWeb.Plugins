@@ -35,8 +35,8 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			Template.RegisterTag<RenderMetadata>("render_metadata");
 			Template.RegisterTag<RenderTitle>("render_title");
 			Template.RegisterTag<UrlPagination>("url_pagination");
-			Template.RegisterTag<UseSeoDescription>("use_seo_description");
-			Template.RegisterTag<UseSeoKeywords>("use_seo_keywords");
+			Template.RegisterTag<UseMetaDescription>("use_meta_description");
+			Template.RegisterTag<UseMetaKeywords>("use_meta_keywords");
 			Template.RegisterTag<UseTitle>("use_title");
 			Template.RegisterTag<WebsiteName>("website_name");
 			Template.RegisterFilter(typeof(Filters));

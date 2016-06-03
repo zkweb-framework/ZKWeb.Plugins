@@ -75,6 +75,9 @@ namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 					return;
 				}
 				var author = article.Author;
+				var classes = article.Classes.Select(c => new { id = c.Id, name = c.Name }).ToList();
+				var tags = article.Tags.Select(t => new { id = t.Id, name = t.Name }).ToList();
+				var keywords = classes.Select(c => c.name).Concat(tags.Select(t => t.name)).ToList();
 				info = new {
 					id = article.Id,
 					title = article.Title,
@@ -82,8 +85,9 @@ namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 					contents = article.Contents,
 					authorId = author == null ? null : (long?)author.Id,
 					authorName = author == null ? null : author.Username,
-					classes = article.Classes.Select(c => new { id = c.Id, name = c.Name }).ToList(),
-					tags = article.Tags.Select(t => new { id = t.Id, name = t.Name }).ToList(),
+					classes,
+					tags,
+					keywords,
 					createTime = article.CreateTime,
 					lastUpdated = article.LastUpdated
 				};
