@@ -6,9 +6,18 @@
 		margin: 20px 4px 0px 4px;
 		padding: 20px;
 		overflow: hidden;
+		display: flex;
+		flex-wrap: wrap;
+		/* 下属区域样式 */
+		> .template_area {
+			float: left;
+
+			&[area_id=product_sales_info] {
+				flex-grow: 1;
+			}
+		}
 		/* 商品相册的样式 */
 		.product-gallery {
-			float: left;
 			/* 主图 */
 			.main-image img {
 				width: 420px;
@@ -40,9 +49,8 @@
 		}
 		/* 商品销售信息的样式 */
 		.product-sales-info {
-			float: left;
 			margin-left: 20px;
-			width: 50%;
+			width: 90%;
 			min-width: 300px;
 			/* 商品名称 */
 			.product-name {

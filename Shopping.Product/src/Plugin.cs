@@ -24,7 +24,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src {
 		public Plugin() {
 			// 注册商品状态的特征
 			Application.Ioc.RegisterInstance(
-				new ProductStateTrait() { VisibleFromProductList = true },
+				new ProductStateTrait() { VisibleFromProductList = true, IsPurchasable = true },
 				serviceKey: typeof(OnSale));
 			// 注册默认模块
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();

@@ -14,12 +14,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.TypeTraits {
 		/// 是否显示在商品列表中
 		/// </summary>
 		public bool VisibleFromProductList { get; set; }
+		/// <summary>
+		/// 是否可以购买
+		/// </summary>
+		public bool IsPurchasable { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public ProductStateTrait() {
 			VisibleFromProductList = false;
+			IsPurchasable = false;
 		}
 
 		/// <summary>

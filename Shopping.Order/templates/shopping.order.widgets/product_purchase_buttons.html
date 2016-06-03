@@ -1,5 +1,12 @@
 ﻿<!-- 注：需要根据销售状态显示内容，未上架时不显示按钮 -->
-<div class="product-purchase-buttons pull-left">
+<div class="product-purchase-buttons" require-script="/static/shopping.order.js/product-view.min.js">
 	{% include_css_here "/static/shopping.order.css/product-view.css" %}
-
+	<form class="product-purchase-form" ajax="true">
+		<input type="hidden" name="productId" />
+		<input type="hidden" name="matchParameters" />
+		<input type="hidden" name="isBuyNow" />
+		<a class="btn btn-buynow">{{ "Buynow" | trans }}</a>
+		<a class="btn btn-add-to-cart"><i class="fa fa-cart-plus"></i>{{ "AddToCart" | trans }}</a>
+	</form>
+	<div class="clearfix"></div>
 </div>

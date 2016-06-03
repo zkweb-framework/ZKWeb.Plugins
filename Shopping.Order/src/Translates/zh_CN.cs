@@ -18,7 +18,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 		{
 			{ "Order", "订单" },
 			{ "OrderManage", "订单管理" },
-			{ "Order management for ec site", "商城使用的订单管理功能" }
+			{ "Order management for ec site", "商城使用的订单管理功能" },
+			// TODO: 以下未翻译到其他语言
+			{ "Buynow", "立刻购买" },
+			{ "AddToCart", "加入购物车" }
 		};
 
 		public bool CanTranslate(string code) {
