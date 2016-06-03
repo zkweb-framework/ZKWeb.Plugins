@@ -1,6 +1,6 @@
 ﻿{% fetch /api/article/info?id={id} > article_info %}
 {% use_title article_info.title -%}
-{% include_css "/static/cms.article.css/article-view.css" %}
+{% include_css_later "/static/cms.article.css/article-view.css" -%}
 {% include common.base/header.html %}
 <div class="page-container article-page-container screen-center-block">
 	{% unless article_info %}

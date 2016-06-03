@@ -1,7 +1,7 @@
-﻿{% fetch /api/product/info?id={id} > product_info %}
+﻿{% fetch /api/product/info?id={id} > product_info -%}
 {% use_title product_info.name -%}
-{% include_css "/static/shopping.product.css/product-view.css" %}
-{% include_js "/static/shopping.product.js/product-view.min.js" %}
+{% include_css_later "/static/shopping.product.css/product-view.css" -%}
+{% include_js_later "/static/shopping.product.js/product-view.min.js" -%}
 {% include common.base/header.html %}
 <div class="screen-center-block">
 	{% unless product_info %}

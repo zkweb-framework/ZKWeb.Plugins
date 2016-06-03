@@ -26,9 +26,17 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			// 初始化定时任务管理器
 			Application.Ioc.Resolve<ScheduledTaskManager>();
 			// 注册模板标签和过滤器
-			Template.RegisterTag<IncludeCss>("include_css");
-			Template.RegisterTag<IncludeJs>("include_js");
+			Template.RegisterTag<IncludeCssHere>("include_css_here");
+			Template.RegisterTag<IncludeCssLater>("include_css_later");
+			Template.RegisterTag<IncludeJsHere>("include_js_here");
+			Template.RegisterTag<IncludeJsLater>("include_js_later");
+			Template.RegisterTag<RenderIncludedCss>("render_included_css");
+			Template.RegisterTag<RenderIncludedJs>("render_included_js");
+			Template.RegisterTag<RenderMetadata>("render_metadata");
+			Template.RegisterTag<RenderTitle>("render_title");
 			Template.RegisterTag<UrlPagination>("url_pagination");
+			Template.RegisterTag<UseSeoDescription>("use_seo_description");
+			Template.RegisterTag<UseSeoKeywords>("use_seo_keywords");
 			Template.RegisterTag<UseTitle>("use_title");
 			Template.RegisterTag<WebsiteName>("website_name");
 			Template.RegisterFilter(typeof(Filters));

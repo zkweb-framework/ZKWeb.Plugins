@@ -4,7 +4,7 @@
 	{% area footer_area_2 %}
 	{% area footer_area_3 %}
 </div>
-<script src="/static/common.base.js/components.min.js" type="text/javascript"></script>
-{% raw_html __js %}
+{% include_js_here "/static/common.base.js/components.min.js" %}
+{% render_included_js %}
 </body>
 </html>

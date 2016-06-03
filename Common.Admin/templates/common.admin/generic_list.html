@@ -1,9 +1,9 @@
 ﻿{% use_title title -%}
 {% for css in includeCss -%}
-{% include_css css -%}
+{% include_css_later css -%}
 {% endfor -%}
 {% for js in includeJs -%}
-{% include_js js -%}
+{% include_js_later js -%}
 {% endfor -%}
 {% include common.admin/header.html %}
 <div class="portlet-title">

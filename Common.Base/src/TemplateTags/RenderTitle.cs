@@ -5,23 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
-	/// 设置网站标题
-	/// 需要配合标签"render_title"使用
+	/// 描画当前网站标题
 	/// 例子
-	/// {% use_title "Plain Text Title" %}
-	/// {% use_title variable_title %}
+	/// {% render_title %}
 	/// </summary>
-	public class UseTitle : Tag {
+	public class RenderTitle : Tag {
 		/// <summary>
-		/// 设置标题到变量中
+		/// 变量名
+		/// </summary>
+		public const string Key = "__title";
+
+		/// <summary>
+		/// 描画当前网站标题
 		/// </summary>
 		public override void Render(Context context, TextWriter result) {
-			context.Environments[0][RenderTitle.Key] =
-				Filters.WebsiteTitle(context[Markup.Trim()] as string);
+			var title = context[Key];
+			result.Write(string.Format("<title>{0}</title>", title));
 		}
 	}
 }

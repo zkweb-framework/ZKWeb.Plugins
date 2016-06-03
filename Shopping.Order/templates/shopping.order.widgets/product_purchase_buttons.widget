@@ -1,1 +1,5 @@
-﻿{ "Name": "ProductPurchaseButtons" }
+﻿{
+	"Name": "ProductPurchaseButtons",
+	"CacheTime": 15,
+	"CacheBy": "IdentAndLocaleAndUrl"
+}

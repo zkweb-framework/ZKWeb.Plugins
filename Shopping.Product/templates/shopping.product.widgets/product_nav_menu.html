@@ -1,6 +1,6 @@
 ﻿{% fetch /api/product/class_filter_info > class_filter_info %}
 <div class="product-nav-menu">
-	<link href="/static/shopping.product.css/product-widgets.css" rel="stylesheet" type="text/css">
+	{% include_css_here "/static/shopping.product.css/product-widgets.css" %}
 	<ul class="nav">
 		<li class="dropdown">
 			<a class="dropdown-toggle" data-trigger="dropdown" data-hover="dropdown" href="/product/list">{{ "All Products" | trans }}</a>

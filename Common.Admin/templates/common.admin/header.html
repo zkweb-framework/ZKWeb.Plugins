@@ -4,11 +4,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 	<meta charset="utf-8" />
 	<link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
-	{% raw_html __meta %}
-	<title>{{ __title }}</title>
-	<link href="/static/common.base.css/components.css" rel="stylesheet" type="text/css" />
-	<link href="/static/common.admin.css/components.css" rel="stylesheet" type="text/css" />
-	{% raw_html __css %}
+	{% render_metadata %}
+	{% render_title %}
+	{% include_css_here "/static/common.base.css/components.css" %}
+	{% include_css_here "/static/common.admin.css/components.css" %}
+	{% render_included_css %}
 </head>
 <body class="skin-default">
 	<div class="page-header">

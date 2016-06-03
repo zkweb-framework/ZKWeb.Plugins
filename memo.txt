@@ -50,6 +50,7 @@
 	ok 支持ckeditor上传保存图片
 	ok 底部copyright
 	逐步补充框架和插件的单元测试
+	Common.Base自带的标签和过滤器文档
 
 性能测试结果 (i7 Q720 1.6Ghz x 4 core, ab -n 2000 -c 8)
 	2015-05-27

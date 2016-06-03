@@ -5,9 +5,9 @@
 	<meta charset="utf-8" />
 	<link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
 	<title>{{ "Admin Login" | website_title }}</title>
-	<link href="/static/common.base.css/components.css" rel="stylesheet" type="text/css" />
-	<link href="/static/common.admin.css/components.css" rel="stylesheet" type="text/css" />
-	<link href="/static/common.admin.css/admin-login.css" rel="stylesheet" type="text/css" />
+	{% include_css_here "/static/common.base.css/components.css" %}
+	{% include_css_here "/static/common.admin.css/components.css" %}
+	{% include_css_here "/static/common.admin.css/admin-login.css" %}
 </head>
 <body class="hold-transition login-page">
 	<div class="login-box">
@@ -17,23 +17,15 @@
 			<p class="text-danger">{{ warning }}</p>
 			{{ form }}
 			<div class="create-account">
-				<p><a class="btn btn-info" href="/user/reg" id="register-btn" class="uppercase">{{ "Register new user" | trans }}</a></p>
+				<p><a class="btn btn-info" href="/user/reg" id="register-btn">{{ "Register new user" | trans }}</a></p>
 			</div>
 		</div>
 	</div>
 	<input id="RedirectAfterLogin" name="RedirectAfterLogin" type="hidden" value="/admin" />
 	<footer>
-		<script src="/static/common.base.js/components.min.js" type="text/javascript"></script>
-		<script src="/static/common.admin.js/components.min.js" type="text/javascript"></script>
-		<script type="text/javascript">
-			$(function () {
-				$("input[name=RememberLogin]").closest(".form-group").addClass("rememberLogin").appendTo(".form-actions");
-				$("[name=AdminLoginForm]").on("success", function () {
-					var url = $(this).find("[name=RedirectAfterLogin]").val();
-					location.href = url;
-				});
-			});
-		</script>
+		{% include_js_here "/static/common.base.js/components.min.js" %}
+		{% include_js_here "/static/common.admin.js/components.min.js" %}
+		{% include_js_here "/static/common.admin.js/admin-login.min.js" %}
 	</footer>
 </body>
 </html>

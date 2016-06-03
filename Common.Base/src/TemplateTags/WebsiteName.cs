@@ -14,7 +14,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 显示当前网站名称
 	/// 例子
-	/// {{ "Website name is" | trans }}{% website_name %}
+	/// {% website_name %}
 	/// </summary>
 	public class WebsiteName : Tag {
 		/// <summary>
