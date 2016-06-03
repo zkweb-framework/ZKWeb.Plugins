@@ -13,12 +13,13 @@ namespace ZKWeb.Plugins.Common.Region.src.Translates {
 	/// </summary>
 	[ExportMany, SingletonReuse]
 	public class en_US : ITranslateProvider {
-		private static HashSet<string> Codes = new HashSet<string>() { "en_US", "en" };
+		private static HashSet<string> Codes = new HashSet<string>() { "en-US", "en" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			{ "CN", "China" },
 			{ "US", "United States" },
 			{ "FR", "France" },
+			{ "GB", "United Kingdom" },
 			{ "DE", "Germany" },
 			{ "JP", "Japan" },
 			{ "KR", "South Korea" },

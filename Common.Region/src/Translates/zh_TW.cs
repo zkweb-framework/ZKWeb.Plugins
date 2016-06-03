@@ -24,6 +24,7 @@ namespace ZKWeb.Plugins.Common.Region.src.Translates {
 			{ "CN", "中華人民共和國" },
 			{ "US", "美利堅合眾國" },
 			{ "FR", "法國" },
+			{ "GB", "英國" },
 			{ "DE", "德國" },
 			{ "JP", "日本國" },
 			{ "KR", "大韓民國" },

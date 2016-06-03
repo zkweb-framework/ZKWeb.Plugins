@@ -126,13 +126,20 @@
 		// 地区改变时的事件
 		$regionsDropdownContainer.on("change", "select", function () {
 			// 保存到字段
+			// 这里获取地区Id还需要根据之前的下拉框，例如选择了省市镇后，再取消选择市时这里需要使用省的值
 			var $select = $(this);
 			var country = $countryDropdownContainer.find("select").val();
-			var regionId = $select.val();
+			var regionId = null;
+			$select.nextAll().remove();
+			$select.parent().find("select").each(function () {
+				var id = $(this).val();
+				if (id) {
+					regionId = id;
+				}
+			});
 			setFieldValue({ Country: country, RegionId: regionId });
 			// 重新生成下级下拉框
-			$select.nextAll().remove();
-			var node = (regionTreeNodes[country] || {})[regionId];
+			var node = (regionTreeNodes[country] || {})[$select.val()];
 			node && $regionsDropdownContainer.append(getChildNodesDropdown(node));
 		});
 		// 更新国家和地区信息，并绑定地区

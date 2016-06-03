@@ -25,15 +25,15 @@ namespace ZKWeb.Plugins.Common.Region.src.Model {
 		/// <summary>
 		/// 地区列表的缓存
 		/// </summary>
-		protected LazyCache<List<Region>> RegionsCache = null;
+		protected LazyCache<List<Region>> RegionsCache { get; set; }
 		/// <summary>
 		/// 地区树的缓存
 		/// </summary>
-		protected LazyCache<ITreeNode<Region>> RegionsTreeCache = null;
+		protected LazyCache<ITreeNode<Region>> RegionsTreeCache { get; set; }
 		/// <summary>
 		/// 地区Id到地区树节点的缓存
 		/// </summary>
-		protected LazyCache<Dictionary<long, ITreeNode<Region>>> RegionsTreeNodeCache = null;
+		protected LazyCache<Dictionary<long, ITreeNode<Region>>> RegionsTreeNodeCache { get; set; }
 
 		/// <summary>
 		/// 初始化

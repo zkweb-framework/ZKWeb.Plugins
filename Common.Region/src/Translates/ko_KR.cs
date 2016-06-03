@@ -24,6 +24,7 @@ namespace ZKWeb.Plugins.Common.Region.src.Translates {
 			{ "CN", "중화 인민 공화국" },
 			{ "US", "미국" },
 			{ "FR", "프랑스" },
+			{ "GB", "영어" },
 			{ "DE", "독일" },
 			{ "JP", "일본의" },
 			{ "KR", "대한민국" },

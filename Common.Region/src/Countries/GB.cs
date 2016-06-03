@@ -13,16 +13,16 @@ using ZKWeb.Utils.Collections;
 
 namespace ZKWeb.Plugins.Common.Region.src.Countries {
 	/// <summary>
-	/// 意大利
+	/// 英国
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class IT : Country {
-		public override string Name { get { return "IT"; } }
-		
-		public IT() {
+	public class GB : Country {
+		public override string Name { get { return "GB"; } }
+
+		public GB() {
 			RegionsCache = LazyCache.Create(() => {
 				var pathManager = Application.Ioc.Resolve<PathManager>();
-				var path = pathManager.GetResourceFullPath("texts", "regions_it.json");
+				var path = pathManager.GetResourceFullPath("texts", "regions_gb.json");
 				var json = File.ReadAllText(path);
 				return JsonConvert.DeserializeObject<List<Model.Region>>(json);
 			});

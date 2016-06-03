@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Database;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
 
@@ -62,7 +63,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.StaticTableCallbacks {
 				pair.Value["Author"] = author == null ? null : author.Username;
 				pair.Value["AuthorId"] = author == null ? null : (long?)author.Id;
 				pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-				pair.Value["LastClass"] = lastClass == null ? null : lastClass.Name;
+				pair.Value["LastClass"] = lastClass == null ? null : new T(lastClass.Name).ToString();
 				pair.Value["LastClassId"] = lastClass == null ? null : (long?)lastClass.Id;
 				pair.Value["Tags"] = pair.Key.Tags.Select(t => new { t.Id, t.Name }).ToList();
 			}
