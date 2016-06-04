@@ -1,4 +1,5 @@
-﻿using DryIoc;
+﻿using DotLiquid;
+using DryIoc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.TypeTraits {
 	/// <summary>
 	/// 商品状态的特征类
 	/// </summary>
-	public class ProductStateTrait {
+	public class ProductStateTrait : ILiquidizable {
 		/// <summary>
 		/// 是否显示在商品列表中
 		/// </summary>
@@ -18,6 +19,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.TypeTraits {
 		/// 是否可以购买
 		/// </summary>
 		public bool IsPurchasable { get; set; }
+		/// <summary>
+		/// 附加特征
+		/// </summary>
+		public Dictionary<string, object> Extra { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -25,6 +30,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.TypeTraits {
 		public ProductStateTrait() {
 			VisibleFromProductList = false;
 			IsPurchasable = false;
+			Extra = new Dictionary<string, object>();
+		}
+
+		/// <summary>
+		/// 支持在模板中使用
+		/// </summary>
+		/// <returns></returns>
+		object ILiquidizable.ToLiquid() {
+			return new { VisibleFromProductList, IsPurchasable, Extra };
 		}
 
 		/// <summary>

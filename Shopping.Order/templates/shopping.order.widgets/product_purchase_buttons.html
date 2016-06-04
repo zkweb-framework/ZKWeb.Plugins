@@ -1,4 +1,9 @@
-﻿<!-- 注：需要根据销售状态显示内容，未上架时不显示按钮 -->
+﻿{% unless product_info.stateTrait.IsPurchasable %}
+<div class="product-unpurchasable-message">
+	{% include_css_here "/static/shopping.order.css/product-view.css" %}
+	<div class="message">{{ product_info.stateText | trans }}</div>
+</div>
+{% else %}
 <div class="product-purchase-buttons" require-script="/static/shopping.order.js/product-view.min.js">
 	{% include_css_here "/static/shopping.order.css/product-view.css" %}
 	<form class="product-purchase-form" ajax="true">
@@ -10,3 +15,4 @@
 	</form>
 	<div class="clearfix"></div>
 </div>
+{% endunless %}

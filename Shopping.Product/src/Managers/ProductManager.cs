@@ -145,6 +145,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 					typeName = new T(product.Type),
 					state = product.State,
 					stateName = new T(product.State),
+					stateText = new T(string.Format("Product is {0}", product.State)),
+					stateTrait = product.GetStateTrait(),
 					sellerId = seller == null ? null : (long?)seller.Id,
 					sellerName = seller == null ? null : seller.Username,
 					classes,

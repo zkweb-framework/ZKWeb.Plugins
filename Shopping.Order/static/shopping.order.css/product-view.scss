@@ -36,7 +36,7 @@
 	/* 提交时样式 */
 	.product-purchase-form.loading, .product-purchase-form.unbuyable {
 		.btn.btn-buynow, .btn.btn-add-to-cart {
-			background: none repeat scroll 0% 0% #808080;
+			background-color: #808080;
 			color: #FFF;
 			border: 1px solid #808080;
 			pointer-events: none;
@@ -93,9 +93,26 @@
 	}
 }
 
+/* 商品不能购买时的消息 */
+.product-unpurchasable-message {
+	clear: both;
+	padding: 12px 0px 0px 32px;
+
+	.message {
+		width: 300px;
+		height: 40px;
+		line-height: 40px;
+		background-color: #eee;
+		color: #666;
+		border: 1px solid #666;
+		text-align: center;
+		font-size: 16px;
+	}
+}
+
 /* 低分辨率时减少边距 */
 @media (max-width: 768px) {
-	.product-purchase-buttons {
+	.product-purchase-buttons, .product-unpurchasable-message {
 		padding: 12px 0px 0px 12px;
 	}
 }

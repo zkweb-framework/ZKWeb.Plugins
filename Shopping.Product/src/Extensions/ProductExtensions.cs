@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.TypeTraits;
 using ZKWeb.Templating;
 using ZKWeb.Utils.Extensions;
 
@@ -63,6 +64,28 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 					yield return propertyValue;
 				}
 			}
+		}
+
+		/// <summary>
+		/// 获取商品状态的特征
+		/// </summary>
+		/// <param name="product">商品</param>
+		/// <returns></returns>
+		public static ProductStateTrait GetStateTrait(this Database.Product product) {
+			var type = Application.Ioc.ResolveMany<IProductState>()
+				.First(s => s.State == product.State).GetType();
+			return ProductStateTrait.For(type);
+		}
+
+		/// <summary>
+		/// 获取商品类型的特征
+		/// </summary>
+		/// <param name="product">商品</param>
+		/// <returns></returns>
+		public static ProductTypeTrait GetTypeTrait(this Database.Product product) {
+			var type = Application.Ioc.ResolveMany<IProductType>()
+				.First(t => t.Type == product.Type).GetType();
+			return ProductTypeTrait.For(type);
 		}
 	}
 }
