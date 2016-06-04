@@ -65,6 +65,11 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.GenericFormsForAdminSettings {
 			[FileUploaderField("AdminPanelLogo")]
 			public HttpPostedFileBase AdminPanelLogo { get; set; }
 			/// <summary>
+			/// 页面图标
+			/// </summary>
+			[FileUploaderField("Favicon")]
+			public HttpPostedFileBase Favicon { get; set; }
+			/// <summary>
 			/// 恢复默认前台Logo
 			/// </summary>
 			[CheckBoxField("RestoreDefaultFrontPageLogo")]
@@ -74,6 +79,11 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.GenericFormsForAdminSettings {
 			/// </summary>
 			[CheckBoxField("RestoreDefaultAdminPanelLogo")]
 			public bool RestoreDefaultAdminPanelLogo { get; set; }
+			/// <summary>
+			/// 恢复默认页面图标
+			/// </summary>
+			[CheckBoxField("RestoreDefaultFavicon")]
+			public bool RestoreDefaultFavicon { get; set; }
 
 			/// <summary>
 			/// 提交表单
@@ -109,6 +119,11 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.GenericFormsForAdminSettings {
 					logoManager.RestoreDefaultAdminPageLogo();
 				} else if (AdminPanelLogo != null) {
 					logoManager.SaveAdminPanelLogo(AdminPanelLogo.InputStream);
+				}
+				if (RestoreDefaultFavicon) {
+					logoManager.RestoreDefaultFavicon();
+				} else if (Favicon != null) {
+					logoManager.SaveFavicon(Favicon.InputStream);
 				}
 				return new { message = new T("Saved Successfully") };
 			}

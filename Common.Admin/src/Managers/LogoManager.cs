@@ -25,6 +25,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// </summary>
 		public static readonly string[] AdminPanelLogoPath = new[] { "static", "common.admin.images", "logo.png" };
 		/// <summary>
+		/// 页面图标
+		/// </summary>
+		public static readonly string[] FaviconPath = new[] { "static", "favicon.ico" };
+		/// <summary>
 		/// Logo图片质量
 		/// </summary>
 		public const int LogoImageQuality = 100;
@@ -54,6 +58,18 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		}
 
 		/// <summary>
+		/// 保存页面图标
+		/// </summary>
+		/// <param name="stream">图片的数据流</param>
+		public virtual void SaveFavicon(Stream stream) {
+			var pathManager = Application.Ioc.Resolve<PathManager>();
+			var path = pathManager.GetStorageFullPath(FaviconPath);
+			using (var image = Image.FromStream(stream)) {
+				image.SaveAuto(path, LogoImageQuality);
+			}
+		}
+
+		/// <summary>
 		/// 恢复默认的前台Logo
 		/// </summary>
 		public virtual void RestoreDefaultFrontPageLogo() {
@@ -70,6 +86,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		public virtual void RestoreDefaultAdminPageLogo() {
 			var pathManager = Application.Ioc.Resolve<PathManager>();
 			var path = pathManager.GetStorageFullPath(AdminPanelLogoPath);
+			if (File.Exists(path)) {
+				File.Delete(path);
+			}
+		}
+
+		/// <summary>
+		/// 恢复默认的页面图标
+		/// </summary>
+		public virtual void RestoreDefaultFavicon() {
+			var pathManager = Application.Ioc.Resolve<PathManager>();
+			var path = pathManager.GetStorageFullPath(FaviconPath);
 			if (File.Exists(path)) {
 				File.Delete(path);
 			}
