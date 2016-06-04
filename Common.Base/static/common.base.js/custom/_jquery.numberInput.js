@@ -31,11 +31,11 @@ $(function () {
 		var $numberInput = $this.closest(numberInputSelector);
 		var allowDecimal = $numberInput.data("allow-decimal");
 		var allowNegative = $numberInput.data("allow-negative");
-		var value = $(this).val();
+		var value = $(this).val() + "";
 		var regex = inputting ? /^\-?\d*\.?\d*$/ : /^\-?\d+(\.?\d+)?$/;
 		if (!value.match(regex) ||
-			(!allowNegative && value.contains("-")) ||
-			(!allowDecimal && value.contains("."))) {
+			(!allowNegative && _.contains(value, '-')) ||
+			(!allowDecimal && _.contains(value, '.'))) {
 			var number = (allowDecimal ? parseFloat(value) : parseInt(value)) || 0;
 			$this.val(allowNegative ? number : Math.abs(number)); // 数值不符合要求时重置
 		}

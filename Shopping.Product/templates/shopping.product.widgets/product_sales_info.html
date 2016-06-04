@@ -47,6 +47,27 @@
 				</dl>
 			</li>
 			{% endfor %}
+			<li class="order-count">
+				<dl>
+					<dt>{{ "OrderCount" | trans }}</dt>
+					<dd>
+						<div class="input-group number-input number-input-sm" data-toggle="number-input">
+							<input type="text" class="number" value="1" data-match-parameter="OrderCount" />
+							<span class="input-group-btn">
+								<span class="up-down">
+									<span class="btn btn-xs btn-default up">
+										<i class="fa fa-chevron-up"></i>
+									</span>
+									<span class="btn btn-xs btn-default down">
+										<i class="fa fa-chevron-down"></i>
+									</span>
+								</span>
+							</span>
+						</div>
+						<span>{{ "Stock" | trans }}:&nbsp;<span class="stock"></span></span>
+					</dd>
+				</dl>
+			</li>
 		</ul>
 	</div>
 	<div class="clearfix"></div>

@@ -6,10 +6,10 @@
 {% else %}
 <div class="product-purchase-buttons" require-script="/static/shopping.order.js/product-view.min.js">
 	{% include_css_here "/static/shopping.order.css/product-view.css" %}
-	<form class="product-purchase-form" ajax="true">
-		<input type="hidden" name="productId" />
-		<input type="hidden" name="matchParameters" />
-		<input type="hidden" name="isBuyNow" />
+	<form class="product-purchase-form" action="/cart/add" method="post" ajax="true">
+		<input type="hidden" name="productId" value="{{ product_info.id }}" />
+		<input type="hidden" name="matchParameters" value="{}" />
+		<input type="hidden" name="isBuyNow" value="false" />
 		<a class="btn btn-buynow">{{ "Buynow" | trans }}</a>
 		<a class="btn btn-add-to-cart"><i class="fa fa-cart-plus"></i>{{ "AddToCart" | trans }}</a>
 	</form>
