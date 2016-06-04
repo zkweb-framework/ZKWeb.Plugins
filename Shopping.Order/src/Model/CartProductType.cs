@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// 购物车商品的类型
 	/// 因为使用了固定的逻辑处理，这里不开放接口
 	/// </summary>
-	public enum CardProductType {
+	public enum CartProductType {
 		/// <summary>
 		/// 加入购物车
 		/// </summary>

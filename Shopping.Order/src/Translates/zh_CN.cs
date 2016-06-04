@@ -21,7 +21,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Order management for ec site", "商城使用的订单管理功能" },
 			// TODO: 以下未翻译到其他语言
 			{ "Buynow", "立刻购买" },
-			{ "AddToCart", "加入购物车" }
+			{ "AddToCart", "加入购物车" },
+			{ "The product you are try to purchase does not exist.", "您尝试购买的商品不存在" },
+			{ "The product you are try to purchase does not purchasable.", "您尝试购买的商品目前不允许购买" },
+			{ "Order count must large than 0", "订购数量必须大于0" },
+
 		};
 
 		public bool CanTranslate(string code) {

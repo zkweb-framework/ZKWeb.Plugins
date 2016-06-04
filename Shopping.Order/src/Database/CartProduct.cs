@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Admin.src.Database;
-using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 
@@ -28,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 类型
 		/// 默认或立刻购买
 		/// </summary>
-		public virtual CardProductType Type { get; set; }
+		public virtual CartProductType Type { get; set; }
 		/// <summary>
 		/// 买家用户，没有时等于null
 		/// </summary>
@@ -37,7 +36,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 买家会话，已有买家用户时等于null
 		/// 这里不关联会话对象避免删除问题
 		/// </summary>
-		public virtual long? BuyerSessionId { get; set; }
+		public virtual string BuyerSession { get; set; }
 		/// <summary>
 		/// 商品
 		/// </summary>
@@ -80,7 +79,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 			Id(c => c.Id);
 			Map(c => c.Type);
 			References(c => c.Buyer).Cascade.Delete();
-			Map(c => c.BuyerSessionId).Index("Idx_BuyerSessionId");
+			Map(c => c.BuyerSession).Index("Idx_BuyerSession");
 			References(c => c.Product).Cascade.Delete();
 			Map(c => c.Count);
 			Map(c => c.MatchParameters).CustomType<JsonSerializedType<Dictionary<string, object>>>();
