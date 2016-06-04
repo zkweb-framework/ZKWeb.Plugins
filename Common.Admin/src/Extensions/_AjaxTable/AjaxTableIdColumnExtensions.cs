@@ -97,5 +97,23 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 			var app = new TApp();
 			column.AddDeleteActions(request, app.GetDataType(), app.TypeName, app.BatchUrl);
 		}
+
+		/// <summary>
+		/// 对后台应用使用的Ajax表格Id列进行标准的设置
+		/// 添加以下菜单项
+		/// - 删除菜单（如果批量操作Url不是空）
+		/// </summary>
+		/// <typeparam name="TApp">后台应用类型</typeparam>
+		/// <param name="column">Id列</param>
+		/// <param name="request">搜索请求</param>
+		public static void StandardSetupForAdminApp<TApp>(
+			this AjaxTableIdColumn column, AjaxTableSearchRequest request)
+			where TApp : class, IAdminAppBuilder, new() {
+			var app = new TApp();
+			if (!string.IsNullOrEmpty(app.BatchUrl)) {
+				column.AddDivider();
+				column.AddDeleteActionsForAdminApp<TApp>(request);
+			}
+		}
 	}
 }

@@ -44,13 +44,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 构建表格时的处理
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditActionForAdminApp<RoleManageApp>();
-				table.MenuItems.AddAddActionForAdminApp<RoleManageApp>();
-				searchBar.KeywordPlaceHolder = new T("Name/Remark");
-				searchBar.MenuItems.AddDivider();
-				searchBar.MenuItems.AddRecycleBin();
-				searchBar.MenuItems.AddAddActionForAdminApp<RoleManageApp>();
+				table.StandardSetupForAdminApp<RoleManageApp>();
+				searchBar.StandardSetupForAdminApp<RoleManageApp>("Name/Remark");
 			}
 
 			/// <summary>
@@ -92,16 +87,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<RoleManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Name", "45%");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditActionForAdminApp<RoleManageApp>();
-				idColumn.AddDivider();
-				idColumn.AddDeleteActionsForAdminApp<RoleManageApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForAdminApp<RoleManageApp>(request);
 			}
 		}
 

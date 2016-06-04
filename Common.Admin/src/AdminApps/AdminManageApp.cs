@@ -47,13 +47,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 构建表格时的处理
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditActionForAdminApp<AdminManageApp>();
-				table.MenuItems.AddAddActionForAdminApp<AdminManageApp>();
-				searchBar.KeywordPlaceHolder = new T("Username");
-				searchBar.MenuItems.AddDivider();
-				searchBar.MenuItems.AddRecycleBin();
-				searchBar.MenuItems.AddAddActionForAdminApp<AdminManageApp>();
+				table.StandardSetupForAdminApp<AdminManageApp>();
+				searchBar.StandardSetupForAdminApp<AdminManageApp>("Username");
 			}
 
 			/// <summary>
@@ -99,7 +94,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<AdminManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddImageColumn("Avatar");
 				response.Columns.AddMemberColumn("Username", "45%");
@@ -107,10 +102,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddEnumLabelColumn("SuperAdmin", typeof(EnumBool));
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditActionForAdminApp<AdminManageApp>();
-				idColumn.AddDivider();
-				idColumn.AddDeleteActionsForAdminApp<AdminManageApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForAdminApp<AdminManageApp>(request);
 			}
 		}
 

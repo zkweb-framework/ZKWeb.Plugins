@@ -33,6 +33,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 		public override string Url { get { return "/admin/payment_transactions"; } }
 		public override string TileClass { get { return "tile bg-yellow"; } }
 		public override string IconClass { get { return "fa fa-download"; } }
+		public override string AddUrl { get { return null; } }
 		protected override IAjaxTableCallback<PaymentTransaction> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() {
 			throw new HttpException(400, new T("Add transaction from admin panel is not supported"));
@@ -48,11 +49,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditActionForAdminApp<PaymentTransactionRecordsApp>();
-				searchBar.KeywordPlaceHolder = new T("Serial/Payer/Payee/Description/Remark");
-				searchBar.MenuItems.AddDivider();
-				searchBar.MenuItems.AddRecycleBin();
+				table.StandardSetupForAdminApp<PaymentTransactionRecordsApp>();
+				searchBar.StandardSetupForAdminApp<PaymentTransactionRecordsApp>(
+					"Serial/Payer/Payee/Description/Remark");
 			}
 
 			/// <summary>
@@ -116,7 +115,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<PaymentTransactionRecordsApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Serial");
 				response.Columns.AddMemberColumn("ExternalSerial");
@@ -128,10 +127,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddEnumLabelColumn("State", typeof(PaymentTransactionState));
-				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditActionForAdminApp<PaymentTransactionRecordsApp>();
-				idColumn.AddDivider();
-				idColumn.AddDeleteActionsForAdminApp<PaymentTransactionRecordsApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForAdminApp<PaymentTransactionRecordsApp>(request);
 			}
 		}
 

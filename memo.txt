@@ -58,8 +58,9 @@
 	ok 支持ckeditor上传保存图片
 	ok 底部copyright
 	逐步补充框架和插件的单元测试
+	打印和导出xls菜单
+	http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
 	Common.Base自带的标签和过滤器文档
-	支持上传favicon
 
 性能测试结果 (i7 Q720 1.6Ghz x 4 core, ab -n 2000 -c 8)
 	2015-05-27

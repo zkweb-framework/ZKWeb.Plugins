@@ -86,5 +86,22 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 				ScriptStrings.PostConfirmedActionForMultiSelected(primaryKey, deleteUrl),
 				dialogParameters);
 		}
+
+		/// <summary>
+		/// 对后台应用使用的Ajax表格操作列进行标准的设置
+		/// 添加以下按钮
+		/// - 查看按钮（如果编辑Url不是空）
+		/// </summary>
+		/// <typeparam name="TApp">后台应用类型</typeparam>
+		/// <param name="column">操作列</param>
+		/// <param name="request">搜索请求</param>
+		public static void StandardSetupForAdminApp<TApp>(
+			this AjaxTableActionColumn column, AjaxTableSearchRequest request)
+			where TApp : class, IAdminAppBuilder, new() {
+			var app = new TApp();
+			if (!string.IsNullOrEmpty(app.EditUrl)) {
+				column.AddEditActionForAdminApp<TApp>();
+			}
+		}
 	}
 }

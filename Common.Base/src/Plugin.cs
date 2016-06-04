@@ -41,6 +41,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			Template.RegisterTag<WebsiteName>("website_name");
 			Template.RegisterFilter(typeof(Filters));
 			// 注册模板可描画类型
+			Template.RegisterSafeType(typeof(HtmlItem), s => s);
 			Template.RegisterSafeType(typeof(MenuItem), s => s);
 			// 注册默认模块
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();

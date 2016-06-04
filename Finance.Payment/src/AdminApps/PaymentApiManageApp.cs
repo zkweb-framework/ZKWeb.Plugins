@@ -1,26 +1,23 @@
 ﻿using DryIocAttributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Plugins.Common.Admin.src;
+using System.Web;
+using ZKWeb.Database;
+using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Admin.src.AdminApps;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src;
+using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Forms;
-using ZKWeb.Utils.Extensions;
-using System.Web;
-using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Finance.Payment.src.ListItemProviders;
-using System.ComponentModel.DataAnnotations;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
-using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
-using ZKWeb.Localize;
-using ZKWeb.Database;
-using ZKWeb.Plugins.Common.Admin.src.AdminApps;
+using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
@@ -64,13 +61,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditActionForAdminApp<PaymentApiManageApp>();
-				table.MenuItems.AddAddActionForAdminApp<PaymentApiManageApp>();
-				searchBar.KeywordPlaceHolder = new T("Name/Owner/Remark");
-				searchBar.MenuItems.AddDivider();
-				searchBar.MenuItems.AddRecycleBin();
-				searchBar.MenuItems.AddAddActionForAdminApp<PaymentApiManageApp>();
+				table.StandardSetupForAdminApp<PaymentApiManageApp>();
+				searchBar.StandardSetupForAdminApp<PaymentApiManageApp>("Name/Owner/Remark");
 			}
 
 			/// <summary>
@@ -118,7 +110,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// 添加列和操作
 			/// </summary>
 			public void OnResponse(AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<PaymentApiManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Name", "35%");
 				response.Columns.AddMemberColumn("Type");
@@ -131,9 +123,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				actionColumn.AddButtonForOpenLink(
 					new T("TestPayment"), "btn btn-xs btn-warning", "fa fa-edit",
 					"/admin/payment_apis/test_payment?id=<%-row.Id%>");
-				actionColumn.AddEditActionForAdminApp<PaymentApiManageApp>();
-				idColumn.AddDivider();
-				idColumn.AddDeleteActionsForAdminApp<PaymentApiManageApp>(request);
+				actionColumn.StandardSetupForAdminApp<PaymentApiManageApp>(request);
 			}
 		}
 

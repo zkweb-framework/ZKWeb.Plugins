@@ -59,13 +59,8 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditActionForAdminApp<LogisticsManageApp>();
-				table.MenuItems.AddAddActionForAdminApp<LogisticsManageApp>();
-				searchBar.KeywordPlaceHolder = new T("Name/Remark");
-				searchBar.MenuItems.AddDivider();
-				searchBar.MenuItems.AddRecycleBin();
-				searchBar.MenuItems.AddAddActionForAdminApp<LogisticsManageApp>();
+				table.StandardSetupForAdminApp<LogisticsManageApp>();
+				searchBar.StandardSetupForAdminApp<LogisticsManageApp>("Name/Remark");
 			}
 
 			/// <summary>
@@ -113,7 +108,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// 添加列和操作
 			/// </summary>
 			public void OnResponse(AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<LogisticsManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddHtmlColumn("Name", "30%");
 				response.Columns.AddMemberColumn("Type");
@@ -122,10 +117,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditActionForAdminApp<LogisticsManageApp>();
-				idColumn.AddDivider();
-				idColumn.AddDeleteActionsForAdminApp<LogisticsManageApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForAdminApp<LogisticsManageApp>(request);
 			}
 		}
 

@@ -66,13 +66,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditActionForAdminApp<ProductManageApp>();
-				table.MenuItems.AddAddActionForAdminApp<ProductManageApp>();
-				searchBar.KeywordPlaceHolder = new T("Name/Remark");
-				searchBar.MenuItems.AddDivider();
-				searchBar.MenuItems.AddRecycleBin();
-				searchBar.MenuItems.AddAddActionForAdminApp<ProductManageApp>();
+				table.StandardSetupForAdminApp<ProductManageApp>();
+				searchBar.StandardSetupForAdminApp<ProductManageApp>("Name/Remark");
 				searchBar.Conditions.Add(new FormField(new DropdownListFieldAttribute(
 					"ProductType", typeof(ListItemsWithOptional<ProductTypeListItemProvider>))));
 				searchBar.Conditions.Add(new FormField(new DropdownListFieldAttribute(
@@ -155,7 +150,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<ProductManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddHtmlColumn("Name", "30%");
 				response.Columns.AddMemberColumn("Price");
@@ -170,9 +165,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				var actionColumn = response.Columns.AddActionColumn("150");
 				actionColumn.AddButtonForOpenLink(new T("Preview"),
 					"btn btn-xs btn-success", "fa fa-eye", "/product/view?id=<%-row.Id%>", "_blank");
-				actionColumn.AddEditActionForAdminApp<ProductManageApp>();
-				idColumn.AddDivider();
-				idColumn.AddDeleteActionsForAdminApp<ProductManageApp>(request);
+				actionColumn.StandardSetupForAdminApp<ProductManageApp>(request);
 			}
 		}
 

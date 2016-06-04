@@ -42,6 +42,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// 高级搜索框的条件项
 		/// </summary>
 		public List<FormField> Conditions { get; protected set; }
+		/// <summary>
+		/// 显示在搜索框之前的项
+		/// </summary>
+		public List<HtmlItem> BeforeItems { get; protected set; }
+		/// <summary>
+		/// 显示在搜索框之后的项
+		/// </summary>
+		public List<HtmlItem> AfterItems { get; protected set; }
 
 		/// <summary>
 		/// 初始化
@@ -49,6 +57,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		public AjaxTableSearchBarBuilder() {
 			MenuItems = new List<MenuItem>();
 			Conditions = new List<FormField>();
+			BeforeItems = new List<HtmlItem>();
+			AfterItems = new List<HtmlItem>();
 			MenuItems.AddRefresh();
 			MenuItems.AddFullscreen();
 			MenuItems.AddDivider();
@@ -77,7 +87,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 				tableId = TableId,
 				menuItems = MenuItems,
 				placeholder = new T(KeywordPlaceHolder ?? "Please enter keyword"),
-				conditions = Conditions
+				conditions = Conditions,
+				beforeItems = BeforeItems,
+				afterItems = AfterItems
 			});
 			return html;
 		}

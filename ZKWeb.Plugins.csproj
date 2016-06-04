@@ -135,12 +135,16 @@
     <Compile Include="Common.AdminSettings\src\GenericFormsForAdminSettings\WebsiteSettingsForm.cs" />
     <Compile Include="Common.AdminSettings\src\Scaffolding\GenericFormForAdminSettings.cs" />
     <Compile Include="Common.AdminSettings\src\Scaffolding\GenericListForAdminSettings.cs" />
-    <Compile Include="Common.Admin\src\Extensions\ContainerExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\_AjaxTable\AjaxTableBuilderExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\_AjaxTable\AjaxTableSearchBarBuilderExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\_Container\ContainerExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\_HtmlItem\HtmlItemsExtensions.cs" />
     <Compile Include="Common.Admin\src\Managers\LogoManager.cs" />
     <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByLocale.cs" />
     <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByIdentAndLocale.cs" />
     <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByIdent.cs" />
     <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByIdentAndLocaleAndUrl.cs" />
+    <Compile Include="Common.Base\src\Extensions\_HtmlItem\HtmlItemsExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\_StaticTable\IStaticTableCallbackExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\_StaticTable\StaticTableSearchRequestExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\_AjaxTable\AjaxTableSearchRequestExtensions.cs" />
@@ -169,7 +173,7 @@
     <Compile Include="Common.AdminSettings\src\Translates\ko_KR.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\zh_TW.cs" />
     <Compile Include="Common.AdminSettings\src\Translates\zh_CN.cs" />
-    <Compile Include="Common.Admin\src\Extensions\AjaxTableColumnsExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\_AjaxTable\AjaxTableColumnsExtensions.cs" />
     <Compile Include="Common.Base\src\Managers\HttpRequestChecker.cs" />
     <Compile Include="Common.Admin\src\Scaffolding\AdminAppBuilder.cs" />
     <Compile Include="Common.Admin\src\AdminApps\UserManageApp.cs" />
@@ -183,11 +187,11 @@
     <Compile Include="Common.Admin\src\Database\UserRole.cs" />
     <Compile Include="Common.Admin\src\DataCallbacks\CheckUsernameDuplicate.cs" />
     <Compile Include="Common.Admin\src\DataCallbacks\PreventDeleteSelf.cs" />
-    <Compile Include="Common.Admin\src\Extensions\AjaxTableActionColumnExtensions.cs" />
-    <Compile Include="Common.Admin\src\Extensions\AjaxTableIdColumnExtensions.cs" />
-    <Compile Include="Common.Admin\src\Extensions\IQueryableExtensions.cs" />
-    <Compile Include="Common.Admin\src\Extensions\MenuItemsExtensions.cs" />
-    <Compile Include="Common.Admin\src\Extensions\SessionExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\_AjaxTable\AjaxTableActionColumnExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\_AjaxTable\AjaxTableIdColumnExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\_Misc\IQueryableExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\_HtmlItem\MenuItemsExtensions.cs" />
+    <Compile Include="Common.Admin\src\Extensions\_Session\SessionExtensions.cs" />
     <Compile Include="Common.Admin\src\Forms\AdminAboutMeForm.cs" />
     <Compile Include="Common.Admin\src\Forms\AdminLoginForm.cs" />
     <Compile Include="Common.Admin\src\Forms\UserLoginForm.cs" />
@@ -208,6 +212,7 @@
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\BaseTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\BaseTableSearchResponse.cs" />
+    <Compile Include="Common.Base\src\Model\_HtmlItem\HtmlItem.cs" />
     <Compile Include="Common.Base\src\Model\_StaticTable\IStaticTableCallback.cs" />
     <Compile Include="Common.Base\src\Model\_StaticTable\IStaticTableCallbackExtension.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\Pagination.cs" />
@@ -296,6 +301,8 @@
     <None Include="Common.Base\templates\common.base.widgets\index_help.widget" />
     <Content Include="Common.Base\templates\common.base.widgets\copyright.html" />
     <Content Include="Common.Base\templates\common.base.widgets\index_help.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.html_item.btn_onclick.html" />
+    <Content Include="Common.Base\templates\common.base\tmpl.html_item.btn_link.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.url_pagination.html" />
     <None Include="Demo\templates\demo.widgets\demo_index.widget" />
     <Content Include="Common.Region\texts\sources.txt" />
@@ -361,7 +368,7 @@
     <Compile Include="Common.Base\src\Model\_ListItem\ListItemFromData.cs" />
     <Compile Include="Common.Base\src\Model\_ListItem\ListItemFromDataNotDeleted.cs" />
     <Compile Include="Common.Base\src\Model\_ListItem\ListItemFromEnum.cs" />
-    <Compile Include="Common.Base\src\Model\_MenuItem\MenuItemGroup.cs" />
+    <Compile Include="Common.Base\src\Model\_HtmlItem\MenuItemGroup.cs" />
     <Compile Include="Common.Base\src\Scaffolding\TabDataEditFormBuilder.cs" />
     <Compile Include="Common.Base\src\Scaffolding\TabFormBuilder.cs" />
     <Compile Include="Common.Base\src\Scaffolding\TabModelFormBuilder.cs" />
@@ -384,7 +391,7 @@
     <Compile Include="Common.Base\src\Extensions\_AjaxTable\AjaxTableColumnsExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\_AjaxTable\AjaxTableIdColumn.cs" />
     <Compile Include="Common.Base\src\Extensions\_AjaxTable\AjaxTableIdColumnExtensions.cs" />
-    <Compile Include="Common.Base\src\Extensions\_MenuItem\MenuItemsExtensions.cs" />
+    <Compile Include="Common.Base\src\Extensions\_HtmlItem\MenuItemsExtensions.cs" />
     <Compile Include="Common.Base\src\Scaffolding\FormBuilder.cs" />
     <Compile Include="Common.Captcha\src\FormFieldHandlers\Captcha.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBox.cs" />
@@ -431,7 +438,7 @@
     <Compile Include="Common.Base\src\Model\_Misc\LabelCssClassAttribute.cs" />
     <Compile Include="Common.Base\src\Model\_ListItem\ListItem.cs" />
     <Compile Include="Common.Base\src\Model\_ListItem\ListItemsWithOptional.cs" />
-    <Compile Include="Common.Base\src\Model\_MenuItem\MenuItem.cs" />
+    <Compile Include="Common.Base\src\Model\_HtmlItem\MenuItem.cs" />
     <Compile Include="Common.Base\src\Model\_Misc\ScriptStrings.cs" />
     <Compile Include="Common.Base\src\Plugin.cs" />
     <Compile Include="Common.Base\src\Managers\ScheduledTaskManager.cs" />

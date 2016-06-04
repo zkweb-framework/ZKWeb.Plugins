@@ -49,14 +49,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		public virtual string SearchUrl { get { return Url + "/search"; } }
 		/// <summary>
 		/// 添加数据的Url
+		/// 返回空值时表示不支持添加数据
 		/// </summary>
 		public virtual string AddUrl { get { return Url + "/add"; } }
 		/// <summary>
 		/// 编辑数据的Url
+		/// 返回空值时表示不支持编辑数据
 		/// </summary>
 		public virtual string EditUrl { get { return Url + "/edit"; } }
 		/// <summary>
 		/// 批量操作的Url
+		/// 返回空值时表示不支持批量操作数据
 		/// </summary>
 		public virtual string BatchUrl { get { return Url + "/batch"; } }
 		/// <summary>
@@ -311,11 +314,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
 			controllerManager.RegisterAction(Url, HttpMethods.GET, Action);
 			controllerManager.RegisterAction(SearchUrl, HttpMethods.POST, SearchAction);
-			controllerManager.RegisterAction(AddUrl, HttpMethods.GET, AddAction);
-			controllerManager.RegisterAction(AddUrl, HttpMethods.POST, AddAction);
-			controllerManager.RegisterAction(EditUrl, HttpMethods.GET, EditAction);
-			controllerManager.RegisterAction(EditUrl, HttpMethods.POST, EditAction);
-			controllerManager.RegisterAction(BatchUrl, HttpMethods.POST, BatchAction);
+			if (!string.IsNullOrEmpty(AddUrl)) {
+				controllerManager.RegisterAction(AddUrl, HttpMethods.GET, AddAction);
+				controllerManager.RegisterAction(AddUrl, HttpMethods.POST, AddAction);
+			}
+			if (!string.IsNullOrEmpty(EditUrl)) {
+				controllerManager.RegisterAction(EditUrl, HttpMethods.GET, EditAction);
+				controllerManager.RegisterAction(EditUrl, HttpMethods.POST, EditAction);
+			}
+			if (!string.IsNullOrEmpty(BatchUrl)) {
+				controllerManager.RegisterAction(BatchUrl, HttpMethods.POST, BatchAction);
+			}
 		}
 	}
 }

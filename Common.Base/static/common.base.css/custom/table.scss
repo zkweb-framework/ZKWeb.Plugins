@@ -183,24 +183,47 @@
 }
 
 /* 搜索栏 */
-.portlet > .portlet-title > .actions {
+.portlet > .portlet-title > .search-bar {
 	padding: 0px 0px 7px 0px;
 	float: right;
 	display: inline-block;
 
-	> .portlet-input {
-		max-width: 230px;
+	> .search-bar-before-items {
+		margin: 0px 4px 4px 0px;
+	}
 
-		.input-group-btn {
-			width: auto;
+	> .search-bar-before-items, > .search-bar-after-items {
+		float: left;
+
+		.btn {
+			padding: 7px 13px 8px;
+
+			i {
+				margin: 0px 4px 0px 0px;
+			}
 		}
 	}
 
-	> .btn-group {
-		margin: 0px -4px 0px 0px;
-	}
+	> .search-bar-body {
+		float: left;
+		margin: 0px 0px 4px 0px;
 
-	.btn {
-		padding: 7px 13px 8px;
+		> .portlet-input {
+			float: left;
+			max-width: 230px;
+
+			.input-group-btn {
+				width: auto;
+			}
+		}
+
+		> .btn-group {
+			float: left;
+			margin: 0px -4px 0px 0px;
+		}
+
+		.btn {
+			padding: 7px 13px 8px;
+		}
 	}
 }
