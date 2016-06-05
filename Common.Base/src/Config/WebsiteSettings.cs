@@ -30,7 +30,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Config {
 		public WebsiteSettings() {
 			WebsiteName = "ZKWeb Default Website";
 			DocumentTitleFormat = "{title} - {websiteName}";
-			CopyrightText = "© 2016 ZKWeb";
+			CopyrightText = "Copyright © 2016 ZKWeb All rights reserved";
 		}
 	}
 }

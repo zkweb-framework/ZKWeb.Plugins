@@ -20,7 +20,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Config {
 		/// </summary>
 		public int NormalCartProductExpiresDays { get; set; }
 		/// <summary>
-		/// 自动确认收货时间，默认14天
+		/// 自动确认收货天数，默认14天
 		/// </summary>
 		public int AutoConfirmOrderAfterDays { get; set; }
 

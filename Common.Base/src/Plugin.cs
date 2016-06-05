@@ -26,6 +26,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			// 初始化定时任务管理器
 			Application.Ioc.Resolve<ScheduledTaskManager>();
 			// 注册模板标签和过滤器
+			Template.RegisterTag<CopyrightText>("copyright_text");
 			Template.RegisterTag<IncludeCssHere>("include_css_here");
 			Template.RegisterTag<IncludeCssLater>("include_css_later");
 			Template.RegisterTag<IncludeJsHere>("include_js_here");
