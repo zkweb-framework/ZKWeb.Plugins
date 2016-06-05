@@ -33,6 +33,7 @@ using DryIoc;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Templating;
 using ZKWeb.Plugins.Shopping.Product.src.Config;
+using ZKWeb.Plugins.Shopping.Product.src.Managers;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>
@@ -315,6 +316,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				saveTo.MatchedDatas.AddRange(MatchedDatas.ToDatabaseSet(saveTo));
 				// 商品介绍
 				saveTo.Introduction = Introduction;
+				// 编辑后清除商品管理器的缓存
+				Application.Ioc.Resolve<ProductManager>().ClearCache();
 				return new {
 					message = new T("Saved Successfully"),
 					script = ScriptStrings.AjaxtableUpdatedAndCloseModal

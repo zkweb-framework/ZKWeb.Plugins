@@ -241,6 +241,8 @@
     <Compile Include="Shopping.Order\src\Config\OrderSettings.cs" />
     <Compile Include="Shopping.Order\src\Controllers\CartController.cs" />
     <Compile Include="Shopping.Order\src\Controllers\OrderController.cs" />
+    <Compile Include="Shopping.Order\src\Extensions\CartProductExtensions.cs" />
+    <Compile Include="Shopping.Order\src\Extensions\CreateOrderProductParametersExtensions.cs" />
     <Compile Include="Shopping.Order\src\Extensions\OrderPriceCalcResultExtensions.cs" />
     <Compile Include="Shopping.Order\src\GenericFormsForAdminSettings\OrderSettingsForm.cs" />
     <Compile Include="Shopping.Order\src\Managers\CartProductManager.cs" />
