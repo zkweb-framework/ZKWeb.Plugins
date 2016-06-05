@@ -5,23 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Database;
 using ZKWeb.Logging;
-using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Shopping.Order.src.Database;
 
-namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
+namespace ZKWeb.Plugins.Shopping.Order.src.ScheduledTasks {
 	/// <summary>
-	/// 会话清理器
-	/// 每小时删除一次过期的会话
+	/// 清理过期的购物车商品
 	/// </summary>
-	[ExportMany, SingletonReuse]
-	public class SessionCleaner : IScheduledTaskExecutor {
+	[ExportMany]
+	public class CartProductCleaner : IScheduledTaskExecutor {
 		/// <summary>
 		/// 任务键名
 		/// </summary>
-		public string Key { get { return "Common.Base.SessionCleaner"; } }
+		public string Key { get { return "Shopping.Order.CartProductCleaner"; } }
 
 		/// <summary>
 		/// 每小时执行一次
@@ -31,16 +29,16 @@ namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 		}
 
 		/// <summary>
-		/// 删除过期的会话
+		/// 自动确认订单
 		/// </summary>
 		public void Execute() {
-			var count = UnitOfWork.WriteData<Session, long>(r => {
+			var count = UnitOfWork.WriteData<CartProduct, long>(r => {
 				var now = DateTime.UtcNow;
-				return r.DeleteWhere(s => s.Expires < now);
+				return r.DeleteWhere(p => p.ExpireTime < now);
 			});
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogInfo(string.Format(
-				"SessionCleaner executed, {0} sessions removed", count));
+				"CartProductCleaner executed, {0} cart products removed", count));
 		}
 	}
 }

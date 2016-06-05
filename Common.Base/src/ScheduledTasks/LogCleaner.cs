@@ -31,8 +31,6 @@ namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 		/// <summary>
 		/// 每小时执行一次
 		/// </summary>
-		/// <param name="lastExecuted"></param>
-		/// <returns></returns>
 		public bool ShouldExecuteNow(DateTime lastExecuted) {
 			return ((DateTime.UtcNow - lastExecuted).TotalHours > 1.0);
 		}

@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// 创建订单
 		/// </summary>
 		/// <returns></returns>
-		[Action("order/create")]
+		[Action("order/create", HttpMethods.POST)]
 		public IActionResult Create() {
 			throw new NotImplementedException();
 		}
@@ -35,6 +35,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("order/confirm")]
+		[Action("order/confirm", HttpMethods.POST)]
 		public IActionResult Confirm() {
 			throw new NotImplementedException();
 		}

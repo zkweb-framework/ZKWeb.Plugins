@@ -8,11 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Model;
-using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
@@ -24,28 +22,46 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>
 	/// 用户管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class UserManager {
 		/// <summary>
 		/// 记住登陆时，保留会话的天数
+		/// 默认30天，可通过网站配置指定
 		/// </summary>
-		public const int SessionExpireDaysWithRememebrLogin = 30;
+		public int SessionExpireDaysWithRememebrLogin { get; set; }
 		/// <summary>
 		/// 不记住登陆时，保留会话的天数
+		/// 默认1天，可通过网站配置指定
 		/// </summary>
-		public const int SessionExpireDaysWithoutRememberLogin = 1;
+		public int SessionExpireDaysWithoutRememberLogin { get; set; }
 		/// <summary>
 		/// 头像宽度
+		/// 默认150，可通过网站配置指定
 		/// </summary>
-		public const int AvatarWidth = 150;
+		public int AvatarWidth { get; set; }
 		/// <summary>
 		/// 头像高度
+		/// 默认150，可通过网站配置指定
 		/// </summary>
-		public const int AvatarHeight = 150;
+		public int AvatarHeight { get; set; }
 		/// <summary>
-		/// 头像图片质量
+		/// 头像图片质量，默认90
 		/// </summary>
-		public const int AvatarImageQuality = 90;
+		public int AvatarImageQuality { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public UserManager() {
+			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			SessionExpireDaysWithRememebrLogin = configManager.WebsiteConfig
+				.Extra.GetOrDefault(ExtraConfigKeys.SessionExpireDaysWithRememebrLogin, 30);
+			SessionExpireDaysWithoutRememberLogin = configManager.WebsiteConfig
+				.Extra.GetOrDefault(ExtraConfigKeys.SessionExpireDaysWithoutRememberLogin, 1);
+			AvatarWidth = configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.AvatarWidth, 150);
+			AvatarHeight = configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.AvatarHeight, 150);
+			AvatarImageQuality = 90;
+		}
 
 		/// <summary>
 		/// 注册用户

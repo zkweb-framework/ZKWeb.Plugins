@@ -34,7 +34,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// 添加商品到购物车
 		/// </summary>
 		/// <returns></returns>
-		[Action("cart/add")]
+		[Action("cart/add", HttpMethods.POST)]
 		public IActionResult Add() {
 			throw new NotImplementedException();
 		}
@@ -43,7 +43,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// 删除购物车中的商品
 		/// </summary>
 		/// <returns></returns>
-		[Action("cart/delete")]
+		[Action("cart/delete", HttpMethods.POST)]
 		public IActionResult Delete() {
 			throw new NotImplementedException();
 		}
@@ -61,7 +61,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// 计算购物车中的商品价格
 		/// </summary>
 		/// <returns></returns>
-		[Action("cart/calculate_price")]
+		[Action("cart/calculate_price", HttpMethods.POST)]
 		public IActionResult CalculatePrice() {
 			throw new NotImplementedException();
 		}

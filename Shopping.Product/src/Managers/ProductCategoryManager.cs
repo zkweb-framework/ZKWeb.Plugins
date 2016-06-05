@@ -20,7 +20,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 	[ExportMany, SingletonReuse]
 	public class ProductCategoryManager : ICacheCleaner {
 		/// <summary>
-		/// 商品类目的缓存时间，默认是180秒
+		/// 商品类目的缓存时间
+		/// 默认180秒，可通过网站配置指定
 		/// </summary>
 		public TimeSpan CategoryCacheTime { get; set; }
 		/// <summary>

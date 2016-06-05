@@ -25,7 +25,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "The product you are try to purchase does not exist.", "您尝试购买的商品不存在" },
 			{ "The product you are try to purchase does not purchasable.", "您尝试购买的商品目前不允许购买" },
 			{ "Order count must large than 0", "订购数量必须大于0" },
-
+			{ "BuynowCartProductExpiresDays", "立刻购买的购物车商品的过期天数" },
+			{ "NormalCartProductExpiresDays", "一般的购物车商品的过期天数" },
 		};
 
 		public bool CanTranslate(string code) {

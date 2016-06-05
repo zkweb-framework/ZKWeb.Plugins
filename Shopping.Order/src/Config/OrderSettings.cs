@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ZKWeb.Plugins.Common.Base.src.Model;
+
+namespace ZKWeb.Plugins.Shopping.Order.src.Config {
+	/// <summary>
+	/// 订单设置
+	/// </summary>
+	[GenericConfig("Shopping.Order.OrderSettings", CacheTime = 15)]
+	public class OrderSettings {
+		/// <summary>
+		/// 立刻购买的购物车商品的过期天数，默认1天
+		/// </summary>
+		public int BuynowCartProductExpiresDays { get; set; }
+		/// <summary>
+		/// 一般的购物车商品的过期天数，默认90天
+		/// </summary>
+		public int NormalCartProductExpiresDays { get; set; }
+		/// <summary>
+		/// 自动确认收货时间，默认14天
+		/// </summary>
+		public int AutoConfirmOrderAfterDays { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public OrderSettings() {
+			BuynowCartProductExpiresDays = 1;
+			NormalCartProductExpiresDays = 90;
+			AutoConfirmOrderAfterDays = 14;
+		}
+	}
+}

@@ -140,6 +140,7 @@
     <Compile Include="Common.Admin\src\Extensions\_Container\ContainerExtensions.cs" />
     <Compile Include="Common.Admin\src\Extensions\_HtmlItem\HtmlItemsExtensions.cs" />
     <Compile Include="Common.Admin\src\Managers\LogoManager.cs" />
+    <Compile Include="Common.Admin\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByLocale.cs" />
     <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByIdentAndLocale.cs" />
     <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolatedByIdent.cs" />
@@ -236,12 +237,15 @@
     <Compile Include="Common.Region\src\Countries\GB.cs" />
     <Compile Include="Demo\src\DatabaseInitializeHandlers\DatabaseInitializeHandlerDemo.cs" />
     <Compile Include="Shopping.Order\src\AdminApps\OrderManageApp.cs" />
+    <Compile Include="Shopping.Order\src\Config\OrderSettings.cs" />
     <Compile Include="Shopping.Order\src\Controllers\CartController.cs" />
     <Compile Include="Shopping.Order\src\Controllers\OrderController.cs" />
     <Compile Include="Shopping.Order\src\Managers\CartProductManager.cs" />
     <Compile Include="Shopping.Order\src\Managers\OrderManager.cs" />
     <Compile Include="Shopping.Order\src\Plugin.cs" />
     <Compile Include="Shopping.Order\src\Repositories\CartProductRepository.cs" />
+    <Compile Include="Shopping.Order\src\ScheduledTasks\CartProductCleaner.cs" />
+    <Compile Include="Shopping.Order\src\ScheduledTasks\OrderAutoConfirmer.cs" />
     <Compile Include="Shopping.Order\src\Translates\ko_KR.cs" />
     <Compile Include="Shopping.Order\src\Translates\ja_JP.cs" />
     <Compile Include="Shopping.Order\src\Translates\zh_TW.cs" />
@@ -332,6 +336,9 @@
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_price_and_order.html" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_filter_by_tag.html" />
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_details.html" />
+    <Compile Include="Shopping.Product\src\Model\IProductMatchParametersComparer.cs" />
+    <Compile Include="Shopping.Product\src\Model\IProductMatchParametersDescriptionProvider.cs" />
+    <Compile Include="Shopping.Product\src\Model\ProductToPropertyValueForMatch.cs" />
     <Compile Include="Shopping.Product\src\Model\ProductPropertyValueForEdit.cs" />
     <Compile Include="Shopping.Product\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Shopping.Product\src\Model\IProductMatchedDataMatcher.cs" />
@@ -339,6 +346,8 @@
     <Compile Include="Shopping.Product\src\Plugin.cs" />
     <Compile Include="Shopping.Product\src\ProductMatchedDataMatchers\OrderCountMatcher.cs" />
     <Compile Include="Shopping.Product\src\ProductMatchedDataMatchers\PropertyMatcher.cs" />
+    <Compile Include="Shopping.Product\src\ProductMatchParametersComparers\PropertiesComparer.cs" />
+    <Compile Include="Shopping.Product\src\ProductMatchParametersDescriptionProviders\PropertiesDescriptionProvider.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\BrandDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\ModelNumberDisplayField.cs" />
     <Compile Include="Shopping.Product\src\ProductSalesInfoDisplayFields\SellerDisplayField.cs" />
