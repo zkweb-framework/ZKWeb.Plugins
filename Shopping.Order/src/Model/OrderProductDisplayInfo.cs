@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Plugins.Common.Currency.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// <summary>
@@ -41,7 +42,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// <summary>
 		/// 货币
 		/// </summary>
-		public string Currency { get; set; }
+		public ICurrency Currency { get; set; }
 		/// <summary>
 		/// 价格的描述
 		/// </summary>

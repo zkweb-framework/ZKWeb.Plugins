@@ -2,7 +2,7 @@
 	商品详情页的购买功能
 	立刻购买
 		请求 /cart/add
-		成功时跳转到 /cart/buynow
+		成功时跳转到 /cart?type=buynow
 	加入购物车
 		请求 /cart/add
 		成功时显示弹出框
@@ -52,8 +52,8 @@ $(function () {
 		}
 		// 需要显示弹出框时设置总商品件数和价格并显示购物车弹出框
 		if (data.showDialog) {
-			var $buttons = $form.closest($buttons);
-			var $dialog = $buttons.find(".product-added-to-cart-dialog");
+			var $dialog = $(this).closest($buttons).find(".product-added-to-cart-dialog");
+			console.log($dialog);
 			$dialog.find(".total-count").text(data.showDialog.totalCount);
 			$dialog.find(".total-price").text(data.showDialog.totalPriceString);
 			$dialog.removeClass("hide");
@@ -63,5 +63,9 @@ $(function () {
 		}
 		// 触发迷你购物车的重新初始化事件
 		$(".minicart-menu").trigger("reinitialize.miniCart");
+	});
+	// 绑定关闭弹出框的事件
+	$buttons.find(".product-added-to-cart-dialog .dialog-close").on("click", function () {
+		$(this).closest(".product-added-to-cart-dialog").addClass("hide");
 	});
 });

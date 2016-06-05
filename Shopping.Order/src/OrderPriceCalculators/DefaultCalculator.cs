@@ -44,7 +44,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 				if (orderCount <= 0) {
 					throw new HttpException(400, new T("Order count must large than 0"));
 				}
-				orderProductTotalPrice = checked(orderProductTotalPrice + productResult.Sum() * orderCount);
+				orderProductTotalPrice = checked(orderProductTotalPrice + productResult.Parts.Sum() * orderCount);
 			}
 			// 添加商品总价到订单价格的组成部分
 			result.Parts.Add(new OrderPriceCalcResult.Part("ProductTotalPrice", orderProductTotalPrice));

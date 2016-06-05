@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
@@ -20,12 +21,26 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 		}
 
 		/// <summary>
-		/// 获取价格的组成部分的合计
+		/// 获取价格组成部分的描述
+		/// 例 "商品总价100 + 运费20 - 优惠50"
 		/// </summary>
-		/// <param name="result">价格计算结果</param>
+		/// <param name="parts">价格组成部分</param>
 		/// <returns></returns>
-		public static decimal Sum(this OrderPriceCalcResult result) {
-			return result.Parts.Sum();
+		public static string GetDescription(this IList<OrderPriceCalcResult.Part> parts) {
+			var builder = new StringBuilder();
+			var isFirst = true;
+			foreach (var part in parts) {
+				if (isFirst) {
+					isFirst = false;
+					builder.Append(new T(part.Type));
+					builder.Append(part.Delta.ToString());
+				} else {
+					builder.Append((part.Delta >= 0) ? " + " : " - ");
+					builder.Append(new T(part.Type));
+					builder.Append(Math.Abs(part.Delta).ToString());
+				}
+			}
+			return builder.ToString();
 		}
 	}
 }

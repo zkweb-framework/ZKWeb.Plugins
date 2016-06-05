@@ -27,16 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <returns></returns>
 		[Action("cart")]
 		public IActionResult Index() {
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// 立刻购买的购物车页
-		/// </summary>
-		/// <returns></returns>
-		[Action("cart/buynow")]
-		public IActionResult Buynow() {
-			throw new NotImplementedException();
+			return new PlainResult("TODO: not implemented");
 		}
 
 		/// <summary>
@@ -62,7 +53,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			}
 			// 立刻购买时跳转到购物车页面，否则显示弹出框
 			if (isBuyNow) {
-				return new JsonResult(new { redirectTo = "/cart/buynow" });
+				return new JsonResult(new { redirectTo = "/cart?type=buynow" });
 			}
 			return new JsonResult(new { showDialog = new { totalCount = 0, totalPriceString = 1 } });
 		}

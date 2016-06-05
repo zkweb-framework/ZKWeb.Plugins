@@ -33,7 +33,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Create order require user logged in", "创建订单需要用户登录" },
 			{ "ProductUnitPrice", "商品单价" },
 			{ "ProductTotalPrice", "商品总价" },
-			{ "Create order contains multi currency is not supported", "不支持创建包含多种货币的订单" }
+			{ "Create order contains multi currency is not supported", "不支持创建包含多种货币的订单" },
+			{ "Add product to cart success", "成功添加商品到购物车" },
+			{ "Total products", "共有商品" },
+			{ "Product total price", "商品总价" },
+			{ "Close", "关闭" },
+			{ "Checkout >>>", "去结算 >>>" }
 		};
 
 		public bool CanTranslate(string code) {
