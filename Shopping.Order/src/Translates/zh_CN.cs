@@ -28,7 +28,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "OrderSettings", "订单设置" },
 			{ "BuynowCartProductExpiresDays", "立刻购买的购物车商品的过期天数" },
 			{ "NormalCartProductExpiresDays", "一般的购物车商品的过期天数" },
-			{ "AutoConfirmOrderAfterDays", "自动确认收货天数" }
+			{ "AutoConfirmOrderAfterDays", "自动确认收货天数" },
+			{ "AllowAnonymousVisitorCreateOrder", "允许非会员下单" },
+			{ "Create order require user logged in", "创建订单需要用户登录" },
+			{ "ProductUnitPrice", "商品单价" },
+			{ "ProductTotalPrice", "商品总价" },
+			{ "Create order contains multi currency is not supported", "不支持创建包含多种货币的订单" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -55,7 +55,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 			var product = productRepository.GetById(productId);
 			if (product == null) {
 				throw new HttpException(400, new T("The product you are try to purchase does not exist."));
-			} else if (product.GetStateTrait().IsPurchasable) {
+			} else if (!product.GetStateTrait().IsPurchasable) {
 				throw new HttpException(400, new T("The product you are try to purchase does not purchasable."));
 			}
 			// 获取订购数量

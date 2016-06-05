@@ -49,8 +49,8 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
 			if (action == "fetch") {
 				// 抓取测试信息
-				var lastUpdateds = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-					request.Get<string>("lastUpdateds")) ?? new Dictionary<string, string>();
+				var lastUpdateds = request.Get<Dictionary<string, string>>("lastUpdateds") ??
+					new Dictionary<string, string>();
 				var informations = webTesterManager.GetInformations(lastUpdateds);
 				return new JsonResult(new { informations });
 			} else if (action == "reset_all") {

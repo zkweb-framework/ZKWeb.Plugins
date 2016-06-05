@@ -1,9 +1,18 @@
-﻿using DryIocAttributes;
+﻿using DryIoc;
+using DryIocAttributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Shopping.Order.src.Config;
+using ZKWeb.Plugins.Shopping.Order.src.Managers;
+using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.Functions;
+using ZKWeb.Web.ActionResults;
 using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
@@ -36,7 +45,26 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <returns></returns>
 		[Action("cart/add", HttpMethods.POST)]
 		public IActionResult Add() {
-			throw new NotImplementedException();
+			var request = HttpContextUtils.CurrentContext.Request;
+			var productId = request.Get<long>("productId");
+			var matchParameters = request.Get<IDictionary<string, object>>("matchParameters");
+			var isBuyNow = request.Get<bool>("isBuyNow");
+			// 添加购物车商品，抛出无权限错误时跳转到登陆页面
+			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
+			try {
+				cartProductManager.AddCartProduct(productId,
+					isBuyNow ? Model.CartProductType.Buynow : Model.CartProductType.Default, matchParameters);
+			} catch (HttpException ex) {
+				if (ex.GetHttpCode() == 403) {
+					return new JsonResult(new { redirectTo = "/user/login" });
+				}
+				throw;
+			}
+			// 立刻购买时跳转到购物车页面，否则显示弹出框
+			if (isBuyNow) {
+				return new JsonResult(new { redirectTo = "/cart/buynow" });
+			}
+			return new JsonResult(new { showDialog = new { totalCount = 0, totalPriceString = 1 } });
 		}
 
 		/// <summary>

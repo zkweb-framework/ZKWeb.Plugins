@@ -78,9 +78,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		public CartProductMap() {
 			Id(c => c.Id);
 			Map(c => c.Type);
-			References(c => c.Buyer).Cascade.Delete();
+			References(c => c.Buyer);
 			Map(c => c.BuyerSession).Index("Idx_BuyerSession");
-			References(c => c.Product).Cascade.Delete();
+			References(c => c.Product);
 			Map(c => c.Count);
 			Map(c => c.MatchParameters).CustomType<JsonSerializedType<Dictionary<string, object>>>();
 			Map(c => c.CreateTime);

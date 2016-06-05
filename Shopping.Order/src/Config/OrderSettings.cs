@@ -23,6 +23,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Config {
 		/// 自动确认收货天数，默认14天
 		/// </summary>
 		public int AutoConfirmOrderAfterDays { get; set; }
+		/// <summary>
+		/// 允许非会员下单，默认允许
+		/// </summary>
+		public bool AllowAnonymousVisitorCreateOrder { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -31,6 +35,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Config {
 			BuynowCartProductExpiresDays = 1;
 			NormalCartProductExpiresDays = 90;
 			AutoConfirmOrderAfterDays = 14;
+			AllowAnonymousVisitorCreateOrder = true;
 		}
 	}
 }

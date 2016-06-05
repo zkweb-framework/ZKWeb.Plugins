@@ -5,8 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Shopping.Order.src.Config;
 using ZKWeb.Plugins.Shopping.Order.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Repositories;
@@ -26,9 +30,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 		/// <param name="parameters">匹配参数</param>
 		public virtual void AddCartProduct(
 			long productId, CartProductType type, IDictionary<string, object> parameters) {
+			// 检查是否允许非会员下单
+			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
+			var settings = configManager.GetData<OrderSettings>();
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var session = sessionManager.GetSession();
+			if (session.GetUser() == null && !settings.AllowAnonymousVisitorCreateOrder) {
+				throw new HttpException(403, new T("Create order require user logged in"));
+			}
+			// 调用仓储添加购物车商品
 			UnitOfWork.WriteRepository<CartProductRepository>(
-				r => r.AddOrIncrease(sessionManager.GetSession(), productId, type, parameters));
+				r => r.AddOrIncrease(session, productId, type, parameters));
 		}
 
 		/// <summary>

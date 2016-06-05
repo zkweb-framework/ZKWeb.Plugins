@@ -44,7 +44,7 @@ $(function () {
 	// 表单提交成功后跳转或弹出购物车弹出框
 	var $form = $buttons.find(".product-purchase-form");
 	var dialogTimer = null;
-	$form.on("success", function (data) {
+	$form.on("success", function (e, data) {
 		// 需要跳转时跳转到指定的页面（可能是用户登录页或立刻购买购物车页等）
 		if (data.redirectTo) {
 			location.href = data.redirectTo;

@@ -30,7 +30,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		/// <summary>
 		/// 密码信息，json
 		/// </summary>
-		public virtual string Password { get; set; }
+		public virtual PasswordInfo Password { get; set; }
 		/// <summary>
 		/// 创建时间
 		/// </summary>
@@ -77,7 +77,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 			if (string.IsNullOrEmpty(password)) {
 				throw new ArgumentNullException("password");
 			}
-			user.Password = JsonConvert.SerializeObject(PasswordInfo.FromPassword(password));
+			user.Password = PasswordInfo.FromPassword(password);
 		}
 
 		/// <summary>
@@ -86,11 +86,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		/// <param name="password"></param>
 		/// <returns></returns>
 		public static bool CheckPassword(this User user, string password) {
-			if (string.IsNullOrEmpty(user.Password) || string.IsNullOrEmpty(password)) {
+			if (user.Password == null || string.IsNullOrEmpty(password)) {
 				return false;
 			}
-			var passwordInfo = JsonConvert.DeserializeObject<PasswordInfo>(user.Password);
-			return passwordInfo.Check(password);
+			return user.Password.Check(password);
 		}
 	}
 
@@ -106,7 +105,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 			Id(u => u.Id);
 			Map(u => u.Type).CustomType<int>().Index("Idx_Type");
 			Map(u => u.Username).Unique();
-			Map(u => u.Password);
+			Map(u => u.Password).CustomType<JsonSerializedType<PasswordInfo>>();
 			Map(u => u.CreateTime);
 			HasManyToMany(u => u.Roles);
 			Map(u => u.Items).CustomType<JsonSerializedType<Dictionary<string, object>>>();

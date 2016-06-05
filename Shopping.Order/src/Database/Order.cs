@@ -55,12 +55,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// <summary>
 		/// 当前的订单总金额的计算结果
 		/// </summary>
-		public virtual PriceCalcResult TotalCostCalcResult { get; set; }
+		public virtual OrderPriceCalcResult TotalCostCalcResult { get; set; }
 		/// <summary>
 		/// 原始的订单总金额的计算结果
 		/// 下单时生成且之后不会改变
 		/// </summary>
-		public virtual PriceCalcResult OriginalTotalCostCalcResult { get; set; }
+		public virtual OrderPriceCalcResult OriginalTotalCostCalcResult { get; set; }
 		/// <summary>
 		/// 创建时间
 		/// </summary>
@@ -127,8 +127,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 			Map(o => o.OrderParameters).CustomType<JsonSerializedType<Dictionary<string, object>>>();
 			Map(o => o.TotalCost);
 			Map(o => o.Currency).Not.Nullable();
-			Map(o => o.TotalCostCalcResult).CustomType<JsonSerializedType<PriceCalcResult>>();
-			Map(o => o.OriginalTotalCostCalcResult).CustomType<JsonSerializedType<PriceCalcResult>>();
+			Map(o => o.TotalCostCalcResult).CustomType<JsonSerializedType<OrderPriceCalcResult>>();
+			Map(o => o.OriginalTotalCostCalcResult).CustomType<JsonSerializedType<OrderPriceCalcResult>>();
 			Map(o => o.CreateTime);
 			Map(o => o.LastUpdated);
 			Map(o => o.StateTimes).CustomType<JsonSerializedType<Dictionary<OrderState, DateTime>>>();

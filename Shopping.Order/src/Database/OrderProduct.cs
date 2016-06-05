@@ -47,12 +47,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// <summary>
 		/// 单价的计算结果
 		/// </summary>
-		public virtual PriceCalcResult UnitPriceCalcResult { get; set; }
+		public virtual OrderPriceCalcResult UnitPriceCalcResult { get; set; }
 		/// <summary>
 		/// 原始单价的计算结果
 		/// 下单时生成且之后不会改变
 		/// </summary>
-		public virtual PriceCalcResult OriginalUnitPriceCalcResult { get; set; }
+		public virtual OrderPriceCalcResult OriginalUnitPriceCalcResult { get; set; }
 		/// <summary>
 		/// 创建时间
 		/// </summary>
@@ -91,8 +91,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 			Map(p => p.Count);
 			Map(p => p.UnitPrice);
 			Map(p => p.Currency).Not.Nullable();
-			Map(p => p.UnitPriceCalcResult).CustomType<JsonSerializedType<PriceCalcResult>>();
-			Map(p => p.OriginalUnitPriceCalcResult).CustomType<JsonSerializedType<PriceCalcResult>>();
+			Map(p => p.UnitPriceCalcResult).CustomType<JsonSerializedType<OrderPriceCalcResult>>();
+			Map(p => p.OriginalUnitPriceCalcResult).CustomType<JsonSerializedType<OrderPriceCalcResult>>();
 			Map(p => p.CreateTime);
 			Map(p => p.LastUpdated);
 			HasMany(p => p.PropertyValues).Cascade.AllDeleteOrphan();

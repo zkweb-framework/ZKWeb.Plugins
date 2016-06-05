@@ -49,6 +49,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.GenericFormsForAdminSettings {
 			[Required]
 			[TextBoxField("AutoConfirmOrderAfterDays", "AutoConfirmOrderAfterDays")]
 			public int AutoConfirmOrderAfterDays { get; set; }
+			/// <summary>
+			/// 允许非会员下单
+			/// </summary>
+			[CheckBoxField("AllowAnonymousVisitorCreateOrder")]
+			public bool AllowAnonymousVisitorCreateOrder { get; set; }
 
 			/// <summary>
 			/// 绑定表单
@@ -59,6 +64,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.GenericFormsForAdminSettings {
 				BuynowCartProductExpiresDays = settings.BuynowCartProductExpiresDays;
 				NormalCartProductExpiresDays = settings.NormalCartProductExpiresDays;
 				AutoConfirmOrderAfterDays = settings.AutoConfirmOrderAfterDays;
+				AllowAnonymousVisitorCreateOrder = settings.AllowAnonymousVisitorCreateOrder;
 			}
 
 			/// <summary>
@@ -71,6 +77,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.GenericFormsForAdminSettings {
 				settings.BuynowCartProductExpiresDays = BuynowCartProductExpiresDays;
 				settings.NormalCartProductExpiresDays = NormalCartProductExpiresDays;
 				settings.AutoConfirmOrderAfterDays = AutoConfirmOrderAfterDays;
+				settings.AllowAnonymousVisitorCreateOrder = AllowAnonymousVisitorCreateOrder;
 				configManager.PutData(settings);
 				return new { message = new T("Saved Successfully") };
 			}
