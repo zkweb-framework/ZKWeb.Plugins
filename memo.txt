@@ -58,8 +58,10 @@
 	ok 支持ckeditor上传保存图片
 	ok 底部copyright
 	逐步补充框架和插件的单元测试
+	单元测试中使用InMemoryDb
+		https://ayende.com/blog/3983/nhibernate-unit-testing
 	打印和导出xls菜单
-	http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
+		http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
 	Common.Base自带的标签和过滤器文档
 	GetProductWithCache
 

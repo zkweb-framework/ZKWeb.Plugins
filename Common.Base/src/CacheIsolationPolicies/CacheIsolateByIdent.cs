@@ -13,7 +13,7 @@ namespace ZKWeb.Plugins.Common.Base.src.CacheIsolationPolicies {
 	/// 按当前登录用户隔离缓存
 	/// </summary>
 	[ExportMany(ContractKey = "Ident")]
-	public class CacheIsolatedByIdent : ICacheIsolationPolicy {
+	public class CacheIsolateByIdent : ICacheIsolationPolicy {
 		/// <summary>
 		/// 获取隔离键
 		/// </summary>

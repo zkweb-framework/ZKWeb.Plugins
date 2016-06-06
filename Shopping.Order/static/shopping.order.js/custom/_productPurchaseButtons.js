@@ -53,7 +53,6 @@ $(function () {
 		// 需要显示弹出框时设置总商品件数和价格并显示购物车弹出框
 		if (data.showDialog) {
 			var $dialog = $(this).closest($buttons).find(".product-added-to-cart-dialog");
-			console.log($dialog);
 			$dialog.find(".total-count").text(data.showDialog.totalCount);
 			$dialog.find(".total-price").text(data.showDialog.totalPriceString);
 			$dialog.removeClass("hide");

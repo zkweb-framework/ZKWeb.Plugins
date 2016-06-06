@@ -1,5 +1,5 @@
 ﻿{
 	"Name": "ProductSalesInfo",
 	"CacheTime": 15,
-	"CacheBy": "IdentAndLocaleAndUrl"
+	"CacheBy": "Ident,Locale,Url"
 }

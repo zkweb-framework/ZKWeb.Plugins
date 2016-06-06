@@ -1,5 +1,5 @@
 ﻿{
 	"Name": "Enter User Panel",
 	"CacheTime": 15,
-	"CacheBy": "IdentAndLocale"
+	"CacheBy": "Ident,Locale"
 }

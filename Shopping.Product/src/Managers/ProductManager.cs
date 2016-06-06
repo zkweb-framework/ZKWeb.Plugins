@@ -55,10 +55,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 			var configManager = Application.Ioc.Resolve<ConfigManager>();
 			ProductApiInfoCacheTime = TimeSpan.FromSeconds(
 				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ProductApiInfoCacheTime, 15));
-			ProductApiInfoCache = new IsolatedMemoryCache<long, object>("IdentAndLocale");
+			ProductApiInfoCache = new IsolatedMemoryCache<long, object>("Ident", "Locale");
 			ProductSearchResultCacheTime = TimeSpan.FromSeconds(
 				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ProductSearchResultCacheTime, 15));
-			ProductSearchResultCache = new IsolatedMemoryCache<string, StaticTableSearchResponse>("IdentAndLocale");
+			ProductSearchResultCache = new IsolatedMemoryCache<string, StaticTableSearchResponse>("Ident", "Locale");
 		}
 
 		/// <summary>

@@ -50,10 +50,10 @@ namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 			var configManager = Application.Ioc.Resolve<ConfigManager>();
 			ArticleApiInfoCacheTime = TimeSpan.FromSeconds(
 				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ArticleApiInfoCacheTime, 15));
-			ArticleApiInfoCache = new IsolatedMemoryCache<long, object>("IdentAndLocale");
+			ArticleApiInfoCache = new IsolatedMemoryCache<long, object>("Ident", "Locale");
 			ArticleSearchResultCacheTime = TimeSpan.FromSeconds(
 				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ArticleSearchResultCacheTime, 15));
-			ArticleSearchResultCache = new IsolatedMemoryCache<string, StaticTableSearchResponse>("IdentAndLocale");
+			ArticleSearchResultCache = new IsolatedMemoryCache<string, StaticTableSearchResponse>("Ident", "Locale");
 		}
 
 		/// <summary>
