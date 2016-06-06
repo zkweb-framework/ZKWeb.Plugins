@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Database.UserTypes;
 using ZKWeb.Plugins.Common.Admin.src.Database;
-using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.GenericRecord.src.Database {
 	/// <summary>

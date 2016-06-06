@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Database.UserTypes;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 	/// <summary>

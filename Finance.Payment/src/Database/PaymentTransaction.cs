@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Database.UserTypes;
 using ZKWeb.Plugins.Common.Admin.src.Database;
-using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Database {

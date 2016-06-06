@@ -1,13 +1,11 @@
 ﻿using DryIocAttributes;
-using FluentNHibernate;
 using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ZKWeb.Utils.Functions;
-using Newtonsoft.Json;
-using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Database.UserTypes;
 
 namespace ZKWeb.Plugins.Common.Base.src.Database {
 	/// <summary>

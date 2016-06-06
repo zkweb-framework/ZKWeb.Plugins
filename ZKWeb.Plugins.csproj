@@ -325,6 +325,7 @@
     <Content Include="Common.Base\templates\common.base\tmpl.url_pagination.html" />
     <None Include="Demo\templates\demo.widgets\demo_index.widget" />
     <Content Include="Common.Region\texts\sources.txt" />
+    <Content Include="Demo\templates.mobile\demo.widgets\demo_index.html" />
     <Content Include="Demo\templates\demo.widgets\demo_index.html" />
     <None Include="Demo\templates\demo.widgets\demo_nav_menu.widget" />
     <Content Include="Demo\templates\demo.widgets\demo_nav_menu.html" />
@@ -374,7 +375,6 @@
     <Compile Include="UnitTest.WebTester\src\Managers\WebTesterManager.cs" />
     <Compile Include="UnitTest.WebTester\src\Model\AssemblyTestInfo.cs" />
     <Compile Include="UnitTest.WebTester\src\Model\AssemblyTestState.cs" />
-    <Compile Include="UnitTest.WebTester\src\Tests\CustomTest.cs" />
     <Compile Include="UnitTest.WebTester\src\Translates\zh_CN.cs" />
     <Content Include="Common.Admin\templates\common.admin.widgets\admin_apps_menu.html" />
     <Compile Include="Common.Base\src\Extensions\_DataTable\DataTableExtensions.cs" />
@@ -458,7 +458,6 @@
     <Compile Include="Common.Base\src\Model\_ListItem\IListItemProvider.cs" />
     <Compile Include="Common.Base\src\Model\_Form\IModelFormBuilder.cs" />
     <Compile Include="Common.Base\src\Model\_ScheduledTask\IScheduledTaskExecutor.cs" />
-    <Compile Include="Common.Base\src\Model\_Database\JsonSerializedType.cs" />
     <Compile Include="Common.Base\src\Model\_Misc\LabelCssClassAttribute.cs" />
     <Compile Include="Common.Base\src\Model\_ListItem\ListItem.cs" />
     <Compile Include="Common.Base\src\Model\_ListItem\ListItemsWithOptional.cs" />
