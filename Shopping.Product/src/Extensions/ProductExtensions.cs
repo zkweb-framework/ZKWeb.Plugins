@@ -50,6 +50,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// <returns></returns>
 		public static IEnumerable<ProductToPropertyValue> FindPropertyValuesWhereNameContains(
 			this Database.Product product, string name) {
+			// 商品没有类目时结束查找
+			if (product.Category == null) {
+				yield break;
+			}
 			// 获取属性名称的所有翻译
 			var translateManager = Application.Ioc.Resolve<TranslateManager>();
 			var languages = Application.Ioc.ResolveMany<ILanguage>();
