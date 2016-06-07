@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -17,6 +15,7 @@ using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Server;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>

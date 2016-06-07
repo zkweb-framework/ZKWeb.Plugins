@@ -33,6 +33,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		/// <param name="request">搜索请求</param>
 		/// <param name="pairs">对象和需要字段的组合列表</param>
-		void OnSelect(StaticTableSearchRequest request, List<KeyValuePair<T, Dictionary<string, object>>> pairs);
+		void OnSelect(StaticTableSearchRequest request, List<EntityToTableRow<T>> pairs);
 	}
 }

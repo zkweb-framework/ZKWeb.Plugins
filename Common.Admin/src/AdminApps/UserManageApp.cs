@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,6 +17,7 @@ using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// <summary>
@@ -69,16 +68,16 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 选择数据
 			/// </summary>
 			public void OnSelect(
-				AjaxTableSearchRequest request, List<KeyValuePair<User, Dictionary<string, object>>> pairs) {
+				AjaxTableSearchRequest request, List<EntityToTableRow<User>> pairs) {
 				var userManager = Application.Ioc.Resolve<UserManager>();
 				foreach (var pair in pairs) {
-					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Avatar"] = userManager.GetAvatarWebPath(pair.Key.Id);
-					pair.Value["Username"] = pair.Key.Username;
-					pair.Value["UserType"] = new T(pair.Key.Type.GetDescription());
-					pair.Value["Roles"] = string.Join(", ", pair.Key.Roles.Select(r => r.Name));
-					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					pair.Row["Id"] = pair.Entity.Id;
+					pair.Row["Avatar"] = userManager.GetAvatarWebPath(pair.Entity.Id);
+					pair.Row["Username"] = pair.Entity.Username;
+					pair.Row["UserType"] = new T(pair.Entity.Type.GetDescription());
+					pair.Row["Roles"] = string.Join(", ", pair.Entity.Roles.Select(r => r.Name));
+					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
 			}
 

@@ -1,5 +1,4 @@
-﻿using DryIocAttributes;
-using FluentNHibernate.Mapping;
+﻿using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +7,7 @@ using System.Threading.Tasks;
 using ZKWeb.Database.UserTypes;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 	/// <summary>

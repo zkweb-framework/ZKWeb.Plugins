@@ -40,16 +40,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				// 选择数据
 				// 默认把对象转换到的字符串保存到ToString中
 				var pairs = queryResult
-					.Select(r => new KeyValuePair<TData, Dictionary<string, object>>(
-						r, new Dictionary<string, object>()))
+					.Select(r => new EntityToTableRow<TData>(r))
 					.ToList();
 				foreach (var pair in pairs) {
-					pair.Value["ToString"] = pair.Key.ToString();
+					pair.Row["ToString"] = pair.Entity.ToString();
 				}
 				foreach (var callback in callbacks) {
 					callback.OnSelect(request, pairs);
 				}
-				response.Rows = pairs.Select(p => p.Value).ToList();
+				response.Rows = pairs.Select(p => p.Row).ToList();
 			});
 			return response;
 		}

@@ -1,11 +1,11 @@
-﻿using DryIocAttributes;
-using FluentNHibernate.Mapping;
+﻿using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Database.UserTypes;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Database {
 	/// <summary>

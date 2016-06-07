@@ -1,6 +1,4 @@
 ﻿using DotLiquid;
-using DryIoc;
-using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +10,7 @@ using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWeb.Plugins.Common.Base.src.TemplateTags;
 using ZKWeb.Templating.AreaSupport;
 using ZKWeb.Plugin.Interfaces;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>

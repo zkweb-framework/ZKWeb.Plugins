@@ -1,10 +1,9 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Utils.IocContainer;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web.Interfaces;
 

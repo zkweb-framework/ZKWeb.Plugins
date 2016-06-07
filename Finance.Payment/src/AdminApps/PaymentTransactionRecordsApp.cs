@@ -1,5 +1,4 @@
-﻿using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +17,10 @@ using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Localize;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Currency.src.Managers;
-using DryIoc;
 using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.AdminApps;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>
@@ -85,28 +84,28 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// 选择字段
 			/// </summary>
 			public void OnSelect(
-				AjaxTableSearchRequest request, List<KeyValuePair<PaymentTransaction, Dictionary<string, object>>> pairs) {
+				AjaxTableSearchRequest request, List<EntityToTableRow<PaymentTransaction>> pairs) {
 				var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
 				foreach (var pair in pairs) {
-					var payer = pair.Key.Payer;
-					var payee = pair.Key.Payee;
-					var api = pair.Key.Api; // not nullable
-					var currency = currencyManager.GetCurrency(pair.Key.CurrencyType);
-					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Serial"] = pair.Key.Serial;
-					pair.Value["Type"] = new T(pair.Key.Type);
-					pair.Value["ApiName"] = new T(api.Name);
-					pair.Value["ApiId"] = api.Id;
-					pair.Value["ExternalSerial"] = pair.Key.ExternalSerial;
-					pair.Value["Amount"] = currency.Format(pair.Key.Amount);
-					pair.Value["Payer"] = payer == null ? null : payer.Username;
-					pair.Value["Payee"] = payee == null ? null : payee.Username;
-					pair.Value["PayerId"] = payer == null ? null : (long?)payer.Id;
-					pair.Value["PayeeId"] = payee == null ? null : (long?)payee.Id;
-					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-					pair.Value["LastUpdated"] = pair.Key.LastUpdated.ToClientTimeString();
-					pair.Value["State"] = pair.Key.State;
-					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					var payer = pair.Entity.Payer;
+					var payee = pair.Entity.Payee;
+					var api = pair.Entity.Api; // not nullable
+					var currency = currencyManager.GetCurrency(pair.Entity.CurrencyType);
+					pair.Row["Id"] = pair.Entity.Id;
+					pair.Row["Serial"] = pair.Entity.Serial;
+					pair.Row["Type"] = new T(pair.Entity.Type);
+					pair.Row["ApiName"] = new T(api.Name);
+					pair.Row["ApiId"] = api.Id;
+					pair.Row["ExternalSerial"] = pair.Entity.ExternalSerial;
+					pair.Row["Amount"] = currency.Format(pair.Entity.Amount);
+					pair.Row["Payer"] = payer == null ? null : payer.Username;
+					pair.Row["Payee"] = payee == null ? null : payee.Username;
+					pair.Row["PayerId"] = payer == null ? null : (long?)payer.Id;
+					pair.Row["PayeeId"] = payee == null ? null : (long?)payee.Id;
+					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+					pair.Row["LastUpdated"] = pair.Entity.LastUpdated.ToClientTimeString();
+					pair.Row["State"] = pair.Entity.State;
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
 			}
 

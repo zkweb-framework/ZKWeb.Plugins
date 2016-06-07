@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -15,6 +13,7 @@ using ZKWeb.Server;
 using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 	/// <summary>

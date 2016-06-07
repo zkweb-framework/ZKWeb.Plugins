@@ -1,5 +1,4 @@
-﻿using DryIoc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Extensions {
 	/// <summary>
@@ -20,7 +20,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Extensions {
 		/// <param name="container">Ioc容器</param>
 		/// <param name="type">支付接口的类型</param>
 		/// <returns></returns>
-		public static List<IPaymentApiHandler> ResolvePaymentApiHandlers(this IContainer container, string type) {
+		public static List<IPaymentApiHandler> ResolvePaymentApiHandlers(
+			this IContainer container, string type) {
 			var handlers = container.ResolveMany<IPaymentApiHandler>().Where(h => h.Type == type).ToList();
 			if (!handlers.Any()) {
 				throw new HttpException(400, string.Format(new T("Unknown payment api type {0}"), type));
@@ -35,7 +36,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Extensions {
 		/// <param name="container">Ioc容器</param>
 		/// <param name="type">支付交易的类型</param>
 		/// <returns></returns>
-		public static List<IPaymentTransactionHandler> ResolveTransactionHandlers(this IContainer container, string type) {
+		public static List<IPaymentTransactionHandler> ResolveTransactionHandlers(
+			this IContainer container, string type) {
 			var handlers = container.ResolveMany<IPaymentTransactionHandler>().Where(h => h.Type == type).ToList();
 			if (!handlers.Any()) {
 				throw new HttpException(400, string.Format(new T("Unknown payment transaction type {0}"), type));

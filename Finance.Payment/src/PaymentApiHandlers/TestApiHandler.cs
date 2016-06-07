@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,6 +20,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Repositories;
 using ZKWeb.Templating;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 	/// <summary>
@@ -181,8 +180,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 					}
 					// 检查当前登录用户是否可支付
 					var result = transaction.Check(c => c.IsPayerLoggedIn);
-					if (!result.Item1) {
-						throw new HttpException(400, result.Item2);
+					if (!result.First) {
+						throw new HttpException(400, result.Second);
 					}
 					Transaction = transaction;
 				});

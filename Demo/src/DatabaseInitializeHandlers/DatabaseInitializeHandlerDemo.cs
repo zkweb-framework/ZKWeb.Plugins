@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using NHibernate.Cfg;
 using ZKWeb.Database.Interfaces;
-using DryIocAttributes;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Helpers;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Demo.src.DatabaseInitializeHandlers {
 	/// <summary>

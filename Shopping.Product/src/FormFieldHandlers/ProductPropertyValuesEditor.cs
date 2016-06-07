@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +12,7 @@ using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 	/// <summary>

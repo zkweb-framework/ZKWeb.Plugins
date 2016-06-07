@@ -1,5 +1,4 @@
-﻿using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +16,6 @@ using ZKWeb.Plugins.Common.Admin.src.AdminApps;
 using ZKWeb.Plugins.CMS.CKEditor.src.FormFieldAttributes;
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.Common.Base.src.Managers;
-using DryIoc;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.GenericClass.src.Database;
@@ -26,6 +24,7 @@ using ZKWeb.Plugins.CMS.Article.src.GenericClasses;
 using ZKWeb.Plugins.Common.GenericClass.src.ListItemProviders;
 using ZKWeb.Plugins.CMS.Article.src.GenericTags;
 using ZKWeb.Plugins.Common.GenericTag.src.ListItemProvider;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 	/// <summary>
@@ -82,18 +81,18 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 			/// 选择数据
 			/// </summary>
 			public void OnSelect(
-				AjaxTableSearchRequest request, List<KeyValuePair<Database.Article, Dictionary<string, object>>> pairs) {
+				AjaxTableSearchRequest request, List<EntityToTableRow<Database.Article>> pairs) {
 				foreach (var pair in pairs) {
-					var author = pair.Key.Author;
-					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Title"] = pair.Key.Title;
-					pair.Value["Author"] = author == null ? null : author.Username;
-					pair.Value["AuthorId"] = author == null ? null : (long?)author.Id;
-					pair.Value["ArticleClass"] = string.Join(", ", pair.Key.Classes.Select(c => c.Name));
-					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-					pair.Value["LastUpdated"] = pair.Key.LastUpdated.ToClientTimeString();
-					pair.Value["DisplayOrder"] = pair.Key.DisplayOrder;
-					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					var author = pair.Entity.Author;
+					pair.Row["Id"] = pair.Entity.Id;
+					pair.Row["Title"] = pair.Entity.Title;
+					pair.Row["Author"] = author == null ? null : author.Username;
+					pair.Row["AuthorId"] = author == null ? null : (long?)author.Id;
+					pair.Row["ArticleClass"] = string.Join(", ", pair.Entity.Classes.Select(c => c.Name));
+					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+					pair.Row["LastUpdated"] = pair.Entity.LastUpdated.ToClientTimeString();
+					pair.Row["DisplayOrder"] = pair.Entity.DisplayOrder;
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
 			}
 

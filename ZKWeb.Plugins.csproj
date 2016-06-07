@@ -40,15 +40,6 @@
     <Reference Include="DotLiquid">
       <HintPath>..\ZKWeb\ZKWeb\bin\DotLiquid.dll</HintPath>
     </Reference>
-    <Reference Include="DryIoc">
-      <HintPath>..\ZKWeb\ZKWeb\bin\DryIoc.dll</HintPath>
-    </Reference>
-    <Reference Include="DryIoc.MefAttributedModel">
-      <HintPath>..\ZKWeb\ZKWeb\bin\DryIoc.MefAttributedModel.dll</HintPath>
-    </Reference>
-    <Reference Include="DryIocAttributes">
-      <HintPath>..\ZKWeb\ZKWeb\bin\DryIocAttributes.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\ZKWeb\ZKWeb\bin\EntityFramework.dll</HintPath>
     </Reference>
@@ -208,6 +199,7 @@
     <Compile Include="Common.Admin\src\Translates\ko_KR.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Admin\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.Base\src\Model\_BaseTable\EntityToTableRow.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\BaseTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\BaseTableSearchResponse.cs" />
     <Compile Include="Common.Base\src\Model\_HtmlItem\HtmlItem.cs" />

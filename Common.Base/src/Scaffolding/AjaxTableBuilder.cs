@@ -1,6 +1,4 @@
 ﻿using DotLiquid;
-using DryIoc;
-using DryIocAttributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,6 +11,7 @@ using System.Web.UI;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Templating;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>

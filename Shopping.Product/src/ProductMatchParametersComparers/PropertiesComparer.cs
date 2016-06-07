@@ -1,11 +1,12 @@
-﻿using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchParametersComparers {
 	/// <summary>
@@ -27,7 +28,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchParametersComparers {
 				return false;
 			}
 			var disinctCount = propertiesLhs.Concat(propertiesRhs) // 计算并集去除重复后的大小
-				.Select(p => new KeyValuePair<long, long?>(p.PropertyId, p.PropertyValueId)).Distinct().Count();
+				.Select(p => new Pair<long, long?>(p.PropertyId, p.PropertyValueId)).Distinct().Count();
 			return propertiesLhs.Count == disinctCount && propertiesLhs.Count == propertiesRhs.Count;
 		}
 	}

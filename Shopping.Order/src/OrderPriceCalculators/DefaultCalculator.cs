@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +9,7 @@ using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 	/// <summary>

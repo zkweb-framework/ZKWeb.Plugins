@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +16,7 @@ using System.Drawing;
 using ZKWeb.Utils.Extensions;
 using System.IO;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.GenericFormsForAdminSettings {
 	/// <summary>

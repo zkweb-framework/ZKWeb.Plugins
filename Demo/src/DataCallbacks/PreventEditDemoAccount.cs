@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +9,7 @@ using ZKWeb.Database.Interfaces;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Demo.src.DataCallbacks {
 	/// <summary>

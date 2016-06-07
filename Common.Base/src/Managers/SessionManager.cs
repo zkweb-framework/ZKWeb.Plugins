@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using NHibernate;
+﻿using NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,6 +9,7 @@ using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Base.src.Managers {
 	/// <summary>

@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -16,6 +14,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Repositories;
 using ZKWeb.Templating;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 	/// <summary>
@@ -78,12 +77,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 			}
 			// 检查当前登录用户是否可以支付
 			var result = transaction.Check(c => c.IsPayerLoggedIn);
-			if (!result.Item1) {
-				return BuildErrorHtml(result.Item2);
+			if (!result.First) {
+				return BuildErrorHtml(result.Second);
 			}
 			result = transaction.Check(c => c.IsPayable);
-			if (!result.Item1) {
-				return BuildErrorHtml(result.Item2);
+			if (!result.First) {
+				return BuildErrorHtml(result.Second);
 			}
 			// 调用接口处理器生成支付html
 			var html = new HtmlString("No Result");
@@ -102,8 +101,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 				r => r.GetById(transactionId));
 			// 检查当前登录用户是否可以查看
 			var result = transaction.Check(c => c.IsPayerLoggedIn);
-			if (!result.Item1) {
-				return BuildErrorHtml(result.Item2);
+			if (!result.First) {
+				return BuildErrorHtml(result.Second);
 			}
 			// 调用接口处理器生成结果html
 			var html = new HtmlString("No Result");

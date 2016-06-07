@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using Ganss.XSS;
+﻿using Ganss.XSS;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,6 +12,7 @@ using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.CMS.CKEditor.src.FormFieldAttributes;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.CMS.CKEditor.src.FormFieldHandlers {
 	/// <summary>

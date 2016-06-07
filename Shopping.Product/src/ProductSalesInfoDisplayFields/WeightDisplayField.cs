@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +6,7 @@ using System.Threading.Tasks;
 using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 	/// <summary>

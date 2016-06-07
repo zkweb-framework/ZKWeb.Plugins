@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +8,7 @@ using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 	/// <summary>

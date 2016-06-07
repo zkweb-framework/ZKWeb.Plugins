@@ -25,14 +25,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <summary>
 		/// 数据列表
 		/// </summary>
-		public List<Dictionary<string, object>> Rows { get; set; }
+		public List<IDictionary<string, object>> Rows { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public BaseTableSearchResponse() {
 			Pagination = new Pagination();
-			Rows = new List<Dictionary<string, object>>();
+			Rows = new List<IDictionary<string, object>>();
 		}
 
 		/// <summary>

@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,6 +14,7 @@ using ZKWeb.Plugins.Common.UserContact.src.Repositories;
 using ZKWeb.Plugins.Common.UserPanel.src;
 using ZKWeb.Plugins.Common.UserPanel.src.Scaffolding;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.UserContact.src.GenericFormsForUserPanel {
 	/// <summary>

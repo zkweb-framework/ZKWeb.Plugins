@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +7,7 @@ using ZKWeb.Plugin.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Templating.AreaSupport;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Admin.src {
 	/// <summary>

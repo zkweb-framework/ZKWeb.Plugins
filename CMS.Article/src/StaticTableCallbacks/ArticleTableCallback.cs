@@ -1,5 +1,4 @@
-﻿using DryIoc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,19 +52,19 @@ namespace ZKWeb.Plugins.CMS.Article.src.StaticTableCallbacks {
 		/// 选择数据
 		/// </summary>
 		public void OnSelect(
-			StaticTableSearchRequest request, List<KeyValuePair<Database.Article, Dictionary<string, object>>> pairs) {
+			StaticTableSearchRequest request, List<EntityToTableRow<Database.Article>> pairs) {
 			foreach (var pair in pairs) {
-				var author = pair.Key.Author;
-				var lastClass = pair.Key.Classes.OrderByDescending(c => c.Id).LastOrDefault();
-				pair.Value["Id"] = pair.Key.Id;
-				pair.Value["Title"] = pair.Key.Title;
-				pair.Value["Summary"] = pair.Key.Summary;
-				pair.Value["Author"] = author == null ? null : author.Username;
-				pair.Value["AuthorId"] = author == null ? null : (long?)author.Id;
-				pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-				pair.Value["LastClass"] = lastClass == null ? null : new T(lastClass.Name).ToString();
-				pair.Value["LastClassId"] = lastClass == null ? null : (long?)lastClass.Id;
-				pair.Value["Tags"] = pair.Key.Tags.Select(t => new { t.Id, t.Name }).ToList();
+				var author = pair.Entity.Author;
+				var lastClass = pair.Entity.Classes.OrderByDescending(c => c.Id).LastOrDefault();
+				pair.Row["Id"] = pair.Entity.Id;
+				pair.Row["Title"] = pair.Entity.Title;
+				pair.Row["Summary"] = pair.Entity.Summary;
+				pair.Row["Author"] = author == null ? null : author.Username;
+				pair.Row["AuthorId"] = author == null ? null : (long?)author.Id;
+				pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+				pair.Row["LastClass"] = lastClass == null ? null : new T(lastClass.Name).ToString();
+				pair.Row["LastClassId"] = lastClass == null ? null : (long?)lastClass.Id;
+				pair.Row["Tags"] = pair.Entity.Tags.Select(t => new { t.Id, t.Name }).ToList();
 			}
 		}
 	}

@@ -1,5 +1,4 @@
-﻿using DryIoc;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -231,13 +230,13 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 			/// 选择字段
 			/// </summary>
 			public void OnSelect(
-				AjaxTableSearchRequest request, List<KeyValuePair<Database.GenericTag, Dictionary<string, object>>> pairs) {
+				AjaxTableSearchRequest request, List<EntityToTableRow<Database.GenericTag>> pairs) {
 				foreach (var pair in pairs) {
-					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Name"] = pair.Key.Name;
-					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-					pair.Value["DisplayOrder"] = pair.Key.DisplayOrder;
-					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					pair.Row["Id"] = pair.Entity.Id;
+					pair.Row["Name"] = pair.Entity.Name;
+					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+					pair.Row["DisplayOrder"] = pair.Entity.DisplayOrder;
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
 			}
 

@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +17,7 @@ using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>
@@ -86,18 +85,18 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 选择数据
 			/// </summary>
 			public void OnSelect(
-				AjaxTableSearchRequest request, List<KeyValuePair<ProductProperty, Dictionary<string, object>>> pairs) {
+				AjaxTableSearchRequest request, List<EntityToTableRow<ProductProperty>> pairs) {
 				foreach (var pair in pairs) {
-					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Name"] = pair.Key.Name;
-					pair.Value["IsSalesProperty"] = pair.Key.IsSalesProperty ? EnumBool.True : EnumBool.False;
-					pair.Value["ControlType"] = new T(pair.Key.ControlType.GetDescription());
-					pair.Value["PropertyValues"] = string.Join(",",
-						pair.Key.OrderedPropertyValues().Select(p => p.Name));
-					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-					pair.Value["LastUpdated"] = pair.Key.LastUpdated.ToClientTimeString();
-					pair.Value["DisplayOrder"] = pair.Key.DisplayOrder;
-					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					pair.Row["Id"] = pair.Entity.Id;
+					pair.Row["Name"] = pair.Entity.Name;
+					pair.Row["IsSalesProperty"] = pair.Entity.IsSalesProperty ? EnumBool.True : EnumBool.False;
+					pair.Row["ControlType"] = new T(pair.Entity.ControlType.GetDescription());
+					pair.Row["PropertyRows"] = string.Join(",",
+						pair.Entity.OrderedPropertyValues().Select(p => p.Name));
+					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+					pair.Row["LastUpdated"] = pair.Entity.LastUpdated.ToClientTimeString();
+					pair.Row["DisplayOrder"] = pair.Entity.DisplayOrder;
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
 			}
 

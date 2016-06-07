@@ -1,5 +1,4 @@
-﻿using DryIocAttributes;
-using FluentNHibernate.Mapping;
+﻿using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,7 @@ using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
+	using Utils.IocContainer;
 	using Product = Product.src.Database.Product;
 
 	/// <summary>

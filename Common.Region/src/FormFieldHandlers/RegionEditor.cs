@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +13,7 @@ using ZKWeb.Plugins.Common.Region.src.Config;
 using ZKWeb.Plugins.Common.Region.src.FormFieldAttributes;
 using ZKWeb.Plugins.Common.Region.src.Model;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Region.src.FormFieldHandlers {
 	/// <summary>

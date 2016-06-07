@@ -1,5 +1,4 @@
-﻿using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +12,6 @@ using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
-using DryIoc;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
@@ -21,6 +19,7 @@ using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Localize;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// <summary>
@@ -75,17 +74,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 选择数据
 			/// </summary>
 			public void OnSelect(
-				AjaxTableSearchRequest request, List<KeyValuePair<User, Dictionary<string, object>>> pairs) {
+				AjaxTableSearchRequest request, List<EntityToTableRow<User>> pairs) {
 				var userManager = Application.Ioc.Resolve<UserManager>();
 				foreach (var pair in pairs) {
-					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Avatar"] = userManager.GetAvatarWebPath(pair.Key.Id);
-					pair.Value["Username"] = pair.Key.Username;
-					pair.Value["Roles"] = string.Join(", ", pair.Key.Roles.Select(r => r.Name));
-					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-					pair.Value["SuperAdmin"] = (
-						pair.Key.Type == UserTypes.SuperAdmin ? EnumBool.True : EnumBool.False);
-					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					pair.Row["Id"] = pair.Entity.Id;
+					pair.Row["Avatar"] = userManager.GetAvatarWebPath(pair.Entity.Id);
+					pair.Row["Username"] = pair.Entity.Username;
+					pair.Row["Roles"] = string.Join(", ", pair.Entity.Roles.Select(r => r.Name));
+					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+					pair.Row["SuperAdmin"] = (
+						pair.Entity.Type == UserTypes.SuperAdmin ? EnumBool.True : EnumBool.False);
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
 			}
 

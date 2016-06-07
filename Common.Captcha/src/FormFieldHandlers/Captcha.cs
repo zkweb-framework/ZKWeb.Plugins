@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
@@ -15,6 +13,7 @@ using ZKWeb.Utils.Extensions;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Captcha.src.Managers;
 using ZKWeb.Plugins.Common.Captcha.src.FormFieldAttributes;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Captcha.src.FormFieldHandlers {
 	/// <summary>

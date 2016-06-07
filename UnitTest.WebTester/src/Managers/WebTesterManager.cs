@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +8,7 @@ using ZKWeb.Plugins.UnitTest.WebTester.src.Model;
 using ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers;
 using ZKWeb.UnitTest;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.UnitTest.WebTester.src.Managers {
 	/// <summary>

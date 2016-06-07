@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +15,9 @@ using ZKWeb.Plugins.Common.SerialGenerate.src.Generator;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
+using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 	/// <summary>
@@ -145,7 +145,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			}
 			// 判断是否可以处理指定的交易状态
 			// 已经是指定的交易状态时返回成功
-			Tuple<bool, string> result;
+			Pair<bool, string> result;
 			if (transaction.State == state) {
 				return;
 			} else if (state == PaymentTransactionState.WaitingPaying) {
@@ -159,8 +159,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			} else {
 				throw new HttpException(400, string.Format(new T("Unsupported transaction state: {0}"), state));
 			}
-			if (!result.Item1) {
-				throw new HttpException(400, result.Item2);
+			if (!result.First) {
+				throw new HttpException(400, result.Second);
 			}
 			// 获取交易类型对应的处理器
 			var handlers = Application.Ioc.ResolveTransactionHandlers(transaction.Type);
@@ -210,8 +210,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			}
 			// 判断是否可以发货
 			var result = transaction.Check(c => c.CanSendGoods);
-			if (!result.Item1) {
-				throw new HttpException(400, result.Item2);
+			if (!result.First) {
+				throw new HttpException(400, result.Second);
 			}
 			// 调用支付接口的处理器处理发货
 			var handlers = Application.Ioc.ResolvePaymentApiHandlers(transaction.Api.Type);

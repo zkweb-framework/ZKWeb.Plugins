@@ -1,6 +1,4 @@
 ﻿using DotLiquid;
-using DryIoc;
-using DryIocAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +9,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.ProductStates;
 using ZKWeb.Plugins.Shopping.Product.src.TypeTraits;
 using ZKWeb.Templating.AreaSupport;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Shopping.Product.src {
 	/// <summary>

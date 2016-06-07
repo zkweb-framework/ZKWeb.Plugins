@@ -1,5 +1,4 @@
-﻿using DryIoc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -89,16 +88,16 @@ namespace ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks {
 		/// 选择数据
 		/// </summary>
 		public void OnSelect(
-			StaticTableSearchRequest request, List<KeyValuePair<Database.Product, Dictionary<string, object>>> pairs) {
+			StaticTableSearchRequest request, List<EntityToTableRow<Database.Product>> pairs) {
 			var albumManager = Application.Ioc.Resolve<ProductAlbumManager>();
 			foreach (var pair in pairs) {
-				var seller = pair.Key.Seller;
-				pair.Value["Id"] = pair.Key.Id;
-				pair.Value["Name"] = new T(pair.Key.Name);
-				pair.Value["MainAlbumThumbnail"] = (
-					albumManager.GetAlbumImageWebPath(pair.Key.Id, null, ProductAlbumImageType.Thumbnail));
-				pair.Value["Price"] = pair.Key.MatchedDatas.GetPriceString();
-				pair.Value["Seller"] = seller == null ? null : seller.Username;
+				var seller = pair.Entity.Seller;
+				pair.Row["Id"] = pair.Entity.Id;
+				pair.Row["Name"] = new T(pair.Entity.Name);
+				pair.Row["MainAlbumThumbnail"] = (
+					albumManager.GetAlbumImageWebPath(pair.Entity.Id, null, ProductAlbumImageType.Thumbnail));
+				pair.Row["Price"] = pair.Entity.MatchedDatas.GetPriceString();
+				pair.Row["Seller"] = seller == null ? null : seller.Username;
 			}
 		}
 	}

@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
@@ -13,6 +11,7 @@ using ZKWeb.Utils.Extensions;
 using ZKWeb.Web.Interfaces;
 using ZKWeb.Plugins.Common.Captcha.src.Managers;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Captcha.src.Controllers {
 	/// <summary>

@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,6 +11,7 @@ using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.LanguageSwitcher.src.Config;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.GenericFormsForAdminSettings {
 	/// <summary>

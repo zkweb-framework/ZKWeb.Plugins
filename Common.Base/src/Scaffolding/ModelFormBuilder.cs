@@ -1,5 +1,4 @@
 ﻿using DotLiquid;
-using DryIoc;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -10,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 
@@ -39,7 +39,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// <summary>
 		/// 表单字段到成员信息
 		/// </summary>
-		public Dictionary<FormField, Tuple<object, PropertyInfo>> FieldToProperty { get; protected set; }
+		public Dictionary<FormField, Pair<object, PropertyInfo>> FieldToProperty { get; protected set; }
 
 		/// <summary>
 		/// 初始化
@@ -54,7 +54,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			}
 			// 添加成员和验证属性
 			Form.Fields.Clear();
-			FieldToProperty = new Dictionary<FormField, Tuple<object, PropertyInfo>>();
+			FieldToProperty = new Dictionary<FormField, Pair<object, PropertyInfo>>();
 			AddFieldsFrom(this);
 		}
 
@@ -71,7 +71,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 					var field = new FormField(fieldAttribute);
 					field.ValidationAttributes.AddRange(property.GetAttributes<ValidationAttribute>());
 					Form.Fields.Add(field);
-					FieldToProperty[field] = Tuple.Create(obj, property);
+					FieldToProperty[field] = Pair.Create(obj, property);
 				}
 			}
 		}
@@ -93,10 +93,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			// 绑定值到模型
 			OnBind();
 			// 把模型中的值设置到字段
+			Pair<object, PropertyInfo> property;
 			foreach (var field in Form.Fields) {
-				var property = FieldToProperty.GetOrDefault(field);
-				if (property != null) {
-					field.Value = property.Item2.GetValue(property.Item1);
+				if (FieldToProperty.TryGetValue(field, out property)) {
+					field.Value = property.Second.GetValue(property.First);
 				}
 			}
 		}
@@ -109,12 +109,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			// 把提交的值设置到模型
 			var submitValues = HttpContextUtils.CurrentContext.Request.GetAll();
 			var values = Form.ParseValues(submitValues);
+			Pair<object, PropertyInfo> property;
 			foreach (var field in Form.Fields) {
 				var value = values.GetOrDefault(field.Attribute.Name);
-				var property = FieldToProperty.GetOrDefault(field);
-				if (property != null) {
-					property.Item2.SetValue(property.Item1,
-						value.ConvertOrDefault(property.Item2.PropertyType, null));
+				if (FieldToProperty.TryGetValue(field, out property)) {
+					property.Second.SetValue(property.First,
+						value.ConvertOrDefault(property.Second.PropertyType, null));
 				}
 			}
 			// 调用提交时的处理

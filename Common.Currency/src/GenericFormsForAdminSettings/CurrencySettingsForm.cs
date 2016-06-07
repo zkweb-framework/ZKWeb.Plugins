@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +16,7 @@ using ZKWeb.Plugins.Common.Currency.src.Config;
 using ZKWeb.Plugins.Common.Currency.src.ListItemProviders;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 using ZKWeb.Localize;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Currency.src.GenericFormsForAdminSettings {
 	/// <summary>

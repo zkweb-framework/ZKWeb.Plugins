@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,6 +17,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.ListItemProviders;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>
@@ -73,17 +72,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 选择数据
 			/// </summary>
 			public void OnSelect(
-				AjaxTableSearchRequest request, List<KeyValuePair<ProductCategory, Dictionary<string, object>>> pairs) {
+				AjaxTableSearchRequest request, List<EntityToTableRow<ProductCategory>> pairs) {
 				foreach (var pair in pairs) {
-					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Name"] = pair.Key.Name;
-					pair.Value["SalesProperties"] = string.Join(",",
-						pair.Key.OrderedProperties().Where(p => p.IsSalesProperty).Select(p => p.Name));
-					pair.Value["NonSalesProperties"] = string.Join(",",
-						pair.Key.OrderedProperties().Where(p => !p.IsSalesProperty).Select(p => p.Name));
-					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-					pair.Value["LastUpdated"] = pair.Key.LastUpdated.ToClientTimeString();
-					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					pair.Row["Id"] = pair.Entity.Id;
+					pair.Row["Name"] = pair.Entity.Name;
+					pair.Row["SalesProperties"] = string.Join(",",
+						pair.Entity.OrderedProperties().Where(p => p.IsSalesProperty).Select(p => p.Name));
+					pair.Row["NonSalesProperties"] = string.Join(",",
+						pair.Entity.OrderedProperties().Where(p => !p.IsSalesProperty).Select(p => p.Name));
+					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+					pair.Row["LastUpdated"] = pair.Entity.LastUpdated.ToClientTimeString();
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
 			}
 

@@ -1,5 +1,4 @@
-﻿using DryIoc;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -243,22 +242,22 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// 选择数据
 			/// </summary>
 			public void OnSelect(
-				AjaxTableSearchRequest request, List<KeyValuePair<Database.GenericClass, Dictionary<string, object>>> pairs) {
+				AjaxTableSearchRequest request, List<EntityToTableRow<Database.GenericClass>> pairs) {
 				// 按上下级关系重新生成数据列表
-				var classMapping = pairs.ToDictionary(p => p.Key.Id);
+				var classMapping = pairs.ToDictionary(p => p.Entity.Id);
 				var tree = TreeUtils.CreateTree(pairs,
-					p => p, p => classMapping.GetOrDefault(p.Key.Parent == null ? 0 : p.Key.Parent.Id));
+					p => p, p => classMapping.GetOrDefault(p.Entity.Parent == null ? 0 : p.Entity.Parent.Id));
 				pairs.Clear();
 				foreach (var node in tree.EnumerateAllNodes().Skip(1)) {
 					var pair = node.Value;
-					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Name"] = pair.Key.Name;
-					pair.Value["ParentId"] = pair.Key.Parent == null ? 0 : pair.Key.Parent.Id;
-					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-					pair.Value["DisplayOrder"] = pair.Key.DisplayOrder;
-					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
-					pair.Value["Level"] = node.GetParents().Count() - 1;
-					pair.Value["NoChilds"] = !node.Childs.Any();
+					pair.Row["Id"] = pair.Entity.Id;
+					pair.Row["Name"] = pair.Entity.Name;
+					pair.Row["ParentId"] = pair.Entity.Parent == null ? 0 : pair.Entity.Parent.Id;
+					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+					pair.Row["DisplayOrder"] = pair.Entity.DisplayOrder;
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					pair.Row["Level"] = node.GetParents().Count() - 1;
+					pair.Row["NoChilds"] = !node.Childs.Any();
 					pairs.Add(pair);
 				}
 			}

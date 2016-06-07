@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Utils.Collections;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 	/// <summary>
@@ -16,7 +17,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
-		void IsPayable(PaymentTransaction transaction, ref Tuple<bool, string> result);
+		void IsPayable(PaymentTransaction transaction, ref Pair<bool, string> result);
 
 		/// <summary>
 		/// 判断付款人是否已登陆
@@ -24,7 +25,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
-		void IsPayerLoggedIn(PaymentTransaction transaction, ref Tuple<bool, string> result);
+		void IsPayerLoggedIn(PaymentTransaction transaction, ref Pair<bool, string> result);
 
 		/// <summary>
 		/// 判断交易是否可以处理等待付款
@@ -32,7 +33,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
-		void CanProcessWaitingPaying(PaymentTransaction transaction, ref Tuple<bool, string> result);
+		void CanProcessWaitingPaying(PaymentTransaction transaction, ref Pair<bool, string> result);
 
 		/// <summary>
 		/// 判断交易是否可以处理担保交易已付款
@@ -40,7 +41,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
-		void CanProcessSecuredPaid(PaymentTransaction transaction, ref Tuple<bool, string> result);
+		void CanProcessSecuredPaid(PaymentTransaction transaction, ref Pair<bool, string> result);
 
 		/// <summary>
 		/// 判断交易是否可以处理交易成功
@@ -48,7 +49,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
-		void CanProcessSuccess(PaymentTransaction transaction, ref Tuple<bool, string> result);
+		void CanProcessSuccess(PaymentTransaction transaction, ref Pair<bool, string> result);
 
 		/// <summary>
 		/// 判断交易是否可以处理交易中止
@@ -56,13 +57,13 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
-		void CanProcessAborted(PaymentTransaction transaction, ref Tuple<bool, string> result);
+		void CanProcessAborted(PaymentTransaction transaction, ref Pair<bool, string> result);
 
 		/// <summary>
 		/// 判断交易是否可以调用发货接口
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
-		void CanSendGoods(PaymentTransaction transaction, ref Tuple<bool, string> result);
+		void CanSendGoods(PaymentTransaction transaction, ref Pair<bool, string> result);
 	}
 }

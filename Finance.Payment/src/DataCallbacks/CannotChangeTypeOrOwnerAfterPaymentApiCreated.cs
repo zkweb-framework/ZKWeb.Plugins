@@ -1,5 +1,4 @@
-﻿using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +7,7 @@ using ZKWeb.Database;
 using ZKWeb.Database.Interfaces;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.DataCallbacks {
 	/// <summary>

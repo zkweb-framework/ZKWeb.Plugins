@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +38,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// }
 	/// </summary>
 	/// <typeparam name="TData">管理的数据类型</typeparam>
-	[ExportMany]
 	public abstract class AdminAppBuilder<TData> : AdminApp, IAdminAppBuilder
 		where TData : class {
 		/// <summary>

@@ -1,5 +1,4 @@
-﻿using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +7,7 @@ using ZKWeb.Plugins.Common.UserPanel.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Localize;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.UserPanel.src.UserPanelMenuProviders {
 	/// <summary>

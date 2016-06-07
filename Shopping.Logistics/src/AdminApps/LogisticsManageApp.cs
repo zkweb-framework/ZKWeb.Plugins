@@ -1,5 +1,4 @@
-﻿using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +15,6 @@ using ZKWeb.Plugins.Common.Admin.src.AdminApps;
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.Shopping.Logistics.src.ListItemProviders;
 using System.Web;
-using DryIoc;
 using ZKWeb.Templating;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Utils.Extensions;
@@ -25,6 +23,7 @@ using ZKWeb.Plugins.Common.Region.src.Model;
 using Newtonsoft.Json;
 using ZKWeb.Plugins.Shopping.Logistics.src.Model;
 using ZKWeb.Plugins.Shopping.Logistics.src.FormFieldAttributes;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 	/// <summary>
@@ -89,18 +88,18 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// <summary>
 			/// 选择数据
 			/// </summary>
-			public void OnSelect(AjaxTableSearchRequest request, List<KeyValuePair<Database.Logistics, Dictionary<string, object>>> pairs) {
+			public void OnSelect(AjaxTableSearchRequest request, List<EntityToTableRow<Database.Logistics>> pairs) {
 				foreach (var pair in pairs) {
-					var owner = pair.Key.Owner;
-					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Name"] = pair.Key.Name;
-					pair.Value["Type"] = new T(pair.Key.Type);
-					pair.Value["Owner"] = owner == null ? null : owner.Username;
-					pair.Value["OwnerId"] = owner == null ? null : (long?)owner.Id;
-					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-					pair.Value["LastUpdated"] = pair.Key.LastUpdated.ToClientTimeString();
-					pair.Value["DisplayOrder"] = pair.Key.DisplayOrder;
-					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					var owner = pair.Entity.Owner;
+					pair.Row["Id"] = pair.Entity.Id;
+					pair.Row["Name"] = pair.Entity.Name;
+					pair.Row["Type"] = new T(pair.Entity.Type);
+					pair.Row["Owner"] = owner == null ? null : owner.Username;
+					pair.Row["OwnerId"] = owner == null ? null : (long?)owner.Id;
+					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+					pair.Row["LastUpdated"] = pair.Entity.LastUpdated.ToClientTimeString();
+					pair.Row["DisplayOrder"] = pair.Entity.DisplayOrder;
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
 			}
 

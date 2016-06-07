@@ -1,6 +1,4 @@
 ﻿using DotLiquid;
-using DryIoc;
-using DryIocAttributes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,6 +22,7 @@ using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Utils.IocContainer;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web.Interfaces;
 

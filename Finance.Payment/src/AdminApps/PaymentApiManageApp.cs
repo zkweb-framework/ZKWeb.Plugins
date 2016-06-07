@@ -1,5 +1,4 @@
-﻿using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,6 +18,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Forms;
 using ZKWeb.Plugins.Finance.Payment.src.ListItemProviders;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>
@@ -91,18 +91,18 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// <summary>
 			/// 选择数据
 			/// </summary>
-			public void OnSelect(AjaxTableSearchRequest request, List<KeyValuePair<PaymentApi, Dictionary<string, object>>> pairs) {
+			public void OnSelect(AjaxTableSearchRequest request, List<EntityToTableRow<PaymentApi>> pairs) {
 				foreach (var pair in pairs) {
-					var owner = pair.Key.Owner;
-					pair.Value["Id"] = pair.Key.Id;
-					pair.Value["Name"] = new T(pair.Key.Name);
-					pair.Value["Type"] = new T(pair.Key.Type);
-					pair.Value["Owner"] = owner == null ? null : owner.Username;
-					pair.Value["OwnerId"] = owner == null ? null : (long?)owner.Id;
-					pair.Value["CreateTime"] = pair.Key.CreateTime.ToClientTimeString();
-					pair.Value["LastUpdated"] = pair.Key.LastUpdated.ToClientTimeString();
-					pair.Value["DisplayOrder"] = pair.Key.DisplayOrder;
-					pair.Value["Deleted"] = pair.Key.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
+					var owner = pair.Entity.Owner;
+					pair.Row["Id"] = pair.Entity.Id;
+					pair.Row["Name"] = new T(pair.Entity.Name);
+					pair.Row["Type"] = new T(pair.Entity.Type);
+					pair.Row["Owner"] = owner == null ? null : owner.Username;
+					pair.Row["OwnerId"] = owner == null ? null : (long?)owner.Id;
+					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
+					pair.Row["LastUpdated"] = pair.Entity.LastUpdated.ToClientTimeString();
+					pair.Row["DisplayOrder"] = pair.Entity.DisplayOrder;
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
 			}
 

@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +13,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.UserContact.src.Repositories;
 using ZKWeb.Utils.Extensions;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.UserContact.src.AjaxTableCallbacks {
 	/// <summary>
@@ -30,15 +29,15 @@ namespace ZKWeb.Plugins.Common.UserContact.src.AjaxTableCallbacks {
 
 		public void OnSort(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) { }
 
-		public void OnSelect(AjaxTableSearchRequest request, List<KeyValuePair<User, Dictionary<string, object>>> pairs) {
+		public void OnSelect(AjaxTableSearchRequest request, List<EntityToTableRow<User>> pairs) {
 			var contacts = UnitOfWork.ReadRepository<
 				UserContactRepository, Dictionary<long, Database.UserContact>>(r => {
-					return r.GetContacts(pairs.Select(p => p.Key.Id).ToList());
+					return r.GetContacts(pairs.Select(p => p.Entity.Id).ToList());
 				});
 			foreach (var pair in pairs) {
-				var contact = contacts.GetOrDefault(pair.Key.Id) ?? new Database.UserContact();
-				pair.Value["Tel"] = contact.Tel;
-				pair.Value["Mobile"] = contact.Mobile;
+				var contact = contacts.GetOrDefault(pair.Entity.Id) ?? new Database.UserContact();
+				pair.Row["Tel"] = contact.Tel;
+				pair.Row["Mobile"] = contact.Mobile;
 			}
 		}
 

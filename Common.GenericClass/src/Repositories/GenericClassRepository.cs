@@ -1,12 +1,11 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.GenericClass.src.Repositories {
 	/// <summary>

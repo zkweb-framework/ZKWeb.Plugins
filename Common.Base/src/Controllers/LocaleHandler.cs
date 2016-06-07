@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +6,7 @@ using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Base.src.Config;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Utils.IocContainer;
 using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {

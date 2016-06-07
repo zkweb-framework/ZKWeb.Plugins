@@ -1,6 +1,4 @@
-﻿using DryIoc;
-using DryIocAttributes;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +17,7 @@ using ZKWeb.Web.Interfaces;
 using ZKWeb.Localize;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Cache.Interfaces;
+using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
