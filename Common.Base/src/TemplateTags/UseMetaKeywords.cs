@@ -11,6 +11,7 @@ using System.Collections;
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 设置页面关键词
+	/// 需要配合"render_metadata"标签使用
 	/// 例子
 	/// {% use_meta_keywords "keywords" %}
 	/// {% use_meta_keywords variable %}

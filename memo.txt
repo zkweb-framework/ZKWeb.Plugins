@@ -57,17 +57,13 @@
 	ok 添加图片管理
 	ok 支持ckeditor上传保存图片
 	ok 底部copyright
-	逐步补充框架和插件的单元测试
-	单元测试中使用InMemoryDb
-		https://ayende.com/blog/3983/nhibernate-unit-testing
-		sqlite数据库字符串
+	逐步补充插件的单元测试
 	打印和导出xls菜单
 		http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
-	Common.Base自带的标签和过滤器文档
 	GetProductWithCache
 
 性能测试结果
-	2015-05-27 (i7 Q720 1.6Ghz x 4 core, ab -n 2000 -c 8, vmware player 12)
+	2016-05-27 (i7 Q720 1.6Ghz x 4 core, ab -n 2000 -c 8, vmware player 12)
 	- 首页 2.240ms, 2.165ms, 2.123ms
 	- 商品列表页 2.131ms, 2.013ms, 2.132ms
 	- 商品详情页 2.165ms, 2.136ms, 2.193ms
