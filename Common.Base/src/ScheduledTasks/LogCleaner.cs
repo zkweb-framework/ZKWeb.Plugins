@@ -40,7 +40,8 @@ namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 		public void Execute() {
 			var now = DateTime.UtcNow.ToLocalTime();
 			var count = 0;
-			var logsDirectory = PathConfig.LogsDirectory;
+			var pathConfig = Application.Ioc.Resolve<PathConfig>();
+			var logsDirectory = pathConfig.LogsDirectory;
 			if (!Directory.Exists(logsDirectory)) {
 				return;
 			}

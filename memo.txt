@@ -66,8 +66,8 @@
 	Common.Base自带的标签和过滤器文档
 	GetProductWithCache
 
-性能测试结果 (i7 Q720 1.6Ghz x 4 core, ab -n 2000 -c 8)
-	2015-05-27
+性能测试结果
+	2015-05-27 (i7 Q720 1.6Ghz x 4 core, ab -n 2000 -c 8, vmware player 12)
 	- 首页 2.240ms, 2.165ms, 2.123ms
 	- 商品列表页 2.131ms, 2.013ms, 2.132ms
 	- 商品详情页 2.165ms, 2.136ms, 2.193ms
