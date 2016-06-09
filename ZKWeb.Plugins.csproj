@@ -226,6 +226,8 @@
     <Compile Include="Common.GenericTag\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Common.Region\src\Countries\GB.cs" />
     <Compile Include="Demo\src\DatabaseInitializeHandlers\DatabaseInitializeHandlerDemo.cs" />
+    <Compile Include="Shopping.Logistics\src\Manager\LogisticsManager.cs" />
+    <Compile Include="Shopping.Logistics\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Shopping.Order\src\AdminApps\OrderManageApp.cs" />
     <Compile Include="Shopping.Order\src\Config\OrderSettings.cs" />
     <Compile Include="Shopping.Order\src\Controllers\CartController.cs" />
