@@ -91,7 +91,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 					pair.Row["Name"] = pair.Entity.Name;
 					pair.Row["IsSalesProperty"] = pair.Entity.IsSalesProperty ? EnumBool.True : EnumBool.False;
 					pair.Row["ControlType"] = new T(pair.Entity.ControlType.GetDescription());
-					pair.Row["PropertyRows"] = string.Join(",",
+					pair.Row["PropertyValues"] = string.Join(",",
 						pair.Entity.OrderedPropertyValues().Select(p => p.Name));
 					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
 					pair.Row["LastUpdated"] = pair.Entity.LastUpdated.ToClientTimeString();

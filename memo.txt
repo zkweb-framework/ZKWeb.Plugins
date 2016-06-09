@@ -62,10 +62,6 @@
 		http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
 	GetProductWithCache
 	更新所有包到最新版本并测试是否正常
-	修复后台编辑商品属性时属性值没有正常显示的问题
-	修复前台商品列表页没有分类时的样式
-	修复前台商品列表页没有标签时的样式
-	修复前台商品列表页分类只有一级没有二级时的样式
 
 性能测试结果
 2016-05-27 (i7 Q720 1.6Ghz x 4 core 4 threads, ab -n 2000 -c 8, vmware player 12)

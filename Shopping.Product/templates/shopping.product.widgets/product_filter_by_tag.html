@@ -1,4 +1,5 @@
 ﻿{% fetch /api/product/tag_filter_info > tag_filter_info %}
+{% if tag_filter_info.tags.size > 0 %}
 <div class="product-filter-by-tag nav-group">
 	<ul>
 		<li>
@@ -17,3 +18,4 @@
 		</li>
 	</ul>
 </div>
+{% endif %}
