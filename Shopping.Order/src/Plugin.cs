@@ -22,6 +22,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src {
 			// 商品详情页
 			areaManager.GetArea("product_sales_info")
 				.DefaultWidgets.Add("shopping.order.widgets/product_purchase_buttons");
+			// 迷你购物车
+			areaManager.GetArea("header_navbar_right")
+				.DefaultWidgets.AddBefore("", "shopping.order.widgets/mini_cart_menu");
 		}
 	}
 }

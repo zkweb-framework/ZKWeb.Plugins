@@ -230,6 +230,7 @@
     <Compile Include="Shopping.Logistics\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Shopping.Order\src\AdminApps\OrderManageApp.cs" />
     <Compile Include="Shopping.Order\src\Config\OrderSettings.cs" />
+    <Compile Include="Shopping.Order\src\Controllers\ApiController.cs" />
     <Compile Include="Shopping.Order\src\Controllers\CartController.cs" />
     <Compile Include="Shopping.Order\src\Controllers\OrderController.cs" />
     <Compile Include="Shopping.Order\src\Extensions\CartProductExtensions.cs" />
@@ -255,6 +256,9 @@
     <Compile Include="Shopping.Order\src\Translates\ja_JP.cs" />
     <Compile Include="Shopping.Order\src\Translates\zh_TW.cs" />
     <Compile Include="Shopping.Order\src\Translates\zh_CN.cs" />
+    <None Include="Shopping.Order\templates\shopping.order.widgets\mini_cart_menu.widget" />
+    <Content Include="Shopping.Order\templates\shopping.order\mini_cart_contents.html" />
+    <Content Include="Shopping.Order\templates\shopping.order.widgets\mini_cart_menu.html" />
     <Compile Include="Shopping.Product\src\AdminApps\ProductCategoryManageApp.cs" />
     <Compile Include="Shopping.Product\src\AdminApps\ProductPropertyManageApp.cs" />
     <Compile Include="Shopping.Product\src\Config\ProductListSettings.cs" />
