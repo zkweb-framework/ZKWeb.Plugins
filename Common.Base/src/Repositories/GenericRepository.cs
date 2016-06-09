@@ -80,6 +80,25 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		}
 
 		/// <summary>
+		/// 获取指定Id的单个对象，找不到或标记已删除时返回null
+		/// </summary>
+		/// <param name="id">数据Id</param>
+		/// <returns></returns>
+		public virtual TData GetByIdWhereNotDeleted(object id) {
+			var entityTrait = EntityTrait.For<TData>();
+			var recyclableTrait = RecyclableTrait.For<TData>();
+			if (!recyclableTrait.IsRecyclable) {
+				throw new ArgumentException(string.Format("entity {0} not recyclable", typeof(TData).Name));
+			}
+			var dataParam = Expression.Parameter(typeof(TData), "data");
+			var primaryKeyExp = Expression.Property(dataParam, entityTrait.PrimaryKey);
+			var deletedExp = Expression.Property(dataParam, recyclableTrait.PropertyName);
+			var body = Expression.AndAlso(
+				Expression.Equal(primaryKeyExp, Expression.Constant(id)), Expression.Not(deletedExp));
+			return Get(Expression.Lambda<Func<TData, bool>>(body, dataParam));
+		}
+
+		/// <summary>
 		/// 获取符合条件的多个对象
 		/// </summary>
 		/// <param name="predicate">查询条件</param>

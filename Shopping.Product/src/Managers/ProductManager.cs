@@ -18,6 +18,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks;
 using ZKWeb.Server;
+using ZKWeb.Utils.Collections;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Utils.IocContainer;
@@ -29,19 +30,28 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 	[ExportMany, SingletonReuse]
 	public class ProductManager : ICacheCleaner {
 		/// <summary>
+		/// 商品的缓存时间
+		/// 默认是3秒，可通过网站配置指定
+		/// </summary>
+		public TimeSpan ProductCacheTime { get; set; }
+		/// <summary>
 		/// 商品信息的缓存时间
 		/// 默认是15秒，可通过网站配置指定
 		/// </summary>
 		public TimeSpan ProductApiInfoCacheTime { get; set; }
 		/// <summary>
-		/// 商品信息的缓存
-		/// </summary>
-		protected IsolatedMemoryCache<long, object> ProductApiInfoCache { get; set; }
-		/// <summary>
 		/// 商品搜索结果的缓存时间
 		/// 默认是15秒，可通过网站配置指定
 		/// </summary>
 		public TimeSpan ProductSearchResultCacheTime { get; set; }
+		/// <summary>
+		/// 商品的缓存
+		/// </summary>
+		protected MemoryCache<long, Database.Product> ProductCache { get; set; }
+		/// <summary>
+		/// 商品信息的缓存
+		/// </summary>
+		protected IsolatedMemoryCache<long, object> ProductApiInfoCache { get; set; }
 		/// <summary>
 		/// 商品搜索结果的缓存
 		/// </summary>
@@ -52,12 +62,45 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// </summary>
 		public ProductManager() {
 			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			ProductCacheTime = TimeSpan.FromSeconds(
+				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ProductCacheTime, 3));
 			ProductApiInfoCacheTime = TimeSpan.FromSeconds(
 				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ProductApiInfoCacheTime, 15));
-			ProductApiInfoCache = new IsolatedMemoryCache<long, object>("Ident", "Locale");
 			ProductSearchResultCacheTime = TimeSpan.FromSeconds(
 				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ProductSearchResultCacheTime, 15));
+			ProductCache = new MemoryCache<long, Database.Product>();
+			ProductApiInfoCache = new IsolatedMemoryCache<long, object>("Ident", "Locale");
 			ProductSearchResultCache = new IsolatedMemoryCache<string, StaticTableSearchResponse>("Ident", "Locale");
+		}
+
+		/// <summary>
+		/// 获取商品
+		/// 商品不存在时返回null，存在时同时获取关联的数据
+		/// 结果会按商品Id缓存一定时间
+		/// </summary>
+		/// <param name="productId"></param>
+		/// <returns></returns>
+		public virtual Database.Product GetProduct(long productId) {
+			// 从缓存获取
+			var product = ProductCache.GetOrDefault(productId);
+			if (product != null) {
+				return product;
+			}
+			// 从数据库获取
+			UnitOfWork.ReadData<Database.Product>(r => {
+				product = r.GetByIdWhereNotDeleted(productId);
+				var category = product.Category;
+				var seller = product.Seller;
+				category.Properties.ToList();
+				category.Properties.SelectMany(p => p.PropertyValues).ToList();
+				product.MatchedDatas.ToList();
+				product.PropertyValues.ToList();
+				// 保存到缓存
+				if (product != null) {
+					ProductCache.Put(productId, product, ProductCacheTime);
+				}
+			});
+			return product;
 		}
 
 		/// <summary>
@@ -68,14 +111,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <param name="productId">商品Id</param>
 		/// <returns></returns>
 		public virtual object GetProductApiInfo(long productId) {
-			// 从缓存中获取
+			// 从缓存获取
 			var info = ProductApiInfoCache.GetOrDefault(productId);
 			if (info != null) {
 				return info;
 			}
-			// 从数据库中获取
+			// 从数据库获取
 			UnitOfWork.ReadData<Database.Product>(r => {
-				var product = r.Get(p => p.Id == productId && !p.Deleted);
+				var product = r.GetByIdWhereNotDeleted(productId);
 				if (product == null) {
 					return; // 商品不存在
 				}
@@ -184,7 +227,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 				productListSettings.ProductsPerPage);
 			var callbacks = new ProductTableCallback().WithExtensions();
 			searchResponse = searchRequest.BuildResponseFromDatabase(callbacks);
-			// 保存到缓存中并返回
+			// 保存到缓存并返回
 			ProductSearchResultCache.Put(key, searchResponse, ProductSearchResultCacheTime);
 			return searchResponse;
 		}

@@ -56,9 +56,11 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Manager {
 			}
 			// 从数据库获取
 			UnitOfWork.ReadData<Database.GenericTag>(r => {
-				tag = r.Get(c => c.Id == tagId && !c.Deleted);
+				tag = r.GetByIdWhereNotDeleted(tagId);
 				// 保存到缓存
-				TagCache.Put(tagId, tag, TagCacheTime);
+				if (tag != null) {
+					TagCache.Put(tagId, tag, TagCacheTime);
+				}
 			});
 			return tag;
 		}

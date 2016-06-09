@@ -20,7 +20,7 @@ namespace ZKWeb.Plugins.Common.UserContact.src.Repositories {
 		/// <param name="userId">用户Id</param>
 		/// <returns></returns>
 		public virtual Database.UserContact GetContact(long userId) {
-			return Get(c => c.User.Id == userId) ?? new Database.UserContact();
+			return GetById(userId) ?? new Database.UserContact();
 		}
 
 		/// <summary>
@@ -40,7 +40,7 @@ namespace ZKWeb.Plugins.Common.UserContact.src.Repositories {
 		/// <param name="userId">用户Id</param>
 		/// <param name="update">更新联系信息的函数</param>
 		public virtual void SetContact(long userId, Action<Database.UserContact> update) {
-			var contact = Get(c => c.User.Id == userId);
+			var contact = GetById(userId);
 			if (contact == null) {
 				contact = new Database.UserContact() { User = Context.Get<User>(u => u.Id == userId) };
 			}

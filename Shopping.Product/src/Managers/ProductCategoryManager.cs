@@ -64,7 +64,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 			}
 			// 从数据库获取
 			UnitOfWork.ReadData<ProductCategory>(r => {
-				category = r.Get(c => c.Id == categoryId && !c.Deleted);
+				category = r.GetByIdWhereNotDeleted(categoryId);
 				// 同时获取属性信息，并保存到缓存
 				if (category != null) {
 					category.Properties.ToList();

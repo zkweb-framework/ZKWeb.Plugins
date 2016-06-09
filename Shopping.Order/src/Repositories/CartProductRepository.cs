@@ -51,7 +51,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 			long productId, CartProductType type, IDictionary<string, object> parameters) {
 			// 判断商品是否可以购买（只判断商品本身，不判断规格等匹配参数）
 			var productRepository = RepositoryResolver.Resolve<Product>(Context);
-			var product = productRepository.GetById(productId);
+			var product = productRepository.GetByIdWhereNotDeleted(productId);
 			if (product == null) {
 				throw new HttpException(400, new T("The product you are try to purchase does not exist."));
 			} else if (!product.GetStateTrait().IsPurchasable) {

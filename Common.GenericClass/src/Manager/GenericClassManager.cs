@@ -62,9 +62,11 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 			}
 			// 从数据库获取
 			UnitOfWork.ReadData<Database.GenericClass>(r => {
-				classObj = r.Get(c => c.Id == classId && !c.Deleted);
+				classObj = r.GetByIdWhereNotDeleted(classId);
 				// 保存到缓存
-				ClassCache.Put(classId, classObj, ClassCacheTime);
+				if (classObj != null) {
+					ClassCache.Put(classId, classObj, ClassCacheTime);
+				}
 			});
 			return classObj;
 		}

@@ -14,6 +14,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// </summary>
 		public const string ProductCategoryCacheTime = "Shopping.Product.ProductCategoryCacheTime";
 		/// <summary>
+		/// 商品的缓存时间，单位是秒
+		/// </summary>
+		public const string ProductCacheTime = "Shopping.Product.ProdutCacheTime";
+		/// <summary>
 		/// 商品信息的缓存时间，单位是秒
 		/// </summary>
 		public const string ProductApiInfoCacheTime = "Shopping.Product.ProductApiInfoCacheTime";

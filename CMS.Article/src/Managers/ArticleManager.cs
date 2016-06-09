@@ -69,7 +69,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 			}
 			// 从数据库中获取
 			UnitOfWork.ReadData<Database.Article>(r => {
-				var article = r.Get(a => a.Id == articleId && !a.Deleted);
+				var article = r.GetByIdWhereNotDeleted(articleId);
 				if (article == null) {
 					return;
 				}
