@@ -26,6 +26,9 @@
 	售后功能
 		支持换货
 		支持退货
+	库存管理
+		支持设置下单减库存和支付减库存
+		支持设置库存警告
 	站内消息
 		Common.UserMessage
 	通知功能
@@ -60,8 +63,13 @@
 	逐步补充插件的单元测试
 	打印和导出xls菜单
 		http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
-	GetProductWithCache
-	更新所有包到最新版本并测试是否正常
+	创建订单时的检查
+		商品是否存在
+		库存是否足够
+		价格是否大于0
+		是否有数量等于或小于0的商品
+		如果有实体商品，必须选择物流(使用Trait)
+		如果有实体商品，必须填写收货地址(使用Trait)
 
 性能测试结果
 2016-05-27 (i7 Q720 1.6Ghz x 4 core 4 threads, ab -n 2000 -c 8, vmware player 12)

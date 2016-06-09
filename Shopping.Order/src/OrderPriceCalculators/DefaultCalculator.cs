@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Shopping.Logistics.src.Manager;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
@@ -48,8 +49,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 			// 添加商品总价到订单价格的组成部分
 			result.Parts.Add(new OrderPriceCalcResult.Part("ProductTotalPrice", orderProductTotalPrice));
 			// 计算运费
-			// 添加运费到订单价格的组成部分
-			// TODO: 添加这里的处理
+			var logisticsId = parameters.OrderParameters.GetOrDefault<long?>("LogisticsId");
+			if (logisticsId != null) {
+				var logisticsCost = orderManager.CalculateLogisticsCost(logisticsId.Value, parameters);
+				if (!string.IsNullOrEmpty(logisticsCost.Second)) {
+					// 计算运费错误
+					throw new HttpException(400, logisticsCost.Second);
+				} else if (logisticsCost.First.Second != result.Currency) {
+					// 货币不一致
+					throw new HttpException(400, new T("Create order contains multi currency is not supported"));
+				}
+				// 添加运费到订单价格的组成部分
+				result.Parts.Add(new OrderPriceCalcResult.Part("LogisticsCost", logisticsCost.First.First));
+			}
 		}
 	}
 }

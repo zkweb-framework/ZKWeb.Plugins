@@ -19,7 +19,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// 订单参数
 		/// 包含收货地址，选择的物流Id和收款接口Id等
 		/// 格式 {
-		///		ShippingAddress: { Country: ..., AreaId: ..., ... },
+		///		ShippingAddress: { Country: ..., RegionId: ..., ... },
 		///		LogisticsId: ...,
 		///		PaymentApiId: ...,
 		///		...

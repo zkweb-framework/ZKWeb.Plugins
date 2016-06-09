@@ -102,7 +102,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Manager {
 		/// <param name="weight">重量，单位是克</param>
 		/// <returns></returns>
 		public virtual Pair<Pair<decimal, string>, string> CalculateCost(
-			long logisticsId, string country, long? regionId, long weight) {
+			long logisticsId, string country, long? regionId, decimal weight) {
 			// 获取物流
 			var logistics = GetLogistics(logisticsId);
 			if (logistics == null) {
