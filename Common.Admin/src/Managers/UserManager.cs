@@ -27,12 +27,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// 记住登陆时，保留会话的天数
 		/// 默认30天，可通过网站配置指定
 		/// </summary>
-		public int SessionExpireDaysWithRememebrLogin { get; set; }
+		public TimeSpan SessionExpireDaysWithRememebrLogin { get; set; }
 		/// <summary>
 		/// 不记住登陆时，保留会话的天数
 		/// 默认1天，可通过网站配置指定
 		/// </summary>
-		public int SessionExpireDaysWithoutRememberLogin { get; set; }
+		public TimeSpan SessionExpireDaysWithoutRememberLogin { get; set; }
 		/// <summary>
 		/// 头像宽度
 		/// 默认150，可通过网站配置指定
@@ -53,10 +53,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// </summary>
 		public UserManager() {
 			var configManager = Application.Ioc.Resolve<ConfigManager>();
-			SessionExpireDaysWithRememebrLogin = configManager.WebsiteConfig
-				.Extra.GetOrDefault(ExtraConfigKeys.SessionExpireDaysWithRememebrLogin, 30);
-			SessionExpireDaysWithoutRememberLogin = configManager.WebsiteConfig
-				.Extra.GetOrDefault(ExtraConfigKeys.SessionExpireDaysWithoutRememberLogin, 1);
+			SessionExpireDaysWithRememebrLogin = TimeSpan.FromDays(configManager.WebsiteConfig
+				.Extra.GetOrDefault(ExtraConfigKeys.SessionExpireDaysWithRememebrLogin, 30));
+			SessionExpireDaysWithoutRememberLogin = TimeSpan.FromDays(configManager.WebsiteConfig
+				.Extra.GetOrDefault(ExtraConfigKeys.SessionExpireDaysWithoutRememberLogin, 1));
 			AvatarWidth = configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.AvatarWidth, 150);
 			AvatarHeight = configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.AvatarHeight, 150);
 			AvatarImageQuality = 90;
@@ -129,8 +129,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			session.ReGenerateId();
 			session.ReleatedId = user.Id;
 			session.RememberLogin = rememberLogin;
-			session.SetExpiresAtLeast(TimeSpan.FromDays(session.RememberLogin ?
-				SessionExpireDaysWithRememebrLogin : SessionExpireDaysWithoutRememberLogin));
+			session.SetExpiresAtLeast(session.RememberLogin ?
+				SessionExpireDaysWithRememebrLogin : SessionExpireDaysWithoutRememberLogin);
 			sessionManager.SaveSession();
 			// 登陆后的处理
 			callbacks.ForEach(c => c.AfterLogin(user));

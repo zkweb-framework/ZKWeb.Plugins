@@ -241,6 +241,7 @@
     <Compile Include="Shopping.Order\src\Model\CreateOrderParameters.cs" />
     <Compile Include="Shopping.Order\src\Model\CreateOrderProductParameters.cs" />
     <Compile Include="Shopping.Order\src\Model\CreateOrderResult.cs" />
+    <Compile Include="Shopping.Order\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderPriceCalculator.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderProductUnitPriceCalculator.cs" />
     <Compile Include="Shopping.Order\src\Model\OrderProductDisplayInfo.cs" />
