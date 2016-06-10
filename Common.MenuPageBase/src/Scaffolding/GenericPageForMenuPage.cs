@@ -15,6 +15,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Web.Interfaces;
 using ZKWeb.Localize;
 using ZKWeb.Web;
+using ZKWeb.Plugins.Common.MenuPageBase.src.Model;
 
 namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 	/// <summary>
@@ -22,7 +23,8 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 	/// 这个抽象类需要再次继承，请勿直接使用
 	/// 目前集成这个类的类有GenericFormForMenuPage, GenericListForMenuPage
 	/// </summary>
-	public abstract class GenericPageForMenuPage : IPrivilegesProvider, IWebsiteStartHandler {
+	public abstract class GenericPageForMenuPage :
+		IMenuProvider, IPrivilegesProvider, IWebsiteStartHandler {
 		/// <summary>
 		/// 所属分组
 		/// </summary>

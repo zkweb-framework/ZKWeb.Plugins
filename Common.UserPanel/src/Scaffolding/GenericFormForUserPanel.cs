@@ -15,7 +15,7 @@ using ZKWeb.Plugins.Common.UserPanel.src.Model;
 
 namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	/// <summary>
-	/// 用于快速添加用户中心中只带有一个表单的简单页面
+	/// 用于给用户快速添加只包含表单的页面
 	/// 例子
 	/// [ExportMany]
 	/// public class ExampleForm : GenericFormForUserPanel {

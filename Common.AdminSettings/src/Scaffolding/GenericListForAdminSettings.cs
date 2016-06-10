@@ -10,7 +10,7 @@ using ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	/// <summary>
-	/// 这个类用于给后台设置快速添加只包含数据列表的页面
+	/// 用于给后台设置快速添加只包含数据列表的页面
 	/// 例子
 	/// [ExportMany]
 	/// public class ExampleList : GenericListForAdminSettings[Data, ExampleList] {
@@ -25,9 +25,8 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	/// }
 	/// </summary>
 	/// <typeparam name="TData">列表中的数据类型</typeparam>
-	/// <typeparam name="TPage">继承这个类的类型</typeparam>
-	public abstract class GenericListForAdminSettings<TData, TPage>
-		: GenericListForMenuPage<TData, TPage>, IAdminSettingsMenuProvider
+	public abstract class GenericListForAdminSettings<TData>
+		: GenericListForMenuPage<TData>, IAdminSettingsMenuProvider
 		where TData : class {
 		/// <summary>
 		/// 使用的权限

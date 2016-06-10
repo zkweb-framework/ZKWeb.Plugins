@@ -7,21 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
-using ZKWeb.Plugins.Common.Admin.src.Model;
-using ZKWeb.Plugins.Common.AdminSettings.src;
-using ZKWeb.Plugins.Common.AdminSettings.src.Model;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
-using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
-using ZKWeb.Plugins.Common.GenericTag.src.Database;
 using ZKWeb.Plugins.Common.GenericTag.src.Repositories;
-using ZKWeb.Plugins.Common.MenuPageBase.src;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Localize;
 using ZKWeb.Web.Interfaces;
@@ -40,7 +33,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 	/// }
 	/// </summary>
 	public abstract class GenericTagBuilder :
-		GenericListForAdminSettings<Database.GenericTag, GenericTagBuilder> {
+		GenericListForAdminSettings<Database.GenericTag> {
 		/// <summary>
 		/// 标签类型，默认使用名称（除去空格）
 		/// </summary>

@@ -5,11 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Plugins.Common.Admin.src;
-using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
-using ZKWeb.Plugins.Common.Admin.src.Model;
-using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -24,13 +20,12 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 	/// 用于快速添加菜单页中只带有一个数据列表的简单页面
 	/// 这个抽象类需要再次继承，请勿直接使用
 	/// 例子
-	/// public abstract class GenericListForAdminSettings[TData, TPage] :
-	///		GenericListForMenuPage[TData, TPage], IMenuProviderForAdminSettings { }
+	/// public abstract class GenericListForAdminSettings[TData] :
+	///		GenericListForMenuPage[TData], IMenuProviderForAdminSettings { }
 	/// [ExportMany] public class ExampleList : GenericListForAdminSettings[Data, ExampleList] { }
 	/// </summary>
 	/// <typeparam name="TData">列表中的数据类型</typeparam>
-	/// <typeparam name="TPage">继承这个类的类型</typeparam>
-	public abstract class GenericListForMenuPage<TData, TPage> : GenericPageForMenuPage
+	public abstract class GenericListForMenuPage<TData> : GenericPageForMenuPage
 		where TData : class {
 		/// <summary>
 		/// 获取搜索的Url

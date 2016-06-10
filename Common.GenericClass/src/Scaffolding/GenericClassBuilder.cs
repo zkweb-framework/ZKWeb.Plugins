@@ -7,17 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
-using ZKWeb.Plugins.Common.AdminSettings.src;
-using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
-using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
-using ZKWeb.Plugins.Common.GenericClass.src.Database;
 using ZKWeb.Plugins.Common.GenericClass.src.Repositories;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
@@ -26,6 +21,7 @@ using ZKWeb.Database;
 using ZKWeb.Web.Interfaces;
 using ZKWeb.Web;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 
 namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 	/// <summary>
@@ -37,7 +33,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 	/// }
 	/// </summary>
 	public abstract class GenericClassBuilder :
-		GenericListForAdminSettings<Database.GenericClass, GenericClassBuilder> {
+		GenericListForAdminSettings<Database.GenericClass> {
 		/// <summary>
 		/// 分类类型，默认使用名称（除去空格）
 		/// </summary>

@@ -17,7 +17,7 @@ using ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	/// <summary>
-	/// 这个类用于给后台设置快速添加只包含表单的页面
+	/// 用于给后台设置快速添加只包含表单的页面
 	/// 例子
 	/// [ExportMany]
 	/// public class ExampleForm : GenericFormForAdminSettings {

@@ -38,7 +38,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 	/// }
 	/// </summary>
 	public abstract class CustomTranslator :
-		GenericListForAdminSettings<Translation, CustomTranslator>, ITranslateProvider, ICacheCleaner {
+		GenericListForAdminSettings<Translation>, ITranslateProvider, ICacheCleaner {
 		/// <summary>
 		/// 使用的权限
 		/// </summary>
