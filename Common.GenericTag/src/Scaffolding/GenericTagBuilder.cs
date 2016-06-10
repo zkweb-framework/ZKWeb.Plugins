@@ -6,9 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
-using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
@@ -18,10 +16,8 @@ using ZKWeb.Plugins.Common.GenericTag.src.Repositories;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Localize;
 using ZKWeb.Web.Interfaces;
-using ZKWeb.Web;
 using ZKWeb.Database;
 using ZKWeb.Utils.Functions;
-using ZKWeb.Plugins.Common.Base.src.Managers;
 
 namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 	/// <summary>
@@ -34,130 +30,39 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 	/// </example>
 	/// </summary>
 	public abstract class GenericTagBuilder :
-		GenericListForAdminSettings<Database.GenericTag> {
-		/// <summary>
-		/// 标签类型，默认使用名称（除去空格）
-		/// </summary>
+		AdminSettingsCrudPageBuilder<Database.GenericTag> {
 		public virtual string Type { get { return Name.Replace(" ", ""); } }
-		/// <summary>
-		/// 使用的权限
-		/// </summary>
-		public override string Privilege { get { return "TagManage:" + Type; } }
-		/// <summary>
-		/// 所属分组
-		/// </summary>
 		public override string Group { get { return "TagManage"; } }
-		/// <summary>
-		/// 分组图标
-		/// </summary>
-		public override string GroupIcon { get { return "fa fa-tags"; } }
-		/// <summary>
-		/// 图标的Css类
-		/// </summary>
+		public override string GroupIconClass { get { return "fa fa-tags"; } }
 		public override string IconClass { get { return "fa fa-tags"; } }
-		/// <summary>
-		/// Url地址
-		/// </summary>
 		public override string Url { get { return "/admin/settings/generic_tag/" + Type.ToLower(); } }
-		/// <summary>
-		/// 添加使用的Url地址
-		/// </summary>
-		public virtual string AddUrl { get { return Url + "/add"; } }
-		/// <summary>
-		/// 编辑使用的Url地址
-		/// </summary>
-		public virtual string EditUrl { get { return Url + "/edit"; } }
-		/// <summary>
-		/// 批量操作使用的Url地址
-		/// </summary>
-		public virtual string BatchUrl { get { return Url + "/batch"; } }
-
-		/// <summary>
-		/// 获取表格回调
-		/// </summary>
-		/// <returns></returns>
+		public override string[] ViewPrivileges { get { return new[] { "TagManage:" + Type }; } }
+		public override string[] EditPrivileges { get { return ViewPrivileges; } }
+		public override string[] DeletePrivileges { get { return ViewPrivileges; } }
+		public override string[] DeleteForeverPrivilege { get { return ViewPrivileges; } }
 		protected override IAjaxTableCallback<Database.GenericTag> GetTableCallback() {
 			return new TableCallback(this);
 		}
+		protected override IModelFormBuilder GetAddForm() { return new Form(Type); }
+		protected override IModelFormBuilder GetEditForm() { return new Form(Type); }
 
 		/// <summary>
-		/// 添加标签
+		/// 获取批量操作的数据Id列表
 		/// </summary>
 		/// <returns></returns>
-		protected virtual IActionResult AddAction() {
-			return EditAction();
-		}
-
-		/// <summary>
-		/// 编辑标签
-		/// </summary>
-		/// <returns></returns>
-		protected virtual IActionResult EditAction() {
-			// 检查权限
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
-			// 处理表单绑定或提交
-			var form = new Form(Type);
-			var request = HttpContextUtils.CurrentContext.Request;
-			if (request.HttpMethod == HttpMethods.POST) {
-				return new JsonResult(form.Submit());
-			} else {
-				form.Bind();
-				return new TemplateResult("common.admin/generic_edit.html", new { form });
-			}
-		}
-
-		/// <summary>
-		/// 批量操作标签
-		/// 目前支持批量删除，恢复，永久删除
-		/// </summary>
-		/// <returns></returns>
-		protected virtual IActionResult BatchAction() {
-			// 检查权限
-			HttpRequestChecker.RequieAjaxRequest();
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
-			// 获取参数
+		protected override IList<object> GetBatchActionIds() {
+			// 检查是否所有Id都属于指定的类型，防止越权操作
 			var request = HttpContextUtils.CurrentContext.Request;
 			var actionName = request.Get<string>("action");
 			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
-			// 检查是否所有Id都属于指定的类型，防止越权操作
+			var ids = JsonConvert.DeserializeObject<IList<object>>(json);
 			var isAllTagTypeMatched = UnitOfWork.ReadRepository<GenericTagRepository, bool>(r => {
-				return r.IsAllTagsTypeEqualTo(idList, Type);
+				return r.IsAllTagsTypeEqualTo(ids, Type);
 			});
 			if (!isAllTagTypeMatched) {
 				throw new HttpException(403, new T("Try to access tag that type not matched"));
 			}
-			// 执行批量操作
-			var message = UnitOfWork.WriteData<Database.GenericTag, string>(r => {
-				if (actionName == "delete_forever") {
-					r.BatchDeleteForever(idList);
-					return new T("Batch Delete Forever Successful");
-				} else if (actionName == "delete") {
-					r.BatchDelete(idList);
-					return new T("Batch Delete Successful");
-				} else if (actionName == "recover") {
-					r.BatchRecover(idList);
-					return new T("Batch Recover Successful");
-				} else {
-					throw new HttpException(404, string.Format(new T("Action {0} not exist"), actionName));
-				}
-			});
-			return new JsonResult(new { message });
-		}
-
-		/// <summary>
-		/// 网站启动时添加处理函数
-		/// </summary>
-		public override void OnWebsiteStart() {
-			base.OnWebsiteStart();
-			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			controllerManager.RegisterAction(AddUrl, HttpMethods.GET, AddAction);
-			controllerManager.RegisterAction(AddUrl, HttpMethods.POST, AddAction);
-			controllerManager.RegisterAction(EditUrl, HttpMethods.GET, EditAction);
-			controllerManager.RegisterAction(EditUrl, HttpMethods.POST, EditAction);
-			controllerManager.RegisterAction(BatchUrl, HttpMethods.POST, BatchAction);
+			return ids;
 		}
 
 		/// <summary>

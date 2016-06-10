@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Model {
 		/// </summary>
 		string Name { get; }
 		/// <summary>
-		/// url链接
+		/// url地址
 		/// </summary>
 		string Url { get; }
 		/// <summary>

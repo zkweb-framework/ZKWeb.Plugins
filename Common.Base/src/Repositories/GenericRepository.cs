@@ -113,14 +113,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 这个函数仅设置Deleted为true，不会从数据库中删除
 		/// </summary>
 		/// <typeparam name="TData">数据类型</typeparam>
-		/// <param name="idList">Id列表</param>
-		public virtual long BatchDelete(IEnumerable<object> idList) {
+		/// <param name="ids">Id列表</param>
+		public virtual long BatchDelete(IEnumerable<object> ids) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			var propertyName = RecyclableTrait.For<TData>().PropertyName;
 			var setter = ReflectionUtils.MakeSetter<TData, bool>(propertyName);
 			var trait = EntityTrait.For<TData>();
 			long count = 0;
-			foreach (var id in idList) {
+			foreach (var id in ids) {
 				var data = Context.Get(
 					ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
 				if (data != null) {
@@ -136,15 +136,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 返回恢复的数量
 		/// </summary>
 		/// <typeparam name="TData">数据类型</typeparam>
-		/// <param name="idList">Id列表</param>
+		/// <param name="ids">Id列表</param>
 		/// <returns></returns>
-		public virtual long BatchRecover(IEnumerable<object> idList) {
+		public virtual long BatchRecover(IEnumerable<object> ids) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			var propertyName = RecyclableTrait.For<TData>().PropertyName;
 			var setter = ReflectionUtils.MakeSetter<TData, bool>(propertyName);
 			var trait = EntityTrait.For<TData>();
 			long count = 0;
-			foreach (var id in idList) {
+			foreach (var id in ids) {
 				var data = Context.Get(
 					ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
 				if (data != null) {
@@ -161,13 +161,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 这个函数会把数据从数据库中删除
 		/// </summary>
 		/// <typeparam name="TData">数据类型</typeparam>
-		/// <param name="idList">Id列表</param>
+		/// <param name="ids">Id列表</param>
 		/// <returns></returns>
-		public virtual long BatchDeleteForever(IEnumerable<object> idList) {
+		public virtual long BatchDeleteForever(IEnumerable<object> ids) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 			var trait = EntityTrait.For<TData>();
 			long count = 0;
-			foreach (var id in idList) {
+			foreach (var id in ids) {
 				count += Context.DeleteWhere(
 					ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
 			}

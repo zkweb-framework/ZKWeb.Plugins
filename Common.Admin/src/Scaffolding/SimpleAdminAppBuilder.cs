@@ -31,7 +31,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// </summary>
 		public abstract string Name { get; }
 		/// <summary>
-		/// url链接
+		/// url地址
 		/// </summary>
 		public abstract string Url { get; }
 		/// <summary>

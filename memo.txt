@@ -62,6 +62,7 @@
 	ok 支持ckeditor上传保存图片
 	ok 底部copyright
 	逐步补充插件的单元测试
+	逐步补充插件的文档
 	打印和导出xls菜单
 		http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
 	创建订单时的检查
@@ -71,6 +72,9 @@
 		是否有数量等于或小于0的商品
 		如果有实体商品，必须选择物流(使用Trait)
 		如果有实体商品，必须填写收货地址(使用Trait)
+	完成收货地址管理后检查是否不需要权限且没有注册权限
+	UserDataEditFormBuilder
+	FilterByOwnedUser
 
 性能测试结果
 2016-05-27 (i7 Q720 1.6Ghz x 4 core 4 threads, ab -n 2000 -c 8, vmware player 12)

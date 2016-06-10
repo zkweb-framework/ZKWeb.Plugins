@@ -19,7 +19,6 @@ using ZKWeb.Utils.Functions;
 using ZKWeb.Localize;
 using ZKWeb.Database;
 using ZKWeb.Web.Interfaces;
-using ZKWeb.Web;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 
@@ -34,135 +33,42 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 	/// </example>
 	/// </summary>
 	public abstract class GenericClassBuilder :
-		GenericListForAdminSettings<Database.GenericClass> {
-		/// <summary>
-		/// 分类类型，默认使用名称（除去空格）
-		/// </summary>
+		AdminSettingsCrudPageBuilder<Database.GenericClass> {
 		public virtual string Type { get { return Name.Replace(" ", ""); } }
-		/// <summary>
-		/// 使用的权限
-		/// </summary>
-		public override string Privilege { get { return "ClassManage:" + Type; } }
-		/// <summary>
-		/// 所属分组
-		/// </summary>
 		public override string Group { get { return "ClassManage"; } }
-		/// <summary>
-		/// 分组图标
-		/// </summary>
-		public override string GroupIcon { get { return "fa fa-list"; } }
-		/// <summary>
-		/// 图标的Css类
-		/// </summary>
+		public override string GroupIconClass { get { return "fa fa-list"; } }
 		public override string IconClass { get { return "fa fa-list"; } }
-		/// <summary>
-		/// 模板路径
-		/// </summary>
-		public override string TemplatePath { get { return "common.generic_class/class_list.html"; } }
-		/// <summary>
-		/// Url地址
-		/// </summary>
 		public override string Url { get { return "/admin/settings/generic_class/" + Type.ToLower(); } }
-		/// <summary>
-		/// 添加使用的Url地址
-		/// </summary>
-		public virtual string AddUrl { get { return Url + "/add"; } }
-		/// <summary>
-		/// 编辑使用的Url地址
-		/// </summary>
-		public virtual string EditUrl { get { return Url + "/edit"; } }
-		/// <summary>
-		/// 批量操作使用的Url地址
-		/// </summary>
-		public virtual string BatchUrl { get { return Url + "/batch"; } }
-
-		/// <summary>
-		/// 获取表格回调
-		/// </summary>
-		/// <returns></returns>
+		public override string[] ViewPrivileges { get { return new[] { "ClassManage:" + Type }; } }
+		public override string[] EditPrivileges { get { return ViewPrivileges; } }
+		public override string[] DeletePrivileges { get { return ViewPrivileges; } }
+		public override string[] DeleteForeverPrivilege { get { return ViewPrivileges; } }
+		public override string ListTemplatePath { get { return "common.generic_class/class_list.html"; } }
 		protected override IAjaxTableCallback<Database.GenericClass> GetTableCallback() {
 			return new TableCallback(this);
 		}
+		protected override IModelFormBuilder GetAddForm() { return new Form(Type); }
+		protected override IModelFormBuilder GetEditForm() { return new Form(Type); }
 
 		/// <summary>
-		/// 添加分类
+		/// 获取批量操作的数据Id列表
 		/// </summary>
 		/// <returns></returns>
-		protected virtual IActionResult AddAction() {
-			return EditAction();
-		}
-
-		/// <summary>
-		/// 编辑分类
-		/// </summary>
-		/// <returns></returns>
-		protected virtual IActionResult EditAction() {
-			// 检查权限
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
-			// 处理表单绑定或提交
-			var form = new Form(Type);
-			var request = HttpContextUtils.CurrentContext.Request;
-			if (request.HttpMethod == HttpMethods.POST) {
-				return new JsonResult(form.Submit());
-			} else {
-				form.Bind();
-				return new TemplateResult("common.admin/generic_edit.html", new { form });
-			}
-		}
-
-		/// <summary>
-		/// 批量操作标签
-		/// 目前支持批量删除，恢复，永久删除
-		/// </summary>
-		/// <returns></returns>
-		protected virtual IActionResult BatchAction() {
-			// 检查权限
-			HttpRequestChecker.RequieAjaxRequest();
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
+		protected override IList<object> GetBatchActionIds() {
 			// 获取参数
 			// 其中Id列表需要把顺序倒转，用于先删除子分类再删除上级分类
 			var request = HttpContextUtils.CurrentContext.Request;
 			var actionName = request.Get<string>("action");
 			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<object>>(json).Reverse().ToList();
+			var ids = JsonConvert.DeserializeObject<IList<object>>(json).Reverse().ToList();
 			// 检查是否所有Id都属于指定的类型，防止越权操作
 			var isAllClassesTypeMatched = UnitOfWork.ReadRepository<GenericClassRepository, bool>(r => {
-				return r.IsAllClassesTypeEqualTo(idList, Type);
+				return r.IsAllClassesTypeEqualTo(ids, Type);
 			});
 			if (!isAllClassesTypeMatched) {
 				throw new HttpException(403, new T("Try to access class that type not matched"));
 			}
-			// 执行批量操作
-			var message = UnitOfWork.WriteData<Database.GenericClass, string>(r => {
-				if (actionName == "delete_forever") {
-					r.BatchDeleteForever(idList);
-					return new T("Batch Delete Forever Successful");
-				} else if (actionName == "delete") {
-					r.BatchDelete(idList);
-					return new T("Batch Delete Successful");
-				} else if (actionName == "recover") {
-					r.BatchRecover(idList);
-					return new T("Batch Recover Successful");
-				} else {
-					throw new HttpException(404, string.Format(new T("Action {0} not exist"), actionName));
-				}
-			});
-			return new JsonResult(new { message });
-		}
-
-		/// <summary>
-		/// 网站启动时添加处理函数
-		/// </summary>
-		public override void OnWebsiteStart() {
-			base.OnWebsiteStart();
-			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			controllerManager.RegisterAction(AddUrl, HttpMethods.GET, AddAction);
-			controllerManager.RegisterAction(AddUrl, HttpMethods.POST, AddAction);
-			controllerManager.RegisterAction(EditUrl, HttpMethods.GET, EditAction);
-			controllerManager.RegisterAction(EditUrl, HttpMethods.POST, EditAction);
-			controllerManager.RegisterAction(BatchUrl, HttpMethods.POST, BatchAction);
+			return ids;
 		}
 
 		/// <summary>

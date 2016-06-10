@@ -18,11 +18,11 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Repositories {
 		/// 如果标签不存在会被跳过
 		/// 常用于防止越权操作
 		/// </summary>
-		/// <param name="idList">标签的Id列表</param>
+		/// <param name="ids">标签的Id列表</param>
 		/// <param name="type">标签类型</param>
 		/// <returns></returns>
-		public bool IsAllTagsTypeEqualTo(IList<object> idList, string type) {
-			return Count(t => idList.Contains(t.Id) && t.Type != type) == 0;
+		public bool IsAllTagsTypeEqualTo(IList<object> ids, string type) {
+			return Count(t => ids.Contains(t.Id) && t.Type != type) == 0;
 		}
 	}
 }

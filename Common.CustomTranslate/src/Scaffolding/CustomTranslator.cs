@@ -7,12 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Plugins.Common.Admin.src;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
-using ZKWeb.Plugins.Common.AdminSettings.src;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
-using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -40,46 +37,20 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 	/// </example>
 	/// </summary>
 	public abstract class CustomTranslator :
-		GenericListForAdminSettings<Translation>, ITranslateProvider, ICacheCleaner {
-		/// <summary>
-		/// 使用的权限
-		/// </summary>
-		public override string Privilege { get { return "CustomTranslate:" + Name; } }
-		/// <summary>
-		/// 所属分组
-		/// </summary>
+		AdminSettingsCrudPageBuilder<Translation>, ITranslateProvider, ICacheCleaner {
 		public override string Group { get { return "CustomTranslate"; } }
-		/// <summary>
-		/// 分组图标
-		/// </summary>
-		public override string GroupIcon { get { return "fa fa-language"; } }
-		/// <summary>
-		/// 图标的Css类
-		/// </summary>
+		public override string GroupIconClass { get { return "fa fa-language"; } }
 		public override string IconClass { get { return "fa fa-language"; } }
-		/// <summary>
-		/// Url地址
-		/// </summary>
 		public override string Url { get { return "/admin/settings/custom_translate/" + Name.ToLower(); } }
-		/// <summary>
-		/// 添加使用的Url地址
-		/// </summary>
-		public virtual string AddUrl { get { return Url + "/add"; } }
-		/// <summary>
-		/// 编辑使用的Url地址
-		/// </summary>
-		public virtual string EditUrl { get { return Url + "/edit"; } }
-		/// <summary>
-		/// 删除使用的Url地址
-		/// </summary>
 		public virtual string DeleteUrl { get { return Url + "/delete"; } }
-		/// <summary>
-		/// 获取表格回调，这里不使用
-		/// </summary>
-		/// <returns></returns>
-		protected override IAjaxTableCallback<Translation> GetTableCallback() {
-			throw new NotSupportedException();
-		}
+		public override string BatchUrl { get { return null; } }
+		public override string[] ViewPrivileges { get { return new[] { "CustomTranslate:" + Name }; } }
+		public override string[] EditPrivileges { get { return ViewPrivileges; } }
+		public override string[] DeletePrivileges { get { return ViewPrivileges; } }
+		public override string[] DeleteForeverPrivilege { get { return ViewPrivileges; } }
+		protected override IAjaxTableCallback<Translation> GetTableCallback() { throw new NotSupportedException(); }
+		protected override IModelFormBuilder GetAddForm() { return new Form(this); }
+		protected override IModelFormBuilder GetEditForm() { return new Form(this); }
 
 		/// <summary>
 		/// 列表页的处理函数
@@ -91,7 +62,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 表格构建器
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
-			table.Id = TableId;
+			table.Id = ListTableId;
 			table.Target = SearchUrl;
 			table.MenuItems.AddDivider();
 			table.MenuItems.AddEditAction("Translation", EditUrl, dialogParameters: new { size = "size-wide" });
@@ -102,9 +73,10 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			searchBar.KeywordPlaceHolder = "Origin/Translated";
 			searchBar.MenuItems.AddDivider();
 			searchBar.MenuItems.AddAddAction("Translation", AddUrl, dialogParameters: new { size = "size-wide" });
-			return new TemplateResult(TemplatePath, new {
+			searchBar.BeforeItems.AddAddAction("Translation", AddUrl, dialogParameters: new { size = "size-wide" });
+			return new TemplateResult(ListTemplatePath, new {
 				title = new T(Name),
-				iconClass = IconClass,
+				extra = ExtraTemplateArguments,
 				table,
 				searchBar
 			});
@@ -146,33 +118,6 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 		}
 
 		/// <summary>
-		/// 添加翻译内容
-		/// </summary>
-		/// <returns></returns>
-		protected virtual IActionResult AddAction() {
-			return EditAction();
-		}
-
-		/// <summary>
-		/// 编辑翻译内容
-		/// </summary>
-		/// <returns></returns>
-		protected virtual IActionResult EditAction() {
-			// 检查权限
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
-			// 处理表单绑定或提交
-			var form = new Form(this);
-			var request = HttpContextUtils.CurrentContext.Request;
-			if (request.HttpMethod == HttpMethods.POST) {
-				return new JsonResult(form.Submit());
-			} else {
-				form.Bind();
-				return new TemplateResult("common.admin/generic_edit.html", new { form });
-			}
-		}
-
-		/// <summary>
 		/// 删除翻译内容
 		/// </summary>
 		/// <returns></returns>
@@ -197,10 +142,6 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 		public override void OnWebsiteStart() {
 			base.OnWebsiteStart();
 			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			controllerManager.RegisterAction(AddUrl, HttpMethods.GET, AddAction);
-			controllerManager.RegisterAction(AddUrl, HttpMethods.POST, AddAction);
-			controllerManager.RegisterAction(EditUrl, HttpMethods.GET, EditAction);
-			controllerManager.RegisterAction(EditUrl, HttpMethods.POST, EditAction);
 			controllerManager.RegisterAction(DeleteUrl, HttpMethods.POST, DeleteAction);
 		}
 

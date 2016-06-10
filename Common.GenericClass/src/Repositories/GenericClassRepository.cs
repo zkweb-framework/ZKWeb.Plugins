@@ -18,11 +18,11 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Repositories {
 		/// 如果分类不存在会被跳过
 		/// 常用于防止越权操作
 		/// </summary>
-		/// <param name="idList">分类的Id列表</param>
+		/// <param name="ids">分类的Id列表</param>
 		/// <param name="type">分类类型</param>
 		/// <returns></returns>
-		public bool IsAllClassesTypeEqualTo(IList<object> idList, string type) {
-			return Count(t => idList.Contains(t.Id) && t.Type != type) == 0;
+		public bool IsAllClassesTypeEqualTo(IList<object> ids, string type) {
+			return Count(t => ids.Contains(t.Id) && t.Type != type) == 0;
 		}
 	}
 }

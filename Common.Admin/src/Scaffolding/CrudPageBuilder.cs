@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -253,6 +254,24 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		}
 
 		/// <summary>
+		/// 获取批量操作的数据Id列表
+		/// </summary>
+		/// <returns></returns>
+		protected virtual IList<object> GetBatchActionIds() {
+			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
+			var obj = JsonConvert.DeserializeObject<JObject>(json);
+			if (obj.Type == JTokenType.Object) {
+				// { ids: [ id列表 ], ... }
+				return obj.GetValue("ids").Values<object>().ToList();
+			} else if (obj.Type == JTokenType.Array) {
+				// [ id列表 ]
+				return obj.Values<object>().ToList();
+			}
+			throw new ArgumentException(string.Format(
+				"get batch action ids failed, unknown format: {0}", json));
+		}
+
+		/// <summary>
 		/// 批量删除
 		/// </summary>
 		/// <returns></returns>
@@ -261,9 +280,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(AllowedUserTypes, DeletePrivileges);
 			// 批量删除
-			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
-			UnitOfWork.WriteData<TData>(r => r.BatchDelete(idList));
+			UnitOfWork.WriteData<TData>(r => r.BatchDelete(GetBatchActionIds()));
 			return new JsonResult(new { message = new T("Batch Delete Successful") });
 		}
 
@@ -276,9 +293,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(AllowedUserTypes, DeletePrivileges);
 			// 批量恢复
-			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
-			UnitOfWork.WriteData<TData>(r => r.BatchRecover(idList));
+			UnitOfWork.WriteData<TData>(r => r.BatchRecover(GetBatchActionIds()));
 			return new JsonResult(new { message = new T("Batch Recover Successful") });
 		}
 
@@ -291,9 +306,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(AllowedUserTypes, DeleteForeverPrivilege);
 			// 批量永久删除
-			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
-			var idList = JsonConvert.DeserializeObject<IList<object>>(json);
-			UnitOfWork.WriteData<TData>(r => r.BatchDeleteForever(idList));
+			UnitOfWork.WriteData<TData>(r => r.BatchDeleteForever(GetBatchActionIds()));
 			return new JsonResult(new { message = new T("Batch Delete Forever Successful") });
 		}
 

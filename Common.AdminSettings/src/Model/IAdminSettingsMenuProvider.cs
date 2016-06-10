@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.MenuPageBase.src.Model;
+using ZKWeb.Plugins.Common.MenuPage.src.Model;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.Model {
 	/// <summary>

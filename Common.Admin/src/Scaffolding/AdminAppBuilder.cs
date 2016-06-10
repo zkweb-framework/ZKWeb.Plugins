@@ -55,5 +55,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// 编辑页的模板路径
 		/// </summary>
 		public override string EditTemplatePath { get { return "common.admin/generic_edit.html"; } }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public AdminAppBuilder() : base() {
+			ExtraTemplateArguments["iconClass"] = IconClass;
+		}
 	}
 }
