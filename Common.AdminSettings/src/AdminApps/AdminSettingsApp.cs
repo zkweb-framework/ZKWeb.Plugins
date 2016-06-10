@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.AdminApps {
 	/// 默认允许管理员或合作伙伴访问
 	/// </summary>
 	[ExportMany]
-	public class AdminSettingsApp : AdminApp {
+	public class AdminSettingsApp : SimpleAdminAppBuilder {
 		public override string Name { get { return "Settings"; } }
 		public override string Url { get { return "/admin/settings"; } }
 		public override string TileClass { get { return "tile bg-blue"; } }

@@ -38,7 +38,8 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 		/// </summary>
 		protected override IActionResult Action() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 处理绑定和提交
 			var form = GetForm();
 			if (HttpContextUtils.CurrentContext.Request.HttpMethod == HttpMethods.POST) {

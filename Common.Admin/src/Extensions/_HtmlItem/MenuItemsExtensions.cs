@@ -55,15 +55,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// <summary>
 		/// 添加编辑项
 		/// 点击后弹出编辑右键选中数据的模态框
-		/// 根据后台应用自动生成，各个参数如不指定则使用默认值
+		/// 根据增删查改页面的构建器自动生成，各个参数如不指定则使用默认值
 		/// </summary>
-		/// <typeparam name="TApp">后台应用的类型</typeparam>
-		public static void AddEditActionForAdminApp<TApp>(
+		/// <typeparam name="TBuilder">构建器的类型</typeparam>
+		public static void AddEditActionForCrudPage<TBuilder>(
 			this List<MenuItem> items, string name = null, string iconClass = null,
 			string titleTemplate = null, string urlTemplate = null, object dialogParameters = null)
-			where TApp : class, IAdminAppBuilder, new() {
-			var app = new TApp();
-			items.AddEditAction(app.TypeName, app.EditUrl,
+			where TBuilder : class, ICrudPageBuilder, new() {
+			var app = new TBuilder();
+			items.AddEditAction(app.DataTypeName, app.EditUrl,
 				name, iconClass, titleTemplate, urlTemplate, dialogParameters);
 		}
 
@@ -95,15 +95,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// <summary>
 		/// 添加添加项
 		/// 点击后弹出添加数据的模态框
-		/// 根据后台应用自动生成，各个参数如不指定则使用默认值
+		/// 根据增删查改页面的构建器自动生成，各个参数如不指定则使用默认值
 		/// </summary>
-		/// <typeparam name="TApp">后台应用的类型</typeparam>
-		public static void AddAddActionForAdminApp<TApp>(
+		/// <typeparam name="TBuilder">后台应用的类型</typeparam>
+		public static void AddAddActionForCrudPage<TBuilder>(
 			this List<MenuItem> items, string name = null, string iconClass = null,
 			string title = null, string url = null, object dialogParameters = null)
-			where TApp : class, IAdminAppBuilder, new() {
-			var app = new TApp();
-			items.AddAddAction(app.TypeName, app.AddUrl,
+			where TBuilder : class, ICrudPageBuilder, new() {
+			var app = new TBuilder();
+			items.AddAddAction(app.DataTypeName, app.AddUrl,
 				name, iconClass, title, url, dialogParameters);
 		}
 	}

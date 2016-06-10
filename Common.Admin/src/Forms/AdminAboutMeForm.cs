@@ -81,7 +81,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 			Privileges = new HashSet<string>(user.Roles.SelectMany(r => r.Privileges));
 			if (user.Type == UserTypes.SuperAdmin) {
 				// 超级管理员时勾选所有权限
-				Privileges = new HashSet<string>(Application.Ioc.ResolvePrivileges());
+				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+				Privileges = new HashSet<string>(privilegeManager.GetPrivileges());
 			}
 		}
 

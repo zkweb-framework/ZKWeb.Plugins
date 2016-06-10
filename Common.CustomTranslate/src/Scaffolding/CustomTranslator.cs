@@ -87,7 +87,8 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 		/// <returns></returns>
 		protected override IActionResult Action() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 表格构建器
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = TableId;
@@ -115,7 +116,8 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 		/// <returns></returns>
 		protected override IActionResult SearchAction() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取参数并转换到搜索请求
 			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
@@ -157,7 +159,8 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult EditAction() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 处理表单绑定或提交
 			var form = new Form(this);
 			var request = HttpContextUtils.CurrentContext.Request;
@@ -176,7 +179,8 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 		protected virtual IActionResult DeleteAction() {
 			// 检查权限
 			HttpRequestChecker.RequieAjaxRequest();
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取参数并执行删除
 			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var original = JsonConvert.DeserializeObject<IList<string>>(json).FirstOrDefault();

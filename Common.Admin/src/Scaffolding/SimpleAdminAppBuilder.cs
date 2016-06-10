@@ -14,10 +14,18 @@ using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>
-	/// 后台应用的基础类
+	/// 简单的后台应用构建器
+	/// <example>
+	/// [ExportMany]
+	/// public class ExampleApp : SimpleAdminAppBuilder {
+	///		public override string Name { get { return "Example"; } }
+	///		public override string Url { get { return "/admin/example"; } }
+	///		protected override IActionResult Action() { }
+	/// }
+	/// </example>
 	/// </summary>
-	public abstract class AdminApp :
-		IPrivilegesProvider, IWebsiteStartHandler, ILiquidizable {
+	public abstract class SimpleAdminAppBuilder :
+		IPrivilegesProvider, IWebsiteStartHandler, IAdminApp {
 		/// <summary>
 		/// 应用名称
 		/// </summary>
@@ -49,26 +57,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		protected abstract IActionResult Action();
 
 		/// <summary>
-		/// 允许直接描画到模板
-		/// </summary>
-		/// <returns></returns>
-		object ILiquidizable.ToLiquid() {
-			return new HtmlString(ToString());
-		}
-
-		/// <summary>
-		/// 获取Html代码
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString() {
-			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var html = templateManager.RenderTemplate(
-				"common.admin/app_tile.html",
-				new { name = new T(Name), tileClass = TileClass, url = Url, iconClass = IconClass });
-			return html;
-		}
-
-		/// <summary>
 		/// 获取权限列表
 		/// </summary>
 		/// <returns></returns>
@@ -84,7 +72,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		public virtual void OnWebsiteStart() {
 			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
 			var privilegesCheckedAction = new Func<IActionResult>(() => {
-				PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+				privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 				return Action();
 			});
 			controllerManager.RegisterAction(Url, HttpMethods.GET, privilegesCheckedAction);

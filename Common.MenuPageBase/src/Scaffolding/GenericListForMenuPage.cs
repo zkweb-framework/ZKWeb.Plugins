@@ -49,7 +49,8 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 		/// <returns></returns>
 		protected override IActionResult Action() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 表格构建器
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = TableId;
@@ -74,7 +75,8 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult SearchAction() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取参数并转换到搜索请求
 			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);

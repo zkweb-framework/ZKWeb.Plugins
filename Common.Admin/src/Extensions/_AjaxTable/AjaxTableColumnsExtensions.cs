@@ -41,16 +41,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// <summary>
 		/// 添加用于编辑数据的列
 		/// 点击后弹出编辑数据的模态框
-		/// 根据后台应用自动生成，各个参数如不指定则使用默认值
+		/// 根据增删查改页面的构建器自动生成，各个参数如不指定则使用默认值
 		/// </summary>
-		/// <typeparam name="TApp">后台应用的类型</typeparam>
-		public static AjaxTableColumn AddEditColumnForAdminApp<TApp>(
+		/// <typeparam name="TBuilder">构建器的类型</typeparam>
+		public static AjaxTableColumn AddEditColumnForCrudPage<TBuilder>(
 			this List<AjaxTableColumn> columns, string nameMember, string idMember,
-			string titleTemplate = null, string urlTemplate = null, object dialogParameters = null, string width = null)
-			where TApp : class, IAdminAppBuilder, new() {
-			var app = new TApp();
+			string titleTemplate = null, string urlTemplate = null,
+			object dialogParameters = null, string width = null)
+			where TBuilder : class, ICrudPageBuilder, new() {
+			var app = new TBuilder();
 			return columns.AddEditColumn(
-				nameMember, idMember, app.TypeName, app.EditUrl,
+				nameMember, idMember, app.DataTypeName, app.EditUrl,
 				titleTemplate, urlTemplate, dialogParameters, width);
 		}
 	}

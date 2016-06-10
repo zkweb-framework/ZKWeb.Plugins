@@ -86,33 +86,33 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// 添加删除相关的按钮
 		/// 如果数据类型可以回收，则添加批量删除或批量恢复和永久删除
 		/// 如果数据类型不可以回收，则添加批量永久删除
-		/// 根据后台应用自动生成
+		/// 根据增删查改页面的构建器自动生成
 		/// </summary>
-		/// <typeparam name="TApp">后台应用的类型</typeparam>
+		/// <typeparam name="TBuilder">构建器的类型</typeparam>
 		/// <param name="column">Id列</param>
 		/// <param name="request">搜索请求</param>
-		public static void AddDeleteActionsForAdminApp<TApp>(
+		public static void AddDeleteActionsForCrudPage<TBuilder>(
 			this AjaxTableIdColumn column, AjaxTableSearchRequest request)
-			where TApp : class, IAdminAppBuilder, new() {
-			var app = new TApp();
-			column.AddDeleteActions(request, app.GetDataType(), app.TypeName, app.BatchUrl);
+			where TBuilder : class, ICrudPageBuilder, new() {
+			var app = new TBuilder();
+			column.AddDeleteActions(request, app.DataType, app.DataTypeName, app.BatchUrl);
 		}
 
 		/// <summary>
-		/// 对后台应用使用的Ajax表格Id列进行标准的设置
+		/// 对增删查改页面使用的Ajax表格Id列进行标准的设置
 		/// 添加以下菜单项
 		/// - 删除菜单（如果批量操作Url不是空）
 		/// </summary>
-		/// <typeparam name="TApp">后台应用类型</typeparam>
+		/// <typeparam name="TBuilder">后台应用类型</typeparam>
 		/// <param name="column">Id列</param>
 		/// <param name="request">搜索请求</param>
-		public static void StandardSetupForAdminApp<TApp>(
+		public static void StandardSetupForCrudPage<TBuilder>(
 			this AjaxTableIdColumn column, AjaxTableSearchRequest request)
-			where TApp : class, IAdminAppBuilder, new() {
-			var app = new TApp();
+			where TBuilder : class, ICrudPageBuilder, new() {
+			var app = new TBuilder();
 			if (!string.IsNullOrEmpty(app.BatchUrl)) {
 				column.AddDivider();
-				column.AddDeleteActionsForAdminApp<TApp>(request);
+				column.AddDeleteActionsForCrudPage<TBuilder>(request);
 			}
 		}
 	}

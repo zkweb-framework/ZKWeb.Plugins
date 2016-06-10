@@ -1,23 +1,17 @@
-﻿using DotLiquid;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Web;
-using ZKWeb;
 using ZKWeb.Localize;
 using ZKWeb.Plugin;
-using ZKWeb.Plugins.Common.Admin.src;
-using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Forms;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Config;
-using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Utils.Extensions;
@@ -39,13 +33,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// <returns></returns>
 		[Action("admin")]
 		public IActionResult Admin() {
-			PrivilegesChecker.Check(UserTypesGroup.AdminOrParter);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(UserTypesGroup.AdminOrParter);
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var apps = Application.Ioc.ResolveMany<AdminApp>();
-			apps = apps.Where(app =>
-				app.AllowedUserTypes.Contains(user.Type) &&
-				PrivilegesChecker.HasPrivileges(user, app.RequiredPrivileges));
+			var apps = Application.Ioc.ResolveMany<IAdminApp>()
+				.Where(app => app.IsAccessableFormUser(user))
+				.Select(app => app.ToTileHtml()).ToList();
 			return new TemplateResult("common.admin/admin_index.html", new { apps });
 		}
 
@@ -102,7 +96,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		[Action("admin/about_me")]
 		[Action("admin/about_me", HttpMethods.POST)]
 		public IActionResult AboutMe() {
-			PrivilegesChecker.Check(UserTypesGroup.AdminOrParter);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(UserTypesGroup.AdminOrParter);
 			var form = new AdminAboutMeForm();
 			var context = HttpContextUtils.CurrentContext;
 			if (context.Request.HttpMethod == HttpMethods.POST) {
@@ -119,7 +114,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// <returns></returns>
 		[Action("admin/about_website")]
 		public IActionResult AboutWebsite() {
-			PrivilegesChecker.Check(UserTypesGroup.AdminOrParter);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(UserTypesGroup.AdminOrParter);
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var pluginManager = Application.Ioc.Resolve<PluginManager>();
 			var websiteSettings = configManager.GetData<WebsiteSettings>();

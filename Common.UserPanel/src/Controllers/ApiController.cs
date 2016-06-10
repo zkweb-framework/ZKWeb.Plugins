@@ -25,7 +25,8 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Controllers {
 		/// <returns></returns>
 		[Action("api/user/panel/menu_groups")]
 		public IActionResult UserPanelMenuGroups() {
-			PrivilegesChecker.Check(UserTypesGroup.All);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(UserTypesGroup.All);
 			var groups = new List<MenuItemGroup>();
 			var providers = Application.Ioc.ResolveMany<IUserPanelMenuProvider>();
 			providers.ForEach(h => h.Setup(groups));

@@ -54,7 +54,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		public IActionResult ClearCache() {
 			var request = HttpContextUtils.CurrentContext.Request;
 			if (!request.IsLocal) {
-				PrivilegesChecker.Check(UserTypesGroup.Admin);
+				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+				privilegeManager.Check(UserTypesGroup.Admin);
 			}
 			var cleaners = Application.Ioc.ResolveMany<ICacheCleaner>();
 			cleaners.ForEach(c => c.ClearCache());

@@ -8,24 +8,35 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Model;
-using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
+using ZKWeb.Utils.IocContainer;
 using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>
-	/// 权限检查器
+	/// 权限管理器
 	/// </summary>
-	public static class PrivilegesChecker {
+	[ExportMany, SingletonReuse]
+	public class PrivilegeManager {
+		/// <summary>
+		/// 获取网站中注册的所有权限，并且去除重复项
+		/// </summary>
+		/// <returns></returns>
+		public virtual List<string> GetPrivileges() {
+			var providers = Application.Ioc.ResolveMany<IPrivilegesProvider>();
+			var privileges = providers.SelectMany(p => p.GetPrivileges()).Distinct().ToList();
+			return privileges;
+		}
+
 		/// <summary>
 		/// 检查当前登录用户是否指定的用户类型，且是否拥有指定的权限
 		/// 如果用户类型不匹配且当前请求是get则跳转到登陆页面，否则抛出403错误
 		/// </summary>
 		/// <param name="type">指定的用户类型</param>
 		/// <param name="privileges">要求的权限列表</param>
-		public static void Check(UserTypes type, params string[] privileges) {
+		public virtual void Check(UserTypes type, params string[] privileges) {
 			Check(new[] { type }, privileges);
 		}
 
@@ -35,7 +46,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// </summary>
 		/// <param name="types">指定的用户类型列表</param>
 		/// <param name="privileges">要求的权限列表</param>
-		public static void Check(UserTypes[] types, params string[] privileges) {
+		public virtual void Check(UserTypes[] types, params string[] privileges) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			var context = HttpContextUtils.CurrentContext;
@@ -68,7 +79,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// <param name="user">用户</param>
 		/// <param name="privileges">权限列表</param>
 		/// <returns></returns>
-		public static bool HasPrivileges(User user, params string[] privileges) {
+		public virtual bool HasPrivileges(User user, params string[] privileges) {
 			if (user.Type == UserTypes.SuperAdmin) {
 				// 超级管理员拥有所有权限
 				return true;

@@ -65,9 +65,10 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 		public virtual void Setup(List<MenuItemGroup> groups) {
 			// 没有权限时不显示菜单项
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			var user = sessionManager.GetSession().GetUser();
 			if (user == null || !AllowedUserTypes.Contains(user.Type) ||
-				!PrivilegesChecker.HasPrivileges(user, RequiredPrivileges)) {
+				!privilegeManager.HasPrivileges(user, RequiredPrivileges)) {
 				return;
 			}
 			// 添加菜单项
@@ -84,7 +85,8 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 		/// </summary>
 		protected virtual IActionResult Action() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回模板页
 			return new TemplateResult(TemplatePath);
 		}

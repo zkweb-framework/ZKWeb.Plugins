@@ -66,8 +66,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupForAdminApp<ProductManageApp>();
-				searchBar.StandardSetupForAdminApp<ProductManageApp>("Name/Remark");
+				table.StandardSetupForCrudPage<ProductManageApp>();
+				searchBar.StandardSetupForCrudPage<ProductManageApp>("Name/Remark");
 				searchBar.Conditions.Add(new FormField(new DropdownListFieldAttribute(
 					"ProductType", typeof(ListItemsWithOptional<ProductTypeListItemProvider>))));
 				searchBar.Conditions.Add(new FormField(new DropdownListFieldAttribute(
@@ -150,7 +150,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<ProductManageApp>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupForCrudPage<ProductManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddHtmlColumn("Name", "30%");
 				response.Columns.AddMemberColumn("Price");
@@ -159,13 +159,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddMemberColumn("Type");
 				response.Columns.AddMemberColumn("State");
-				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Seller", "SellerId");
+				response.Columns.AddEditColumnForCrudPage<UserManageApp>("Seller", "SellerId");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn("150");
 				actionColumn.AddButtonForOpenLink(new T("Preview"),
 					"btn btn-xs btn-success", "fa fa-eye", "/product/view?id=<%-row.Id%>", "_blank");
-				actionColumn.StandardSetupForAdminApp<ProductManageApp>(request);
+				actionColumn.StandardSetupForCrudPage<ProductManageApp>(request);
 			}
 		}
 

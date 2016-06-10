@@ -58,8 +58,8 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupForAdminApp<LogisticsManageApp>();
-				searchBar.StandardSetupForAdminApp<LogisticsManageApp>("Name/Remark");
+				table.StandardSetupForCrudPage<LogisticsManageApp>();
+				searchBar.StandardSetupForCrudPage<LogisticsManageApp>("Name/Remark");
 			}
 
 			/// <summary>
@@ -107,16 +107,16 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// 添加列和操作
 			/// </summary>
 			public void OnResponse(AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<LogisticsManageApp>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupForCrudPage<LogisticsManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddHtmlColumn("Name", "30%");
 				response.Columns.AddMemberColumn("Type");
-				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Owner", "OwnerId");
+				response.Columns.AddEditColumnForCrudPage<UserManageApp>("Owner", "OwnerId");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				response.Columns.AddActionColumn().StandardSetupForAdminApp<LogisticsManageApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForCrudPage<LogisticsManageApp>(request);
 			}
 		}
 

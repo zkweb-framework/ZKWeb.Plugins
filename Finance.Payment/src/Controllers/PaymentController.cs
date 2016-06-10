@@ -32,7 +32,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		[Action("admin/payment_apis/test_payment")]
 		[Action("admin/payment_apis/test_payment", HttpMethods.POST)]
 		public IActionResult TestPayment() {
-			PrivilegesChecker.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
 			var form = new TestPaymentForm();
 			if (HttpContextUtils.CurrentContext.Request.HttpMethod == HttpMethods.GET) {
 				form.Bind();
@@ -48,7 +49,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		/// <returns></returns>
 		[Action("admin/payment_apis/test_api_pay", HttpMethods.POST)]
 		public IActionResult TestApiPay() {
-			PrivilegesChecker.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
 			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
 			var form = new TestApiHandler.TestApiPayForm(id);
 			return new JsonResult(form.Submit());

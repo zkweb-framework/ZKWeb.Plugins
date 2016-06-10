@@ -41,8 +41,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 构建表格时的处理
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupForAdminApp<UserManageApp>();
-				searchBar.StandardSetupForAdminApp<UserManageApp>("Username");
+				table.StandardSetupForCrudPage<UserManageApp>();
+				searchBar.StandardSetupForCrudPage<UserManageApp>("Username");
 			}
 
 			/// <summary>
@@ -86,7 +86,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<UserManageApp>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupForCrudPage<UserManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddImageColumn("Avatar");
 				response.Columns.AddMemberColumn("Username", "45%");
@@ -94,7 +94,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				response.Columns.AddMemberColumn("Roles");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				response.Columns.AddActionColumn().StandardSetupForAdminApp<UserManageApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForCrudPage<UserManageApp>(request);
 			}
 		}
 
@@ -140,7 +140,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				}
 				// 添加用户或修改密码需要超级管理员
 				if (!string.IsNullOrEmpty(Password)) {
-					PrivilegesChecker.Check(UserTypes.SuperAdmin);
+					var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+					privilegeManager.Check(UserTypes.SuperAdmin);
 					if (Password != ConfirmPassword) {
 						throw new HttpException(400, new T("Please repeat the password exactly"));
 					}

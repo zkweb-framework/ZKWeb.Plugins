@@ -48,8 +48,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 构建表格
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupForAdminApp<ProductPropertyManageApp>();
-				searchBar.StandardSetupForAdminApp<ProductPropertyManageApp>("Name/Remark");
+				table.StandardSetupForCrudPage<ProductPropertyManageApp>();
+				searchBar.StandardSetupForCrudPage<ProductPropertyManageApp>("Name/Remark");
 				searchBar.Conditions.Add(new FormField(new CheckBoxFieldAttribute("IsSalesProperty")));
 			}
 
@@ -105,7 +105,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<ProductPropertyManageApp>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupForCrudPage<ProductPropertyManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Name", "15%");
 				response.Columns.AddEnumLabelColumn("IsSalesProperty", typeof(EnumBool));
@@ -115,7 +115,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				response.Columns.AddActionColumn().StandardSetupForAdminApp<ProductPropertyManageApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForCrudPage<ProductPropertyManageApp>(request);
 			}
 		}
 

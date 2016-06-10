@@ -98,7 +98,8 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult EditAction() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 处理表单绑定或提交
 			var form = new Form(Type);
 			var request = HttpContextUtils.CurrentContext.Request;
@@ -118,7 +119,8 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 		protected virtual IActionResult BatchAction() {
 			// 检查权限
 			HttpRequestChecker.RequieAjaxRequest();
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取参数
 			// 其中Id列表需要把顺序倒转，用于先删除子分类再删除上级分类
 			var request = HttpContextUtils.CurrentContext.Request;

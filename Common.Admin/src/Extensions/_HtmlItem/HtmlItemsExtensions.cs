@@ -43,16 +43,16 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// <summary>
 		/// 添加添加按钮
 		/// 点击后弹出添加数据的模态框
-		/// 根据后台应用自动生成，各个参数如不指定则使用默认值
+		/// 根据增删查改页面的构建器自动生成，各个参数如不指定则使用默认值
 		/// </summary>
-		/// <typeparam name="TApp">后台应用的类型</typeparam>
-		public static void AddAddActionForAdminApp<TApp>(
+		/// <typeparam name="TBuilder">构建器的类型</typeparam>
+		public static void AddAddActionForCrudPage<TBuilder>(
 			this List<HtmlItem> items, string name = null,
 			string iconClass = null, string btnClass = null,
 			string title = null, string url = null, object dialogParameters = null)
-			where TApp : class, IAdminAppBuilder, new() {
-			var app = new TApp();
-			items.AddAddAction(app.TypeName, app.AddUrl,
+			where TBuilder : class, ICrudPageBuilder, new() {
+			var app = new TBuilder();
+			items.AddAddAction(app.DataTypeName, app.AddUrl,
 				name, iconClass, btnClass, title, url, dialogParameters);
 		}
 	}

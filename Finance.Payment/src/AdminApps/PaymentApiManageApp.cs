@@ -61,8 +61,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupForAdminApp<PaymentApiManageApp>();
-				searchBar.StandardSetupForAdminApp<PaymentApiManageApp>("Name/Owner/Remark");
+				table.StandardSetupForCrudPage<PaymentApiManageApp>();
+				searchBar.StandardSetupForCrudPage<PaymentApiManageApp>("Name/Owner/Remark");
 			}
 
 			/// <summary>
@@ -110,11 +110,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// 添加列和操作
 			/// </summary>
 			public void OnResponse(AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<PaymentApiManageApp>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupForCrudPage<PaymentApiManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Name", "35%");
 				response.Columns.AddMemberColumn("Type");
-				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Owner", "OwnerId");
+				response.Columns.AddEditColumnForCrudPage<UserManageApp>("Owner", "OwnerId");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddMemberColumn("DisplayOrder");
@@ -123,7 +123,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				actionColumn.AddButtonForOpenLink(
 					new T("TestPayment"), "btn btn-xs btn-warning", "fa fa-edit",
 					"/admin/payment_apis/test_payment?id=<%-row.Id%>");
-				actionColumn.StandardSetupForAdminApp<PaymentApiManageApp>(request);
+				actionColumn.StandardSetupForCrudPage<PaymentApiManageApp>(request);
 			}
 		}
 

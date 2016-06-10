@@ -84,7 +84,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		[Action("home")]
 		public IActionResult Home() {
-			PrivilegesChecker.Check(UserTypesGroup.All);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(UserTypesGroup.All);
 			return new TemplateResult("common.admin/user_home.html");
 		}
 	}

@@ -30,7 +30,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 	///   ?action=start_all
 	/// </summary>
 	[ExportMany]
-	public class WebTesterApp : AdminApp {
+	public class WebTesterApp : SimpleAdminAppBuilder {
 		public override string Name { get { return "UnitTest"; } }
 		public override string Url { get { return "/admin/unit_test/web_tester"; } }
 		public override string TileClass { get { return "tile bg-black"; } }

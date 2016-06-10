@@ -41,8 +41,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 构建表格
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupForAdminApp<ProductCategoryManageApp>();
-				searchBar.StandardSetupForAdminApp<ProductCategoryManageApp>("Name/Remark");
+				table.StandardSetupForCrudPage<ProductCategoryManageApp>();
+				searchBar.StandardSetupForCrudPage<ProductCategoryManageApp>("Name/Remark");
 			}
 
 			/// <summary>
@@ -91,7 +91,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<ProductCategoryManageApp>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupForCrudPage<ProductCategoryManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Name", "15%");
 				response.Columns.AddMemberColumn("SalesProperties", "15%");
@@ -99,7 +99,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				response.Columns.AddActionColumn().StandardSetupForAdminApp<ProductCategoryManageApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForCrudPage<ProductCategoryManageApp>(request);
 			}
 		}
 

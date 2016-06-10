@@ -25,7 +25,8 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Controllers {
 		/// <returns></returns>
 		[Action("api/admin/settings/menu_groups")]
 		public IActionResult AdminSettingsMenuGroups() {
-			PrivilegesChecker.Check(UserTypesGroup.AdminOrParter);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(UserTypesGroup.AdminOrParter);
 			var groups = new List<MenuItemGroup>();
 			var handlers = Application.Ioc.ResolveMany<IAdminSettingsMenuProvider>();
 			handlers.ForEach(h => h.Setup(groups));

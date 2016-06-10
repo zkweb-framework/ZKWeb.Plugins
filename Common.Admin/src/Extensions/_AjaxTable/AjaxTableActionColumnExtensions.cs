@@ -43,16 +43,16 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// <summary>
 		/// 添加查看按钮
 		/// 点击后弹出编辑数据的模态框
-		/// 根据后台应用自动生成，各个参数如不指定则使用默认值
+		/// 根据增删查改页面的构建器自动生成，各个参数如不指定则使用默认值
 		/// </summary>
-		/// <typeparam name="TApp">后台应用的类型</typeparam>
-		public static void AddEditActionForAdminApp<TApp>(
+		/// <typeparam name="TBuilder">后台应用的类型</typeparam>
+		public static void AddEditActionForCrudPage<TBuilder>(
 			this AjaxTableActionColumn column,
 			string name = null, string buttonClass = null, string iconClass = null,
 			string titleTemplate = null, string urlTemplate = null, object dialogParameters = null)
-			where TApp : class, IAdminAppBuilder, new() {
-			var app = new TApp();
-			column.AddEditAction(app.TypeName, app.EditUrl,
+			where TBuilder : class, ICrudPageBuilder, new() {
+			var app = new TBuilder();
+			column.AddEditAction(app.DataTypeName, app.EditUrl,
 				name, buttonClass, iconClass, titleTemplate, urlTemplate, dialogParameters);
 		}
 
@@ -88,19 +88,19 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		}
 
 		/// <summary>
-		/// 对后台应用使用的Ajax表格操作列进行标准的设置
+		/// 对增删查改页面使用的Ajax表格操作列进行标准的设置
 		/// 添加以下按钮
 		/// - 查看按钮（如果编辑Url不是空）
 		/// </summary>
-		/// <typeparam name="TApp">后台应用类型</typeparam>
+		/// <typeparam name="TBuilder">构建器的类型</typeparam>
 		/// <param name="column">操作列</param>
 		/// <param name="request">搜索请求</param>
-		public static void StandardSetupForAdminApp<TApp>(
+		public static void StandardSetupForCrudPage<TBuilder>(
 			this AjaxTableActionColumn column, AjaxTableSearchRequest request)
-			where TApp : class, IAdminAppBuilder, new() {
-			var app = new TApp();
+			where TBuilder : class, ICrudPageBuilder, new() {
+			var app = new TBuilder();
 			if (!string.IsNullOrEmpty(app.EditUrl)) {
-				column.AddEditActionForAdminApp<TApp>();
+				column.AddEditActionForCrudPage<TBuilder>();
 			}
 		}
 	}

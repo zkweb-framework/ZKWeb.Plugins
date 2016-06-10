@@ -87,7 +87,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 		/// <returns></returns>
 		public virtual IActionResult Action() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回模板页
 			var form = GetForm();
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
@@ -107,7 +108,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 		/// <returns></returns>
 		public virtual IActionResult SearchAction() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取搜索请求
 			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
@@ -151,7 +153,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 		public virtual IActionResult UploadAction() {
 			// 检查权限
 			HttpRequestChecker.RequieAjaxRequest();
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回上传结果
 			var form = GetForm();
 			return new JsonResult(form.Submit());
@@ -164,7 +167,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 		public virtual IActionResult RemoveAction() {
 			// 检查权限
 			HttpRequestChecker.RequieAjaxRequest();
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回删除结果
 			var imageManager = Application.Ioc.Resolve<ImageManager>();
 			var name = HttpContextUtils.CurrentContext.Request.Get<string>("name");

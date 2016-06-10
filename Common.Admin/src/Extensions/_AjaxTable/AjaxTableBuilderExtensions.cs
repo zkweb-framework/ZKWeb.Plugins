@@ -13,25 +13,25 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 	/// </summary>
 	public static class AjaxTableBuilderExtensions {
 		/// <summary>
-		/// 对后台应用使用的表格构建器进行标准的设置
+		/// 对增删查改页面使用的表格构建器进行标准的设置
 		/// 添加以下菜单项
 		/// - 编辑菜单（如果编辑Url不是空）
 		/// - 添加菜单（如果添加Url不是空）
 		/// </summary>
-		/// <typeparam name="TApp"></typeparam>
-		/// <param name="table"></param>
-		public static void StandardSetupForAdminApp<TApp>(this AjaxTableBuilder table)
-			where TApp : class, IAdminAppBuilder, new() {
-			var app = new TApp();
+		/// <typeparam name="TBuilder">构建器的类型</typeparam>
+		/// <param name="table">Ajax表格</param>
+		public static void StandardSetupForCrudPage<TBuilder>(this AjaxTableBuilder table)
+			where TBuilder : class, ICrudPageBuilder, new() {
+			var app = new TBuilder();
 			var addDividerOnce = new Lazy<Action>(
 				() => { table.MenuItems.AddDivider(); return () => { }; });
 			if (!string.IsNullOrEmpty(app.EditUrl)) {
 				addDividerOnce.Value();
-				table.MenuItems.AddEditActionForAdminApp<TApp>();
+				table.MenuItems.AddEditActionForCrudPage<TBuilder>();
 			}
 			if (!string.IsNullOrEmpty(app.AddUrl)) {
 				addDividerOnce.Value();
-				table.MenuItems.AddAddActionForAdminApp<TApp>();
+				table.MenuItems.AddAddActionForCrudPage<TBuilder>();
 			}
 		}
 	}

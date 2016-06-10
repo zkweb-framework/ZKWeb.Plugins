@@ -15,31 +15,31 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 	/// </summary>
 	public static class AjaxTableSearchBarBuilderExtensions {
 		/// <summary>
-		/// 对后台应用使用的搜索栏构建器进行标准的设置
+		/// 对增删查改页面使用的搜索栏构建器进行标准的设置
 		/// 添加以下菜单项
 		/// - 回收站（如果数据支持回收）
 		/// - 添加菜单（如果添加Url不是空）
 		/// 添加以下按钮
 		/// - 添加按钮（如果添加Url不是空）
 		/// </summary>
-		/// <typeparam name="TApp">后台应用类型</typeparam>
+		/// <typeparam name="TBuilder">后台应用类型</typeparam>
 		/// <param name="searchBar">搜索栏构建器</param>
 		/// <param name="keywordPlaceHolder">关键词的预留文本，传入后会自动翻译，可传入原文</param>
-		public static void StandardSetupForAdminApp<TApp>(
+		public static void StandardSetupForCrudPage<TBuilder>(
 			this AjaxTableSearchBarBuilder searchBar, string keywordPlaceHolder)
-			where TApp : class, IAdminAppBuilder, new() {
-			var app = new TApp();
+			where TBuilder : class, ICrudPageBuilder, new() {
+			var app = new TBuilder();
 			searchBar.KeywordPlaceHolder = new T(keywordPlaceHolder);
 			var addDividerOnce = new Lazy<Action>(
 				() => { searchBar.MenuItems.AddDivider(); return () => { }; });
-			if (RecyclableTrait.For(app.GetDataType()).IsRecyclable) {
+			if (RecyclableTrait.For(app.DataType).IsRecyclable) {
 				addDividerOnce.Value();
 				searchBar.MenuItems.AddRecycleBin();
 			}
 			if (!string.IsNullOrEmpty(app.AddUrl)) {
 				addDividerOnce.Value();
-				searchBar.MenuItems.AddAddActionForAdminApp<TApp>();
-				searchBar.BeforeItems.AddAddActionForAdminApp<TApp>();
+				searchBar.MenuItems.AddAddActionForCrudPage<TBuilder>();
+				searchBar.BeforeItems.AddAddActionForCrudPage<TBuilder>();
 			}
 		}
 	}

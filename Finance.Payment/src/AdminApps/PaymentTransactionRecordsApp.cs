@@ -48,8 +48,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupForAdminApp<PaymentTransactionRecordsApp>();
-				searchBar.StandardSetupForAdminApp<PaymentTransactionRecordsApp>(
+				table.StandardSetupForCrudPage<PaymentTransactionRecordsApp>();
+				searchBar.StandardSetupForCrudPage<PaymentTransactionRecordsApp>(
 					"Serial/Payer/Payee/Description/Remark");
 			}
 
@@ -114,19 +114,19 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<PaymentTransactionRecordsApp>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupForCrudPage<PaymentTransactionRecordsApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Serial");
 				response.Columns.AddMemberColumn("ExternalSerial");
 				response.Columns.AddMemberColumn("Type");
-				response.Columns.AddEditColumnForAdminApp<PaymentApiManageApp>("ApiName", "ApiId");
+				response.Columns.AddEditColumnForCrudPage<PaymentApiManageApp>("ApiName", "ApiId");
 				response.Columns.AddMemberColumn("Amount");
-				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Payer", "PayerId");
-				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Payee", "PayeeId");
+				response.Columns.AddEditColumnForCrudPage<UserManageApp>("Payer", "PayerId");
+				response.Columns.AddEditColumnForCrudPage<UserManageApp>("Payee", "PayeeId");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddEnumLabelColumn("State", typeof(PaymentTransactionState));
-				response.Columns.AddActionColumn().StandardSetupForAdminApp<PaymentTransactionRecordsApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForCrudPage<PaymentTransactionRecordsApp>(request);
 			}
 		}
 

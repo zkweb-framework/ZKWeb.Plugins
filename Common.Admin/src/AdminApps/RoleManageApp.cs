@@ -44,8 +44,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 构建表格时的处理
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupForAdminApp<RoleManageApp>();
-				searchBar.StandardSetupForAdminApp<RoleManageApp>("Name/Remark");
+				table.StandardSetupForCrudPage<RoleManageApp>();
+				searchBar.StandardSetupForCrudPage<RoleManageApp>("Name/Remark");
 			}
 
 			/// <summary>
@@ -87,13 +87,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<RoleManageApp>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupForCrudPage<RoleManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Name", "45%");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				response.Columns.AddActionColumn().StandardSetupForAdminApp<RoleManageApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForCrudPage<RoleManageApp>(request);
 			}
 		}
 

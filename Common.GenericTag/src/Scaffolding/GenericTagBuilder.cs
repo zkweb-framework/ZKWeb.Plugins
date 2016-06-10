@@ -94,7 +94,8 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult EditAction() {
 			// 检查权限
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 处理表单绑定或提交
 			var form = new Form(Type);
 			var request = HttpContextUtils.CurrentContext.Request;
@@ -114,7 +115,8 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 		protected virtual IActionResult BatchAction() {
 			// 检查权限
 			HttpRequestChecker.RequieAjaxRequest();
-			PrivilegesChecker.Check(AllowedUserTypes, RequiredPrivileges);
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取参数
 			var request = HttpContextUtils.CurrentContext.Request;
 			var actionName = request.Get<string>("action");

@@ -49,8 +49,8 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 			/// </summary>
 			public void OnBuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupForAdminApp<ArticleManageApp>();
-				searchBar.StandardSetupForAdminApp<ArticleManageApp>("Title/Summary/Author");
+				table.StandardSetupForCrudPage<ArticleManageApp>();
+				searchBar.StandardSetupForCrudPage<ArticleManageApp>("Title/Summary/Author");
 			}
 
 			/// <summary>
@@ -101,10 +101,10 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<ArticleManageApp>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupForCrudPage<ArticleManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Title", "25%");
-				response.Columns.AddEditColumnForAdminApp<UserManageApp>("Author", "AuthorId");
+				response.Columns.AddEditColumnForCrudPage<UserManageApp>("Author", "AuthorId");
 				response.Columns.AddMemberColumn("ArticleClass");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("LastUpdated");
@@ -113,7 +113,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 				var actionColumn = response.Columns.AddActionColumn("150");
 				actionColumn.AddButtonForOpenLink(new T("Preview"),
 					"btn btn-xs btn-success", "fa fa-eye", "/article/view?id=<%-row.Id%>", "_blank");
-				actionColumn.StandardSetupForAdminApp<ArticleManageApp>(request);
+				actionColumn.StandardSetupForCrudPage<ArticleManageApp>(request);
 			}
 		}
 

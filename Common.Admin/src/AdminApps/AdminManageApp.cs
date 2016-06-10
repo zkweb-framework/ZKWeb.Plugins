@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 		public override string Url { get { return "/admin/admins"; } }
 		public override string TileClass { get { return "tile bg-blue"; } }
 		public override string IconClass { get { return "fa fa-user-secret"; } }
-		public override string TypeName { get { return "Admin"; } }
+		public override string DataTypeName { get { return "Admin"; } }
 		public override UserTypes[] AllowedUserTypes { get { return new[] { UserTypes.SuperAdmin }; } }
 		protected override IAjaxTableCallback<User> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() { return new AddForm(); }
@@ -46,8 +46,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 构建表格时的处理
 			/// </summary>
 			public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupForAdminApp<AdminManageApp>();
-				searchBar.StandardSetupForAdminApp<AdminManageApp>("Username");
+				table.StandardSetupForCrudPage<AdminManageApp>();
+				searchBar.StandardSetupForCrudPage<AdminManageApp>("Username");
 			}
 
 			/// <summary>
@@ -93,7 +93,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// </summary>
 			public void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupForAdminApp<AdminManageApp>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupForCrudPage<AdminManageApp>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddImageColumn("Avatar");
 				response.Columns.AddMemberColumn("Username", "45%");
@@ -101,7 +101,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddEnumLabelColumn("SuperAdmin", typeof(EnumBool));
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				response.Columns.AddActionColumn().StandardSetupForAdminApp<AdminManageApp>(request);
+				response.Columns.AddActionColumn().StandardSetupForCrudPage<AdminManageApp>(request);
 			}
 		}
 
