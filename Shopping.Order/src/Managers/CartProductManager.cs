@@ -108,8 +108,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			}
 			// 从数据库获取
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			count = UnitOfWork.ReadRepository<CartProductRepository, long>(
-				r => r.GetManyBySession(sessionManager.GetSession(), type).Select(p => p.Count).Sum());
+			count = UnitOfWork.ReadRepository<CartProductRepository, long>(r =>
+				r.GetManyBySession(sessionManager.GetSession(), type)
+				.Select(p => (long?)p.Count).Sum() ?? 0);
 			// 保存到缓存并返回
 			CartProductTotalCountCache.Put(type, count, CartProductTotalCountCacheTime);
 			return count.Value;
