@@ -1,10 +1,10 @@
 ﻿/*
 	商品详情页的购买功能
 	立刻购买
-		请求 /cart/add
+		请求 /api/cart/add
 		成功时跳转到 /cart?type=buynow
 	加入购物车
-		请求 /cart/add
+		请求 /api/cart/add
 		成功时显示弹出框
 	失败时显示错误信息
 */

@@ -10,6 +10,7 @@ using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Config;
 using ZKWeb.Plugins.Shopping.Order.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
@@ -84,7 +85,31 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 		}
 
 		/// <summary>
+		/// 删除当前会话下的购物车商品
+		/// </summary>
+		/// <param name="cartProductId"></param>
+		/// <returns></returns>
+		public virtual bool DeleteCartProduct(long cartProductId) {
+			// 从数据库删除，只删除当前会话下的购物车商品
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			bool result = UnitOfWork.WriteRepository<CartProductRepository, bool>(r => {
+				var cartProduct = r.GetManyBySession(
+					sessionManager.GetSession(), CartProductType.Default)
+					.FirstOrDefault(c => c.Id == cartProductId);
+				if (cartProduct != null) {
+					r.Delete(cartProduct);
+					return true;
+				}
+				return false;
+			});
+			// 删除相关的缓存
+			CartProductTotalCountCache.Remove(CartProductType.Default);
+			return result;
+		}
+
+		/// <summary>
 		/// 获取当前会话下的购物车商品列表
+		/// 为了保证数据的实时性，这个函数不使用缓存
 		/// </summary>
 		/// <param name="type">购物车商品类型</param>
 		/// <returns></returns>
@@ -109,8 +134,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			// 从数据库获取
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			count = UnitOfWork.ReadRepository<CartProductRepository, long>(r =>
-				r.GetManyBySession(sessionManager.GetSession(), type)
-				.Select(p => (long?)p.Count).Sum() ?? 0);
+				r.GetManyBySession(sessionManager.GetSession(), type).Sum(p => (long?)p.Count) ?? 0);
 			// 保存到缓存并返回
 			CartProductTotalCountCache.Put(type, count, CartProductTotalCountCacheTime);
 			return count.Value;
@@ -137,6 +161,21 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 				result[price.Currency] = totalPrice;
 			}
 			return result;
+		}
+
+		/// <summary>
+		/// 获取迷你购物车的信息
+		/// 为了保证数据的实时性，这个函数不使用缓存
+		/// </summary>
+		/// <returns></returns>
+		public virtual object GetMiniCartApiInfo() {
+			var cartProducts = GetCartProducts(CartProductType.Default);
+			var displayInfos = cartProducts.Select(c => c.ToOrderProductDisplayInfo());
+			var totalCount = displayInfos.Sum(d => (long?)d.Count) ?? 0;
+			var totalPriceString = string.Join(", ", displayInfos
+				.GroupBy(d => d.Currency.Type)
+				.Select(g => g.First().Currency.Format(g.Sum(d => checked(d.UnitPrice * d.Count)))));
+			return new { displayInfos, totalCount, totalPriceString };
 		}
 	}
 }

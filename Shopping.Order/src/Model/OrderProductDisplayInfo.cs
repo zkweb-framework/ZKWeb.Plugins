@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotLiquid;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// 订单商品的显示信息
 	/// 用于显示在购物车页和订单列表页等
 	/// </summary>
-	public class OrderProductDisplayInfo {
+	public class OrderProductDisplayInfo : ILiquidizable {
 		/// <summary>
 		/// 商品Id
 		/// </summary>
@@ -32,28 +33,51 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// </summary>
 		public string MatchedParametersDescription { get; set; }
 		/// <summary>
-		/// 价格
+		/// 单价
 		/// </summary>
-		public decimal Price { get; set; }
+		public decimal UnitPrice { get; set; }
 		/// <summary>
-		/// 原始价格
+		/// 原始单价
 		/// </summary>
-		public decimal OriginalPrice { get; set; }
+		public decimal OriginalUnitPrice { get; set; }
 		/// <summary>
 		/// 货币
 		/// </summary>
 		public ICurrency Currency { get; set; }
 		/// <summary>
-		/// 价格的描述
+		/// 单价字符串
 		/// </summary>
-		public string PriceDescription { get; set; }
+		public string UnitPriceString { get; set; }
 		/// <summary>
-		/// 原始价格描述
+		/// 单价的描述
 		/// </summary>
-		public string OriginalPriceDescription { get; set; }
+		public string UnitPriceDescription { get; set; }
+		/// <summary>
+		/// 原始单价描述
+		/// </summary>
+		public string OriginalUnitPriceDescription { get; set; }
 		/// <summary>
 		/// 数量
 		/// </summary>
 		public long Count { get; set; }
+		/// <summary>
+		/// 附加数据
+		/// </summary>
+		public IDictionary<string, object> Extra { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public OrderProductDisplayInfo() {
+			Extra = new Dictionary<string, object>();
+		}
+
+		/// <summary>
+		/// 允许描画到模板
+		/// </summary>
+		/// <returns></returns>
+		object ILiquidizable.ToLiquid() {
+			return Hash.FromAnonymousObject(this);
+		}
 	}
 }

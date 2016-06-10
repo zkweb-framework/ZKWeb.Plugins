@@ -256,9 +256,14 @@
     <Compile Include="Shopping.Order\src\Translates\ja_JP.cs" />
     <Compile Include="Shopping.Order\src\Translates\zh_TW.cs" />
     <Compile Include="Shopping.Order\src\Translates\zh_CN.cs" />
+    <None Include="Shopping.Order\static\shopping.order.css\cart-minicart.scss" />
     <None Include="Shopping.Order\templates\shopping.order.widgets\mini_cart_menu.widget" />
+    <Content Include="Shopping.Order\static\shopping.order.css\cart-minicart.css" />
+    <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.min.js" />
+    <Content Include="Shopping.Order\static\shopping.order.js\custom\_minicart.js" />
     <Content Include="Shopping.Order\templates\shopping.order\mini_cart_contents.html" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\mini_cart_menu.html" />
+    <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.js" />
     <Compile Include="Shopping.Product\src\AdminApps\ProductCategoryManageApp.cs" />
     <Compile Include="Shopping.Product\src\AdminApps\ProductPropertyManageApp.cs" />
     <Compile Include="Shopping.Product\src\Config\ProductListSettings.cs" />
@@ -334,6 +339,9 @@
     <Content Include="Shopping.Order\static\shopping.order.js\product-view.min.js" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\product_purchase_buttons.html" />
     <None Include="Shopping.Product\static\shopping.product.css\product-widgets.scss" />
+    <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_description.html" />
+    <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_name.html" />
+    <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_image.html" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-widgets.css" />
     <Content Include="Shopping.Product\static\shopping.product.js\custom\_productPropertyValuesEditor.js" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\order_count.matcher.js" />

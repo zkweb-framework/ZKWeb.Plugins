@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Currency.src.Managers;
+using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
@@ -44,11 +45,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 			info.MatchedParametersDescription = string.Join(" ", descriptionProviders
 				.Select(p => p.GetDescription(product, parameters.MatchParameters))
 				.Where(d => !string.IsNullOrEmpty(d)));
-			info.Price = unitPrice.Parts.Sum();
-			info.OriginalPrice = info.Price;
+			info.UnitPrice = unitPrice.Parts.Sum();
+			info.OriginalUnitPrice = info.UnitPrice;
 			info.Currency = currencyManager.GetCurrency(unitPrice.Currency);
-			info.PriceDescription = unitPrice.Parts.GetDescription();
-			info.OriginalPriceDescription = info.PriceDescription;
+			info.UnitPriceString = info.Currency.Format(info.UnitPrice);
+			info.UnitPriceDescription = unitPrice.Parts.GetDescription();
+			info.OriginalUnitPriceDescription = info.UnitPriceDescription;
 			info.Count = parameters.MatchParameters.GetOrDefault<long>("OrderCount");
 			return info;
 		}

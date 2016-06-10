@@ -13,15 +13,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	[ExportMany]
 	public class OrderController : IController {
 		/// <summary>
-		/// 创建订单
-		/// </summary>
-		/// <returns></returns>
-		[Action("order/create", HttpMethods.POST)]
-		public IActionResult Create() {
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
 		/// 跳转到订单支付页面
 		/// </summary>
 		/// <returns></returns>

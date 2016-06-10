@@ -42,8 +42,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Checkout >>>", "去结算 >>>" },
 			{ "Order product unit price must not be negative", "订单商品的单价必须大于或等于0" },
 			{ "Order cost must large than 0", "订单总价必须大于0" },
-			{ "Cart <span class='total-count'>[0]</span> products",
-				"购物车<span class='total-count'>[0]</span>件" }
+			{ "Cart <em>[0]</em> products", "购物车<em>[0]</em>件" },
+			{ "<em>[0]</em> Products", "共<em>[0]</em>件商品" },
+			{ "Total <em>[0]</em>", "共<em>[0]</em>" },
+			{ "Cart is empty", "购物车中还没有商品，赶紧选购吧！" },
+			{ "Recently add to cart", "最近加入购物车" },
+			{ "Delete Successfully", "删除成功" }
 		};
 
 		public bool CanTranslate(string code) {

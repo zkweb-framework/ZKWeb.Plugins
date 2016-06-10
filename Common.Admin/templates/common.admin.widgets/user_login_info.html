@@ -3,14 +3,14 @@
 	{% if login_info.userId > 0 %}
 	<div>
 		{{ "Welcome to " | trans }}{% website_name %}
-		<a href="/home">{{ login_info.username }}</a> |
-		<a post-href="/user/logout">{{ "Logout" | trans }}</a>
+		<a class="nav-link" href="/home">{{ login_info.username }}</a> |
+		<a class="nav-link" post-href="/user/logout">{{ "Logout" | trans }}</a>
 	</div>
 	{% else %}
 	<div>
 		{{ "Welcome to " | trans }}{% website_name %} |
-		<a href="/user/login">{{ "Login" | trans }}</a>
-		<a href="/user/reg">{{ "Register for free" | trans }}</a>
+		<a class="nav-link" href="/user/login">{{ "Login" | trans }}</a>
+		<a class="nav-link" href="/user/reg">{{ "Register for free" | trans }}</a>
 	</div>
 	{% endif %}
 </div>
