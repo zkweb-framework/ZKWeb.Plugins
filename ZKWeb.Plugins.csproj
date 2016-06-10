@@ -261,6 +261,9 @@
     <Content Include="Shopping.Order\static\shopping.order.css\cart-minicart.css" />
     <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.min.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\custom\_minicart.js" />
+    <None Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.widget" />
+    <Content Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.html" />
+    <Content Include="Shopping.Order\templates\shopping.order\cart.html" />
     <Content Include="Shopping.Order\templates\shopping.order\mini_cart_contents.html" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\mini_cart_menu.html" />
     <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.js" />

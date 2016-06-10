@@ -22,6 +22,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			// TODO: 以下未翻译到其他语言
 			{ "Buynow", "立刻购买" },
 			{ "AddToCart", "加入购物车" },
+			{ "Cart", "购物车" },
 			{ "The product you are try to purchase does not exist.", "您尝试购买的商品不存在" },
 			{ "The product you are try to purchase does not purchasable.", "您尝试购买的商品目前不允许购买" },
 			{ "Order count must large than 0", "订购数量必须大于0" },

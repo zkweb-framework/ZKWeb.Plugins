@@ -25,6 +25,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src {
 			// 迷你购物车
 			areaManager.GetArea("header_navbar_right")
 				.DefaultWidgets.AddBefore("", "shopping.order.widgets/mini_cart_menu");
+			// 购物车
+			areaManager.GetArea("cart_contents")
+				.DefaultWidgets.Add("shopping.order.widgets/cart_contents");
 		}
 	}
 }

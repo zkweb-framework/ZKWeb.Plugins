@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <returns></returns>
 		[Action("cart")]
 		public IActionResult Index() {
-			return new PlainResult("TODO: not implemented");
+			return new TemplateResult("shopping.order/cart.html");
 		}
 
 		/// <summary>
