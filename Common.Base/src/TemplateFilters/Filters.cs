@@ -14,10 +14,8 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 	public static class Filters {
 		/// <summary>
 		/// 网站标题
-		/// 例子
-		///		{{ "Website Title" | website_title }}
-		///	格式
-		///		见WebsiteSettings.DocumentTitleFormat
+		/// <example>{{ "Website Title" | website_title }}</example>
+		///	格式见 WebsiteSettings.DocumentTitleFormat
 		/// </summary>
 		/// <param name="text">需要翻译的文本</param>
 		/// <returns></returns>

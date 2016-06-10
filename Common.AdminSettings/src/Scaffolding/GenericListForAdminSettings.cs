@@ -10,10 +10,10 @@ using ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	/// <summary>
-	/// 用于给后台设置快速添加只包含数据列表的页面
-	/// 例子
+	/// 用于列出数据的后台设置页面构建器
+	/// <example>
 	/// [ExportMany]
-	/// public class ExampleList : GenericListForAdminSettings[Data, ExampleList] {
+	/// public class ExampleList : GenericListForAdminSettings[Data] {
 	///		public override string Group { get { return "Example Group"; } }
 	///		public override string GroupIcon { get { return "fa fa-group"; } }
 	///		public override string Name { get { return "Example List"; } }
@@ -23,10 +23,11 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	///		protected override IAjaxTableCallback<Data> GetTableCallback() { return new TableCallback(); }
 	///		public class TableCallback : IAjaxTableCallback<Data> { /* 表格回调 */ }
 	/// }
+	/// </example>
 	/// </summary>
 	/// <typeparam name="TData">列表中的数据类型</typeparam>
-	public abstract class GenericListForAdminSettings<TData>
-		: GenericListForMenuPage<TData>, IAdminSettingsMenuProvider
+	public abstract class GenericListForAdminSettings<TData> :
+		GenericListForMenuPage<TData>, IAdminSettingsMenuProvider
 		where TData : class {
 		/// <summary>
 		/// 使用的权限

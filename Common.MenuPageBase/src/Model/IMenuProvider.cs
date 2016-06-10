@@ -9,9 +9,11 @@ namespace ZKWeb.Plugins.Common.MenuPageBase.src.Model {
 	/// <summary>
 	/// 菜单分组和菜单项的提供器接口
 	/// 这个接口需要再次继承，请勿直接使用
-	/// 例子
+	/// <example>
 	/// public interface IMenuProviderForUserPanel : IMenuProvider { }
-	/// [ExportMany] public class ExampleProvider : IMenuProviderForUserPanel { }
+	/// [ExportMany]
+	/// public class ExampleProvider : IMenuProviderForUserPanel { }
+	/// </example>
 	/// </summary>
 	public interface IMenuProvider {
 		/// <summary>

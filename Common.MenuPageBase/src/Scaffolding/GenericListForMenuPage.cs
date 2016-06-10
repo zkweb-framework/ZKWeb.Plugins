@@ -17,12 +17,14 @@ using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 	/// <summary>
-	/// 用于快速添加菜单页中只带有一个数据列表的简单页面
-	/// 这个抽象类需要再次继承，请勿直接使用
-	/// 例子
-	/// public abstract class GenericListForAdminSettings[TData] :
-	///		GenericListForMenuPage[TData], IMenuProviderForAdminSettings { }
-	/// [ExportMany] public class ExampleList : GenericListForAdminSettings[Data, ExampleList] { }
+	/// 用于列出数据的菜单页面构建器
+	/// 这个接口需要再次继承，请勿直接使用
+	/// <example>
+	/// public abstract class GenericListForUserPanel :
+	///		GenericListForMenuPage, IMenuProviderForUserPanel { }
+	/// [ExportMany]
+	/// public class ExampleList : GenericListForUserPanel { }
+	/// </example>
 	/// </summary>
 	/// <typeparam name="TData">列表中的数据类型</typeparam>
 	public abstract class GenericListForMenuPage<TData> : GenericPageForMenuPage

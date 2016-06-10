@@ -15,8 +15,8 @@ using ZKWeb.Plugins.Common.UserPanel.src.Model;
 
 namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	/// <summary>
-	/// 用于给用户快速添加只包含表单的页面
-	/// 例子
+	/// 带单个表单的用户中心页面构建器
+	/// <example>
 	/// [ExportMany]
 	/// public class ExampleForm : GenericFormForUserPanel {
 	///		public override string Group { get { return "Example Group"; } }
@@ -27,6 +27,7 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	///		public override IModelFormBuilder GetForm() { return new Form(); }
 	///		public class Form : ModelFormBuilder { /* 表单内容 */ }
 	/// }
+	/// </example>
 	/// </summary>
 	public abstract class GenericFormForUserPanel : GenericFormForMenuPage, IUserPanelMenuProvider {
 		/// <summary>

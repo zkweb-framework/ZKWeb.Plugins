@@ -12,8 +12,11 @@ using ZKWeb.Utils.Functions;
 namespace ZKWeb.Plugins.Common.Region.src.Model {
 	/// <summary>
 	/// 国家/行政区
-	/// 例子（必须使用SingletonReuse，用于支持在其他插件添加地区）
-	/// [ExportMany, SingletonReuse] China : Country { }
+	/// 注册时请使用使用SingletonReuse，以支持在其他插件添加地区
+	/// <example>
+	/// [ExportMany, SingletonReuse]
+	/// public class China : Country { }
+	/// </example>
 	/// </summary>
 	public abstract class Country : ICacheCleaner {
 		/// <summary>

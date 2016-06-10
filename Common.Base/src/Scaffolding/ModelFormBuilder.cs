@@ -16,7 +16,7 @@ using ZKWeb.Utils.Functions;
 namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// 从模型构建表单的构建器
-	/// 例子
+	/// <exmaple>
 	/// public class TestForm : ModelFormBuilder {
 	///		[Required]
 	///		[TextBoxField("FieldA", "Please enter something")]
@@ -30,6 +30,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	///			return new { message = string.Format("{0}, {1}", FieldA, FieldB) };
 	///		}
 	/// }
+	/// </exmaple>
 	/// </summary>
 	public abstract class ModelFormBuilder : IModelFormBuilder, ILiquidizable {
 		/// <summary>

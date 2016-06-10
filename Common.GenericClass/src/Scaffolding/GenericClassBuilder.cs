@@ -26,11 +26,12 @@ using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 	/// <summary>
 	/// 通用分类构建器
-	/// 使用时需要继承，例子
+	/// <example>
 	/// [ExportMany]
 	/// public class ExampleClass : GenericClassBuilder {
 	///		public override string Name { get { return "ExampleClass"; } }
 	/// }
+	/// </example>
 	/// </summary>
 	public abstract class GenericClassBuilder :
 		GenericListForAdminSettings<Database.GenericClass> {

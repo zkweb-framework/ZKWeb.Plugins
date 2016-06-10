@@ -8,7 +8,6 @@ using System.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
-using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
@@ -25,7 +24,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>
 	/// 后台应用构建器
 	/// 支持自动生成列表和增删查改页面（Scaffold，半自动）
-	/// 例子
+	/// <example>
 	///	[ExportMany]
 	///	public class TestDataManageApp : AdminAppBuilder[TestData, TestDataManageApp] {
 	///		public override string Name { get { return "TestData Manage"; } }
@@ -36,6 +35,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	///		public class TableCallback : IAjaxTableCallback[TestData] { /* 实现函数 */ }
 	///		public class Form : DataEditFormBuilder[TestData, Form] { /* 实现函数 */ }
 	/// }
+	/// </example>
 	/// </summary>
 	/// <typeparam name="TData">管理的数据类型</typeparam>
 	public abstract class AdminAppBuilder<TData> : AdminApp, IAdminAppBuilder

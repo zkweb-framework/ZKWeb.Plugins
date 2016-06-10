@@ -8,8 +8,9 @@ using ZKWeb.Localize;
 namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// 给选项列表添加"请选择"的空值选项
-	/// 例子
+	/// <example>
 	/// [DropdownListField("Type", typeof(ListItemsWithOptional[ListItemFromEnum[TestTypes]]))]
+	/// </example>
 	/// </summary>
 	/// <typeparam name="TBaseProvider"></typeparam>
 	public class ListItemsWithOptional<TBaseProvider> : IListItemProvider

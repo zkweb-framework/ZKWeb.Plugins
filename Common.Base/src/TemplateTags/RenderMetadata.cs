@@ -10,9 +10,10 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 描画附加的内容
 	/// 用于描画head标签中的meta标签
-	/// 例子
-	/// {% render_metadata %}
 	/// 描画后会清空原有的内容，可以重复调用
+	/// <example>
+	/// {% render_metadata %}
+	/// </example>
 	/// </summary>
 	public class RenderMetadata : Tag {
 		/// <summary>

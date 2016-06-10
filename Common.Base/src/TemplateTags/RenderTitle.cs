@@ -9,8 +9,9 @@ using System.IO;
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 描画当前网站标题
-	/// 例子
+	/// <example>
 	/// {% render_title %}
+	/// </example>
 	/// </summary>
 	public class RenderTitle : Tag {
 		/// <summary>

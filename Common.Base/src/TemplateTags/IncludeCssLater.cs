@@ -12,11 +12,11 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 延迟引用css文件
 	/// 需要配合"render_included_css"标签使用
-	/// 例子
+	/// 这个标签会影响上下文内容，不应该在有缓存的模板模块中使用
+	/// <example>
 	/// {% include_css_later "/static/common.base.css/test.css" %}
 	/// {% include_css_later variable %}
-	/// 注意
-	/// 这个标签会影响上下文内容，不应该在有缓存的模板模块中使用
+	/// </example>
 	/// </summary>
 	public class IncludeCssLater : Tag {
 		/// <summary>

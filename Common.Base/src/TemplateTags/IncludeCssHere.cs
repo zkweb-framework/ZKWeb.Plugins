@@ -11,9 +11,10 @@ using ZKWeb.Utils.Extensions;
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 在当前位置引用css文件
-	/// 例子
+	/// <example>
 	/// {% include_css_here "/static/common.base.css/test.css" %}
 	/// {% include_css_here variable %}
+	/// </example>
 	/// </summary>
 	public class IncludeCssHere : Tag {
 		/// <summary>

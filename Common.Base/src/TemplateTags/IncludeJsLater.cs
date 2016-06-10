@@ -12,11 +12,11 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 延迟引用javascript文件
 	/// 需要配合"render_included_js"标签使用
-	/// 例子
+	/// 这个标签会影响上下文内容，不应该在有缓存的模板模块中使用
+	/// <example>
 	/// {% include_js_later "/static/common.base.js/test.js" %}
 	/// {% include_js_later variable %}
-	/// 注意
-	/// 这个标签会影响上下文内容，不应该在有缓存的模板模块中使用
+	/// </example>
 	/// </summary>
 	public class IncludeJsLater : Tag {
 		/// <summary>

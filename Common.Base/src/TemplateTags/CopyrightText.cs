@@ -12,8 +12,9 @@ using ZKWeb.Localize;
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 显示版权信息文本
-	/// 例子
+	/// <example>
 	/// {% copyright_text %}
+	/// </example>
 	/// </summary>
 	public class CopyrightText : Tag {
 		/// <summary>

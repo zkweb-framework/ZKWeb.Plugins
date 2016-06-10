@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 描画延迟引用的css资源
-	/// 例子
-	/// {% render_included_css %}
 	/// 描画后会清空原有的引用，可以重复调用
+	/// <example>
+	/// {% render_included_css %}
+	/// </example>
 	/// </summary>
 	public class RenderIncludedCss : Tag {
 		/// <summary>

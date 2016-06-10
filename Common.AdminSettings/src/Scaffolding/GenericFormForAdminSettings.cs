@@ -17,8 +17,8 @@ using ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	/// <summary>
-	/// 用于给后台设置快速添加只包含表单的页面
-	/// 例子
+	/// 带单个表单的后台设置页面构建器
+	/// <example>
 	/// [ExportMany]
 	/// public class ExampleForm : GenericFormForAdminSettings {
 	///		public override string Group { get { return "Example Group"; } }
@@ -30,6 +30,7 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	///		protected override IModelFormBuilder GetForm() { return new Form(); }
 	///		public class Form : ModelFormBuilder { /* 表单内容 */ }
 	/// }
+	/// </example>
 	/// </summary>
 	public abstract class GenericFormForAdminSettings :
 		GenericFormForMenuPage, IAdminSettingsMenuProvider {

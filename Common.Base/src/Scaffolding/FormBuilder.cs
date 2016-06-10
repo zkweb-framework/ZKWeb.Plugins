@@ -18,18 +18,20 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// 表单构建器
 	/// 这个类可以通过Ioc替换，使用时注意要通过Ioc获取
-	/// 创建的例子
-	///		var form = Application.Ioc.Resolve[FormBuilder]();
-	///		form.Attribute = new FormAttribute() { Name = "TestForm" };
-	///		form.Fields.Add(new FormField(new TextBoxFieldAttribute("Username")));
-	///		form.Fields.Add(new FormField(new PasswordFieldAttribute("Password")));
-	/// 绑定的例子
-	///		form.BindValuesFromAnonymousObject(new { Username = "TestUser", Password = "TestPassword" });
-	///		return new TemplateResult("test_form.html", new { form });
-	///	提交的例子
-	///		var values = form.ParseValues(HttpContextUtils.CurrentContext.Request.GetParams());
-	///		var username = values.GetOrDefault[string]("Username");
-	///		var password = values.GetOrDefault[string]("Password");
+	/// <example>
+	/// // 创建
+	/// var form = Application.Ioc.Resolve[FormBuilder]();
+	/// form.Attribute = new FormAttribute() { Name = "TestForm" };
+	/// form.Fields.Add(new FormField(new TextBoxFieldAttribute("Username")));
+	/// form.Fields.Add(new FormField(new PasswordFieldAttribute("Password")));
+	/// // 绑定
+	/// form.BindValuesFromAnonymousObject(new { Username = "TestUser", Password = "TestPassword" });
+	/// return new TemplateResult("test_form.html", new { form });
+	/// // 提交
+	/// var values = form.ParseValues(HttpContextUtils.CurrentContext.Request.GetParams());
+	/// var username = values.GetOrDefault[string]("Username");
+	/// var password = values.GetOrDefault[string]("Password");
+	/// </example>
 	/// </summary>
 	[ExportMany]
 	public class FormBuilder : ILiquidizable {

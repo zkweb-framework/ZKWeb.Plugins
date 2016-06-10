@@ -17,12 +17,14 @@ using ZKWeb.Utils.Functions;
 
 namespace ZKWeb.Plugins.Common.MenuPageBase.src.Scaffolding {
 	/// <summary>
-	/// 用于快速添加菜单页中只带有一个表单的简单页面
+	/// 带单个表单的菜单页面构建器
 	/// 这个抽象类需要再次继承，请勿直接使用
-	/// 例子
+	/// <example>
 	/// public abstract class GenericFormForUserPanel :
 	///		GenericFormForMenuPage, IMenuProviderForUserPanel { }
-	/// [ExportMany] public class ExampleForm : GenericFormForUserPanel { }
+	/// [ExportMany]
+	/// public class ExampleForm : GenericFormForUserPanel { }
+	/// </example>
 	/// </summary>
 	public abstract class GenericFormForMenuPage : GenericPageForMenuPage {
 		/// <summary>

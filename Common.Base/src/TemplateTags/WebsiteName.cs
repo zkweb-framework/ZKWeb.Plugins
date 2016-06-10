@@ -12,8 +12,9 @@ using ZKWeb.Localize;
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 显示当前网站名称
-	/// 例子
+	/// <example>
 	/// {% website_name %}
+	/// </example>
 	/// </summary>
 	public class WebsiteName : Tag {
 		/// <summary>

@@ -26,11 +26,12 @@ using ZKWeb.Plugins.Common.Base.src.Managers;
 namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 	/// <summary>
 	/// 通用标签构建器
-	/// 使用时需要继承，例子
+	/// <example>
 	/// [ExportMany]
 	/// public class ExampleTag : GenericTagBuilder {
 	///		public override string Name { get { return "ExampleTag"; } }
 	/// }
+	/// </example>
 	/// </summary>
 	public abstract class GenericTagBuilder :
 		GenericListForAdminSettings<Database.GenericTag> {

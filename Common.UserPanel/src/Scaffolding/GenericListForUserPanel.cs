@@ -9,9 +9,10 @@ using ZKWeb.Plugins.Common.UserPanel.src.Model;
 
 namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	/// <summary>
-	/// 用于给用户中心快速添加只包含数据列表的页面
-	/// 例子
+	/// 用于列出数据的用户中心页面构建器
+	/// <example>
 	/// TODO: 编写这里的例子
+	/// </example>
 	/// </summary>
 	/// <typeparam name="TData">数据类型</typeparam>
 	public abstract class GenericListForUserPanel<TData> :
