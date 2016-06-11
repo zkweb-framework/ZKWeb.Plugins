@@ -42,7 +42,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// </summary>
 		/// <typeparam name="T">类型</typeparam>
 		/// <returns></returns>
-		protected GenericConfigAttribute GetConfigAttribute<T>() {
+		protected virtual GenericConfigAttribute GetConfigAttribute<T>() {
 			var attribute = AttributeCache.GetOrAdd(
 				typeof(T), t => t.GetAttribute<GenericConfigAttribute>());
 			if (attribute == null) {
@@ -115,7 +115,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// <summary>
 		/// 清理缓存
 		/// </summary>
-		public void ClearCache() {
+		public virtual void ClearCache() {
 			ConfigValueCache.Clear();
 		}
 	}
