@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
+using System.FastReflection;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -66,7 +67,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// <param name="obj">对象</param>
 		public void AddFieldsFrom(object obj) {
 			var type = obj.GetType();
-			foreach (var property in type.GetProperties()) {
+			foreach (var property in type.FastGetProperties()) {
 				var fieldAttribute = property.GetAttribute<FormFieldAttribute>();
 				if (fieldAttribute != null) {
 					var field = new FormField(fieldAttribute);
@@ -97,7 +98,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			Pair<object, PropertyInfo> property;
 			foreach (var field in Form.Fields) {
 				if (FieldToProperty.TryGetValue(field, out property)) {
-					field.Value = property.Second.GetValue(property.First);
+					field.Value = property.Second.FastGetValue(property.First);
 				}
 			}
 		}
@@ -114,7 +115,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			foreach (var field in Form.Fields) {
 				var value = values.GetOrDefault(field.Attribute.Name);
 				if (FieldToProperty.TryGetValue(field, out property)) {
-					property.Second.SetValue(property.First,
+					property.Second.FastSetValue(property.First,
 						value.ConvertOrDefault(property.Second.PropertyType, null));
 				}
 			}

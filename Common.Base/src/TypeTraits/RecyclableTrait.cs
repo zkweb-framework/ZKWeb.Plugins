@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.FastReflection;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TypeTraits {
 		/// </summary>
 		/// <param name="type">类型</param>
 		public RecyclableTrait(Type type) : this() {
-			IsRecyclable = type.GetProperty(PropertyName) != null;
+			IsRecyclable = type.FastGetProperty(PropertyName) != null;
 		}
 
 		/// <summary>

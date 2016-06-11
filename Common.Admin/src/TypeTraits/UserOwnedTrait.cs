@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.FastReflection;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.TypeTraits {
 		/// <param name="type">实体类型</param>
 		public UserOwnedTrait(Type type) {
 			foreach (var ownerKey in DefaultPropertyNames) {
-				if (type.GetProperty(ownerKey) != null) {
+				if (type.FastGetProperty(ownerKey) != null) {
 					PropertyName = ownerKey;
 					IsUserOwned = true;
 					break;
