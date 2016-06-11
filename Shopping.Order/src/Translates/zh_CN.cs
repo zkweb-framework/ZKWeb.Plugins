@@ -48,7 +48,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Total <em>[0]</em>", "共<em>[0]</em>" },
 			{ "Cart is empty", "购物车中还没有商品，赶紧选购吧！" },
 			{ "Recently add to cart", "最近加入购物车" },
-			{ "Delete Successfully", "删除成功" }
+			{ "Delete Successfully", "删除成功" },
+			{ "OrderList", "订单列表" },
+			{ "ShippingAddress", "收货地址" },
+			{ "UserShippingAddress", "收货地址" },
+			{ "Address/Name/Tel", "地址/姓名/电话" },
+			{ "ZipCode", "邮政编码" },
+			{ "DetailedAddress", "详细地址" },
+			{ "Fullname", "姓名" },
+			{ "Tel/Mobile", "电话/手机" }
 		};
 
 		public bool CanTranslate(string code) {

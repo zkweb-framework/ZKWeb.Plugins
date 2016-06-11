@@ -259,13 +259,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IList<object> GetBatchActionIds() {
 			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
-			var obj = JsonConvert.DeserializeObject<JObject>(json);
-			if (obj.Type == JTokenType.Object) {
-				// { ids: [ id列表 ], ... }
-				return obj.GetValue("ids").Values<object>().ToList();
-			} else if (obj.Type == JTokenType.Array) {
+			var obj = JsonConvert.DeserializeObject<JToken>(json);
+			if (obj is JArray) {
 				// [ id列表 ]
 				return obj.Values<object>().ToList();
+			} else if (obj is JObject) {
+				// { ids: [ id列表 ], ... }
+				return ((JObject)obj).GetValue("ids").Values<object>().ToList();
 			}
 			throw new ArgumentException(string.Format(
 				"get batch action ids failed, unknown format: {0}", json));

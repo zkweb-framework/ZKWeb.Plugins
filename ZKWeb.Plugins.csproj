@@ -136,6 +136,9 @@
     <Compile Include="Common.Admin\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Common.Admin\src\Model\IAdminApp.cs" />
     <Compile Include="Common.Admin\src\Scaffolding\CrudPageBuilder.cs" />
+    <Compile Include="Common.Admin\src\Scaffolding\TabUserOwnedDataEditFormBuilder.cs" />
+    <Compile Include="Common.Admin\src\Scaffolding\UserOwnedDataEditFormBuilder.cs" />
+    <Compile Include="Common.Admin\src\TypeTraits\UserOwnedTrait.cs" />
     <Compile Include="Common.Base\src\CacheIsolationPolicies\CacheIsolateByIdent.cs" />
     <Compile Include="Common.Base\src\Extensions\_HtmlItem\HtmlItemsExtensions.cs" />
     <Compile Include="Common.Base\src\Extensions\_StaticTable\IStaticTableCallbackExtensions.cs" />
@@ -233,6 +236,7 @@
     <Compile Include="Common.MenuPage\src\Scaffolding\FormMenuPageBuilder.cs" />
     <Compile Include="Common.MenuPage\src\Scaffolding\SimpleMenuPageBuilder.cs" />
     <Compile Include="Common.Region\src\Countries\GB.cs" />
+    <Compile Include="Common.Region\src\Extensions\RegionNodeException.cs" />
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelCrudPageBuilder.cs" />
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelFormPageBuilder.cs" />
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelSimplePageBuilder.cs" />
@@ -248,6 +252,7 @@
     <Compile Include="Shopping.Order\src\Extensions\CreateOrderProductParametersExtensions.cs" />
     <Compile Include="Shopping.Order\src\Extensions\OrderPriceCalcResultExtensions.cs" />
     <Compile Include="Shopping.Order\src\AdminSettingsPages\OrderSettingsForm.cs" />
+    <Compile Include="Shopping.Order\src\Extensions\UserShippingAddressExtensions.cs" />
     <Compile Include="Shopping.Order\src\Managers\CartProductManager.cs" />
     <Compile Include="Shopping.Order\src\Managers\OrderManager.cs" />
     <Compile Include="Shopping.Order\src\Model\CreateOrderParameters.cs" />
@@ -283,6 +288,8 @@
     <Content Include="Shopping.Order\templates\shopping.order\mini_cart_contents.html" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\mini_cart_menu.html" />
     <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.js" />
+    <Compile Include="Shopping.Order\src\UserPanelPages\OrderManage.cs" />
+    <Compile Include="Shopping.Order\src\UserPanelPages\UserShippingAddressManage.cs" />
     <Compile Include="Shopping.Product\src\AdminApps\ProductCategoryManageApp.cs" />
     <Compile Include="Shopping.Product\src\AdminApps\ProductPropertyManageApp.cs" />
     <Compile Include="Shopping.Product\src\Config\ProductListSettings.cs" />

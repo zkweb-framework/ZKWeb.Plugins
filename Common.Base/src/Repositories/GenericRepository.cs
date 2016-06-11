@@ -75,8 +75,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <returns></returns>
 		public virtual TData GetById(object id) {
 			var trait = EntityTrait.For<TData>();
-			id = id.ConvertOrDefault(trait.PrimaryKeyType, null);
-			return Get(ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
+			return Get(ExpressionUtils.MakeMemberEqualiventExpression<TData>(
+				trait.PrimaryKey,
+				id.ConvertOrDefault(trait.PrimaryKeyType, null)));
 		}
 
 		/// <summary>
@@ -85,16 +86,19 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <param name="id">数据Id</param>
 		/// <returns></returns>
 		public virtual TData GetByIdWhereNotDeleted(object id) {
+			// 判断类型是否可回收
 			var entityTrait = EntityTrait.For<TData>();
 			var recyclableTrait = RecyclableTrait.For<TData>();
 			if (!recyclableTrait.IsRecyclable) {
 				throw new ArgumentException(string.Format("entity {0} not recyclable", typeof(TData).Name));
 			}
+			// 构建表达式 (data => data.Id == id && !data.Deleted)
 			var dataParam = Expression.Parameter(typeof(TData), "data");
-			var primaryKeyExp = Expression.Property(dataParam, entityTrait.PrimaryKey);
-			var deletedExp = Expression.Property(dataParam, recyclableTrait.PropertyName);
 			var body = Expression.AndAlso(
-				Expression.Equal(primaryKeyExp, Expression.Constant(id)), Expression.Not(deletedExp));
+				Expression.Equal(
+					Expression.Property(dataParam, entityTrait.PrimaryKey),
+					Expression.Constant(id.ConvertOrDefault(entityTrait.PrimaryKeyType, null))),
+				Expression.Not(Expression.Property(dataParam, recyclableTrait.PropertyName)));
 			return Get(Expression.Lambda<Func<TData, bool>>(body, dataParam));
 		}
 
@@ -122,7 +126,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 			long count = 0;
 			foreach (var id in ids) {
 				var data = Context.Get(
-					ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
+					ExpressionUtils.MakeMemberEqualiventExpression<TData>(
+						trait.PrimaryKey,
+						id.ConvertOrDefault(trait.PrimaryKeyType, null)));
 				if (data != null) {
 					Context.Save(ref data, d => setter(d, true));
 					++count;
@@ -146,7 +152,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 			long count = 0;
 			foreach (var id in ids) {
 				var data = Context.Get(
-					ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
+					ExpressionUtils.MakeMemberEqualiventExpression<TData>(
+						trait.PrimaryKey,
+						id.ConvertOrDefault(trait.PrimaryKeyType, null)));
 				if (data != null) {
 					Context.Save(ref data, d => setter(d, false));
 					++count;
@@ -169,7 +177,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 			long count = 0;
 			foreach (var id in ids) {
 				count += Context.DeleteWhere(
-					ExpressionUtils.MakeMemberEqualiventExpression<TData>(trait.PrimaryKey, id));
+					ExpressionUtils.MakeMemberEqualiventExpression<TData>(
+						trait.PrimaryKey,
+						id.ConvertOrDefault(trait.PrimaryKeyType, null)));
 			}
 			return count;
 		}

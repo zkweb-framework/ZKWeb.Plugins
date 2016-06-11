@@ -8,6 +8,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 namespace ZKWeb.Plugins.Common.Region.src.FormFieldAttributes {
 	/// <summary>
 	/// 地区联动下拉框的属性
+	/// 类型请使用 CountryAndRegion
 	/// </summary>
 	public class RegionEditorAttribute : FormFieldAttribute {
 		/// <summary>

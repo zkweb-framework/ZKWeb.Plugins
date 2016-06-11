@@ -65,11 +65,18 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// <summary>
 		/// 是否已删除
 		/// </summary>
-		public virtual long Deleted { get; set; }
+		public virtual bool Deleted { get; set; }
 		/// <summary>
 		/// 备注
 		/// </summary>
 		public virtual string Remark { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public UserShippingAddress() {
+			DisplayOrder = 10000;
+		}
 
 		/// <summary>
 		/// 显示名称

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.MenuPage.src.Scaffolding;
 using ZKWeb.Plugins.Common.UserPanel.src.Model;
@@ -21,7 +22,7 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	///		protected override IModelFormBuilder GetEditForm() { return new Form(); }
 	///		protected override IAjaxTableCallback[ExampleTable] GetTableCallback() { return new TableCallback(); }
 	///		public class TableCallback : IAjaxTableCallback[ExampleTable] { }
-	///		public class Form : UserDataEditFormBuilder[ExampleTable, Form] { }
+	///		public class Form : UserOwnedDataEditFormBuilder[ExampleTable, Form] { }
 	/// }
 	/// </example>
 	/// </summary>
@@ -53,5 +54,17 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 		/// 编辑页的模板路径
 		/// </summary>
 		public override string EditTemplatePath { get { return "common.user_panel/generic_edit.html"; } }
+
+		/// <summary>
+		/// 获取批量操作的数据Id列表
+		/// 并检查当前登录用户是否有数据的所有权
+		/// </summary>
+		/// <returns></returns>
+		protected override IList<object> GetBatchActionIds() {
+			var ids = base.GetBatchActionIds();
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.CheckOwnership<TData>(ids);
+			return ids;
+		}
 	}
 }
