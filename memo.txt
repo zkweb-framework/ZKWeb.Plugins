@@ -51,6 +51,10 @@
 		SMS.GuangXin
 	待办事项功能
 		Schedule.Todo
+	前台样式整理
+		用户中心首页
+		登陆页
+		注册页
 	商城网站完成后
 		固定abi，提供向后兼容性
 		提供用户手册
@@ -72,9 +76,6 @@
 		是否有数量等于或小于0的商品
 		如果有实体商品，必须选择物流(使用Trait)
 		如果有实体商品，必须填写收货地址(使用Trait)
-	完成收货地址管理后检查是否不需要权限且没有注册权限
-	UserDataEditFormBuilder
-	FilterByOwnedUser
 
 性能测试结果
 2016-05-27 (i7 Q720 1.6Ghz x 4 core 4 threads, ab -n 2000 -c 8, vmware player 12)
