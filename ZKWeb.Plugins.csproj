@@ -209,6 +209,7 @@
     <Compile Include="Common.Base\src\Model\_BaseTable\BaseTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\BaseTableSearchResponse.cs" />
     <Compile Include="Common.Base\src\Model\_HtmlItem\HtmlItem.cs" />
+    <Compile Include="Common.Base\src\Model\_Web\IUrlFilter.cs" />
     <Compile Include="Common.Base\src\Model\_StaticTable\IStaticTableCallback.cs" />
     <Compile Include="Common.Base\src\Model\_StaticTable\IStaticTableCallbackExtension.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\Pagination.cs" />
@@ -235,6 +236,10 @@
     <Compile Include="Common.MenuPage\src\Scaffolding\CrudMenuPageBuilder.cs" />
     <Compile Include="Common.MenuPage\src\Scaffolding\FormMenuPageBuilder.cs" />
     <Compile Include="Common.MenuPage\src\Scaffolding\SimpleMenuPageBuilder.cs" />
+    <Compile Include="Common.PesudoStatic\src\Translates\ja_JP.cs" />
+    <Compile Include="Common.PesudoStatic\src\Translates\ko_KR.cs" />
+    <Compile Include="Common.PesudoStatic\src\Translates\zh_CN.cs" />
+    <Compile Include="Common.PesudoStatic\src\Translates\zh_TW.cs" />
     <Compile Include="Common.Region\src\Countries\GB.cs" />
     <Compile Include="Common.Region\src\Extensions\RegionNodeException.cs" />
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelCrudPageBuilder.cs" />
@@ -272,6 +277,7 @@
     <Compile Include="Shopping.Order\src\Translates\ja_JP.cs" />
     <Compile Include="Shopping.Order\src\Translates\zh_TW.cs" />
     <Compile Include="Shopping.Order\src\Translates\zh_CN.cs" />
+    <None Include="Common.PesudoStatic\plugin.json" />
     <None Include="Shopping.Order\static\shopping.order.css\cart-minicart.scss" />
     <None Include="Shopping.Order\templates\shopping.order.widgets\mini_cart_menu.widget" />
     <Content Include="Common.AdminSettings\templates\common.admin_settings\generic_add.html" />
@@ -491,11 +497,11 @@
     <Compile Include="Common.Base\src\Model\_ListItem\IListItemProvider.cs" />
     <Compile Include="Common.Base\src\Model\_Form\IModelFormBuilder.cs" />
     <Compile Include="Common.Base\src\Model\_ScheduledTask\IScheduledTaskExecutor.cs" />
-    <Compile Include="Common.Base\src\Model\_Misc\LabelCssClassAttribute.cs" />
+    <Compile Include="Common.Base\src\Model\_Web\LabelCssClassAttribute.cs" />
     <Compile Include="Common.Base\src\Model\_ListItem\ListItem.cs" />
     <Compile Include="Common.Base\src\Model\_ListItem\ListItemsWithOptional.cs" />
     <Compile Include="Common.Base\src\Model\_HtmlItem\MenuItem.cs" />
-    <Compile Include="Common.Base\src\Model\_Misc\ScriptStrings.cs" />
+    <Compile Include="Common.Base\src\Model\_Web\ScriptStrings.cs" />
     <Compile Include="Common.Base\src\Plugin.cs" />
     <Compile Include="Common.Base\src\Managers\ScheduledTaskManager.cs" />
     <Compile Include="Common.Base\src\ScheduledTasks\LogCleaner.cs" />

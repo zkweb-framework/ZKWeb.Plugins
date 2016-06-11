@@ -41,7 +41,11 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.PaymentApiHandlers {
 		/// </summary>
 		public void OnFormBind(PaymentApiEditForm form, DatabaseContext context, PaymentApi bindFrom) {
 			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
-			apiData.CopyMembersTo(ApiDataEditing);
+			ApiDataEditing.PartnerId = apiData.PartnerId;
+			ApiDataEditing.PartnerKey = apiData.PartnerKey;
+			ApiDataEditing.PartnerEmail = apiData.PartnerEmail;
+			ApiDataEditing.ServiceType = apiData.ServiceType;
+			ApiDataEditing.ReturnDomain = apiData.ReturnDomain;
 		}
 
 		/// <summary>

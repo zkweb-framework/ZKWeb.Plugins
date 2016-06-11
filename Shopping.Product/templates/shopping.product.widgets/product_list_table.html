@@ -6,7 +6,7 @@
 		<div class="product-cell">
 			<dl>
 				<dt class="main-album">
-					<a href="/product/view?id={{ row.Id }}" target="_blank" title="{{ row.Name }}">
+					<a href="{{ "/product/view?id=[0]" | format: row.Id | url }}" target="_blank" title="{{ row.Name }}">
 						<img src="{{ row.MainAlbumThumbnail }}" />
 					</a>
 				</dt>
@@ -14,7 +14,7 @@
 					<div title="{{ row.Price }}">{{ row.Price }}</div>
 				</dd>
 				<dd class="product-name">
-					<a href="/product/view?id={{ row.Id }}" target="_blank" title="{{ row.Name }}">
+					<a href="{{ "/product/view?id=[0]" | format: row.Id | url }}" target="_blank" title="{{ row.Name }}">
 						{{ row.Name }}
 					</a>
 				</dd>

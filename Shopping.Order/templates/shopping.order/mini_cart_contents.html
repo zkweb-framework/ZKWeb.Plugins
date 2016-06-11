@@ -34,7 +34,7 @@
 			<span class="total-count">{{ "<em>[0]</em> Products" | trans | format: minicart_info.totalCount | raw_html }}</span>
 			<span class="total-price">{{ "Total <em>[0]</em>" | trans | format: minicart_info.totalPriceString | raw_html }}</span>
 		</div>
-		<a class="btn btn-themed btn-goto-cart" href="/cart">{{ "Checkout >>>" | trans }}</a>
+		<a class="btn btn-themed btn-goto-cart" href="{{ "/cart" | url }}">{{ "Checkout >>>" | trans }}</a>
 		<div class="clearfix"></div>
 	</div>
 </li>

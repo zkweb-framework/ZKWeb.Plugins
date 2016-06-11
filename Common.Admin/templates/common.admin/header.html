@@ -13,7 +13,7 @@
 <body class="skin-default">
 	<div class="page-header">
 		<header class="main-header">
-			<a href="/admin" class="logo" title="logo">
+			<a href="{{ "/admin" | url }}" class="logo" title="logo">
 				<img src="/static/common.admin.images/logo.png" alt="logo">
 			</a>
 			<nav class="navbar navbar-static-top" role="navigation">
@@ -33,10 +33,10 @@
 								</li>
 								<li class="user-body">
 									<div class="col-xs-4 text-center">
-										<a href="/" target="_blank">{{ "Website Index" | trans }}</a>
+										<a href="{{ "/" | url }}" target="_blank">{{ "Website Index" | trans }}</a>
 									</div>
 									<div class="col-xs-4 text-center">
-										<a href="/admin/about_website" target="">{{ "About Website" | trans }}</a>
+										<a href="{{ "/admin/about_website" | url }}" target="">{{ "About Website" | trans }}</a>
 									</div>
 									<div class="col-xs-4 text-center">
 										<a post-href="/api/cache/clear" ajax="true">{{ "Clear Cache" | trans }}</a>
@@ -44,7 +44,7 @@
 								</li>
 								<li class="user-footer">
 									<div class="pull-left">
-										<a class="btn btn-default btn-flat" href="/admin/about_me" target="">{{ "About Me" | trans }}</a>
+										<a class="btn btn-default btn-flat" href="{{ "/admin/about_me" | url }}" target="">{{ "About Me" | trans }}</a>
 									</div>
 									<div class="pull-right">
 										<a class="btn btn-default btn-flat" post-href="/admin/logout">{{ "Logout" | trans }}</a>

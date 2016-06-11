@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Config;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 	/// <summary>
@@ -28,6 +29,20 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 					.Replace("{websiteName}", new T(settings.WebsiteName)));
 			}
 			return title;
+		}
+
+		/// <summary>
+		/// 全局过滤网址
+		/// <example>{{ "/example" | url }}</example>
+		/// </summary>
+		/// <param name="url"></param>
+		/// <returns></returns>
+		public static string Url(string url) {
+			var filters = Application.Ioc.ResolveMany<IUrlFilter>();
+			foreach (var filter in filters) {
+				filter.Filter(ref url);
+			}
+			return url;
 		}
 	}
 }

@@ -22,7 +22,7 @@
 				<div class="article-classes">
 					<span>{{ "Classes" | trans }}: </span>
 					{% for class in article_info.classes %}
-					<a href="/article/list?class={{ class.id }}">{{ class.name | trans }}</a>
+					<a href="{{ "/article/list?class=[0]" | format: class.id | url }}">{{ class.name | trans }}</a>
 					{% endfor %}
 				</div>
 				{% endif %}
@@ -30,7 +30,7 @@
 				<div class="article-tags">
 					<span>{{ "Tags" | trans }}: </span>
 					{% for tag in article_info.tags %}
-					<a href="/article/list?tag={{ tag.id }}">{{ tag.name | trans }}</a>
+					<a href="{{ "/article/list?tag=[0]" | format: tag.id | url }}">{{ tag.name | trans }}</a>
 					{% endfor %}
 				</div>
 				{% endif %}

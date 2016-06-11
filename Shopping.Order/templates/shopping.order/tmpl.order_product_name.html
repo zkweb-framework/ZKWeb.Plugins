@@ -1,5 +1,5 @@
 ﻿<div class="name order-product-name">
-	<a title="{{ info.Name }}" href="/product/view?id={{ info.ProductId }}" target="_blank">
+	<a title="{{ info.Name }}" href="{{ "/product/view?id=[0]" | format: info.ProductId | url }}" target="_blank">
 		{{ info.Name }}
 	</a>
 </div>

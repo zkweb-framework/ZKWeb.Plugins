@@ -40,7 +40,9 @@ namespace ZKWeb.Plugins.Finance.Payment.Tenpay.src.PaymentApiHandlers {
 		/// </summary>
 		public void OnFormBind(PaymentApiEditForm form, DatabaseContext context, PaymentApi bindFrom) {
 			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
-			apiData.CopyMembersTo(ApiDataEditing);
+			ApiDataEditing.PartnerId = apiData.PartnerId;
+			ApiDataEditing.PartnerKey = apiData.PartnerKey;
+			ApiDataEditing.ReturnDomain = apiData.ReturnDomain;
 		}
 
 		/// <summary>

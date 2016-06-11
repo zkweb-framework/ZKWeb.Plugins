@@ -30,7 +30,7 @@
 			<li class="article-cell">
 				<div class="top">
 					<h4>
-						<a class="title" href="/article/view?id={{ article.Id }}">
+						<a class="title" href="{{ "/article/view?id=[0]" | format: article.Id | url }}">
 							{% if article.LastClass %}
 							[{{ article.LastClass }}]
 							{% endif %}
@@ -42,7 +42,7 @@
 					{% if article.Summary != "" %}
 					{{ article.Summary }}&nbsp;
 					{% endif %}
-					<a href="/article/view?id={{ article.Id }}">{{ "Read More" | trans }}</a>
+					<a href="{{ "/article/view?id=[0]" | format: article.Id | url }}">{{ "Read More" | trans }}</a>
 				</div>
 				<div class="bottom">
 					{% if article.Author %}
@@ -51,7 +51,7 @@
 					<span class="post-on">{{ "Posted on" | trans }}: {{ article.CreateTime }}</span>
 					<div class="tags pull-right">
 						{% for tag in article.Tags %}
-						<a class="tag" href="/article/list?tag={{ tag.Id }}">{{ tag.Name | trans }}</a>
+						<a class="tag" href="{{ "/article/list?tag=[0]" | format: tag.Id | url }}">{{ tag.Name | trans }}</a>
 						{% endfor %}
 					</div>
 				</div>

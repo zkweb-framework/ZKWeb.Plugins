@@ -1,11 +1,11 @@
-﻿<dl class='entity-summary product-summary'>
+﻿<dl class="entity-summary product-summary">
 	<dt>
-		<a title='{{ name }}' href='/product/view?id={{ productId }}' target='_blank'>
-			<img src='{{ imageWebPath }}' />
+		<a title="{{ name }}" href="{{ "/product/view?id=[0]" | format: productId | url }}" target="_blank">
+			<img src="{{ imageWebPath }}" />
 		</a>
 	</dt>
 	<dd>
-		<a title='{{ name }}' href='/product/view?id={{ productId }}' target='_blank'>
+		<a title="{{ name }}" href="{{ "/product/view?id=[0]" | format: productId | url }}" target="_blank">
 			{{ nameTruncated }}
 		</a>
 	</dd>

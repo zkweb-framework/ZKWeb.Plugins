@@ -2,20 +2,20 @@
 <div class="portlet">
 	<div class="portlet-title">
 		<div class="caption">
-			<a href="/article/list"><i class="fa fa-list"></i>&nbsp;{{ "AllArticles" | trans }}</a>
+			<a href="{{ "/article/list" | url }}"><i class="fa fa-list"></i>&nbsp;{{ "AllArticles" | trans }}</a>
 		</div>
 	</div>
 	<ul class="nav menu_groups_nav">
 		{% for classL1 in article_class_tree.tree.Childs %}
 		<li>
-			<a href="/article/list?class={{ classL1.Value.Id }}">
+			<a href="{{ "/article/list?class=[0]" | format: classL1.Value.Id | url }}">
 				<i class="fa fa-list"></i>{{ classL1.Value.Name | trans }}
 			</a>
 			{% if classL1.Childs.size > 0 %}
 			<ul class="nav childs">
 				{% for classL2 in classL1.Childs %}
 				<li>
-					<a href="/article/list?class={{ classL2.Value.Id }}">
+					<a href="{{ "/article/list?class=[0]" | format: classL2.Value.Id | url }}">
 						<i class="fa fa-list"></i>{{ classL2.Value.Name | trans }}
 					</a>
 				</li>

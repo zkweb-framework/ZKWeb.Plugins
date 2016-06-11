@@ -7,7 +7,7 @@
 	</form>
 	<div class="tags">
 		{% for tag in tag_filter_info.tags %}
-		<a href="/product/list?tag={{ tag.Id }}">{{ tag.Name | trans }}</a>
+		<a href="{{ "/product/list?tag=[0]" | format: tag.Id | url }}">{{ tag.Name | trans }}</a>
 		{% endfor %}
 	</div>
 </div>
