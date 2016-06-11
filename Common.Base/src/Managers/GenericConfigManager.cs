@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,15 +20,20 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 	[ExportMany, SingletonReuse]
 	public class GenericConfigManager {
 		/// <summary>
+		/// 配置属性的缓存
+		/// </summary>
+		public ConcurrentDictionary<Type, GenericConfigAttribute> AttributeCache { get; set; }
+		/// <summary>
 		/// 配置值的缓存
 		/// </summary>
-		protected MemoryCache<string, object> Cache { get; set; }
+		protected MemoryCache<Type, object> ConfigValueCache { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public GenericConfigManager() {
-			Cache = new MemoryCache<string, object>();
+			AttributeCache = new ConcurrentDictionary<Type, GenericConfigAttribute>();
+			ConfigValueCache = new MemoryCache<Type, object>();
 		}
 
 		/// <summary>
@@ -35,8 +41,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// </summary>
 		/// <typeparam name="T">类型</typeparam>
 		/// <returns></returns>
-		private static GenericConfigAttribute GetConfigAttribute<T>() {
-			var attribute = typeof(T).GetAttribute<GenericConfigAttribute>();
+		protected GenericConfigAttribute GetConfigAttribute<T>() {
+			var attribute = AttributeCache.GetOrAdd(
+				typeof(T), t => t.GetAttribute<GenericConfigAttribute>());
 			if (attribute == null) {
 				throw new ArgumentException(string.Format(
 					"type {0} not contains GenericConfigAttribute", typeof(T).Name));
@@ -61,7 +68,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			});
 			// 保存到缓存
 			if (attribute.CacheTime > 0) {
-				Cache.Put(key, value, TimeSpan.FromSeconds(attribute.CacheTime));
+				ConfigValueCache.Put(typeof(T), value, TimeSpan.FromSeconds(attribute.CacheTime));
 			}
 		}
 
@@ -73,7 +80,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			var attribute = GetConfigAttribute<T>();
 			var key = attribute.Key;
 			// 从缓存获取
-			var value = Cache.GetOrDefault(key) as T;
+			var value = ConfigValueCache.GetOrDefault(typeof(T)) as T;
 			if (value != null) {
 				return value;
 			}
@@ -87,7 +94,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			// 允许缓存时设置到缓存
 			value = value ?? new T();
 			if (attribute.CacheTime > 0) {
-				Cache.Put(key, value, TimeSpan.FromSeconds(attribute.CacheTime));
+				ConfigValueCache.Put(typeof(T), value, TimeSpan.FromSeconds(attribute.CacheTime));
 			}
 			return value;
 		}
@@ -99,7 +106,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			var attribute = GetConfigAttribute<T>();
 			var key = attribute.Key;
 			// 从缓存删除
-			Cache.Remove(key);
+			ConfigValueCache.Remove(typeof(T));
 			// 从数据库删除
 			UnitOfWork.WriteData<GenericConfig>(r => r.DeleteWhere(c => c.Key == key));
 		}

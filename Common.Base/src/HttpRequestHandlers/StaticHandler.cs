@@ -12,13 +12,13 @@ using ZKWeb.Web.Interfaces;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Utils.IocContainer;
 
-namespace ZKWeb.Plugins.Common.Base.src.Controllers {
+namespace ZKWeb.Plugins.Common.Base.src.HttpRequestHandlers {
 	/// <summary>
 	/// 静态文件处理器
 	/// 路径规则
-	///		/static/{路径}
+	/// /static/{路径}
 	///	返回文件
-	///		pathManager.GetResourcesPath("static", 路径);
+	/// pathManager.GetResourcesPath("static", 路径);
 	/// 文件不存在时抛出404例外
 	/// </summary>
 	[ExportMany, SingletonReuse]

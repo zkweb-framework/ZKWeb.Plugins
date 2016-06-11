@@ -9,7 +9,7 @@ using ZKWeb.Utils.Functions;
 using ZKWeb.Utils.IocContainer;
 using ZKWeb.Web.Interfaces;
 
-namespace ZKWeb.Plugins.Common.Base.src.Controllers {
+namespace ZKWeb.Plugins.Common.Base.src.HttpRequestHandlers {
 	/// <summary>
 	/// 设置语言和时区
 	/// </summary>

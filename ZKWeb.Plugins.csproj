@@ -236,10 +236,14 @@
     <Compile Include="Common.MenuPage\src\Scaffolding\CrudMenuPageBuilder.cs" />
     <Compile Include="Common.MenuPage\src\Scaffolding\FormMenuPageBuilder.cs" />
     <Compile Include="Common.MenuPage\src\Scaffolding\SimpleMenuPageBuilder.cs" />
+    <Compile Include="Common.PesudoStatic\src\Config\PesudoStaticSettings.cs" />
+    <Compile Include="Common.PesudoStatic\src\HttpRequestHandlers\PesudoStaticHandler.cs" />
+    <Compile Include="Common.PesudoStatic\src\Model\PesudoStaticPolicies.cs" />
     <Compile Include="Common.PesudoStatic\src\Translates\ja_JP.cs" />
     <Compile Include="Common.PesudoStatic\src\Translates\ko_KR.cs" />
     <Compile Include="Common.PesudoStatic\src\Translates\zh_CN.cs" />
     <Compile Include="Common.PesudoStatic\src\Translates\zh_TW.cs" />
+    <Compile Include="Common.PesudoStatic\src\UrlFilters\PesudoStaticUrlFilter.cs" />
     <Compile Include="Common.Region\src\Countries\GB.cs" />
     <Compile Include="Common.Region\src\Extensions\RegionNodeException.cs" />
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelCrudPageBuilder.cs" />
@@ -470,7 +474,7 @@
     <Compile Include="Common.Base\src\FormFieldHandlers\TextBox.cs" />
     <Compile Include="Common.Base\src\Config\LocaleSettings.cs" />
     <Compile Include="Common.Base\src\Config\WebsiteSettings.cs" />
-    <Compile Include="Common.Base\src\Controllers\LocaleHandler.cs" />
+    <Compile Include="Common.Base\src\HttpRequestHandlers\LocaleHandler.cs" />
     <Compile Include="Common.Base\src\FormFieldValidators\RegularExpression.cs" />
     <Compile Include="Common.Base\src\FormFieldValidators\Required.cs" />
     <Compile Include="Common.Base\src\FormFieldValidators\StringLength.cs" />
@@ -508,7 +512,7 @@
     <Compile Include="Common.Base\src\ScheduledTasks\SessionCleaner.cs" />
     <Compile Include="Common.Base\src\Managers\SessionManager.cs" />
     <Compile Include="Common.Base\src\Database\Session.cs" />
-    <Compile Include="Common.Base\src\Controllers\StaticHandler.cs" />
+    <Compile Include="Common.Base\src\HttpRequestHandlers\StaticHandler.cs" />
     <Compile Include="Common.Base\src\TemplateFilters\Filters.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeCssLater.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeJsLater.cs" />
@@ -1281,7 +1285,9 @@
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Common.PesudoStatic\src\AdminSettingsPages\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
