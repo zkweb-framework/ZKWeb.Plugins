@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using ZKWeb.Cache.Interfaces;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -18,11 +19,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 	/// 通用配置管理器
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class GenericConfigManager {
+	public class GenericConfigManager : ICacheCleaner {
 		/// <summary>
 		/// 配置属性的缓存
 		/// </summary>
-		public ConcurrentDictionary<Type, GenericConfigAttribute> AttributeCache { get; set; }
+		protected ConcurrentDictionary<Type, GenericConfigAttribute> AttributeCache { get; set; }
 		/// <summary>
 		/// 配置值的缓存
 		/// </summary>
@@ -77,14 +78,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// </summary>
 		/// <returns></returns>
 		public virtual T GetData<T>() where T : class, new() {
-			var attribute = GetConfigAttribute<T>();
-			var key = attribute.Key;
 			// 从缓存获取
 			var value = ConfigValueCache.GetOrDefault(typeof(T)) as T;
 			if (value != null) {
 				return value;
 			}
 			// 从数据库获取
+			var attribute = GetConfigAttribute<T>();
+			var key = attribute.Key;
 			UnitOfWork.ReadData<GenericConfig>(r => {
 				var config = r.Get(c => c.Key == key);
 				if (config != null) {
@@ -109,6 +110,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			ConfigValueCache.Remove(typeof(T));
 			// 从数据库删除
 			UnitOfWork.WriteData<GenericConfig>(r => r.DeleteWhere(c => c.Key == key));
+		}
+
+		/// <summary>
+		/// 清理缓存
+		/// </summary>
+		public void ClearCache() {
+			ConfigValueCache.Clear();
 		}
 	}
 }

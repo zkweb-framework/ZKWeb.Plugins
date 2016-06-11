@@ -19,9 +19,14 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Config {
 		public bool EnablePesudoStatic { get; set; }
 		/// <summary>
 		/// 伪静态扩展名
-		/// 默认.html
+		/// 默认".html"
 		/// </summary>
 		public string PesudoStaticExtension { get; set; }
+		/// <summary>
+		/// 伪静态参数分隔符
+		/// 默认"-"
+		/// </summary>
+		public char PesudoStaticParamDelimiter { get; set; }
 		/// <summary>
 		/// 伪静态策略
 		/// 默认黑名单策略
@@ -44,6 +49,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Config {
 		public PesudoStaticSettings() {
 			EnablePesudoStatic = true;
 			PesudoStaticExtension = ".html";
+			PesudoStaticParamDelimiter = '-';
 			PesudoStaticPolicy = PesudoStaticPolicies.BlackListPolicy;
 			IncludeUrlPaths = new List<string>();
 			ExcludeUrlPaths = new List<string>();
