@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using DotLiquid.Tags;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
@@ -20,6 +21,14 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 		/// 设置到url时使用的参数名
 		/// </summary>
 		public const string UrlParam = "page";
+		/// <summary>
+		/// 最后一页的别名
+		/// </summary>
+		public const string LastPageAlias = "last";
+		/// <summary>
+		/// 最后一页的值
+		/// </summary>
+		public const int LastPageNo = PaginationExtensions.LastPageNo;
 
 		/// <summary>
 		/// 描画Html到模板
@@ -29,7 +38,12 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 			if (pagination == null) {
 				throw new ArgumentNullException("pagination is null");
 			}
-			var scope = Hash.FromAnonymousObject(new { pagination, urlParam = UrlParam });
+			var scope = Hash.FromAnonymousObject(new {
+				pagination,
+				urlParam = UrlParam,
+				lastPageNo = LastPageNo,
+				lastPageAlias = LastPageAlias
+			});
 			context.Stack(scope, () => {
 				var includeTag = new Include();
 				includeTag.Initialize("include", "common.base/tmpl.url_pagination.html", null);

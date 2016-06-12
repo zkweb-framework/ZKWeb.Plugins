@@ -20,6 +20,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// Ajax表格搜索请求中，需要获取总数量时使用的键
 		/// </summary>
 		public const string AjaxTableRequireTotalCountKey = "RequireTotalCount";
+		/// <summary>
+		/// 最后一页的值
+		/// </summary>
+		public const int LastPageNo = int.MaxValue;
 
 		/// <summary>
 		/// 更新分页信息中的链接列表
@@ -49,7 +53,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			}
 			// 省略号，如果可到达的最后一页不是真正的最后一页，且有分页范围
 			if (!pagination.ReachableLastPageIsLastPage && linkRange > 0) {
-				pagination.Links.Add(new Pagination.Link(int.MaxValue, "...", "ellipsis"));
+				pagination.Links.Add(new Pagination.Link(LastPageNo, "...", "ellipsis"));
 			}
 			// 下一页，末页
 			bool isLastPage = (
@@ -58,7 +62,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				isLastPage ? pageNo : (pageNo + 1),
 				new T("NextPage"), isLastPage ? "disabled" : "enabled"));
 			pagination.Links.Add(new Pagination.Link(
-				int.MaxValue, new T("LastPage"), isLastPage ? "disabled" : "enabled"));
+				LastPageNo, new T("LastPage"), isLastPage ? "disabled" : "enabled"));
 		}
 
 		/// <summary>

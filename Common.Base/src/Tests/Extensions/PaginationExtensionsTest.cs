@@ -13,6 +13,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 		public void Paging() {
 			var pagination = new Pagination();
 			var query = Enumerable.Range(0, 500);
+			var lastPageNo = PaginationExtensions.LastPageNo;
 
 			// pageNo = 1, pageSize = 50, linkRange = 2
 			int pageNo = 1;
@@ -23,7 +24,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			Assert.Equals(pagination.ReachableLastPageNo, 3);
 			Assert.IsTrue(!pagination.ReachableLastPageIsLastPage);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.PageNo).SequenceEqual(
-				new[] { 1, 1, 1, 2, 3, int.MaxValue, 2, int.MaxValue }),
+				new[] { 1, 1, 1, 2, 3, lastPageNo, 2, lastPageNo }),
 				pagination.Links);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.State).SequenceEqual(
 				new[] { "disabled", "disabled",
@@ -38,7 +39,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			Assert.Equals(pagination.ReachableLastPageNo, 2);
 			Assert.IsTrue(!pagination.ReachableLastPageIsLastPage);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.PageNo).SequenceEqual(
-				new[] { 1, 1, 2, 3, int.MaxValue }),
+				new[] { 1, 1, 2, 3, lastPageNo }),
 				pagination.Links);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.State).SequenceEqual(
 				new[] { "enabled", "enabled", "active", "enabled", "enabled" }),
@@ -52,7 +53,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			Assert.Equals(pagination.ReachableLastPageNo, 10);
 			Assert.IsTrue(pagination.ReachableLastPageIsLastPage);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.PageNo).SequenceEqual(
-				new[] { 1, 7, 1, 6, 7, 8, 9, 10, 9, int.MaxValue }),
+				new[] { 1, 7, 1, 6, 7, 8, 9, 10, 9, lastPageNo }),
 				pagination.Links);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.State).SequenceEqual(
 				new[] { "enabled", "enabled", "ellipsis",
@@ -67,7 +68,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			Assert.Equals(pagination.ReachableLastPageNo, 10);
 			Assert.IsTrue(pagination.ReachableLastPageIsLastPage);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.PageNo).SequenceEqual(
-				new[] { 1, 9, 1, 8, 9, 10, 10, int.MaxValue }),
+				new[] { 1, 9, 1, 8, 9, 10, 10, lastPageNo }),
 				pagination.Links);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.State).SequenceEqual(
 				new[] { "enabled", "enabled", "ellipsis",

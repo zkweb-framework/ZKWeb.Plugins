@@ -31,7 +31,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public static StaticTableSearchRequest FromHttpRequest(
 			HttpRequestBase request, int? defaultPageSize = null) {
 			var searchRequest = new StaticTableSearchRequest();
-			searchRequest.PageNo = request.Get(UrlPagination.UrlParam, 0);
+			var pageNo = request.Get<string>(UrlPagination.UrlParam, null);
+			searchRequest.PageNo = ((pageNo == UrlPagination.LastPageAlias) ?
+				UrlPagination.LastPageNo : pageNo.ConvertOrDefault<int>(1));
 			searchRequest.PageSize = request.Get(PageSizeKey, defaultPageSize ?? 50);
 			searchRequest.Keyword = request.Get<string>(KeywordKey);
 			foreach (var pair in request.GetAll()) {

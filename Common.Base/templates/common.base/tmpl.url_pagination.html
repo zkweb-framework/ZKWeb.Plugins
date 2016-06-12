@@ -1,7 +1,12 @@
 ﻿<ul class="pagination">
 	{% for link in pagination.Links %}
 	<li>
-		<a class="{{ link.State }}" href="{{ "" | url_replace_param: urlParam, link.PageNo | url }}" title="{{ link.Name }}">{{ link.Name }}</a>
+		{% if link.PageNo == lastPageNo -%}
+		{% assign pageNo = lastPageAlias -%}
+		{% else -%}
+		{% assign pageNo = link.PageNo -%}
+		{% endif -%}
+		<a class="{{ link.State }}" href="{{ "" | url_replace_param: urlParam, pageNo | url }}" title="{{ link.Name }}">{{ link.Name }}</a>
 	</li>
 	{% endfor %}
 </ul>
