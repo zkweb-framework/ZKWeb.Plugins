@@ -40,12 +40,6 @@
     <Reference Include="DotLiquid">
       <HintPath>..\ZKWeb\ZKWeb\bin\DotLiquid.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\ZKWeb\ZKWeb\bin\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\ZKWeb\ZKWeb\bin\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\ZKWeb\ZKWeb\bin\FluentNHibernate.dll</HintPath>
     </Reference>
@@ -71,6 +65,10 @@
     </Reference>
     <Reference Include="Npgsql">
       <HintPath>..\ZKWeb\ZKWeb\bin\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ZKWeb\ZKWeb\bin\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -239,7 +237,11 @@
     <Compile Include="Common.PesudoStatic\src\AdminSettingsPages\PesudoStaticSettingsForm.cs" />
     <Compile Include="Common.PesudoStatic\src\Config\PesudoStaticSettings.cs" />
     <Compile Include="Common.PesudoStatic\src\HttpRequestHandlers\PesudoStaticHandler.cs" />
+    <Compile Include="Common.PesudoStatic\src\Model\PesudoStaticHttpContext.cs" />
+    <Compile Include="Common.PesudoStatic\src\Model\PesudoStaticHttpRequest.cs" />
     <Compile Include="Common.PesudoStatic\src\Model\PesudoStaticPolicies.cs" />
+    <Compile Include="Common.PesudoStatic\src\Tests\HttpRequestHandlers\PesudoStaticHandlerTest.cs" />
+    <Compile Include="Common.PesudoStatic\src\Tests\UrlFilters\PesudoStaticUrlFilterTest.cs" />
     <Compile Include="Common.PesudoStatic\src\Translates\ja_JP.cs" />
     <Compile Include="Common.PesudoStatic\src\Translates\ko_KR.cs" />
     <Compile Include="Common.PesudoStatic\src\Translates\zh_CN.cs" />

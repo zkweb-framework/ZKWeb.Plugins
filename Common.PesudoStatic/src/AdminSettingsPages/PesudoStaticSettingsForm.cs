@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Config;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Model;
+using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.IocContainer;
 
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.AdminSettingsPages {
@@ -98,10 +99,12 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.AdminSettingsPages {
 				}
 				settings.PesudoStaticParamDelimiter = PesudoStaticParamDelimiter[0];
 				settings.PesudoStaticPolicy = PesudoStaticPolicy;
-				settings.IncludeUrlPaths = IncludeUrlPaths.Split('\n')
-					.Select(t => t.Trim()).Where(t => !string.IsNullOrEmpty(t)).ToList();
-				settings.ExcludeUrlPaths = ExcludeUrlPaths.Split('\n')
-					.Select(t => t.Trim()).Where(t => !string.IsNullOrEmpty(t)).ToList();
+				settings.IncludeUrlPaths.Clear();
+				settings.IncludeUrlPaths.AddRange(IncludeUrlPaths.Split('\n')
+					.Select(t => t.Trim()).Where(t => !string.IsNullOrEmpty(t)));
+				settings.ExcludeUrlPaths.Clear();
+				settings.ExcludeUrlPaths.AddRange(ExcludeUrlPaths.Split('\n')
+					.Select(t => t.Trim()).Where(t => !string.IsNullOrEmpty(t)));
 				configManager.PutData(settings);
 				return new { message = new T("Saved Successfully") };
 			}

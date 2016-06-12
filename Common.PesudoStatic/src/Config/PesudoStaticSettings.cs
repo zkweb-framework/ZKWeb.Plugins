@@ -36,12 +36,12 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Config {
 		/// 包含的Url路径
 		/// 在白名单策略下生效
 		/// </summary>
-		public List<string> IncludeUrlPaths { get; set; }
+		public SortedSet<string> IncludeUrlPaths { get; set; }
 		/// <summary>
 		/// 排除的Url路径
 		/// 在黑名单策略下生效
 		/// </summary>
-		public List<string> ExcludeUrlPaths { get; set; }
+		public SortedSet<string> ExcludeUrlPaths { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -51,8 +51,8 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Config {
 			PesudoStaticExtension = ".html";
 			PesudoStaticParamDelimiter = '-';
 			PesudoStaticPolicy = PesudoStaticPolicies.BlackListPolicy;
-			IncludeUrlPaths = new List<string>();
-			ExcludeUrlPaths = new List<string>();
+			IncludeUrlPaths = new SortedSet<string>();
+			ExcludeUrlPaths = new SortedSet<string>();
 		}
 	}
 }
