@@ -87,16 +87,16 @@ $.fn.ajaxTable = function (options) {
 	};
 	// 到指定页
 	$.ajaxTableType.prototype.toPage = function (pageNo) {
-		this.searchRequest.pageNo = parseInt(pageNo) || 1;
+		this.searchRequest.PageNo = parseInt(pageNo) || 1;
 		this.refresh();
 	};
 	// 到上一页
 	$.ajaxTableType.prototype.toPrevPage = function () {
-		this.toPage(this.searchRequest.pageNo - 1);
+		this.toPage(this.searchRequest.PageNo - 1);
 	};
 	// 到下一页
 	$.ajaxTableType.prototype.toNextPage = function () {
-		this.toPage(this.searchRequest.pageNo + 1);
+		this.toPage(this.searchRequest.PageNo + 1);
 	};
 	// 更新每页显示数量
 	$.ajaxTableType.prototype.updatePageSize = function (size) {
