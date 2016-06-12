@@ -115,8 +115,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			foreach (var field in Form.Fields) {
 				var value = values.GetOrDefault(field.Attribute.Name);
 				if (FieldToProperty.TryGetValue(field, out property)) {
-					property.Second.FastSetValue(property.First,
-						value.ConvertOrDefault(property.Second.PropertyType, null));
+					value = value.ConvertOrDefault(property.Second.PropertyType, null);
+					if (value != null) {
+						property.Second.FastSetValue(property.First, value);
+					}
 				}
 			}
 			// 调用提交时的处理

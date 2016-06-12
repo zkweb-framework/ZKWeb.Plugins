@@ -18,7 +18,6 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters {
 		/// 过滤Url
 		/// </summary>
 		public void Filter(ref string url) {
-			url = url + "/index.html";
 		}
 	}
 }

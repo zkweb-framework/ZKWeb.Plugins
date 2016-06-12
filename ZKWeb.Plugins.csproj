@@ -236,6 +236,7 @@
     <Compile Include="Common.MenuPage\src\Scaffolding\CrudMenuPageBuilder.cs" />
     <Compile Include="Common.MenuPage\src\Scaffolding\FormMenuPageBuilder.cs" />
     <Compile Include="Common.MenuPage\src\Scaffolding\SimpleMenuPageBuilder.cs" />
+    <Compile Include="Common.PesudoStatic\src\AdminSettingsPages\PesudoStaticSettingsForm.cs" />
     <Compile Include="Common.PesudoStatic\src\Config\PesudoStaticSettings.cs" />
     <Compile Include="Common.PesudoStatic\src\HttpRequestHandlers\PesudoStaticHandler.cs" />
     <Compile Include="Common.PesudoStatic\src\Model\PesudoStaticPolicies.cs" />
@@ -1285,9 +1286,7 @@
     <Content Include="Common.Base\templates\common.base\footer.html" />
     <Content Include="Common.Base\templates\common.base\header.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common.PesudoStatic\src\AdminSettingsPages\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
