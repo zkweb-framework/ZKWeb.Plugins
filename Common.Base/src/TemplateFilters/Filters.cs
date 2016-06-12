@@ -63,7 +63,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 				url = HttpContextUtils.CurrentContext.Request.Url.PathAndQuery;
 			}
 			var queryIndex = url.IndexOf('?');
-			var path = queryIndex >= 0 ? url.Substring(0, queryIndex) : "";
+			var path = queryIndex >= 0 ? url.Substring(0, queryIndex) : url;
 			var query = HttpUtility.ParseQueryString(
 				queryIndex >= 0 ? url.Substring(queryIndex + 1) : "");
 			if (value == null) {

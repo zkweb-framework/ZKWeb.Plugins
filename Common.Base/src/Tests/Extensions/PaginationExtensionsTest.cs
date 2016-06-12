@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			Assert.Equals(pagination.ReachableLastPageNo, 3);
 			Assert.IsTrue(!pagination.ReachableLastPageIsLastPage);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.PageNo).SequenceEqual(
-				new[] { 1, 1, 1, 2, 3, int.MaxValue, 1, int.MaxValue }),
+				new[] { 1, 1, 1, 2, 3, int.MaxValue, 2, int.MaxValue }),
 				pagination.Links);
 			Assert.IsTrueWith(pagination.Links.Select(l => l.State).SequenceEqual(
 				new[] { "disabled", "disabled",
@@ -84,7 +84,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			request.Conditions[PaginationExtensions.AjaxTablePaginationLinkRangeKey] = 1;
 			request.Conditions[PaginationExtensions.AjaxTableRequireTotalCountKey] = true;
 			var result = pagination.Paging(request, query);
-			Assert.Equals(request.PageNo, 0);
+			Assert.Equals(request.PageNo, 1);
 			Assert.IsTrueWith(result.SequenceEqual(Enumerable.Range(0, 50)), result);
 			Assert.Equals(pagination.ReachableLastPageNo, 2);
 			Assert.IsTrue(!pagination.ReachableLastPageIsLastPage);
