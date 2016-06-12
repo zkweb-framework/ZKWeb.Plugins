@@ -359,7 +359,6 @@
     <Content Include="CMS.ImageBrowser\templates\cms.imagebrowser\image_list.html" />
     <Content Include="Common.Admin\static\common.admin.js\admin-login.js" />
     <Content Include="Common.Admin\static\common.admin.js\admin-login.min.js" />
-    <Content Include="Common.Base\static\common.base.js\custom\_jquery.setUrlParam.js" />
     <None Include="Common.Base\templates\common.base.widgets\index_help.widget" />
     <Content Include="Common.Base\templates\common.base.widgets\copyright.html" />
     <Content Include="Common.Base\templates\common.base.widgets\index_help.html" />

@@ -35,7 +35,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				// 分页并设置分页信息
 				// 当前页没有任何内容时返回最后一页的数据
 				var queryResult = response.Pagination.Paging(request, query);
-				response.PageIndex = request.PageIndex;
+				response.PageNo = request.PageNo;
 				response.PageSize = request.PageSize;
 				// 选择数据
 				// 默认把对象转换到的字符串保存到ToString中

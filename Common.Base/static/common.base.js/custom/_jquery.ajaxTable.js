@@ -15,7 +15,7 @@ $.fn.ajaxTable = function (options) {
 	}
 	// 设置默认选项
 	options = $.extend({
-		pageIndex: 0,
+		pageNo: 1,
 		pageSize: 50,
 		keyword: null,
 		conditions: {},
@@ -28,7 +28,7 @@ $.fn.ajaxTable = function (options) {
 	table = new $.ajaxTableType();
 	table.options = options;
 	table.searchRequest = {
-		PageIndex: options.pageIndex,
+		PageNo: options.pageNo,
 		PageSize: options.pageSize,
 		Keyword: options.keyword,
 		Conditions: options.conditions
@@ -52,7 +52,7 @@ $.fn.ajaxTable = function (options) {
 			// 载入搜索的结果
 			// 模板已预编译时使用编译的内容，否则重新获取并编译
 			var loadResult = function () {
-				table.searchRequest.PageIndex = data.PageIndex;
+				table.searchRequest.PageNo = data.PageNo;
 				table.searchRequest.PageSize = data.PageSize;
 				table.container.html(table.compiledTemplate({ result: data }));
 				// 绑定分页事件
@@ -86,22 +86,22 @@ $.fn.ajaxTable = function (options) {
 		});
 	};
 	// 到指定页
-	$.ajaxTableType.prototype.toPage = function (pageIndex) {
-		this.searchRequest.PageIndex = parseInt(pageIndex) || 0;
+	$.ajaxTableType.prototype.toPage = function (pageNo) {
+		this.searchRequest.pageNo = parseInt(pageNo) || 1;
 		this.refresh();
 	};
 	// 到上一页
 	$.ajaxTableType.prototype.toPrevPage = function () {
-		this.toPage(this.searchRequest.PageIndex - 1);
+		this.toPage(this.searchRequest.pageNo - 1);
 	};
 	// 到下一页
 	$.ajaxTableType.prototype.toNextPage = function () {
-		this.toPage(this.searchRequest.PageIndex + 1);
+		this.toPage(this.searchRequest.pageNo + 1);
 	};
 	// 更新每页显示数量
 	$.ajaxTableType.prototype.updatePageSize = function (size) {
 		this.searchRequest.PageSize = parseInt(size);
-		this.toPage(0);
+		this.toPage(1);
 	};
 	// 应用搜索条件并提交搜索
 	$.ajaxTableType.prototype.applySearch = function (searchButton) {

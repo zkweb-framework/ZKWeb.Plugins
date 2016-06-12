@@ -104,7 +104,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 			public void OnQuery(
 				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.GenericTag> query) {
 				// 在第一页显示所有分类
-				request.PageIndex = 0;
+				request.PageNo = 0;
 				request.PageSize = 0x7ffffffe;
 				// 提供类型给其他回调
 				request.Conditions["Type"] = Builder.Type;

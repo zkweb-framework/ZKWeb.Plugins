@@ -1,7 +1,7 @@
 ﻿<ul class="pagination">
 	{% for link in pagination.Links %}
 	<li>
-		<a class="{{ link.State }}" data-trigger="set-url-param" data-key="{{ urlParam }}" data-value="{{ link.Page }}" title="{{ link.Name }}">{{ link.Name }}</a>
+		<a class="{{ link.State }}" href="{{ "" | url_replace_param: urlParam, link.PageNo | url }}" title="{{ link.Name }}">{{ link.Name }}</a>
 	</li>
 	{% endfor %}
 </ul>

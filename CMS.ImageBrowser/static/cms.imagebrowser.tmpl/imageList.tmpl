@@ -19,7 +19,7 @@
 					<% if (link.State == "active") { %>
 						<li><input type="text" class="pagination-input form-control" value="<%-link.Name%>" /></li>
 					<% } else { %>
-						<li><a class="<%-link.State%>" data-page="<%-link.Page%>" title="<%-link.Name%>"><%-link.Name%></a></li>
+						<li><a class="<%-link.State%>" data-page="<%-link.PageNo%>" title="<%-link.Name%>"><%-link.Name%></a></li>
 					<% } %>
 				<% }); %>
 			</ul>

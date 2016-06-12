@@ -25,26 +25,27 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// 更新分页信息中的链接列表
 		/// </summary>
 		/// <param name="pagination">分页信息</param>
-		/// <param name="linkRange">分页链接的范围，范围等于2且当前页等于2时显示0~4</param>
+		/// <param name="pageNo">当前页的序号，从1开始</param>
+		/// <param name="linkRange">分页链接的范围，范围等于2且当前页等于2时显示1~5</param>
 		private static void UpdateLinks(
-			this Pagination pagination, int pageIndex, int linkRange) {
+			this Pagination pagination, int pageNo, int linkRange) {
 			pagination.Links.Clear();
 			// 首页, 上一页
-			bool isFirstPage = pageIndex == 0;
+			bool isFirstPage = pageNo <= 1;
 			pagination.Links.Add(new Pagination.Link(
-				0, new T("FirstPage"), isFirstPage ? "disabled" : "enabled"));
+				1, new T("FirstPage"), isFirstPage ? "disabled" : "enabled"));
 			pagination.Links.Add(new Pagination.Link(
-				isFirstPage ? pageIndex : (pageIndex - 1),
+				isFirstPage ? pageNo : (pageNo - 1),
 				new T("PrevPage"), isFirstPage ? "disabled" : "enabled"));
-			// 省略号，如果开始页大于0，且有分页范围
-			int fromPage = (linkRange >= pageIndex) ? 0 : (pageIndex - linkRange);
-			if (fromPage > 0 && linkRange > 0) {
-				pagination.Links.Add(new Pagination.Link(0, "...", "ellipsis"));
+			// 省略号，如果开始页大于1，且有分页范围
+			int fromPageNo = (pageNo - linkRange < 1) ? 1 : (pageNo - linkRange);
+			if (fromPageNo > 1 && linkRange > 0) {
+				pagination.Links.Add(new Pagination.Link(1, "...", "ellipsis"));
 			}
 			// 指定范围内的分页链接
-			for (int i = fromPage; i <= pagination.ReachableLastPage; ++i) {
+			for (int i = fromPageNo; i <= pagination.ReachableLastPageNo; ++i) {
 				pagination.Links.Add(new Pagination.Link(
-					i, (i + 1).ToString(), (i == pageIndex) ? "active" : "enabled"));
+					i, i.ToString(), (i == pageNo) ? "active" : "enabled"));
 			}
 			// 省略号，如果可到达的最后一页不是真正的最后一页，且有分页范围
 			if (!pagination.ReachableLastPageIsLastPage && linkRange > 0) {
@@ -52,9 +53,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			}
 			// 下一页，末页
 			bool isLastPage = (
-				pageIndex == pagination.ReachableLastPage && pagination.ReachableLastPageIsLastPage);
+				pageNo == pagination.ReachableLastPageNo && pagination.ReachableLastPageIsLastPage);
 			pagination.Links.Add(new Pagination.Link(
-				isLastPage ? pageIndex : (pageIndex + 1),
+				isLastPage ? pageNo : (pageNo + 1),
 				new T("NextPage"), isLastPage ? "disabled" : "enabled"));
 			pagination.Links.Add(new Pagination.Link(
 				int.MaxValue, new T("LastPage"), isLastPage ? "disabled" : "enabled"));
@@ -66,7 +67,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// </summary>
 		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="pagination">分页信息</param>
-		/// <param name="pageIndex">页面序号，从0开始</param>
+		/// <param name="pageNo">页面序号，从1开始</param>
 		/// <param name="pageSize">每页数量</param>
 		/// <param name="query">需要分页的数据</param>
 		/// <param name="linkRange">分页链接的范围，默认等于2, 当前页等于2时显示0~4</param>
@@ -74,10 +75,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// <returns></returns>
 		public static IList<TData> Paging<TData>(
 			this Pagination pagination,
-			ref int pageIndex, int pageSize, IEnumerable<TData> query,
+			ref int pageNo, int pageSize, IEnumerable<TData> query,
 			int? linkRange = null, bool? requireTotalCount = null) {
 			// 设置默认参数
-			pageIndex = (pageIndex >= 0) ? pageIndex : 0;
+			var pageIndex = pageNo - 1;
+			if (pageIndex < 0) {
+				pageIndex = 0;
+			}
 			pageSize = (pageSize > 0) ? pageSize : 1;
 			linkRange = linkRange ?? 2;
 			requireTotalCount = requireTotalCount ?? false;
@@ -105,13 +109,17 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			//     结果数量150时，可到达的最后一页是4, 是真正的最后一页
 			//     结果数量50时，可到达的最后一页是2，是真正的最后一页
 			int subQueryCount = subQuery.Count();
-			pagination.ReachableLastPage = (
+			var reachableLastPage = (
 				pageIndex + ((subQueryCount > 0) ? ((subQueryCount - 1) / pageSize) : 0));
-			pagination.ReachableLastPageIsLastPage = (
+			var reachableLastPageIsLastPage = (
 				takeCount == pageSize || takeCount > subQueryCount);
-			if (!pagination.ReachableLastPageIsLastPage) {
-				--pagination.ReachableLastPage;
+			if (!reachableLastPageIsLastPage) {
+				--reachableLastPage;
 			}
+			// 更新页面序号
+			pageNo = pageIndex + 1;
+			pagination.ReachableLastPageNo = reachableLastPage + 1;
+			pagination.ReachableLastPageIsLastPage = reachableLastPageIsLastPage;
 			// 需要时设置总数量
 			if (requireTotalCount.Value) {
 				totalCount = totalCount ?? query.LongCount();
@@ -120,7 +128,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				pagination.TotalCount = null;
 			}
 			// 添加分页链接
-			pagination.UpdateLinks(pageIndex, linkRange ?? 2);
+			pagination.UpdateLinks(pageNo, linkRange ?? 2);
 			// 返回查询结果
 			var result = subQuery.Take(pageSize).ToList();
 			return result;
@@ -137,12 +145,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// <returns></returns>
 		public static IList<TData> Paging<TData>(
 			this Pagination pagination, BaseTableSearchRequest request, IEnumerable<TData> query) {
-			int pageIndex = request.PageIndex;
+			int pageIndex = request.PageNo;
 			int pageSize = request.PageSize;
 			int? linkRange = request.Conditions.GetOrDefault<int?>(AjaxTablePaginationLinkRangeKey);
 			bool? requireTotalCount = request.Conditions.GetOrDefault<bool?>(AjaxTableRequireTotalCountKey);
 			var result = pagination.Paging(ref pageIndex, pageSize, query, linkRange, requireTotalCount);
-			request.PageIndex = pageIndex; // 页面序号有可能改变，需要设置回请求中
+			request.PageNo = pageIndex; // 页面序号有可能改变，需要设置回请求中
 			return result;
 		}
 	}

@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <returns></returns>
 		public static AjaxTableSearchRequest FromJson(string json) {
 			var request = JsonConvert.DeserializeObject<AjaxTableSearchRequest>(json);
-			request.PageIndex = Math.Max(request.PageIndex, 0);
+			request.PageNo = Math.Max(request.PageNo, 0);
 			request.PageSize = Math.Min(Math.Max(request.PageSize, 1), MaxPageSize);
 			request.Conditions = request.Conditions ?? new Dictionary<string, object>();
 			return request;

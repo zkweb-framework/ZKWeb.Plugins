@@ -1,4 +1,4 @@
-﻿{% fetch /api/product/search?{QUERY_STRING} > product_search_result %}
+﻿{% fetch /api/product/search?{*query} > product_search_result %}
 <div class="table-container static-table-container">
 	{% if product_search_result.response.Rows.size > 0 %}
 	<div class="product-list-table">

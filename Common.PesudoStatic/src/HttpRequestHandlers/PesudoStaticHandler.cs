@@ -60,7 +60,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers {
 				} else if (parts.Length % 2 == 1) {
 					// 包含其他参数
 					// 不需要处理解码，构建时会排除需要解码的参数
-					for (int i = 2; i < parts.Length; ++i) {
+					for (int i = 2; i < parts.Length; i += 2) {
 						var key = parts[i - 1];
 						var value = parts[i];
 						if (query[key] == null) {

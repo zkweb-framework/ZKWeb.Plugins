@@ -100,7 +100,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			}
 			var response = new AjaxTableSearchResponse();
 			var result = response.Pagination.Paging(request, query);
-			response.PageIndex = request.PageIndex;
+			response.PageNo = request.PageNo;
 			response.PageSize = request.PageSize;
 			response.Rows.AddRange(result.Select(translation => new Dictionary<string, object>() {
 				{ "Id", HttpUtility.UrlEncode(translation.Original) },

@@ -11,9 +11,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// </summary>
 	public abstract class BaseTableSearchResponse : ILiquidizable {
 		/// <summary>
-		/// 返回的页面序号，从0开始
+		/// 返回的页面序号，从1开始
 		/// </summary>
-		public int PageIndex { get; set; }
+		public int PageNo { get; set; }
 		/// <summary>
 		/// 每页显示数量
 		/// </summary>
@@ -40,7 +40,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		/// <returns></returns>
 		object ILiquidizable.ToLiquid() {
-			return new { PageIndex, PageSize, Pagination, Rows };
+			return new { PageNo, PageSize, Pagination, Rows };
 		}
 	}
 }

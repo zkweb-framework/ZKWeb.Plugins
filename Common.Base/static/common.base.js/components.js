@@ -28,7 +28,6 @@
 // @koala-append "custom/_jquery.requireScript.js"
 // @koala-append "custom/_jquery.requireStyle.js"
 // @koala-append "custom/_jquery.select.js"
-// @koala-append "custom/_jquery.setUrlParam.js"
 // @koala-append "custom/_jquery.switchery.js"
 // @koala-append "custom/_jquery.toast.setup.js"
 // @koala-append "custom/_jquery.fullscreen.js"

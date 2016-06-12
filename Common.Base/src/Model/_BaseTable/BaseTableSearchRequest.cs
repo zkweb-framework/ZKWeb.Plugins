@@ -14,9 +14,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		public static int MaxPageSize = 10000;
 		/// <summary>
-		/// 请求的页面序号，从0开始
+		/// 请求的页面序号，从1开始
 		/// </summary>
-		public int PageIndex { get; set; }
+		public int PageNo { get; set; }
 		/// <summary>
 		/// 每页显示数量
 		/// </summary>

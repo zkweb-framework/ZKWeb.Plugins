@@ -1,5 +1,5 @@
 ﻿{% fetch /api/article/class_info?class={class} > article_class_info %}
-{% fetch /api/article/search?{QUERY_STRING} > article_search_result %}
+{% fetch /api/article/search?{*query} > article_search_result %}
 <div class="portlet">
 	<div class="portlet-title">
 		<div class="caption">

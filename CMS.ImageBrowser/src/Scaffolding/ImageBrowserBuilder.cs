@@ -123,7 +123,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			var response = new AjaxTableSearchResponse();
 			var result = response.Pagination.Paging(request, names);
 			// 返回搜索结果
-			response.PageIndex = request.PageIndex;
+			response.PageNo = request.PageNo;
 			response.PageSize = request.PageSize;
 			response.Rows.AddRange(result.Select(name => {
 				var path = imageManager.GetImageWebPath(

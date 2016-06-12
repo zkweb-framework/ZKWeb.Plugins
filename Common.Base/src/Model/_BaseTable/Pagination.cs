@@ -13,7 +13,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <summary>
 		/// 可到达的最后一页
 		/// </summary>
-		public int ReachableLastPage { get; set; }
+		public int ReachableLastPageNo { get; set; }
 		/// <summary>
 		/// 可到达的最后一页是否真正的最后一页
 		/// </summary>
@@ -41,7 +41,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		/// <returns></returns>
 		object ILiquidizable.ToLiquid() {
-			return new { ReachableLastPage, ReachableLastPageIsLastPage, TotalCount, Links };
+			return new { ReachableLastPageNo, ReachableLastPageIsLastPage, TotalCount, Links };
 		}
 
 		/// <summary>
@@ -50,9 +50,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public class Link : ILiquidizable {
 			/// <summary>
 			/// 页面序号
-			/// 从0开始
+			/// 从1开始
 			/// </summary>
-			public int Page { get; set; }
+			public int PageNo { get; set; }
 			/// <summary>
 			/// 页面名称
 			/// 如果是数字，从1开始（需要显示序号+1）
@@ -73,8 +73,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			/// <summary>
 			/// 初始化
 			/// </summary>
-			public Link(int page, string name, string state) {
-				Page = page;
+			public Link(int pageNo, string name, string state) {
+				PageNo = pageNo;
 				Name = name;
 				State = state;
 			}
@@ -84,7 +84,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			/// </summary>
 			/// <returns></returns>
 			object ILiquidizable.ToLiquid() {
-				return new { Page, Name, State };
+				return new { PageNo, Name, State };
 			}
 		}
 	}

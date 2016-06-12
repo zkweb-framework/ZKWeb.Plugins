@@ -53,6 +53,10 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.HttpRequestHandlers {
 				Assert.IsTrueWith(
 					(result == "/example/view?name=john&key=%26" ||
 					result == "/example/view?key=%26&name=john"), result);
+				result = testUrl("/example/view-name-john-age-50.html");
+				Assert.IsTrueWith(
+					(result == "/example/view?name=john&age=50" ||
+					result == "/example/view?age=50&name=john"), result);
 				Assert.Equals(testUrl("/test-param-nums-error.html"), "/test-param-nums-error.html");
 			}
 		}
