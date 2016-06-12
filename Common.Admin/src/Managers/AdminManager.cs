@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Utils.IocContainer;
 
@@ -76,11 +77,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			var referrer = request.UrlReferrer;
 			// 来源于同一站点时，跳转到来源页面
 			if (referrer != null && referrer.Host == request.Url.Host &&
-				referrer.AbsolutePath != "/admin/logout") {
+				!referrer.AbsolutePath.Contains("/logout") &&
+				!referrer.AbsolutePath.Contains("/login")) {
 				return referrer.PathAndQuery;
 			}
 			// 默认跳转到后台首页
-			return "/admin";
+			return Filters.Url("/admin");
 		}
 	}
 }

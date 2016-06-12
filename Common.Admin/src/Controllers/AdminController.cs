@@ -14,6 +14,7 @@ using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Config;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWeb.Utils.Extensions;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Utils.IocContainer;
@@ -54,7 +55,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			if (user != null && UserTypesGroup.AdminOrParter.Contains(user.Type)) {
-				return new RedirectResult("/admin");
+				return new RedirectResult(Filters.Url("/admin"));
 			}
 			// 否则显示登陆表单
 			var form = new AdminLoginForm();
@@ -77,7 +78,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		public IActionResult Logout() {
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			userManager.Logout();
-			return new RedirectResult("/admin/login");
+			return new RedirectResult(Filters.Url("/admin/login"));
 		}
 
 		/// <summary>

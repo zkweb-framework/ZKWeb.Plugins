@@ -10,6 +10,7 @@ using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWeb.Utils.Functions;
 using ZKWeb.Utils.IocContainer;
 using ZKWeb.Web.ActionResults;
@@ -32,7 +33,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			if (user != null) {
-				return new RedirectResult("/home");
+				return new RedirectResult(Filters.Url("/home"));
 			}
 			// 否则显示注册表单
 			var form = new UserRegForm();
@@ -55,7 +56,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			if (user != null) {
-				return new RedirectResult("/home");
+				return new RedirectResult(Filters.Url("/home"));
 			}
 			// 否则显示登陆表单
 			var form = new UserLoginForm();
@@ -75,7 +76,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		public IActionResult Logout() {
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			userManager.Logout();
-			return new RedirectResult("/user/login");
+			return new RedirectResult(Filters.Url("/user/login"));
 		}
 
 		/// <summary>
