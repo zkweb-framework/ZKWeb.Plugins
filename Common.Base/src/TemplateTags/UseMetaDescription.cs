@@ -10,7 +10,7 @@ using System.Web;
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 设置页面描述
-	/// 需要配合"render_metadata"标签使用
+	/// 需要配合"render_meta_description"标签使用
 	/// <example>
 	/// {% use_meta_description "description" %}
 	/// {% use_meta_description variable %}
@@ -21,12 +21,8 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 		/// 设置页面描述
 		/// </summary>
 		public override void Render(Context context, TextWriter result) {
-			var metadata = (context[RenderMetadata.Key] ?? "").ToString();
-			var description = (context[Markup.Trim()] ?? "").ToString();
-			metadata += string.Format(
-				"<meta name='description' content='{0}' />\r\n",
-				HttpUtility.HtmlAttributeEncode(description));
-			context.Environments[0][RenderMetadata.Key] = metadata; // 设置到顶级空间
+			var keywords = context[Markup.Trim()] ?? "";
+			context.Environments[0][RenderMetaDescription.Key] = keywords; // 设置到顶级空间
 		}
 	}
 }

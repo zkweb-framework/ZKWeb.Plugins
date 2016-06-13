@@ -11,7 +11,7 @@ using System.Collections;
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 设置页面关键词
-	/// 需要配合"render_metadata"标签使用
+	/// 需要配合"render_meta_keywords"标签使用
 	/// <example>
 	/// {% use_meta_keywords "keywords" %}
 	/// {% use_meta_keywords variable %}
@@ -22,15 +22,12 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 		/// 设置页面关键词
 		/// </summary>
 		public override void Render(Context context, TextWriter result) {
-			var metadata = (context[RenderMetadata.Key] ?? "").ToString();
 			var keywords = context[Markup.Trim()] ?? "";
-			var keywordsString = (keywords is IEnumerable) ?
-				string.Join(",", (keywords as IEnumerable).OfType<object>()) :
-				keywords.ToString();
-			metadata += string.Format(
-				"<meta name='keywords' content='{0}' />\r\n",
-				HttpUtility.HtmlAttributeEncode(keywordsString));
-			context.Environments[0][RenderMetadata.Key] = metadata; // 设置到顶级空间
+			if (keywords is IEnumerable<string>) {
+				// 支持传入列表
+				keywords = string.Join(",", (IEnumerable<string>)keywords);
+			}
+			context.Environments[0][RenderMetaKeywords.Key] = keywords; // 设置到顶级空间
 		}
 	}
 }

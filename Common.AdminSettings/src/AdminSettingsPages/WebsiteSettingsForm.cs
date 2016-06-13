@@ -54,6 +54,16 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.AdminSettingsPages {
 			[TextBoxField("CopyrightText", "CopyrightText")]
 			public string CopyrightText { get; set; }
 			/// <summary>
+			/// 页面关键词
+			/// </summary>
+			[TextBoxField("PageKeywords", "PageKeywords")]
+			public string PageKeywords { get; set; }
+			/// <summary>
+			/// 页面描述
+			/// </summary>
+			[TextBoxField("PageDescription", "PageDescription")]
+			public string PageDescription { get; set; }
+			/// <summary>
 			/// 前台Logo
 			/// </summary>
 			[FileUploaderField("FrontPageLogo")]
@@ -92,6 +102,8 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.AdminSettingsPages {
 				var settings = configManager.GetData<WebsiteSettings>();
 				WebsiteName = settings.WebsiteName;
 				DocumentTitleFormat = settings.DocumentTitleFormat;
+				PageKeywords = settings.PageKeywords;
+				PageDescription = settings.PageDescription;
 				CopyrightText = settings.CopyrightText;
 			}
 
@@ -105,6 +117,8 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.AdminSettingsPages {
 				var settings = configManager.GetData<WebsiteSettings>();
 				settings.WebsiteName = WebsiteName;
 				settings.DocumentTitleFormat = DocumentTitleFormat;
+				settings.PageKeywords = PageKeywords;
+				settings.PageDescription = PageDescription;
 				settings.CopyrightText = CopyrightText;
 				configManager.PutData(settings);
 				// 保存Logo

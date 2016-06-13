@@ -221,7 +221,9 @@
     <Compile Include="Common.Base\src\TemplateTags\IncludeCssHere.cs" />
     <Compile Include="Common.Base\src\TemplateTags\RenderIncludedJs.cs" />
     <Compile Include="Common.Base\src\TemplateTags\RenderIncludedCss.cs" />
-    <Compile Include="Common.Base\src\TemplateTags\RenderMetadata.cs" />
+    <Compile Include="Common.Base\src\TemplateTags\RenderExtraMetadata.cs" />
+    <Compile Include="Common.Base\src\TemplateTags\RenderMetaDescription.cs" />
+    <Compile Include="Common.Base\src\TemplateTags\RenderMetaKeywords.cs" />
     <Compile Include="Common.Base\src\TemplateTags\RenderTitle.cs" />
     <Compile Include="Common.Base\src\TemplateTags\UseMetaKeywords.cs" />
     <Compile Include="Common.Base\src\TemplateTags\UseMetaDescription.cs" />

@@ -20,6 +20,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Config {
 		/// </summary>
 		public string DocumentTitleFormat { get; set; }
 		/// <summary>
+		/// 页面关键词
+		/// </summary>
+		public string PageKeywords { get; set; }
+		/// <summary>
+		/// 页面描述
+		/// </summary>
+		public string PageDescription { get; set; }
+		/// <summary>
 		/// 版权信息
 		/// </summary>
 		public string CopyrightText { get; set; }
@@ -30,6 +38,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Config {
 		public WebsiteSettings() {
 			WebsiteName = "ZKWeb Default Website";
 			DocumentTitleFormat = "{title} - {websiteName}";
+			PageKeywords = "";
+			PageDescription = "";
 			CopyrightText = "Copyright © 2016 ZKWeb All rights reserved";
 		}
 	}

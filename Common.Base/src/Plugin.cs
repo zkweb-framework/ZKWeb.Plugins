@@ -30,9 +30,11 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			Template.RegisterTag<IncludeCssLater>("include_css_later");
 			Template.RegisterTag<IncludeJsHere>("include_js_here");
 			Template.RegisterTag<IncludeJsLater>("include_js_later");
+			Template.RegisterTag<RenderExtraMetadata>("render_extra_metadata");
 			Template.RegisterTag<RenderIncludedCss>("render_included_css");
 			Template.RegisterTag<RenderIncludedJs>("render_included_js");
-			Template.RegisterTag<RenderMetadata>("render_metadata");
+			Template.RegisterTag<RenderMetaKeywords>("render_meta_keywords");
+			Template.RegisterTag<RenderMetaDescription>("render_meta_description");
 			Template.RegisterTag<RenderTitle>("render_title");
 			Template.RegisterTag<UrlPagination>("url_pagination");
 			Template.RegisterTag<UseMetaDescription>("use_meta_description");
