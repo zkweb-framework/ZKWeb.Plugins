@@ -1,7 +1,7 @@
 ﻿{% fetch /api/product/tag_filter_info > tag_filter_info %}
 <div class="product-search-bar">
 	{% include_css_here "/static/shopping.product.css/product-widgets.css" %}
-	<form method="get" action="/product/list">
+	<form method="get" action="{{ "/product/list" | url }}">
 		<input class="keyword" name="keyword" value="" placeholder="{{ "Please enter product name" | trans }}" type="text">
 		<input class="submit" value="{{ "Search" | trans }}" type="submit">
 	</form>

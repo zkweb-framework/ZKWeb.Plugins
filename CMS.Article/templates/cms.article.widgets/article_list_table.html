@@ -11,17 +11,22 @@
 			{% endif %}
 		</div>
 		<div class="actions search-bar article-search-bar">
-			<div class="portlet-input input-inline input-medium">
-				<div class="input-group">
-					<input class="form-control keyword" placeholder="{{ "Title/Summary/Author" | trans }}" type="text">
-					<div class="input-group-btn">
-						<a class="btn btn-default search-button" title="{{ "Search" | trans }}">
-							<i class="fa fa-search"></i>
-						</a>
-					</div>
+			<div class="search-bar-body">
+				<div class="portlet-input input-inline input-medium">
+					<form method="get" action="{{ "/article/list" | url }}">
+						<div class="input-group">
+							<input type="text" class="form-control keyword" name="keyword" value="{{ "" | url_get_param: "keyword" }}" placeholder="{{ "Title/Summary/Author" | trans }}">
+							<div class="input-group-btn">
+								<button class="btn btn-default search-button" type="submit" title="{{ "Search" | trans }}">
+									<i class="fa fa-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
+
 	</div>
 	<div class="portlet-body">
 		{% if article_search_result.response.Rows.size > 0 %}

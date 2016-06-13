@@ -1,5 +1,5 @@
 ﻿{
 	"Name": "ProductFilterByTag",
 	"CacheTime": 15,
-	"CacheBy": "Locale"
+	"CacheBy": "Locale,Url"
 }

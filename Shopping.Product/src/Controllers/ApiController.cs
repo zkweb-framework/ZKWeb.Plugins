@@ -119,6 +119,22 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		}
 
 		/// <summary>
+		/// 商品列表排序使用的信息
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/product/sort_info", HttpMethods.POST)]
+		public IActionResult SortInfo() {
+			var sort_orders = new object[] {
+				new { name = "Default", value = "default" },
+				new { name = "BestSales", value = "best_sales" },
+				new { name = "LowerPrice", value = "lower_price" },
+				new { name = "HigherPrice", value = "higher_price" },
+				new { name = "NewestOnSale", value = "newest_on_sale" },
+			};
+			return new JsonResult(new { sort_orders });
+		}
+
+		/// <summary>
 		/// 搜索商品列表
 		/// </summary>
 		/// <returns></returns>

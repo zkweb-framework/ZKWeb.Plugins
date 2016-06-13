@@ -2,19 +2,27 @@
 {% if class_filter_info.tree.Childs.size > 0 %}
 <div class="product-filter-by-class nav-group">
 	<ul>
+		{% assign base_url = "" | url_remove_param: "page" %}
+		{% assign request_class = base_url | url_get_param: "class" %}
 		{% for classL1 in class_filter_info.tree.Childs %}
+		{% assign nameL1 = classL1.Value.Name | trans %}
 		<li>
 			<dl>
 				<dt>
-					<a data-trigger="set-url-param" data-key="class" data-value="{{ classL1.Value.Id }}">
-						{{ classL1.Value.Name | trans }}
-					</a>
+					{% if request_class == classL1.Value.Id %}
+					<a class="selected" href="{{ base_url | url_remove_param: "class" | url }}" title="{{ nameL1 }}">{{ nameL1 }}<i class="fa fa-remove"></i></a>
+					{% else %}
+					<a href="{{ base_url | url_set_param: "class", classL1.Value.Id | url }}" title="{{ nameL1 }}">{{ nameL1 }}</a>
+					{% endif %}
 				</dt>
 				<dd>
 					{% for classL2 in classL1.Childs %}
-					<a data-trigger="set-url-param" data-key="class" data-value="{{ classL2.Value.Id }}">
-						{{ classL2.Value.Name | trans }}
-					</a>
+					{% assign nameL2 = classL2.Value.Name | trans %}
+					{% if request_class == classL2.Value.Id %}
+					<a class="selected" href="{{ base_url | url_remove_param: "class" | url }}" title="{{ nameL2 }}">{{ nameL2 }}<i class="fa fa-remove"></i></a>
+					{% else %}
+					<a href="{{ base_url | url_set_param: "class", classL2.Value.Id | url }}" title="{{ nameL2 }}">{{ nameL2 }}</a>
+					{% endif %}
 					{% endfor %}
 				</dd>
 			</dl>

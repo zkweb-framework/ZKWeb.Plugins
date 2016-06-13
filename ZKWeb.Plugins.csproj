@@ -108,8 +108,11 @@
     <Compile Include="CMS.Article\src\Translates\zh_TW.cs" />
     <Compile Include="CMS.Article\src\Translates\zh_CN.cs" />
     <Content Include="CMS.Article\static\cms.article.css\article-view.css" />
+    <Content Include="CMS.Article\static\cms.article.js\article-list.js" />
+    <Content Include="CMS.Article\static\cms.article.js\article-list.min.js" />
     <Content Include="CMS.Article\templates\cms.article.widgets\article_contents.html" />
     <None Include="CMS.Article\static\cms.article.css\article-view.scss" />
+    <None Include="CMS.Article\static\cms.article.js\koala-config.json" />
     <None Include="CMS.Article\templates\cms.article.widgets\article_contents.widget" />
     <Compile Include="CMS.ImageBrowser\src\Managers\ImageManager.cs" />
     <Compile Include="CMS.ImageBrowser\src\Model\ExtraConfigKeys.cs" />
@@ -317,14 +320,11 @@
     <Compile Include="Shopping.Product\src\ListItemProviders\ProductSalesPropertyListItemProvider.cs" />
     <Compile Include="Shopping.Product\src\Managers\ProductManager.cs" />
     <Content Include="CMS.Article\static\cms.article.css\article-list.css" />
-    <Content Include="CMS.Article\static\cms.article.js\article-list.js" />
-    <Content Include="CMS.Article\static\cms.article.js\article-list.min.js" />
     <Content Include="CMS.Article\templates\cms.article.widgets\article_nav_menu.html" />
     <Content Include="CMS.Article\templates\cms.article.widgets\article_list_nav.html" />
     <Content Include="CMS.Article\templates\cms.article.widgets\article_list_table.html" />
     <None Include="CMS.Article\static\cms.article.css\article-list.scss" />
     <None Include="CMS.Article\static\cms.article.css\koala-config.json" />
-    <None Include="CMS.Article\static\cms.article.js\koala-config.json" />
     <None Include="CMS.Article\templates\cms.article.widgets\article_list_table.widget" />
     <None Include="CMS.Article\templates\cms.article.widgets\article_nav_menu.widget" />
     <None Include="CMS.Article\templates\cms.article.widgets\article_list_nav.widget" />

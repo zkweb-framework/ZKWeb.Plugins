@@ -6,7 +6,7 @@
 		{% else -%}
 		{% assign pageNo = link.PageNo -%}
 		{% endif -%}
-		<a class="{{ link.State }}" href="{{ "" | url_replace_param: urlParam, pageNo | url }}" title="{{ link.Name }}">{{ link.Name }}</a>
+		<a class="{{ link.State }}" href="{{ "" | url_set_param: urlParam, pageNo | url }}" title="{{ link.Name }}">{{ link.Name }}</a>
 	</li>
 	{% endfor %}
 </ul>

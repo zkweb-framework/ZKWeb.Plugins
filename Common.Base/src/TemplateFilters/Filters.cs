@@ -17,8 +17,10 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 	public static class Filters {
 		/// <summary>
 		/// 网站标题
-		/// <example>{{ "Website Title" | website_title }}</example>
-		///	格式见 WebsiteSettings.DocumentTitleFormat
+		/// 格式见 WebsiteSettings.DocumentTitleFormat
+		/// <example>
+		/// {{ "Website Title" | website_title }}
+		/// </example>
 		/// </summary>
 		/// <param name="text">需要翻译的文本</param>
 		/// <returns></returns>
@@ -35,7 +37,9 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 
 		/// <summary>
 		/// 全局过滤网址
-		/// <example>{{ "/example" | url }}</example>
+		/// <example>
+		/// {{ "/example" | url }}
+		/// </example>
 		/// </summary>
 		/// <param name="url"></param>
 		/// <returns></returns>
@@ -48,17 +52,39 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 		}
 
 		/// <summary>
-		/// 替换Url参数，传入的url是空值时使用当前请求的url
+		/// 获取Url参数，传入的url是空值时使用当前请求的url
 		/// <example>
-		/// {{ "" | url_replace_param: "key", "value" | url }}
-		/// {{ test_url | url_replace_param: "key", variable | url }}
+		/// {{ "" | url_get_param: "key" }}
+		/// {{ test_url | url_get_param: variable }}
+		/// </example>
+		/// </summary>
+		/// <param name="url">来源url，空值时使用当前请求的url</param>
+		/// <param name="key">参数</param>
+		/// <returns></returns>
+		public static string UrlGetParam(string url, string key) {
+			if (string.IsNullOrEmpty(url)) {
+				url = HttpContextUtils.CurrentContext.Request.Url.PathAndQuery;
+			}
+			var queryIndex = url.IndexOf('?');
+			if (queryIndex < 0) {
+				return null;
+			}
+			var query = HttpUtility.ParseQueryString(url.Substring(queryIndex + 1));
+			return query[key];
+		}
+
+		/// <summary>
+		/// 设置Url参数，传入的url是空值时使用当前请求的url
+		/// <example>
+		/// {{ "" | url_set_param: "key", "value" | url }}
+		/// {{ test_url | url_set_param: "key", variable | url }}
 		/// </example>
 		/// </summary>
 		/// <param name="url">来源url，空值时使用当前请求的url</param>
 		/// <param name="key">参数</param>
 		/// <param name="value">参数值，等于null时表示移除</param>
 		/// <returns></returns>
-		public static string UrlReplaceParam(string url, string key, object value = null) {
+		public static string UrlSetParam(string url, string key, object value = null) {
 			if (string.IsNullOrEmpty(url)) {
 				url = HttpContextUtils.CurrentContext.Request.Url.PathAndQuery;
 			}
@@ -77,6 +103,21 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 				urlBuilder.Append('?').Append(query.ToString());
 			}
 			return urlBuilder.ToString();
+		}
+
+		/// <summary>
+		/// 删除Url参数，传入的url是空值时使用当前请求的url
+		/// 等于UrlSetParam(url, key, null)
+		/// <example>
+		/// {{ "" | url_remove_param: "key" }}
+		/// {{ test_url | url_remove_param: variable }}
+		/// </example>
+		/// </summary>
+		/// <param name="url">来源url，空值时使用当前请求的url</param>
+		/// <param name="key">参数</param>
+		/// <returns></returns>
+		public static string UrlRemoveParam(string url, string key) {
+			return UrlSetParam(url, key);
 		}
 	}
 }
