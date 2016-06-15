@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Currency.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Model {

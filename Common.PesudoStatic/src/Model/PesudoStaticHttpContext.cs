@@ -2,31 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Configuration;
-using System.Web.Instrumentation;
-using System.Web.Profile;
-using System.Web.SessionState;
-using System.Web.WebSockets;
 
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.Model {
 	/// <summary>
 	/// 伪静态使用的http上下文
 	/// 用于重载请求
 	/// </summary>
-	internal class PesudoStaticHttpContext : HttpContextBase {
+	internal class PesudoStaticHttpContext : IHttpContext {
 		/// <summary>
 		/// 原始的http上下文
 		/// </summary>
-		public HttpContextBase OriginalContext { get; protected set; }
+		public IHttpContext OriginalContext { get; protected set; }
 		/// <summary>
 		/// 重载的http请求
 		/// </summary>
-		public HttpRequestBase OverrideRequest { get; protected set; }
+		public IHttpRequest OverrideRequest { get; protected set; }
 
 		/// <summary>
 		/// 初始化
@@ -34,7 +25,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Model {
 		/// <param name="originalContext">原始的http上下文</param>
 		/// <param name="overrideRequest">重载的http请求</param>
 		public PesudoStaticHttpContext(
-			HttpContextBase originalContext, HttpRequestBase overrideRequest) {
+			IHttpContext originalContext, IHttpRequest overrideRequest) {
 			OriginalContext = originalContext;
 			OverrideRequest = overrideRequest;
 		}
@@ -100,7 +91,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Model {
 		public override ProfileBase Profile {
 			get { return OriginalContext.Profile; }
 		}
-		public override HttpRequestBase Request {
+		public override IHttpRequest Request {
 			get { return OverrideRequest; }
 		}
 		public override HttpResponseBase Response {
@@ -147,7 +138,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Model {
 		public override void AddError(Exception errorInfo) {
 			OriginalContext.AddError(errorInfo);
 		}
-		public override ISubscriptionToken AddOnRequestCompleted(Action<HttpContextBase> callback) {
+		public override ISubscriptionToken AddOnRequestCompleted(Action<IHttpContext> callback) {
 			return OriginalContext.AddOnRequestCompleted(callback);
 		}
 		public override void ClearError() {

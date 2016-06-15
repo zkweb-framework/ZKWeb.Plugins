@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.CMS.Article.src.GenericClasses;
 using ZKWeb.Plugins.CMS.Article.src.Managers;
 using ZKWeb.Plugins.Common.GenericClass.src.Manager;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
+using ZKWeb.Web.Abstractions;
 
 namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 	/// <summary>
@@ -36,7 +36,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 		/// <returns></returns>
 		[Action("api/article/class_info", HttpMethods.POST)]
 		public IActionResult ArticleClassName() {
-			var classId = HttpContextUtils.CurrentContext.Request.Get<long>("class");
+			var classId = HttpManager.CurrentContext.Request.Get<long>("class");
 			var classManager = Application.Ioc.Resolve<GenericClassManager>();
 			var classObj = classManager.GetClass(classId);
 			if (classObj == null || classObj.Type != new ArticleClass().Type) {
@@ -51,7 +51,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 		/// <returns></returns>
 		[Action("api/article/info", HttpMethods.POST)]
 		public IActionResult ArticleInfo() {
-			var articleId = HttpContextUtils.CurrentContext.Request.Get<long>("id");
+			var articleId = HttpManager.CurrentContext.Request.Get<long>("id");
 			var articleManager = Application.Ioc.Resolve<ArticleManager>();
 			var info = articleManager.GetArticleApiInfo(articleId);
 			return new JsonResult(info);

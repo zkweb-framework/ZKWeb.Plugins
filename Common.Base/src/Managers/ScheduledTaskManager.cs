@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
-using System.Web;
 using ZKWeb;
 using ZKWeb.Database;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Base.src.Managers {
 	/// <summary>

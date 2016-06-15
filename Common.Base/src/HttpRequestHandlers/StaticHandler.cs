@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Utils.Extensions;
+using ZKWebStandard.Extensions;
 using ZKWeb.Server;
-using ZKWeb.Web.Interfaces;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWeb.Web;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Base.src.HttpRequestHandlers {
 	/// <summary>
@@ -32,7 +30,7 @@ namespace ZKWeb.Plugins.Common.Base.src.HttpRequestHandlers {
 		/// 处理请求
 		/// </summary>
 		public void OnRequest() {
-			var context = HttpContextUtils.CurrentContext;
+			var context = HttpManager.CurrentContext;
 			var path = context.Request.Path;
 			if (path.StartsWith(Prefix)) {
 				var pathManager = Application.Ioc.Resolve<PathManager>();

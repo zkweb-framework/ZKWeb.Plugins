@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Server;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchedDataMatchers {
 	/// <summary>

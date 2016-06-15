@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
@@ -15,8 +14,8 @@ using ZKWeb.Plugins.Common.Region.src.Model;
 using ZKWeb.Plugins.Common.UserPanel.src.Scaffolding;
 using ZKWeb.Plugins.Shopping.Order.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 	/// <summary>

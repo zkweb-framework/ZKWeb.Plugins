@@ -7,12 +7,10 @@ using System.FastReflection;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Utils.Collections;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Collections;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
@@ -109,7 +107,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// <returns></returns>
 		public object Submit() {
 			// 把提交的值设置到模型
-			var submitValues = HttpContextUtils.CurrentContext.Request.GetAll();
+			var submitValues = HttpManager.CurrentContext.Request.GetAll();
 			var values = Form.ParseValues(submitValues);
 			Pair<object, PropertyInfo> property;
 			foreach (var field in Form.Fields) {

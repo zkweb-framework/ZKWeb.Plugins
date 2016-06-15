@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Currency.src.Managers;
 using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
-using ZKWeb.Utils.Extensions;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 	/// <summary>

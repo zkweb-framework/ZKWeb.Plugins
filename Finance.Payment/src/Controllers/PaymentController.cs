@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
@@ -13,11 +11,12 @@ using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Forms;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
+using ZKWeb.Web.Abstractions;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 	/// <summary>
@@ -35,7 +34,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
 			var form = new TestPaymentForm();
-			if (HttpContextUtils.CurrentContext.Request.HttpMethod == HttpMethods.GET) {
+			if (HttpManager.CurrentContext.Request.HttpMethod == HttpMethods.GET) {
 				form.Bind();
 				return new TemplateResult("finance.payment/test_payment.html", new { form });
 			} else {
@@ -51,7 +50,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		public IActionResult TestApiPay() {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
-			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
+			var id = HttpManager.CurrentContext.Request.Get<long>("id");
 			var form = new TestApiHandler.TestApiPayForm(id);
 			return new JsonResult(form.Submit());
 		}
@@ -64,7 +63,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		[Action("payment/transaction/pay")]
 		public IActionResult Pay() {
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
-			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
+			var id = HttpManager.CurrentContext.Request.Get<long>("id");
 			var html = transactionManager.GetPaymentHtml(id);
 			return new TemplateResult("finance.payment/transaction_pay.html", new { html });
 		}
@@ -77,7 +76,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		[Action("payment/transaction/pay_result")]
 		public IActionResult PayResult() {
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
-			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
+			var id = HttpManager.CurrentContext.Request.Get<long>("id");
 			var html = transactionManager.GetResultHtml(id);
 			return new TemplateResult("finance.payment/transaction_pay_result.html", new { html });
 		}

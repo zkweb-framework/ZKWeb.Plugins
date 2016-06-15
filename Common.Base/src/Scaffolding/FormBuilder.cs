@@ -4,15 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.UI;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
-using ZKWeb.Web.Interfaces;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
+using ZKWeb.Web;
 
 namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
@@ -28,7 +25,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// form.BindValuesFromAnonymousObject(new { Username = "TestUser", Password = "TestPassword" });
 	/// return new TemplateResult("test_form.html", new { form });
 	/// // 提交
-	/// var values = form.ParseValues(HttpContextUtils.CurrentContext.Request.GetParams());
+	/// var values = form.ParseValues(HttpManager.CurrentContext.Request.GetParams());
 	/// var username = values.GetOrDefault[string]("Username");
 	/// var password = values.GetOrDefault[string]("Password");
 	/// </example>
@@ -65,7 +62,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// </summary>
 		/// <param name="html">html构建器</param>
 		protected virtual void RenderFormBeginTag(HtmlTextWriter html) {
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			html.AddAttribute("name", Attribute.Name ?? "");
 			html.AddAttribute("action", Attribute.Action ?? request.Url.PathAndQuery);
 			html.AddAttribute("method", Attribute.Method ?? HttpMethods.POST);

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -14,11 +12,11 @@ using ZKWeb.Plugins.Shopping.Product.src.GenericClasses;
 using ZKWeb.Plugins.Shopping.Product.src.GenericTags;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web.Abstractions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 	/// <summary>
@@ -33,7 +31,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// <returns></returns>
 		[Action("api/product/property_editor")]
 		public IActionResult PropertyEditor() {
-			var categoryId = HttpContextUtils.CurrentContext.Request.Get<long>("categoryId");
+			var categoryId = HttpManager.CurrentContext.Request.Get<long>("categoryId");
 			var categoryManager = Application.Ioc.Resolve<ProductCategoryManager>();
 			// 获取类目
 			var category = categoryManager.GetCategory(categoryId);
@@ -58,7 +56,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// <returns></returns>
 		[Action("api/product/matched_data_binders")]
 		public IActionResult MatchedDataBinders() {
-			var categoryId = HttpContextUtils.CurrentContext.Request.Get<long?>("categoryId");
+			var categoryId = HttpManager.CurrentContext.Request.Get<long?>("categoryId");
 			var conditionBinders = Application.Ioc
 				.ResolveMany<ProductMatchedDataConditionBinder>()
 				.Where(b => b.Init(categoryId)).ToList();
@@ -78,7 +76,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// <returns></returns>
 		[Action("api/product/info", HttpMethods.POST)]
 		public IActionResult ProductInfo() {
-			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
+			var id = HttpManager.CurrentContext.Request.Get<long>("id");
 			var productManager = Application.Ioc.Resolve<ProductManager>();
 			var info = productManager.GetProductApiInfo(id);
 			return new JsonResult(info);

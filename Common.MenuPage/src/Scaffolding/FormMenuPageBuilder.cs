@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.MenuPage.src.Model;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Utils;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
 
 namespace ZKWeb.Plugins.Common.MenuPage.src.Scaffolding {
 	/// <summary>
@@ -37,7 +36,7 @@ namespace ZKWeb.Plugins.Common.MenuPage.src.Scaffolding {
 			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 处理绑定和提交
 			var form = GetForm();
-			if (HttpContextUtils.CurrentContext.Request.HttpMethod == HttpMethods.POST) {
+			if (HttpManager.CurrentContext.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();

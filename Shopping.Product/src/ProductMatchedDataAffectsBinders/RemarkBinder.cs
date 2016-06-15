@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Server;
 using ZKWeb.Templating;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchedDataAffectsBinders {
 	/// <summary>

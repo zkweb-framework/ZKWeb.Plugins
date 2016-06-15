@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Currency.src.Managers;
 using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
+using ZKWeb.Web.Abstractions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// <summary>
@@ -51,7 +50,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		[Action("api/cart/add", HttpMethods.POST)]
 		public IActionResult Add() {
 			HttpRequestChecker.RequieAjaxRequest();
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var productId = request.Get<long>("productId");
 			var matchParameters = request.Get<IDictionary<string, object>>("matchParameters");
 			var isBuyNow = request.Get<bool>("isBuyNow");
@@ -87,7 +86,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		[Action("api/cart/delete", HttpMethods.POST)]
 		public IActionResult Delete() {
 			HttpRequestChecker.RequieAjaxRequest();
-			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
+			var id = HttpManager.CurrentContext.Request.Get<long>("id");
 			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
 			cartProductManager.DeleteCartProduct(id);
 			return new JsonResult(new { message = new T("Delete Successfully") });

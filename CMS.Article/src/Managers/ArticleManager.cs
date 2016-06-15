@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Cache;
 using ZKWeb.Cache.Interfaces;
 using ZKWeb.Plugins.CMS.Article.src.Config;
@@ -13,9 +12,9 @@ using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Server;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 	/// <summary>
@@ -103,7 +102,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 		/// <returns></returns>
 		public virtual StaticTableSearchResponse GetArticleSearchResponseFromHttpRequest() {
 			// 从缓存获取
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var key = request.Url.PathAndQuery;
 			var searchResponse = ArticleSearchResultCache.GetOrDefault(key);
 			if (searchResponse != null) {

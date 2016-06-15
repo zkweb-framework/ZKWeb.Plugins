@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
@@ -16,8 +14,8 @@ using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.ListItemProviders;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 	/// <summary>
@@ -66,7 +64,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 			Handlers = UnitOfWork.ReadData<PaymentApi, List<IPaymentApiHandler>>(r => {
 				var api = string.IsNullOrEmpty(id) ? null : r.GetById(id);
 				var type = api == null ? null : api.Type;
-				type = type ?? HttpContextUtils.CurrentContext.Request.Get<string>("type");
+				type = type ?? HttpManager.CurrentContext.Request.Get<string>("type");
 				return Application.Ioc.ResolvePaymentApiHandlers(type);
 			});
 			Handlers.ForEach(h => h.OnFormCreated(this));
@@ -77,7 +75,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		/// </summary>
 		protected override void OnBind(DatabaseContext context, PaymentApi bindFrom) {
 			// 获取接口类型
-			var type = bindFrom.Type ?? HttpContextUtils.CurrentContext.Request.Get<string>("type");
+			var type = bindFrom.Type ?? HttpManager.CurrentContext.Request.Get<string>("type");
 			if (string.IsNullOrEmpty(type)) {
 				throw new ArgumentException(new T("Payment api type not specificed"));
 			}
@@ -97,7 +95,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		protected override object OnSubmit(DatabaseContext context, PaymentApi saveTo) {
 			// 添加接口时设置类型和创建时间
 			if (saveTo.Id <= 0) {
-				saveTo.Type = HttpContextUtils.CurrentContext.Request.Get<string>("type");
+				saveTo.Type = HttpManager.CurrentContext.Request.Get<string>("type");
 				saveTo.CreateTime = DateTime.UtcNow;
 			}
 			// 保存表单

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
@@ -14,13 +12,13 @@ using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.CustomTranslate.src.Model;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 using ZKWeb.Server;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
 using ZKWeb.Localize;
 using ZKWeb.Web;
-using ZKWeb.Localize.Interfaces;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Cache.Interfaces;
 
@@ -91,7 +89,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取参数并转换到搜索请求
-			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
+			var json = HttpManager.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
 			// 构建搜索回应
 			var query = Translates.Select(t => new Translation() { Original = t.Key, Translated = t.Value });
@@ -127,7 +125,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取参数并执行删除
-			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
+			var json = HttpManager.CurrentContext.Request.Get<string>("json");
 			var original = JsonConvert.DeserializeObject<IList<string>>(json).FirstOrDefault();
 			if (!string.IsNullOrEmpty(original)) {
 				Translates.Remove(original);
@@ -232,7 +230,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			/// 绑定表单
 			/// </summary>
 			protected override void OnBind() {
-				OriginalText = HttpUtility.UrlDecode(HttpContextUtils.CurrentContext.Request.Get<string>("Id"));
+				OriginalText = HttpUtility.UrlDecode(HttpManager.CurrentContext.Request.Get<string>("Id"));
 				TranslatedText = Translator.Translates.GetOrDefault(OriginalText);
 			}
 
@@ -241,7 +239,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			/// </summary>
 			/// <returns></returns>
 			protected override object OnSubmit() {
-				var oldOriginalText = HttpUtility.UrlDecode(HttpContextUtils.CurrentContext.Request.Get<string>("Id"));
+				var oldOriginalText = HttpUtility.UrlDecode(HttpManager.CurrentContext.Request.Get<string>("Id"));
 				if (!string.IsNullOrEmpty(oldOriginalText)) {
 					Translator.Translates.Remove(oldOriginalText);
 				}

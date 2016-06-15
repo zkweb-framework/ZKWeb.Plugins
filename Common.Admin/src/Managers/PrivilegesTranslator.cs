@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Localize;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>

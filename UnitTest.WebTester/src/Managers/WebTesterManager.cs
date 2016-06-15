@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.UnitTest.WebTester.src.Model;
 using ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers;
-using ZKWeb.UnitTest;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.IocContainer;
+using ZKWeb.Testing;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.UnitTest.WebTester.src.Managers {
 	/// <summary>
@@ -48,7 +46,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Managers {
 		/// 初始化
 		/// </summary>
 		public WebTesterManager() {
-			var unitTestManager = Application.Ioc.Resolve<UnitTestManager>();
+			var unitTestManager = Application.Ioc.Resolve<TestManager>();
 			var assemblies = unitTestManager.GetAssembliesForTest();
 			Informations = assemblies.Select(a => new AssemblyTestInfo(a)).ToList();
 			InformationsLock = new object();

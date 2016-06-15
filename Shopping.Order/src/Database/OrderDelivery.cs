@@ -1,13 +1,9 @@
 ﻿using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
-	using Utils.IocContainer;
 	using Logistics = Logistics.src.Database.Logistics;
 
 	/// <summary>

@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Config;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 	/// <summary>
@@ -63,7 +61,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 		/// <returns></returns>
 		public static string UrlGetParam(string url, string key) {
 			if (string.IsNullOrEmpty(url)) {
-				url = HttpContextUtils.CurrentContext.Request.Url.PathAndQuery;
+				url = HttpManager.CurrentContext.Request.Url.PathAndQuery;
 			}
 			var queryIndex = url.IndexOf('?');
 			if (queryIndex < 0) {
@@ -86,7 +84,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 		/// <returns></returns>
 		public static string UrlSetParam(string url, string key, object value = null) {
 			if (string.IsNullOrEmpty(url)) {
-				url = HttpContextUtils.CurrentContext.Request.Url.PathAndQuery;
+				url = HttpManager.CurrentContext.Request.Url.PathAndQuery;
 			}
 			var queryIndex = url.IndexOf('?');
 			var path = queryIndex >= 0 ? url.Substring(0, queryIndex) : url;

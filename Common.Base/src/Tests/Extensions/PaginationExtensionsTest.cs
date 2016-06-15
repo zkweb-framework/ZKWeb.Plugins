@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Utils.UnitTest;
+using ZKWebStandard.Testing;
 
 namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
-	[UnitTest]
+	[Tests]
 	public class PaginationExtensionsTest {
 		public void Paging() {
 			var pagination = new Pagination();

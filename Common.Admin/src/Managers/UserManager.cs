@@ -4,8 +4,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Model;
@@ -14,9 +12,9 @@ using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWeb.Server;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>
@@ -150,7 +148,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// </summary>
 		/// <returns></returns>
 		public virtual string GetUrlRedirectAfterLogin() {
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var referrer = request.UrlReferrer;
 			// 来源于同一站点时，跳转到来源页面
 			if (referrer != null && referrer.Host == request.Url.Host &&

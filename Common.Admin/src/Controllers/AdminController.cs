@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugin;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
@@ -15,11 +14,12 @@ using ZKWeb.Plugins.Common.Base.src.Config;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
+using ZKWeb.Web.Abstractions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>
@@ -59,7 +59,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			}
 			// 否则显示登陆表单
 			var form = new AdminLoginForm();
-			var context = HttpContextUtils.CurrentContext;
+			var context = HttpManager.CurrentContext;
 			if (context.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
@@ -100,7 +100,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(UserTypesGroup.AdminOrParter);
 			var form = new AdminAboutMeForm();
-			var context = HttpContextUtils.CurrentContext;
+			var context = HttpManager.CurrentContext;
 			if (context.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
@@ -122,7 +122,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var websiteSettings = configManager.GetData<WebsiteSettings>();
 			var localeSettings = configManager.GetData<LocaleSettings>();
 			var serverUsername = Environment.UserName;
-			var serverVariables = HttpContextUtils.CurrentContext.Request.ServerVariables;
+			var serverVariables = HttpManager.CurrentContext.Request.ServerVariables;
 			var hostingInfoTable = new DataTable();
 			hostingInfoTable.Columns.Add("Name");
 			hostingInfoTable.Columns.Add("Value");

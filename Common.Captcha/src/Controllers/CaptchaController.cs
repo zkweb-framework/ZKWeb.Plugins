@@ -4,14 +4,13 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Web.Interfaces;
+using ZKWebStandard.Extensions;
+using ZKWeb.Web;
 using ZKWeb.Plugins.Common.Captcha.src.Managers;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
+using ZKWeb.Web.Abstractions;
 
 namespace ZKWeb.Plugins.Common.Captcha.src.Controllers {
 	/// <summary>
@@ -25,7 +24,7 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Controllers {
 		/// <returns></returns>
 		[Action("captcha")]
 		public IActionResult Captcha() {
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var key = request.Get<string>("key");
 			var captchaManager = Application.Ioc.Resolve<CaptchaManager>();
 			return new ImageResult(captchaManager.Generate(key));
@@ -37,7 +36,7 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Controllers {
 		/// <returns></returns>
 		[Action("captcha/audio")]
 		public IActionResult CaptchaAudio() {
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var key = request.Get<string>("key");
 			var captchaManager = Application.Ioc.Resolve<CaptchaManager>();
 			var stream = captchaManager.GetAudioStream(key);

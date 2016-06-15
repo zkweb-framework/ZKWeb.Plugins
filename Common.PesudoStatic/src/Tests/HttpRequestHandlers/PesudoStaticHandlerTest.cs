@@ -3,17 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Config;
 using ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
-using ZKWeb.Utils.UnitTest;
-using ZKWeb.Web.Interfaces;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
+using ZKWebStandard.Testing;
 
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.HttpRequestHandlers {
-	[UnitTest]
+	[Tests]
 	class PesudoStaticHandlerTest {
 		public void OnRequest() {
 			var settings = new PesudoStaticSettings();
@@ -27,7 +25,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.HttpRequestHandlers {
 					var handlerMock = Substitute.For<IHttpRequestHandler>();
 					handlerMock.When(h => h.OnRequest()).Do(callInfo => {
 						if (parsedUrl == null) {
-							parsedUrl = HttpContextUtils.CurrentContext.Request.Url.PathAndQuery;
+							parsedUrl = HttpManager.CurrentContext.Request.Url.PathAndQuery;
 						}
 					});
 					Application.Ioc.Unregister<IHttpRequestHandler>();

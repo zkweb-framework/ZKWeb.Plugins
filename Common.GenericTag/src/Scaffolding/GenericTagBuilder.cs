@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
@@ -13,11 +11,11 @@ using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.GenericTag.src.Repositories;
-using ZKWeb.Utils.Extensions;
+using ZKWebStandard.Extensions;
 using ZKWeb.Localize;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
 using ZKWeb.Database;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 	/// <summary>
@@ -52,9 +50,9 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 		/// <returns></returns>
 		protected override IList<object> GetBatchActionIds() {
 			// 检查是否所有Id都属于指定的类型，防止越权操作
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var actionName = request.Get<string>("action");
-			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
+			var json = HttpManager.CurrentContext.Request.Get<string>("json");
 			var ids = JsonConvert.DeserializeObject<IList<object>>(json);
 			var isAllTagTypeMatched = UnitOfWork.ReadRepository<GenericTagRepository, bool>(r => {
 				return r.IsAllTagsTypeEqualTo(ids, Type);

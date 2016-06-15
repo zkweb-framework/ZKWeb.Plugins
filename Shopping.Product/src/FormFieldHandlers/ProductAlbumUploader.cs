@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.UI;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.FormFieldHandlers;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -13,9 +10,9 @@ using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Templating;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 	/// <summary>
@@ -50,7 +47,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 		public object Parse(FormField field, string value) {
 			var data = new ProductAlbumUploadData();
 			var attribute = (ProductAlbumUploaderAttribute)field.Attribute;
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var uploadHandler = new FileUploader();
 			data.MainImageIndex = request.Get<long>(attribute.Name + "_MainImageIndex");
 			for (int x = 1; x <= ProductAlbumUploadData.MaxImageCount; ++x) {

@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.LanguageSwitcher.src.Config;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
+using ZKWeb.Web.Abstractions;
 
 namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.Controllers {
 	/// <summary>
@@ -36,7 +35,7 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.Controllers {
 		/// <returns></returns>
 		[Action("api/locale/switch_to_language", HttpMethods.POST)]
 		public IActionResult SwitchToLanguage() {
-			var language = HttpContextUtils.CurrentContext.Request.Get<string>("language");
+			var language = HttpManager.CurrentContext.Request.Get<string>("language");
 			HttpContextUtils.PutCookie(LocaleUtils.LanguageKey, language);
 			return new JsonResult(new { script = ScriptStrings.RefreshAfter(0) });
 		}

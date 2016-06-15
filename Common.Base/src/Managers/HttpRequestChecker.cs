@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.Managers {
 	/// <summary>
@@ -18,7 +16,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// </summary>
 		/// <param name="errorMessage">错误信息，没有时使用默认信息</param>
 		public static void RequieAjaxRequest(string errorMessage = null) {
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			if (!request.IsAjaxRequest()) {
 				throw new HttpException(403, errorMessage ?? "Request required to be ajax request");
 			}

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using ZKWeb.Plugins.Common.Base.src.TemplateTags;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
+﻿using ZKWeb.Plugins.Common.Base.src.TemplateTags;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
@@ -29,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="defaultPageSize">默认的每页数量，默认是50</param>
 		/// <returns></returns>
 		public static StaticTableSearchRequest FromHttpRequest(
-			HttpRequestBase request, int? defaultPageSize = null) {
+			IHttpRequest request, int? defaultPageSize = null) {
 			var searchRequest = new StaticTableSearchRequest();
 			var pageNo = request.Get<string>(UrlPagination.UrlParam, null);
 			searchRequest.PageNo = ((pageNo == UrlPagination.LastPageAlias) ?
@@ -37,7 +31,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			searchRequest.PageSize = request.Get(PageSizeKey, defaultPageSize ?? 50);
 			searchRequest.Keyword = request.Get<string>(KeywordKey);
 			foreach (var pair in request.GetAll()) {
-				searchRequest.Conditions[pair.Key] = pair.Value;
+				searchRequest.Conditions[pair.First] = pair.Second;
 			}
 			return searchRequest;
 		}
@@ -48,7 +42,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="defaultPageSize">默认的每页数量，默认是50</param>
 		/// <returns></returns>
 		public static StaticTableSearchRequest FromHttpRequest(int? defaultPageSize = null) {
-			return FromHttpRequest(HttpContextUtils.CurrentContext.Request, defaultPageSize);
+			return FromHttpRequest(HttpManager.CurrentContext.Request, defaultPageSize);
 		}
 	}
 }

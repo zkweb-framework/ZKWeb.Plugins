@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.CMS.ImageBrowser.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
@@ -13,11 +9,10 @@ using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
 
 namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 	/// <summary>
@@ -111,7 +106,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 获取搜索请求
-			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
+			var json = HttpManager.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
 			// 搜索图片列表
 			// 分页时如果没有结果，使用最后一页的结果
@@ -171,7 +166,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 返回删除结果
 			var imageManager = Application.Ioc.Resolve<ImageManager>();
-			var name = HttpContextUtils.CurrentContext.Request.Get<string>("name");
+			var name = HttpManager.CurrentContext.Request.Get<string>("name");
 			imageManager.Remove(CategoryLower, name);
 			return new JsonResult(new { message = new T("Remove Successfully") });
 		}
@@ -241,7 +236,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			protected override object OnSubmit() {
 				// 需要支持直接上传，这里不根据名称获取
 				// 如果是直接上传，文件大小和后缀不会经过事先的检查，这里手动再检查一遍
-				var files = HttpContextUtils.CurrentContext.Request.Files;
+				var files = HttpManager.CurrentContext.Request.Files;
 				var imageFile = files.Count <= 0 ? null : files[0];
 				if (imageFile == null || imageFile.InputStream == null) {
 					throw new HttpException(400, new T("Please select image file"));

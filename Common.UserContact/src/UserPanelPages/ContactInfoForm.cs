@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
@@ -13,8 +12,8 @@ using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.UserContact.src.Repositories;
 using ZKWeb.Plugins.Common.UserPanel.src;
 using ZKWeb.Plugins.Common.UserPanel.src.Scaffolding;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.UserContact.src.UserPanelPages {
 	/// <summary>

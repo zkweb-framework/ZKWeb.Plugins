@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
@@ -14,11 +12,11 @@ using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.GenericClass.src.Repositories;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 using ZKWeb.Localize;
 using ZKWeb.Database;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 
@@ -57,9 +55,9 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 		protected override IList<object> GetBatchActionIds() {
 			// 获取参数
 			// 其中Id列表需要把顺序倒转，用于先删除子分类再删除上级分类
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var actionName = request.Get<string>("action");
-			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
+			var json = HttpManager.CurrentContext.Request.Get<string>("json");
 			var ids = JsonConvert.DeserializeObject<IList<object>>(json).Reverse().ToList();
 			// 检查是否所有Id都属于指定的类型，防止越权操作
 			var isAllClassesTypeMatched = UnitOfWork.ReadRepository<GenericClassRepository, bool>(r => {
@@ -231,7 +229,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// 这个函数只在添加时使用
 			/// </summary>
 			protected Database.GenericClass GetParentClass(DatabaseContext context) {
-				var parentId = HttpContextUtils.CurrentContext.Request.Get<long>("parentId");
+				var parentId = HttpManager.CurrentContext.Request.Get<long>("parentId");
 				if (parentId <= 0) {
 					return null;
 				}

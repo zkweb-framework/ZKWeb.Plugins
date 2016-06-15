@@ -3,16 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Config;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Model;
 using ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters;
-using ZKWeb.Utils.IocContainer;
-using ZKWeb.Utils.UnitTest;
+using ZKWebStandard.Testing;
 
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.UrlFilters {
-	[UnitTest]
+	[Tests]
 	class PesudoStaticUrlFilterTest {
 		public void Filter() {
 			var settings = new PesudoStaticSettings();

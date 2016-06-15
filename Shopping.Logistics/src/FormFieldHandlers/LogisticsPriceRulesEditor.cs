@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Managers;
@@ -14,8 +10,7 @@ using ZKWeb.Plugins.Common.Currency.src.ListItemProviders;
 using ZKWeb.Plugins.Common.Region.src.Config;
 using ZKWeb.Plugins.Shopping.Logistics.src.FormFieldAttributes;
 using ZKWeb.Plugins.Shopping.Logistics.src.Model;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Logistics.src.FormFieldHandlers {
 	/// <summary>

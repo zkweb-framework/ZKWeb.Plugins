@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Forms;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
@@ -11,10 +9,11 @@ using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
+using ZKWeb.Web.Abstractions;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -37,7 +36,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			}
 			// 否则显示注册表单
 			var form = new UserRegForm();
-			if (HttpContextUtils.CurrentContext.Request.HttpMethod == HttpMethods.POST) {
+			if (HttpManager.CurrentContext.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
@@ -60,7 +59,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			}
 			// 否则显示登陆表单
 			var form = new UserLoginForm();
-			if (HttpContextUtils.CurrentContext.Request.HttpMethod == HttpMethods.POST) {
+			if (HttpManager.CurrentContext.Request.HttpMethod == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();

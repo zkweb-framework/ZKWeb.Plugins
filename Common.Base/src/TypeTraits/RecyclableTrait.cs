@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.FastReflection;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Base.src.TypeTraits {
 	/// <summary>

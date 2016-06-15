@@ -4,8 +4,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
@@ -15,10 +13,10 @@ using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWeb.Plugins.Common.Base.src.TypeTraits;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
-using ZKWeb.Web.Interfaces;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
+using ZKWeb.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>
@@ -55,7 +53,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		public virtual void Check(UserTypes[] types, params string[] privileges) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var context = HttpContextUtils.CurrentContext;
+			var context = HttpManager.CurrentContext;
 			if (context != null && context.Request.HttpMethod == HttpMethods.GET &&
 				(user == null || !types.Contains(user.Type))) {
 				// 包含普通用户时跳转到前台登陆页面，否则跳转到后台登陆页面

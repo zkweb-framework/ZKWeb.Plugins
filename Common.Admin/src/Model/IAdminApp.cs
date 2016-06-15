@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Model {
 	/// <summary>

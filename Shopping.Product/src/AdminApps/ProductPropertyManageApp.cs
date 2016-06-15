@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
@@ -11,13 +10,13 @@ using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Localize;
-using ZKWeb.Utils.Extensions;
+using ZKWebStandard.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>

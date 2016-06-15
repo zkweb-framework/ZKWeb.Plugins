@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchParametersDescriptionProviders {
 	/// <summary>

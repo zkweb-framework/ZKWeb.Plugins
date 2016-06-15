@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugin.Interfaces;
 using ZKWeb.Plugins.Common.Captcha.src.Managers;
-using ZKWeb.Templating.AreaSupport;
-using ZKWeb.Utils.IocContainer;
+using ZKWeb.Templating.DynamicContents;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Demo.src {
 	/// <summary>

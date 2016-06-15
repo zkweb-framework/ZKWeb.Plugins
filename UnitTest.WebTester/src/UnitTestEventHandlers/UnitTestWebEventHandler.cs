@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZKWeb.Plugins.UnitTest.WebTester.src.Managers;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.UnitTest.Event;
+﻿using ZKWeb.Plugins.UnitTest.WebTester.src.Managers;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Testing.Events;
 
 namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 	/// <summary>
 	/// 在网页中运行单元测试使用的事件处理器
 	/// </summary>
-	public class UnitTestWebEventHandler : IUnitTestEventHandler {
+	public class UnitTestWebEventHandler : ITestEventHandler {
 		/// <summary>
 		/// 程序集测试开始
 		/// </summary>

@@ -7,21 +7,18 @@ using System.Security.Authentication.ExtendedProtection;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Routing;
-using ZKWeb.Utils.Extensions;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.Model {
 	/// <summary>
 	/// 伪静态使用的http请求
 	/// 用于重载路径相关的成员
 	/// </summary>
-	internal class PesudoStaticHttpRequest : HttpRequestBase {
+	internal class PesudoStaticHttpRequest : IHttpRequest {
 		/// <summary>
 		/// 原始的http请求
 		/// </summary>
-		public HttpRequestBase OriginalRequest { get; protected set; }
+		public IHttpRequest OriginalRequest { get; protected set; }
 		/// <summary>
 		/// 重载的Url
 		/// </summary>
@@ -40,7 +37,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Model {
 		/// </summary>
 		/// <param name="originalRequest">原始的http请求</param>
 		/// <param name="overrideUrl">重载的Url</param>
-		public PesudoStaticHttpRequest(HttpRequestBase originalRequest, Uri overrideUrl) {
+		public PesudoStaticHttpRequest(IHttpRequest originalRequest, Uri overrideUrl) {
 			OriginalRequest = originalRequest;
 			OverrideUrl = overrideUrl;
 			OverrideQueryString = HttpUtility.ParseQueryString(overrideUrl.Query);

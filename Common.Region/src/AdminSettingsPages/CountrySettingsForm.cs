@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Managers;
@@ -12,7 +11,7 @@ using ZKWeb.Plugins.Common.Region.src.Config;
 using ZKWeb.Plugins.Common.Region.src.ListItemProviders;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 using ZKWeb.Localize;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Region.src.AdminSettingsPages {
 	/// <summary>

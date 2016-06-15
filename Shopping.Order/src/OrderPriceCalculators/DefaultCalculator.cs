@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Shopping.Logistics.src.Manager;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 	/// <summary>

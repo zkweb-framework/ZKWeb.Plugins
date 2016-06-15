@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
@@ -11,7 +10,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.TypeTraits;
-using ZKWeb.Utils.Extensions;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks {
 	/// <summary>

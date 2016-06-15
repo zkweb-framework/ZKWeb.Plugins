@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.AdminSettings.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Currency.src.Model;
-using ZKWeb.Utils.Extensions;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Common.Currency.src.ListItemProviders {
 	/// <summary>

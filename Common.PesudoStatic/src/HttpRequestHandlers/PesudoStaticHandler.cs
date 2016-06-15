@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Config;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Model;
 using ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
-using ZKWeb.Web.Interfaces;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
+using ZKWeb.Web;
 
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers {
 	/// <summary>
@@ -30,7 +28,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers {
 				return;
 			}
 			// 判断路径是否以伪静态后缀结尾
-			var context = HttpContextUtils.CurrentContext;
+			var context = HttpManager.CurrentContext;
 			var request = context.Request;
 			var url = request.Url;
 			var path = url.AbsolutePath;

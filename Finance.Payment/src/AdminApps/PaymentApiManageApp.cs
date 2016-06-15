@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.AdminApps;
@@ -16,9 +14,9 @@ using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Forms;
 using ZKWeb.Plugins.Finance.Payment.src.ListItemProviders;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>
@@ -32,7 +30,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 		public override string IconClass { get { return "fa fa-arrow-circle-o-down"; } }
 		protected override IAjaxTableCallback<PaymentApi> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() {
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var type = request.Get<string>("type"); //支付接口类型，没有传入时需要先选择
 			if (string.IsNullOrEmpty(type)) {
 				return new SelectTypeForAddForm();

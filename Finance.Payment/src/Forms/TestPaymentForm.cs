@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
@@ -17,8 +15,8 @@ using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Finance.Payment.src.Repositories;
 using ZKWeb.Server;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 	/// <summary>
@@ -55,7 +53,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		/// </summary>
 		/// <returns></returns>
 		protected PaymentApi GetApiFromRequest() {
-			var id = HttpContextUtils.CurrentContext.Request.Get<long>("id");
+			var id = HttpManager.CurrentContext.Request.Get<long>("id");
 			var api = UnitOfWork.ReadData<PaymentApi, PaymentApi>(r => r.GetById(id));
 			if (api == null) {
 				throw new HttpException(404, new T("Payment api not exist"));

@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Database.UserTypes;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Shopping.Logistics.src.Model;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Logistics.src.Database {
 	/// <summary>

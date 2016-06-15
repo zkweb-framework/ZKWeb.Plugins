@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Logging;
@@ -19,8 +17,8 @@ using ZKWeb.Plugins.Finance.Payment.src.Forms;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Repositories;
 using ZKWeb.Templating;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 	/// <summary>

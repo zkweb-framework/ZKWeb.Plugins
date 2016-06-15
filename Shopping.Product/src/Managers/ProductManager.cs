@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Cache;
 using ZKWeb.Cache.Interfaces;
 using ZKWeb.Localize;
@@ -18,10 +16,10 @@ using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks;
 using ZKWeb.Server;
-using ZKWeb.Utils.Collections;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Collections;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 	/// <summary>
@@ -214,7 +212,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <returns></returns>
 		public virtual StaticTableSearchResponse GetProductSearchResponseFromHttpRequest() {
 			// 从缓存获取
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var key = request.Url.PathAndQuery;
 			var searchResponse = ProductSearchResultCache.GetOrDefault(key);
 			if (searchResponse != null) {

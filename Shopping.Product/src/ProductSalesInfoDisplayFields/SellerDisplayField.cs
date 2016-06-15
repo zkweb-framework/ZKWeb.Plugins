@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
-using System.Web;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 	/// <summary>

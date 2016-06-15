@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
-using System.Linq;
 using System.Speech.Synthesis;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Captcha.src.Model;
 using ZKWeb.Server;
-using ZKWeb.Utils.Collections;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Collections;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
+using System.Drawing;
 
 namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 	/// <summary>

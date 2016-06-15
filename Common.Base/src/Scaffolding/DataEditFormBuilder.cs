@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
@@ -73,7 +71,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual string GetRequestId() {
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var id = request.Get<string>("id") ?? request.Get<string>("Id");
 			return id;
 		}

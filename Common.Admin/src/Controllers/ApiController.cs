@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
@@ -12,12 +10,16 @@ using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Managers;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Web.Interfaces;
+using ZKWebStandard.Extensions;
+using ZKWeb.Web;
 using ZKWeb.Localize;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Utils;
 using ZKWeb.Cache.Interfaces;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Ioc;
+using ZKWeb.Web.Abstractions;
+using ZKWebStandard.Web;
+using System.Net;
+using ZKWeb.Cache;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -52,8 +54,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		[Action("api/cache/clear", HttpMethods.POST)]
 		public IActionResult ClearCache() {
-			var request = HttpContextUtils.CurrentContext.Request;
-			if (!request.IsLocal) {
+			var request = HttpManager.CurrentContext.Request;
+			if (request.RemoteIpAddress != IPAddress.Loopback &&
+				request.RemoteIpAddress != IPAddress.IPv6Loopback) {
 				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 				privilegeManager.Check(UserTypesGroup.Admin);
 			}

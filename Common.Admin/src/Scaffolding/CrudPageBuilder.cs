@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
@@ -15,11 +13,11 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.TypeTraits;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>
@@ -184,7 +182,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(AllowedUserTypes, ViewPrivileges);
 			// 获取参数并转换到搜索请求
-			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
+			var json = HttpManager.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
 			// 表格回调，内置+使用Ioc注册的扩展回调
 			var callbacks = GetTableCallback().WithExtensions();
@@ -199,7 +197,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult AddAction() {
 			var form = GetAddForm();
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			if (request.HttpMethod == HttpMethods.POST) {
 				// 检查权限
@@ -221,7 +219,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult EditAction() {
 			var form = GetEditForm();
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			if (request.HttpMethod == HttpMethods.POST) {
 				// 检查权限
@@ -243,7 +241,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// <returns></returns>
 		protected virtual IActionResult BatchAction() {
 			HttpRequestChecker.RequieAjaxRequest();
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var actionName = request.Get<string>("action");
 			var action = BatchActions.GetOrDefault(actionName);
 			if (action == null) {
@@ -258,7 +256,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IList<object> GetBatchActionIds() {
-			var json = HttpContextUtils.CurrentContext.Request.Get<string>("json");
+			var json = HttpManager.CurrentContext.Request.Get<string>("json");
 			var obj = JsonConvert.DeserializeObject<JToken>(json);
 			if (obj is JArray) {
 				// [ id列表 ]

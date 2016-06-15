@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
-using ZKWeb.Utils.Extensions;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// <summary>

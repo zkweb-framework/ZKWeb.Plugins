@@ -3,18 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.UnitTest.WebTester.src.Managers;
 using ZKWeb.Templating;
-using ZKWeb.Utils.Extensions;
-using ZKWeb.Utils.Functions;
-using ZKWeb.Utils.IocContainer;
+using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Interfaces;
+using ZKWeb.Web;
 
 namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 	/// <summary>
@@ -43,7 +41,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 		/// <returns></returns>
 		protected virtual IActionResult PostAction() {
 			HttpRequestChecker.RequieAjaxRequest();
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			var action = request.Get<string>("action");
 			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
 			if (action == "fetch") {
@@ -74,7 +72,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 		/// </summary>
 		/// <returns></returns>
 		protected override IActionResult Action() {
-			var request = HttpContextUtils.CurrentContext.Request;
+			var request = HttpManager.CurrentContext.Request;
 			if (request.HttpMethod == HttpMethods.POST) {
 				return PostAction();
 			}
