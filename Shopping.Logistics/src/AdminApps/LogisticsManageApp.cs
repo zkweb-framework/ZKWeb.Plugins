@@ -22,6 +22,7 @@ using Newtonsoft.Json;
 using ZKWeb.Plugins.Shopping.Logistics.src.Model;
 using ZKWeb.Plugins.Shopping.Logistics.src.FormFieldAttributes;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 	/// <summary>

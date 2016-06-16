@@ -10,6 +10,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.TypeTraits;
 using ZKWeb.Templating;
+using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {

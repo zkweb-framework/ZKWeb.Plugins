@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.FormFieldHandlers;
@@ -11,8 +8,8 @@ using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Templating;
 using ZKWebStandard.Extensions;
-using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 	/// <summary>
@@ -24,7 +21,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (ProductAlbumUploaderAttribute)field.Attribute;
 			var html = new StringBuilder();
 			var value = (ProductAlbumUploadData)field.Value;
@@ -44,14 +41,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
+		public object Parse(FormField field, IList<string> values) {
 			var data = new ProductAlbumUploadData();
 			var attribute = (ProductAlbumUploaderAttribute)field.Attribute;
 			var request = HttpManager.CurrentContext.Request;
 			var uploadHandler = new FileUploader();
 			data.MainImageIndex = request.Get<long>(attribute.Name + "_MainImageIndex");
 			for (int x = 1; x <= ProductAlbumUploadData.MaxImageCount; ++x) {
-				var image = request.Files[attribute.Name + "_Image_" + x];
+				var image = request.GetPostedFile(attribute.Name + "_Image_" + x);
 				var deleteImage = request.Get<bool>(attribute.Name + "_DeleteImage_" + x);
 				attribute.Check(image);
 				data.UploadedImages.Add(image);

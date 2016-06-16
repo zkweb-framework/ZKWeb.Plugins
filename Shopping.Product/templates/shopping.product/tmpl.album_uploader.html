@@ -7,7 +7,7 @@
 	<div class="form-group">
 		<label class="control-label"> </label>
 		<div class="form-controls file-uploader">
-			<input data-val="true" name="{{ prefix }}_Image_{{ index }}" value="" type="file">
+			<input name="{{ prefix }}_Image_{{ index }}" value="" type="file">
 			<a onclick="$(this).prev().val(null)">{{ "Clear" | trans }}</a>
 			<label class="checkbox-inline">
 				<input name="{{ prefix }}_DeleteImage_{{ index }}" value="true" type="checkbox">{{ "Delete" | trans }}

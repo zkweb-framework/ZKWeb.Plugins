@@ -6,6 +6,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 	/// <summary>
@@ -23,7 +24,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 		/// </summary>
 		public string GetDisplayHtml(DatabaseContext context, Database.Product product) {
 			var seller = product.Seller;
-			return seller == null ? null : HttpUtility.HtmlEncode(seller.Username);
+			return seller == null ? null : HttpUtils.HtmlEncode(seller.Username);
 		}
 	}
 }

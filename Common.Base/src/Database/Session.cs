@@ -5,6 +5,7 @@ using System.Linq;
 using ZKWebStandard.Utils;
 using ZKWeb.Database.UserTypes;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Database {
 	/// <summary>
@@ -59,7 +60,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		/// 重新生成Id
 		/// </summary>
 		public static void ReGenerateId(this Session session) {
-			session.Id = HttpServerUtility.UrlTokenEncode(RandomUtils.SystemRandomBytes(20));
+			session.Id = RandomUtils.SystemRandomBytes(20).ToHex();
 		}
 
 		/// <summary>

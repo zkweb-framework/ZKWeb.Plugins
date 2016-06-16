@@ -7,6 +7,7 @@ using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Templating;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 	/// <summary>

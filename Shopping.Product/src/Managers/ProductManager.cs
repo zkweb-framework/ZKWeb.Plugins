@@ -53,7 +53,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <summary>
 		/// 商品搜索结果的缓存
 		/// </summary>
-		protected IsolatedMemoryCache<string, StaticTableSearchResponse> ProductSearchResultCache { get; set; }
+		protected IsolatedMemoryCache<int, StaticTableSearchResponse> ProductSearchResultCache { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -68,7 +68,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ProductSearchResultCacheTime, 15));
 			ProductCache = new MemoryCache<long, Database.Product>();
 			ProductApiInfoCache = new IsolatedMemoryCache<long, object>("Ident", "Locale");
-			ProductSearchResultCache = new IsolatedMemoryCache<string, StaticTableSearchResponse>("Ident", "Locale");
+			ProductSearchResultCache = (
+				new IsolatedMemoryCache<int, StaticTableSearchResponse>("Ident", "Locale", "Url"));
 		}
 
 		/// <summary>
@@ -212,9 +213,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <returns></returns>
 		public virtual StaticTableSearchResponse GetProductSearchResponseFromHttpRequest() {
 			// 从缓存获取
-			var request = HttpManager.CurrentContext.Request;
-			var key = request.Url.PathAndQuery;
-			var searchResponse = ProductSearchResultCache.GetOrDefault(key);
+			var searchResponse = ProductSearchResultCache.GetOrDefault(0);
 			if (searchResponse != null) {
 				return searchResponse;
 			}
@@ -226,7 +225,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 			var callbacks = new ProductTableCallback().WithExtensions();
 			searchResponse = searchRequest.BuildResponseFromDatabase(callbacks);
 			// 保存到缓存并返回
-			ProductSearchResultCache.Put(key, searchResponse, ProductSearchResultCacheTime);
+			ProductSearchResultCache.Put(0, searchResponse, ProductSearchResultCacheTime);
 			return searchResponse;
 		}
 

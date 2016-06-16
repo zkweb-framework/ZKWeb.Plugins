@@ -9,6 +9,7 @@ using ZKWeb.Plugins.Common.MenuPage.src.Model;
 using ZKWebStandard.Utils;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.MenuPage.src.Scaffolding {
 	/// <summary>
@@ -36,7 +37,7 @@ namespace ZKWeb.Plugins.Common.MenuPage.src.Scaffolding {
 			privilegeManager.Check(AllowedUserTypes, RequiredPrivileges);
 			// 处理绑定和提交
 			var form = GetForm();
-			if (HttpManager.CurrentContext.Request.HttpMethod == HttpMethods.POST) {
+			if (HttpManager.CurrentContext.Request.Method == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();

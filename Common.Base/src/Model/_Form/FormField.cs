@@ -1,8 +1,7 @@
 ﻿using DotLiquid;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
@@ -31,7 +30,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			ValidationAttributes = new List<Attribute>();
 			Value = null;
 		}
-		
+
 		/// <summary>
 		/// 允许直接描画到模板
 		/// </summary>
@@ -47,6 +46,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		public override string ToString() {
 			// 根据验证器添加html属性
 			var htmlAttributes = new Dictionary<string, string>();
+			if (ValidationAttributes.Count > 0) {
+				htmlAttributes["data-val"] = "true"; // jquery.validate.unobtrusive使用的属性
+			}
 			foreach (var validatorAttribute in ValidationAttributes) {
 				var validator = Application.Ioc.Resolve<IFormFieldValidator>(serviceKey: validatorAttribute.GetType());
 				validator.AddHtmlAttributes(this, validatorAttribute, htmlAttributes);

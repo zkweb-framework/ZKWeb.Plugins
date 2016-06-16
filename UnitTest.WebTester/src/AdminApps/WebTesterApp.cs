@@ -14,6 +14,7 @@ using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
 using ZKWebStandard.Web;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 	/// <summary>
@@ -74,7 +75,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 		/// <returns></returns>
 		protected override IActionResult Action() {
 			var request = HttpManager.CurrentContext.Request;
-			if (request.HttpMethod == HttpMethods.POST) {
+			if (request.Method == HttpMethods.POST) {
 				return PostAction();
 			}
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();

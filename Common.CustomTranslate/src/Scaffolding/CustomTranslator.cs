@@ -21,6 +21,7 @@ using ZKWeb.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Cache;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 	/// <summary>
@@ -101,7 +102,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			response.PageNo = request.PageNo;
 			response.PageSize = request.PageSize;
 			response.Rows.AddRange(result.Select(translation => new Dictionary<string, object>() {
-				{ "Id", HttpUtility.UrlEncode(translation.Original) },
+				{ "Id", HttpUtils.UrlEncode(translation.Original) },
 				{ "OriginalText", translation.Original },
 				{ "TranslatedText", translation.Translated },
 				{ "ToString", translation.ToString() }
@@ -230,7 +231,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			/// 绑定表单
 			/// </summary>
 			protected override void OnBind() {
-				OriginalText = HttpUtility.UrlDecode(HttpManager.CurrentContext.Request.Get<string>("Id"));
+				OriginalText = HttpUtils.UrlDecode(HttpManager.CurrentContext.Request.Get<string>("Id"));
 				TranslatedText = Translator.Translates.GetOrDefault(OriginalText);
 			}
 
@@ -239,7 +240,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 			/// </summary>
 			/// <returns></returns>
 			protected override object OnSubmit() {
-				var oldOriginalText = HttpUtility.UrlDecode(HttpManager.CurrentContext.Request.Get<string>("Id"));
+				var oldOriginalText = HttpUtils.UrlDecode(HttpManager.CurrentContext.Request.Get<string>("Id"));
 				if (!string.IsNullOrEmpty(oldOriginalText)) {
 					Translator.Translates.Remove(oldOriginalText);
 				}

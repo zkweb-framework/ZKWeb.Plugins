@@ -19,6 +19,7 @@ using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// <summary>
@@ -59,7 +60,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			// 否则显示登陆表单
 			var form = new AdminLoginForm();
 			var context = HttpManager.CurrentContext;
-			if (context.Request.HttpMethod == HttpMethods.POST) {
+			if (context.Request.Method == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
@@ -100,7 +101,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			privilegeManager.Check(UserTypesGroup.AdminOrParter);
 			var form = new AdminAboutMeForm();
 			var context = HttpManager.CurrentContext;
-			if (context.Request.HttpMethod == HttpMethods.POST) {
+			if (context.Request.Method == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
@@ -121,11 +122,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var websiteSettings = configManager.GetData<WebsiteSettings>();
 			var localeSettings = configManager.GetData<LocaleSettings>();
 			var serverUsername = Environment.UserName;
-			var serverVariables = HttpManager.CurrentContext.Request.ServerVariables;
-			var hostingInfoTable = new DataTable();
-			hostingInfoTable.Columns.Add("Name");
-			hostingInfoTable.Columns.Add("Value");
-			serverVariables.AllKeys.ForEach(k => hostingInfoTable.Rows.Add(k, serverVariables[k]));
 			var zkwebVersion = Application.Version;
 			var zkwebFullVersion = Application.FullVersion;
 			var memoryUsage = SystemUtils.GetUsedMemoryBytes() / 1024 / 1024;
@@ -142,7 +138,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 				defaultLanguage = localeSettings.DefaultLanguage,
 				defaultTimeZone = localeSettings.DefaultTimezone,
 				serverUsername = serverUsername,
-				hostingInfoTable = hostingInfoTable.ToHtml(),
 				zkwebVersion = zkwebVersion.ToString(),
 				zkwebFullVersion = zkwebFullVersion,
 				memoryUsage = memoryUsage,

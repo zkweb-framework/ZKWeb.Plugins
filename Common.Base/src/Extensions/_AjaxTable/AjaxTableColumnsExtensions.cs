@@ -6,7 +6,9 @@ using System.Text;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Templating;
+using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 	/// <summary>
@@ -62,8 +64,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			var column = new AjaxTableColumn() {
 				Key = member,
 				Width = width,
-				HeadTemplate = HttpUtility.HtmlEncode(new T(member)),
-				CellTemplate = string.Format("<%-row.{0}%>", HttpUtility.HtmlAttributeEncode(member))
+				HeadTemplate = HttpUtils.HtmlEncode(new T(member)),
+				CellTemplate = string.Format("<%-row.{0}%>", HttpUtils.HtmlEncode(member))
 			};
 			columns.Add(column);
 			return column;
@@ -81,8 +83,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			var column = new AjaxTableColumn() {
 				Key = member,
 				Width = width,
-				HeadTemplate = HttpUtility.HtmlEncode(new T(member)),
-				CellTemplate = string.Format("<%=row.{0}%>", HttpUtility.HtmlAttributeEncode(member))
+				HeadTemplate = HttpUtils.HtmlEncode(new T(member)),
+				CellTemplate = string.Format("<%=row.{0}%>", HttpUtils.HtmlEncode(member))
 			};
 			columns.Add(column);
 			return column;
@@ -110,7 +112,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			var column = new AjaxTableColumn() {
 				Key = member,
 				Width = width,
-				HeadTemplate = HttpUtility.HtmlEncode(new T(member)),
+				HeadTemplate = HttpUtils.HtmlEncode(new T(member)),
 				CellTemplate = templateManager.RenderTemplate(
 					"common.base/tmpl.ajax_table.label_column_cell.html",
 					new { classMapping, nameMapping, member })
@@ -135,7 +137,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			var column = new AjaxTableColumn() {
 				Key = member,
 				Width = width,
-				HeadTemplate = HttpUtility.HtmlEncode(new T(member)),
+				HeadTemplate = HttpUtils.HtmlEncode(new T(member)),
 				CellTemplate = templateManager.RenderTemplate(
 					"common.base/tmpl.ajax_table.image_column_cell.html",
 					new { member, imageWidth, imageHeight })
@@ -160,7 +162,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			var column = new AjaxTableColumn() {
 				Key = nameMember,
 				Width = width,
-				HeadTemplate = HttpUtility.HtmlEncode(new T(nameMember)),
+				HeadTemplate = HttpUtils.HtmlEncode(new T(nameMember)),
 				CellTemplate = templateManager.RenderTemplate(
 					"common.base/tmpl.ajax_table.tree_node_column_cell.html",
 					new { nameMember, levelMember, noChildsMember })
@@ -183,7 +185,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			var column = new AjaxTableColumn() {
 				Key = member,
 				Width = width,
-				HeadTemplate = HttpUtility.HtmlEncode(new T(member)),
+				HeadTemplate = HttpUtils.HtmlEncode(new T(member)),
 				CellTemplate = templateManager.RenderTemplate(
 					"common.base/tmpl.ajax_table.onclick_cell.html",
 					new { member, onClick })

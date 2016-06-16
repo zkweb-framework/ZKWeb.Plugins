@@ -1,17 +1,12 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Region.src.Config;
 using ZKWeb.Plugins.Common.Region.src.FormFieldAttributes;
 using ZKWeb.Plugins.Common.Region.src.Model;
-using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWeb.Templating;
 
 namespace ZKWeb.Plugins.Common.Region.src.FormFieldHandlers {
 	/// <summary>
@@ -23,35 +18,25 @@ namespace ZKWeb.Plugins.Common.Region.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (RegionEditorAttribute)field.Attribute;
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var regionSettings = configManager.GetData<RegionSettings>();
-			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("require-script", "/static/common.region.js/region-editor.min.js");
-			html.AddAttribute("require-style", "/static/common.region.css/region-editor.css");
-			html.AddAttribute("class", "region-editor");
-			html.AddAttribute("data-trigger", "region-editor");
-			html.AddAttribute("data-display-country-dropdown", JsonConvert.SerializeObject(
-				attribute.DisplayCountryDropdown ?? regionSettings.DisplayCountryDropdown));
-			html.RenderBeginTag("div");
-			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttribute("value", JsonConvert.SerializeObject(field.Value));
-			html.AddAttribute("type", "hidden");
-			html.AddAttributes(provider.FormControlAttributes);
-			html.AddAttributes(htmlAttributes);
-			html.RenderBeginTag("input");
-			html.RenderEndTag(); // input
-			html.RenderEndTag(); // div
-			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			return templateManager.RenderTemplate("common.region/tmpl.region_editor.html", new {
+				name = attribute.Name,
+				value = JsonConvert.SerializeObject(field.Value),
+				attributes = htmlAttributes,
+				displayCountryDropdown = JsonConvert.SerializeObject(
+					attribute.DisplayCountryDropdown ?? regionSettings.DisplayCountryDropdown)
+			});
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
-			return JsonConvert.DeserializeObject<CountryAndRegion>(value) ?? new CountryAndRegion();
+		public object Parse(FormField field, IList<string> values) {
+			return JsonConvert.DeserializeObject<CountryAndRegion>(values[0]) ?? new CountryAndRegion();
 		}
 	}
 }

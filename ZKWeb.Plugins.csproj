@@ -292,9 +292,11 @@
     <Content Include="Common.Base\templates\common.base\tmpl.tab_form.end_tag.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.tab_form.begin_tag.html" />
     <Content Include="Common.Captcha\templates\common.captcha\tmpl.form.captcha.html" />
+    <Content Include="Common.Region\templates\common.region\tmpl.region_editor.html" />
     <Content Include="Common.UserPanel\templates\common.user_panel\generic_add.html" />
     <Content Include="Common.UserPanel\templates\common.user_panel\generic_edit.html" />
     <Content Include="Common.UserPanel\templates\common.user_panel\generic_list.html" />
+    <Content Include="Shopping.Logistics\templates\shopping.logistics\tmpl.price_rules_editor.html" />
     <Content Include="Shopping.Order\static\shopping.order.css\cart-minicart.css" />
     <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.min.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\custom\_minicart.js" />
@@ -464,7 +466,6 @@
     <Compile Include="Common.Base\src\Scaffolding\FormBuilder.cs" />
     <Compile Include="Common.Captcha\src\FormFieldHandlers\Captcha.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\CheckBox.cs" />
-    <Compile Include="Common.Base\src\Scaffolding\FormHtmlProvider.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\DropdownList.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\FileUploader.cs" />
     <Compile Include="Common.Base\src\FormFieldHandlers\Hidden.cs" />
@@ -981,6 +982,9 @@
     <Content Include="CMS.CKEditor\static\ckeditor\skins\office2013\images\lock.png" />
     <Content Include="CMS.CKEditor\static\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="CMS.CKEditor\static\ckeditor\styles.js" />
+    <Content Include="Shopping.Product\templates\shopping.product\tmpl.form.product_matched_data_editor.html" />
+    <Content Include="Shopping.Product\templates\shopping.product\tmpl.form.product_to_property_values_editor.html" />
+    <Content Include="Shopping.Product\templates\shopping.product\tmpl.form.product_property_values_editor.html" />
     <Content Include="UnitTest.WebTester\static\unittest.webtester.css\webtester.css" />
     <Content Include="UnitTest.WebTester\static\unittest.webtester.js\webtester.js" />
     <Content Include="UnitTest.WebTester\static\unittest.webtester.js\webtester.min.js" />

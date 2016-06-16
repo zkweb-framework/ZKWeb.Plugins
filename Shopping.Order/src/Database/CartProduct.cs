@@ -8,6 +8,7 @@ using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
+	using ZKWebStandard.Ioc;
 	using Product = Product.src.Database.Product;
 
 	/// <summary>

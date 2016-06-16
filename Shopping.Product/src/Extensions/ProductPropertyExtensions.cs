@@ -6,6 +6,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Templating;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 	/// <summary>

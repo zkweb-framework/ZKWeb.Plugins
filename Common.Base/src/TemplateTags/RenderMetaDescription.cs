@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using ZKWeb.Plugins.Common.Base.src.Config;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
@@ -32,7 +33,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 				description = settings.PageDescription;
 			}
 			result.Write(string.Format("<meta name='description' content='{0}' />",
-				HttpUtility.HtmlAttributeEncode(description)));
+				HttpUtils.HtmlEncode(description)));
 		}
 	}
 }

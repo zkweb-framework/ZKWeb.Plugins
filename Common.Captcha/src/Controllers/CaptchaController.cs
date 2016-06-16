@@ -10,6 +10,7 @@ using ZKWeb.Web;
 using ZKWeb.Plugins.Common.Captcha.src.Managers;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Captcha.src.Controllers {
 	/// <summary>

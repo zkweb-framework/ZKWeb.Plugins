@@ -1,4 +1,4 @@
-﻿<select name="{{ name }}" class="form-control" data-val="true" {{ attributes | html_attributes }}>
+﻿<select name="{{ name }}" class="form-control" {{ attributes | html_attributes }}>
 	{% for option in options %}
 	{% if option.selected %}
 	<option value="{{ option.value }}" selected="selected">{{ option.name }}</option>

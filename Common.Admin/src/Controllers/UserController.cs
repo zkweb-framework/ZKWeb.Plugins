@@ -13,6 +13,7 @@ using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -35,7 +36,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			}
 			// 否则显示注册表单
 			var form = new UserRegForm();
-			if (HttpManager.CurrentContext.Request.HttpMethod == HttpMethods.POST) {
+			if (HttpManager.CurrentContext.Request.Method == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
@@ -58,7 +59,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			}
 			// 否则显示登陆表单
 			var form = new UserLoginForm();
-			if (HttpManager.CurrentContext.Request.HttpMethod == HttpMethods.POST) {
+			if (HttpManager.CurrentContext.Request.Method == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
@@ -25,7 +26,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 			}
 			result.Write(string.Format(
 				"<script src='{0}' type='text/javascript'></script>",
-				HttpUtility.HtmlAttributeEncode(path)));
+				HttpUtils.HtmlEncode(path)));
 		}
 	}
 }

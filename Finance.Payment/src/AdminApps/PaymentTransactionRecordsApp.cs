@@ -20,6 +20,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.AdminApps;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Web;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 	/// <summary>

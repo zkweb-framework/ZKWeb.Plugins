@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
+	using ZKWebStandard.Ioc;
 	using Logistics = Logistics.src.Database.Logistics;
 
 	/// <summary>

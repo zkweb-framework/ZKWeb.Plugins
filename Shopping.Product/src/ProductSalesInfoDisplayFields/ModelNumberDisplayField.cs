@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 	/// <summary>
@@ -31,7 +32,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 			// 没有时返回null
 			var value = product.FindPropertyValuesWhereNameContains(Name).FirstOrDefault();
 			if (value != null) {
-				return HttpUtility.HtmlEncode(value.PropertyValueName);
+				return HttpUtils.HtmlEncode(value.PropertyValueName);
 			}
 			return null;
 		}

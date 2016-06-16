@@ -1,15 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Shopping.Product.src.FormFieldAttributes;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
-using ZKWebStandard.Extensions;
+using ZKWeb.Templating;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
@@ -22,35 +17,27 @@ namespace ZKWeb.Plugins.Shopping.Product.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (ProductPropertyValuesEditorAttribute)field.Attribute;
-			var html = new HtmlTextWriter(new StringWriter());
 			var translations = new Dictionary<string, string>() {
 				{ "Name", new T("Name") },
 				{ "Remark", new T("Remark") }
 			};
-			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttribute("value", JsonConvert.SerializeObject(field.Value));
-			html.AddAttribute("type", "hidden");
-			html.AddAttributes(provider.FormControlAttributes);
-			html.AddAttributes(htmlAttributes);
-			html.RenderBeginTag("input");
-			html.RenderEndTag();
-			html.AddAttribute("class", "product-property-values-editor");
-			html.AddAttribute("data-toggle", "product-property-values-editor");
-			html.AddAttribute("data-property-values-name", attribute.Name);
-			html.AddAttribute("data-translations", JsonConvert.SerializeObject(translations));
-			html.RenderBeginTag("div");
-			html.RenderEndTag();
-			return html.InnerWriter.ToString();
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			return templateManager.RenderTemplate(
+				"shopping.product/tmpl.form.product_property_values_editor.html", new {
+					name = attribute.Name,
+					value = JsonConvert.SerializeObject(field.Value),
+					attributes = htmlAttributes,
+					translations = JsonConvert.SerializeObject(translations)
+				});
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
-			return JsonConvert.DeserializeObject<List<ProductPropertyValueForEdit>>(value) ??
+		public object Parse(FormField field, IList<string> values) {
+			return JsonConvert.DeserializeObject<List<ProductPropertyValueForEdit>>(values[0]) ??
 				new List<ProductPropertyValueForEdit>();
 		}
 	}

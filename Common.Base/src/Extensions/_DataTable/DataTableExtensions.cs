@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
+﻿using System.Data;
 using System.Text;
 using ZKWeb.Localize;
+using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 	/// <summary>
@@ -23,15 +22,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		public static HtmlString ToHtml(this DataTable table,
 			string tableClass = null, string tableHeadRowClass = null) {
 			var htmlBuilder = new StringBuilder();
-			tableClass = HttpUtility.HtmlAttributeEncode(tableClass ?? "table table-bordered table-hover");
-			tableHeadRowClass = HttpUtility.HtmlAttributeEncode(tableHeadRowClass ?? "heading");
+			tableClass = HttpUtils.HtmlEncode(tableClass ?? "table table-bordered table-hover");
+			tableHeadRowClass = HttpUtils.HtmlEncode(tableHeadRowClass ?? "heading");
 			htmlBuilder.AppendFormat("<table class='{0}'>", tableClass);
 			htmlBuilder.AppendFormat("<thead><tr role='row' class='{0}'>", tableHeadRowClass);
 			foreach (DataColumn column in table.Columns) {
-				var width = HttpUtility.HtmlAttributeEncode(
+				var width = HttpUtils.HtmlEncode(
 					(column.ExtendedProperties["width"] ?? "").ToString());
 				var allowHtml = column.ExtendedProperties["allowHtml"].ConvertOrDefault<bool>();
-				var caption = allowHtml ? column.Caption : HttpUtility.HtmlEncode(column.Caption);
+				var caption = allowHtml ? column.Caption : HttpUtils.HtmlEncode(column.Caption);
 				htmlBuilder.AppendFormat("<th width='{0}'>{1}</th>", width, new T(caption));
 			}
 			htmlBuilder.Append("</tr></thead><tbody>");
@@ -39,7 +38,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				htmlBuilder.Append("<tr role='row'>");
 				foreach (DataColumn column in table.Columns) {
 					var data = row[column];
-					var html = (data is HtmlString) ? data : HttpUtility.HtmlEncode((data ?? "").ToString());
+					var html = (data is HtmlString) ? data : HttpUtils.HtmlEncode((data ?? "").ToString());
 					htmlBuilder.AppendFormat("<td>{0}</td>", html);
 				}
 				htmlBuilder.Append("</tr>");

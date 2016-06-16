@@ -1,13 +1,10 @@
-﻿using NHibernate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Database;
-using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
-using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Managers {
 	/// <summary>
@@ -27,31 +24,30 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// </summary>
 		/// <returns></returns>
 		public virtual Session GetSession() {
-			// 从http上下文中获取会话
+			// 从Http上下文中获取会话
 			// 因为一次请求中可能会调用多次GetSession，应该确保返回同一个对象
-			var session = HttpContextUtils.GetData<Session>(SessionKey, null);
+			var context = HttpManager.CurrentContext;
+			var session = context.GetData<Session>(SessionKey, null);
 			if (session != null) {
 				return session;
 			}
 			// 从数据库中获取会话
 			var dabaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			string id = HttpContextUtils.GetCookie(SessionKey);
+			string id = context.GetCookie(SessionKey);
 			if (!string.IsNullOrEmpty(id)) {
-				using (var context = dabaseManager.GetContext()) {
-					session = context.Get<Session>(s => s.Id == id);
-				}
+				session = UnitOfWork.ReadData<Session, Session>(r => r.GetById(id));
 			}
 			// 当前没有会话时返回新的会话
 			if (session == null) {
 				session = new Session() {
 					ReleatedId = 0,
-					IpAddress = HttpContextUtils.GetClientIpAddress(),
+					IpAddress = context.Request.RemoteIpAddress.ToString(),
 					RememberLogin = false,
 					Expires = DateTime.UtcNow.AddHours(1)
 				};
 				session.ReGenerateId();
 			}
-			HttpContextUtils.PutData(SessionKey, session);
+			context.PutData(SessionKey, session);
 			return session;
 		}
 
@@ -60,12 +56,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// 必要时发送Cookie到浏览器
 		/// </summary>
 		public virtual void SaveSession() {
-			var session = HttpContextUtils.GetData<Session>(SessionKey, null);
+			var context = HttpManager.CurrentContext;
+			var session = context.GetData<Session>(SessionKey, null);
 			if (session == null) {
 				throw new NullReferenceException("session is null");
 			}
 			// 添加或更新到数据库中
-			var cookieSessionId = HttpContextUtils.GetCookie(SessionKey);
+			var cookieSessionId = context.GetCookie(SessionKey);
 			UnitOfWork.WriteData<Session>(r => {
 				// 保存会话
 				r.Save(ref session);
@@ -82,7 +79,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 				if (session.RememberLogin) {
 					expires = session.Expires.AddYears(1);
 				}
-				HttpContextUtils.PutCookie(SessionKey, session.Id, expires, true);
+				var options = new HttpCookieOptions() { Expires = expires, HttpOnly = true };
+				context.PutCookie(SessionKey, session.Id, options);
 			}
 		}
 
@@ -91,16 +89,17 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// 同时删除浏览器中的Cookie
 		/// </summary>
 		public virtual void RemoveSession() {
-			// 删除http上下文中的会话
-			HttpContextUtils.RemoveData(SessionKey);
+			// 删除Http上下文中的会话
+			var context = HttpManager.CurrentContext;
+			context.RemoveData(SessionKey);
 			// 删除数据库中的会话
-			string id = HttpContextUtils.GetCookie(SessionKey);
+			string id = context.GetCookie(SessionKey);
 			if (string.IsNullOrEmpty(id)) {
 				return;
 			}
 			UnitOfWork.WriteData<Session>(r => r.DeleteWhere(s => s.Id == id));
 			// 删除客户端中的会话Cookies
-			HttpContextUtils.RemoveCookie(SessionKey);
+			context.RemoveCookie(SessionKey);
 		}
 	}
 }

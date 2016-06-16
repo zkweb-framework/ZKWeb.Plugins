@@ -14,6 +14,7 @@ using ZKWeb.Server;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 	/// <summary>
@@ -38,7 +39,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 		/// <summary>
 		/// 文章搜索结果的缓存
 		/// </summary>
-		protected IsolatedMemoryCache<string, StaticTableSearchResponse> ArticleSearchResultCache { get; set; }
+		protected IsolatedMemoryCache<int, StaticTableSearchResponse> ArticleSearchResultCache { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -50,7 +51,8 @@ namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 			ArticleApiInfoCache = new IsolatedMemoryCache<long, object>("Ident", "Locale");
 			ArticleSearchResultCacheTime = TimeSpan.FromSeconds(
 				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.ArticleSearchResultCacheTime, 15));
-			ArticleSearchResultCache = new IsolatedMemoryCache<string, StaticTableSearchResponse>("Ident", "Locale");
+			ArticleSearchResultCache = (
+				new IsolatedMemoryCache<int, StaticTableSearchResponse>("Ident", "Locale", "Url"));
 		}
 
 		/// <summary>
@@ -101,9 +103,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 		/// <returns></returns>
 		public virtual StaticTableSearchResponse GetArticleSearchResponseFromHttpRequest() {
 			// 从缓存获取
-			var request = HttpManager.CurrentContext.Request;
-			var key = request.Url.PathAndQuery;
-			var searchResponse = ArticleSearchResultCache.GetOrDefault(key);
+			var searchResponse = ArticleSearchResultCache.GetOrDefault(0);
 			if (searchResponse != null) {
 				return searchResponse;
 			}
@@ -115,7 +115,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 			var callbacks = new ArticleTableCallback().WithExtensions();
 			searchResponse = searchRequest.BuildResponseFromDatabase(callbacks);
 			// 保存到缓存中并返回
-			ArticleSearchResultCache.Put(key, searchResponse, ArticleSearchResultCacheTime);
+			ArticleSearchResultCache.Put(0, searchResponse, ArticleSearchResultCacheTime);
 			return searchResponse;
 		}
 

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
@@ -28,7 +29,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 			}
 			var html = string.Format(
 				"<link href='{0}' rel='stylesheet' type='text/css' />\r\n",
-				HttpUtility.HtmlAttributeEncode(path));
+				HttpUtils.HtmlEncode(path));
 			if (!css.Contains(html)) {
 				css += html;
 				context.Environments[0][RenderIncludedCss.Key] = css; // 设置到顶级空间

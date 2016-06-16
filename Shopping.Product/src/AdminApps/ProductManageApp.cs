@@ -31,6 +31,7 @@ using ZKWeb.Templating;
 using ZKWeb.Plugins.Shopping.Product.src.Config;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 	/// <summary>

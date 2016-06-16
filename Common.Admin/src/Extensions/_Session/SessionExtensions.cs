@@ -5,7 +5,9 @@ using System.Text;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 	/// <summary>
@@ -25,8 +27,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 			if (session.ReleatedId <= 0) {
 				return null;
 			}
-			// 从http上下文中获取，确保保存时的会话和获取时的会话是同一个
-			var pair = HttpContextUtils.GetData<Tuple<Session, User>>(SessionUserKey);
+			// 从Http上下文中获取，确保保存时的会话和获取时的会话是同一个
+			var context = HttpManager.CurrentContext;
+			var pair = context.GetData<Tuple<Session, User>>(SessionUserKey);
 			if (pair != null && pair.Item1 == session) {
 				return pair.Item2;
 			}
@@ -39,7 +42,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 				return u;
 			});
 			if (user != null) {
-				HttpContextUtils.PutData(SessionUserKey, Tuple.Create(session, user));
+				context.PutData(SessionUserKey, Tuple.Create(session, user));
 			}
 			return user;
 		}

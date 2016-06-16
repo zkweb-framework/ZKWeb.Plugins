@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using ZKWebStandard.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
@@ -28,7 +29,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 			}
 			var html = string.Format(
 				"<script src='{0}' type='text/javascript'></script>\r\n",
-				HttpUtility.HtmlAttributeEncode(path));
+				HttpUtils.HtmlEncode(path));
 			if (!js.Contains(html)) {
 				js += html;
 				context.Environments[0][RenderIncludedJs.Key] = js; // 设置到顶级空间

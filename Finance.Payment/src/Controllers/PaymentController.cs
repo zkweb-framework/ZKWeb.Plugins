@@ -16,6 +16,7 @@ using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 	/// <summary>
@@ -33,7 +34,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(UserTypesGroup.Admin, "PaymentApiManage:Test");
 			var form = new TestPaymentForm();
-			if (HttpManager.CurrentContext.Request.HttpMethod == HttpMethods.GET) {
+			if (HttpManager.CurrentContext.Request.Method == HttpMethods.GET) {
 				form.Bind();
 				return new TemplateResult("finance.payment/test_payment.html", new { form });
 			} else {
