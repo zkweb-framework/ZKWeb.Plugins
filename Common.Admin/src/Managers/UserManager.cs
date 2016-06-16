@@ -15,6 +15,7 @@ using ZKWeb.Server;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>
@@ -149,9 +150,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// <returns></returns>
 		public virtual string GetUrlRedirectAfterLogin() {
 			var request = HttpManager.CurrentContext.Request;
-			var referrer = request.UrlReferrer;
+			var referrer = request.GetReferrer();
 			// 来源于同一站点时，跳转到来源页面
-			if (referrer != null && referrer.Host == request.Url.Host &&
+			if (referrer != null && referrer.Host == request.Host &&
 				!referrer.AbsolutePath.Contains("/logout") &&
 				!referrer.AbsolutePath.Contains("/login")) {
 				return referrer.PathAndQuery;

@@ -19,7 +19,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// 获取表单字段的html
 		/// </summary>
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var html = new HtmlTextWriter(new StringWriter());
 			html.AddAttribute("name", field.Attribute.Name);
 			html.AddAttribute("value", JsonConvert.SerializeObject(field.Value));
@@ -28,7 +28,8 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("input");
 			html.RenderEndTag();
-			return html.InnerWriter.ToString();
+			return html.InnerWriter.ToString();*/
+			throw new NotImplementedException(); // TODO: FIXME
 		}
 
 		/// <summary>

@@ -7,6 +7,7 @@ using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -19,7 +20,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// </summary>
 		public static HtmlString BuildRadioButtonsHtml(RadioButtonsFieldAttribute attribute,
 			IEnumerable<KeyValuePair<string, string>> htmlAttributes, object value) {
-			var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
+			/*var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
 			var listItems = listItemProvider.GetItems().ToList();
 			var html = new HtmlTextWriter(new StringWriter());
 			html.AddAttribute("class", "radio-list");
@@ -42,7 +43,8 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 				html.RenderEndTag(); // label
 			}
 			html.RenderEndTag(); // div
-			return new HtmlString(html.InnerWriter.ToString());
+			return new HtmlString(html.InnerWriter.ToString());*/
+			throw new NotImplementedException(); // TODO: FIXME
 		}
 
 		/// <summary>

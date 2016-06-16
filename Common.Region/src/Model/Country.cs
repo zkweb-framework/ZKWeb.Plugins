@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZKWeb.Cache.Interfaces;
+using ZKWeb.Cache;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;

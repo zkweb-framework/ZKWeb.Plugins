@@ -1,15 +1,11 @@
 ﻿using DotLiquid;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWeb.Plugins.Common.Base.src.TemplateTags;
 using ZKWeb.Templating.DynamicContents;
-using ZKWeb.Plugin.Interfaces;
 using ZKWebStandard.Ioc;
+using ZKWeb.Plugin;
 
 namespace ZKWeb.Plugins.Common.Base.src {
 	/// <summary>

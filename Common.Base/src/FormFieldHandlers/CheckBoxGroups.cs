@@ -26,7 +26,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// 获取表单字段的html
 		/// </summary>
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var attribute = (CheckBoxGroupsFieldAttribute)field.Attribute;
 			var listItemGroupsProvider = (IListItemGroupsProvider)Activator.CreateInstance(attribute.Source);
 			var listItemGroups = listItemGroupsProvider.GetGroups().ToList();
@@ -44,7 +44,8 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 				fieldName = field.Attribute.Name,
 				fieldHtml = new HtmlString(fieldHtml.InnerWriter.ToString())
 			});
-			return provider.FormGroupHtml(field, htmlAttributes, html);
+			return provider.FormGroupHtml(field, htmlAttributes, html);*/
+			throw new NotImplementedException(); // TODO: FIXME
 		}
 
 		/// <summary>

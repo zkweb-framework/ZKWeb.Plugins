@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using ZKWeb.Localize;
 using ZKWebStandard.Extensions;
+using ZKWebStandard.Testing;
 
 namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 	/// <summary>
@@ -24,17 +25,9 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 		/// </summary>
 		public string StateName { get { return new T(State.GetDescription()); } }
 		/// <summary>
-		/// 通过数量
+		/// 测试结果的计数器
 		/// </summary>
-		public ulong Passed { get; set; }
-		/// <summary>
-		/// 跳过数量
-		/// </summary>
-		public ulong Skipped { get; set; }
-		/// <summary>
-		/// 失败数量
-		/// </summary>
-		public ulong Failed { get; set; }
+		public TestResultCounter Counter { get; set; }
 		/// <summary>
 		/// 跳过时输出的信息
 		/// </summary>
@@ -93,9 +86,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 				throw new NotSupportedException("test information is not resetable now");
 			}
 			State = AssemblyTestState.NotRunning;
-			Passed = 0;
-			Skipped = 0;
-			Failed = 0;
+			Counter = new TestResultCounter();
 			SkippedMessage = null;
 			FailedMessage = null;
 			ErrorMessage = null;

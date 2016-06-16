@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZKWeb.Database;
-using ZKWeb.Database.Interfaces;
+﻿using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.GenericRecord.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Database;

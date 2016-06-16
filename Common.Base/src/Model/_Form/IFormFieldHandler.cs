@@ -21,6 +21,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// </summary>
 		/// <param name="field">表单字段</param>
 		/// <returns></returns>
-		object Parse(FormField field, string value);
+		object Parse(FormField field, IList<string> values);
 	}
 }

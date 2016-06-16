@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Config;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Model;
 using ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters;
-using ZKWebStandard.Utils;
-using ZKWebStandard.Ioc;
 using ZKWeb.Web;
+using ZKWebStandard.Ioc;
+using ZKWebStandard.Utils;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers {
 	/// <summary>
@@ -30,12 +28,11 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers {
 			// 判断路径是否以伪静态后缀结尾
 			var context = HttpManager.CurrentContext;
 			var request = context.Request;
-			var url = request.Url;
-			var path = url.AbsolutePath;
+			var path = request.Path;
 			if (!path.EndsWith(settings.PesudoStaticExtension)) {
 				return;
 			}
-			var query = HttpUtility.ParseQueryString(request.Url.Query);
+			var query = request.GetQueryValues().ToDictionary(p => p.First, p => p.Second);
 			// 解析伪静态路径
 			// - 无参数时: {原始路径}{后缀名}
 			// - 只有id参数时: {原始路径}{分隔符}{id}{后缀名}
@@ -52,8 +49,8 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers {
 				path = path.Substring(0, lastPartIndex + 1) + parts[0];
 				if (parts.Length == 2) {
 					// 只有id参数
-					if (query[PesudoStaticUrlFilter.IdParameterName] == null) {
-						query[PesudoStaticUrlFilter.IdParameterName] = parts[1];
+					if (!query.ContainsKey(PesudoStaticUrlFilter.IdParameterName)) {
+						query[PesudoStaticUrlFilter.IdParameterName] = new[] { parts[1] };
 					}
 				} else if (parts.Length % 2 == 1) {
 					// 包含其他参数
@@ -61,8 +58,8 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers {
 					for (int i = 2; i < parts.Length; i += 2) {
 						var key = parts[i - 1];
 						var value = parts[i];
-						if (query[key] == null) {
-							query[key] = value;
+						if (!query.ContainsKey(key)) {
+							query[key] = new[] { value };
 						}
 					}
 				} else {
@@ -70,21 +67,10 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers {
 					return;
 				}
 			}
-			// 构建解析后的url
-			var overrideUrlBuilder = new StringBuilder();
-			overrideUrlBuilder.Append(url.Scheme);
-			overrideUrlBuilder.Append("://");
-			overrideUrlBuilder.Append(url.Authority);
-			overrideUrlBuilder.Append(path);
-			if (query.Count > 0) {
-				overrideUrlBuilder.Append('?');
-				overrideUrlBuilder.Append(query.ToString());
-			}
 			// 重载当前的http上下文，然后调用其它处理器处理
-			var overrideUrl = new Uri(overrideUrlBuilder.ToString());
-			var overrideRequest = new PesudoStaticHttpRequest(request, overrideUrl);
-			var overrideContext = new PesudoStaticHttpContext(context, overrideRequest);
-			using (HttpContextUtils.OverrideContext(overrideContext)) {
+			var queryString = HttpUtils.BuildQueryString(query);
+			var overrideContext = new PesudoStaticHttpContext(context, path, queryString);
+			using (HttpManager.OverrideContext(overrideContext)) {
 				var handlers = Application.Ioc.ResolveMany<IHttpRequestHandler>().Reverse();
 				foreach (var handler in handlers) {
 					if (handler is PesudoStaticHandler) {

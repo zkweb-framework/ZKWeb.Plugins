@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWebStandard.Extensions;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// <summary>
@@ -25,7 +26,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// 上传的图片列表
 		/// 仅提交时使用
 		/// </summary>
-		public List<HttpPostedFileBase> UploadedImages { get; set; }
+		public List<IHttpPostedFile> UploadedImages { get; set; }
 		/// <summary>
 		/// 要删除的图片列表
 		/// 仅提交时使用
@@ -42,7 +43,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// </summary>
 		public ProductAlbumUploadData() {
 			ImageUrls = new List<string>();
-			UploadedImages = new List<HttpPostedFileBase>();
+			UploadedImages = new List<IHttpPostedFile>();
 			DeleteImages = new List<bool>();
 			MainImageIndex = 1;
 		}
@@ -91,7 +92,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 				if (delete) {
 					albumManager.DeleteAlbumImage(productId, x);
 				} else if (image != null) {
-					albumManager.SaveAlbumImage(productId, x, image.InputStream);
+					albumManager.SaveAlbumImage(productId, x, image.OpenReadStream());
 				}
 			}
 			// 设置主图

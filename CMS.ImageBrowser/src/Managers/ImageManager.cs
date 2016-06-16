@@ -4,7 +4,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using ZKWeb.Cache.Interfaces;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.CMS.ImageBrowser.src.Model;
 using ZKWeb.Server;
@@ -12,6 +11,8 @@ using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWeb.Cache;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 	/// <summary>

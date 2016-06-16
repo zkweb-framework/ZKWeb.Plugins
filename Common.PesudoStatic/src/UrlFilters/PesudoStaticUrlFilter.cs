@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Config;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Model;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters {
 	/// <summary>
@@ -98,38 +97,41 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters {
 				url = path + settings.PesudoStaticExtension;
 				return;
 			}
-			var parameters = HttpUtility.ParseQueryString(query);
+			var parameters = HttpUtils.ParseQueryString(query);
 			if (parameters.Count == 1) {
 				var idParameter = parameters[IdParameterName];
-				if (!string.IsNullOrEmpty(idParameter)) {
+				if (idParameter != null && idParameter.Count == 1) {
 					url = (new StringBuilder()
 						.Append(path)
 						.Append(settings.PesudoStaticParamDelimiter)
-						.Append(idParameter)
+						.Append(idParameter[0])
 						.Append(settings.PesudoStaticExtension).ToString());
 					return;
 				}
 			}
 			var urlBuilder = new StringBuilder();
-			var excludedParameters = HttpUtility.ParseQueryString("");
+			var excludedParameters = HttpUtils.ParseQueryString("");
 			urlBuilder.Append(path);
-			foreach (var key in parameters.AllKeys) {
-				var value = parameters[key];
+			foreach (var key in parameters.Keys) {
+				var values = parameters[key];
 				if (key.Contains(settings.PesudoStaticParamDelimiter) ||
-					value.Contains(settings.PesudoStaticParamDelimiter) ||
-					key != HttpUtility.UrlEncode(key) ||
-					value != HttpUtility.UrlEncode(value)) {
-					excludedParameters[key] = value;
+					values.Any(t => t.Contains(settings.PesudoStaticParamDelimiter)) ||
+					key != HttpUtils.UrlEncode(key) ||
+					values.Any(t => t != HttpUtils.UrlEncode(t))) {
+					excludedParameters[key] = values;
 					continue;
 				}
-				urlBuilder.Append(settings.PesudoStaticParamDelimiter);
-				urlBuilder.Append(key);
-				urlBuilder.Append(settings.PesudoStaticParamDelimiter);
-				urlBuilder.Append(value);
+				foreach (var value in values) {
+					urlBuilder.Append(settings.PesudoStaticParamDelimiter);
+					urlBuilder.Append(key);
+					urlBuilder.Append(settings.PesudoStaticParamDelimiter);
+					urlBuilder.Append(value);
+				}
 			}
 			urlBuilder.Append(settings.PesudoStaticExtension);
 			if (excludedParameters.Count > 0) {
-				urlBuilder.Append('?').Append(excludedParameters.ToString());
+				urlBuilder.Append('?');
+				urlBuilder.Append(HttpUtils.BuildQueryString(excludedParameters));
 			}
 			url = urlBuilder.ToString();
 		}

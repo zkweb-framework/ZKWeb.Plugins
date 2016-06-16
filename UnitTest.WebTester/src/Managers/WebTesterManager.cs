@@ -93,7 +93,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Managers {
 				var assembly = AppDomain.CurrentDomain.GetAssemblies()
 					.First(a => a.GetName().Name == assemblyToRun);
 				var eventHandler = new UnitTestWebEventHandler();
-				var unitTestManager = Application.Ioc.Resolve<UnitTestManager>();
+				var unitTestManager = Application.Ioc.Resolve<TestManager>();
 				unitTestManager.RunAssemblyTest(assembly, eventHandler);
 			}
 		}

@@ -19,6 +19,7 @@ using ZKWeb.Database;
 using ZKWeb.Web;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 	/// <summary>

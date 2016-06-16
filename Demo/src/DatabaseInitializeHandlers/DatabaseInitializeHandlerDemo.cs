@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NHibernate.Cfg;
-using ZKWeb.Database.Interfaces;
-using FluentNHibernate.Cfg;
-using FluentNHibernate.Conventions;
+﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Conventions.Helpers;
+using ZKWeb.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Demo.src.DatabaseInitializeHandlers {

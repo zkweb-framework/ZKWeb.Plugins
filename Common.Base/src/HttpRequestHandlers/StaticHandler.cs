@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
 using ZKWeb.Server;
-using ZKWeb.Web;
-using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
+using ZKWeb.Web;
 
 namespace ZKWeb.Plugins.Common.Base.src.HttpRequestHandlers {
 	/// <summary>
@@ -36,8 +32,7 @@ namespace ZKWeb.Plugins.Common.Base.src.HttpRequestHandlers {
 				var pathManager = Application.Ioc.Resolve<PathManager>();
 				var filePath = pathManager.GetResourceFullPath("static", path.Substring(Prefix.Length));
 				if (filePath != null) {
-					var ifModifiedSince =
-						context.Request.Headers["If-Modified-Since"].ConvertOrDefault<DateTime?>();
+					var ifModifiedSince = context.Request.GetIfModifiedSince();
 					new FileResult(filePath, ifModifiedSince).WriteResponse(context.Response);
 					context.Response.End();
 				}

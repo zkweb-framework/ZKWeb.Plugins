@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 	/// <summary>

@@ -19,7 +19,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// 获取表单字段的html
 		/// </summary>
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var html = new HtmlTextWriter(new StringWriter());
 			html.AddAttribute("name", field.Attribute.Name);
 			if (field.Value.ConvertOrDefault<bool?>() == true) {
@@ -30,8 +30,9 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 			html.AddAttributes(provider.FormControlAttributes.Where(a => a.Key != "class"));
 			html.AddAttributes(htmlAttributes);
 			html.RenderBeginTag("input");
-			html.RenderEndTag();
-			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());
+			html.RenderEndTag(); TODO: fixme
+			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());*/
+			throw new NotImplementedException();
 		}
 
 		/// <summary>

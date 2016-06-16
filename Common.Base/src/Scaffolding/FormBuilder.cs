@@ -1,15 +1,13 @@
 ﻿using DotLiquid;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
@@ -64,7 +62,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		protected virtual void RenderFormBeginTag(HtmlTextWriter html) {
 			var request = HttpManager.CurrentContext.Request;
 			html.AddAttribute("name", Attribute.Name ?? "");
-			html.AddAttribute("action", Attribute.Action ?? request.Url.PathAndQuery);
+			html.AddAttribute("action", Attribute.Action ?? (request.Path + request.QueryString));
 			html.AddAttribute("method", Attribute.Method ?? HttpMethods.POST);
 			html.AddAttribute("role", "form");
 			html.AddAttribute("ajax", Attribute.EnableAjaxSubmit ? "true" : "false");
@@ -99,10 +97,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 				return;
 			}
 			// 获取cookies传入的csrf校验值，不存在时设置
-			var token = HttpContextUtils.GetCookie(CsrfTokenKey);
+			var context = HttpManager.CurrentContext;
+			var token = context.GetCookie(CsrfTokenKey);
 			if (string.IsNullOrEmpty(token)) {
-				token = HttpServerUtility.UrlTokenEncode(RandomUtils.SystemRandomBytes(20));
-				HttpContextUtils.PutCookie(CsrfTokenKey, token);
+				token = RandomUtils.SystemRandomBytes(20).ToHex();
+				context.PutCookie(CsrfTokenKey, token);
 			}
 			// 添加到表单中
 			var field = new FormField(new HiddenFieldAttribute(CsrfTokenFieldName));
@@ -188,11 +187,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// <param name="submitValues">提交上来的值</param>
 		/// <returns></returns>
 		public static IDictionary<string, object> ParseValues(
-			this FormBuilder builder, IDictionary<string, string> submitValues) {
+			this FormBuilder builder, IDictionary<string, IList<string>> submitValues) {
 			// 检查csrf校验值
+			var context = HttpManager.CurrentContext;
 			if (builder.Attribute.EnableCsrfToken) {
-				var exceptedToken = HttpContextUtils.GetCookie(FormBuilder.CsrfTokenKey);
-				var actualToken = submitValues.GetOrDefault(FormBuilder.CsrfTokenFieldName);
+				var exceptedToken = context.GetCookie(FormBuilder.CsrfTokenKey);
+				var actualTokens = submitValues.GetOrDefault(FormBuilder.CsrfTokenFieldName);
+				var actualToken = actualTokens == null ? null : actualTokens[0];
 				if (string.IsNullOrEmpty(exceptedToken) || exceptedToken != actualToken) {
 					throw new HttpException(403, new T("Check Csrf Token Failed."));
 				}
@@ -201,11 +202,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			var result = new Dictionary<string, object>();
 			foreach (var field in builder.Fields) {
 				// 解析值
-				string value = submitValues.GetOrDefault(field.Attribute.Name);
+				var values = submitValues.GetOrDefault(field.Attribute.Name);
 				object parsed = null;
-				if (value != null || field.Attribute is IFormFieldParseFromEnv) {
+				if (values != null || field.Attribute is IFormFieldParseFromEnv) {
 					var fieldHandler = Application.Ioc.Resolve<IFormFieldHandler>(serviceKey: field.Attribute.GetType());
-					parsed = fieldHandler.Parse(field, value);
+					parsed = fieldHandler.Parse(field, values);
 				}
 				// 校验值
 				foreach (var attribute in field.ValidationAttributes) {

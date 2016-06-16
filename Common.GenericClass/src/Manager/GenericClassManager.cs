@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZKWeb.Cache.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.GenericClass.src.Model;
 using ZKWeb.Server;
@@ -10,6 +9,7 @@ using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWeb.Cache;
 
 namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 	/// <summary>

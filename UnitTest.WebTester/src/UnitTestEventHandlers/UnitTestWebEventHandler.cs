@@ -27,9 +27,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
 			webTesterManager.UpdateInformation(assemblyName, testInfo => {
 				testInfo.State = Model.AssemblyTestState.FinishedRunning;
-				testInfo.Passed = info.Passed;
-				testInfo.Skipped = info.Skipped;
-				testInfo.Failed = info.Failed;
+				testInfo.Counter = info.Counter;
 				testInfo.Updated();
 			});
 		}
@@ -67,7 +65,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
 			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
 			webTesterManager.UpdateInformation(assemblyName, testInfo => {
-				testInfo.Failed += 1;
+				testInfo.Counter.Failed += 1;
 				testInfo.FailedMessage += string.Format(
 					"Test {0} failed:\r\n{1}\r\n\r\n", info.Method.GetFullName(), info.Exception);
 				testInfo.Updated();
@@ -81,7 +79,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
 			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
 			webTesterManager.UpdateInformation(assemblyName, testInfo => {
-				testInfo.Passed += 1;
+				testInfo.Counter.Passed += 1;
 				testInfo.Updated();
 			});
 		}
@@ -93,7 +91,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.UnitTestEventHandlers {
 			var assemblyName = info.Runner.Assembly.GetName().Name;
 			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
 			webTesterManager.UpdateInformation(assemblyName, testInfo => {
-				testInfo.Skipped += 1;
+				testInfo.Counter.Skipped += 1;
 				testInfo.SkippedMessage += string.Format(
 					"Test {0} skipped: {1}\r\n\r\n", info.Method.GetFullName(), info.Exception.Message);
 				testInfo.Updated();

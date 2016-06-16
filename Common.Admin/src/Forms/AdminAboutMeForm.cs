@@ -12,6 +12,7 @@ using ZKWeb.Plugins.Common.Base.src;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 	/// <summary>
@@ -60,7 +61,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 		/// 头像
 		/// </summary>
 		[FileUploaderField("Avatar", Group = "Change Avatar")]
-		public HttpPostedFileBase Avatar { get; set; }
+		public IHttpPostedFile Avatar { get; set; }
 		/// <summary>
 		/// 删除头像
 		/// </summary>
@@ -101,7 +102,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 			}
 			// 修改头像
 			if (Avatar != null) {
-				userManager.SaveAvatar(session.ReleatedId, Avatar.InputStream);
+				userManager.SaveAvatar(session.ReleatedId, Avatar.OpenReadStream());
 			} else if (DeleteAvatar) {
 				userManager.DeleteAvatar(session.ReleatedId);
 			}

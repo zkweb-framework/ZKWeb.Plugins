@@ -6,6 +6,7 @@ using System.Text;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Utils;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 	/// <summary>
@@ -16,7 +17,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// 检查上传的文件
 		/// </summary>
 		/// <param name="file">文件对象</param>
-		public static void Check(this FileUploaderFieldAttribute attribute, HttpPostedFileBase file) {
+		public static void Check(this FileUploaderFieldAttribute attribute, IHttpPostedFile file) {
 			if (file == null) {
 				return;
 			} else if (!attribute.Extensions.Contains(
@@ -25,7 +26,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				throw new Exception(string.Format(
 					new T("Only {0} files are allowed"),
 					string.Join(",", attribute.Extensions)));
-			} else if (file.ContentLength > attribute.MaxContentsLength) {
+			} else if (file.Length > attribute.MaxContentsLength) {
 				// 检查大小
 				throw new Exception(string.Format(
 					new T("Please upload file size not greater than {0}"),

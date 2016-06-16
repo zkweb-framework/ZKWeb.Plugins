@@ -18,6 +18,7 @@ using ZKWebStandard.Utils;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>
@@ -199,7 +200,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			var form = GetAddForm();
 			var request = HttpManager.CurrentContext.Request;
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			if (request.HttpMethod == HttpMethods.POST) {
+			if (request.Method == HttpMethods.POST) {
 				// 检查权限
 				privilegeManager.Check(AllowedUserTypes, EditPrivileges);
 				// 提交表单
@@ -221,7 +222,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			var form = GetEditForm();
 			var request = HttpManager.CurrentContext.Request;
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			if (request.HttpMethod == HttpMethods.POST) {
+			if (request.Method == HttpMethods.POST) {
 				// 检查权限
 				privilegeManager.Check(AllowedUserTypes, EditPrivileges);
 				// 提交表单

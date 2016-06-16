@@ -1,14 +1,13 @@
 ﻿using NSubstitute;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Config;
 using ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers;
-using ZKWebStandard.Utils;
+using ZKWeb.Web;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Testing;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.HttpRequestHandlers {
 	[Tests]
@@ -25,13 +24,14 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.HttpRequestHandlers {
 					var handlerMock = Substitute.For<IHttpRequestHandler>();
 					handlerMock.When(h => h.OnRequest()).Do(callInfo => {
 						if (parsedUrl == null) {
-							parsedUrl = HttpManager.CurrentContext.Request.Url.PathAndQuery;
+							var request = HttpManager.CurrentContext.Request;
+							parsedUrl = request.Path + request.QueryString;
 						}
 					});
 					Application.Ioc.Unregister<IHttpRequestHandler>();
 					Application.Ioc.RegisterInstance(handlerMock);
 					Application.Ioc.RegisterMany<PesudoStaticHandler>(ReuseType.Singleton);
-					using (var context = HttpContextUtils.OverrideContext(url, "GET")) {
+					using (var context = HttpManager.OverrideContext(url, "GET")) {
 						var handlers = Application.Ioc.ResolveMany<IHttpRequestHandler>().Reverse();
 						foreach (var handler in handlers) {
 							handler.OnRequest();

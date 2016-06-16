@@ -13,6 +13,7 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 	/// <summary>
@@ -202,7 +203,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			/// 图片文件
 			/// </summary>
 			[FileUploaderField("Image")]
-			public HttpPostedFileBase Image { get; set; }
+			public IHttpPostedFile Image { get; set; }
 			/// <summary>
 			/// 自定义名称
 			/// </summary>
@@ -236,9 +237,9 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			protected override object OnSubmit() {
 				// 需要支持直接上传，这里不根据名称获取
 				// 如果是直接上传，文件大小和后缀不会经过事先的检查，这里手动再检查一遍
-				var files = HttpManager.CurrentContext.Request.Files;
-				var imageFile = files.Count <= 0 ? null : files[0];
-				if (imageFile == null || imageFile.InputStream == null) {
+				var files = HttpManager.CurrentContext.Request.GetPostedFiles().ToList();
+				var imageFile = files.Count <= 0 ? null : files[0].Second;
+				if (imageFile == null) {
 					throw new HttpException(400, new T("Please select image file"));
 				}
 				((FileUploaderFieldAttribute)this.Form.Fields.First(
@@ -253,7 +254,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 				while (imageManager.Exists(Category, name)) {
 					name = string.Format("{0} ({1})", originalName, count++);
 				}
-				imageManager.Save(imageFile.InputStream, Category, name);
+				imageManager.Save(imageFile.OpenReadStream(), Category, name);
 				return new {
 					message = new T("Upload Successfully"),
 					path = imageManager.GetImageWebPath(Category, name, imageManager.ImageExtension)

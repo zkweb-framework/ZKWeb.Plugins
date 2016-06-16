@@ -9,6 +9,7 @@ using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 	/// <summary>

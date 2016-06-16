@@ -5,6 +5,7 @@ using System.Text;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Extensions {
 	/// <summary>

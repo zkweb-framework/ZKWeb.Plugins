@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ZKWeb.Cache;
-using ZKWeb.Cache.Interfaces;
 using ZKWeb.Plugins.CMS.Article.src.Config;
 using ZKWeb.Plugins.CMS.Article.src.Model;
 using ZKWeb.Plugins.CMS.Article.src.StaticTableCallbacks;

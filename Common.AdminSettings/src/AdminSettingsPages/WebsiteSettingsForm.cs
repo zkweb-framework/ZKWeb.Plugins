@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.Base.src;
+﻿using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.Common.Base.src.Config;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 using ZKWeb.Localize;
-using System.Drawing;
-using ZKWebStandard.Extensions;
-using System.IO;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.AdminSettingsPages {
 	/// <summary>
@@ -65,17 +58,17 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.AdminSettingsPages {
 			/// 前台Logo
 			/// </summary>
 			[FileUploaderField("FrontPageLogo")]
-			public HttpPostedFileBase FrontPageLogo { get; set; }
+			public IHttpPostedFile FrontPageLogo { get; set; }
 			/// <summary>
 			/// 后台Logo
 			/// </summary>
 			[FileUploaderField("AdminPanelLogo")]
-			public HttpPostedFileBase AdminPanelLogo { get; set; }
+			public IHttpPostedFile AdminPanelLogo { get; set; }
 			/// <summary>
 			/// 页面图标
 			/// </summary>
 			[FileUploaderField("Favicon")]
-			public HttpPostedFileBase Favicon { get; set; }
+			public IHttpPostedFile Favicon { get; set; }
 			/// <summary>
 			/// 恢复默认前台Logo
 			/// </summary>
@@ -124,17 +117,17 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.AdminSettingsPages {
 				if (RestoreDefaultFrontPageLogo) {
 					logoManager.RestoreDefaultFrontPageLogo();
 				} else if (FrontPageLogo != null) {
-					logoManager.SaveFrontPageLogo(FrontPageLogo.InputStream);
+					logoManager.SaveFrontPageLogo(FrontPageLogo.OpenReadStream());
 				}
 				if (RestoreDefaultAdminPanelLogo) {
 					logoManager.RestoreDefaultAdminPageLogo();
 				} else if (AdminPanelLogo != null) {
-					logoManager.SaveAdminPanelLogo(AdminPanelLogo.InputStream);
+					logoManager.SaveAdminPanelLogo(AdminPanelLogo.OpenReadStream());
 				}
 				if (RestoreDefaultFavicon) {
 					logoManager.RestoreDefaultFavicon();
 				} else if (Favicon != null) {
-					logoManager.SaveFavicon(Favicon.InputStream);
+					logoManager.SaveFavicon(Favicon.OpenReadStream());
 				}
 				return new { message = new T("Saved Successfully") };
 			}

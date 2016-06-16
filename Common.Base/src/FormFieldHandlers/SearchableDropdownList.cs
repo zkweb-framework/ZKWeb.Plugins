@@ -18,14 +18,15 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// 获取表单字段的html
 		/// </summary>
 		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
 			var attribute = (DropdownListFieldAttribute)field.Attribute;
 			var selectHtml = DropdownList.BuildSelectHtml(attribute,
 				provider.FormControlAttributes.Concat(htmlAttributes), field.Value);
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var html = templateManager.RenderTemplate(
 				"common.base/tmpl.searchable_dropdown_list.html", new { selectHtml });
-			return provider.FormGroupHtml(field, htmlAttributes, html);
+			return provider.FormGroupHtml(field, htmlAttributes, html);*/
+			throw new NotImplementedException(); // TODO: FIXME
 		}
 
 		/// <summary>

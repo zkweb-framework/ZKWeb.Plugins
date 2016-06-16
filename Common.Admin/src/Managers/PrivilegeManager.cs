@@ -17,6 +17,7 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>
@@ -54,11 +55,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			var context = HttpManager.CurrentContext;
-			if (context != null && context.Request.HttpMethod == HttpMethods.GET &&
+			if (context != null && context.Request.Method == HttpMethods.GET &&
 				(user == null || !types.Contains(user.Type))) {
 				// 包含普通用户时跳转到前台登陆页面，否则跳转到后台登陆页面
 				context.Response.Redirect(Filters.Url(
-					types.Contains(UserTypes.User) ? "/user/login" : "/admin/login"));
+					types.Contains(UserTypes.User) ? "/user/login" : "/admin/login"), false);
 				return;
 			} else if (types.Contains(user.Type) && HasPrivileges(user, privileges)) {
 				// 检查通过

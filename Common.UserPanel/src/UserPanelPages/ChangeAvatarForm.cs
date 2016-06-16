@@ -12,6 +12,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.UserPanel.src.Model;
 using ZKWeb.Plugins.Common.UserPanel.src.Scaffolding;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.UserPanel.src.UserPanelPages {
 	/// <summary>
@@ -34,7 +35,7 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.UserPanelPages {
 			/// 头像
 			/// </summary>
 			[FileUploaderField("Avatar")]
-			public HttpPostedFileBase Avatar { get; set; }
+			public IHttpPostedFile Avatar { get; set; }
 			/// <summary>
 			/// 删除头像
 			/// </summary>
@@ -55,7 +56,7 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.UserPanelPages {
 				var session = sessionManager.GetSession();
 				var userManager = Application.Ioc.Resolve<UserManager>();
 				if (Avatar != null) {
-					userManager.SaveAvatar(session.ReleatedId, Avatar.InputStream);
+					userManager.SaveAvatar(session.ReleatedId, Avatar.OpenReadStream());
 				} else if (DeleteAvatar) {
 					userManager.DeleteAvatar(session.ReleatedId);
 				}

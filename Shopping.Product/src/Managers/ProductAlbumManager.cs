@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Server;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 	/// <summary>

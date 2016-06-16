@@ -16,7 +16,7 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
-using ZKWeb.Web.Abstractions;
+using ZKWeb.Web;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 	/// <summary>

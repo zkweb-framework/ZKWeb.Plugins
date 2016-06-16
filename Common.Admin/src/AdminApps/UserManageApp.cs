@@ -16,6 +16,7 @@ using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// <summary>
@@ -116,7 +117,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 头像
 			/// </summary>
 			[FileUploaderField("Avatar", Group = "Change Avatar")]
-			public HttpPostedFileBase Avatar { get; set; }
+			public IHttpPostedFile Avatar { get; set; }
 			/// <summary>
 			/// 删除头像
 			/// </summary>
@@ -157,7 +158,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			protected override void OnSubmitSaved(DatabaseContext context, User saved) {
 				var userManagr = Application.Ioc.Resolve<UserManager>();
 				if (Avatar != null) {
-					userManagr.SaveAvatar(saved.Id, Avatar.InputStream);
+					userManagr.SaveAvatar(saved.Id, Avatar.OpenReadStream());
 				} else if (DeleteAvatar) {
 					userManagr.DeleteAvatar(saved.Id);
 				}

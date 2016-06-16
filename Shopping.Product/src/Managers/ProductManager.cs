@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ZKWeb.Cache;
-using ZKWeb.Cache.Interfaces;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Managers;
@@ -20,6 +19,7 @@ using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 	/// <summary>

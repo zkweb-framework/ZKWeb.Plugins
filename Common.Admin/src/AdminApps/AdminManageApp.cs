@@ -18,6 +18,7 @@ using ZKWeb.Localize;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// <summary>

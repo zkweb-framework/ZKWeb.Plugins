@@ -13,6 +13,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.UserPanel.src.Model;
 using ZKWeb.Plugins.Common.UserPanel.src.Scaffolding;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.UserPanel.src.UserPanelPages {
 	/// <summary>

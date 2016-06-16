@@ -20,7 +20,7 @@ using ZKWeb.Localize;
 using ZKWeb.Web;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Managers;
-using ZKWeb.Cache.Interfaces;
+using ZKWeb.Cache;
 
 namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 	/// <summary>

@@ -12,6 +12,7 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 	/// <summary>

@@ -20,7 +20,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// </summary>
 		public static HtmlString BuildSelectHtml(DropdownListFieldAttribute attribute,
 			IEnumerable<KeyValuePair<string, string>> htmlAttributes, object value) {
-			var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
+			/*var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
 			var listItems = listItemProvider.GetItems().ToList();
 			var html = new HtmlTextWriter(new StringWriter());
 			html.AddAttribute("name", attribute.Name);
@@ -38,7 +38,8 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 				html.RenderEndTag();
 			}
 			html.RenderEndTag();
-			return new HtmlString(html.InnerWriter.ToString());
+			return new HtmlString(html.InnerWriter.ToString());*/
+			throw new NotImplementedException(); // TODO: FIXME
 		}
 
 		/// <summary>

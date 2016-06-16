@@ -222,6 +222,7 @@
     <Compile Include="Common.PesudoStatic\src\HttpRequestHandlers\PesudoStaticHandler.cs" />
     <Compile Include="Common.PesudoStatic\src\Model\PesudoStaticHttpContext.cs" />
     <Compile Include="Common.PesudoStatic\src\Model\PesudoStaticHttpRequest.cs" />
+    <Compile Include="Common.PesudoStatic\src\Model\PesudoStaticHttpResponse.cs" />
     <Compile Include="Common.PesudoStatic\src\Model\PesudoStaticPolicies.cs" />
     <Compile Include="Common.PesudoStatic\src\Tests\HttpRequestHandlers\PesudoStaticHandlerTest.cs" />
     <Compile Include="Common.PesudoStatic\src\Tests\UrlFilters\PesudoStaticUrlFilterTest.cs" />

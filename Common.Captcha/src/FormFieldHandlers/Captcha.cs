@@ -11,6 +11,7 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Captcha.src.Managers;
 using ZKWeb.Plugins.Common.Captcha.src.FormFieldAttributes;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Captcha.src.FormFieldHandlers {
 	/// <summary>
