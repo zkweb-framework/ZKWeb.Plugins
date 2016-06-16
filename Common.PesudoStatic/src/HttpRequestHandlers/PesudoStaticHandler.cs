@@ -68,7 +68,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.HttpRequestHandlers {
 				}
 			}
 			// 重载当前的http上下文，然后调用其它处理器处理
-			var queryString = HttpUtils.BuildQueryString(query);
+			var queryString = (query.Count > 0) ? "?" + HttpUtils.BuildQueryString(query) : "";
 			var overrideContext = new PesudoStaticHttpContext(context, path, queryString);
 			using (HttpManager.OverrideContext(overrideContext)) {
 				var handlers = Application.Ioc.ResolveMany<IHttpRequestHandler>().Reverse();

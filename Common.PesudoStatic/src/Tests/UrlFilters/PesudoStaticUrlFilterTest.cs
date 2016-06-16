@@ -45,7 +45,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.UrlFilters {
 
 				Assert.Equals(testUrl("login"), "login.html");
 				Assert.Equals(testUrl("/example/view?id=1"), "/example/view-1.html");
-				Assert.Equals(testUrl("/example/view?Id=1"), "/example/view-1.html");
+				Assert.Equals(testUrl("/example/view?Id=1"), "/example/view-Id-1.html");
 
 				var result = testUrl("/example/view?tag=123&key=asd");
 				Assert.IsTrueWith(

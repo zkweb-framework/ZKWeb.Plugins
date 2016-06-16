@@ -4,6 +4,7 @@ using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Config;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Model;
+using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Utils;
 
@@ -44,6 +45,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters {
 	public class PesudoStaticUrlFilter : IUrlFilter {
 		/// <summary>
 		/// Id参数的名称
+		/// 只支持小写的"id"
 		/// </summary>
 		public const string IdParameterName = "id";
 
@@ -99,7 +101,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters {
 			}
 			var parameters = HttpUtils.ParseQueryString(query);
 			if (parameters.Count == 1) {
-				var idParameter = parameters[IdParameterName];
+				var idParameter = parameters.GetOrDefault(IdParameterName);
 				if (idParameter != null && idParameter.Count == 1) {
 					url = (new StringBuilder()
 						.Append(path)
