@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// </summary>
 		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var label = templateManager.RenderTemplate("tmpl.form.label.html", new {
+			var label = templateManager.RenderTemplate("common.base/tmpl.form.label.html", new {
 				name = field.Attribute.Name,
 				value = (field.Value ?? "").ToString(),
 				attributes = htmlAttributes

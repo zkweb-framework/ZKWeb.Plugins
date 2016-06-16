@@ -69,8 +69,9 @@ $(function () {
 			var $target = $(targetSource).find($checkbox.attr("merge-to"));
 			var values = $target.data("values") || _.map(JSON.parse($target.val() || "[]"), String);
 			$target.data("values", values);
-			$checkbox.prop("checked", _.contains(values, $checkbox.val()));
+			$checkbox.prop("checked", _.contains(values, $checkbox.val()))
 		});
+		$(checkboxes).trigger("change");
 	};
 	setup($(checkboxWithMergeToSelector), document);
 	$(document).on("dynamicLoaded", function (e, contents) {

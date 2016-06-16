@@ -46,7 +46,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 				Key = "No",
 				Width = width,
 				HeadTemplate = "",
-				CellTemplate = "<%-result.PageNo * result.PageSize + index%>"
+				CellTemplate = "<%-(result.PageNo-1)*result.PageSize+index+1%>"
 			};
 			columns.Add(column);
 			return column;
