@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (TextAreaFieldAttribute)field.Attribute;
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var textarea = templateManager.RenderTemplate("tmpl.form.textarea.html", new {
+			var textarea = templateManager.RenderTemplate("common.base/tmpl.form.textarea.html", new {
 				name = attribute.Name,
 				rows = attribute.Rows,
 				value = (field.Value ?? "").ToString(),

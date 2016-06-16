@@ -121,7 +121,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			callbacks.ForEach(c => c.BeforeLogin(user));
 			// 设置会话
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			sessionManager.RemoveSession();
+			sessionManager.RemoveSession(false);
 			var session = sessionManager.GetSession();
 			session.ReGenerateId();
 			session.ReleatedId = user.Id;
@@ -138,7 +138,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// </summary>
 		public virtual void Logout() {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			sessionManager.RemoveSession();
+			sessionManager.RemoveSession(true);
 		}
 
 		/// <summary>
@@ -147,12 +147,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// <returns></returns>
 		public virtual string GetUrlRedirectAfterLogin() {
 			var request = HttpManager.CurrentContext.Request;
-			var referrer = request.GetReferrer();
+			var referer = request.GetReferer();
 			// 来源于同一站点时，跳转到来源页面
-			if (referrer != null && referrer.Host == request.Host &&
-				!referrer.AbsolutePath.Contains("/logout") &&
-				!referrer.AbsolutePath.Contains("/login")) {
-				return referrer.PathAndQuery;
+			if (referer != null && referer.Authority == request.Host &&
+				!referer.AbsolutePath.Contains("/logout") &&
+				!referer.AbsolutePath.Contains("/login")) {
+				return referer.PathAndQuery;
 			}
 			// 默认跳转到首页
 			return Filters.Url("/");

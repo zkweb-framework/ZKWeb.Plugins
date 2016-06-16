@@ -69,12 +69,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// <returns></returns>
 		public virtual string GetUrlRedirectAfterLogin() {
 			var request = HttpManager.CurrentContext.Request;
-			var referrer = request.GetReferrer();
+			var referer = request.GetReferer();
 			// 来源于同一站点时，跳转到来源页面
-			if (referrer != null && referrer.Host == request.Host &&
-				!referrer.AbsolutePath.Contains("/logout") &&
-				!referrer.AbsolutePath.Contains("/login")) {
-				return referrer.PathAndQuery;
+			if (referer != null && referer.Authority == request.Host &&
+				!referer.AbsolutePath.Contains("/logout") &&
+				!referer.AbsolutePath.Contains("/login")) {
+				return referer.PathAndQuery;
 			}
 			// 默认跳转到后台首页
 			return Filters.Url("/admin");

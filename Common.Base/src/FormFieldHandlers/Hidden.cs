@@ -15,12 +15,11 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// </summary>
 		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var hidden = templateManager.RenderTemplate("tmpl.form.hidden.html", new {
+			return templateManager.RenderTemplate("common.base/tmpl.form.hidden.html", new {
 				name = field.Attribute.Name,
 				value = (field.Value ?? "").ToString(),
 				attributes = htmlAttributes
 			});
-			return field.WrapFieldHtml(htmlAttributes, hidden);
 		}
 
 		/// <summary>

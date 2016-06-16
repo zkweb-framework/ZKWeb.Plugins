@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (PasswordFieldAttribute)field.Attribute;
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var password = templateManager.RenderTemplate("tmpl.form.hidden.html", new {
+			var password = templateManager.RenderTemplate("common.base/tmpl.form.password.html", new {
 				name = field.Attribute.Name,
 				value = (field.Value ?? "").ToString(),
 				placeholder = new T(attribute.PlaceHolder),

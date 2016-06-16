@@ -1,6 +1,8 @@
 ﻿using System;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using System.FastReflection;
+using System.Collections.Concurrent;
 
 namespace ZKWeb.Plugins.Common.Base.src.TypeTraits {
 	/// <summary>
@@ -19,10 +21,24 @@ namespace ZKWeb.Plugins.Common.Base.src.TypeTraits {
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		public EntityTrait() {
-			PrimaryKey = "Id";
-			PrimaryKeyType = typeof(long);
+		public EntityTrait() { }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public EntityTrait(Type type) {
+			var idMember = type.FastGetProperty("Id");
+			if (idMember != null) {
+				PrimaryKey = "Id";
+				PrimaryKeyType = idMember.PropertyType;
+			}
 		}
+
+		/// <summary>
+		/// 默认特征类的缓存
+		/// </summary>
+		private static ConcurrentDictionary<Type, EntityTrait> DefaultTraits =
+			new ConcurrentDictionary<Type, EntityTrait>();
 
 		/// <summary>
 		/// 获取指定实体类型的特征
@@ -32,7 +48,10 @@ namespace ZKWeb.Plugins.Common.Base.src.TypeTraits {
 		public static EntityTrait For(Type type) {
 			var trait = Application.Ioc.Resolve<EntityTrait>(
 				serviceKey: type, ifUnresolved: IfUnresolved.ReturnDefault);
-			return trait ?? new EntityTrait();
+			if (trait == null) {
+				trait = DefaultTraits.GetOrAdd(type, t => new EntityTrait(t));
+			}
+			return trait;
 		}
 
 		/// <summary>

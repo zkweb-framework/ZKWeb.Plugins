@@ -86,9 +86,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 
 		/// <summary>
 		/// 删除当前会话
-		/// 同时删除浏览器中的Cookie
 		/// </summary>
-		public virtual void RemoveSession() {
+		/// <param name="removeCookie">是否同时删除Cookie</param>
+		public virtual void RemoveSession(bool removeCookie) {
 			// 删除Http上下文中的会话
 			var context = HttpManager.CurrentContext;
 			context.RemoveData(SessionKey);
@@ -98,8 +98,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 				return;
 			}
 			UnitOfWork.WriteData<Session>(r => r.DeleteWhere(s => s.Id == id));
-			// 删除客户端中的会话Cookies
-			context.RemoveCookie(SessionKey);
+			if (removeCookie) {
+				// 删除客户端中的会话Cookie
+				context.RemoveCookie(SessionKey);
+			}
 		}
 	}
 }

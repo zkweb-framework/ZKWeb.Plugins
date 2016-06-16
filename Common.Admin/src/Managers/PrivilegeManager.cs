@@ -56,8 +56,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			if (context != null && context.Request.Method == HttpMethods.GET &&
 				(user == null || !types.Contains(user.Type))) {
 				// 包含普通用户时跳转到前台登陆页面，否则跳转到后台登陆页面
-				context.Response.Redirect(Filters.Url(
-					types.Contains(UserTypes.User) ? "/user/login" : "/admin/login"), false);
+				context.Response.RedirectByScript(Filters.Url(
+					types.Contains(UserTypes.User) ? "/user/login" : "/admin/login"));
 				return;
 			} else if (types.Contains(user.Type) && HasPrivileges(user, privileges)) {
 				// 检查通过

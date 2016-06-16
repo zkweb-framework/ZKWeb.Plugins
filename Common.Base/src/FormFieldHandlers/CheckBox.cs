@@ -21,7 +21,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 			} else {
 				htmlAttributes.Remove("checked");
 			}
-			var checkbox = templateManager.RenderTemplate("tmpl.form.checkbox.html", new {
+			var checkbox = templateManager.RenderTemplate("common.base/tmpl.form.checkbox.html", new {
 				name = field.Attribute.Name,
 				attributes = htmlAttributes
 			});

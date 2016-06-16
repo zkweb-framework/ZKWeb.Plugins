@@ -48,6 +48,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// 表单字段列表
 		/// </summary>
 		public List<FormField> Fields { get; protected set; }
+		/// <summary>
+		/// 当前客户端使用的csrf校验值
+		/// </summary>
+		public string CsrfToken { get; protected set; }
 
 		/// <summary>
 		/// 初始化
@@ -55,6 +59,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		public FormBuilder() {
 			Attribute = new FormAttribute(null);
 			Fields = new List<FormField>();
+			if (Attribute.EnableCsrfToken) {
+				// 获取客户端传入的csrf校验值，不存在时设置
+				var context = HttpManager.CurrentContext;
+				CsrfToken = context.GetCookie(CsrfTokenKey);
+				if (string.IsNullOrEmpty(CsrfToken)) {
+					CsrfToken = RandomUtils.SystemRandomBytes(20).ToHex();
+					context.PutCookie(CsrfTokenKey, CsrfToken);
+				}
+			}
 		}
 
 		/// <summary>
@@ -97,21 +110,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// </summary>
 		/// <param name="html">html构建器</param>
 		protected virtual void RenderCsrfToken(StringBuilder html) {
-			// 不需要描画时直接返回
-			if (!Attribute.EnableCsrfToken) {
-				return;
+			if (Attribute.EnableCsrfToken) {
+				// 添加csrf校验值到表单
+				var field = new FormField(new HiddenFieldAttribute(CsrfTokenFieldName));
+				field.Value = CsrfToken;
+				RenderFormField(html, field);
 			}
-			// 获取cookies传入的csrf校验值，不存在时设置
-			var context = HttpManager.CurrentContext;
-			var token = context.GetCookie(CsrfTokenKey);
-			if (string.IsNullOrEmpty(token)) {
-				token = RandomUtils.SystemRandomBytes(20).ToHex();
-				context.PutCookie(CsrfTokenKey, token);
-			}
-			// 添加到表单中
-			var field = new FormField(new HiddenFieldAttribute(CsrfTokenFieldName));
-			field.Value = token;
-			RenderFormField(html, field);
 		}
 
 		/// <summary>
@@ -120,7 +124,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// <param name="html">html构建器</param>
 		protected virtual void RenderSubmitButton(StringBuilder html) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			html.AppendLine(templateManager.RenderTemplate("common.base/tmpl.form.submit_button.html", null));
+			html.AppendLine(
+				templateManager.RenderTemplate("common.base/tmpl.form.submit_button.html", new {
+					buttonText = new T(Attribute.SubmitButtonText)
+				}));
 		}
 
 		/// <summary>
