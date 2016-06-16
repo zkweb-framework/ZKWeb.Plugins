@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Collection;
+using ZKWeb.Templating;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -18,46 +17,40 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 构建Select元素的Html
 		/// </summary>
-		public static HtmlString BuildSelectHtml(DropdownListFieldAttribute attribute,
-			IEnumerable<KeyValuePair<string, string>> htmlAttributes, object value) {
-			/*var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
+		public static HtmlString BuildSelectHtml(
+			DropdownListFieldAttribute attribute,
+			IDictionary<string, string> htmlAttributes, object value) {
+			var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
 			var listItems = listItemProvider.GetItems().ToList();
-			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("name", attribute.Name);
-			html.AddAttributes(htmlAttributes);
-			html.RenderBeginTag("select");
 			var valueString = (value is Enum) ?
 				((int)value).ToString() : value.ConvertOrDefault<string>();
-			foreach (var item in listItems) {
-				html.AddAttribute("value", item.Value);
-				if (item.Value == valueString) {
-					html.AddAttribute("selected", "selected");
-				}
-				html.RenderBeginTag("option");
-				html.WriteEncodedText(item.Name);
-				html.RenderEndTag();
-			}
-			html.RenderEndTag();
-			return new HtmlString(html.InnerWriter.ToString());*/
-			throw new NotImplementedException(); // TODO: FIXME
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var select = templateManager.RenderTemplate("common.base/tmpl.form.select.html", new {
+				name = attribute.Name,
+				attributes = htmlAttributes,
+				options = listItems.Select(item => new {
+					name = item.Name,
+					value = item.Value,
+					selected = item.Value == valueString
+				})
+			});
+			return new HtmlString(select);
 		}
 
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (DropdownListFieldAttribute)field.Attribute;
-			var selectHtml = BuildSelectHtml(attribute,
-				provider.FormControlAttributes.Concat(htmlAttributes), field.Value);
-			return provider.FormGroupHtml(field, htmlAttributes, selectHtml.ToString());
+			var selectHtml = BuildSelectHtml(attribute, htmlAttributes, field.Value);
+			return field.WrapFieldHtml(htmlAttributes, selectHtml.ToString());
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
-			return value;
+		public object Parse(FormField field, IList<string> values) {
+			return values[0];
 		}
 	}
 }

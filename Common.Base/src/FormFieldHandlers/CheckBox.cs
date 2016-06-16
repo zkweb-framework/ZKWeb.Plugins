@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWeb.Templating;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -18,28 +14,25 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
-			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("name", field.Attribute.Name);
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			if (field.Value.ConvertOrDefault<bool?>() == true) {
-				html.AddAttribute("checked", null);
+				htmlAttributes["checked"] = "checked";
+			} else {
+				htmlAttributes.Remove("checked");
 			}
-			html.AddAttribute("type", "checkbox");
-			html.AddAttribute("class", "switchery");
-			html.AddAttributes(provider.FormControlAttributes.Where(a => a.Key != "class"));
-			html.AddAttributes(htmlAttributes);
-			html.RenderBeginTag("input");
-			html.RenderEndTag(); TODO: fixme
-			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());*/
-			throw new NotImplementedException();
+			var checkbox = templateManager.RenderTemplate("tmpl.form.checkbox.html", new {
+				name = field.Attribute.Name,
+				attributes = htmlAttributes
+			});
+			return field.WrapFieldHtml(htmlAttributes, checkbox);
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
-			return value == "on";
+		public object Parse(FormField field, IList<string> values) {
+			return values[0] == "on";
 		}
 	}
 }

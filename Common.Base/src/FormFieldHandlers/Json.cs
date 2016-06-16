@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
+using ZKWeb.Templating;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -18,26 +14,22 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
-			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttribute("value", JsonConvert.SerializeObject(field.Value));
-			html.AddAttribute("type", "hidden");
-			html.AddAttributes(provider.FormControlAttributes);
-			html.AddAttributes(htmlAttributes);
-			html.RenderBeginTag("input");
-			html.RenderEndTag();
-			return html.InnerWriter.ToString();*/
-			throw new NotImplementedException(); // TODO: FIXME
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var hidden = templateManager.RenderTemplate("tmpl.form.hidden.html", new {
+				name = field.Attribute.Name,
+				value = JsonConvert.SerializeObject(field.Value),
+				attributes = htmlAttributes
+			});
+			return field.WrapFieldHtml(htmlAttributes, hidden);
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
+		public object Parse(FormField field, IList<string> values) {
 			var attribute = (JsonFieldAttribute)field.Attribute;
-			return JsonConvert.DeserializeObject(value, attribute.FieldType);
+			return JsonConvert.DeserializeObject(values[0], attribute.FieldType);
 		}
 	}
 }

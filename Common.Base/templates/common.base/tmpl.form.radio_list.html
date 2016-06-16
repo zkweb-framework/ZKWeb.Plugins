@@ -1,0 +1,12 @@
+﻿<div class="radio-list">
+	{% for option in options %}
+	<label class="radio-inline">
+		{% if option.selected %}
+		<input name="{{ name }}" type="radio" data-val="true" value="{{ option.value }}" checked="checked" {{ attributes | html_attributes }} />
+		{% endif %}
+		<input name="{{ name }}" type="radio" data-val="true" value="{{ option.value }}" {{ attributes | html_attributes }} />
+		{% endif %}
+		{{ name | trans }}
+	</label>
+	{% endfor %}
+</div>

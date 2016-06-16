@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWebStandard.Extensions;
+using ZKWeb.Templating;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
@@ -19,26 +14,23 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (TextAreaFieldAttribute)field.Attribute;
-			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttribute("rows", attribute.Rows.ToString());
-			html.AddAttribute("placeholder", new T(attribute.PlaceHolder));
-			html.AddAttributes(provider.FormControlAttributes);
-			html.AddAttributes(htmlAttributes);
-			html.RenderBeginTag("textarea");
-			html.WriteEncodedText((field.Value ?? "").ToString());
-			html.RenderEndTag();
-			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());*/
-			throw new NotImplementedException(); // TODO: FIXME
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var textarea = templateManager.RenderTemplate("tmpl.form.textarea.html", new {
+				name = attribute.Name,
+				rows = attribute.Rows,
+				value = (field.Value ?? "").ToString(),
+				placeholder = new T(attribute.PlaceHolder),
+				attributes = htmlAttributes
+			});
+			return field.WrapFieldHtml(htmlAttributes, textarea);
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
+		public object Parse(FormField field, IList<string> value) {
 			return value;
 		}
 	}

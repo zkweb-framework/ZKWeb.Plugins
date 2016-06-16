@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Templating;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
@@ -30,17 +31,20 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// 描画标签容器的开始标签
 		/// </summary>
 		/// <param name="html">html构建器</param>
-		protected virtual void RenderTabContainerBeginTag(HtmlTextWriter html) {
-			html.AddAttribute("class", "tabbable-line");
-			html.RenderBeginTag("div");
+		protected virtual void RenderTabContainerBeginTag(StringBuilder html) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			html.AppendLine(
+				templateManager.RenderTemplate("common.base/tmpl.tab_form.begin_tag.html", null));
 		}
 
 		/// <summary>
 		/// 描画标签容器的结束标签
 		/// </summary>
 		/// <param name="html">html构建器</param>
-		protected virtual void RenderTabContainerEndTag(HtmlTextWriter html) {
-			html.RenderEndTag(); // div
+		protected virtual void RenderTabContainerEndTag(StringBuilder html) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			html.AppendLine(
+				templateManager.RenderTemplate("common.base/tmpl.tab_form.end_tag.html", null));
 		}
 
 		/// <summary>
@@ -49,31 +53,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// <param name="html">html构建器</param>
 		/// <param name="groups">字段分组</param>
 		protected virtual void RenderTabs(
-			HtmlTextWriter html, IEnumerable<IGrouping<string, FormField>> groups) {
-			html.AddAttribute("class", "nav nav-tabs");
-			html.RenderBeginTag("ul");
-			// 描画标签
-			var firstGroup = true;
-			foreach (var group in groups) {
-				if (firstGroup) {
-					html.AddAttribute("class", "active");
-					html.AddAttribute("aria-expanded", "true");
-					firstGroup = false;
-				}
-				html.RenderBeginTag("li");
-				html.AddAttribute("href", "#" + GetTabId(group.Key));
-				html.AddAttribute("data-toggle", "tab");
-				html.RenderBeginTag("a");
-				html.WriteEncodedText(new T(group.Key));
-				html.RenderEndTag(); // a
-				html.RenderEndTag(); // li
-			}
-			// 描画提交按钮
-			html.AddAttribute("class", "buttons");
-			html.RenderBeginTag("li");
-			RenderSubmitButton(html);
-			html.RenderEndTag(); // li
-			html.RenderEndTag(); // ul
+			StringBuilder html, IEnumerable<IGrouping<string, FormField>> groups) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var submitButton = new StringBuilder();
+			RenderSubmitButton(submitButton);
+			html.AppendLine(
+				templateManager.RenderTemplate("common.base/tmpl.tab_form.tabs.html", new {
+					groups = groups.Select(g => new { tabId = GetTabId(g.Key), name = new T(g.Key) }),
+					submitButton = new HtmlString(submitButton.ToString())
+				}));
 		}
 
 		/// <summary>
@@ -82,21 +70,19 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// <param name="html">html构建器</param>
 		/// <param name="groups">字段分组</param>
 		protected virtual void RenderTabContents(
-			HtmlTextWriter html, IEnumerable<IGrouping<string, FormField>> groups) {
-			html.AddAttribute("class", "tab-content");
-			html.RenderBeginTag("div");
-			var firstGroup = true;
-			foreach (var group in groups) {
-				html.AddAttribute("id", GetTabId(group.Key));
-				html.AddAttribute("class", firstGroup ? "tab-pane active" : "tab-pane");
-				firstGroup = false;
-				html.RenderBeginTag("div");
-				foreach (var field in group) {
-					RenderFormField(html, field);
-				}
-				html.RenderEndTag(); // div
-			}
-			html.RenderEndTag(); // div
+			StringBuilder html, IEnumerable<IGrouping<string, FormField>> groups) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			html.AppendLine(
+				templateManager.RenderTemplate("common.base/tmpl.tab_form.tab_contents.html", new {
+					groups = groups.Select(g => new {
+						tabId = GetTabId(g.Key),
+						formFields = g.Select(field => {
+							var formFieldHtml = new StringBuilder();
+							RenderFormField(formFieldHtml, field);
+							return new HtmlString(formFieldHtml.ToString());
+						})
+					})
+				}));
 		}
 
 		/// <summary>
@@ -104,7 +90,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString() {
-			var html = new HtmlTextWriter(new StringWriter());
+			var html = new StringBuilder();
 			RenderFormBeginTag(html);
 			RenderTabContainerBeginTag(html);
 			var groups = Fields.GroupBy(f => f.Attribute.Group ?? DefaultGroupName).ToList();
@@ -113,7 +99,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			RenderTabContainerEndTag(html);
 			RenderCsrfToken(html);
 			RenderFormEndTag(html);
-			return html.InnerWriter.ToString();
+			return html.ToString();
 		}
 	}
 }

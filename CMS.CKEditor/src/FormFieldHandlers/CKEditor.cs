@@ -1,15 +1,12 @@
 ﻿using Ganss.XSS;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.CMS.CKEditor.src.FormFieldAttributes;
-using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWeb.Templating;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.CMS.CKEditor.src.FormFieldHandlers {
 	/// <summary>
@@ -20,29 +17,24 @@ namespace ZKWeb.Plugins.CMS.CKEditor.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (CKEditorAttribute)field.Attribute;
-			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttribute("require-script", "/static/cms.ckeditor.js/ckeditor-loader.min.js");
-			html.AddAttribute("class", "form-control ckeditor");
-			html.AddAttribute("data-trigger", "ckeditor");
-			html.AddAttribute("data-ckeditor-config", JsonConvert.SerializeObject(attribute.Config));
-			html.AddAttributes(provider.FormControlAttributes.Where(a => a.Key != "class"));
-			html.AddAttributes(htmlAttributes);
-			html.RenderBeginTag("textarea");
-			html.WriteEncodedText((field.Value ?? "").ToString());
-			html.RenderEndTag();
-			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var ckeditor = templateManager.RenderTemplate("cms.ckeditor/tmpl.form.ckeditor.html", new {
+				name = attribute.Name,
+				value = (field.Value ?? "").ToString(),
+				attributes = htmlAttributes,
+				ckeditorConfig = JsonConvert.SerializeObject(attribute.Config)
+			});
+			return field.WrapFieldHtml(htmlAttributes, ckeditor);
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
+		public object Parse(FormField field, IList<string> values) {
 			// 解码提交回来的Html内容
-			var html = HttpUtility.HtmlDecode(value);
+			var html = HttpUtils.HtmlDecode(values[0]);
 			// 过滤不安全的内容
 			var sanitizer = new HtmlSanitizer();
 			sanitizer.RemovingAttribute += (e, args) => {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>

@@ -31,7 +31,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 			searchRequest.PageSize = request.Get(PageSizeKey, defaultPageSize ?? 50);
 			searchRequest.Keyword = request.Get<string>(KeywordKey);
 			foreach (var pair in request.GetAll()) {
-				searchRequest.Conditions[pair.First] = pair.Second;
+				searchRequest.Conditions[pair.First] = pair.Second[0];
 			}
 			return searchRequest;
 		}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.FastReflection;
+using System.Linq;
 using System.Reflection;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Collections;
@@ -103,7 +104,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// <returns></returns>
 		public object Submit() {
 			// 把提交的值设置到模型
-			var submitValues = HttpManager.CurrentContext.Request.GetAll();
+			var request = HttpManager.CurrentContext.Request;
+			var submitValues = request.GetAllDictionary();
 			var values = Form.ParseValues(submitValues);
 			Pair<object, PropertyInfo> property;
 			foreach (var field in Form.Fields) {

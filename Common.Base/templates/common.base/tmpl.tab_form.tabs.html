@@ -1,0 +1,15 @@
+﻿<ul class="nav nav-tabs">
+	{% for group in groups %}
+	{% if forloop.index == 1 %}
+	{% assign cssClass = "active" %}
+	{% else %}
+	{% assign cssClass = "" %}
+	{% endif %}
+	<li class="{{ cssClass }}" aria-expanded="true">
+		<a href="#{{ group.tabId }}" data-toggle="tab">{{ group.name }}</a>
+	</li>
+	{% endfor %}
+	<li class="buttons">
+		{{ submitButton }}
+	</li>
+</ul>

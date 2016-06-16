@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
+﻿using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Templating;
 using ZKWebStandard.Ioc;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -17,23 +13,20 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
-			var attribute = (DropdownListFieldAttribute)field.Attribute;
-			var selectHtml = DropdownList.BuildSelectHtml(attribute,
-				provider.FormControlAttributes.Concat(htmlAttributes), field.Value);
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
+			var attribute = (SearchableDropdownListFieldAttribute)field.Attribute;
+			var selectHtml = DropdownList.BuildSelectHtml(attribute, htmlAttributes, field.Value);
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var html = templateManager.RenderTemplate(
+			var searchableDropdown = templateManager.RenderTemplate(
 				"common.base/tmpl.searchable_dropdown_list.html", new { selectHtml });
-			return provider.FormGroupHtml(field, htmlAttributes, html);*/
-			throw new NotImplementedException(); // TODO: FIXME
+			return field.WrapFieldHtml(htmlAttributes, searchableDropdown);
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
-			return value;
+		public object Parse(FormField field, IList<string> values) {
+			return values;
 		}
 	}
 }

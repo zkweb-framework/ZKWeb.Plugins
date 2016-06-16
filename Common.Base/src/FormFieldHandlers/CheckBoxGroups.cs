@@ -9,6 +9,8 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Templating;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Collection;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -25,34 +27,29 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (CheckBoxGroupsFieldAttribute)field.Attribute;
 			var listItemGroupsProvider = (IListItemGroupsProvider)Activator.CreateInstance(attribute.Source);
 			var listItemGroups = listItemGroupsProvider.GetGroups().ToList();
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var fieldHtml = new HtmlTextWriter(new StringWriter());
-			fieldHtml.AddAttribute("name", field.Attribute.Name);
-			fieldHtml.AddAttribute("value", JsonConvert.SerializeObject(field.Value ?? new string[0]));
-			fieldHtml.AddAttribute("type", "hidden");
-			fieldHtml.AddAttributes(provider.FormControlAttributes);
-			fieldHtml.AddAttributes(htmlAttributes);
-			fieldHtml.RenderBeginTag("input");
-			fieldHtml.RenderEndTag();
-			var html = templateManager.RenderTemplate("common.base/tmpl.checkbox_groups.html", new {
+			var fieldHtml = templateManager.RenderTemplate("tmpl.form.hidden.html", new {
+				name = field.Attribute.Name,
+				value = JsonConvert.SerializeObject(field.Value ?? new string[0]),
+				attributes = htmlAttributes
+			});
+			var checkboxGroups = templateManager.RenderTemplate("common.base/tmpl.checkbox_groups.html", new {
 				groups = listItemGroups.Select(g => new { key = g.Key, items = g }),
 				fieldName = field.Attribute.Name,
-				fieldHtml = new HtmlString(fieldHtml.InnerWriter.ToString())
+				fieldHtml = new HtmlString(fieldHtml)
 			});
-			return provider.FormGroupHtml(field, htmlAttributes, html);*/
-			throw new NotImplementedException(); // TODO: FIXME
+			return field.WrapFieldHtml(htmlAttributes, checkboxGroups);
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
-			return JsonConvert.DeserializeObject<IList<string>>(value);
+		public object Parse(FormField field, IList<string> values) {
+			return JsonConvert.DeserializeObject<IList<string>>(values[0]);
 		}
 	}
 }

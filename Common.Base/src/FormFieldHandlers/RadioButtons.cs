@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Collection;
+using ZKWeb.Templating;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -18,51 +17,40 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 构建单选按钮组的Html
 		/// </summary>
-		public static HtmlString BuildRadioButtonsHtml(RadioButtonsFieldAttribute attribute,
-			IEnumerable<KeyValuePair<string, string>> htmlAttributes, object value) {
-			/*var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
+		public static HtmlString BuildRadioButtonsHtml(
+			RadioButtonsFieldAttribute attribute,
+			IDictionary<string, string> htmlAttributes, object value) {
+			var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
 			var listItems = listItemProvider.GetItems().ToList();
-			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("class", "radio-list");
-			html.RenderBeginTag("div");
 			var valueString = (value is Enum) ?
 				((int)value).ToString() : value.ConvertOrDefault<string>();
-			foreach (var item in listItems) {
-				html.AddAttribute("class", "radio-inline");
-				html.RenderBeginTag("label");
-				html.AddAttribute("name", attribute.Name);
-				html.AddAttribute("value", item.Value);
-				html.AddAttribute("type", "radio");
-				if (item.Value == valueString) {
-					html.AddAttribute("checked", "checked");
-				}
-				html.AddAttributes(htmlAttributes.Where(a => a.Key != "class"));
-				html.RenderBeginTag("input");
-				html.RenderEndTag(); // input
-				html.WriteEncodedText(item.Name);
-				html.RenderEndTag(); // label
-			}
-			html.RenderEndTag(); // div
-			return new HtmlString(html.InnerWriter.ToString());*/
-			throw new NotImplementedException(); // TODO: FIXME
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var radioList = templateManager.RenderTemplate("common.base/tmpl.form.radio_list.html", new {
+				name = attribute.Name,
+				attributes = htmlAttributes,
+				options = listItems.Select(item => new {
+					name = item.Name,
+					value = item.Value,
+					selected = item.Value == valueString
+				})
+			});
+			return new HtmlString(radioList);
 		}
 
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (RadioButtonsFieldAttribute)field.Attribute;
-			var radioButtonsHtml = BuildRadioButtonsHtml(attribute,
-				provider.FormControlAttributes.Concat(htmlAttributes), field.Value);
-			return provider.FormGroupHtml(field, htmlAttributes, radioButtonsHtml.ToString());
+			var radioButtonsHtml = BuildRadioButtonsHtml(attribute, htmlAttributes, field.Value);
+			return field.WrapFieldHtml(htmlAttributes, radioButtonsHtml.ToString());
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
-			return value;
+		public object Parse(FormField field, IList<string> values) {
+			return values[0];
 		}
 	}
 }

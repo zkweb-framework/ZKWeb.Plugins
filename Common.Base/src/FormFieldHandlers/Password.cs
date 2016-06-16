@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWeb.Templating;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -19,33 +14,23 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		/// <param name="field"></param>
-		/// <param name="htmlAttributes"></param>
-		/// <returns></returns>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (PasswordFieldAttribute)field.Attribute;
-			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttribute("value", (field.Value ?? "").ToString());
-			html.AddAttribute("type", "password");
-			html.AddAttribute("placeholder", new T(attribute.PlaceHolder));
-			html.AddAttributes(provider.FormControlAttributes);
-			html.AddAttributes(htmlAttributes);
-			html.RenderBeginTag("input");
-			html.RenderEndTag();
-			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());*/
-			throw new NotImplementedException(); // TODO: FIXME
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var password = templateManager.RenderTemplate("tmpl.form.hidden.html", new {
+				name = field.Attribute.Name,
+				value = (field.Value ?? "").ToString(),
+				placeholder = new T(attribute.PlaceHolder),
+				attributes = htmlAttributes
+			});
+			return field.WrapFieldHtml(htmlAttributes, password);
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		/// <param name="field"></param>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public object Parse(FormField field, string value) {
-			return value;
+		public object Parse(FormField field, IList<string> value) {
+			return value[0];
 		}
 	}
 }

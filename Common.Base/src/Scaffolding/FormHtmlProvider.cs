@@ -13,7 +13,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	///	这个类可以通过Ioc替换，使用时注意要通过Ioc获取
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class FormHtmlProvider {
+	public class FormHtmlProvider_Obslete {
 		/// <summary>
 		/// 表单控件的默认属性
 		/// </summary>
@@ -22,15 +22,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			{ "class", "form-control" },
 			{ "data-val", "true" }
 		};
-
-		/// <summary>
-		/// 提交按钮的默认属性
-		/// </summary>
-		public virtual IDictionary<string, string> SubmitButtonAttributes { get { return _SubmitButtonAttributes; } }
-		private Dictionary<string, string> _SubmitButtonAttributes = new Dictionary<string, string>() {
-			{ "class", "btn btn-submit" },
-			{ "type", "submit" }
-		};
+		
 
 		/// <summary>
 		/// 构建表单组的html

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
+﻿using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWeb.Templating;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -17,22 +13,20 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
-			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttributes(provider.FormControlAttributes);
-			html.AddAttributes(htmlAttributes);
-			html.RenderBeginTag("label");
-			html.WriteEncodedText((field.Value ?? "").ToString());
-			html.RenderEndTag();
-			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());*/
-			throw new NotImplementedException(); // TODO: FIXME
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var label = templateManager.RenderTemplate("tmpl.form.label.html", new {
+				name = field.Attribute.Name,
+				value = (field.Value ?? "").ToString(),
+				attributes = htmlAttributes
+			});
+			return field.WrapFieldHtml(htmlAttributes, label);
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值，只读文本没有提交值
 		/// </summary>
-		public object Parse(FormField field, string value) {
+		public object Parse(FormField field, IList<string> value) {
 			return null;
 		}
 	}

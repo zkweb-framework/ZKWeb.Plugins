@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using ZKWeb.Localize;
+﻿using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWebStandard.Extensions;
-using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWeb.Templating;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 	/// <summary>
@@ -21,27 +15,21 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// <summary>
 		/// 获取表单字段的html
 		/// </summary>
-		public string Build(FormField field, Dictionary<string, string> htmlAttributes) {
-			/*var provider = Application.Ioc.Resolve<FormHtmlProvider>();
-			var attribute = (FileUploaderFieldAttribute)field.Attribute;
-			var html = new HtmlTextWriter(new StringWriter());
-			html.AddAttribute("name", field.Attribute.Name);
-			html.AddAttribute("class", "file-uploader");
-			html.AddAttribute("type", "file");
-			html.AddAttributes(provider.FormControlAttributes.Where(a => a.Key != "class"));
-			html.AddAttributes(htmlAttributes);
-			html.RenderBeginTag("input");
-			html.RenderEndTag();
-			return provider.FormGroupHtml(field, htmlAttributes, html.InnerWriter.ToString());*/
-			throw new NotImplementedException(); // TODO: FIXME
+		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var file = templateManager.RenderTemplate("tmpl.form.file.html", new {
+				name = field.Attribute.Name,
+				attributes = htmlAttributes
+			});
+			return field.WrapFieldHtml(htmlAttributes, file);
 		}
 
 		/// <summary>
 		/// 解析提交的字段的值
 		/// </summary>
-		public object Parse(FormField field, string value) {
+		public object Parse(FormField field, IList<string> values) {
 			var attribute = (FileUploaderFieldAttribute)field.Attribute;
-			var file = HttpManager.CurrentContext.Request.Files[field.Attribute.Name];
+			var file = HttpManager.CurrentContext.Request.GetPostedFile(field.Attribute.Name);
 			attribute.Check(file);
 			return file;
 		}

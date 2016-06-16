@@ -1,0 +1,13 @@
+﻿<div class="input-group" require-script="/static/common.captcha.js/captcha.min.js">
+	<input name="{{ name }}" type="text" class="form-control" data-val="true" value="{{ value }}" placeholder="{{ placeholder }}" {{ attributes | html_attributes }} />
+	<span class="input-group-addon">
+		<img alt="{{ "Captcha" | trans }}" class="captcha" src="/captcha?key={{ key }}" title="{{ "Click to change captcha image" | trans }}" />
+	</span>
+	{% if supportCaptchaAudio %}
+	<span class="input-group-addon">
+		<a class="captcha-audio" title="{{ "Captcha Audio" | trans }}" data-audio="/captcha/audio?key={{ key }}">
+			<i class="fa fa-music"></i>
+		</a>
+	</span>
+	{% endif %}
+</div>

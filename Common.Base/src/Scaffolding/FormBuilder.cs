@@ -8,6 +8,9 @@ using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web;
 using ZKWebStandard.Web;
+using System.Text;
+using ZKWeb.Templating;
+using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
@@ -59,23 +62,26 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// 描画表单的开始标签
 		/// </summary>
 		/// <param name="html">html构建器</param>
-		protected virtual void RenderFormBeginTag(HtmlTextWriter html) {
+		protected virtual void RenderFormBeginTag(StringBuilder html) {
 			var request = HttpManager.CurrentContext.Request;
-			html.AddAttribute("name", Attribute.Name ?? "");
-			html.AddAttribute("action", Attribute.Action ?? (request.Path + request.QueryString));
-			html.AddAttribute("method", Attribute.Method ?? HttpMethods.POST);
-			html.AddAttribute("role", "form");
-			html.AddAttribute("ajax", Attribute.EnableAjaxSubmit ? "true" : "false");
-			html.AddAttribute("class", Attribute.CssClass);
-			html.RenderBeginTag("form");
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			html.AppendLine(
+				templateManager.RenderTemplate("common.base/tmpl.form.begin_tag.html", new {
+					name = Attribute.Name ?? "",
+					action = Attribute.Action ?? (request.Path + request.QueryString),
+					method = Attribute.Method ?? HttpMethods.POST,
+					ajax = Attribute.EnableAjaxSubmit ? "true" : "false",
+					cssClass = Attribute.CssClass
+				}));
 		}
 
 		/// <summary>
 		/// 描画表单的结束标签
 		/// </summary>
 		/// <param name="html">html构建器</param>
-		protected virtual void RenderFormEndTag(HtmlTextWriter html) {
-			html.RenderEndTag(); // form
+		protected virtual void RenderFormEndTag(StringBuilder html) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			html.AppendLine(templateManager.RenderTemplate("common.base/tmpl.form.end_tag.html", null));
 		}
 
 		/// <summary>
@@ -83,15 +89,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// </summary>
 		/// <param name="html">html构建器</param>
 		/// <param name="field">表单字段</param>
-		protected virtual void RenderFormField(HtmlTextWriter html, FormField field) {
-			html.WriteLine(field);
+		protected virtual void RenderFormField(StringBuilder html, FormField field) {
+			html.AppendLine(field.ToString());
 		}
 
 		/// <summary>
 		/// 描画csrf校验值
 		/// </summary>
 		/// <param name="html">html构建器</param>
-		protected virtual void RenderCsrfToken(HtmlTextWriter html) {
+		protected virtual void RenderCsrfToken(StringBuilder html) {
 			// 不需要描画时直接返回
 			if (!Attribute.EnableCsrfToken) {
 				return;
@@ -113,17 +119,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// 描画提交按钮
 		/// </summary>
 		/// <param name="html">html构建器</param>
-		protected virtual void RenderSubmitButton(HtmlTextWriter html) {
-			var provider = Application.Ioc.Resolve<FormHtmlProvider>();
-			html.AddAttribute("class", "form-actions");
-			html.RenderBeginTag("div");
-			foreach (var pair in provider.SubmitButtonAttributes) {
-				html.AddAttribute(pair.Key, pair.Value);
-			}
-			html.RenderBeginTag("button");
-			html.WriteEncodedText(new T(Attribute.SubmitButtonText));
-			html.RenderEndTag(); // button
-			html.RenderEndTag(); // div
+		protected virtual void RenderSubmitButton(StringBuilder html) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			html.AppendLine(templateManager.RenderTemplate("common.base/tmpl.form.submit_button.html", null));
 		}
 
 		/// <summary>
@@ -139,7 +137,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString() {
-			var html = new HtmlTextWriter(new StringWriter());
+			var html = new StringBuilder();
 			RenderFormBeginTag(html);
 			foreach (var field in Fields) {
 				RenderFormField(html, field);
@@ -147,7 +145,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			RenderCsrfToken(html);
 			RenderSubmitButton(html);
 			RenderFormEndTag(html);
-			return html.InnerWriter.ToString();
+			return html.ToString();
 		}
 	}
 
