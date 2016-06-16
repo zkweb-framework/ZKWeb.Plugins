@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
@@ -13,9 +12,7 @@ using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.GenericTag.src.Repositories;
 using ZKWebStandard.Extensions;
 using ZKWeb.Localize;
-using ZKWeb.Web;
 using ZKWeb.Database;
-using ZKWebStandard.Utils;
 using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {

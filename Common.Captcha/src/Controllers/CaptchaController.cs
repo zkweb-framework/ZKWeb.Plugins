@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Text;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
 using ZKWeb.Web;
 using ZKWeb.Plugins.Common.Captcha.src.Managers;
-using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Web;
 

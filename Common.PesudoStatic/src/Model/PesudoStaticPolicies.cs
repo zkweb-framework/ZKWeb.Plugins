@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Common.PesudoStatic.src.Model {
+﻿namespace ZKWeb.Plugins.Common.PesudoStatic.src.Model {
 	/// <summary>
 	/// 伪静态策略
 	/// </summary>

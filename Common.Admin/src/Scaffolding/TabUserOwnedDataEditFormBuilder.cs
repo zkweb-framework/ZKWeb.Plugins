@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
+﻿using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>

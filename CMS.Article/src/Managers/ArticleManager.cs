@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ZKWeb.Cache;
 using ZKWeb.Plugins.CMS.Article.src.Config;
 using ZKWeb.Plugins.CMS.Article.src.Model;
@@ -12,9 +10,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Server;
 using ZKWebStandard.Extensions;
-using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.CMS.Article.src.Managers {
 	/// <summary>

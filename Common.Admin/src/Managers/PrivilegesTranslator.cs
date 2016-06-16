@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZKWeb.Localize;
+﻿using ZKWeb.Localize;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {

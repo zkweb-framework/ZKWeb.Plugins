@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Finance.Payment.src.Model {
+﻿namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 	/// <summary>
 	/// 担保交易付款后，自动发货使用的参数
 	/// </summary>

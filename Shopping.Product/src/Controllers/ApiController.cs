@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.Base.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Managers;
-using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.GenericClass.src.Manager;
 using ZKWeb.Plugins.Common.GenericTag.src.Manager;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;

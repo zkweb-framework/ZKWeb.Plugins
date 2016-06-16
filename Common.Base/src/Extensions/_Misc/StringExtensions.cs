@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Common.Base.src.Extensions {
+﻿namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 	/// <summary>
 	/// 字符串的扩展函数
 	/// </summary>

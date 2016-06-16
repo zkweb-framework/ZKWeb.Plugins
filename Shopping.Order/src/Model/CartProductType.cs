@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Shopping.Order.src.Model {
+﻿namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// <summary>
 	/// 购物车商品的类型
 	/// 因为使用了固定的逻辑处理，这里不开放接口

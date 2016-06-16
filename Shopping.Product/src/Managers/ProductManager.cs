@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using ZKWeb.Cache;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
@@ -17,9 +15,7 @@ using ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks;
 using ZKWeb.Server;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
-using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 	/// <summary>

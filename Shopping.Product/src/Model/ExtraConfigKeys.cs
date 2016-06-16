@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Shopping.Product.src.Model {
+﻿namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// <summary>
 	/// 网站附加配置中使用的键
 	/// </summary>

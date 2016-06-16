@@ -1,8 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWebStandard.Ioc;

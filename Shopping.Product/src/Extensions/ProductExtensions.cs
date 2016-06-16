@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using ZKWeb.Localize;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
@@ -11,7 +8,6 @@ using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.TypeTraits;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
-using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 	/// <summary>

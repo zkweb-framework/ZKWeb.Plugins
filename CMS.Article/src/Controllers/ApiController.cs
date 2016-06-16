@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ZKWeb.Plugins.CMS.Article.src.GenericClasses;
 using ZKWeb.Plugins.CMS.Article.src.Managers;
 using ZKWeb.Plugins.Common.GenericClass.src.Manager;

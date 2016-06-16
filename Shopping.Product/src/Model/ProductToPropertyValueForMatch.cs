@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Shopping.Product.src.Model {
+﻿namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// <summary>
 	/// 商品关联的属性值数据，用于反序列化客户端传回的值
 	/// 商品匹配参数中使用

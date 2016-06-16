@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Shopping.Order.src.Model {
+﻿namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// <summary>
 	/// 订单商品单价的计算器
 	/// </summary>

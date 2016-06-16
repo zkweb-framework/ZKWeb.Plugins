@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Currency.src.ListItemProviders;
-using ZKWeb.Plugins.Common.Currency.src.Managers;
-using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Server;
 using ZKWeb.Templating;

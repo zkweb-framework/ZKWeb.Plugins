@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
@@ -13,8 +9,6 @@ using ZKWeb.Plugins.Common.Currency.src.Config;
 using ZKWeb.Plugins.Common.Currency.src.ListItemProviders;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
-using ZKWeb.Plugins.Finance.Payment.src.Repositories;
-using ZKWeb.Server;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Web;

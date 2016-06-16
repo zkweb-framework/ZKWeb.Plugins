@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Common.Base.src.Model {
+﻿namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// 表格列信息
 	/// </summary>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Common.Region.src.Model {
+﻿namespace ZKWeb.Plugins.Common.Region.src.Model {
 	/// <summary>
 	/// 国家和地区
 	/// 地区联动下拉框使用

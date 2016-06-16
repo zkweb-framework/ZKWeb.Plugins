@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
+﻿namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 	/// <summary>
 	/// 程序集的测试状态
 	/// </summary>

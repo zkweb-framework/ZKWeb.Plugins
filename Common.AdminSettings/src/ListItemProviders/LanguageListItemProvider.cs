@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using ZKWeb.Localize;
-using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.AdminSettings.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.ListItemProviders {
 	/// <summary>

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZKWeb.Web;
-
-namespace ZKWeb.Plugins.Common.Admin.src.Model {
+﻿namespace ZKWeb.Plugins.Common.Admin.src.Model {
 	/// <summary>
 	/// 后台应用的接口
 	/// </summary>

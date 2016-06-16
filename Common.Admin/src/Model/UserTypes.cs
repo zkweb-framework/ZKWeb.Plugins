@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Common.Admin.src.Model {
+﻿namespace ZKWeb.Plugins.Common.Admin.src.Model {
 	/// <summary>
 	/// 用户类型
 	/// </summary>

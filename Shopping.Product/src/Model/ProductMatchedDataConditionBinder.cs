@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Shopping.Product.src.Model {
+﻿namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// <summary>
 	/// 商品匹配数据的条件绑定器
 	/// 绑定器只在商品编辑时使用

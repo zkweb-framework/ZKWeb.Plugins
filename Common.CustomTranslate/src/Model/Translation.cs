@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Common.CustomTranslate.src.Model {
+﻿namespace ZKWeb.Plugins.Common.CustomTranslate.src.Model {
 	/// <summary>
 	/// 翻译内容
 	/// </summary>

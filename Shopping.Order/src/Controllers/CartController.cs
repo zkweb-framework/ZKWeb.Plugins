@@ -1,14 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.Currency.src.Managers;
-using ZKWeb.Plugins.Common.Currency.src.Model;
-using ZKWeb.Plugins.Shopping.Order.src.Managers;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
-using ZKWebStandard.Extensions;
-using ZKWebStandard.Utils;
+﻿using System;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;

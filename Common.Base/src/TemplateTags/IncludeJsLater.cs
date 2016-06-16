@@ -1,10 +1,6 @@
 ﻿using DotLiquid;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {

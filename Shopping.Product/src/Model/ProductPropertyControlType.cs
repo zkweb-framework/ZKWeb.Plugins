@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Shopping.Product.src.Model {
+﻿namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// <summary>
 	/// 商品属性使用的输入控件类型
 	/// </summary>

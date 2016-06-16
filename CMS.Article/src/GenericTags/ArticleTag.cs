@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Common.GenericTag.src.Scaffolding;
+﻿using ZKWeb.Plugins.Common.GenericTag.src.Scaffolding;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.CMS.Article.src.GenericTags {

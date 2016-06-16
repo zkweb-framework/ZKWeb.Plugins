@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Model {
+﻿namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Model {
 	/// <summary>
 	/// 支付宝的服务类型
 	/// </summary>

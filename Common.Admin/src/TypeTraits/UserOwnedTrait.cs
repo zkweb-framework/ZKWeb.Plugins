@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.FastReflection;
-using System.Linq;
-using System.Text;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Admin.src.TypeTraits {

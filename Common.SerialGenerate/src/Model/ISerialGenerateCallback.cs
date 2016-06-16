@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Common.SerialGenerate.src.Model {
+﻿namespace ZKWeb.Plugins.Common.SerialGenerate.src.Model {
 	/// <summary>
 	/// 生成序列号时的回调
 	/// 可用于修改默认生成的序列号

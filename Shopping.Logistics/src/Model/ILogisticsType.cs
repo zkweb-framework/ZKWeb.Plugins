@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Shopping.Logistics.src.Model {
+﻿namespace ZKWeb.Plugins.Shopping.Logistics.src.Model {
 	/// <summary>
 	/// 物流类型的接口
 	/// </summary>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ZKWeb.Plugins.Common.Base.src.Model {
+﻿namespace ZKWeb.Plugins.Common.Base.src.Model {
 	/// <summary>
 	/// 扩展指定类型的表格回调使用的接口
 	/// </summary>

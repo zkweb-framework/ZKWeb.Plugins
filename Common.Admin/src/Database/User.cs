@@ -1,9 +1,6 @@
 ﻿using FluentNHibernate.Mapping;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ZKWeb.Database.UserTypes;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWebStandard.Utils;

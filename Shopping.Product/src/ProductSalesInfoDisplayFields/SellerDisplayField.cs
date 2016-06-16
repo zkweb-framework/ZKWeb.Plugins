@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.Shopping.Product.src.Model;
+﻿using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Database;
-using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Utils;
 

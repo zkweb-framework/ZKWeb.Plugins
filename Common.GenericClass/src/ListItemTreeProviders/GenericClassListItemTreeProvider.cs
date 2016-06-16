@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Base.src.Repositories;
+﻿using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.GenericClass.src.Manager;
 using ZKWeb.Plugins.Common.GenericClass.src.Scaffolding;
-using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.GenericClass.src.ListItemProviders {

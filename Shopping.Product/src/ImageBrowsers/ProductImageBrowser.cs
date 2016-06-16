@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding;
-using ZKWeb.Plugins.Common.Admin.src.Model;
+﻿using ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.ImageBrowsers {
