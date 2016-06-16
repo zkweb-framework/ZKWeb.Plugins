@@ -18,13 +18,13 @@ using ZKWebStandard.Web;
 namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 	/// <summary>
 	/// 通用标签构建器
+	/// </summary>
 	/// <example>
 	/// [ExportMany]
 	/// public class ExampleTag : GenericTagBuilder {
 	///		public override string Name { get { return "ExampleTag"; } }
 	/// }
 	/// </example>
-	/// </summary>
 	public abstract class GenericTagBuilder :
 		AdminSettingsCrudPageBuilder<Database.GenericTag> {
 		public virtual string Type { get { return Name.Replace(" ", ""); } }

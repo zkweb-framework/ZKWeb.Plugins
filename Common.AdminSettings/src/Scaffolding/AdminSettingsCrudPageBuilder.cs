@@ -5,6 +5,7 @@ using ZKWeb.Plugins.Common.MenuPage.src.Scaffolding;
 namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	/// <summary>
 	/// 支持增删查改数据的后台页面构建器
+	/// </summary>
 	/// <example>
 	/// public class ExamplePage : AdminSettingsCrudPageBuilder[ExampleTable] {
 	///		public override string Group { get { return "Example Group"; } }
@@ -19,7 +20,6 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	///		public class Form : DataEditFormBuilder[ExampleTable, Form] { }
 	/// }
 	/// </example>
-	/// </summary>
 	/// <typeparam name="TData">数据类型</typeparam>
 	public abstract class AdminSettingsCrudPageBuilder<TData> :
 		CrudMenuPageBuilder<TData>, IAdminSettingsMenuProvider

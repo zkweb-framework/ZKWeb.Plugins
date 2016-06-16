@@ -5,11 +5,11 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 设置页面描述
 	/// 需要配合"render_meta_description"标签使用
+	/// </summary>
 	/// <example>
 	/// {% use_meta_description "description" %}
 	/// {% use_meta_description variable %}
 	/// </example>
-	/// </summary>
 	public class UseMetaDescription : Tag {
 		/// <summary>
 		/// 设置页面描述

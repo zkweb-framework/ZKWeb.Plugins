@@ -5,10 +5,10 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 描画额外的meta标签
 	/// 描画后会清空原有的内容，可以重复调用
+	/// </summary>
 	/// <example>
 	/// {% render_extra_metadata %}
 	/// </example>
-	/// </summary>
 	public class RenderExtraMetadata : Tag {
 		/// <summary>
 		/// 变量名

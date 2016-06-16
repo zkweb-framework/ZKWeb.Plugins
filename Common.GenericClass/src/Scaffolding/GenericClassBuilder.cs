@@ -19,13 +19,13 @@ using ZKWebStandard.Web;
 namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 	/// <summary>
 	/// 通用分类构建器
+	/// </summary>
 	/// <example>
 	/// [ExportMany]
 	/// public class ExampleClass : GenericClassBuilder {
 	///		public override string Name { get { return "ExampleClass"; } }
 	/// }
 	/// </example>
-	/// </summary>
 	public abstract class GenericClassBuilder :
 		AdminSettingsCrudPageBuilder<Database.GenericClass> {
 		public virtual string Type { get { return Name.Replace(" ", ""); } }

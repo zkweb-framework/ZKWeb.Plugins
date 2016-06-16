@@ -6,11 +6,11 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 设置页面关键词
 	/// 需要配合"render_meta_keywords"标签使用
+	/// </summary>
 	/// <example>
 	/// {% use_meta_keywords "keywords" %}
 	/// {% use_meta_keywords variable %}
 	/// </example>
-	/// </summary>
 	public class UseMetaKeywords : Tag {
 		/// <summary>
 		/// 设置页面关键词

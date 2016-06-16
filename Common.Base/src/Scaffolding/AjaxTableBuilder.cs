@@ -12,13 +12,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// Ajax表格构建器
 	/// 这个类可以通过Ioc替换，使用时注意要通过Ioc获取
+	/// </summary>
 	/// <example>
 	/// var table = Application.Ioc.Resolve[AjaxTableBuilder]();
 	/// table.Id = "TestList";
 	/// table.Target = "/test/search";
 	/// return new TemplateResult("test_table.html", new { table });
 	/// </example>
-	/// </summary>
 	[ExportMany]
 	public class AjaxTableBuilder : ILiquidizable {
 		/// <summary>

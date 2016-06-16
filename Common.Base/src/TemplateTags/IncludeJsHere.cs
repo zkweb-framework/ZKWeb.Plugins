@@ -6,11 +6,11 @@ using ZKWebStandard.Utils;
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 在当前位置引用js文件
+	/// </summary>
 	/// <example>
 	/// {% include_js_here "/static/common.base.js/test.js" %}
 	/// {% include_js_here variable %}
 	/// </example>
-	/// </summary>
 	public class IncludeJsHere : Tag {
 		/// <summary>
 		/// 描画引用标签

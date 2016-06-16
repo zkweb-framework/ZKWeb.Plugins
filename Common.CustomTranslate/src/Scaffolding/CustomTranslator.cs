@@ -25,13 +25,13 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 	/// 自定义翻译器
 	/// 可以在后台设置中设置自定义翻译
 	/// 注册时必须添加SingletonReuse属性否则影响性能
+	/// </summary>
 	/// <example>
 	/// [ExportMany, SingletonReuse]
 	/// public class Chinese : CustomTranslator {
 	///		public override string Name { get { return "zh-CN"; } }
 	/// }
 	/// </example>
-	/// </summary>
 	public abstract class CustomTranslator :
 		AdminSettingsCrudPageBuilder<Translation>, ITranslateProvider, ICacheCleaner {
 		public override string Group { get { return "CustomTranslate"; } }

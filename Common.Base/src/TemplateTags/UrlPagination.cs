@@ -8,10 +8,10 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 根据Url分页的控件
 	/// 需要配合Model.Pagination使用
+	/// </summary>
 	/// <example>
 	/// {% url_pagination response.Pagination %}
 	/// </example>
-	/// </summary>
 	public class UrlPagination : Tag {
 		/// <summary>
 		/// 设置到url时使用的参数名

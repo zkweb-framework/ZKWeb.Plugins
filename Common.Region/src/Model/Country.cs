@@ -9,11 +9,11 @@ namespace ZKWeb.Plugins.Common.Region.src.Model {
 	/// <summary>
 	/// 国家/行政区
 	/// 注册时请使用使用SingletonReuse，以支持在其他插件添加地区
+	/// </summary>
 	/// <example>
 	/// [ExportMany, SingletonReuse]
 	/// public class China : Country { }
 	/// </example>
-	/// </summary>
 	public abstract class Country : ICacheCleaner {
 		/// <summary>
 		/// 国家名称

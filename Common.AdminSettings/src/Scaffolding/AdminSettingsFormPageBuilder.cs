@@ -5,6 +5,7 @@ using ZKWeb.Plugins.Common.MenuPage.src.Scaffolding;
 namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	/// <summary>
 	/// 带单个表单的后台设置页面构建器
+	/// </summary>
 	/// <example>
 	/// [ExportMany]
 	/// public class ExamplePage : AdminSettingsFormPageBuilder {
@@ -18,7 +19,6 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	///		public class Form : ModelFormBuilder { }
 	/// }
 	/// </example>
-	/// </summary>
 	public abstract class AdminSettingsFormPageBuilder :
 		FormMenuPageBuilder, IAdminSettingsMenuProvider {
 		/// <summary>

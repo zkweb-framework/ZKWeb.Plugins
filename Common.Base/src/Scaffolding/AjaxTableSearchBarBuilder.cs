@@ -12,13 +12,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// Ajax表格搜索栏构建器
 	/// 这个类可以通过Ioc替换，使用时注意要通过Ioc获取
+	/// </summary>
 	/// <example>
 	/// var searchBar = Application.Ioc.Resolve[AjaxTableSearchBarBuilder]();
 	/// searchBar.TableId = "TestList";
 	/// searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("TestCondition")));
 	/// return new TemplateResult("test_table.html", new { table, searchBar });
 	/// </example>
-	/// </summary>
 	[ExportMany]
 	public class AjaxTableSearchBarBuilder : ILiquidizable {
 		/// <summary>

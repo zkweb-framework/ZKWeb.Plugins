@@ -2,6 +2,7 @@
 	/// <summary>
 	/// 商品属性关联的属性值数据，用于反序列化客户端传回的值
 	/// 编辑商品属性时使用
+	/// </summary>
 	/// <example>
 	/// [
 	///		{ Id: 0, Name: "红色", Remark: "备注" },
@@ -9,7 +10,6 @@
 	///		{ Id: 10002, Name: "绿色", Remark: "备注" }
 	/// ]
 	/// </example>
-	/// </summary>
 	public class ProductPropertyValueForEdit {
 		/// <summary>
 		/// 属性值Id

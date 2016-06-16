@@ -7,6 +7,7 @@ using ZKWeb.Plugins.Common.UserPanel.src.Model;
 namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	/// <summary>
 	/// 支持增删查改数据的后台页面构建器
+	/// </summary>
 	/// <example>
 	/// public class ExamplePage : UserPanelCrudPageBuilder[ExampleTable] {
 	///		public override string Group { get { return "Example Group"; } }
@@ -21,7 +22,6 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	///		public class Form : UserOwnedDataEditFormBuilder[ExampleTable, Form] { }
 	/// }
 	/// </example>
-	/// </summary>
 	/// <typeparam name="TData">数据类型</typeparam>
 	public abstract class UserPanelCrudPageBuilder<TData> :
 		CrudMenuPageBuilder<TData>, IUserPanelMenuProvider

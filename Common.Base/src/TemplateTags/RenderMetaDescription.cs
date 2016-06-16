@@ -8,10 +8,10 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 描画页面描述
 	/// 如果有指定关键词时使用指定的描述，否则使用网站设置中的描述
+	/// </summary>
 	/// <example>
 	/// {% render_meta_description %}
 	/// </example>
-	/// </summary>
 	public class RenderMetaDescription : Tag {
 		/// <summary>
 		/// 变量名

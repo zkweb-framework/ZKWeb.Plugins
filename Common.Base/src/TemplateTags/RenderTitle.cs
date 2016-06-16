@@ -4,10 +4,10 @@ using System.IO;
 namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 描画当前网站标题
+	/// </summary>
 	/// <example>
 	/// {% render_title %}
 	/// </example>
-	/// </summary>
 	public class RenderTitle : Tag {
 		/// <summary>
 		/// 变量名

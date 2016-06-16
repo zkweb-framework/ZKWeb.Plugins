@@ -3,6 +3,7 @@
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>
 	/// 支持增删查改数据的后台应用构建器
+	/// </summary>
 	/// <example>
 	///	[ExportMany]
 	///	public class ExampleApp : AdminAppBuilder[TestData] {
@@ -15,7 +16,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	///		public class Form : DataEditFormBuilder[TestData, Form] { }
 	/// }
 	/// </example>
-	/// </summary>
 	/// <typeparam name="TData">数据类型</typeparam>
 	public abstract class AdminAppBuilder<TData> : CrudPageBuilder<TData>, IAdminApp
 		where TData : class {

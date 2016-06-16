@@ -15,6 +15,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// 表单构建器
 	/// 这个类可以通过Ioc替换，使用时注意要通过Ioc获取
+	/// </summary>
 	/// <example>
 	/// // 创建
 	/// var form = Application.Ioc.Resolve[FormBuilder]();
@@ -29,7 +30,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// var username = values.GetOrDefault[string]("Username");
 	/// var password = values.GetOrDefault[string]("Password");
 	/// </example>
-	/// </summary>
 	[ExportMany]
 	public class FormBuilder : ILiquidizable {
 		/// <summary>

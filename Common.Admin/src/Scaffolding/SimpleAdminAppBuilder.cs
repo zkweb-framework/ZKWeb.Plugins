@@ -7,6 +7,7 @@ using ZKWeb.Web;
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>
 	/// 简单的后台应用构建器
+	/// </summary>
 	/// <example>
 	/// [ExportMany]
 	/// public class ExampleApp : SimpleAdminAppBuilder {
@@ -15,7 +16,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	///		protected override IActionResult Action() { }
 	/// }
 	/// </example>
-	/// </summary>
 	public abstract class SimpleAdminAppBuilder :
 		IPrivilegesProvider, IWebsiteStartHandler, IAdminApp {
 		/// <summary>

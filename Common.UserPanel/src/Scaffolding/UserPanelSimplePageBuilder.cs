@@ -5,6 +5,7 @@ using ZKWeb.Plugins.Common.UserPanel.src.Model;
 namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	/// <summary>
 	/// 简单的用户中心页面构建器
+	/// </summary>
 	/// <example>
 	/// [ExportMany]
 	/// public class ExamplePage : UserPanelSimplePageBuilder {
@@ -16,7 +17,6 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	///		protected override IActionResult Action() { return new PlainResult("example page"); }
 	/// }
 	/// </example>
-	/// </summary>
 	public abstract class UserPanelSimplePageBuilder :
 		SimpleMenuPageBuilder, IUserPanelMenuProvider {
 		/// <summary>

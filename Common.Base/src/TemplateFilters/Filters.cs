@@ -17,10 +17,10 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 		/// <summary>
 		/// 网站标题
 		/// 格式见 WebsiteSettings.DocumentTitleFormat
+		/// </summary>
 		/// <example>
 		/// {{ "Website Title" | website_title }}
 		/// </example>
-		/// </summary>
 		/// <param name="text">需要翻译的文本</param>
 		/// <returns></returns>
 		public static string WebsiteTitle(string title) {
@@ -36,10 +36,10 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 
 		/// <summary>
 		/// 全局过滤网址
+		/// </summary>
 		/// <example>
 		/// {{ "/example" | url }}
 		/// </example>
-		/// </summary>
 		/// <param name="url"></param>
 		/// <returns></returns>
 		public static string Url(string url) {
@@ -52,11 +52,11 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 
 		/// <summary>
 		/// 获取Url参数，传入的url是空值时使用当前请求的url
+		/// </summary>
 		/// <example>
 		/// {{ "" | url_get_param: "key" }}
 		/// {{ test_url | url_get_param: variable }}
 		/// </example>
-		/// </summary>
 		/// <param name="url">来源url，空值时使用当前请求的url</param>
 		/// <param name="key">参数</param>
 		/// <returns></returns>
@@ -75,11 +75,11 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 
 		/// <summary>
 		/// 设置Url参数，传入的url是空值时使用当前请求的url
+		/// </summary>
 		/// <example>
 		/// {{ "" | url_set_param: "key", "value" | url }}
 		/// {{ test_url | url_set_param: "key", variable | url }}
 		/// </example>
-		/// </summary>
 		/// <param name="url">来源url，空值时使用当前请求的url</param>
 		/// <param name="key">参数</param>
 		/// <param name="value">参数值，等于null时表示移除</param>
@@ -108,11 +108,11 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 		/// <summary>
 		/// 删除Url参数，传入的url是空值时使用当前请求的url
 		/// 等于UrlSetParam(url, key, null)
+		/// </summary>
 		/// <example>
 		/// {{ "" | url_remove_param: "key" }}
 		/// {{ test_url | url_remove_param: variable }}
 		/// </example>
-		/// </summary>
 		/// <param name="url">来源url，空值时使用当前请求的url</param>
 		/// <param name="key">参数</param>
 		/// <returns></returns>

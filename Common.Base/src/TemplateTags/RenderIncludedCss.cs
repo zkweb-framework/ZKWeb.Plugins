@@ -5,10 +5,10 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 描画延迟引用的css资源
 	/// 描画后会清空原有的引用，可以重复调用
+	/// </summary>
 	/// <example>
 	/// {% render_included_css %}
 	/// </example>
-	/// </summary>
 	public class RenderIncludedCss : Tag {
 		/// <summary>
 		/// 变量名

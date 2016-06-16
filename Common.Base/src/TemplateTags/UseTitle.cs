@@ -6,11 +6,11 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 设置网站标题
 	/// 需要配合标签"render_title"使用
+	/// </summary>
 	/// <example>
 	/// {% use_title "Plain Text Title" %}
 	/// {% use_title variable_title %}
 	/// </example>
-	/// </summary>
 	public class UseTitle : Tag {
 		/// <summary>
 		/// 设置标题到变量中

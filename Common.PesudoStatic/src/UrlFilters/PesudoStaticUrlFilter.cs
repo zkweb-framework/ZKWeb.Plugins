@@ -10,6 +10,7 @@ using ZKWebStandard.Utils;
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters {
 	/// <summary>
 	/// 伪静态使用的Url过滤器
+	/// </summary>
 	/// <example>
 	/// 规则
 	/// - 如果路径是空，跳过
@@ -39,7 +40,6 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters {
 	/// /example/list?tag=123&class=158 => /example/list-tag-123-class-158.html
 	/// /example/list?key=1-1&class=123 => /example/list-class-123.html?key=1-1
 	/// </example>
-	/// </summary>
 	[ExportMany, SingletonReuse]
 	public class PesudoStaticUrlFilter : IUrlFilter {
 		/// <summary>

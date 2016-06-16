@@ -5,6 +5,7 @@ using ZKWeb.Plugins.Common.Admin.src.Model;
 namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	/// <summary>
 	/// 带单个表单的用户中心页面构建器
+	/// </summary>
 	/// <example>
 	/// [ExportMany]
 	/// public class ExamplePage : UserPanelFormPageBuilder {
@@ -17,7 +18,6 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	///		public class Form : ModelFormBuilder { }
 	/// }
 	/// </example>
-	/// </summary>
 	public abstract class UserPanelFormPageBuilder :
 		FormMenuPageBuilder, IUserPanelMenuProvider {
 		/// <summary>

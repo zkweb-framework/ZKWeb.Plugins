@@ -8,10 +8,10 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 	/// <summary>
 	/// 描画页面关键词
 	/// 如果有指定关键词时使用指定的关键词，否则使用网站设置中的关键词
+	/// </summary>
 	/// <example>
 	/// {% render_meta_keywords %}
 	/// </example>
-	/// </summary>
 	public class RenderMetaKeywords : Tag {
 		/// <summary>
 		/// 变量名

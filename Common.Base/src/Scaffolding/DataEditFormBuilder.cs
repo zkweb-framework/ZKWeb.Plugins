@@ -10,6 +10,7 @@ using ZKWebStandard.Web;
 namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <summary>
 	/// 用于编辑指定数据的表单
+	/// </summary>
 	/// <example>
 	/// public class UserEditForm : DataEditFormBuilder[User, UserEditForm] {
 	///		[TextBoxField("Username")]
@@ -23,7 +24,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	///		}
 	/// }
 	/// </example>
-	/// </summary>
 	/// <typeparam name="TData">编辑的数据类型</typeparam>
 	/// <typeparam name="TForm">继承类自身的类型</typeparam>
 	public abstract class DataEditFormBuilder<TData, TForm> : ModelFormBuilder
