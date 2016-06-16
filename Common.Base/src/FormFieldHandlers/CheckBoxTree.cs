@@ -34,7 +34,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 				level = n.GetParents().Count() - 1
 			});
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var fieldHtml = templateManager.RenderTemplate("tmpl.form.hidden.html", new {
+			var fieldHtml = templateManager.RenderTemplate("common.base/tmpl.form.hidden.html", new {
 				name = field.Attribute.Name,
 				value = JsonConvert.SerializeObject(field.Value ?? new string[0]),
 				attributes = htmlAttributes

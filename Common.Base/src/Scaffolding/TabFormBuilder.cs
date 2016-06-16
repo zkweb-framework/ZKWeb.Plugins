@@ -79,8 +79,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 							var formFieldHtml = new StringBuilder();
 							RenderFormField(formFieldHtml, field);
 							return new HtmlString(formFieldHtml.ToString());
-						})
-					})
+						}).ToList()
+					}).ToList()
 				}));
 		}
 

@@ -3,7 +3,7 @@
 	<label class="radio-inline">
 		{% if option.selected %}
 		<input name="{{ name }}" type="radio" value="{{ option.value }}" checked="checked" {{ attributes | html_attributes }} />
-		{% endif %}
+		{% else %}
 		<input name="{{ name }}" type="radio" value="{{ option.value }}" {{ attributes | html_attributes }} />
 		{% endif %}
 		{{ name | trans }}

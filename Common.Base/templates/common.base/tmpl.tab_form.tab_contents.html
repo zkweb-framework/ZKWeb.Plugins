@@ -1,6 +1,5 @@
 ﻿<div class="tab-content">
 	{% for group in groups %}
-	{% for group in groups %}
 	{% if forloop.index == 1 %}
 	{% assign cssClass = "tab-pane active" %}
 	{% else %}
@@ -8,7 +7,7 @@
 	{% endif %}
 	<div id="{{ group.tabId }}" class="{{ cssClass }}">
 		<div>
-			{% for formField in formFields %}
+			{% for formField in group.formFields %}
 			{{ formField }}
 			{% endfor %}
 		</div>

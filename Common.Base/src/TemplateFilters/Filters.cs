@@ -70,7 +70,8 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 				return null;
 			}
 			var query = HttpUtils.ParseQueryString(queryString);
-			return query[key][0];
+			var values = query.GetOrDefault(key);
+			return (values == null) ? null : values[0];
 		}
 
 		/// <summary>
@@ -100,7 +101,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 			var urlBuilder = new StringBuilder();
 			urlBuilder.Append(path);
 			if (query.Count > 0) {
-				urlBuilder.Append('?').Append(query.ToString());
+				urlBuilder.Append('?').Append(HttpUtils.BuildQueryString(query));
 			}
 			return urlBuilder.ToString();
 		}
