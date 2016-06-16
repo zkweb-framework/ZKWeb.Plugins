@@ -26,7 +26,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldHandlers {
 		/// 解析提交的字段的值
 		/// </summary>
 		public object Parse(FormField field, IList<string> values) {
-			return values;
+			return values[0];
 		}
 	}
 }

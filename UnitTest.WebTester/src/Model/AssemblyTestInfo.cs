@@ -58,6 +58,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.Model {
 		public AssemblyTestInfo(Assembly assembly) {
 			AssemblyName = assembly.GetName().Name;
 			State = AssemblyTestState.NotRunning;
+			Counter = new TestResultCounter();
 			Updated();
 		}
 

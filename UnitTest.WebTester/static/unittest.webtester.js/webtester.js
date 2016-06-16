@@ -34,9 +34,9 @@ $(function () {
 			_.each(data.informations, function (info) {
 				var $row = $table.find("tr[data-assembly-name='" + info.AssemblyName + "']");
 				$row.find(".state").text(info.StateName);
-				$row.find(".passed").text(info.Passed);
-				$row.find(".skipped a").text(info.Skipped);
-				$row.find(".failed a").text(info.Failed);
+				$row.find(".passed").text(info.Counter.Passed);
+				$row.find(".skipped a").text(info.Counter.Skipped);
+				$row.find(".failed a").text(info.Counter.Failed);
 				$row.find(".skipped pre").text(info.SkippedMessage || "");
 				$row.find(".failed pre").text(info.FailedMessage || "");
 				$row.find(".error-message a").text(getLines(info.ErrorMessage));

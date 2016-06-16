@@ -2,7 +2,8 @@
 	{% for option in options %}
 	{% if option.selected %}
 	<option value="{{ option.value }}" selected="selected">{{ option.name }}</option>
-	{% endif %}
+	{% else %}
 	<option value="{{ option.value }}">{{ option.name }}</option>
+	{% endif %}
 	{% endfor %}
 </select>
