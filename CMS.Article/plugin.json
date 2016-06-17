@@ -5,9 +5,8 @@
 	"Dependencies": [
 		"Common.Base",
 		"Common.Admin",
-		"CMS.CKEditor",
-		"CMS.ImageBrowser",
 		"Common.GenericClass",
-		"Common.GenericTag"
+		"Common.GenericTag",
+		"CMS.ImageBrowser"
 	]
 }

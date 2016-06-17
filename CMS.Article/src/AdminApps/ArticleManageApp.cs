@@ -10,7 +10,6 @@ using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Localize;
 using ZKWebStandard.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.AdminApps;
-using ZKWeb.Plugins.CMS.CKEditor.src.FormFieldAttributes;
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
@@ -150,12 +149,12 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 			/// <summary>
 			/// 内容
 			/// </summary>
-			[CKEditor("Contents", ImageBrowserUrl = "/image_browser/article")]
+			[RichTextEditor("Contents", ImageBrowserUrl = "/image_browser/article")]
 			public string Contents { get; set; }
 			/// <summary>
 			/// 备注
 			/// </summary>
-			[CKEditor("Remark", ImageBrowserUrl = "/image_browser/article", Group = "Remark")]
+			[RichTextEditor("Remark", ImageBrowserUrl = "/image_browser/article", Group = "Remark")]
 			public string Remark { get; set; }
 
 			/// <summary>

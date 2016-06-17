@@ -7,9 +7,8 @@
 		"Common.Admin",
 		"Common.AdminSettings",
 		"Common.Currency",
-		"CMS.CKEditor",
-		"CMS.ImageBrowser",
 		"Common.GenericClass",
-		"Common.GenericTag"
+		"Common.GenericTag",
+		"CMS.ImageBrowser"
 	]
 }

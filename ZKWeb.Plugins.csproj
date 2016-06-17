@@ -797,7 +797,6 @@
     <Compile Include="Shopping.Product\src\Translates\ja_JP.cs" />
     <Compile Include="Shopping.Product\src\Translates\zh_TW.cs" />
     <Compile Include="Shopping.Product\src\Translates\zh_CN.cs" />
-    <Compile Include="CMS.CKEditor\src\FormFieldAttributes\CKEditorAttribute.cs" />
     <Compile Include="CMS.CKEditor\src\FormFieldHandlers\CKEditor.cs" />
     <Compile Include="CMS.CKEditor\src\Translates\ko_KR.cs" />
     <Compile Include="CMS.CKEditor\src\Translates\ja_JP.cs" />
