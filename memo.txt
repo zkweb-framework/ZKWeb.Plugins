@@ -81,6 +81,10 @@
 		是否有数量等于或小于0的商品
 		如果有实体商品，必须选择物流(使用Trait)
 		如果有实体商品，必须填写收货地址(使用Trait)
+	修改CKEditor到RichTextEditor，允许无缝替换
+
+零碎任务（疑难）
+	修复Asp.Net Core版本出现502错误的问题
 
 性能测试结果
 2016-05-27 (i7 Q720 1.6Ghz x 4 core 4 threads, ab -n 2000 -c 8, vmware player 12)
