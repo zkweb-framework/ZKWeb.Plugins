@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchParametersDescriptionPr
 		/// </summary>
 		public string GetDescription(Database.Product product, IDictionary<string, object> parameters) {
 			var properties = parameters.GetOrDefault<IList<ProductToPropertyValueForMatch>>("Properties");
-			if (properties == null) {
+			if (properties == null || properties.Count <= 0) {
 				return null;
 			}
 			var propertiesMap = properties.ToDictionary(p => p.PropertyId);
