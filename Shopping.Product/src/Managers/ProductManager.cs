@@ -86,8 +86,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 				product = r.GetByIdWhereNotDeleted(productId);
 				var category = product.Category;
 				var seller = product.Seller;
-				category.Properties.ToList();
-				category.Properties.SelectMany(p => p.PropertyValues).ToList();
+				if (category != null) {
+					category.Properties.ToList();
+					category.Properties.SelectMany(p => p.PropertyValues).ToList();
+				}
 				product.MatchedDatas.ToList();
 				product.PropertyValues.ToList();
 				// 保存到缓存
