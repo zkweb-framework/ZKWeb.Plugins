@@ -109,6 +109,9 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 				searchBar.MenuItems.AddAddAction(
 					Builder.Type, Builder.AddUrl,
 					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
+				searchBar.BeforeItems.AddAddAction(
+					Builder.Type, Builder.AddUrl,
+					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
 			}
 
 			/// <summary>

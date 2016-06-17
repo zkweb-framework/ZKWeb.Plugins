@@ -92,6 +92,8 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 				searchBar.MenuItems.AddRecycleBin();
 				searchBar.MenuItems.AddAddAction(
 					Builder.Type, Builder.AddUrl, dialogParameters: new { size = "size-wide" });
+				searchBar.BeforeItems.AddAddAction(
+					Builder.Type, Builder.AddUrl, dialogParameters: new { size = "size-wide" });
 			}
 
 			/// <summary>
