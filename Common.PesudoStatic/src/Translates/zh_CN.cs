@@ -10,9 +10,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Translates {
 	[ExportMany, SingletonReuse]
 	public class zh_CN : ITranslateProvider {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
-		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
-		{
-			// TODO: 以下未翻译到其他语言
+		private static Dictionary<string, string> Translates = new Dictionary<string, string>() {
 			{ "PesudoStatic", "伪静态" },
 			{ "Pesudo static support", "伪静态支持" },
 			{ "PesudoStaticSettings", "伪静态设置" },

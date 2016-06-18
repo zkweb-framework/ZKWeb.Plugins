@@ -25,7 +25,10 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Translates {
 			{ "FirstHeavyCost", "먼저 중공업 비용" },
 			{ "ContinuedHeavyUnit(g)", "계속 무거운 단위(그램)" },
 			{ "ContinuedHeavyCost", "계속 무거운 비용" },
-			{ "Disabled", "장애인" }
+			{ "Disabled", "장애인" },
+			{ "Selected logistics does not exist", "선택한 물류가 존재하지 않습니다" },
+			{ "Selected logistics is not available for this region",
+				"선택된 물류는이 지역에서 사용할 수 없습니다" }
 		};
 
 		public bool CanTranslate(string code) {

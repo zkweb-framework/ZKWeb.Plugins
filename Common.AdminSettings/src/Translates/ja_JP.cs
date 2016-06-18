@@ -44,7 +44,11 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Translates {
 			{ "FrontPageLogo", "フロントページのロゴ" },
 			{ "AdminPanelLogo", "管理者パネルのロゴ" },
 			{ "RestoreDefaultFrontPageLogo", "フロントページのロゴをデフォルトに戻す" },
-			{ "RestoreDefaultAdminPanelLogo", "管理者パネルのロゴをデフォルトに戻す" }
+			{ "RestoreDefaultAdminPanelLogo", "管理者パネルのロゴをデフォルトに戻す" },
+			{ "Favicon", "ファビコン" },
+			{ "RestoreDefaultFavicon", "ファビコンをデフォルトに戻す" },
+			{ "PageKeywords", "ページのキーワード" },
+			{ "PageDescription", "ページの説明" }
 		};
 
 		public bool CanTranslate(string code) {

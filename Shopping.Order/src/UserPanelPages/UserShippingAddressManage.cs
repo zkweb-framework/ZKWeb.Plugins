@@ -131,7 +131,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			/// 收货人电话/手机
 			/// </summary>
 			[Required]
-			[TextBoxField("Tel/Mobile", "Tel/Mobile")]
+			[TextBoxField("TelOrMobile", "TelOrMobile")]
 			[StringLength(100, MinimumLength = 1)]
 			public string ReceiverTel { get; set; }
 			/// <summary>

@@ -86,7 +86,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "CheckBox", "多選框" },
 			{ "RadioButton", "單選框" },
 			{ "DropdownList", "下拉列表" },
-			{ "EditableDropdownList", "可編輯的下拉列表" }
+			{ "EditableDropdownList", "可編輯的下拉列表" },
+			{ "OrderCount", "訂購數量" },
+			{ "Product is OnSale", "商品正常銷售中" },
+			{ "Product is StopSelling", "商品已下架" },
+			{ "Product is WaitForSales", "商品尚未開始銷售" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -51,7 +51,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 				calculator.Calculate(parameters, result);
 			}
 			if (result.Parts.Sum() <= 0) {
-				throw new HttpException(400, new T("Order cost must large than 0"));
+				throw new HttpException(400, new T("Order cost must larger than 0"));
 			}
 			return result;
 		}

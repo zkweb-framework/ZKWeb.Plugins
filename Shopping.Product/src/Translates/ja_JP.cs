@@ -86,7 +86,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "CheckBox", "チェックボックス" },
 			{ "RadioButton", "ラジオボタン" },
 			{ "DropdownList", "ドロップダウンリスト" },
-			{ "EditableDropdownList", "編集可能なドロップダウンリスト" }
+			{ "EditableDropdownList", "編集可能なドロップダウンリスト" },
+			{ "OrderCount", "注文数" },
+			{ "Product is OnSale", "この商品は販売中です" },
+			{ "Product is StopSelling", "この商品の販売は終了しました" },
+			{ "Product is WaitForSales", "この商品の販売はまだ始まっていません" }
 		};
 
 		public bool CanTranslate(string code) {

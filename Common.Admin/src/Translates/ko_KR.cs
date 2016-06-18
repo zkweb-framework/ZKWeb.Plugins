@@ -122,6 +122,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "ZKWeb Version", "ZKWeb 버전" },
 			{ "ZKWeb Full Version", "ZKWeb 풀 버전" },
 			{ "Memory Usage", "메모리 사용량" },
+			{ "Action require the ownership of {0}: {1}", "다음 작업의 소유권을 가질 필요가 {0}: {1}" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -25,7 +25,9 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Translates {
 			{ "FirstHeavyCost", "首重費用" },
 			{ "ContinuedHeavyUnit(g)", "續重(克)" },
 			{ "ContinuedHeavyCost", "續重費用" },
-			{ "Disabled", "已禁用" }
+			{ "Disabled", "已禁用" },
+			{ "Selected logistics does not exist", "選擇的物流不存在" },
+			{ "Selected logistics is not available for this region", "選擇的物流不支持您的地區，請選擇其他物流" }
 		};
 
 		public bool CanTranslate(string code) {

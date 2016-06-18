@@ -58,7 +58,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 			// 获取订购数量
 			var orderCount = parameters.GetOrDefault<long>("OrderCount");
 			if (orderCount <= 0) {
-				throw new HttpException(400, new T("Order count must large than 0"));
+				throw new HttpException(400, new T("Order count must larger than 0"));
 			}
 			// 立刻购买时删除原有的购物车商品列表
 			// 加入购物车时获取现有的购物车商品列表，判断是否可以增加已有的数量

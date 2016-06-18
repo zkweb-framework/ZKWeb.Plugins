@@ -45,7 +45,6 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Translates {
 			{ "AdminPanelLogo", "后台Logo" },
 			{ "RestoreDefaultFrontPageLogo", "恢复默认前台Logo" },
 			{ "RestoreDefaultAdminPanelLogo", "恢复默认后台Logo" },
-			// TODO: 以下未翻译到其他语言
 			{ "Favicon", "页面图标" },
 			{ "RestoreDefaultFavicon", "恢复默认页面图标" },
 			{ "PageKeywords", "页面关键词" },

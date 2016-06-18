@@ -44,7 +44,11 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Translates {
 			{ "FrontPageLogo", "프론트 페이지 로고" },
 			{ "AdminPanelLogo", "관리자 패널 로고" },
 			{ "RestoreDefaultFrontPageLogo", "기본 프론트 페이지 로고 복원" },
-			{ "RestoreDefaultAdminPanelLogo", "기본 관리자 패널 로고 복원" }
+			{ "RestoreDefaultAdminPanelLogo", "기본 관리자 패널 로고 복원" },
+			{ "Favicon", "파비콘" },
+			{ "RestoreDefaultFavicon", "기본 파비콘 복원" },
+			{ "PageKeywords", "페이지 키워드" },
+			{ "PageDescription", "페이지 설명" }
 		};
 
 		public bool CanTranslate(string code) {

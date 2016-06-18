@@ -25,7 +25,10 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Translates {
 			{ "FirstHeavyCost", "第一段階の費用" },
 			{ "ContinuedHeavyUnit(g)", "続く段階ごとの重さ(グラム)" },
 			{ "ContinuedHeavyCost", "続く段階ごとの費用" },
-			{ "Disabled", "禁止" }
+			{ "Disabled", "禁止" },
+			{ "Selected logistics does not exist", "選択した物流は存在しません" },
+			{ "Selected logistics is not available for this region",
+				"選択した物流はこの地域では利用できません、他の物流を選んでください" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -26,7 +26,6 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Translates {
 			{ "ContinuedHeavyUnit(g)", "续重(克)" },
 			{ "ContinuedHeavyCost", "续重费用" },
 			{ "Disabled", "已禁用" },
-			// TODO: 以下未翻译到其他语言
 			{ "Selected logistics does not exist", "选择的物流不存在" },
 			{ "Selected logistics is not available for this region", "选择的物流不支持您的地区，请选择其他物流" }
 		};

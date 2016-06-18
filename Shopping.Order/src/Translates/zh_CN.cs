@@ -15,13 +15,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Order", "订单" },
 			{ "OrderManage", "订单管理" },
 			{ "Order management for ec site", "商城使用的订单管理功能" },
-			// TODO: 以下未翻译到其他语言
 			{ "Buynow", "立刻购买" },
 			{ "AddToCart", "加入购物车" },
 			{ "Cart", "购物车" },
 			{ "The product you are try to purchase does not exist.", "您尝试购买的商品不存在" },
 			{ "The product you are try to purchase does not purchasable.", "您尝试购买的商品目前不允许购买" },
-			{ "Order count must large than 0", "订购数量必须大于0" },
+			{ "Order count must larger than 0", "订购数量必须大于0" },
 			{ "OrderSettings", "订单设置" },
 			{ "BuynowCartProductExpiresDays", "立刻购买的购物车商品的过期天数" },
 			{ "NormalCartProductExpiresDays", "一般的购物车商品的过期天数" },
@@ -38,7 +37,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Close", "关闭" },
 			{ "Checkout >>>", "去结算 >>>" },
 			{ "Order product unit price must not be negative", "订单商品的单价必须大于或等于0" },
-			{ "Order cost must large than 0", "订单总价必须大于0" },
+			{ "Order cost must larger than 0", "订单总价必须大于0" },
 			{ "Cart <em>[0]</em> products", "购物车<em>[0]</em>件" },
 			{ "<em>[0]</em> Products", "共<em>[0]</em>件商品" },
 			{ "Total <em>[0]</em>", "共<em>[0]</em>" },
@@ -52,7 +51,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "ZipCode", "邮政编码" },
 			{ "DetailedAddress", "详细地址" },
 			{ "Fullname", "姓名" },
-			{ "Tel/Mobile", "电话/手机" }
+			{ "TelOrMobile", "电话/手机" }
 		};
 
 		public bool CanTranslate(string code) {

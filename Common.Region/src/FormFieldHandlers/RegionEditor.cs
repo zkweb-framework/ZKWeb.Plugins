@@ -7,6 +7,7 @@ using ZKWeb.Plugins.Common.Region.src.FormFieldAttributes;
 using ZKWeb.Plugins.Common.Region.src.Model;
 using ZKWebStandard.Ioc;
 using ZKWeb.Templating;
+using ZKWeb.Plugins.Common.Base.src.Extensions;
 
 namespace ZKWeb.Plugins.Common.Region.src.FormFieldHandlers {
 	/// <summary>
@@ -23,13 +24,15 @@ namespace ZKWeb.Plugins.Common.Region.src.FormFieldHandlers {
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var regionSettings = configManager.GetData<RegionSettings>();
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			return templateManager.RenderTemplate("common.region/tmpl.region_editor.html", new {
-				name = attribute.Name,
-				value = JsonConvert.SerializeObject(field.Value),
-				attributes = htmlAttributes,
-				displayCountryDropdown = JsonConvert.SerializeObject(
+			var regionEditor = templateManager.RenderTemplate(
+				"common.region/tmpl.region_editor.html", new {
+					name = attribute.Name,
+					value = JsonConvert.SerializeObject(field.Value),
+					attributes = htmlAttributes,
+					displayCountryDropdown = JsonConvert.SerializeObject(
 					attribute.DisplayCountryDropdown ?? regionSettings.DisplayCountryDropdown)
-			});
+				});
+			return field.WrapFieldHtml(htmlAttributes, regionEditor);
 		}
 
 		/// <summary>

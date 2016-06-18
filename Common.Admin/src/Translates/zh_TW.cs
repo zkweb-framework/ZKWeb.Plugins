@@ -121,6 +121,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Translates {
 			{ "ZKWeb Version", "ZKWeb版本" },
 			{ "ZKWeb Full Version", "ZKWeb完整版本" },
 			{ "Memory Usage", "使用内存" },
+			{ "Action require the ownership of {0}: {1}", "操作需要擁有以下{0}的所有權: {1}" }
 		};
 
 		public bool CanTranslate(string code) {
