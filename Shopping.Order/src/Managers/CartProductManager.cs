@@ -19,6 +19,8 @@ using ZKWebStandard.Ioc;
 using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
+	using Logistics = Logistics.src.Database.Logistics;
+
 	/// <summary>
 	/// 购物车商品管理器
 	/// </summary>
@@ -162,18 +164,46 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 		}
 
 		/// <summary>
-		/// 获取迷你购物车的信息
+		/// 获取当前会话中的迷你购物车的信息
 		/// 为了保证数据的实时性，这个函数不使用缓存
 		/// </summary>
 		/// <returns></returns>
 		public virtual object GetMiniCartApiInfo() {
 			var cartProducts = GetCartProducts(CartProductType.Default);
-			var displayInfos = cartProducts.Select(c => c.ToOrderProductDisplayInfo());
+			var displayInfos = cartProducts.Select(c => c.ToOrderProductDisplayInfo()).ToList();
 			var totalCount = displayInfos.Sum(d => (long?)d.Count) ?? 0;
 			var totalPriceString = string.Join(", ", displayInfos
 				.GroupBy(d => d.Currency.Type)
 				.Select(g => g.First().Currency.Format(g.Sum(d => checked(d.UnitPrice * d.Count)))));
 			return new { displayInfos, totalCount, totalPriceString };
+		}
+
+		/// <summary>
+		/// 获取当前会话中的购物车的信息
+		/// 为了保证数据的实时性，这个函数不使用缓存
+		/// </summary>
+		/// <param name="type">购物车类型</param>
+		/// <returns></returns>
+		public virtual object GetCartApiInfo(CartProductType type) {
+			// 购物车商品显示信息
+			var cartProducts = GetCartProducts(type);
+			var displayInfos = cartProducts.Select(c => c.ToOrderProductDisplayInfo()).ToList();
+			// 收货地址列表
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			var user = sessionManager.GetSession().GetUser();
+			var userId = (user == null) ? null : (long?)user.Id;
+			var shippingAddresses = orderManager.GetAvailableShippingAddress(userId);
+			// 物流列表，各个卖家都有单独的列表
+			var sellerIds = displayInfos.Select(d => d.SellerId).Distinct().ToList();
+			var logisticsWithSellers = sellerIds.Select(sellerId => new {
+				sellerId,
+				logisticsList = orderManager.GetAvailableLogistics(userId, sellerId)
+			}).ToList();
+			// 支付接口列表，各个卖家使用同一个列表
+			// 卖家不应该提供单独的支付接口，应该使用结算处理
+			var paymentApis = orderManager.GetAvailablePaymentApis(userId);
+			return new { displayInfos, shippingAddresses, logisticsWithSellers, paymentApis };
 		}
 	}
 }

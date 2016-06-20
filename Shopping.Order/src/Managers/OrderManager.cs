@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Shopping.Logistics.src.Manager;
+using ZKWeb.Plugins.Shopping.Order.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
@@ -12,6 +14,8 @@ using ZKWebStandard.Ioc;
 using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
+	using Logistics = Logistics.src.Database.Logistics;
+
 	/// <summary>
 	/// 订单管理器
 	/// </summary>
@@ -87,6 +91,43 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			// 使用物流管理器计算运费
 			var logisticsManager = Application.Ioc.Resolve<LogisticsManager>();
 			return logisticsManager.CalculateCost(logisticsId, country, regionId, totalWeight);
+		}
+
+		/// <summary>
+		/// 获取创建订单可用的收货地址列表
+		/// </summary>
+		/// <param name="userId">用户Id</param>
+		/// <returns></returns>
+		public virtual IList<UserShippingAddress> GetAvailableShippingAddress(long? userId) {
+			var addresses = new List<UserShippingAddress>();
+			var providers = Application.Ioc.ResolveMany<IOrderShippingAddressProvider>();
+			providers.ForEach(p => p.GetShippingAddresses(userId, addresses));
+			return addresses;
+		}
+
+		/// <summary>
+		/// 获取创建订单可用的支付接口列表
+		/// </summary>
+		/// <param name="userId">用户Id</param>
+		/// <returns></returns>
+		public virtual IList<PaymentApi> GetAvailablePaymentApis(long? userId) {
+			var apis = new List<PaymentApi>();
+			var providers = Application.Ioc.ResolveMany<IOrderPaymentApiProvider>();
+			providers.ForEach(p => p.GetPaymentApis(userId, apis));
+			return apis;
+		}
+
+		/// <summary>
+		/// 获取创建订单可用的物流列表
+		/// </summary>
+		/// <param name="userId">用户Id</param>
+		/// <param name="sellerId">卖家Id</param>
+		/// <returns></returns>
+		public virtual IList<Logistics> GetAvailableLogistics(long? userId, long? sellerId) {
+			var logisticsList = new List<Logistics>();
+			var providers = Application.Ioc.ResolveMany<IOrderLogisticsProvider>();
+			providers.ForEach(p => p.GetLogisticsList(userId, sellerId, logisticsList));
+			return logisticsList;
 		}
 	}
 }

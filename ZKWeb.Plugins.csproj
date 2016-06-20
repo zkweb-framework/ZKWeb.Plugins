@@ -275,8 +275,11 @@
     <Compile Include="Shopping.Order\src\Model\CreateOrderProductParameters.cs" />
     <Compile Include="Shopping.Order\src\Model\CreateOrderResult.cs" />
     <Compile Include="Shopping.Order\src\Model\ExtraConfigKeys.cs" />
+    <Compile Include="Shopping.Order\src\Model\IOrderLogisticsProvider.cs" />
+    <Compile Include="Shopping.Order\src\Model\IOrderPaymentApiProvider.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderPriceCalculator.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderProductUnitPriceCalculator.cs" />
+    <Compile Include="Shopping.Order\src\Model\IOrderShippingAddressProvider.cs" />
     <Compile Include="Shopping.Order\src\Model\OrderProductDisplayInfo.cs" />
     <Compile Include="Shopping.Order\src\OrderPriceCalculators\DefaultCalculator.cs" />
     <Compile Include="Shopping.Order\src\OrderProductUnitPriceCalaculators\DefaultCalculator.cs" />

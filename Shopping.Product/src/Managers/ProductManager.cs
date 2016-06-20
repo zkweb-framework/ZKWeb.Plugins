@@ -85,10 +85,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 			UnitOfWork.ReadData<Database.Product>(r => {
 				product = r.GetByIdWhereNotDeleted(productId);
 				var category = product.Category;
-				var seller = product.Seller;
 				if (category != null) {
 					category.Properties.ToList();
 					category.Properties.SelectMany(p => p.PropertyValues).ToList();
+				}
+				var seller = product.Seller;
+				if (seller != null) {
+					var _ = seller.Username;
 				}
 				product.MatchedDatas.ToList();
 				product.PropertyValues.ToList();

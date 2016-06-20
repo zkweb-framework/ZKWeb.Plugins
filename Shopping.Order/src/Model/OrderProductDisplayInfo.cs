@@ -57,6 +57,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// </summary>
 		public long Count { get; set; }
 		/// <summary>
+		/// 卖家Id
+		/// </summary>
+		public long? SellerId { get; set; }
+		/// <summary>
+		/// 卖家用户名
+		/// </summary>
+		public string Seller { get; set; }
+		/// <summary>
 		/// 附加数据
 		/// </summary>
 		public IDictionary<string, object> Extra { get; set; }

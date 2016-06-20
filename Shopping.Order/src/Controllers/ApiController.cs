@@ -42,6 +42,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		}
 
 		/// <summary>
+		/// 获取购物车信息
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/cart/info", HttpMethods.POST)]
+		public IActionResult CartInfo() {
+			var type = HttpManager.CurrentContext.Request.Get<string>("type");
+			var cartProductType = (type == "buynow") ? CartProductType.Buynow : CartProductType.Default;
+			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
+			var info = cartProductManager.GetCartApiInfo(cartProductType);
+			return new JsonResult(info);
+		}
+
+		/// <summary>
 		/// 添加商品到购物车
 		/// </summary>
 		/// <returns></returns>

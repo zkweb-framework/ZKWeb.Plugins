@@ -48,6 +48,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 			info.UnitPriceDescription = unitPrice.Parts.GetDescription();
 			info.OriginalUnitPriceDescription = info.UnitPriceDescription;
 			info.Count = parameters.MatchParameters.GetOrDefault<long>("OrderCount");
+			info.SellerId = (product.Seller == null) ? null : (long?)product.Seller.Id;
+			info.Seller = (product.Seller == null) ? null : product.Seller.Username;
 			return info;
 		}
 	}
