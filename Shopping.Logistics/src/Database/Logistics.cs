@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using ZKWeb.Database.UserTypes;
@@ -30,6 +31,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Database {
 		/// <summary>
 		/// 所有人，没有时等于null
 		/// </summary>
+		[JsonIgnore]
 		public virtual User Owner { get; set; }
 		/// <summary>
 		/// 创建时间

@@ -19,7 +19,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 	/// <summary>
 	/// 订单管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class OrderManager {
 		/// <summary>
 		/// 计算订单商品的单价

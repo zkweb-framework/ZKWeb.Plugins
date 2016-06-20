@@ -19,12 +19,10 @@ using ZKWebStandard.Ioc;
 using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
-	using Logistics = Logistics.src.Database.Logistics;
-
 	/// <summary>
 	/// 购物车商品管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class CartProductManager {
 		/// <summary>
 		/// 购物车商品的总数量的缓存时间

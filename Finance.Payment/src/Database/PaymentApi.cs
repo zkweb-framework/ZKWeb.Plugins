@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using ZKWeb.Database.UserTypes;
@@ -29,6 +30,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// 接口的所属用户，null时属于网站
 		/// 创建后不能修改
 		/// </summary>
+		[JsonIgnore]
 		public virtual User Owner { get; set; }
 		/// <summary>
 		/// 附加数据

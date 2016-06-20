@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZKWeb.Cache;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
@@ -18,20 +19,22 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Manager {
 	/// 物流管理器
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class LogisticsManager {
+	public class LogisticsManager : ICacheCleaner {
 		/// <summary>
 		/// 物流的缓存时间
 		/// 默认是3秒，可通过网站配置指定
 		/// </summary>
-		public TimeSpan LogisticsCacheTime { get; set; }
+		protected TimeSpan LogisticsCacheTime { get; set; }
 		/// <summary>
 		/// 物流的缓存
+		/// { 物流Id: 物流, ... }
 		/// </summary>
-		public MemoryCache<long, Database.Logistics> LogisticsCache { get; set; }
+		protected MemoryCache<long, Database.Logistics> LogisticsCache { get; set; }
 		/// <summary>
 		/// 物流列表的缓存
+		/// { 所属Id: 物流列表, ... }
 		/// </summary>
-		public MemoryCache<long, IList<Database.Logistics>> LogisticsListCache { get; set; }
+		protected MemoryCache<long, IList<Database.Logistics>> LogisticsListCache { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -72,7 +75,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Manager {
 		/// 获取物流列表
 		/// 结果会按所有人Id缓存一定时间
 		/// </summary>
-		/// <param name="ownerId">所有人Id，传入null时获取没有所有人的物流列表</param>
+		/// <param name="ownerId">所有人Id，传入null时获取后台添加的物流列表</param>
 		/// <returns></returns>
 		public virtual IList<Database.Logistics> GetLogisticsList(long? ownerId) {
 			// 从缓存获取
@@ -151,6 +154,14 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Manager {
 			}
 			var currency = matchedRule.Currency ?? currencySettings.DefaultCurrency;
 			return Pair.Create(Pair.Create(cost, currency), "");
+		}
+
+		/// <summary>
+		/// 清理缓存
+		/// </summary>
+		public void ClearCache() {
+			LogisticsCache.Clear();
+			LogisticsListCache.Clear();
 		}
 	}
 }

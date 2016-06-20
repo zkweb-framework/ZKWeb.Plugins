@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using Newtonsoft.Json;
 using System;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWebStandard.Ioc;
@@ -15,6 +16,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// <summary>
 		/// 所属的用户
 		/// </summary>
+		[JsonIgnore]
 		public virtual User User { get; set; }
 		/// <summary>
 		/// 国家
