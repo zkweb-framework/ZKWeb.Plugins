@@ -51,7 +51,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "ZipCode", "邮政编码" },
 			{ "DetailedAddress", "详细地址" },
 			{ "Fullname", "姓名" },
-			{ "TelOrMobile", "电话/手机" }
+			{ "TelOrMobile", "电话/手机" },
+			// TODO: 以下未翻译到其他语言
+			{ "SubmitOrder", "提交订单" },
+			{ "Calculating...", "计算中" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -1,0 +1,34 @@
+﻿<div class="cart-product-table">
+	<div class="table-scroller">
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr class="heading" role="row">
+					<th width="25"><input type="checkbox" class="select-all" /></th>
+					<th>{{ "Product" | trans }}</th>
+					<th width="110">{{ "Seller" | trans }}</th>
+					<th width="110">{{ "ProductUnitPrice" | trans }}</th>
+					<th width="110">{{ "OrderCount" | trans }}</th>
+					<th width="90">{{ "Actions" | trans }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for info in cart_info.displayInfos %}
+				<tr role="row">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<input type="hidden" name="orderProductCreatingParameters" />
+	<div class="cart-product-total">
+		<span class="total-count">{{ "Products total count: <em>0</em>" | trans | raw_html }}</span>
+		<span class="total-price">{{ "Products total price: <em>0</em>" | trans | raw_html }}</span>
+	</div>
+	<div class="clearfix"></div>
+</div>

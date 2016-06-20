@@ -273,6 +273,7 @@
     <Compile Include="Shopping.Order\src\Extensions\UserShippingAddressExtensions.cs" />
     <Compile Include="Shopping.Order\src\Managers\CartProductManager.cs" />
     <Compile Include="Shopping.Order\src\Managers\OrderManager.cs" />
+    <Compile Include="Shopping.Order\src\Managers\UserShippingAddressManager.cs" />
     <Compile Include="Shopping.Order\src\Model\CreateOrderParameters.cs" />
     <Compile Include="Shopping.Order\src\Model\CreateOrderProductParameters.cs" />
     <Compile Include="Shopping.Order\src\Model\CreateOrderResult.cs" />
@@ -298,6 +299,7 @@
     <Compile Include="Shopping.Order\src\Translates\zh_CN.cs" />
     <None Include="Common.PesudoStatic\plugin.json" />
     <None Include="Shopping.Order\static\shopping.order.css\cart-minicart.scss" />
+    <None Include="Shopping.Order\static\shopping.order.css\cart-view.scss" />
     <None Include="Shopping.Order\templates\shopping.order.widgets\mini_cart_menu.widget" />
     <Content Include="CMS.CKEditor\templates\cms.ckeditor\tmpl.form.ckeditor.html" />
     <Content Include="Common.AdminSettings\templates\common.admin_settings\generic_add.html" />
@@ -328,6 +330,13 @@
     <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.min.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\custom\_minicart.js" />
     <None Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.widget" />
+    <Content Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.submit_order.html" />
+    <Content Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.order_comment.html" />
+    <Content Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.order_price_description.html" />
+    <Content Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.payment_api_select.html" />
+    <Content Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.logistics_select.html" />
+    <Content Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.shipping_address.html" />
+    <Content Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.product_table.html" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.html" />
     <Content Include="Shopping.Order\templates\shopping.order\cart.html" />
     <Content Include="Shopping.Order\templates\shopping.order\mini_cart_contents.html" />
