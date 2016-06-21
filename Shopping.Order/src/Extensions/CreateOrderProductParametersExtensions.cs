@@ -4,6 +4,7 @@ using ZKWeb.Plugins.Common.Currency.src.Managers;
 using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Extensions;
@@ -51,6 +52,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 			info.Count = parameters.MatchParameters.GetOrDefault<long>("OrderCount");
 			info.SellerId = (product.Seller == null) ? null : (long?)product.Seller.Id;
 			info.Seller = (product.Seller == null) ? null : product.Seller.Username;
+			info.StateTrait = product.GetStateTrait();
+			info.TypeTrait = product.GetTypeTrait();
 			return info;
 		}
 	}

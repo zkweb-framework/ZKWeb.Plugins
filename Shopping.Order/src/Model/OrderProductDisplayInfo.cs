@@ -1,6 +1,7 @@
 ﻿using DotLiquid;
 using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Currency.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.TypeTraits;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// <summary>
@@ -68,6 +69,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// 卖家用户名
 		/// </summary>
 		public string Seller { get; set; }
+		/// <summary>
+		/// 商品状态的特征
+		/// </summary>
+		public ProductStateTrait StateTrait { get; set; }
+		/// <summary>
+		/// 商品类型的特征
+		/// </summary>
+		public ProductTypeTrait TypeTrait { get; set; }
 		/// <summary>
 		/// 附加数据
 		/// </summary>

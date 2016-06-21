@@ -54,9 +54,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "TelOrMobile", "电话/手机" },
 			// TODO: 以下未翻译到其他语言
 			{ "SubmitOrder", "提交订单" },
-			{ "Calculating...", "计算中" },
+			{ "Calculating...", "计算中..." },
 			{ "Products total count: <em>0</em>", "商品总数量: <em>0</em>" },
-			{ "Products total price: <em>0</em>", "商品总价格: <em>0</em>" }
+			{ "Products total price: <em>0</em>", "商品总价格: <em>0</em>" },
+			{ "Confirm Shipping Address:", "确认收货地址:" }
 		};
 
 		public bool CanTranslate(string code) {

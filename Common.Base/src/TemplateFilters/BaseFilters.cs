@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Text;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Config;
@@ -141,6 +142,18 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 				html.Append("\" ");
 			}
 			return new HtmlString(html.ToString());
+		}
+
+		/// <summary>
+		/// 使用Json序列化对象
+		/// </summary>
+		/// <example>
+		/// {{ obj | json }}
+		/// </example>
+		/// <param name="obj">序列化的对象</param>
+		/// <returns></returns>
+		public static string Json(object obj) {
+			return JsonConvert.SerializeObject(obj);
 		}
 	}
 }

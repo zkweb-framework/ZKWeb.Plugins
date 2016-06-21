@@ -1,5 +1,6 @@
 ﻿using ZKWeb.Plugin;
 using ZKWeb.Plugins.Shopping.Product.src.ProductStates;
+using ZKWeb.Plugins.Shopping.Product.src.ProductTypes;
 using ZKWeb.Plugins.Shopping.Product.src.TypeTraits;
 using ZKWeb.Templating.DynamicContents;
 using ZKWebStandard.Ioc;
@@ -18,6 +19,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src {
 			Application.Ioc.RegisterInstance(
 				new ProductStateTrait() { VisibleFromProductList = true, IsPurchasable = true },
 				serviceKey: typeof(OnSale));
+			// 注册商品类型的特征
+			Application.Ioc.RegisterInstance(
+				new ProductTypeTrait() { IsReal = false },
+				serviceKey: typeof(VirtualProduct));
 			// 注册默认模块
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			// 商品详情页

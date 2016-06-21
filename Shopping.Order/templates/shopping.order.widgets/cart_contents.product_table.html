@@ -19,7 +19,9 @@
 					<td class="seller">{{ info | order_product_seller }}</td>
 					<td class="unit-price">{{ info | order_product_price }}</td>
 					<td class="order-count">{{ info | order_product_count_editor }}</td>
-					<td class="actions"></td>
+					<td class="actions">
+						<a class="delete" data-id="{{ info.Extra.cartProductId }}">{{ "Delete" | trans }}</a>
+					</td>
 				</tr>
 				{% endfor %}
 			</tbody>

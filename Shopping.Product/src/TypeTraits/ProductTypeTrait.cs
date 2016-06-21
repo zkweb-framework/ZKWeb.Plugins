@@ -9,6 +9,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.TypeTraits {
 	/// </summary>
 	public class ProductTypeTrait : ILiquidizable {
 		/// <summary>
+		/// 是否实体商品
+		/// </summary>
+		public bool IsReal { get; set; }
+		/// <summary>
 		/// 附加特征
 		/// </summary>
 		public Dictionary<string, object> Extra { get; set; }
@@ -17,6 +21,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.TypeTraits {
 		/// 初始化
 		/// </summary>
 		public ProductTypeTrait() {
+			IsReal = true;
 			Extra = new Dictionary<string, object>();
 		}
 
@@ -25,7 +30,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.TypeTraits {
 		/// </summary>
 		/// <returns></returns>
 		object ILiquidizable.ToLiquid() {
-			return new { Extra };
+			return new { IsReal, Extra };
 		}
 
 		/// <summary>
