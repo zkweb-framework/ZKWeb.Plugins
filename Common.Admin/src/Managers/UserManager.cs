@@ -155,7 +155,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 				return referer.PathAndQuery;
 			}
 			// 默认跳转到首页
-			return Filters.Url("/");
+			return BaseFilters.Url("/");
 		}
 
 		/// <summary>

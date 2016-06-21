@@ -36,7 +36,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			Template.RegisterTag<UseMetaKeywords>("use_meta_keywords");
 			Template.RegisterTag<UseTitle>("use_title");
 			Template.RegisterTag<WebsiteName>("website_name");
-			Template.RegisterFilter(typeof(Filters));
+			Template.RegisterFilter(typeof(BaseFilters));
 			// 注册模板可描画类型
 			Template.RegisterSafeType(typeof(HtmlItem), s => s);
 			Template.RegisterSafeType(typeof(MenuItem), s => s);

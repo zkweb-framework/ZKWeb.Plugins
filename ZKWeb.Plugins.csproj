@@ -270,6 +270,7 @@
     <Compile Include="Shopping.Order\src\Extensions\CreateOrderProductParametersExtensions.cs" />
     <Compile Include="Shopping.Order\src\Extensions\OrderPriceCalcResultExtensions.cs" />
     <Compile Include="Shopping.Order\src\AdminSettingsPages\OrderSettingsForm.cs" />
+    <Compile Include="Shopping.Order\src\Extensions\OrderProductDisplayInfoExtensions.cs" />
     <Compile Include="Shopping.Order\src\Extensions\UserShippingAddressExtensions.cs" />
     <Compile Include="Shopping.Order\src\Managers\CartProductManager.cs" />
     <Compile Include="Shopping.Order\src\Managers\OrderManager.cs" />
@@ -289,10 +290,12 @@
     <Compile Include="Shopping.Order\src\OrderPriceCalculators\DefaultCalculator.cs" />
     <Compile Include="Shopping.Order\src\OrderProductUnitPriceCalaculators\DefaultCalculator.cs" />
     <Compile Include="Shopping.Order\src\OrderShippingAddressProviders\DefaultOrderShippingAddressProvider.cs" />
+    <Compile Include="Shopping.Order\src\PaymentTransactionHandlers\OrderTransactionHandler.cs" />
     <Compile Include="Shopping.Order\src\Plugin.cs" />
     <Compile Include="Shopping.Order\src\Repositories\CartProductRepository.cs" />
     <Compile Include="Shopping.Order\src\ScheduledTasks\CartProductCleaner.cs" />
     <Compile Include="Shopping.Order\src\ScheduledTasks\OrderAutoConfirmer.cs" />
+    <Compile Include="Shopping.Order\src\TemplateFilters\OrderFilters.cs" />
     <Compile Include="Shopping.Order\src\Translates\ko_KR.cs" />
     <Compile Include="Shopping.Order\src\Translates\ja_JP.cs" />
     <Compile Include="Shopping.Order\src\Translates\zh_TW.cs" />
@@ -418,6 +421,10 @@
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_description.html" />
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_name.html" />
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_image.html" />
+    <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_price.html" />
+    <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_seller.html" />
+    <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_count_editor.html" />
+    <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_summary.html" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-widgets.css" />
     <Content Include="Shopping.Product\static\shopping.product.js\custom\_productPropertyValuesEditor.js" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\order_count.matcher.js" />
@@ -552,7 +559,7 @@
     <Compile Include="Common.Base\src\Managers\SessionManager.cs" />
     <Compile Include="Common.Base\src\Database\Session.cs" />
     <Compile Include="Common.Base\src\HttpRequestHandlers\StaticHandler.cs" />
-    <Compile Include="Common.Base\src\TemplateFilters\Filters.cs" />
+    <Compile Include="Common.Base\src\TemplateFilters\BaseFilters.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeCssLater.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeJsLater.cs" />
     <Compile Include="Common.Base\src\TemplateTags\WebsiteName.cs" />

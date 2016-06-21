@@ -1,4 +1,6 @@
-﻿using ZKWeb.Plugin;
+﻿using DotLiquid;
+using ZKWeb.Plugin;
+using ZKWeb.Plugins.Shopping.Order.src.TemplateFilters;
 using ZKWeb.Templating.DynamicContents;
 using ZKWebStandard.Ioc;
 
@@ -12,6 +14,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src {
 		/// 初始化
 		/// </summary>
 		public Plugin() {
+			// 注册模板标签和过滤器
+			Template.RegisterFilter(typeof(OrderFilters));
 			// 注册默认模块
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			// 商品详情页

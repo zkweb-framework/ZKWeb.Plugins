@@ -49,7 +49,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// </summary>
 		public string UnitPriceDescription { get; set; }
 		/// <summary>
-		/// 原始单价描述
+		/// 原始单价字符串
+		/// </summary>
+		public string OriginalUnitPriceString { get; set; }
+		/// <summary>
+		/// 原始单价的描述
 		/// </summary>
 		public string OriginalUnitPriceDescription { get; set; }
 		/// <summary>

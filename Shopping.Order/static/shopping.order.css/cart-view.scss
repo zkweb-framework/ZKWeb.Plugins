@@ -18,8 +18,14 @@
 	.cart-product-table {
 		border-bottom: 1px solid #DDD;
 		/* 表格样式 */
+		.table-scroller {
+			min-height: 0px;
+			overflow-x: auto;
+			overflow-y: hidden;
+		}
+
 		.table {
-			margin: -1px -1px 0px -1px;
+			margin: -1px -1px -1px -1px;
 
 			> thead > tr > th {
 				border-bottom: none;
@@ -29,10 +35,31 @@
 			> tbody > tr {
 				background-color: #fff;
 			}
-		}
-		/* 购物车商品单元格 */
-		.cart-product .order-product-summary {
-			margin: 0px 0px 0px 4px;
+			/* 购物车商品单元格 */
+			.cart-product .order-product-summary {
+				margin: 0px 0px 0px 4px;
+			}
+			/* 卖家单元格和单价单元格 */
+			.seller, .price {
+				font-weight: bold;
+				text-align: center;
+				line-height: 32px;
+			}
+			/* 数量单元格 */
+			.order-count {
+				.up {
+					margin: 0px 0px 3px 0px;
+				}
+
+				.down {
+					margin: 0px;
+				}
+			}
+			/* 操作单元格 */
+			.actions {
+				text-align: center;
+				line-height: 32px;
+			}
 		}
 		/* 商品数量合计和商品金额总计 */
 		/* 这里用border-top代替table的border-bottom，避免样式不一致 */
@@ -51,17 +78,6 @@
 				font-style: normal;
 			}
 		}
-	}
-	/* 价格单元格 */
-	.price {
-		font-weight: bold;
-		text-align: center;
-		line-height: 32px;
-	}
-	/* 操作单元格 */
-	.actions {
-		text-align: center;
-		line-height: 32px;
 	}
 	/* 收货地址 */
 	.shipping-address {

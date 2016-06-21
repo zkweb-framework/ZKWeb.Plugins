@@ -77,7 +77,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 				return referer.PathAndQuery;
 			}
 			// 默认跳转到后台首页
-			return Filters.Url("/admin");
+			return BaseFilters.Url("/admin");
 		}
 	}
 }

@@ -191,16 +191,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			var orderManager = Application.Ioc.Resolve<OrderManager>();
 			var user = sessionManager.GetSession().GetUser();
 			var userId = (user == null) ? null : (long?)user.Id;
-			var shippingAddresses = orderManager.GetAvailableShippingAddress(userId);
+			var shippingAddresses = orderManager.GetAvailableShippingAddress(userId)
+				.Select(a => a.ToLiquid()).ToList();
 			// 物流列表，各个卖家都有单独的列表
 			var sellerIds = displayInfos.Select(d => d.SellerId).Distinct().ToList();
 			var logisticsWithSellers = sellerIds.Select(sellerId => new {
 				sellerId,
 				logisticsList = orderManager.GetAvailableLogistics(userId, sellerId)
+					.Select(l => l.ToLiquid()).ToList()
 			}).ToList();
 			// 支付接口列表，各个卖家使用同一个列表
 			// 卖家不应该提供单独的支付接口，应该使用结算处理
-			var paymentApis = orderManager.GetAvailablePaymentApis(userId);
+			var paymentApis = orderManager.GetAvailablePaymentApis(userId)
+				.Select(a => a.ToLiquid()).ToList();
 			return new { displayInfos, shippingAddresses, logisticsWithSellers, paymentApis };
 		}
 	}

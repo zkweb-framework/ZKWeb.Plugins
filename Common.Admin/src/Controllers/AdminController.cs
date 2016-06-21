@@ -52,7 +52,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			if (user != null && UserTypesGroup.AdminOrParter.Contains(user.Type)) {
-				return new RedirectResult(Filters.Url("/admin"));
+				return new RedirectResult(BaseFilters.Url("/admin"));
 			}
 			// 否则显示登陆表单
 			var form = new AdminLoginForm();
@@ -75,7 +75,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		public IActionResult Logout() {
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			userManager.Logout();
-			return new RedirectResult(Filters.Url("/admin/login"));
+			return new RedirectResult(BaseFilters.Url("/admin/login"));
 		}
 
 		/// <summary>

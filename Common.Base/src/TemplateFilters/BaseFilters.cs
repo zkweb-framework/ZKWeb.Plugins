@@ -13,7 +13,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 	/// <summary>
 	/// 模板系统的过滤器
 	/// </summary>
-	public static class Filters {
+	public static class BaseFilters {
 		/// <summary>
 		/// 网站标题
 		/// 格式见 WebsiteSettings.DocumentTitleFormat

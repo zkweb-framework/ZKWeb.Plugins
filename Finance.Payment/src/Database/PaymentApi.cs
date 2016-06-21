@@ -1,5 +1,5 @@
-﻿using FluentNHibernate.Mapping;
-using Newtonsoft.Json;
+﻿using DotLiquid;
+using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
 using ZKWeb.Database.UserTypes;
@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 	/// 支付接口
 	/// 用于用户支付金钱给网站或其他用户
 	/// </summary>
-	public class PaymentApi {
+	public class PaymentApi : ILiquidizable {
 		/// <summary>
 		/// 接口Id
 		/// </summary>
@@ -30,7 +30,6 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// 接口的所属用户，null时属于网站
 		/// 创建后不能修改
 		/// </summary>
-		[JsonIgnore]
 		public virtual User Owner { get; set; }
 		/// <summary>
 		/// 附加数据
@@ -68,6 +67,14 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 			DisplayOrder = 10000;
 			ExtraData = new Dictionary<string, object>();
 			SupportTransactionTypes = new List<string>();
+		}
+
+		/// <summary>
+		/// 允许描画到模板
+		/// </summary>
+		/// <returns></returns>
+		public virtual object ToLiquid() {
+			return new { Id, Name, Type };
 		}
 
 		/// <summary>

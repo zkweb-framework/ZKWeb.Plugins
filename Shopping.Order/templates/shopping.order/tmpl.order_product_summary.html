@@ -1,0 +1,10 @@
+﻿<dl class="order-product-block entity-summary order-product-summary"
+	data-product-id="{{ info.ProductId }}" data-order-product-id="{{ info.OrderProductId }}">
+	<dt>
+		{% include shopping.order/tmpl.order_product_image.html %}
+	</dt>
+	<dd>
+		{% include shopping.order/tmpl.order_product_name.html %}
+		{% include shopping.order/tmpl.order_product_description.html %}
+	</dd>
+</dl>

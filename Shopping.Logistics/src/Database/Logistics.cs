@@ -1,5 +1,5 @@
-﻿using FluentNHibernate.Mapping;
-using Newtonsoft.Json;
+﻿using DotLiquid;
+using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
 using ZKWeb.Database.UserTypes;
@@ -11,7 +11,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Database {
 	/// <summary>
 	/// 物流
 	/// </summary>
-	public class Logistics {
+	public class Logistics : ILiquidizable {
 		/// <summary>
 		/// 物流Id
 		/// </summary>
@@ -31,7 +31,6 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Database {
 		/// <summary>
 		/// 所有人，没有时等于null
 		/// </summary>
-		[JsonIgnore]
 		public virtual User Owner { get; set; }
 		/// <summary>
 		/// 创建时间
@@ -60,6 +59,14 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Database {
 		public Logistics() {
 			PriceRules = new List<PriceRule>();
 			DisplayOrder = 10000;
+		}
+
+		/// <summary>
+		/// 允许描画到模板
+		/// </summary>
+		/// <returns></returns>
+		public virtual object ToLiquid() {
+			return new { Id, Name, Type };
 		}
 
 		/// <summary>

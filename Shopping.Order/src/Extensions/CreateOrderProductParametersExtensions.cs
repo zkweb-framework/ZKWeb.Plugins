@@ -46,6 +46,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 			info.Currency = currencyManager.GetCurrency(unitPrice.Currency);
 			info.UnitPriceString = info.Currency.Format(info.UnitPrice);
 			info.UnitPriceDescription = unitPrice.Parts.GetDescription();
+			info.OriginalUnitPriceString = info.UnitPriceString;
 			info.OriginalUnitPriceDescription = info.UnitPriceDescription;
 			info.Count = parameters.MatchParameters.GetOrDefault<long>("OrderCount");
 			info.SellerId = (product.Seller == null) ? null : (long?)product.Seller.Id;

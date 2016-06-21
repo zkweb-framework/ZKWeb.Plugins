@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateTags {
 		/// </summary>
 		public override void Render(Context context, TextWriter result) {
 			context.Environments[0][RenderTitle.Key] =
-				Filters.WebsiteTitle(context[Markup.Trim()] as string);
+				BaseFilters.WebsiteTitle(context[Markup.Trim()] as string);
 		}
 	}
 }

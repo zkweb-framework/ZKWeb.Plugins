@@ -1,5 +1,5 @@
-﻿using FluentNHibernate.Mapping;
-using Newtonsoft.Json;
+﻿using DotLiquid;
+using FluentNHibernate.Mapping;
 using System;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWebStandard.Ioc;
@@ -8,7 +8,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 	/// <summary>
 	/// 收货地址
 	/// </summary>
-	public class UserShippingAddress {
+	public class UserShippingAddress : ILiquidizable {
 		/// <summary>
 		/// 收货地址Id
 		/// </summary>
@@ -16,7 +16,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// <summary>
 		/// 所属的用户
 		/// </summary>
-		[JsonIgnore]
 		public virtual User User { get; set; }
 		/// <summary>
 		/// 国家
@@ -74,6 +73,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// </summary>
 		public UserShippingAddress() {
 			DisplayOrder = 10000;
+		}
+
+		/// <summary>
+		/// 允许描画到模板
+		/// </summary>
+		/// <returns></returns>
+		public virtual object ToLiquid() {
+			return new {
+				Id, Country, RegionId, ZipCode, DetailedAddress,
+				ReceiverName, ReceiverTel, Summary
+			};
 		}
 
 		/// <summary>
