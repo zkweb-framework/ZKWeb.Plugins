@@ -214,6 +214,8 @@
     <Compile Include="Common.Base\src\Model\_BaseTable\Pagination.cs" />
     <Compile Include="Common.Base\src\Model\_StaticTable\StaticTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\_StaticTable\StaticTableSearchResponse.cs" />
+    <Compile Include="Common.Base\src\Scaffolding\FieldsOnlyFormBuilder.cs" />
+    <Compile Include="Common.Base\src\Scaffolding\FieldsOnlyModelFormBuilder.cs" />
     <Compile Include="Common.Base\src\TemplateTags\CopyrightText.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeJsHere.cs" />
     <Compile Include="Common.Base\src\TemplateTags\IncludeCssHere.cs" />
@@ -272,6 +274,10 @@
     <Compile Include="Shopping.Order\src\AdminSettingsPages\OrderSettingsForm.cs" />
     <Compile Include="Shopping.Order\src\Extensions\OrderProductDisplayInfoExtensions.cs" />
     <Compile Include="Shopping.Order\src\Extensions\UserShippingAddressExtensions.cs" />
+    <Compile Include="Shopping.Order\src\Forms\CreateOrderCommentForm.cs" />
+    <Compile Include="Shopping.Order\src\Forms\CreateOrderForm.cs" />
+    <Compile Include="Shopping.Order\src\Forms\CreateOrderShippingAddressForm.cs" />
+    <Compile Include="Shopping.Order\src\ListItemProviders\ShippingAddressListItemProvider.cs" />
     <Compile Include="Shopping.Order\src\Managers\CartProductManager.cs" />
     <Compile Include="Shopping.Order\src\Managers\OrderManager.cs" />
     <Compile Include="Shopping.Order\src\Managers\UserShippingAddressManager.cs" />

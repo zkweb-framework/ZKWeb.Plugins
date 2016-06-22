@@ -57,7 +57,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Calculating...", "计算中..." },
 			{ "Products total count: <em>0</em>", "商品总数量: <em>0</em>" },
 			{ "Products total price: <em>0</em>", "商品总价格: <em>0</em>" },
-			{ "Confirm Shipping Address:", "确认收货地址:" }
+			{ "Confirm Shipping Address:", "确认收货地址:" },
+			{ "Use new address", "使用新地址" },
+			{ "Manage shipping address", "管理收货地址" },
+			{ "Check this will save or add shipping address", "勾选这里可以保存现有地址或添加新的地址" },
+			{ "Save shipping address", "保存收货地址" },
+			{ "OrderComment", "订单留言" }
 		};
 
 		public bool CanTranslate(string code) {

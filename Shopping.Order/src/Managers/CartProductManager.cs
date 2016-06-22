@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Config;
 using ZKWeb.Plugins.Shopping.Order.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
+using ZKWeb.Plugins.Shopping.Order.src.Forms;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Repositories;
 using ZKWeb.Server;
@@ -186,13 +187,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			// 购物车商品显示信息
 			var cartProducts = GetCartProducts(type);
 			var displayInfos = cartProducts.Select(c => c.ToOrderProductDisplayInfo()).ToList();
-			// 收货地址列表
+			// 收货地址表单
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var orderManager = Application.Ioc.Resolve<OrderManager>();
 			var user = sessionManager.GetSession().GetUser();
 			var userId = (user == null) ? null : (long?)user.Id;
-			var shippingAddresses = orderManager.GetAvailableShippingAddress(userId)
-				.Select(a => a.ToLiquid()).ToList();
+			var shippingAddressForm = new CreateOrderShippingAddressForm();
+			shippingAddressForm.Bind();
+			// 订单留言表单
+			var commentForm = new CreateOrderCommenForm();
+			commentForm.Bind();
 			// 物流列表，各个卖家都有单独的列表
 			var sellerIds = displayInfos.Select(d => d.SellerId).Distinct().ToList();
 			var logisticsWithSellers = sellerIds.Select(sellerId => new {
@@ -204,7 +208,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			// 卖家不应该提供单独的支付接口，应该使用结算处理
 			var paymentApis = orderManager.GetAvailablePaymentApis(userId)
 				.Select(a => a.ToLiquid()).ToList();
-			return new { displayInfos, shippingAddresses, logisticsWithSellers, paymentApis };
+			// 订单创建表单
+			var createOrderForm = new CreateOrderForm();
+			createOrderForm.Bind();
+			return new {
+				displayInfos, shippingAddressForm, commentForm,
+				logisticsWithSellers, paymentApis, createOrderForm
+			};
 		}
 	}
 }
