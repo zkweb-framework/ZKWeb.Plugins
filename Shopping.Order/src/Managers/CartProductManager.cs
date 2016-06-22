@@ -15,6 +15,7 @@ using ZKWeb.Plugins.Shopping.Order.src.Forms;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Repositories;
 using ZKWeb.Server;
+using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Web;
@@ -187,6 +188,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			// 购物车商品显示信息
 			var cartProducts = GetCartProducts(type);
 			var displayInfos = cartProducts.Select(c => c.ToOrderProductDisplayInfo()).ToList();
+			var anyRealProducts = displayInfos.Any(d => d.TypeTrait.IsReal);
 			// 收货地址表单
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var orderManager = Application.Ioc.Resolve<OrderManager>();
@@ -198,10 +200,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			var commentForm = new CreateOrderCommenForm();
 			commentForm.Bind();
 			// 物流列表，各个卖家都有单独的列表
-			var sellerIds = displayInfos.Select(d => d.SellerId).Distinct().ToList();
-			var logisticsWithSellers = sellerIds.Select(sellerId => new {
-				sellerId,
-				logisticsList = orderManager.GetAvailableLogistics(userId, sellerId)
+			var sellers = displayInfos.Select(d => new { d.SellerId, d.Seller }).GroupBy(d => d.SellerId);
+			var logisticsWithSellers = sellers.Select(s => new {
+				sellerId = s.Key,
+				seller = s.First().Seller,
+				logisticsList = orderManager.GetAvailableLogistics(userId, s.Key)
 					.Select(l => l.ToLiquid()).ToList()
 			}).ToList();
 			// 支付接口列表，各个卖家使用同一个列表
@@ -212,8 +215,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			var createOrderForm = new CreateOrderForm();
 			createOrderForm.Bind();
 			return new {
-				displayInfos, shippingAddressForm, commentForm,
-				logisticsWithSellers, paymentApis, createOrderForm
+				displayInfos, anyRealProducts,
+				shippingAddressForm, commentForm,
+				logisticsWithSellers, paymentApis, createOrderForm,
 			};
 		}
 	}

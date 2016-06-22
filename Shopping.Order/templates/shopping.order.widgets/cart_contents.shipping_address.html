@@ -1,6 +1,7 @@
-﻿<div class="shipping-address">
+﻿{% if cart_info.anyRealProducts %}
+<div class="shipping-address">
 	<div class="title">
-		{{ "Confirm Shipping Address:" | trans }}
+		{{ "Shipping Address:" | trans }}
 	</div>
 	<div class="user-shipping-address-form">
 		<div class="form-horizontal">
@@ -11,3 +12,4 @@
 		</div>
 	</div>
 </div>
+{% endif %}

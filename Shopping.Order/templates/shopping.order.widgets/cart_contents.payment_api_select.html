@@ -1,3 +1,22 @@
 ﻿<div class="payment-api-select">
-	payment api select
+	<div class="form-horizontal">
+		<div class="form-body">
+			<div class="form-group">
+				<label class="control-label">
+					{{ "PaymentApi:" | trans }}
+				</label>
+				<div class="form-controls">
+					<div class="radio-list">
+						{% for paymentApi in cart_info.paymentApis %}
+						<label class="radio-inline">
+							<input name="payment_api" type="radio" value="{{ paymentApi.Id }}" />
+							{{ paymentApi.Name | trans }}
+						</label>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
 </div>

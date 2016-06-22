@@ -81,15 +81,8 @@
 	}
 	/* 收货地址 */
 	.shipping-address {
-		.title {
-			background-color: #F3F3F3;
-			height: 33px;
-			line-height: 33px;
-			border-bottom: 1px solid #DDD;
-			padding-left: 15px;
-			font-weight: bold;
-		}
-		/* 收货地址选择器的上边距 */
+		border-bottom: 1px solid #DDD;
+		/* 收货地址表单的上边距 */
 		.user-shipping-address-form {
 			margin: 15px 0px 0px 0px;
 		}
@@ -106,8 +99,23 @@
 		}
 	}
 	/* 留言 */
-	.comment {
+	.order-comment {
 		border-bottom: 1px solid #DDD;
+		/* 留言表单的上边距 */
+		.order-comment-form {
+			margin: 15px 0px 0px 0px;
+		}
+	}
+	/* 收货地址和留言的标题栏 */
+	.shipping-address, .order-comment {
+		.title {
+			background-color: #F3F3F3;
+			height: 33px;
+			line-height: 33px;
+			border-bottom: 1px solid #DDD;
+			padding-left: 15px;
+			font-weight: bold;
+		}
 	}
 	/* 物流 */
 	.logistics-select {

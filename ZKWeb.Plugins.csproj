@@ -336,6 +336,7 @@
     <Content Include="Common.UserPanel\templates\common.user_panel\generic_list.html" />
     <Content Include="Shopping.Logistics\templates\shopping.logistics\tmpl.price_rules_editor.html" />
     <Content Include="Shopping.Order\static\shopping.order.css\cart-minicart.css" />
+    <Content Include="Shopping.Order\static\shopping.order.css\cart-view.css" />
     <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.min.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\custom\_minicart.js" />
     <None Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.widget" />
@@ -431,6 +432,7 @@
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_seller.html" />
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_count_editor.html" />
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_summary.html" />
+    <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_shipping_address_addin.html" />
     <Content Include="Shopping.Product\static\shopping.product.css\product-widgets.css" />
     <Content Include="Shopping.Product\static\shopping.product.js\custom\_productPropertyValuesEditor.js" />
     <Content Include="Shopping.Product\static\shopping.product.js\matched_data_matchers\order_count.matcher.js" />

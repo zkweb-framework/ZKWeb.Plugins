@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.FastReflection;
@@ -31,10 +32,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// <summary>
 		/// 表单构建器
 		/// </summary>
+		[JsonIgnore]
 		public FormBuilder Form { get; protected set; }
 		/// <summary>
 		/// 表单字段到成员信息
 		/// </summary>
+		[JsonIgnore]
 		public Dictionary<FormField, Pair<object, PropertyInfo>> FieldToProperty { get; protected set; }
 
 		/// <summary>
