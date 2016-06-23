@@ -9,14 +9,15 @@ using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Shopping.Order.src.Config;
 using ZKWeb.Plugins.Shopping.Order.src.Database;
+using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
-	using ZKWebStandard.Web;
 	using Product = Product.src.Database.Product;
 
 	/// <summary>
@@ -28,13 +29,18 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 		/// 获取会话对应的购物车商品列表
 		/// </summary>
 		/// <param name="session">会话</param>
+		/// <param name="type">购物车商品类型，传入null时获取所有类型</param>
 		/// <returns></returns>
 		public virtual IQueryable<CartProduct> GetManyBySession(
-			Session session, CartProductType type) {
+			Session session, CartProductType? type) {
 			var user = session.GetUser();
-			return (user != null) ?
-				GetMany(c => c.Buyer.Id == user.Id && c.Type == type) :
-				GetMany(c => c.BuyerSession == session.Id && c.Type == type);
+			var query = (user != null) ?
+				GetMany(c => c.Buyer.Id == user.Id) :
+				GetMany(c => c.BuyerSession == session.Id);
+			if (type != null) {
+				query = query.Where(q => q.Type == type);
+			}
+			return query;
 		}
 
 		/// <summary>
@@ -81,10 +87,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 			// 修改到数据库
 			if (increaseTo != null) {
 				// 修改已有的数量
-				Save(ref increaseTo, p => {
-					p.Count = checked(p.Count + orderCount);
-					p.MatchParameters["OrderCount"] = p.Count;
-				});
+				Save(ref increaseTo, p => p.UpdateOrderCount(checked(p.Count + orderCount)));
 			} else {
 				// 添加新的购物车商品
 				var configManager = Application.Ioc.Resolve<GenericConfigManager>();

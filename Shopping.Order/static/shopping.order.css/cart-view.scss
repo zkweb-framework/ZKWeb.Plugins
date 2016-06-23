@@ -152,18 +152,16 @@
 	.btn-submit-order {
 		margin: 10px 0px 0px 0px;
 
-		.submit {
+		> form {
+			margin: 0px;
+		}
+
+		.btn-submit {
 			float: right;
 			width: 140px;
-			height: 35px;
-			line-height: 35px;
 			font-size: 14px;
 			font-weight: bold;
-		}
-		/* 禁止重复提交 */
-		.loading .submit {
-			background-color: gray;
-			pointer-events: none;
+			background-color: #C40000;
 		}
 	}
 	/* 低分辨率时让按钮全屏 */
@@ -171,7 +169,7 @@
 		.btn-submit-order {
 			margin: 10px;
 
-			.submit {
+			.btn-submit {
 				width: 100%;
 			}
 		}

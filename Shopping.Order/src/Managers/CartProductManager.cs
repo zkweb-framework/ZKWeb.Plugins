@@ -87,14 +87,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 		/// <summary>
 		/// 删除当前会话下的购物车商品
 		/// </summary>
-		/// <param name="cartProductId"></param>
+		/// <param name="cartProductId">购物车商品Id</param>
 		/// <returns></returns>
 		public virtual bool DeleteCartProduct(long cartProductId) {
 			// 从数据库删除，只删除当前会话下的购物车商品
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			bool result = UnitOfWork.WriteRepository<CartProductRepository, bool>(r => {
-				var cartProduct = r.GetManyBySession(
-					sessionManager.GetSession(), CartProductType.Default)
+				var cartProduct = r.GetManyBySession(sessionManager.GetSession(), null)
 					.FirstOrDefault(c => c.Id == cartProductId);
 				if (cartProduct != null) {
 					r.Delete(cartProduct);
@@ -103,8 +102,26 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 				return false;
 			});
 			// 删除相关的缓存
-			CartProductTotalCountCache.Remove(CartProductType.Default);
+			CartProductTotalCountCache.Clear();
 			return result;
+		}
+
+		/// <summary>
+		/// 更新当前会话下的购物车商品数量
+		/// </summary>
+		/// <param name="counts">{ 购物车商品Id: 数量 }</param>
+		public virtual void UpdateCartProductCounts(IDictionary<long, long> counts) {
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			UnitOfWork.WriteRepository<CartProductRepository>(r => {
+				var cartProducts = r.GetManyBySession(sessionManager.GetSession(), null);
+				foreach (var cartProduct in cartProducts) {
+					var count = counts.GetOrDefault(cartProduct.Id);
+					if (count > 0) {
+						var cartProductRef = cartProduct;
+						r.Save(ref cartProductRef, p => p.UpdateOrderCount(count));
+					}
+				}
+			});
 		}
 
 		/// <summary>

@@ -1,5 +1,6 @@
 ﻿{% fetch /api/cart/info?type={type} > cart_info %}
-<div class="panel panel-themed cart-container">
+{% assign cart_type = "" | url_get_param: "type" %}
+<div class="panel panel-themed cart-container" data-type="{{ cart_type }}">
 	<div class="panel-heading">
 		<i class="fa fa-shopping-cart">&nbsp;{{ "Cart" | trans }}</i>
 	</div>

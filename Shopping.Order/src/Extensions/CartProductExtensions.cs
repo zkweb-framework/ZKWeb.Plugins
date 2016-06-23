@@ -33,5 +33,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 			displayInfo.Extra["cartProductId"] = cartProduct.Id;
 			return displayInfo;
 		}
+
+		/// <summary>
+		/// 更新购物车商品的订购数量
+		/// </summary>
+		/// <param name="cartProduct">购物车商品</param>
+		/// <param name="orderCount">订购数量</param>
+		public static void UpdateOrderCount(this CartProduct cartProduct, long orderCount) {
+			cartProduct.Count = orderCount;
+			cartProduct.MatchParameters["OrderCount"] = orderCount;
+		}
 	}
 }

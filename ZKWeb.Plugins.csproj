@@ -337,7 +337,12 @@
     <Content Include="Shopping.Logistics\templates\shopping.logistics\tmpl.price_rules_editor.html" />
     <Content Include="Shopping.Order\static\shopping.order.css\cart-minicart.css" />
     <Content Include="Shopping.Order\static\shopping.order.css\cart-view.css" />
+    <Content Include="Shopping.Order\static\shopping.order.js\cart-view.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.min.js" />
+    <Content Include="Shopping.Order\static\shopping.order.js\cart-view.min.js" />
+    <Content Include="Shopping.Order\static\shopping.order.js\custom\_cart.calculatePrice.js" />
+    <Content Include="Shopping.Order\static\shopping.order.js\custom\_cart.shippingAddress.js" />
+    <Content Include="Shopping.Order\static\shopping.order.js\custom\_cart.productTable.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\custom\_minicart.js" />
     <None Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.widget" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\cart_contents.submit_order.html" />

@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using ZKWeb.Database.UserTypes;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
-	using ZKWebStandard.Ioc;
 	using Product = Product.src.Database.Product;
 
 	/// <summary>

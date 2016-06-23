@@ -104,6 +104,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		}
 
 		/// <summary>
+		/// 更新购物车中的商品数量
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/cart/update_counts", HttpMethods.POST)]
+		public IActionResult UpdateCounts() {
+			HttpRequestChecker.RequieAjaxRequest();
+			var counts = HttpManager.CurrentContext.Request.Get<IDictionary<long, long>>("counts");
+			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
+			cartProductManager.UpdateCartProductCounts(counts);
+			return new JsonResult(new { });
+		}
+
+		/// <summary>
 		/// 计算购物车中的商品价格
 		/// </summary>
 		/// <returns></returns>

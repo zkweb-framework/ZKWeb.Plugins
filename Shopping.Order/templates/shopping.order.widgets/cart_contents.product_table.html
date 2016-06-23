@@ -13,7 +13,11 @@
 			</thead>
 			<tbody>
 				{% for info in cart_info.displayInfos %}
-				<tr role="row">
+				<tr class="cart-product" role="row"
+					data-cart-product-id="{{ info.Extra.cartProductId }}"
+					data-product-id="{{ info.ProductId }}"
+					data-matched-parameters="{{ info.MatchedParameters | json }}"
+					data-is-real="{{ info.TypeTrait.IsReal | json }}">
 					<td class="selection"><input type="checkbox" /></td>
 					<td class="summary">{{ info | order_product_summary }}</td>
 					<td class="seller">{{ info | order_product_seller }}</td>
@@ -27,7 +31,8 @@
 			</tbody>
 		</table>
 	</div>
-	<input type="hidden" name="orderProductCreatingParameters" />
+	<input type="hidden" name="createOrderProductParameters" />
+	<input type="hidden" name="cartProducts" data-order-parameter="CartProducts" data-is-json-object="true" />
 	<div class="cart-product-total">
 		<span class="total-count">{{ "Products total count: <em>0</em>" | trans | raw_html }}</span>
 		<span class="total-price">{{ "Products total price: <em>0</em>" | trans | raw_html }}</span>

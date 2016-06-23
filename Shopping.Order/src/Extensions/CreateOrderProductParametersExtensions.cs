@@ -39,6 +39,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 			info.Name = new T(product.Name);
 			info.ImageWebPath = productAlbumManager.GetAlbumImageWebPath(
 				product.Id, null, ProductAlbumImageType.Thumbnail);
+			info.MatchedParameters = parameters.MatchParameters;
 			info.MatchedParametersDescription = string.Join(" ", descriptionProviders
 				.Select(p => p.GetDescription(product, parameters.MatchParameters))
 				.Where(d => !string.IsNullOrEmpty(d)));

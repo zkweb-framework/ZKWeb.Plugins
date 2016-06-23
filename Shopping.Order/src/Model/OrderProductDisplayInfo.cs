@@ -26,6 +26,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// </summary>
 		public string ImageWebPath { get; set; }
 		/// <summary>
+		/// 商品匹配参数
+		/// </summary>
+		public IDictionary<string, object> MatchedParameters { get; set; }
+		/// <summary>
 		/// 商品匹配参数的描述
 		/// </summary>
 		public string MatchedParametersDescription { get; set; }
