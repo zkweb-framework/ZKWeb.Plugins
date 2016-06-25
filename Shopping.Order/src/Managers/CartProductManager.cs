@@ -211,7 +211,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			var orderManager = Application.Ioc.Resolve<OrderManager>();
 			var user = sessionManager.GetSession().GetUser();
 			var userId = (user == null) ? null : (long?)user.Id;
-			var shippingAddressForm = new CreateOrderShippingAddressForm();
+			var shippingAddressForm = new UserShippingAddressForm();
 			shippingAddressForm.Bind();
 			// 订单留言表单
 			var commentForm = new CreateOrderCommenForm();

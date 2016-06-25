@@ -18,7 +18,7 @@
 		}
 		构建OrderParameters的流程
 			查找所有带data-order-parameter属性的元素，把属性值作为OrderParameters中的键
-			获取元素的值，再判断data-is-json-object的值，等于true时调用JSON.parse解析值
+			获取并解析元素的值，参考jquery的dataAttr的处理
 			最后把值设置到OrderParameters下
 
 	计算价格

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
@@ -43,7 +44,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 			}
 			// 添加商品总价到订单价格的组成部分
 			result.Parts.Add(new OrderPriceCalcResult.Part("ProductTotalPrice", orderProductTotalPrice));
-			// 计算运费
+			// 计算运费，根据订单商品的卖家(LogisticsWithSeller)
+			throw new NotImplementedException();
 			var logisticsId = parameters.OrderParameters.GetOrDefault<long?>("LogisticsId");
 			if (logisticsId != null) {
 				var logisticsCost = orderManager.CalculateLogisticsCost(logisticsId.Value, parameters);

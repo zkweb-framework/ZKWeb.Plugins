@@ -3,7 +3,7 @@
 		<table class="table table-bordered table-hover" data-toggle="checkbox-group">
 			<thead>
 				<tr class="heading" role="row">
-					<th width="25"><input type="checkbox" class="select-all" /></th>
+					<th width="25"><input type="checkbox" class="select-all" checked="checked" /></th>
 					<th>{{ "Product" | trans }}</th>
 					<th width="110">{{ "Seller" | trans }}</th>
 					<th width="110">{{ "ProductUnitPrice" | trans }}</th>
@@ -17,8 +17,9 @@
 					data-cart-product-id="{{ info.Extra.cartProductId }}"
 					data-product-id="{{ info.ProductId }}"
 					data-matched-parameters="{{ info.MatchedParameters | json }}"
+					data-seller-id="{{ info.SellerId }}"
 					data-is-real="{{ info.TypeTrait.IsReal | json }}">
-					<td class="selection"><input type="checkbox" /></td>
+					<td class="selection"><input type="checkbox" checked="checked" /></td>
 					<td class="summary">{{ info | order_product_summary }}</td>
 					<td class="seller">{{ info | order_product_seller }}</td>
 					<td class="unit-price">{{ info | order_product_price }}</td>
@@ -31,8 +32,8 @@
 			</tbody>
 		</table>
 	</div>
-	<input type="hidden" name="createOrderProductParameters" />
-	<input type="hidden" name="cartProducts" data-order-parameter="CartProducts" data-is-json-object="true" />
+	<input type="hidden" name="createOrderProductParametersList" />
+	<input type="hidden" name="cartProducts" data-order-parameter="CartProducts" />
 	<div class="cart-product-total">
 		<span class="total-count">{{ "Products total count: <em>0</em>" | trans | raw_html }}</span>
 		<span class="total-price">{{ "Products total price: <em>0</em>" | trans | raw_html }}</span>

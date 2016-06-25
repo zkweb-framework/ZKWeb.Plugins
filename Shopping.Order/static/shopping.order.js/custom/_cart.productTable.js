@@ -1,13 +1,9 @@
 ﻿/*
 	购物车功能
 	购物车商品的处理
-		包含实体商品时会显示收货地址表单
-		所有商品都是虚拟商品时会删除收货地址表单
-		包含实体商品时会显示物流选择
-		所有商品都是虚拟商品时会删除物流选择
-		
 		支持删除购物车商品（立刻购买时不显示）
-		支持保存购物车商品Id到订单创建参数
+		支持更新商品的购买数量到服务器
+		支持保存购物车商品信息到订单创建参数
 */
 
 /* 购物车商品的处理 */
@@ -15,27 +11,41 @@ $(function () {
 	// 绑定购物车商品改变时的事件
 	var $cartContainer = $(".cart-container");
 	var $cartProductTable = $cartContainer.find(".cart-product-table");
+	var $parametersList = $cartContainer.find("[name='createOrderProductParametersList']");
+	var $cartProducts = $cartContainer.find("[name='cartProducts']");
 	var cartProductChangeEventName = "cartProductChange.cartView";
+	var cartProductChangeEventMask = false;
 	$cartContainer.on(cartProductChangeEventName, function () {
-		var createOrderProductParameters = []; // 创建订单商品的参数列表
-		var anyRealProduct = false; // 是否包含实体商品
+		if (cartProductChangeEventMask) {
+			return;
+		}
+		cartProductChangeEventMask = true; // 设置事件处理中，防止重复处理
+		var createOrderProductParametersList = []; // 创建订单商品的参数列表
 		var totalCount = 0; // 购物车商品数量总计
 		var cartProducts = {}; // 购物车商品Id和数量
 		$cartProductTable.find(".cart-product").each(function () {
 			var $cartProduct = $(this);
+			// 没有勾选时跳过
+			var $checkbox = $cartProduct.find(".selection input");
+			if (!$checkbox.is(":checked")) {
+				return;
+			}
+			// 数量等于0时取消勾选并跳过
+			var $orderCount = $cartProduct.find(".order-count input");
+			var orderCount = $orderCount.val() || 0;
+			if (orderCount <= 0) {
+				$checkbox.prop("checked", false).change();
+				return;
+			}
 			// 添加购物车商品关联的商品Id和匹配参数到列表中
 			var productId = $cartProduct.data("product-id");
 			var matchedParameters = $cartProduct.data("matched-parameters") || "{}";
 			matchedParameters.OrderCount = parseInt(
 				$cartProduct.find(".order-count input").val()) || 0; // 更新订购数量
-			createOrderProductParameters.push({
+			createOrderProductParametersList.push({
 				ProductId: productId,
 				MatchParameters: matchedParameters
 			});
-			// 检测是否包含实体商品
-			if ($cartProduct.data("is-real")) {
-				anyRealProduct = true;
-			}
 			// 统计购物车商品数量
 			totalCount += matchedParameters.OrderCount;
 			// 保存购物车商品Id和数量
@@ -43,18 +53,13 @@ $(function () {
 			var cartProductId = $cartProduct.data("cart-product-id");
 			cartProducts[cartProductId] = matchedParameters.OrderCount;
 		});
-		// 不包含实体商品时，删除收货地址表单和物流选择
-		if (!anyRealProduct) {
-			$cartContainer.find(".shipping-address").remove();
-			$cartContainer.find(".logistics-select").remove();
-		}
 		// 更新商品数量总计
 		$cartProductTable.find(".cart-product-total .total-count > em").text(totalCount);
 		// 保存到控件
-		var $parameters = $cartContainer.find("[name='createOrderProductParameters']");
-		$parameters.val(JSON.stringify(createOrderProductParameters)).change();
-		var $cartProducts = $cartContainer.find("[name='cartProducts']");
+		$parametersList.val(JSON.stringify(createOrderProductParametersList)).change();
 		$cartProducts.val(JSON.stringify(cartProducts)).change();
+		// 设置结束处理
+		cartProductChangeEventMask = false;
 	});
 	// 绑定删除事件，删除后触发改变事件
 	$cartContainer.on("click", ".delete", function () {
@@ -70,6 +75,10 @@ $(function () {
 			$cartContainer.trigger(cartProductChangeEventName);
 		});
 	});
+	// 在勾选改变时触发改变事件
+	$cartProductTable.on("change", ".selection input", function () {
+		$cartContainer.trigger(cartProductChangeEventName);
+	});
 	// 在数量改变时触发改变事件
 	var updateCountsHandler = null;
 	$cartProductTable.on("change", ".order-count input", function () {
@@ -78,12 +87,14 @@ $(function () {
 		// 一秒后把数量保存到服务端，防止频繁提交
 		clearTimeout(updateCountsHandler);
 		updateCountsHandler = setTimeout(function () {
-			var $cartProducts = $cartContainer.find("[name='cartProducts']");
 			$.post("/api/cart/update_counts", { counts: $cartProducts.val() }, function (data) {
 				$.handleAjaxResult(data);
 			});
 		}, 1000);
 	});
+	// 支持保存购物车商品信息到订单创建参数
+	$parametersList.attr("data-order-parameter", "CreateOrderProductParametersList");
+	$cartProducts.attr("data-order-parameter", "CartProducts");
 	// 页面载入时触发改变事件
 	$cartContainer.trigger(cartProductChangeEventName);
 });

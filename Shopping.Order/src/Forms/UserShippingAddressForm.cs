@@ -9,9 +9,9 @@ using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Forms {
 	/// <summary>
-	/// 创建订单时的收货地址表单
+	/// 用户收货地址表单
 	/// </summary>
-	public class CreateOrderShippingAddressForm : FieldsOnlyModelFormBuilder {
+	public class UserShippingAddressForm : FieldsOnlyModelFormBuilder {
 		/// <summary>
 		/// 收货地址
 		/// </summary>
@@ -22,6 +22,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Forms {
 		/// </summary>
 		[HtmlField("ShippingAddressAddin")]
 		public HtmlString ShippingAddressAddin { get; set; }
+		/// <summary>
+		/// 最终填写的收货地址的Json
+		/// </summary>
+		[Required]
+		[HiddenField("ShippingAddressJson")]
+		public string ShippingAddressJson { get; set; }
 		/// <summary>
 		/// 收货人姓名
 		/// </summary>
@@ -43,7 +49,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Forms {
 		/// <summary>
 		/// 邮政编码
 		/// </summary>
-		[Required]
 		[TextBoxField("ZipCode", "ZipCode")]
 		public string ZipCode { get; set; }
 		/// <summary>
@@ -59,7 +64,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Forms {
 		protected override void OnBind() {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			ShippingAddressAddin = new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_shipping_address_addin.html", null));
+				"shopping.order/tmpl.user_shipping_address_addin.html", null));
 		}
 	}
 }
