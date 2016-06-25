@@ -16,11 +16,11 @@ $(function () {
 		var logisticsWithSeller = {};
 		$logisticsSelects.each(function () {
 			var $logisticsSelect = $(this);
-			var sellerId = $logisticsSelect.data("seller-id");
+			var sellerId = $logisticsSelect.data("seller-id") || 0;
 			var logisticsId = $logisticsSelect.find("input[type='radio']:checked").val();
 			logisticsWithSeller[sellerId] = logisticsId;
 		});
-		$logisticsWithSeller.val(JSON.stringify(logisticsWithSeller));
+		$logisticsWithSeller.val(JSON.stringify(logisticsWithSeller)).change();
 	});
 	// 选择默认的物流配送
 	$logisticsSelects.each(function () {

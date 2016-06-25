@@ -3,8 +3,8 @@
 	构建订单创建参数和实时计算价格
 
 	构建订单创建参数
-		格式 (同OrderCreatingParameters) {
-			OrderProductCreatingParametersList: [
+		格式 (同CreateOrderParameters) {
+			CreateOrderProductParametersList: [
 				{ ProductId: 商品Id, MatchParameters: 商品匹配参数 }
 				...
 			],
@@ -50,3 +50,42 @@
 		成功时跳转到指定地址，失败时显示错误信息
 */
 
+/* 构建订单创建参数 */
+$(function () {
+	var $cartContainer = $(".cart-container");
+	var createOrderParametersChangeEventName = "createOrderParametersChange.cartView";
+	var collectCreateOrderParametersEventName = "collectCreateOrderParametersEventName.cartView";
+	$cartContainer.on(collectCreateOrderParametersEventName, function () {
+		// 格式同CreateOrderParameters
+		var createOrderParameters = {
+			OrderParameters: {},
+			OrderProductParametersList: []
+		};
+		// 收集带data-order-parameter属性的元素的值
+		$cartContainer.find("[data-order-parameter]").each(function () {
+			var $parameter = $(this);
+			var key = $parameter.attr("data-order-parameter");
+			var value = $("<div>").attr("data-val", $parameter.val()).data("val");
+			if (key == "CreateOrderProductParametersList") {
+				createOrderParameters.OrderProductParametersList = value;
+			} else {
+				createOrderParameters.OrderParameters[key] = value;
+			}
+		});
+		// 保存订单创建参数并触发改变事件
+		console.log(createOrderParameters);
+		$cartContainer.data("createOrderParameters", createOrderParameters);
+		$cartContainer.trigger(createOrderParametersChangeEventName);
+	});
+	// 带data-order-parameter属性的元素改变时，触发收集事件
+	$cartContainer.on("change", "[data-order-parameter]", function () {
+		$cartContainer.trigger(collectCreateOrderParametersEventName);
+	});
+	// 页面载入时触发收集事件
+	$cartContainer.trigger(collectCreateOrderParametersEventName);
+});
+
+/* 计算价格 */
+$(function () {
+
+});
