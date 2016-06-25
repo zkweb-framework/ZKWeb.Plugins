@@ -15,7 +15,7 @@
 	// 更新国家信息，更新完成后执行onUpdated
 	var updateCountryInfo = function (onUpdated) {
 		// 已经更新时直接执行onUpdated
-		if (countryInfo != null) {
+		if (countryInfo !== null) {
 			onUpdated();
 			return;
 		}
@@ -30,7 +30,7 @@
 	var updateRegionTrees = function (country, onUpdated) {
 		// 已经更新时直接执行onUpdated
 		var regionTree = regionTrees[country] || null;
-		if (regionTree != null) {
+		if (regionTree !== null) {
 			onUpdated();
 			return;
 		}
@@ -67,7 +67,7 @@
 		var $regionsDropdownContainer = $("<div>").attr("class", "regions-dropdown").appendTo($editor);
 		// 获取和设置字段值的函数
 		var getFieldValue = function () { return JSON.parse($field.val() || "{}") || {}; };
-		var setFieldValue = function (value) { $field.val(JSON.stringify(value)); };
+		var setFieldValue = function (value) { $field.val(JSON.stringify(value)).change(); };
 		// 获取子地区下拉框的函数，没有子地区时返回空对象
 		var getChildNodesDropdown = function (node) {
 			if ($.isEmptyObject(node.Childs)) {
@@ -143,23 +143,26 @@
 			node && $regionsDropdownContainer.append(getChildNodesDropdown(node));
 		});
 		// 更新国家和地区信息，并绑定地区
-		updateCountryInfo(function () {
-			// 添加国家下拉框
-			$countryDropdownContainer.empty();
-			var $dropdown = $("<select>").addClass("form-control");
-			_.each(countryInfo.countries, function (country) {
-				$dropdown.append($("<option>").text(country.Name).val(country.Value));
+		var bindCountryAndRegionEventName = "bindCountryAndRegion.RegionEditor";
+		$editor.on(bindCountryAndRegionEventName, function () {
+			updateCountryInfo(function () {
+				// 添加国家下拉框
+				$countryDropdownContainer.empty();
+				var $dropdown = $("<select>").addClass("form-control");
+				_.each(countryInfo.countries, function (country) {
+					$dropdown.append($("<option>").text(country.Name).val(country.Value));
+				});
+				displayCountryDropdown ? $dropdown.show() : $dropdown.hide();
+				$countryDropdownContainer.append($dropdown);
+				// 绑定国家下拉框
+				$editor.trigger(bindCountryEventName);
+				// 更新地区信息
+				updateRegionTrees($dropdown.val(), function () {
+					// 绑定地区下拉框
+					$editor.trigger(bindRegionEventName);
+				});
 			});
-			displayCountryDropdown ? $dropdown.show() : $dropdown.hide();
-			$countryDropdownContainer.append($dropdown);
-			// 绑定国家下拉框
-			$editor.trigger(bindCountryEventName);
-			// 更新地区信息
-			updateRegionTrees($dropdown.val(), function () {
-				// 绑定地区下拉框
-				$editor.trigger(bindRegionEventName);
-			});
-		});
+		}).trigger(bindCountryAndRegionEventName);
 	};
 })();
 

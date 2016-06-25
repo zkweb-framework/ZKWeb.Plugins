@@ -341,6 +341,9 @@
     <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.min.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\cart-view.min.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\custom\_cart.calculatePrice.js" />
+    <Content Include="Shopping.Order\static\shopping.order.js\custom\_cart.paymentApiSelect.js" />
+    <Content Include="Shopping.Order\static\shopping.order.js\custom\_cart.logisticsSelect.js" />
+    <Content Include="Shopping.Order\static\shopping.order.js\custom\_cart.orderComment.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\custom\_cart.shippingAddress.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\custom\_cart.productTable.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\custom\_minicart.js" />

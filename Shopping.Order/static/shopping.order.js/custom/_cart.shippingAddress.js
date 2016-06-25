@@ -3,6 +3,7 @@
 	收货地址的处理
 		包含实体商品时显示收货地址表单，否则隐藏
 		包含实体商品时显示物流选择，否则隐藏
+		启用收货地址表单的功能
 		支持保存收货地址到订单创建参数
 */
 
@@ -25,8 +26,10 @@ $(function () {
 		anyRealProduct ? $shippingAddress.removeClass("hide") : $shippingAddress.addClass("hide");
 		anyRealProduct ? $logisticsSelect.removeClass("hide") : $logisticsSelect.addClass("hide");
 	});
-	// 支持保存收货地址到订单创建参数
+	// 启用收货地址表单的功能
 	var $shippingAddressForm = $cartContainer.find(".user-shipping-address-form");
+	$shippingAddressForm.userShippingAddressForm();
+	// 支持保存收货地址到订单创建参数
 	var $shippingAddressJson = $shippingAddressForm.find("input[name='ShippingAddressJson']");
 	$shippingAddressJson.attr("data-order-parameter", "ShippingAddress");
 });

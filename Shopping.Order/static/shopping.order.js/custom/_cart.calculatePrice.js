@@ -33,9 +33,10 @@
 					priceString: 商品单价的字符串
 					description: 商品单价的描述
 				}, ... ],
-				logisticsCostStringMapping: {
-					卖家Id: { 物流Id: 物流费用的字符串 }
-				}
+				availableLogistics: {
+					卖家Id: [ { logisticsId: 物流Id, costString: 运费字符串 }, ... ]
+				},
+				availablePaymentApi: [ { paymentApiId: 支付接口Id }, ... ]
 			}
 		}
 		失败时的格式 { error: "错误信息" }

@@ -44,7 +44,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 			}
 			// 添加商品总价到订单价格的组成部分
 			result.Parts.Add(new OrderPriceCalcResult.Part("ProductTotalPrice", orderProductTotalPrice));
-			// 计算运费，根据订单商品的卖家(LogisticsWithSeller)
+			// 计算运费
+			// 根据真实的订单商品的卖家选择
+			// TODO: LogisticsWithSeller
 			throw new NotImplementedException();
 			var logisticsId = parameters.OrderParameters.GetOrDefault<long?>("LogisticsId");
 			if (logisticsId != null) {
