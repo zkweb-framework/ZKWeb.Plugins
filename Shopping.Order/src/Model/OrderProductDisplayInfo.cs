@@ -74,9 +74,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// </summary>
 		public string Seller { get; set; }
 		/// <summary>
+		/// 商品状态
+		/// </summary>
+		public string State { get; set; }
+		/// <summary>
 		/// 商品状态的特征
 		/// </summary>
 		public ProductStateTrait StateTrait { get; set; }
+		/// <summary>
+		/// 商品类型
+		/// </summary>
+		public string Type { get; set; }
 		/// <summary>
 		/// 商品类型的特征
 		/// </summary>

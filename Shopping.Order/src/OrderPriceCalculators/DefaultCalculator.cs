@@ -1,12 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 	/// <summary>
@@ -18,9 +19,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 		/// 设置订单价格等于以下的合计
 		/// - 商品总价
 		/// - 运费
+		/// - 支付手续费
+		/// 注意
+		/// - 传入的参数中可能会包含多个卖家
 		/// </summary>
 		public void Calculate(CreateOrderParameters parameters, OrderPriceCalcResult result) {
 			// 计算商品总价
+			if (!parameters.OrderProductParametersList.Any()) {
+				throw new BadRequestException(new T("Please select the products you want to purchase"));
+			}
 			var orderManager = Application.Ioc.Resolve<OrderManager>();
 			var orderProductTotalPrice = 0.0M;
 			var currencyIsSet = false;
@@ -33,33 +40,60 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 					currencyIsSet = true;
 					result.Currency = productResult.Currency;
 				} else if (result.Currency != productResult.Currency) {
-					throw new HttpException(400, new T("Create order contains multi currency is not supported"));
+					throw new BadRequestException(new T("Create order contains multi currency is not supported"));
 				}
 				// 添加到商品总价
 				var orderCount = productParameters.MatchParameters.GetOrDefault<long>("OrderCount");
 				if (orderCount <= 0) {
-					throw new HttpException(400, new T("Order count must larger than 0"));
+					throw new BadRequestException(new T("Order count must larger than 0"));
 				}
 				orderProductTotalPrice = checked(orderProductTotalPrice + productResult.Parts.Sum() * orderCount);
 			}
-			// 添加商品总价到订单价格的组成部分
 			result.Parts.Add(new OrderPriceCalcResult.Part("ProductTotalPrice", orderProductTotalPrice));
 			// 计算运费
-			// 根据真实的订单商品的卖家选择
-			// TODO: LogisticsWithSeller
-			throw new NotImplementedException();
-			var logisticsId = parameters.OrderParameters.GetOrDefault<long?>("LogisticsId");
-			if (logisticsId != null) {
-				var logisticsCost = orderManager.CalculateLogisticsCost(logisticsId.Value, parameters);
+			// 非实体商品不需要计算运费
+			var productManager = Application.Ioc.Resolve<ProductManager>();
+			var sellerToLogistics = parameters.GetSellerToLogistics();
+			var sellerIds = parameters.OrderProductParametersList.GetSellerIdsHasRealProducts();
+			var totalLogisticsCost = 0M;
+			foreach (var sellerId in sellerIds) {
+				var logisticsId = sellerToLogistics.GetOrDefault(sellerId);
+				var logisticsCost = orderManager.CalculateLogisticsCost(logisticsId, sellerId, parameters);
 				if (!string.IsNullOrEmpty(logisticsCost.Second)) {
 					// 计算运费错误
-					throw new HttpException(400, logisticsCost.Second);
-				} else if (logisticsCost.First.Second != result.Currency) {
+					throw new BadRequestException(logisticsCost.Second);
+				} else if (logisticsCost.First.First != 0 &&
+					logisticsCost.First.Second != result.Currency) {
 					// 货币不一致
-					throw new HttpException(400, new T("Create order contains multi currency is not supported"));
+					throw new BadRequestException(new T("Create order contains multi currency is not supported"));
 				}
-				// 添加运费到订单价格的组成部分
-				result.Parts.Add(new OrderPriceCalcResult.Part("LogisticsCost", logisticsCost.First.First));
+				totalLogisticsCost = checked(totalLogisticsCost + logisticsCost.First.First);
+			}
+			if (totalLogisticsCost != 0) {
+				result.Parts.Add(new OrderPriceCalcResult.Part("LogisticsCost", totalLogisticsCost));
+			}
+			// 计算支付手续费
+			ReCalculatePaymentFee(parameters, result);
+		}
+
+		/// <summary>
+		/// 重新计算支付手续费
+		/// 删除原有的手续费并按当前的总价重新计算
+		/// 手续费不会按各个卖家分别计算
+		/// - 如果使用合并交易可以在合并交易中设置整体的手续费
+		/// - 例: (交易A: 手续费0.5, 交易B: 手续费0.3, 合并交易: 手续费0.6)
+		/// </summary>
+		public static void ReCalculatePaymentFee(
+			CreateOrderParameters parameters, OrderPriceCalcResult result) {
+			var oldPartIndex = result.Parts.FindIndex(p => p.Type == "PaymentFee");
+			if (oldPartIndex >= 0) {
+				result.Parts.RemoveAt(oldPartIndex);
+			}
+			var paymentApiManager = Application.Ioc.Resolve<PaymentApiManager>();
+			var paymentApiId = parameters.GetPaymentApiId();
+			var paymentFee = paymentApiManager.CalculatePaymentFee(paymentApiId, result.Parts.Sum());
+			if (paymentFee != 0) {
+				result.Parts.Add(new OrderPriceCalcResult.Part("PaymentFee", paymentFee));
 			}
 		}
 	}

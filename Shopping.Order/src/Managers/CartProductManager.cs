@@ -6,8 +6,11 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.Currency.src.Managers;
 using ZKWeb.Plugins.Common.Currency.src.Model;
+using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Config;
 using ZKWeb.Plugins.Shopping.Order.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
@@ -15,10 +18,8 @@ using ZKWeb.Plugins.Shopping.Order.src.Forms;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Repositories;
 using ZKWeb.Server;
-using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 	/// <summary>
@@ -70,7 +71,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			var session = sessionManager.GetSession();
 			var user = session.GetUser();
 			if (user == null && !settings.AllowAnonymousVisitorCreateOrder) {
-				throw new HttpException(403, new T("Create order require user logged in"));
+				throw new ForbiddenException(new T("Create order require user logged in"));
 			}
 			// 调用仓储添加购物车商品
 			UnitOfWork.WriteRepository<CartProductRepository>(
@@ -217,7 +218,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			var commentForm = new CreateOrderCommenForm();
 			commentForm.Bind();
 			// 物流列表，各个卖家都有单独的列表
-			var sellers = displayInfos.Select(d => new { d.SellerId, d.Seller }).GroupBy(d => d.SellerId);
+			// 没有实体商品的卖家不包含在列表中
+			var sellers = displayInfos
+				.Where(d => d.TypeTrait.IsReal)
+				.Select(d => new { d.SellerId, d.Seller }).GroupBy(d => d.SellerId);
 			var logisticsWithSellers = sellers.Select(s => new {
 				sellerId = s.Key,
 				seller = s.First().Seller,
@@ -235,6 +239,74 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 				displayInfos, anyRealProducts,
 				shippingAddressForm, commentForm,
 				logisticsWithSellers, paymentApis, createOrderForm,
+			};
+		}
+
+		/// <summary>
+		/// 获取购物车商品计算价格的信息
+		/// 为了保证数据的实时性，这个函数不使用缓存
+		/// </summary>
+		/// <param name="parameters">订单创建参数</param>
+		/// <returns></returns>
+		public virtual object GetCartCalculatePriceApiInfo(CreateOrderParameters parameters) {
+			// 计算各个商品的单价（数量等改变后有可能会改变单价）
+			var orderProductUnitPrices = new List<object>();
+			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
+			foreach (var productParameters in parameters.OrderProductParametersList) {
+				var productResult = orderManager.CalculateOrderProductUnitPrice(
+					parameters.UserId, productParameters);
+				var currency = currencyManager.GetCurrency(productResult.Currency);
+				var priceString = currency.Format(productResult.Parts.Sum());
+				var description = productResult.Parts.GetDescription();
+				orderProductUnitPrices.Add(new { priceString, description });
+			}
+			// 计算订单总价
+			var orderResult = orderManager.CalculateOrderPrice(parameters);
+			var orderCurrency = currencyManager.GetCurrency(orderResult.Currency);
+			var orderPriceString = orderCurrency.Format(orderResult.Parts.Sum());
+			var orderPriceDescription = orderResult.Parts.GetDescription();
+			// 获取商品总价
+			var orderProductTotalPricePart = orderResult.Parts
+				.FirstOrDefault(p => p.Type == "ProductTotalPrice");
+			var orderProductTotalPriceString = orderCurrency.Format(
+				orderProductTotalPricePart == null ? 0 : orderProductTotalPricePart.Delta);
+			// 计算各个物流的运费
+			// 同时选择可用的物流（部分物流不能送到选择的地区）
+			var availableLogistics = new Dictionary<long, IList<object>>();
+			var sellerIds = parameters.OrderProductParametersList.GetSellerIdsHasRealProducts();
+			foreach (var sellerId in sellerIds) {
+				var sellerIdOrNull = sellerId <= 0 ? null : (long?)sellerId;
+				var logisticsList = orderManager
+					.GetAvailableLogistics(parameters.UserId, sellerIdOrNull)
+					.Select(l => {
+						var result = orderManager.CalculateLogisticsCost(l.Id, sellerIdOrNull, parameters);
+						if (!string.IsNullOrEmpty(result.Second)) {
+							return (object)null;
+						}
+						var currency = currencyManager.GetCurrency(result.First.Second);
+						return new { logisticsId = l.Id, costString = currency.Format(result.First.First) };
+					})
+					.Where(l => l != null).ToList();
+				availableLogistics[sellerId] = logisticsList;
+			}
+			// 计算各个支付接口的手续费
+			// 同时选择可用的支付接口
+			var paymentApiManager = Application.Ioc.Resolve<PaymentApiManager>();
+			var orderPriceWithoutPaymentFee = orderResult.Parts
+				.Where(p => p.Type != "PaymentFee").ToList().Sum();
+			var availablePaymentApis = orderManager
+				.GetAvailablePaymentApis(parameters.UserId)
+				.Select(a => {
+					var paymentFee = paymentApiManager.CalculatePaymentFee(
+						parameters.GetPaymentApiId(), orderPriceWithoutPaymentFee);
+					return new { apiId = a.Id, feeString = orderCurrency.Format(paymentFee) };
+				})
+				.Where(a => a != null).ToList<object>();
+			return new {
+				orderPriceString, orderPriceDescription,
+				orderProductTotalPriceString, orderProductUnitPrices,
+				availableLogistics, availablePaymentApis
 			};
 		}
 	}

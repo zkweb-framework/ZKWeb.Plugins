@@ -8,7 +8,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// </summary>
 	public interface IOrderLogisticsProvider {
 		/// <summary>
-		/// 获取可使用的物流
+		/// 获取默认可使用的物流
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <param name="sellerId">卖家Id</param>

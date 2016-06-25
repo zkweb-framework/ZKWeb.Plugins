@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Shopping.Logistics.src.Manager;
 using ZKWeb.Plugins.Shopping.Order.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 	using Logistics = Logistics.src.Database.Logistics;
@@ -36,7 +37,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 				calculator.Calculate(userId, parameters, result);
 			}
 			if (result.Parts.Sum() < 0) {
-				throw new HttpException(400, new T("Order product unit price must not be negative"));
+				throw new BadRequestException(new T("Order product unit price must not be negative"));
 			}
 			return result;
 		}
@@ -55,18 +56,29 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 				calculator.Calculate(parameters, result);
 			}
 			if (result.Parts.Sum() <= 0) {
-				throw new HttpException(400, new T("Order cost must larger than 0"));
+				throw new BadRequestException(new T("Order cost must larger than 0"));
 			}
 			return result;
 		}
 
 		/// <summary>
-		/// 计算订单的运费
+		/// 计算订单使用指定的物流的运费
 		/// 返回 ((运费, 货币), 错误信息)
 		/// </summary>
+		/// <param name="logisticsId">物流Id</param>
+		/// <param name="sellerId">卖家Id</param>
+		/// <param name="parameters">订单创建参数</param>
 		/// <returns></returns>
 		public virtual Pair<Pair<decimal, string>, string> CalculateLogisticsCost(
-			long logisticsId, CreateOrderParameters parameters) {
+			long logisticsId, long? sellerId, CreateOrderParameters parameters) {
+			// 判断物流的所属人是否空或卖家
+			var logisticsManager = Application.Ioc.Resolve<LogisticsManager>();
+			var logistics = logisticsManager.GetLogistics(logisticsId);
+			if (logistics == null) {
+				throw new BadRequestException(new T("Please select logistics"));
+			} else if (logistics.Owner != null && logistics.Owner.Id != sellerId) {
+				throw new ForbiddenException(new T("Selected logistics is not available for this seller"));
+			}
 			// 获取收货地址中的国家和地区
 			var shippingAddress = (parameters.OrderParameters
 				.GetOrDefault<IDictionary<string, object>>("ShippingAddress") ??
@@ -77,19 +89,26 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			var productManager = Application.Ioc.Resolve<ProductManager>();
 			var matchers = Application.Ioc.ResolveMany<IProductMatchedDataMatcher>();
 			var totalWeight = 0M;
-			foreach (var orderProductParameter in parameters.OrderProductParametersList) {
-				var product = productManager.GetProduct(orderProductParameter.ProductId);
-				var orderCount = orderProductParameter.MatchParameters.GetOrDefault<long>("OrderCount");
+			foreach (var productParameters in parameters.OrderProductParametersList) {
+				var product = productManager.GetProduct(productParameters.ProductId);
+				var productSellerId = (product.Seller == null) ? null : (long?)product.Seller.Id;
+				if (sellerId != productSellerId) {
+					// 跳过其他卖家的商品
+					continue;
+				} else if (product.GetTypeTrait().IsReal) {
+					// 跳过非实体商品
+					continue;
+				}
+				var orderCount = productParameters.MatchParameters.GetOrDefault<long>("OrderCount");
 				foreach (var data in product.MatchedDatas) {
 					if (data.Weight != null &&
-						matchers.All(m => m.IsMatched(orderProductParameter.MatchParameters, data))) {
+						matchers.All(m => m.IsMatched(productParameters.MatchParameters, data))) {
 						totalWeight += checked(totalWeight + data.Weight.Value * orderCount);
 						break;
 					}
 				}
 			}
 			// 使用物流管理器计算运费
-			var logisticsManager = Application.Ioc.Resolve<LogisticsManager>();
 			return logisticsManager.CalculateCost(logisticsId, country, regionId, totalWeight);
 		}
 

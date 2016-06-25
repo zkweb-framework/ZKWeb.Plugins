@@ -11,7 +11,7 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Cache;
-using ZKWebStandard.Web;
+using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 	/// <summary>
@@ -119,7 +119,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 			try {
 				image = Image.FromStream(imageStream);
 			} catch {
-				throw new HttpException(400, new T("Parse uploaded image failed"));
+				throw new BadRequestException(new T("Parse uploaded image failed"));
 			}
 			using (image) {
 				// 保存原图

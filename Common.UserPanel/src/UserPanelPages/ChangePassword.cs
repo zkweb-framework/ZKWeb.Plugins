@@ -58,7 +58,7 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.UserPanelPages {
 			/// <returns></returns>
 			protected override object OnSubmit() {
 				if (Password != ConfirmPassword) {
-					throw new HttpException(400, new T("Please repeat the password exactly"));
+					throw new BadRequestException(new T("Please repeat the password exactly"));
 				}
 				var sessionManager = Application.Ioc.Resolve<SessionManager>();
 				var session = sessionManager.GetSession();

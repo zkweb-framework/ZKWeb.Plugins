@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Cache;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWeb.Server;
 using ZKWebStandard.Collections;
@@ -90,6 +92,23 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 			// 保存到缓存
 			PaymentApisCache.Put(key, apis, PaymentApiCacheTime);
 			return apis;
+		}
+
+		/// <summary>
+		/// 计算支付手续费
+		/// </summary>
+		/// <param name="apiId">支付接口Id</param>
+		/// <param name="amount">支付金额</param>
+		/// <returns></returns>
+		public virtual decimal CalculatePaymentFee(long apiId, decimal amount) {
+			var paymentFee = 0M;
+			var api = GetPaymentApi(apiId);
+			if (api == null) {
+				throw new ArgumentNullException(new T("Selected payment api does not exist"));
+			}
+			var handlers = Application.Ioc.ResolvePaymentApiHandlers(api.Type);
+			handlers.ForEach(h => h.CalculatePaymentFee(api, amount, ref paymentFee));
+			return paymentFee;
 		}
 
 		/// <summary>

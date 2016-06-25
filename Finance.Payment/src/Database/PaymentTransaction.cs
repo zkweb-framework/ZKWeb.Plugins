@@ -39,6 +39,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// </summary>
 		public virtual decimal Amount { get; set; }
 		/// <summary>
+		/// 支付手续费
+		/// 手续费有可能在网站上收取，也可能在支付接口上收取
+		/// </summary>
+		public virtual decimal PaymentFee { get; set; }
+		/// <summary>
 		/// 货币类型
 		/// </summary>
 		public virtual string CurrencyType { get; set; }
@@ -121,6 +126,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 			References(t => t.Api).Not.Nullable();
 			Map(t => t.ExternalSerial).Index("Idx_ExternalSerial");
 			Map(t => t.Amount).Index("Idx_Amount");
+			Map(t => t.PaymentFee).Index("Idx_PaymentFee");
 			Map(t => t.CurrencyType).Index("Idx_CurrencyType");
 			References(t => t.Payer).Nullable();
 			References(t => t.Payee).Nullable();

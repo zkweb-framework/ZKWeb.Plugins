@@ -6,6 +6,7 @@ using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Shopping.Order.src.Config;
 using ZKWeb.Plugins.Shopping.Order.src.Database;
@@ -15,7 +16,6 @@ using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 	using Product = Product.src.Database.Product;
@@ -57,14 +57,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 			var productRepository = RepositoryResolver.Resolve<Product>(Context);
 			var product = productRepository.GetByIdWhereNotDeleted(productId);
 			if (product == null) {
-				throw new HttpException(400, new T("The product you are try to purchase does not exist."));
+				throw new BadRequestException(new T("The product you are try to purchase does not exist."));
 			} else if (!product.GetStateTrait().IsPurchasable) {
-				throw new HttpException(400, new T("The product you are try to purchase does not purchasable."));
+				throw new BadRequestException(new T("The product you are try to purchase does not purchasable."));
 			}
 			// 获取订购数量
 			var orderCount = parameters.GetOrDefault<long>("OrderCount");
 			if (orderCount <= 0) {
-				throw new HttpException(400, new T("Order count must larger than 0"));
+				throw new BadRequestException(new T("Order count must larger than 0"));
 			}
 			// 立刻购买时删除原有的购物车商品列表
 			// 加入购物车时获取现有的购物车商品列表，判断是否可以增加已有的数量

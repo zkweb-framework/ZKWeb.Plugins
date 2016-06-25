@@ -4,7 +4,6 @@ using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Captcha.src.FormFieldAttributes;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 	/// <summary>
@@ -51,7 +50,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 		/// <returns></returns>
 		protected override object OnSubmit() {
 			if (Password != ConfirmPassword) {
-				throw new HttpException(400, new T("Please repeat the password exactly"));
+				throw new BadRequestException(new T("Please repeat the password exactly"));
 			}
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			userManager.Reg(Username, Password);

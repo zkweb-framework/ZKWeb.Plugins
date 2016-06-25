@@ -16,7 +16,6 @@ using ZKWeb.Localize;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 	/// <summary>
@@ -146,13 +145,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				if (saveTo.Id <= 0) {
 					saveTo.CreateTime = DateTime.UtcNow;
 					if (string.IsNullOrEmpty(Password)) {
-						throw new HttpException(400, new T("Please enter password when creating admin"));
+						throw new BadRequestException(new T("Please enter password when creating admin"));
 					}
 				}
 				// 需要更新密码时
 				if (!string.IsNullOrEmpty(Password)) {
 					if (Password != ConfirmPassword) {
-						throw new HttpException(400, new T("Please repeat the password exactly"));
+						throw new BadRequestException(new T("Please repeat the password exactly"));
 					}
 					saveTo.SetPassword(Password);
 				}
@@ -161,7 +160,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				// 不允许取消自身的超级管理员权限
 				var sessionManager = Application.Ioc.Resolve<SessionManager>();
 				if (sessionManager.GetSession().ReleatedId == saveTo.Id && saveTo.Type != UserTypes.SuperAdmin) {
-					throw new HttpException(400, new T("You can't downgrade yourself to normal admin"));
+					throw new BadRequestException(new T("You can't downgrade yourself to normal admin"));
 				}
 				// 设置角色
 				var roleRepository = RepositoryResolver.Resolve<UserRole>(context);

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Extensions {
 	/// <summary>
@@ -21,7 +21,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Extensions {
 			this IContainer container, string type) {
 			var handlers = container.ResolveMany<IPaymentApiHandler>().Where(h => h.Type == type).ToList();
 			if (!handlers.Any()) {
-				throw new HttpException(400, string.Format(new T("Unknown payment api type {0}"), type));
+				throw new BadRequestException(string.Format(new T("Unknown payment api type {0}"), type));
 			}
 			return handlers;
 		}
@@ -37,7 +37,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Extensions {
 			this IContainer container, string type) {
 			var handlers = container.ResolveMany<IPaymentTransactionHandler>().Where(h => h.Type == type).ToList();
 			if (!handlers.Any()) {
-				throw new HttpException(400, string.Format(new T("Unknown payment transaction type {0}"), type));
+				throw new BadRequestException(string.Format(new T("Unknown payment transaction type {0}"), type));
 			}
 			return handlers;
 		}

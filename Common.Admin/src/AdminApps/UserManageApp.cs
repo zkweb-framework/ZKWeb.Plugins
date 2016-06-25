@@ -131,7 +131,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 				if (saveTo.Id <= 0) {
 					saveTo.CreateTime = DateTime.UtcNow;
 					if (string.IsNullOrEmpty(Password)) {
-						throw new HttpException(400, new T("Please enter password when creating user"));
+						throw new BadRequestException(new T("Please enter password when creating user"));
 					}
 					saveTo.Type = UserTypes.User;
 				}
@@ -140,7 +140,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 					var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 					privilegeManager.Check(UserTypes.SuperAdmin);
 					if (Password != ConfirmPassword) {
-						throw new HttpException(400, new T("Please repeat the password exactly"));
+						throw new BadRequestException(new T("Please repeat the password exactly"));
 					}
 					saveTo.SetPassword(Password);
 				}

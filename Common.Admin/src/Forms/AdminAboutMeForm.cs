@@ -93,7 +93,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Forms {
 			// 修改密码
 			if (!string.IsNullOrEmpty(OldPassword) && !string.IsNullOrEmpty(Password)) {
 				if (Password != ConfirmPassword) {
-					throw new HttpException(400, new T("Please repeat the password exactly"));
+					throw new BadRequestException(new T("Please repeat the password exactly"));
 				}
 				userManager.ChangePassword(session.ReleatedId, OldPassword, Password);
 			}

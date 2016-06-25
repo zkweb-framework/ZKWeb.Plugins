@@ -240,7 +240,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 				var files = HttpManager.CurrentContext.Request.GetPostedFiles().ToList();
 				var imageFile = files.Count <= 0 ? null : files[0].Second;
 				if (imageFile == null) {
-					throw new HttpException(400, new T("Please select image file"));
+					throw new BadRequestException(new T("Please select image file"));
 				}
 				((FileUploaderFieldAttribute)this.Form.Fields.First(
 					f => f.Attribute.Name == "Image").Attribute).Check(imageFile);

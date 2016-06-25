@@ -15,7 +15,6 @@ using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.AdminApps;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
@@ -31,7 +30,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 		public override string AddUrl { get { return null; } }
 		protected override IAjaxTableCallback<PaymentTransaction> GetTableCallback() { return new TableCallback(); }
 		protected override IModelFormBuilder GetAddForm() {
-			throw new HttpException(400, new T("Add transaction from admin panel is not supported"));
+			throw new BadRequestException(new T("Add transaction from admin panel is not supported"));
 		}
 		protected override IModelFormBuilder GetEditForm() { return new Form(); }
 
@@ -94,6 +93,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 					pair.Row["ApiId"] = api.Id;
 					pair.Row["ExternalSerial"] = pair.Entity.ExternalSerial;
 					pair.Row["Amount"] = currency.Format(pair.Entity.Amount);
+					pair.Row["PaymentFee"] = currency.Format(pair.Entity.PaymentFee);
 					pair.Row["Payer"] = payer == null ? null : payer.Username;
 					pair.Row["Payee"] = payee == null ? null : payee.Username;
 					pair.Row["PayerId"] = payer == null ? null : (long?)payer.Id;
@@ -117,6 +117,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				response.Columns.AddMemberColumn("Type");
 				response.Columns.AddEditColumnForCrudPage<PaymentApiManageApp>("ApiName", "ApiId");
 				response.Columns.AddMemberColumn("Amount");
+				response.Columns.AddMemberColumn("PaymentFee");
 				response.Columns.AddEditColumnForCrudPage<UserManageApp>("Payer", "PayerId");
 				response.Columns.AddEditColumnForCrudPage<UserManageApp>("Payee", "PayeeId");
 				response.Columns.AddMemberColumn("CreateTime");
@@ -166,6 +167,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			[LabelField("Amount")]
 			public string Amount { get; set; }
 			/// <summary>
+			/// 支付手续费
+			/// </summary>
+			[LabelField("PaymentFee")]
+			public string PaymentFee { get; set; }
+			/// <summary>
 			/// 付款人
 			/// </summary>
 			[LabelField("Payer")]
@@ -210,6 +216,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 				ExternalSerial = bindFrom.ExternalSerial;
 				Currency = new T(bindFrom.CurrencyType);
 				Amount = currency.Format(bindFrom.Amount);
+				PaymentFee = currency.Format(bindFrom.PaymentFee);
 				Payer = bindFrom.Payer == null ? null : bindFrom.Payer.Username;
 				Payee = bindFrom.Payee == null ? null : bindFrom.Payee.Username;
 				Description = bindFrom.Description;

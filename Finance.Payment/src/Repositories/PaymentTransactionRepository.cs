@@ -4,6 +4,7 @@ using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Admin.src.Database;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.GenericRecord.src.Database;
 using ZKWeb.Plugins.Common.GenericRecord.src.Repositories;
@@ -37,29 +38,30 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 		/// <returns></returns>
 		public virtual PaymentTransaction CreateTransaction(
 			string transactionType, long paymentApiId,
-			decimal amount, string currencyType, long? payerId, long? payeeId,
+			decimal amount, decimal paymentFee, string currencyType, long? payerId, long? payeeId,
 			long? releatedId, string description, object extraData = null) {
 			// 检查参数
 			var handlers = Application.Ioc.ResolveTransactionHandlers(transactionType);
 			if (amount <= 0) {
-				throw new HttpException(400, "Transaction amount must large than zero");
+				throw new BadRequestException("Transaction amount must large than zero");
 			} else if (string.IsNullOrEmpty(description)) {
-				throw new HttpException(400, "Transaction description is required");
+				throw new BadRequestException("Transaction description is required");
 			}
 			// 检查接口是否可以使用
 			var api = Context.Get<PaymentApi>(a => a.Id == paymentApiId);
 			if (api == null) {
-				throw new HttpException(400, new T("Payment api not exist"));
+				throw new BadRequestException(new T("Payment api not exist"));
 			} else if (!api.SupportTransactionTypes.Contains(transactionType)) {
-				throw new HttpException(400, new T("Selected payment api not support this transaction"));
+				throw new BadRequestException(new T("Selected payment api not support this transaction"));
 			} else if (api.Deleted) {
-				throw new HttpException(400, new T("Selected payment api is deleted"));
+				throw new BadRequestException(new T("Selected payment api is deleted"));
 			}
 			// 保存交易到数据库
 			var transaction = new PaymentTransaction() {
 				Type = transactionType,
 				Api = api,
 				Amount = amount,
+				PaymentFee = paymentFee,
 				CurrencyType = currencyType,
 				Payer = Context.Get<User>(u => u.Id == payerId),
 				Payee = Context.Get<User>(u => u.Id == payeeId),
@@ -116,7 +118,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			// 更新交易
 			var transaction = GetById(transactionId);
 			if (transaction == null) {
-				throw new HttpException(400, new T("Payment transaction not found"));
+				throw new BadRequestException(new T("Payment transaction not found"));
 			}
 			Save(ref transaction, t => t.LastError = lastError);
 			// 记录错误到日志
@@ -138,7 +140,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			// 获取交易
 			var transaction = GetById(transactionId);
 			if (transaction == null) {
-				throw new HttpException(400, new T("Payment transaction not found"));
+				throw new BadRequestException(new T("Payment transaction not found"));
 			}
 			// 判断是否可以处理指定的交易状态
 			// 已经是指定的交易状态时返回成功
@@ -154,10 +156,10 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			} else if (state == PaymentTransactionState.Aborted) {
 				result = transaction.Check(c => c.CanProcessAborted);
 			} else {
-				throw new HttpException(400, string.Format(new T("Unsupported transaction state: {0}"), state));
+				throw new BadRequestException(string.Format(new T("Unsupported transaction state: {0}"), state));
 			}
 			if (!result.First) {
-				throw new HttpException(400, result.Second);
+				throw new BadRequestException(result.Second);
 			}
 			// 获取交易类型对应的处理器
 			var handlers = Application.Ioc.ResolveTransactionHandlers(transaction.Type);
@@ -182,7 +184,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			} else if (state == PaymentTransactionState.Aborted) {
 				handlers.ForEach(h => h.OnAbort(Context, transaction, previousState));
 			} else {
-				throw new HttpException(400, string.Format(new T("Unsupported transaction state: {0}"), state));
+				throw new BadRequestException(string.Format(new T("Unsupported transaction state: {0}"), state));
 			}
 			// 成功时添加详细记录
 			AddDetailRecord(transaction.Id, null, string.Format(
@@ -203,12 +205,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			// 获取交易
 			var transaction = GetById(transactionId);
 			if (transaction == null) {
-				throw new HttpException(400, new T("Payment transaction not found"));
+				throw new BadRequestException(new T("Payment transaction not found"));
 			}
 			// 判断是否可以发货
 			var result = transaction.Check(c => c.CanSendGoods);
 			if (!result.First) {
-				throw new HttpException(400, result.Second);
+				throw new BadRequestException(result.Second);
 			}
 			// 调用支付接口的处理器处理发货
 			var handlers = Application.Ioc.ResolvePaymentApiHandlers(transaction.Api.Type);

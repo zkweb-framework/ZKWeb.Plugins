@@ -4,7 +4,6 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Captcha.src.Managers;
 using ZKWeb.Plugins.Common.Captcha.src.FormFieldAttributes;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 using ZKWeb.Templating;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 
@@ -41,7 +40,7 @@ namespace ZKWeb.Plugins.Common.Captcha.src.FormFieldHandlers {
 			var value = values[0];
 			var captchaManager = Application.Ioc.Resolve<CaptchaManager>();
 			if (!captchaManager.Check(attribute.Key, value)) {
-				throw new HttpException(400, new T("Incorrect captcha"));
+				throw new ForbiddenException(new T("Incorrect captcha"));
 			}
 			return value;
 		}

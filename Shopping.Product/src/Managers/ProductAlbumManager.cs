@@ -5,12 +5,12 @@ using System.IO;
 using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Config;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Server;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 	/// <summary>
@@ -102,13 +102,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <returns></returns>
 		public virtual void SaveAlbumImage(long id, long index, Stream imageStream) {
 			if (imageStream == null) {
-				throw new HttpException(400, new T("Please select product album file"));
+				throw new BadRequestException(new T("Please select product album file"));
 			}
 			Image image;
 			try {
 				image = Image.FromStream(imageStream);
 			} catch {
-				throw new HttpException(400, new T("Parse uploaded image failed"));
+				throw new BadRequestException(new T("Parse uploaded image failed"));
 			}
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var settings = configManager.GetData<ProductAlbumSettings>();

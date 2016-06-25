@@ -21,9 +21,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 		/// </summary>
 		public virtual PaymentTransaction CreateTestTransaction(
 			long apiId, decimal amount, string currency, long? payerId, long? payeeId, string description) {
+			var apiManager = Application.Ioc.Resolve<PaymentApiManager>();
+			var paymentFee = apiManager.CalculatePaymentFee(apiId, amount);
 			var transaction = UnitOfWork.WriteRepository<PaymentTransactionRepository, PaymentTransaction>(r => {
 				return r.CreateTransaction(
-					"TestTransaction", apiId, amount, currency, payerId, payeeId, payerId, description);
+					"TestTransaction", apiId, amount, paymentFee,
+					currency, payerId, payeeId, payerId, description);
 			});
 			return transaction;
 		}

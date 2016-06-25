@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Currency.src.Managers;
 using ZKWeb.Plugins.Common.Currency.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
@@ -8,7 +10,6 @@ using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Extensions;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 	/// <summary>
@@ -32,7 +33,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 			var info = new OrderProductDisplayInfo();
 			var product = productManager.GetProduct(parameters.ProductId);
 			if (product == null) {
-				throw new HttpException(400, new T("The product you are try to purchase does not exist."));
+				throw new BadRequestException(new T("The product you are try to purchase does not exist."));
 			}
 			info.ProductId = product.Id;
 			info.OrderProductId = 0;
@@ -53,9 +54,27 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 			info.Count = parameters.MatchParameters.GetOrDefault<long>("OrderCount");
 			info.SellerId = (product.Seller == null) ? null : (long?)product.Seller.Id;
 			info.Seller = (product.Seller == null) ? null : product.Seller.Username;
+			info.State = product.State;
 			info.StateTrait = product.GetStateTrait();
+			info.Type = product.Type;
 			info.TypeTrait = product.GetTypeTrait();
 			return info;
+		}
+
+		/// <summary>
+		/// 获取包含了实体商品的卖家Id列表
+		/// 无卖家的Id等于0
+		/// </summary>
+		/// <param name="parameters">订单商品创建参数</param>
+		/// <returns></returns>
+		public static IList<long> GetSellerIdsHasRealProducts(
+			this IList<CreateOrderProductParameters> parametersList) {
+			var productManager = Application.Ioc.Resolve<ProductManager>();
+			return parametersList
+				.Select(p => productManager.GetProduct(p.ProductId))
+				.Where(p => p.GetTypeTrait().IsReal)
+				.Select(p => p.Seller == null ? 0 : p.Seller.Id)
+				.Distinct().ToList();
 		}
 	}
 }

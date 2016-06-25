@@ -49,6 +49,13 @@ namespace ZKWeb.Plugins.Finance.Payment.Tenpay.src.PaymentApiHandlers {
 		}
 
 		/// <summary>
+		/// 计算支付手续费
+		/// </summary>
+		public void CalculatePaymentFee(PaymentApi api, decimal amount, ref decimal paymentFee) {
+			paymentFee = 0;
+		}
+
+		/// <summary>
 		/// 获取支付Html
 		/// </summary>
 		public void GetPaymentHtml(PaymentTransaction transaction, ref HtmlString html) {

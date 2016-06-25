@@ -207,6 +207,9 @@
     <Compile Include="Common.Base\src\Model\_BaseTable\EntityToTableRow.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\BaseTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\BaseTableSearchResponse.cs" />
+    <Compile Include="Common.Base\src\Model\_Exceptions\BadRequestException.cs" />
+    <Compile Include="Common.Base\src\Model\_Exceptions\ForbiddenException.cs" />
+    <Compile Include="Common.Base\src\Model\_Exceptions\NotFoundException.cs" />
     <Compile Include="Common.Base\src\Model\_HtmlItem\HtmlItem.cs" />
     <Compile Include="Common.Base\src\Model\_Web\IUrlFilter.cs" />
     <Compile Include="Common.Base\src\Model\_StaticTable\IStaticTableCallback.cs" />
@@ -269,6 +272,7 @@
     <Compile Include="Shopping.Order\src\Controllers\CartController.cs" />
     <Compile Include="Shopping.Order\src\Controllers\OrderController.cs" />
     <Compile Include="Shopping.Order\src\Extensions\CartProductExtensions.cs" />
+    <Compile Include="Shopping.Order\src\Extensions\CreateOrderParametersExtensions.cs" />
     <Compile Include="Shopping.Order\src\Extensions\CreateOrderProductParametersExtensions.cs" />
     <Compile Include="Shopping.Order\src\Extensions\OrderPriceCalcResultExtensions.cs" />
     <Compile Include="Shopping.Order\src\AdminSettingsPages\OrderSettingsForm.cs" />
@@ -438,6 +442,7 @@
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_name.html" />
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_image.html" />
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_price.html" />
+    <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_type.html" />
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_seller.html" />
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_count_editor.html" />
     <Content Include="Shopping.Order\templates\shopping.order\tmpl.order_product_summary.html" />

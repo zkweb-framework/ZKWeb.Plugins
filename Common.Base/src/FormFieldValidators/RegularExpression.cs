@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 	/// <summary>
@@ -39,7 +38,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 			}
 			var attribtue = (RegularExpressionAttribute)validatorAttribute;
 			if (!Regex.IsMatch(str, attribtue.Pattern)) {
-				throw new HttpException(400, ErrorMessage(field));
+				throw new BadRequestException(ErrorMessage(field));
 			}
 		}
 	}

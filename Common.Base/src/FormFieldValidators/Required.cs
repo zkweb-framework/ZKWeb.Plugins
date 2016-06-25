@@ -36,7 +36,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 		/// </summary>
 		public void Validate(FormField field, object validatorAttribute, object value) {
 			if (value == null || value.ToString() == "") {
-				throw new HttpException(400, ErrorMessage(field));
+				throw new BadRequestException(ErrorMessage(field));
 			}
 		}
 	}

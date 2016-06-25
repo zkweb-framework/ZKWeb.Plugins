@@ -67,7 +67,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Logistics([0]):", "物流配送([0]):" },
 			{ "PaymentApi:", "支付接口:" },
 			{ "OrderTransaction", "订单交易" },
-			{ "Order Comment:", "订单留言:" }
+			{ "Order Comment:", "订单留言:" },
+			{ "Please select the products you want to purchase", "请选择您想要购买的商品" },
+			{ "Selected logistics is not available for this seller", "该卖家不可使用选择的物流" },
+			{ "Please select logistics", "请选择物流" },
+			{ "Please select payment api", "请选择支付接口" }
 		};
 
 		public bool CanTranslate(string code) {

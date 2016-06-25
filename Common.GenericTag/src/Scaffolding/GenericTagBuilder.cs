@@ -56,7 +56,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 				return r.IsAllTagsTypeEqualTo(ids, Type);
 			});
 			if (!isAllTagTypeMatched) {
-				throw new HttpException(403, new T("Try to access tag that type not matched"));
+				throw new ForbiddenException(new T("Try to access tag that type not matched"));
 			}
 			return ids;
 		}
@@ -199,7 +199,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 			protected override void OnBind(DatabaseContext context, Database.GenericTag bindFrom) {
 				if (bindFrom.Id > 0 && bindFrom.Type != Type) {
 					// 检查类型，防止越权操作
-					throw new HttpException(403, new T("Try to access tag that type not matched"));
+					throw new ForbiddenException(new T("Try to access tag that type not matched"));
 				}
 				Name = bindFrom.Name;
 				DisplayOrder = bindFrom.DisplayOrder;
@@ -216,7 +216,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 					saveTo.CreateTime = DateTime.UtcNow;
 				} else if (saveTo.Id > 0 && saveTo.Type != Type) {
 					// 编辑时检查类型，防止越权操作
-					throw new HttpException(403, new T("Try to access tag that type not matched"));
+					throw new ForbiddenException(new T("Try to access tag that type not matched"));
 				}
 				saveTo.Name = Name;
 				saveTo.DisplayOrder = DisplayOrder;

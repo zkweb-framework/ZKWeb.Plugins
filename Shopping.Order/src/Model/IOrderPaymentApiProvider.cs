@@ -7,7 +7,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// </summary>
 	public interface IOrderPaymentApiProvider {
 		/// <summary>
-		/// 获取可使用的支付接口
+		/// 获取默认可使用的支付接口
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <param name="apis">可使用的支付接口列表</param>

@@ -37,6 +37,14 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		void OnFormSubmit(PaymentApiEditForm form, DatabaseContext context, PaymentApi saveTo);
 
 		/// <summary>
+		/// 计算支付手续费
+		/// </summary>
+		/// <param name="api">支付接口</param>
+		/// <param name="amount">支付金额</param>
+		/// <param name="paymentFee">支付手续费</param>
+		void CalculatePaymentFee(PaymentApi api, decimal amount, ref decimal paymentFee);
+
+		/// <summary>
 		/// 获取支付使用的Html
 		/// 是否可以支付已在外部判断，这个函数不需要判断
 		/// </summary>

@@ -56,6 +56,13 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 		}
 
 		/// <summary>
+		/// 计算支付手续费
+		/// </summary>
+		public void CalculatePaymentFee(PaymentApi api, decimal amount, ref decimal paymentFee) {
+			paymentFee = 0;
+		}
+
+		/// <summary>
 		/// 获取支付Html
 		/// </summary>
 		public void GetPaymentHtml(PaymentTransaction transaction, ref HtmlString html) {
@@ -96,7 +103,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 			/// </summary>
 			public void CheckPaymentPassword(string paymentPassword) {
 				if (string.IsNullOrEmpty(PaymentPassword) || paymentPassword != PaymentPassword) {
-					throw new HttpException(401, new T("Incorrect payment password"));
+					throw new ForbiddenException(new T("Incorrect payment password"));
 				}
 			}
 		}
@@ -167,17 +174,17 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentApiHandlers {
 					var transaction = r.GetById(transactionId);
 					// 检查交易是否为空
 					if (transaction == null) {
-						throw new HttpException(400, new T("Payment transaction not found"));
+						throw new BadRequestException(new T("Payment transaction not found"));
 					}
 					// 检查交易对应的接口类型是否测试接口
 					if (transaction.Api.Type != "TestApi") {
-						throw new HttpException(400,
+						throw new ForbiddenException(
 							new T("Use test api to pay transaction created with other api type is not allowed"));
 					}
 					// 检查当前登录用户是否可支付
 					var result = transaction.Check(c => c.IsPayerLoggedIn);
 					if (!result.First) {
-						throw new HttpException(400, result.Second);
+						throw new ForbiddenException(result.Second);
 					}
 					Transaction = transaction;
 				});

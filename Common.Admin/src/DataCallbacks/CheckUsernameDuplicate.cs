@@ -1,8 +1,8 @@
 ﻿using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.DataCallbacks {
 	/// <summary>
@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.DataCallbacks {
 	public class CheckUsernameDuplicate : IDataSaveCallback<User> {
 		public void BeforeSave(DatabaseContext context, User data) {
 			if (data.Id <= 0 && context.Count<User>(u => u.Username == data.Username) > 0) {
-				throw new HttpException(400, new T("Username is already taken, please choose other username"));
+				throw new BadRequestException(new T("Username is already taken, please choose other username"));
 			}
 		}
 

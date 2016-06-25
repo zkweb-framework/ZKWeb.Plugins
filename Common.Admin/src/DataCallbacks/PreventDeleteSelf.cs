@@ -2,8 +2,8 @@
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.DataCallbacks {
 	/// <summary>
@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.DataCallbacks {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
 			if (data.Deleted && session.ReleatedId == data.Id) {
-				throw new HttpException(400, new T("Delete yourself is not allowed"));
+				throw new BadRequestException(new T("Delete yourself is not allowed"));
 			}
 		}
 
@@ -26,7 +26,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.DataCallbacks {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
 			if (session.ReleatedId == data.Id) {
-				throw new HttpException(400, new T("Delete yourself is not allowed"));
+				throw new BadRequestException(new T("Delete yourself is not allowed"));
 			}
 		}
 	}

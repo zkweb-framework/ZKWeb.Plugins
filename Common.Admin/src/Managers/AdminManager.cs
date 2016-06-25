@@ -9,6 +9,7 @@ using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Web;
 using ZKWebStandard.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>
@@ -25,7 +26,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			var user = userManager.FindUser(username);
 			// 用户不存在或密码错误时抛出例外
 			if (user == null || !user.CheckPassword(password)) {
-				throw new HttpException(401, new T("Incorrect username or password"));
+				throw new ForbiddenException(new T("Incorrect username or password"));
 			}
 			// 当前没有任何管理员时，把这个用户设置为超级管理员
 			UnitOfWork.WriteData<User>(r => {
@@ -36,7 +37,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			});
 			// 只允许管理员或合作伙伴登陆到后台
 			if (!UserTypesGroup.AdminOrParter.Contains(user.Type)) {
-				throw new HttpException(401, new T("Sorry, You have no privileges to use admin panel."));
+				throw new ForbiddenException(new T("Sorry, You have no privileges to use admin panel."));
 			}
 			// 以指定用户登录
 			userManager.LoginWithUser(user, rememberLogin);

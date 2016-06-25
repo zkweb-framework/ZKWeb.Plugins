@@ -10,7 +10,7 @@
 			],
 			OrderParameters: {
 				ShippingAddress: { Country: 国家Id, RegionId: 地区Id, ... },
-				LogisticsWithSeller: [{ SellerId: 卖家Id, LogisticsId: 物流Id }, ...]
+				SellerToLogistics: { SellerId: LogisticsId, ... },
 				PaymentApiId: 支付接口Id,
 				CartProducts: { 购物车商品Id: 数量, ... }
 				...
@@ -36,7 +36,7 @@
 				availableLogistics: {
 					卖家Id: [ { logisticsId: 物流Id, costString: 运费字符串 }, ... ]
 				},
-				availablePaymentApi: [ { paymentApiId: 支付接口Id }, ... ]
+				availablePaymentApis: [ { apiId: 支付接口Id, feeString: 手续费字符串 }, ... ]
 			}
 		}
 		失败时的格式 { error: "错误信息" }
@@ -66,14 +66,13 @@ $(function () {
 			var $parameter = $(this);
 			var key = $parameter.attr("data-order-parameter");
 			var value = $("<div>").attr("data-val", $parameter.val()).data("val");
-			if (key == "CreateOrderProductParametersList") {
+			if (key === "CreateOrderProductParametersList") {
 				createOrderParameters.OrderProductParametersList = value;
 			} else {
 				createOrderParameters.OrderParameters[key] = value;
 			}
 		});
 		// 保存订单创建参数并触发改变事件
-		console.log(createOrderParameters);
 		$cartContainer.data("createOrderParameters", createOrderParameters);
 		$cartContainer.trigger(createOrderParametersChangeEventName);
 	});
@@ -87,5 +86,63 @@ $(function () {
 
 /* 计算价格 */
 $(function () {
+	// 绑定计算价格的事件
+	var $cartContainer = $(".cart-container");
+	var $cartProductTotalPrice = $cartContainer.find(".cart-product-total .total-price > em");
+	var $orderPriceDescription = $cartContainer.find(".order-price-description .description");
+	var calculatingHtml = $orderPriceDescription.html();
+	var calcPriceEventName = "calcPrice.cartView";
+	var calcPriceSuccessEventName = "calcPriceSuccess.cartView";
+	var timeStampKey = "lastCalcPriceTimeStamp";
+	var timeoutHandler = null;
+	$cartContainer.on(calcPriceEventName, function () {
+		// 显示计算中。1秒后再处理
+		$cartProductTotalPrice.html(calculatingHtml);
+		$orderPriceDescription.html(calculatingHtml);
+		clearTimeout(timeoutHandler);
+		timeoutHandler = setTimeout(function () {
+			// 获取订单创建参数
+			var createOrderParameters = $cartContainer.data("createOrderParameters");
+			if ($.isEmptyObject(createOrderParameters)) {
+				return;
+			}
+			// 设置时间戳，保证只显示最后一次提交的计算价格
+			var timestamp = Date.now();
+			$cartContainer.data(timeStampKey, timestamp);
+			// 提交到服务端
+			var params = { CreateOrderParameters: JSON.stringify(createOrderParameters) };
+			$.post("/api/cart/calculate_price", params, function (data) {
+				// 判断当前返回的是否最后一次提交的结果
+				if (timestamp !== $cartContainer.data(timeStampKey)) {
+					return;
+				}
+				// 成功时显示价格信息，失败时显示错误信息
+				var priceInfo = data.priceInfo;
+				if (priceInfo) {
+					// 商品总价
+					$cartProductTotalPrice.text(priceInfo.orderProductTotalPriceString);
+					// 订单总价
+					$orderPriceDescription.text(
+						priceInfo.orderPriceDescription + " = " + priceInfo.orderPriceString);
+					// 商品单价
+					// TODO: ...
+					// 物流运费
 
+					// 支付手续费
+
+					// 触发计算价格成功时的事件
+					$cartContainer.data("priceInfo", priceInfo);
+					$cartContainer.trigger(calcPriceSuccessEventName);
+				} else {
+					$orderPriceDescription.text(data.error);
+				}
+			});
+		}, 1000);
+	});
+	// 在订单创建参数改变时触发计算事件
+	$cartContainer.on("createOrderParametersChange.cartView", function () {
+		$cartContainer.trigger(calcPriceEventName);
+	});
+	// 页面载入时触发计算事件
+	$cartContainer.trigger(calcPriceEventName);
 });

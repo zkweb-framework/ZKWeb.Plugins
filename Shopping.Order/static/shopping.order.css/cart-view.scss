@@ -26,6 +26,7 @@
 
 		.table {
 			margin: -1px -1px -1px -1px;
+			min-width: 900px;
 
 			> thead > tr > th {
 				border-bottom: none;
@@ -39,8 +40,8 @@
 			.cart-product .order-product-summary {
 				margin: 0px 0px 0px 4px;
 			}
-			/* 卖家单元格和单价单元格 */
-			.seller, .price {
+			/* 类型, 卖家, 单价单元格 */
+			.type, .seller, .price {
 				font-weight: bold;
 				text-align: center;
 				line-height: 32px;

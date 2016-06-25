@@ -16,6 +16,7 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web;
 using ZKWebStandard.Web;
+using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>
@@ -65,13 +66,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			} else if (privileges != null && privileges.Length > 0) {
 				// 无权限403
 				var translator = Application.Ioc.Resolve<PrivilegesTranslator>();
-				throw new HttpException(403, string.Format(
+				throw new ForbiddenException(string.Format(
 					new T("Action require {0}, and {1} privileges"),
 					string.Join(",", types.Select(t => new T(t.GetDescription()))),
 					string.Join(",", privileges.Select(p => translator.Translate(p)))));
 			} else {
 				// 用户类型不符合，或未登录403
-				throw new HttpException(403, string.Format(
+				throw new ForbiddenException(string.Format(
 					new T("Action require {0}"),
 					string.Join(",", types.Select(t => new T(t.GetDescription())))));
 			}
@@ -111,7 +112,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			if (user == null || !HasOwnership<TData>(user.Id, ids)) {
-				throw new HttpException(403, string.Format(
+				throw new ForbiddenException(string.Format(
 					new T("Action require the ownership of {0}: {1}"),
 					new T(typeof(TData).Name), string.Join(", ", ids)));
 			}

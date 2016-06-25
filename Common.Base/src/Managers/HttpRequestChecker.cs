@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Web;
@@ -19,7 +20,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		public static void RequieAjaxRequest(string errorMessage = null) {
 			var request = HttpManager.CurrentContext.Request;
 			if (!request.IsAjaxRequest()) {
-				throw new HttpException(403, errorMessage ?? "Request required to be ajax request");
+				throw new ForbiddenException(errorMessage ?? "Request required to be ajax request");
 			}
 		}
 	}

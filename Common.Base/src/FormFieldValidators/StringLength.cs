@@ -44,7 +44,7 @@ namespace ZKWeb.Plugins.Common.Base.src.FormFieldValidators {
 			}
 			var attribute = (StringLengthAttribute)validatorAttribute;
 			if (str.Length < attribute.MinimumLength || str.Length > attribute.MaximumLength) {
-				throw new HttpException(400, ErrorMessage(field, attribute));
+				throw new BadRequestException(ErrorMessage(field, attribute));
 			}
 		}
 	}

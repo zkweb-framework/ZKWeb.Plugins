@@ -32,6 +32,18 @@ namespace ZKWeb.Plugins.Shopping.Order.src.TemplateFilters {
 		}
 
 		/// <summary>
+		/// 获取订单商品类型的Html
+		/// </summary>
+		/// <param name="info">订单商品的信息</param>
+		/// <returns></returns>
+		public static HtmlString OrderProductType(object info) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var html = templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_product_type.html", new { info });
+			return new HtmlString(html);
+		}
+
+		/// <summary>
 		/// 获取订单商品价格的Html
 		/// </summary>
 		/// <param name="info">订单商品的信息</param>

@@ -60,7 +60,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 				return r.IsAllClassesTypeEqualTo(ids, Type);
 			});
 			if (!isAllClassesTypeMatched) {
-				throw new HttpException(403, new T("Try to access class that type not matched"));
+				throw new ForbiddenException(new T("Try to access class that type not matched"));
 			}
 			return ids;
 		}
@@ -236,7 +236,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 				if (parent == null) {
 					return null;
 				} else if (parent.Type != Type) {
-					throw new HttpException(403, new T("Try to access class that type not matched"));
+					throw new ForbiddenException(new T("Try to access class that type not matched"));
 				}
 				return parent;
 			}
@@ -254,7 +254,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 					ParentClass = bindFrom.Parent == null ? "" : bindFrom.Parent.Name;
 					// 检查类型，防止越权操作
 					if (bindFrom.Type != Type) {
-						throw new HttpException(403, new T("Try to access class that type not matched"));
+						throw new ForbiddenException(new T("Try to access class that type not matched"));
 					}
 				}
 				Name = bindFrom.Name;
@@ -273,7 +273,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 					saveTo.CreateTime = DateTime.UtcNow;
 				} else if (saveTo.Type != Type) {
 					// 编辑时检查类型，防止越权操作
-					throw new HttpException(403, new T("Try to access class that type not matched"));
+					throw new ForbiddenException(new T("Try to access class that type not matched"));
 				}
 				saveTo.Name = Name;
 				saveTo.DisplayOrder = DisplayOrder;

@@ -112,8 +112,8 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Manager {
 			}
 			// 匹配运费规则
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
-			var regionSettings = Application.Ioc.Resolve<RegionSettings>();
-			var currencySettings = Application.Ioc.Resolve<CurrencySettings>();
+			var regionSettings = configManager.GetData<RegionSettings>();
+			var currencySettings = configManager.GetData<CurrencySettings>();
 			var regionManager = Application.Ioc.Resolve<RegionManager>();
 			country = string.IsNullOrEmpty(country) ? regionSettings.DefaultCountry : country;
 			var matchedRule = logistics.PriceRules.FirstOrDefault(rule => {

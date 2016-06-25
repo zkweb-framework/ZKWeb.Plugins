@@ -82,7 +82,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			UnitOfWork.ReadData<TData>(r => {
 				var data = string.IsNullOrEmpty(id) ? new TData() : r.GetById(id);
 				if (data == null) {
-					throw new HttpException(404, string.Format(new T("Data with id {0} cannot be found"), id));
+					throw new NotFoundException(string.Format(new T("Data with id {0} cannot be found"), id));
 				}
 				OnBind(r.Context, data);
 				Extensions.ForEach(c => c.OnBind((TForm)(object)this, r.Context, data));
@@ -99,7 +99,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 			var result = UnitOfWork.WriteData<TData, object>(r => {
 				var data = string.IsNullOrEmpty(id) ? new TData() : r.GetById(id);
 				if (data == null) {
-					throw new HttpException(404, string.Format(new T("Data with id {0} cannot be found"), id));
+					throw new NotFoundException(string.Format(new T("Data with id {0} cannot be found"), id));
 				}
 				// 保存时的处理
 				object formResult = null;

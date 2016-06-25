@@ -123,7 +123,18 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		[Action("api/cart/calculate_price", HttpMethods.POST)]
 		public IActionResult CalculatePrice() {
 			HttpRequestChecker.RequieAjaxRequest();
-			throw new NotImplementedException();
+			var createOrderParameters = HttpManager.CurrentContext.Request
+				.Get<CreateOrderParameters>("CreateOrderParameters") ?? new CreateOrderParameters();
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var session = sessionManager.GetSession();
+			createOrderParameters.UserId = session.ReleatedId;
+			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
+			try {
+				var info = cartProductManager.GetCartCalculatePriceApiInfo(createOrderParameters);
+				return new JsonResult(new { priceInfo = info });
+			} catch (Exception ex) {
+				return new JsonResult(new { error = ex.Message });
+			}
 		}
 
 		/// <summary>

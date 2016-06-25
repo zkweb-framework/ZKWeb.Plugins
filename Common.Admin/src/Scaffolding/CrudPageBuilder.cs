@@ -244,7 +244,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 			var action = BatchActions.GetOrDefault(actionName);
 			if (action == null) {
 				// 找不到对应的操作
-				throw new HttpException(404, string.Format(new T("Action {0} not exist"), actionName));
+				throw new NotFoundException(string.Format(new T("Action {0} not exist"), actionName));
 			}
 			return action();
 		}

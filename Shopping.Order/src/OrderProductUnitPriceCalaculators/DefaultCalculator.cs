@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Currency.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderProductUnitPriceCalaculators {
 	/// <summary>
@@ -26,7 +26,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderProductUnitPriceCalaculators {
 			var currency = currencyManager.GetDefaultCurrency();
 			var product = productManager.GetProduct(parameters.ProductId);
 			if (product == null) {
-				throw new HttpException(400, new T("The product you are try to purchase does not exist."));
+				throw new BadRequestException(new T("The product you are try to purchase does not exist."));
 			}
 			foreach (var data in product.MatchedDatas) {
 				if (data.Price != null && matchers.All(m => m.IsMatched(parameters.MatchParameters, data))) {

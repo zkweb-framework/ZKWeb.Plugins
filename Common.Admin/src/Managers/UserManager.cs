@@ -7,6 +7,7 @@ using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.Base.src.TemplateFilters;
 using ZKWeb.Server;
@@ -104,7 +105,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			// 用户不存在或密码错误时抛出例外
 			var user = FindUser(username);
 			if (user == null || !user.CheckPassword(password)) {
-				throw new HttpException(401, new T("Incorrect username or password"));
+				throw new ForbiddenException(new T("Incorrect username or password"));
 			}
 			// 以指定用户登录
 			LoginWithUser(user, rememberLogin);
@@ -189,13 +190,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// <param name="imageStream">图片数据流</param>
 		public virtual void SaveAvatar(long userId, Stream imageStream) {
 			if (imageStream == null) {
-				throw new HttpException(400, new T("Please select avatar file"));
+				throw new BadRequestException(new T("Please select avatar file"));
 			}
 			Image image;
 			try {
 				image = Image.FromStream(imageStream);
 			} catch {
-				throw new HttpException(400, new T("Parse uploaded image failed"));
+				throw new BadRequestException(new T("Parse uploaded image failed"));
 			}
 			using (image) {
 				var path = GetAvatarStoragePath(userId);
@@ -227,9 +228,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 			UnitOfWork.WriteData<User>(r => {
 				var user = r.GetById(userId);
 				if (user == null) {
-					throw new HttpException(400, new T("User not found"));
+					throw new ForbiddenException(new T("User not found"));
 				} else if (!user.CheckPassword(oldPassword)) {
-					throw new HttpException(400, new T("Incorrect old password"));
+					throw new ForbiddenException(new T("Incorrect old password"));
 				}
 				r.Save(ref user, u => u.SetPassword(newPassword));
 			});

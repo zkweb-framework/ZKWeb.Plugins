@@ -1,8 +1,8 @@
 ﻿using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
+using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Demo.src.DataCallbacks {
 	/// <summary>
@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Demo.src.DataCallbacks {
 
 		public void BeforeSave(DatabaseContext context, User data) {
 			if (data.Username == "test" || data.Username == "demo") {
-				throw new HttpException(400, new T("Edit or delete demo account is not allowed"));
+				throw new ForbiddenException(new T("Edit or delete demo account is not allowed"));
 			}
 		}
 
