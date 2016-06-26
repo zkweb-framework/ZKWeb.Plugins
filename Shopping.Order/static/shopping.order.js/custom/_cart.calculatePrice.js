@@ -53,6 +53,7 @@
 /* 构建订单创建参数 */
 $(function () {
 	var $cartContainer = $(".cart-container");
+	var $createOrderParameters = $cartContainer.find(".btn-submit-order [name='CreateOrderParameters']");
 	var createOrderParametersChangeEventName = "createOrderParametersChange.cartView";
 	var collectCreateOrderParametersEventName = "collectCreateOrderParametersEventName.cartView";
 	$cartContainer.on(collectCreateOrderParametersEventName, function () {
@@ -73,6 +74,7 @@ $(function () {
 			}
 		});
 		// 保存订单创建参数并触发改变事件
+		$createOrderParameters.val(JSON.stringify(createOrderParameters));
 		$cartContainer.data("createOrderParameters", createOrderParameters);
 		$cartContainer.trigger(createOrderParametersChangeEventName);
 	});

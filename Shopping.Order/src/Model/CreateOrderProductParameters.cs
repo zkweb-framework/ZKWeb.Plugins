@@ -18,6 +18,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		public IDictionary<string, object> MatchParameters { get; set; }
 		/// <summary>
 		/// 附加数据
+		/// 计算价格等时可以使用这里传递数据，但创建订单后不会保留
 		/// </summary>
 		public IDictionary<string, object> Extra { get; set; }
 
