@@ -55,7 +55,27 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "ZipCode", "郵便番号" },
 			{ "DetailedAddress", "詳細のアドレス" },
 			{ "Fullname", "フルネーム" },
-			{ "TelOrMobile", "電話/携帯電話" }
+			{ "TelOrMobile", "電話/携帯電話" },
+			{ "SubmitOrder", "注文する" },
+			{ "Calculating...", "計算中..." },
+			{ "Products total count: <em>0</em>", "商品数合計: <em>0</em>" },
+			{ "Products total price: <em>0</em>", "商品価格合計: <em>0</em>" },
+			{ "Shipping Address:", "お届け先の住所:" },
+			{ "Use new address", "新しいアドレスを使う" },
+			{ "Manage shipping address", "お届け先の住所を管理する" },
+			{ "Check this will save or add shipping address",
+				"ここをチェックすると入力した住所を保存できます" },
+			{ "Save shipping address", "お届け先の住所を保存する" },
+			{ "OrderComment", "注文コメント" },
+			{ "Logistics:", "配送方法:" },
+			{ "Logistics([0]):", "配送方法([0]):" },
+			{ "PaymentApi:", "支払方法:" },
+			{ "OrderTransaction", "注文取引" },
+			{ "Order Comment:", "注文コメント:" },
+			{ "Please select the products you want to purchase", "購入したい商品を選択してください" },
+			{ "Selected logistics is not available for this seller", "この販売者は選択した配送方法を利用できません" },
+			{ "Please select logistics", "配送方法を選択してください" },
+			{ "Please select payment api", "支払方法を選択してください" }
 		};
 
 		public bool CanTranslate(string code) {

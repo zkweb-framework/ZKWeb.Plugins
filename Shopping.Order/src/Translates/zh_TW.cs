@@ -51,7 +51,26 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "ZipCode", "郵政編碼" },
 			{ "DetailedAddress", "詳細地址" },
 			{ "Fullname", "姓名" },
-			{ "TelOrMobile", "電話/手機" }
+			{ "TelOrMobile", "電話/手機" },
+			{ "SubmitOrder", "提交訂單" },
+			{ "Calculating...", "計算中..." },
+			{ "Products total count: <em>0</em>", "商品總數量: <em>0</em>" },
+			{ "Products total price: <em>0</em>", "商品總價格: <em>0</em>" },
+			{ "Shipping Address:", "收貨地址:" },
+			{ "Use new address", "使用新地址" },
+			{ "Manage shipping address", "管理收貨地址" },
+			{ "Check this will save or add shipping address", "勾選這裏可以保存現有地址或添加新的地址" },
+			{ "Save shipping address", "保存收貨地址" },
+			{ "OrderComment", "訂單留言" },
+			{ "Logistics:", "物流配送:" },
+			{ "Logistics([0]):", "物流配送([0]):" },
+			{ "PaymentApi:", "支付接口:" },
+			{ "OrderTransaction", "訂單交易" },
+			{ "Order Comment:", "訂單留言:" },
+			{ "Please select the products you want to purchase", "請選擇您想要購買的商品" },
+			{ "Selected logistics is not available for this seller", "該賣家不可使用選擇的物流" },
+			{ "Please select logistics", "請選擇物流" },
+			{ "Please select payment api", "請選擇支付接口" }
 		};
 
 		public bool CanTranslate(string code) {

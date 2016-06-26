@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "The product you are try to purchase does not purchasable.",
 				"당신이 구입하려고하는 제품을 구매할하지 않습니다" },
 			{ "Order count must larger than 0", "주문 횟수해야보다 큰 0" },
-			{ "OrderSettings", "주문 설정" },	
+			{ "OrderSettings", "주문 설정" },
 			{ "BuynowCartProductExpiresDays", "지금 주문 장바구니 제품 일 만료" },
 			{ "NormalCartProductExpiresDays", "일반 장바구니 제품 일 만료" },
 			{ "AutoConfirmOrderAfterDays", "일 후 자동 확인 주문" },
@@ -54,7 +54,27 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "ZipCode", "우편 번호" },
 			{ "DetailedAddress", "주소" },
 			{ "Fullname", "전체 이름" },
-			{ "TelOrMobile", "전화/모바일" }
+			{ "TelOrMobile", "전화/모바일" },
+			{ "SubmitOrder", "주문을 제출" },
+			{ "Calculating...", "계산하는..." },
+			{ "Products total count: <em>0</em>", "항목의 총 수: <em>0</em>" },
+			{ "Products total price: <em>0</em>", "상품 총 가격: <em>0</em>" },
+			{ "Shipping Address:", "배송 주소:" },
+			{ "Use new address", "새 주소" },
+			{ "Manage shipping address", "배송 주소 관리" },
+			{ "Check this will save or add shipping address",
+				"기존 주소를 저장하거나 새 주소를 추가하려면 여기를 확인" },
+			{ "Save shipping address", "저장 배송 주소" },
+			{ "OrderComment", "주문 메시지" },
+			{ "Logistics:", "물류 배송:" },
+			{ "Logistics([0]):", "물류 배송([0]):" },
+			{ "PaymentApi:", "지불 게이트웨이:" },
+			{ "OrderTransaction", "주문 트랜잭션" },
+			{ "Order Comment:", "주문 메시지:" },
+			{ "Please select the products you want to purchase", "당신이 구입하려는 항목을 선택하세요" },
+			{ "Selected logistics is not available for this seller", "판매자 선택된 스트림을 사용할 수 없다" },
+			{ "Please select logistics", "물류를 선택" },
+			{ "Please select payment api", "선택 결제 인터페이스" }
 		};
 
 		public bool CanTranslate(string code) {

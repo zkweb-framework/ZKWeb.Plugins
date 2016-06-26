@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "ProductManage", "商品管理" },
 			{ "Product management for ec site", "オンラインショッピングサイトが使う商品管理機能" },
 			{ "ProductType", "商品タイプ" },
-			{ "RealProduct", "物理的な商品" },
+			{ "RealProduct", "実体のある商品" },
 			{ "VirtualProduct", "バーチャル商品" },
 			{ "ProductState", "商品状態" },
 			{ "OnSale", "発売中" },

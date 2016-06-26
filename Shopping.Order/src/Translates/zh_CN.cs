@@ -52,7 +52,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "DetailedAddress", "详细地址" },
 			{ "Fullname", "姓名" },
 			{ "TelOrMobile", "电话/手机" },
-			// TODO: 以下未翻译到其他语言
 			{ "SubmitOrder", "提交订单" },
 			{ "Calculating...", "计算中..." },
 			{ "Products total count: <em>0</em>", "商品总数量: <em>0</em>" },
