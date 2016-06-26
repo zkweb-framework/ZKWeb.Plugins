@@ -88,16 +88,15 @@ $(function () {
 $(function () {
 	// 绑定计算价格的事件
 	var $cartContainer = $(".cart-container");
-	var $cartProductTotalPrice = $cartContainer.find(".cart-product-total .total-price > em");
 	var $orderPriceDescription = $cartContainer.find(".order-price-description .description");
 	var calculatingHtml = $orderPriceDescription.html();
 	var calcPriceEventName = "calcPrice.cartView";
 	var calcPriceSuccessEventName = "calcPriceSuccess.cartView";
 	var timeStampKey = "lastCalcPriceTimeStamp";
 	var timeoutHandler = null;
+	$cartContainer.data("calculatingHtml", calculatingHtml);
 	$cartContainer.on(calcPriceEventName, function () {
-		// 显示计算中。1秒后再处理
-		$cartProductTotalPrice.html(calculatingHtml);
+		// 显示计算中，1秒后再处理
 		$orderPriceDescription.html(calculatingHtml);
 		clearTimeout(timeoutHandler);
 		timeoutHandler = setTimeout(function () {
@@ -119,17 +118,9 @@ $(function () {
 				// 成功时显示价格信息，失败时显示错误信息
 				var priceInfo = data.priceInfo;
 				if (priceInfo) {
-					// 商品总价
-					$cartProductTotalPrice.text(priceInfo.orderProductTotalPriceString);
 					// 订单总价
 					$orderPriceDescription.text(
 						priceInfo.orderPriceDescription + " = " + priceInfo.orderPriceString);
-					// 商品单价
-					// TODO: ...
-					// 物流运费
-
-					// 支付手续费
-
 					// 触发计算价格成功时的事件
 					$cartContainer.data("priceInfo", priceInfo);
 					$cartContainer.trigger(calcPriceSuccessEventName);

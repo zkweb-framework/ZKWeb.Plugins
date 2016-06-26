@@ -4,6 +4,7 @@
 		支持删除购物车商品（立刻购买时不显示）
 		支持更新商品的购买数量到服务器
 		支持保存购物车商品信息到订单创建参数
+		计算价格完成后刷新商品总价和商品单价
 */
 
 /* 购物车商品的处理 */
@@ -40,11 +41,13 @@ $(function () {
 			// 添加购物车商品关联的商品Id和匹配参数到列表中
 			var productId = $cartProduct.data("product-id");
 			var matchedParameters = $cartProduct.data("matched-parameters") || "{}";
+			var cartProductId = $cartProduct.data("cart-product-id");
 			matchedParameters.OrderCount = parseInt(
 				$cartProduct.find(".order-count input").val()) || 0; // 更新订购数量
 			createOrderProductParametersList.push({
 				ProductId: productId,
-				MatchParameters: matchedParameters
+				MatchParameters: matchedParameters,
+				Extra: { cartProductId: cartProductId }
 			});
 			// 统计购物车商品数量
 			totalCount += matchedParameters.OrderCount;
@@ -97,4 +100,29 @@ $(function () {
 	$cartProducts.attr("data-order-parameter", "CartProducts");
 	// 页面载入时触发改变事件
 	$cartContainer.trigger(cartProductChangeEventName);
+});
+
+/* 购物车商品计算价格的处理 */
+$(function () {
+	// 计算价格完成后刷新商品总价和商品单价
+	var $cartContainer = $(".cart-container");
+	var $cartProductTotalPrice = $cartContainer.find(".cart-product-total .total-price > em");
+	$cartContainer.on("calcPrice.cartView", function () {
+		// 显示计算中
+		$cartProductTotalPrice.html($cartContainer.data("calculatingHtml"));
+	});
+	$cartContainer.on("calcPriceSuccess.cartView", function () {
+		var priceInfo = $cartContainer.data("priceInfo");
+		// 商品总价
+		$cartProductTotalPrice.text(priceInfo.orderProductTotalPriceString);
+		// 商品单价
+		var cartProductMapping = _.indexBy(
+			$cartContainer.find(".cart-product-table .cart-product"),
+			function (elem) { return $(elem).data("cart-product-id"); });
+		_.each(priceInfo.orderProductUnitPrices, function (info) {
+			var $cartProduct = $(cartProductMapping[info.extra.cartProductId]);
+			var $price = $cartProduct.find(".unit-price .price");
+			$price.attr("title", info.description).text(info.priceString);
+		});
+	});
 });

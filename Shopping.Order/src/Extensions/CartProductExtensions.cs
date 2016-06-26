@@ -16,6 +16,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 			var parameters = new CreateOrderProductParameters();
 			parameters.ProductId = cartProduct.Product.Id;
 			parameters.MatchParameters = cartProduct.MatchParameters;
+			parameters.Extra["cartProductId"] = cartProduct.Id;
 			return parameters;
 		}
 

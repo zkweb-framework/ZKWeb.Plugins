@@ -19,7 +19,7 @@ $(function () {
 			function (elem) { return $(elem).data("cart-product-id"); });
 		var anyRealProduct = _.any(cartProducts,
 			function (_, key) { return $(cartProductMapping[key]).data("is-real"); });
-		// 包含实体商品时，显示收货地址表单和物流选择，否则隐藏
+		// 包含实体商品时显示收货地址表单，否则隐藏
 		var $shippingAddress = $cartContainer.find(".shipping-address");
 		anyRealProduct ? $shippingAddress.removeClass("hide") : $shippingAddress.addClass("hide");
 	};

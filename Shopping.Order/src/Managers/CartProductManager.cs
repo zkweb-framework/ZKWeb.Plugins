@@ -133,8 +133,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 		/// <returns></returns>
 		public virtual IList<CartProduct> GetCartProducts(CartProductType type) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			return UnitOfWork.ReadRepository<CartProductRepository, IList<CartProduct>>(
-				r => r.GetManyBySession(sessionManager.GetSession(), type).ToList());
+			return UnitOfWork.ReadRepository<CartProductRepository, IList<CartProduct>>(r =>
+				r.GetManyBySession(sessionManager.GetSession(), type).OrderBy(c => c.Id).ToList());
 		}
 
 		/// <summary>
@@ -259,7 +259,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 				var currency = currencyManager.GetCurrency(productResult.Currency);
 				var priceString = currency.Format(productResult.Parts.Sum());
 				var description = productResult.Parts.GetDescription();
-				orderProductUnitPrices.Add(new { priceString, description });
+				orderProductUnitPrices.Add(new {
+					priceString, description, extra = productParameters.Extra
+				});
 			}
 			// 计算订单总价
 			var orderResult = orderManager.CalculateOrderPrice(parameters);

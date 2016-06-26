@@ -138,6 +138,14 @@
 			padding-bottom: 10px;
 		}
 	}
+	/* 物流或支付接口不可用时的样式 */
+	.radio-list .radio-inline.not-available {
+		text-decoration: line-through;
+
+		em {
+			display: none;
+		}
+	}
 	/* 价格Html */
 	.order-price-description {
 		.description {

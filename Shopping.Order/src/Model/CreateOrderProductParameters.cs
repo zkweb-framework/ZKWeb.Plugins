@@ -16,12 +16,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// 订购数量在OrderCount键下
 		/// </summary>
 		public IDictionary<string, object> MatchParameters { get; set; }
+		/// <summary>
+		/// 附加数据
+		/// </summary>
+		public IDictionary<string, object> Extra { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public CreateOrderProductParameters() {
 			MatchParameters = new Dictionary<string, object>();
+			Extra = new Dictionary<string, object>();
 		}
 	}
 }
