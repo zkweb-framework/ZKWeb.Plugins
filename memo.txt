@@ -65,6 +65,7 @@
 	ok 添加图片管理
 	ok 支持ckeditor上传保存图片
 	ok 底部copyright
+	FileResult需要支持分割下载(Range头)
 	逐步补充插件的单元测试
 	补充插件的文档
 		因为订单的处理比较复杂

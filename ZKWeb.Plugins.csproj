@@ -38,8 +38,8 @@
       <HintPath>packages\CS-Script.bin.3.12.2.1\lib\net45\CSScriptLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DotLiquid, Version=1.0.0.0, Culture=neutral, PublicKeyToken=82e46016ecf9f07c, processorArchitecture=MSIL">
-      <HintPath>packages\DotLiquidForkForZKWeb.1.0.0\lib\NET45\DotLiquid.dll</HintPath>
+    <Reference Include="DotLiquid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\DotLiquidForkForZKWeb.1.0.1\lib\net45\DotLiquid.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -78,11 +78,11 @@
     <Reference Include="System.Speech" />
     <Reference Include="System.Data" />
     <Reference Include="ZKWeb, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ZKWeb.1.0.0-beta-1a\lib\NET45\ZKWeb.dll</HintPath>
+      <HintPath>packages\ZKWeb.1.0.0-beta-2\lib\net45\ZKWeb.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ZKWebStandard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\ZKWeb.1.0.0-beta-1a\lib\NET45\ZKWebStandard.dll</HintPath>
+      <HintPath>packages\ZKWeb.1.0.0-beta-2\lib\net45\ZKWebStandard.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
