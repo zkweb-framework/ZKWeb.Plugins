@@ -15,8 +15,8 @@
 		ok 支持显示文章
 		ok 支持显示文章列表
 	订单功能
-		- 实现购物车
-		- 实现前台收货地址管理
+		ok 实现购物车
+		ok 实现前台收货地址管理
 		实现前台订单管理
 		实现后台订单管理
 	订单扩展功能
@@ -66,10 +66,11 @@
 	ok 支持ckeditor上传保存图片
 	ok 底部copyright
 	FileResult需要支持分割下载(Range头)
-	逐步补充插件的单元测试
+		http://stackoverflow.com/questions/3303029/http-range-header
 	补充插件的文档
 		因为订单的处理比较复杂
 		在开始编写创建订单前应该补充完文档
+	逐步补充插件的单元测试
 	打印和导出xls菜单
 		http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
 	多店铺支持
@@ -87,6 +88,7 @@
 	修复商品总价"204.00000"的显示问题
 	修复Product Total Price204.00000中间没有空格的问题
 	支持用户登录后自动整合登陆前的购物车商品
+	支持商品属性类型"单选框"
 
 零碎任务（疑难）
 	修复Asp.Net Core版本出现502错误的问题
