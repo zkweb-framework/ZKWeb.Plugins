@@ -65,7 +65,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 		/// 获取包含了实体商品的卖家Id列表
 		/// 无卖家的Id等于0
 		/// </summary>
-		/// <param name="parameters">订单商品创建参数</param>
+		/// <param name="parametersList">订单商品创建参数</param>
 		/// <returns></returns>
 		public static IList<long> GetSellerIdsHasRealProducts(
 			this IList<CreateOrderProductParameters> parametersList) {

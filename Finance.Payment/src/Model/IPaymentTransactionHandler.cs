@@ -16,6 +16,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <summary>
 		/// 交易创建后的处理
 		/// </summary>
+		/// <param name="context">数据库上下文</param>
 		/// <param name="transaction">支付交易</param>
 		void OnCreated(DatabaseContext context, PaymentTransaction transaction);
 

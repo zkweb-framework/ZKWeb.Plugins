@@ -75,6 +75,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 使用通用的仓储，并返回处理结果
 		/// </summary>
 		/// <typeparam name="TData">数据类型</typeparam>
+		/// <typeparam name="TResult">结果类型</typeparam>
 		/// <param name="func">工作内容</param>
 		public static TResult ReadData<TData, TResult>(Func<GenericRepository<TData>, TResult> func)
 			where TData : class {
@@ -102,7 +103,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 执行修改数据使用的工作
 		/// 使用通用的仓储，并返回处理结果
 		/// </summary>
-		/// <typeparam name="TData">数据仓储类型</typeparam>
+		/// <typeparam name="TData">数据类型</typeparam>
+		/// <typeparam name="TResult">结果类型</typeparam>
 		/// <param name="func">工作内容</param>
 		public static TResult WriteData<TData, TResult>(Func<GenericRepository<TData>, TResult> func)
 			where TData : class {
@@ -116,7 +118,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 执行读取数据使用的工作
 		/// 使用指定的仓储
 		/// </summary>
-		/// <typeparam name="TData">数据类型</typeparam>
+		/// <typeparam name="TRepository">仓储类型</typeparam>
 		/// <param name="func">工作内容</param>
 		public static void ReadRepository<TRepository>(Action<TRepository> func)
 			where TRepository : IRepository {
@@ -130,7 +132,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 执行读取数据使用的工作
 		/// 使用指定的仓储，并返回处理结果
 		/// </summary>
-		/// <typeparam name="TData">数据类型</typeparam>
+		/// <typeparam name="TRepository">仓储类型</typeparam>
+		/// <typeparam name="TResult">结果类型</typeparam>
 		/// <param name="func">工作内容</param>
 		public static TResult ReadRepository<TRepository, TResult>(Func<TRepository, TResult> func)
 			where TRepository : IRepository {
@@ -144,7 +147,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 执行修改数据使用的工作
 		/// 使用指定的仓储
 		/// </summary>
-		/// <typeparam name="TData">数据仓储类型</typeparam>
+		/// <typeparam name="TRepository">仓储类型</typeparam>
 		/// <param name="func">工作内容</param>
 		public static void WriteRepository<TRepository>(Action<TRepository> func)
 			where TRepository : IRepository {
@@ -158,7 +161,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 执行修改数据使用的工作
 		/// 使用指定的仓储，并返回处理结果
 		/// </summary>
-		/// <typeparam name="TData">数据仓储类型</typeparam>
+		/// <typeparam name="TRepository">仓储类型</typeparam>
+		/// <typeparam name="TResult">结果类型</typeparam>
 		/// <param name="func">工作内容</param>
 		public static TResult WriteRepository<TRepository, TResult>(Func<TRepository, TResult> func)
 			where TRepository : IRepository {

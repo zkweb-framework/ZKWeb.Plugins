@@ -22,7 +22,7 @@ namespace ZKWeb.Plugins.Common.Base.src.TemplateFilters {
 		/// <example>
 		/// {{ "Website Title" | website_title }}
 		/// </example>
-		/// <param name="text">需要翻译的文本</param>
+		/// <param name="title">翻译前的网站标题</param>
 		/// <returns></returns>
 		public static string WebsiteTitle(string title) {
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();

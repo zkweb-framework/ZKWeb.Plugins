@@ -97,7 +97,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// 初始化
 		/// </summary>
 		/// <param name="name">字段名称</param>
-		/// <param name="sources">选项来源，必须继承IListItemProvider</param>
+		/// <param name="source">选项来源，必须继承IListItemProvider</param>
 		public CheckBoxGroupFieldAttribute(string name, Type source) {
 			Name = name;
 			Source = source;
@@ -117,7 +117,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// 初始化
 		/// </summary>
 		/// <param name="name">字段名称</param>
-		/// <param name="sources">选项来源，必须继承IListItemGroupsProvider</param>
+		/// <param name="source">选项来源，必须继承IListItemGroupsProvider</param>
 		public CheckBoxGroupsFieldAttribute(string name, Type source) {
 			Name = name;
 			Source = source;
@@ -251,7 +251,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// 初始化
 		/// </summary>
 		/// <param name="name">字段名称</param>
-		/// <param name="name">字段类型，序列化和反序列化时使用</param>
+		/// <param name="fieldType">字段类型，序列化和反序列化时使用</param>
 		public JsonFieldAttribute(string name, Type fieldType) {
 			Name = name;
 			FieldType = fieldType;

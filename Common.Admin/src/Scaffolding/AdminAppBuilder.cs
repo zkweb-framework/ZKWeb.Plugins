@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	///	public class ExampleApp : AdminAppBuilder[TestData] {
 	///		public override string Name { get { return "ExampleManager"; } }
 	///		public override string Url { get { return "/admin/example"; } }
-	///		protected override IAjaxTableCallback<TestData> GetTableCallback() { return new TableCallback(); }
+	///		protected override IAjaxTableCallback[TestData] GetTableCallback() { return new TableCallback(); }
 	///		protected override FormBuilder GetAddForm() { return new Form(); }
 	///		protected override FormBuilder GetEditForm() { return new Form(); }
 	///		public class TableCallback : IAjaxTableCallback[TestData] { }

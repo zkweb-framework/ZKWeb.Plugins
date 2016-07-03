@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.UnitTest.WebTester.src.AdminApps {
 	/// - 重置测试结果
 	///   ?action=reset_all
 	/// - 运行指定项或全部项
-	///   ?action=start&assembly=name
+	///   ?action=start＆assembly=name
 	///   ?action=start_all
 	/// </summary>
 	[ExportMany]

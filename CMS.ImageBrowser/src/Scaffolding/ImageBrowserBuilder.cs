@@ -218,6 +218,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 			/// 初始化
 			/// </summary>
 			/// <param name="category">图片类别</param>
+			/// <param name="uploadAttribute">上传属性</param>
 			/// <param name="uploadUrl">上传地址</param>
 			public Form(
 				string category, FileUploaderFieldAttribute uploadAttribute, string uploadUrl) {

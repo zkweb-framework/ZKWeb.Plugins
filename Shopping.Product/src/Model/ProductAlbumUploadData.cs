@@ -50,7 +50,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// 初始化，用于绑定
 		/// </summary>
 		/// <param name="productId">商品Id</param>
-		/// <param name="maxIndex">最多检测到的序号</param>
 		public ProductAlbumUploadData(long productId) : this() {
 			// 获取当前相册的图片列表
 			var albumManager = Application.Ioc.Resolve<ProductAlbumManager>();
@@ -101,7 +100,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 				x => albumManager.SetMainAlbumImage(productId, x))) {
 			} else {
 				albumManager.DeleteAlbumImage(productId, null);
-			} 
+			}
 		}
 	}
 }

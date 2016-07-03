@@ -38,8 +38,8 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.UrlFilters {
 	/// / => /
 	/// /user/login => /user/login.html
 	/// /example/view?id=1 => /example/view-1.html
-	/// /example/list?tag=123&class=158 => /example/list-tag-123-class-158.html
-	/// /example/list?key=1-1&class=123 => /example/list-class-123.html?key=1-1
+	/// /example/list?tag=123＆class=158 => /example/list-tag-123-class-158.html
+	/// /example/list?key=1-1＆class=123 => /example/list-class-123.html?key=1-1
 	/// </example>
 	[ExportMany, SingletonReuse]
 	public class PesudoStaticUrlFilter : IUrlFilter {

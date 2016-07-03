@@ -29,6 +29,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 		/// <param name="transactionType">交易类型</param>
 		/// <param name="paymentApiId">支付接口Id</param>
 		/// <param name="amount">交易金额</param>
+		/// <param name="paymentFee">手续费</param>
 		/// <param name="currencyType">货币类型</param>
 		/// <param name="payerId">付款人Id</param>
 		/// <param name="payeeId">收款人Id</param>

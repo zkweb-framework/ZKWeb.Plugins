@@ -163,4 +163,11 @@ $RECYCLE.BIN/
 
 # nuget packages
 packages/
+*.nupkg
+project.lock.json
 
+# publish files
+PublishProfiles/
+
+# User-specific files for aspnet core
+*.xproj.user

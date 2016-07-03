@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Extensions {
 		/// <summary>
 		/// 添加回收站选项
 		/// </summary>
-		/// <param name="items">菜单项列表/param>
+		/// <param name="items">菜单项列表</param>
 		/// <param name="name">名称</param>
 		/// <param name="iconClass">图标的Css类</param>
 		public static void AddRecycleBin(

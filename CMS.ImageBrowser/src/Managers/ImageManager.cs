@@ -79,6 +79,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 		/// <summary>
 		/// 获取图片的本地路径
 		/// </summary>
+		/// <param name="category">图片类别</param>
 		/// <param name="name">名称，不应该带后缀名</param>
 		/// <param name="extensions">后缀名</param>
 		/// <returns></returns>
@@ -89,6 +90,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 		/// <summary>
 		/// 获取图片的网页路径
 		/// </summary>
+		/// <param name="category">图片类别</param>
 		/// <param name="name">名称，不应该带后缀名</param>
 		/// <param name="extensions">后缀名</param>
 		/// <returns></returns>
@@ -100,7 +102,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 		/// <summary>
 		/// 判断图片是否存在
 		/// </summary>
-		/// <param name="category">类别</param>
+		/// <param name="category">图片类别</param>
 		/// <param name="name">名称，不应该带后缀名</param>
 		/// <returns></returns>
 		public virtual bool Exists(string category, string name) {

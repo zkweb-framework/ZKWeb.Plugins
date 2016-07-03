@@ -68,7 +68,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		/// <summary>
 		/// 设置密码
 		/// </summary>
-		/// <param name="password"></param>
 		public static void SetPassword(this User user, string password) {
 			if (string.IsNullOrEmpty(password)) {
 				throw new ArgumentNullException("password");
@@ -79,8 +78,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		/// <summary>
 		/// 检查密码
 		/// </summary>
-		/// <param name="password"></param>
-		/// <returns></returns>
 		public static bool CheckPassword(this User user, string password) {
 			if (user.Password == null || string.IsNullOrEmpty(password)) {
 				return false;

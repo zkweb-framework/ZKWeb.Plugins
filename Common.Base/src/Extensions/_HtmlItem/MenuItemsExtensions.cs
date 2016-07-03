@@ -131,7 +131,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// <param name="iconClass">图标Css类</param>
 		/// <param name="titleTemplate">模态框标题的模板，格式是underscore.js的默认格式，参数传入row</param>
 		/// <param name="urlTemplate">远程链接的模板，格式是underscore.js的默认格式，参数传入row</param>
-		/// <param name="extendParameters">用于覆盖传入给BootstrapDialog.show的参数</param>
+		/// <param name="dialogParameters">用于覆盖传入给BootstrapDialog.show的参数</param>
 		public static void AddRemoteModalForSelectedRow(
 			this List<MenuItem> items, string name, string iconClass,
 			string titleTemplate, string urlTemplate, object dialogParameters = null) {

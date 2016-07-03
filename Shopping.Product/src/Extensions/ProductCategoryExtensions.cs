@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// 顶级类目 > 上级类目 > 类目
 		/// </summary>
 		/// <param name="category">类目</param>
-		/// <param name="spliter">分隔符，默认是" > "</param>
+		/// <param name="delimiter">分隔符，默认是" > "</param>
 		/// <returns></returns>
 		public static string GetFullName(
 			this ITreeNode<ProductCategory> category, string delimiter = " > ") {

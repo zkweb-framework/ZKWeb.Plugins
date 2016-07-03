@@ -113,7 +113,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 返回删除的数量
 		/// 这个函数仅设置Deleted为true，不会从数据库中删除
 		/// </summary>
-		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="ids">Id列表</param>
 		public virtual long BatchDelete(IEnumerable<object> ids) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
@@ -138,7 +137,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 批量恢复
 		/// 返回恢复的数量
 		/// </summary>
-		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="ids">Id列表</param>
 		/// <returns></returns>
 		public virtual long BatchRecover(IEnumerable<object> ids) {
@@ -165,7 +163,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 返回删除的数量
 		/// 这个函数会把数据从数据库中删除
 		/// </summary>
-		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="ids">Id列表</param>
 		/// <returns></returns>
 		public virtual long BatchDeleteForever(IEnumerable<object> ids) {

@@ -17,6 +17,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// 解析提交的字段的值
 		/// </summary>
 		/// <param name="field">表单字段</param>
+		/// <param name="values">值列表</param>
 		/// <returns></returns>
 		object Parse(FormField field, IList<string> values);
 	}

@@ -66,6 +66,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		/// 设置会话最少在指定的时间后过期
 		/// 当前会话的过期时间比指定的时间要晚时不更新当前的过期时间
 		/// </summary>
+		/// <param name="session">会话</param>
 		/// <param name="span">最少在这个时间后过期</param>
 		public static void SetExpiresAtLeast(this Session session, TimeSpan span) {
 			var expires = DateTime.UtcNow + span;

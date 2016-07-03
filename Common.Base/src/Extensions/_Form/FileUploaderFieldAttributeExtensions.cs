@@ -13,6 +13,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// <summary>
 		/// 检查上传的文件
 		/// </summary>
+		/// <param name="attribute">上传属性</param>
 		/// <param name="file">文件对象</param>
 		public static void Check(this FileUploaderFieldAttribute attribute, IHttpPostedFile file) {
 			if (file == null) {

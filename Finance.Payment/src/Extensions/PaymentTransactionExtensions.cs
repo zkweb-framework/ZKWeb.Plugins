@@ -21,6 +21,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Extensions {
 		/// 返回是否满足和文本信息
 		/// </summary>
 		/// <param name="transaction">交易</param>
+		/// <param name="getCheckFunc">获取检查函数的函数</param>
 		/// <returns></returns>
 		public static Pair<bool, string> Check(
 			this PaymentTransaction transaction, Func<IPaymentTransactionChecker, CheckFunc> getCheckFunc) {
