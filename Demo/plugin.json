@@ -1,5 +1,0 @@
-﻿{
-	"Name": "Demo",
-	"Description": "Trun website into demo mode",
-	"Dependencies": [ "Common.Base" ]
-}

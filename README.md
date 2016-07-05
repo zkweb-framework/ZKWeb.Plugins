@@ -3,7 +3,6 @@ This project is for manage plugin files.<br />
 
 Framework: http://github.com/zkweb-framework/ZKWeb<br/>
 Document: http://zkweb-framework.github.io (Chinese only)<br/>
-[![Build status](https://ci.appveyor.com/api/projects/status/7i8s0vji60j8xcqd?svg=true)](https://ci.appveyor.com/project/303248153/zkweb-plugins)
 
 Plugins information:<br/>
 

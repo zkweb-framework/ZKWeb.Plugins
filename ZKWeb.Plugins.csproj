@@ -294,7 +294,6 @@
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelCrudPageBuilder.cs" />
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelFormPageBuilder.cs" />
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelSimplePageBuilder.cs" />
-    <Compile Include="Demo\src\DatabaseInitializeHandlers\DatabaseInitializeHandlerDemo.cs" />
     <Compile Include="Finance.Payment\src\Managers\PaymentApiManager.cs" />
     <Compile Include="Finance.Payment\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Shopping.Logistics\src\Manager\LogisticsManager.cs" />
@@ -459,12 +458,7 @@
     <Content Include="Common.Base\templates\common.base\tmpl.html_item.btn_onclick.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.html_item.btn_link.html" />
     <Content Include="Common.Base\templates\common.base\tmpl.url_pagination.html" />
-    <None Include="Demo\templates\demo.widgets\demo_index.widget" />
     <Content Include="Common.Region\texts\sources.txt" />
-    <Content Include="Demo\templates.mobile\demo.widgets\demo_index.html" />
-    <Content Include="Demo\templates\demo.widgets\demo_index.html" />
-    <None Include="Demo\templates\demo.widgets\demo_nav_menu.widget" />
-    <Content Include="Demo\templates\demo.widgets\demo_nav_menu.html" />
     <Content Include="Shopping.Order\static\shopping.order.css\product-view.css" />
     <Content Include="Shopping.Order\static\shopping.order.js\custom\_productPurchaseButtons.js" />
     <Content Include="Shopping.Order\static\shopping.order.js\product-view.js" />
@@ -764,12 +758,6 @@
     <Compile Include="Common.UserPanel\src\Translates\zh_TW.cs" />
     <Compile Include="Common.UserPanel\src\Translates\zh_CN.cs" />
     <Compile Include="Common.UserPanel\src\UserPanelMenuProviders\UserPanelIndex.cs" />
-    <Compile Include="Demo\src\Plugin.cs" />
-    <Compile Include="Demo\src\DataCallbacks\PreventEditDemoAccount.cs" />
-    <Compile Include="Demo\src\Translates\ja_JP.cs" />
-    <Compile Include="Demo\src\Translates\ko_KR.cs" />
-    <Compile Include="Demo\src\Translates\zh_TW.cs" />
-    <Compile Include="Demo\src\Translates\zh_CN.cs" />
     <Compile Include="Finance.Payment.Alipay\src\Model\AlipayServiceTypes.cs" />
     <Compile Include="Finance.Payment.Alipay\src\PaymentApiHandlers\AlipayApiHandler.cs" />
     <Compile Include="Finance.Payment.Alipay\src\Translates\zh_CN.cs" />
@@ -1354,7 +1342,6 @@
     <None Include="Common.Base\templates\common.base.widgets\logo.widget" />
     <None Include="Common.UserPanel\plugin.json" />
     <None Include="Common.UserContact\plugin.json" />
-    <None Include="Demo\plugin.json" />
     <None Include="Finance.Payment.Alipay\plugin.json" />
     <None Include="Finance.Payment.Tenpay\plugin.json" />
     <None Include="Finance.Payment.WeChat\plugin.json" />
