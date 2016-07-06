@@ -89,9 +89,8 @@
 	修复Product Total Price204.00000中间没有空格的问题
 	支持用户登录后自动整合登陆前的购物车商品
 	支持商品属性类型"单选框"
-
-零碎任务（疑难）
-	修复Asp.Net Core版本出现502错误的问题
+	修复商品规格下拉框出现js错误的问题
+	发布asp.net core时替换%LAUNCHER_PATH%
 
 性能测试结果
 2016-05-27 (i7 Q720 1.6Ghz x 4 core 4 threads, ab -n 2000 -c 8, vmware player 12)
@@ -114,3 +113,7 @@
 	- 首页 0.674ms, 0.688ms, 0.672ms
 	- 商品列表页 0.648ms, 0.770ms, 0.645ms
 	- 商品详情页 0.736ms, 0.756ms, 0.775ms
+2016-07-06 (i7 Q720 1.6Ghz x 4 core 8 threads, ab -n 8000 -c 16, real machine, asp.net)
+	- 首页 0.447ms, 0.430ms, 0.432ms
+	- 商品列表页 0.402ms, 0.408ms, 0.422ms
+	- 商品详情页 0.504ms, 0.506ms, 0.502ms
