@@ -14,7 +14,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			// pageNo = 1, pageSize = 50, linkRange = 2
 			int pageNo = 1;
 			int pageSize = 50;
-			var result = pagination.Paging(ref pageNo, pageSize, query, 2, false);
+			var result = pagination.Paging(ref pageNo, pageSize, query.AsQueryable(), 2, false);
 			Assert.Equals(pageNo, 1);
 			Assert.IsTrueWith(result.SequenceEqual(Enumerable.Range(0, 50)), result);
 			Assert.Equals(pagination.ReachableLastPageNo, 3);
@@ -29,7 +29,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 
 			// pageNo = 2, pageSize = 50; linkRange = 0
 			pageNo = 2;
-			result = pagination.Paging(ref pageNo, pageSize, query, 0, false);
+			result = pagination.Paging(ref pageNo, pageSize, query.AsQueryable(), 0, false);
 			Assert.Equals(pageNo, 2);
 			Assert.IsTrueWith(result.SequenceEqual(Enumerable.Range(50, 50)), result);
 			Assert.Equals(pagination.ReachableLastPageNo, 2);
@@ -43,7 +43,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 
 			// pageNo = 8, pageSize = 50; linkRange = 2
 			pageNo = 8;
-			result = pagination.Paging(ref pageNo, pageSize, query, 2, false);
+			result = pagination.Paging(ref pageNo, pageSize, query.AsQueryable(), 2, false);
 			Assert.Equals(pageNo, 8);
 			Assert.IsTrueWith(result.SequenceEqual(Enumerable.Range(350, 50)), result);
 			Assert.Equals(pagination.ReachableLastPageNo, 10);
@@ -58,7 +58,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 
 			// pageNo = 0x7fffffff, pageSize = 50, linkRange = 2
 			pageNo = 0x7fffffff;
-			result = pagination.Paging(ref pageNo, pageSize, query, 2, false);
+			result = pagination.Paging(ref pageNo, pageSize, query.AsQueryable(), 2, false);
 			Assert.Equals(pageNo, 10);
 			Assert.IsTrueWith(result.SequenceEqual(Enumerable.Range(450, 50)), result);
 			Assert.Equals(pagination.ReachableLastPageNo, 10);
@@ -80,7 +80,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			var request = new AjaxTableSearchRequest() { PageNo = 1, PageSize = 50 };
 			request.Conditions[PaginationExtensions.AjaxTablePaginationLinkRangeKey] = 1;
 			request.Conditions[PaginationExtensions.AjaxTableRequireTotalCountKey] = true;
-			var result = pagination.Paging(request, query);
+			var result = pagination.Paging(request, query.AsQueryable());
 			Assert.Equals(request.PageNo, 1);
 			Assert.IsTrueWith(result.SequenceEqual(Enumerable.Range(0, 50)), result);
 			Assert.Equals(pagination.ReachableLastPageNo, 2);
@@ -91,7 +91,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Tests.Extensions {
 			request.PageNo = 0x7fffffff;
 			request.Conditions[PaginationExtensions.AjaxTablePaginationLinkRangeKey] = 2;
 			request.Conditions[PaginationExtensions.AjaxTableRequireTotalCountKey] = false;
-			result = pagination.Paging(request, query);
+			result = pagination.Paging(request, query.AsQueryable());
 			Assert.Equals(request.PageNo, 10);
 			Assert.IsTrueWith(result.SequenceEqual(Enumerable.Range(450, 50)), result);
 			Assert.Equals(pagination.ReachableLastPageNo, 10);

@@ -77,7 +77,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// <returns></returns>
 		public static IList<TData> Paging<TData>(
 			this Pagination pagination,
-			ref int pageNo, int pageSize, IEnumerable<TData> query,
+			ref int pageNo, int pageSize, IQueryable<TData> query,
 			int? linkRange = null, bool? requireTotalCount = null) {
 			// 设置默认参数
 			var pageIndex = pageNo - 1;
@@ -110,7 +110,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 			//     结果数量151时，可到达的最后一页是4, 不是真正的最后一页
 			//     结果数量150时，可到达的最后一页是4, 是真正的最后一页
 			//     结果数量50时，可到达的最后一页是2，是真正的最后一页
-			int subQueryCount = subQuery.Count();
+			int subQueryCount = subQuery.AsEnumerable().Count();
 			var reachableLastPage = (
 				pageIndex + ((subQueryCount > 0) ? ((subQueryCount - 1) / pageSize) : 0));
 			var reachableLastPageIsLastPage = (
@@ -146,7 +146,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// <param name="query">需要分页的数据</param>
 		/// <returns></returns>
 		public static IList<TData> Paging<TData>(
-			this Pagination pagination, BaseTableSearchRequest request, IEnumerable<TData> query) {
+			this Pagination pagination, BaseTableSearchRequest request, IQueryable<TData> query) {
 			int pageIndex = request.PageNo;
 			int pageSize = request.PageSize;
 			int? linkRange = request.Conditions.GetOrDefault<int?>(AjaxTablePaginationLinkRangeKey);

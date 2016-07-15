@@ -95,7 +95,7 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 				query = query.Where(q => q.Original.Contains(request.Keyword) || q.Translated.Contains(request.Keyword));
 			}
 			var response = new AjaxTableSearchResponse();
-			var result = response.Pagination.Paging(request, query);
+			var result = response.Pagination.Paging(request, query.AsQueryable());
 			response.PageNo = request.PageNo;
 			response.PageSize = request.PageSize;
 			response.Rows.AddRange(result.Select(translation => new Dictionary<string, object>() {

@@ -117,7 +117,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Scaffolding {
 				names = names.Where(name => name.Contains(request.Keyword)).ToList();
 			}
 			var response = new AjaxTableSearchResponse();
-			var result = response.Pagination.Paging(request, names);
+			var result = response.Pagination.Paging(request, names.AsQueryable());
 			// 返回搜索结果
 			response.PageNo = request.PageNo;
 			response.PageSize = request.PageSize;
