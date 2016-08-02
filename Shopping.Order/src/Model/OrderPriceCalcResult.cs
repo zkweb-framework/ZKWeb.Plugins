@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// <summary>
@@ -46,7 +47,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 			/// <param name="delta">影响量</param>
 			public Part(string type, decimal delta) {
 				Type = type;
-				Delta = delta;
+				Delta = delta.Normalize();
 			}
 		}
 	}
