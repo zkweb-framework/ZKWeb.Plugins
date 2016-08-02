@@ -65,11 +65,10 @@
 	ok 添加图片管理
 	ok 支持ckeditor上传保存图片
 	ok 底部copyright
-	FileResult需要支持分割下载(Range头)
+	ok 补充插件的文档
+	延迟 修复商品规格下拉框出现js错误的问题，难以重现
+	延迟 FileResult需要支持分割下载(Range头)
 		http://stackoverflow.com/questions/3303029/http-range-header
-	补充插件的文档
-		因为订单的处理比较复杂
-		在开始编写创建订单前应该补充完文档
 	逐步补充插件的单元测试
 	打印和导出xls菜单
 		http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
@@ -85,7 +84,6 @@
 		是否有数量等于或小于0的商品
 		如果有实体商品，必须选择物流(使用Trait)
 		如果有实体商品，必须填写收货地址(使用Trait)
-	修复商品规格下拉框出现js错误的问题
 	解决部分查询排序时无索引的问题
 	支持订单交易
 	支持订单合并交易，支付完成后显示所有关联订单
