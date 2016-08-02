@@ -55,20 +55,10 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Manager {
 		/// <param name="logisticsId">物流Id</param>
 		/// <returns></returns>
 		public virtual Database.Logistics GetLogistics(long logisticsId) {
-			// 从缓存获取
-			var logistics = LogisticsCache.GetOrDefault(logisticsId);
-			if (logistics != null) {
-				return logistics;
-			}
-			// 从数据库获取
-			UnitOfWork.ReadData<Database.Logistics>(r => {
-				logistics = r.GetByIdWhereNotDeleted(logisticsId);
-				// 保存到缓存
-				if (logistics != null) {
-					LogisticsCache.Put(logisticsId, logistics, LogisticsCacheTime);
-				}
-			});
-			return logistics;
+			return LogisticsCache.GetOrCreate(logisticsId, () =>
+				UnitOfWork.ReadData<Database.Logistics, Database.Logistics>(r => {
+					return r.GetByIdWhereNotDeleted(logisticsId);
+				}), LogisticsCacheTime);
 		}
 
 		/// <summary>
@@ -78,19 +68,11 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Manager {
 		/// <param name="ownerId">所有人Id，传入null时获取后台添加的物流列表</param>
 		/// <returns></returns>
 		public virtual IList<Database.Logistics> GetLogisticsList(long? ownerId) {
-			// 从缓存获取
-			var logisticsList = LogisticsListCache.GetOrDefault(ownerId ?? 0);
-			if (logisticsList != null) {
-				return logisticsList;
-			}
-			// 从数据库获取
-			logisticsList = UnitOfWork.ReadData<Database.Logistics, IList<Database.Logistics>>(r => {
-				return r.GetMany(l => !l.Deleted && l.Owner.Id == ownerId)
-					.OrderBy(l => l.DisplayOrder).ToList();
-			});
-			// 保存到缓存并返回
-			LogisticsListCache.Put(ownerId ?? 0, logisticsList, LogisticsCacheTime);
-			return logisticsList;
+			return LogisticsListCache.GetOrCreate(ownerId ?? 0, () =>
+				UnitOfWork.ReadData<Database.Logistics, IList<Database.Logistics>>(r => {
+					return r.GetMany(l => !l.Deleted && l.Owner.Id == ownerId)
+						.OrderBy(l => l.DisplayOrder).ToList();
+				}), LogisticsCacheTime);
 		}
 
 		/// <summary>

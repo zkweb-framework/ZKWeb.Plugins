@@ -201,22 +201,21 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 					Thread.CurrentThread.CurrentUICulture = cultureInfo;
 					// 构建语音
 					// 参数缓存一定时间，防止多次尝试攻击
-					var prompt = CaptchaAudioPromptCache.GetOrDefault(captcha);
-					if (prompt == null) {
-						prompt = new PromptBuilder();
+					var prompt = CaptchaAudioPromptCache.GetOrCreate(captcha, () => {
+						var builder = new PromptBuilder();
 						var promptRates = new[] { PromptRate.Slow, PromptRate.Medium, PromptRate.Fast };
 						var voiceGenders = new[] { VoiceGender.Male, VoiceGender.Female, VoiceGender.Neutral };
 						var voiceAges = new[] { VoiceAge.Adult, VoiceAge.Child, VoiceAge.Senior, VoiceAge.Teen };
 						foreach (var c in captcha) {
-							prompt.StartVoice(
+							builder.StartVoice(
 								RandomUtils.RandomSelection(voiceGenders),
 								RandomUtils.RandomSelection(voiceAges));
-							prompt.AppendText(c.ToString(), RandomUtils.RandomSelection(promptRates));
-							prompt.AppendBreak(TimeSpan.FromMilliseconds(RandomUtils.RandomInt(50, 450)));
-							prompt.EndVoice();
+							builder.AppendText(c.ToString(), RandomUtils.RandomSelection(promptRates));
+							builder.AppendBreak(TimeSpan.FromMilliseconds(RandomUtils.RandomInt(50, 450)));
+							builder.EndVoice();
 						}
-						CaptchaAudioPromptCache.Put(captcha, prompt, CaptchaAudioPromptCacheTime);
-					}
+						return builder;
+					}, CaptchaAudioPromptCacheTime);
 					// 写入语音到数据流
 					var synthesizer = new SpeechSynthesizer();
 					synthesizer.SetOutputToWaveStream(stream);

@@ -163,20 +163,18 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Managers {
 		public virtual IReadOnlyList<string> Query(string category) {
 			// 获取类别对应的文件夹下的所有图片名称
 			var baseDir = GetImageStorageBasePath(category);
-			var names = ImageNamesCache.GetOrDefault(category);
-			if (names != null) {
-			} else if (!Directory.Exists(baseDir)) {
-				names = new List<string>();
-			} else {
-				names = Directory.EnumerateFiles(baseDir)
-					.Where(path => path.EndsWith(ImageExtension) &&
-						!path.EndsWith(ImageThumbnailExtension))
-					.OrderByDescending(path => File.GetLastWriteTimeUtc(path))
-					.Select(path => Path.GetFileNameWithoutExtension(path))
-					.ToList();
-				ImageNamesCache.Put(category, names, ImageNamesCacheTime);
-			}
-			return names;
+			return ImageNamesCache.GetOrCreate(category, () => {
+				if (!Directory.Exists(baseDir)) {
+					return new List<string>();
+				} else {
+					return Directory.EnumerateFiles(baseDir)
+						.Where(path => path.EndsWith(ImageExtension) &&
+							!path.EndsWith(ImageThumbnailExtension))
+						.OrderByDescending(path => File.GetLastWriteTimeUtc(path))
+						.Select(path => Path.GetFileNameWithoutExtension(path))
+						.ToList();
+				}
+			}, ImageNamesCacheTime);
 		}
 
 		/// <summary>

@@ -3,6 +3,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers;
+using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderPaymentApiProviders {
@@ -17,11 +18,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderPaymentApiProviders {
 		/// </summary>
 		public void GetPaymentApis(long? userId, IList<PaymentApi> apis) {
 			var paymentApiManager = Application.Ioc.Resolve<PaymentApiManager>();
-			// TODO: 下个版本改成AddRange
-			foreach (var api in paymentApiManager.GetPaymentApis(
-				null, OrderTransactionHandler.ConstType)) {
-				apis.Add(api);
-			}
+			apis.AddRange(paymentApiManager.GetPaymentApis(
+				null, OrderTransactionHandler.ConstType));
 		}
 	}
 }

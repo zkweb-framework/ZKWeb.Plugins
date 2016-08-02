@@ -2,6 +2,7 @@
 using ZKWeb.Plugins.Shopping.Order.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderShippingAddressProviders {
@@ -15,11 +16,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderShippingAddressProviders {
 		/// 获取用户添加的收货地址
 		/// </summary>
 		public void GetShippingAddresses(long? userId, IList<UserShippingAddress> addresses) {
-			// TODO: 下个版本改成AddRange
 			var shippingAddressManager = Application.Ioc.Resolve<UserShippingAddressManager>();
-			foreach (var address in shippingAddressManager.GetShippingAddresses(userId)) {
-				addresses.Add(address);
-			}
+			addresses.AddRange(shippingAddressManager.GetShippingAddresses(userId));
 		}
 	}
 }

@@ -4,6 +4,7 @@ using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderLogisticsProviders {
+	using ZKWebStandard.Extensions;
 	using Logistics = Logistics.src.Database.Logistics;
 
 	/// <summary>
@@ -17,14 +18,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderLogisticsProviders {
 		/// </summary>
 		public void GetLogisticsList(long? userId, long? sellerId, IList<Logistics> logisticsList) {
 			var logisticsManager = Application.Ioc.Resolve<LogisticsManager>();
-			// TODO: 下个版本改成AddRange
-			foreach (var logistics in logisticsManager.GetLogisticsList(null)) {
-				logisticsList.Add(logistics);
-			}
+			logisticsList.AddRange(logisticsManager.GetLogisticsList(null));
 			if (sellerId != null) {
-				foreach (var logistics in logisticsManager.GetLogisticsList(sellerId)) {
-					logisticsList.Add(logistics);
-				}
+				logisticsList.AddRange(logisticsManager.GetLogisticsList(sellerId));
 			}
 		}
 	}

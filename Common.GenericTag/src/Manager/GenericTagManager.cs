@@ -47,20 +47,10 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Manager {
 		/// <param name="tagId">标签Id</param>
 		/// <returns></returns>
 		public virtual Database.GenericTag GetTag(long tagId) {
-			// 从缓存获取
-			var tag = TagCache.GetOrDefault(tagId);
-			if (tag != null) {
-				return tag;
-			}
-			// 从数据库获取
-			UnitOfWork.ReadData<Database.GenericTag>(r => {
-				tag = r.GetByIdWhereNotDeleted(tagId);
-				// 保存到缓存
-				if (tag != null) {
-					TagCache.Put(tagId, tag, TagCacheTime);
-				}
-			});
-			return tag;
+			return TagCache.GetOrCreate(tagId, () =>
+				UnitOfWork.ReadData<Database.GenericTag, Database.GenericTag>(r => {
+					return r.GetByIdWhereNotDeleted(tagId);
+				}), TagCacheTime);
 		}
 
 		/// <summary>
@@ -70,19 +60,11 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Manager {
 		/// <param name="type">标签类型</param>
 		/// <returns></returns>
 		public virtual IList<Database.GenericTag> GetTags(string type) {
-			// 从缓存获取
-			var tags = TagListCache.GetOrDefault(type);
-			if (tags != null) {
-				return tags;
-			}
-			// 从数据库获取
-			tags = UnitOfWork.ReadData<Database.GenericTag, IList<Database.GenericTag>>(r => {
-				return r.GetMany(c => c.Type == type && !c.Deleted)
-					.OrderBy(t => t.DisplayOrder).ToList();
-			});
-			// 保存到缓存并返回
-			TagListCache.Put(type, tags, TagCacheTime);
-			return tags;
+			return TagListCache.GetOrCreate(type, () =>
+				UnitOfWork.ReadData<Database.GenericTag, IList<Database.GenericTag>>(r => {
+					return r.GetMany(c => c.Type == type && !c.Deleted)
+						.OrderBy(t => t.DisplayOrder).ToList();
+				}), TagCacheTime);
 		}
 
 		/// <summary>

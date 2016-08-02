@@ -53,20 +53,10 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 		/// <param name="apiId">支付接口的Id</param>
 		/// <returns></returns>
 		public virtual PaymentApi GetPaymentApi(long apiId) {
-			// 从缓存获取
-			var api = PaymentApiCache.GetOrDefault(apiId);
-			if (api != null) {
-				return api;
-			}
-			// 从数据库获取
-			UnitOfWork.ReadData<PaymentApi>(r => {
-				api = r.GetByIdWhereNotDeleted(apiId);
-				// 保存到缓存
-				if (api != null) {
-					PaymentApiCache.Put(apiId, api, PaymentApiCacheTime);
-				}
-			});
-			return api;
+			return PaymentApiCache.GetOrCreate(apiId, () =>
+				UnitOfWork.ReadData<PaymentApi, PaymentApi>(r => {
+					return r.GetByIdWhereNotDeleted(apiId);
+				}), PaymentApiCacheTime);
 		}
 
 		/// <summary>
@@ -77,21 +67,13 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 		/// <param name="transactionType">交易类型</param>
 		/// <returns></returns>
 		public virtual IList<PaymentApi> GetPaymentApis(long? ownerId, string transactionType) {
-			// 从缓存获取
 			var key = Pair.Create(ownerId ?? 0, transactionType);
-			var apis = PaymentApisCache.GetOrDefault(key);
-			if (apis != null) {
-				return apis;
-			}
-			// 从数据库获取
-			apis = UnitOfWork.ReadData<PaymentApi, List<PaymentApi>>(r => {
-				return r.GetMany(a => a.Owner.Id == ownerId && !a.Deleted)
-					.OrderBy(a => a.DisplayOrder).ToList()
-					.Where(a => a.SupportTransactionTypes.Contains(transactionType)).ToList();
-			});
-			// 保存到缓存
-			PaymentApisCache.Put(key, apis, PaymentApiCacheTime);
-			return apis;
+			return PaymentApisCache.GetOrCreate(key, () =>
+				UnitOfWork.ReadData<PaymentApi, List<PaymentApi>>(r => {
+					return r.GetMany(a => a.Owner.Id == ownerId && !a.Deleted)
+						.OrderBy(a => a.DisplayOrder).ToList()
+						.Where(a => a.SupportTransactionTypes.Contains(transactionType)).ToList();
+				}), PaymentApiCacheTime);
 		}
 
 		/// <summary>

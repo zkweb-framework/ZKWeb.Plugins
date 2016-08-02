@@ -53,20 +53,10 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 		/// <param name="classId">分类Id</param>
 		/// <returns></returns>
 		public virtual Database.GenericClass GetClass(long classId) {
-			// 从缓存获取
-			var classObj = ClassCache.GetOrDefault(classId);
-			if (classObj != null) {
-				return classObj;
-			}
-			// 从数据库获取
-			UnitOfWork.ReadData<Database.GenericClass>(r => {
-				classObj = r.GetByIdWhereNotDeleted(classId);
-				// 保存到缓存
-				if (classObj != null) {
-					ClassCache.Put(classId, classObj, ClassCacheTime);
-				}
-			});
-			return classObj;
+			return ClassCache.GetOrCreate(classId, () =>
+				UnitOfWork.ReadData<Database.GenericClass, Database.GenericClass>(r => {
+					return r.GetByIdWhereNotDeleted(classId);
+				}), ClassCacheTime);
 		}
 
 		/// <summary>
@@ -76,21 +66,13 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 		/// <param name="type">分类类型</param>
 		/// <returns></returns>
 		public virtual IList<Database.GenericClass> GetClasses(string type) {
-			// 从缓存获取
-			var classes = ClassListCache.GetOrDefault(type);
-			if (classes != null) {
-				return classes;
-			}
-			// 从数据库获取
-			classes = UnitOfWork.ReadData<Database.GenericClass, IList<Database.GenericClass>>(r => {
-				return r.GetMany(c => c.Type == type && !c.Deleted)
-					.OrderBy(c => c.DisplayOrder)
-					.Select(c => new { c, p = c.Parent }).ToList()
-					.Select(c => c.c).ToList();
-			});
-			// 保存到缓存并返回
-			ClassListCache.Put(type, classes, ClassCacheTime);
-			return classes;
+			return ClassListCache.GetOrCreate(type, () =>
+				UnitOfWork.ReadData<Database.GenericClass, IList<Database.GenericClass>>(r => {
+					return r.GetMany(c => c.Type == type && !c.Deleted)
+						.OrderBy(c => c.DisplayOrder)
+						.Select(c => new { c, p = c.Parent }).ToList()
+						.Select(c => c.c).ToList();
+				}), ClassCacheTime);
 		}
 
 		/// <summary>
@@ -100,19 +82,12 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Manager {
 		/// <param name="type">分类类型</param>
 		/// <returns></returns>
 		public virtual ITreeNode<Database.GenericClass> GetClassTree(string type) {
-			// 从缓存获取
-			var classTree = ClassTreeCache.GetOrDefault(type);
-			if (classTree != null) {
-				return classTree;
-			}
-			// 生成分类树
-			var classes = GetClasses(type);
-			var classMap = classes.ToDictionary(c => c.Id);
-			classTree = TreeUtils.CreateTree(classes,
-				c => c, c => c.Parent == null ? null : classMap.GetOrDefault(c.Parent.Id));
-			// 保存到缓存并返回
-			ClassTreeCache.Put(type, classTree, ClassCacheTime);
-			return classTree;
+			return ClassTreeCache.GetOrCreate(type, () => {
+				var classes = GetClasses(type);
+				var classMap = classes.ToDictionary(c => c.Id);
+				return TreeUtils.CreateTree(classes,
+					c => c, c => c.Parent == null ? null : classMap.GetOrDefault(c.Parent.Id));
+			}, ClassCacheTime);
 		}
 
 		/// <summary>

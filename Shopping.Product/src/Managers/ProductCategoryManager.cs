@@ -55,22 +55,16 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// <param name="categoryId">类目Id</param>
 		/// <returns></returns>
 		public virtual ProductCategory GetCategory(long categoryId) {
-			// 从缓存获取
-			var category = CategoryCache.GetOrDefault(categoryId);
-			if (category != null) {
-				return category;
-			}
-			// 从数据库获取
-			UnitOfWork.ReadData<ProductCategory>(r => {
-				category = r.GetByIdWhereNotDeleted(categoryId);
-				// 同时获取属性信息，并保存到缓存
-				if (category != null) {
-					category.Properties.ToList();
-					category.Properties.SelectMany(p => p.PropertyValues).ToList();
-					CategoryCache.Put(categoryId, category, CategoryCacheTime);
-				}
-			});
-			return category;
+			return CategoryCache.GetOrCreate(categoryId, () =>
+				UnitOfWork.ReadData<ProductCategory, ProductCategory>(r => {
+					var category = r.GetByIdWhereNotDeleted(categoryId);
+					// 同时获取属性信息
+					if (category != null) {
+						category.Properties.ToList();
+						category.Properties.SelectMany(p => p.PropertyValues).ToList();
+					}
+					return category;
+				}), CategoryCacheTime);
 		}
 
 		/// <summary>
@@ -78,18 +72,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// </summary>
 		/// <returns></returns>
 		public virtual IReadOnlyList<ProductCategory> GetCategoryList() {
-			// 从缓存获取
-			var categoryList = CategoryListCache.GetOrDefault(0);
-			if (categoryList != null) {
-				return categoryList;
-			}
-			// 从数据库获取
-			categoryList = UnitOfWork.ReadData<ProductCategory, List<ProductCategory>>(r => {
-				return r.GetMany(c => !c.Deleted).ToList();
-			});
-			// 保存到缓存
-			CategoryListCache.Put(0, categoryList, CategoryCacheTime);
-			return categoryList;
+			return CategoryListCache.GetOrCreate(0, () =>
+				UnitOfWork.ReadData<ProductCategory, List<ProductCategory>>(r => {
+					return r.GetMany(c => !c.Deleted).ToList();
+				}), CategoryCacheTime);
 		}
 
 		/// <summary>
@@ -97,21 +83,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Managers {
 		/// </summary>
 		/// <returns></returns>
 		public virtual IReadOnlyList<ProductProperty> GetPropertyList() {
-			// 从缓存获取
-			var propertyList = PropertyListCache.GetOrDefault(0);
-			if (propertyList != null) {
-				return propertyList;
-			}
-			// 从数据库获取
-			// 按显示顺序 +更新时间排序
-			propertyList = UnitOfWork.ReadData<ProductProperty, List<ProductProperty>>(r => {
-				return r.GetMany(p => !p.Deleted)
-					.OrderBy(p => p.DisplayOrder)
-					.ThenByDescending(p => p.LastUpdated).ToList();
-			});
-			// 保存到缓存
-			PropertyListCache.Put(0, propertyList, CategoryCacheTime);
-			return propertyList;
+			return PropertyListCache.GetOrCreate(0, () =>
+				UnitOfWork.ReadData<ProductProperty, List<ProductProperty>>(r => {
+					return r.GetMany(p => !p.Deleted)
+						.OrderBy(p => p.DisplayOrder)
+						.ThenByDescending(p => p.LastUpdated).ToList();
+				}), CategoryCacheTime);
 		}
 
 		/// <summary>
