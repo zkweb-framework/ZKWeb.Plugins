@@ -32,10 +32,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 				if (isFirst) {
 					isFirst = false;
 					builder.Append(new T(part.Type));
+					builder.Append(" ");
 					builder.Append(part.Delta.ToString());
 				} else {
 					builder.Append((part.Delta >= 0) ? " + " : " - ");
 					builder.Append(new T(part.Type));
+					builder.Append(" ");
 					builder.Append(Math.Abs(part.Delta).ToString());
 				}
 			}
