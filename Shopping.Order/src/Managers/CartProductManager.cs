@@ -126,6 +126,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 		}
 
 		/// <summary>
+		/// 把属于会话的购物车商品整合到用户中
+		/// 用于允许非会员下单时，未登录前添加的商品可以在登录后整合到自身的购物车中
+		/// </summary>
+		public virtual void MergeToUser(string sessionId, long userId) {
+			UnitOfWork.WriteRepository<CartProductRepository>(r => {
+				r.MergeToUser(sessionId, userId);
+			});
+		}
+
+		/// <summary>
 		/// 获取当前会话下的购物车商品列表
 		/// 为了保证数据的实时性，这个函数不使用缓存
 		/// </summary>

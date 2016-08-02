@@ -426,6 +426,7 @@
     <Content Include="Shopping.Order\templates\shopping.order\mini_cart_contents.html" />
     <Content Include="Shopping.Order\templates\shopping.order.widgets\mini_cart_menu.html" />
     <Content Include="Shopping.Order\static\shopping.order.js\cart-minicart.js" />
+    <Compile Include="Shopping.Order\src\UserLoginCallbacks\MergeCartProductsAfterLogin.cs" />
     <Compile Include="Shopping.Order\src\UserPanelPages\OrderManage.cs" />
     <Compile Include="Shopping.Order\src\UserPanelPages\UserShippingAddressManage.cs" />
     <Compile Include="Shopping.Product\src\AdminApps\ProductCategoryManageApp.cs" />

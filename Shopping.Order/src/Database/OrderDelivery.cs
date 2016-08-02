@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// </summary>
 		public virtual long Id { get; set; }
 		/// <summary>
-		/// 发货单编号
+		/// 发货单编号，唯一键
 		/// </summary>
 		public virtual string Serial { get; set; }
 		/// <summary>

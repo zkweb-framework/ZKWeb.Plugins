@@ -113,7 +113,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 		/// <summary>
 		/// 把属于会话的购物车商品整合到用户中
 		/// 用于允许非会员下单时，未登录前添加的商品可以在登陆后整合到登陆后的用户
-		/// 目前不支持合并相同的商品
 		/// </summary>
 		/// <param name="sessionId">会话Id</param>
 		/// <param name="userId">用户Id</param>
@@ -124,9 +123,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 			if (user == null) {
 				throw new ArgumentException("merge cart products failed: user not exist");
 			}
+			var sessionMock = new Session() { Id = sessionId, ReleatedId = userId };
 			foreach (var cartProduct in cartProducts) {
-				var localCopy = cartProduct;
-				Save(ref localCopy, p => { p.BuyerSession = null; p.Buyer = user; });
+				AddOrIncrease(sessionMock,
+					cartProduct.Product.Id, cartProduct.Type, cartProduct.MatchParameters);
+				Delete(cartProduct);
 			}
 		}
 	}
