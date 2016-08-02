@@ -29,6 +29,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 			} else if (property.ControlType == ProductPropertyControlType.CheckBox) {
 				// 多选框
 				templatePath = "shopping.product/property_editor.checkbox.html";
+			} else if (property.ControlType == ProductPropertyControlType.RadioButton) {
+				// 单选按钮
+				templatePath = "shopping.product/property_editor.radiobutton.html";
 			} else if (property.ControlType == ProductPropertyControlType.DropdownList) {
 				// 下拉框
 				templatePath = "shopping.product/property_editor.dropdownlist.html";

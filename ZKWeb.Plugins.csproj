@@ -1097,6 +1097,7 @@
     <Content Include="CMS.CKEditor\static\ckeditor\skins\office2013\images\lock.png" />
     <Content Include="CMS.CKEditor\static\ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="CMS.CKEditor\static\ckeditor\styles.js" />
+    <Content Include="Shopping.Product\templates\shopping.product\property_editor.radiobutton.html" />
     <Content Include="Shopping.Product\templates\shopping.product\tmpl.form.product_matched_data_editor.html" />
     <Content Include="Shopping.Product\templates\shopping.product\tmpl.form.product_to_property_values_editor.html" />
     <Content Include="Shopping.Product\templates\shopping.product\tmpl.form.product_property_values_editor.html" />

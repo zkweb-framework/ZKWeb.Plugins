@@ -84,7 +84,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Translates {
 			{ "ControlType", "控件类型" },
 			{ "TextBox", "文本框" },
 			{ "CheckBox", "多选框" },
-			{ "RadioButton", "单选框" },
+			{ "RadioButton", "单选按钮" },
 			{ "DropdownList", "下拉列表" },
 			{ "EditableDropdownList", "可编辑的下拉列表" },
 			{ "OrderCount", "订购数量" },

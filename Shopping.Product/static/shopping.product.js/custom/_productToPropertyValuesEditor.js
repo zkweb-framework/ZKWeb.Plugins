@@ -62,6 +62,12 @@ $.fn.productToPropertyValuesEditor = function () {
 				// 下拉框，选中值等于属性值
 				var value = _.first(valueMapping[propertyId]);
 				$property.find("select").val(value ? value.propertyValueId : "").change();
+			} else if (propertyType == "radio-button") {
+				// 单选按钮，选中值等于属性值
+				var value = _.first(valueMapping[propertyId]);
+				value && $property.find("input[type='radio']").filter(function () {
+					return $(this).val() == value.propertyValueId;
+				}).prop("checked", true);
 			} else if (propertyType == "editable-dropdown-list") {
 				// 可编辑的下拉框，选中值等于属性值，文本等于名称
 				var value = _.first(valueMapping[propertyId]);
@@ -101,6 +107,12 @@ $.fn.productToPropertyValuesEditor = function () {
 				var $select = $property.find("select");
 				var text = $select.find("option:selected").text().trim(); // 属性值名称
 				var value = $select.val(); // 属性值Id
+				value && values.push({ propertyId: propertyId, propertyValueId: value, name: text });
+			} else if (propertyType == "radio-button") {
+				// 单选按钮，属性等于选中值，选中的文本作为名称
+				var $checkedRadio = $property.find("input[type='radio']:checked");
+				var text = $checkedRadio.parent().text().trim();
+				var value = $checkedRadio.val(); // 属性值Id
 				value && values.push({ propertyId: propertyId, propertyValueId: value, name: text });
 			} else if (propertyType == "editable-dropdown-list") {
 				// 可编辑的下拉框，文本没有编辑过时属性值等于选中值否则等于空，文本框中的文本作为名称

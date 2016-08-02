@@ -12,7 +12,7 @@
 		/// </summary>
 		CheckBox = 1,
 		/// <summary>
-		/// 单选框
+		/// 单选按钮
 		/// </summary>
 		RadioButton = 2,
 		/// <summary>
