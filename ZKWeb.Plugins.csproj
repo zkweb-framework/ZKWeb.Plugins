@@ -325,6 +325,7 @@
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelSimplePageBuilder.cs" />
     <Compile Include="Finance.Payment\src\Managers\PaymentApiManager.cs" />
     <Compile Include="Finance.Payment\src\Model\ExtraConfigKeys.cs" />
+    <Compile Include="Finance.Payment\src\PaymentTransactionHandlers\MergedTransactionHandlerBase.cs" />
     <Compile Include="Shopping.Logistics\src\Manager\LogisticsManager.cs" />
     <Compile Include="Shopping.Logistics\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Shopping.Order\src\AdminApps\OrderManageApp.cs" />
@@ -350,17 +351,20 @@
     <Compile Include="Shopping.Order\src\Model\CreateOrderProductParameters.cs" />
     <Compile Include="Shopping.Order\src\Model\CreateOrderResult.cs" />
     <Compile Include="Shopping.Order\src\Model\ExtraConfigKeys.cs" />
+    <Compile Include="Shopping.Order\src\Model\IOrderCreator.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderLogisticsProvider.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderPaymentApiProvider.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderPriceCalculator.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderProductUnitPriceCalculator.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderShippingAddressProvider.cs" />
     <Compile Include="Shopping.Order\src\Model\OrderProductDisplayInfo.cs" />
+    <Compile Include="Shopping.Order\src\OrderCreators\DefaultOrderCreator.cs" />
     <Compile Include="Shopping.Order\src\OrderLogisticsProviders\DefaultOrderLogisticsProvider.cs" />
     <Compile Include="Shopping.Order\src\OrderPaymentApiProviders\DefaultOrderPaymentApiProvider.cs" />
     <Compile Include="Shopping.Order\src\OrderPriceCalculators\DefaultCalculator.cs" />
     <Compile Include="Shopping.Order\src\OrderProductUnitPriceCalaculators\DefaultCalculator.cs" />
     <Compile Include="Shopping.Order\src\OrderShippingAddressProviders\DefaultOrderShippingAddressProvider.cs" />
+    <Compile Include="Shopping.Order\src\PaymentTransactionHandlers\MergedOrderTransactionHandler.cs" />
     <Compile Include="Shopping.Order\src\PaymentTransactionHandlers\OrderTransactionHandler.cs" />
     <Compile Include="Shopping.Order\src\Plugin.cs" />
     <Compile Include="Shopping.Order\src\Repositories\CartProductRepository.cs" />
@@ -1410,6 +1414,7 @@
     <Analyzer Include="packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

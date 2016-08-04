@@ -148,5 +148,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			providers.ForEach(p => p.GetLogisticsList(userId, sellerId, logisticsList));
 			return logisticsList;
 		}
+
+		/// <summary>
+		/// 创建订单
+		/// </summary>
+		/// <param name="parameters">创建订单的参数</param>
+		/// <returns></returns>
+		public virtual CreateOrderResult CreateOrder(CreateOrderParameters parameters) {
+			var orderCreator = Application.Ioc.Resolve<IOrderCreator>();
+			return orderCreator.CreateOrder(parameters);
+		}
 	}
 }

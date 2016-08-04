@@ -302,6 +302,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 				saveTo.Seller = Seller == null ? null : context.Get<User>(u => u.Username == Seller);
 				saveTo.Remark = Remark;
 				saveTo.LastUpdated = DateTime.UtcNow;
+				if (saveTo.Seller == null && !string.IsNullOrEmpty(Seller)) {
+					throw new NotFoundException(new T("Seller username not exist"));
+				}
 				// 属性规格
 				var categoryRepository = RepositoryResolver.Resolve<ProductCategory>(context);
 				saveTo.Category = Category == null ? null : categoryRepository.GetById(Category);

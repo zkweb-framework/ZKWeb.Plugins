@@ -11,6 +11,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		public IList<long> CreatedOrderIds { get; set; }
 		/// <summary>
 		/// 创建的支付交易Id列表
+		/// 如果有多个，最后一个支付交易应该是合并交易
 		/// </summary>
 		public IList<long> CreatedTransactionIds { get; set; }
 

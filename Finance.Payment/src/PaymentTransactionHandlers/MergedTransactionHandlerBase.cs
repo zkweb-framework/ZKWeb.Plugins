@@ -3,31 +3,25 @@ using ZKWeb.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWebStandard.Collection;
-using ZKWebStandard.Ioc;
 
-namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
+namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 	/// <summary>
-	/// 订单交易处理器
+	/// 合并交易处理器的基类
+	/// 因为合并交易需要安全检查和区分类别
+	/// 这个处理器不注册到容器中，需要继承使用
 	/// </summary>
-	[ExportMany]
-	public class OrderTransactionHandler : IPaymentTransactionHandler {
-		/// <summary>
-		/// 交易类型
-		/// </summary>
-		public string Type { get { return ConstType; } }
-		public const string ConstType = "OrderTransaction";
-
+	public abstract class MergedTransactionHandlerBase {
 		/// <summary>
 		/// 交易创建后
 		/// </summary>
-		public void OnCreated(DatabaseContext context, PaymentTransaction transaction) {
+		public virtual void OnCreated(DatabaseContext context, PaymentTransaction transaction) {
 			throw new NotImplementedException();
 		}
 
 		/// <summary>
 		/// 等待付款时
 		/// </summary>
-		public void OnWaitingPaying(
+		public virtual void OnWaitingPaying(
 			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			throw new NotImplementedException();
 		}
@@ -35,7 +29,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// <summary>
 		/// 担保交易付款后
 		/// </summary>
-		public void OnSecuredPaid(
+		public virtual void OnSecuredPaid(
 			DatabaseContext context, PaymentTransaction transaction,
 			PaymentTransactionState previousState, ref AutoSendGoodsParameters parameters) {
 			throw new NotImplementedException();
@@ -44,7 +38,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// <summary>
 		/// 交易成功时
 		/// </summary>
-		public void OnSuccess(
+		public virtual void OnSuccess(
 			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			throw new NotImplementedException();
 		}
@@ -52,7 +46,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// <summary>
 		/// 交易终止时
 		/// </summary>
-		public void OnAbort(
+		public virtual void OnAbort(
 			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			throw new NotImplementedException();
 		}
@@ -60,7 +54,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// <summary>
 		/// 获取显示交易结果的Html
 		/// </summary>
-		public void GetResultHtml(PaymentTransaction transaction, ref HtmlString html) {
+		public virtual void GetResultHtml(PaymentTransaction transaction, ref HtmlString html) {
 			throw new NotImplementedException();
 		}
 	}
