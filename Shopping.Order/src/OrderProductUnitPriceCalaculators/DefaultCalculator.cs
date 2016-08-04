@@ -5,7 +5,6 @@ using ZKWeb.Plugins.Common.Currency.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
-using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderProductUnitPriceCalaculators {
@@ -21,20 +20,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderProductUnitPriceCalaculators {
 			long? userId, CreateOrderProductParameters parameters, OrderPriceCalcResult result) {
 			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
 			var productManager = Application.Ioc.Resolve<ProductManager>();
-			var matchers = Application.Ioc.ResolveMany<IProductMatchedDataMatcher>();
-			var basePrice = 0M;
-			var currency = currencyManager.GetDefaultCurrency();
 			var product = productManager.GetProduct(parameters.ProductId);
 			if (product == null) {
 				throw new BadRequestException(new T("The product you are try to purchase does not exist."));
 			}
-			foreach (var data in product.MatchedDatas) {
-				if (data.Price != null && matchers.All(m => m.IsMatched(parameters.MatchParameters, data))) {
-					basePrice = data.Price.Value;
-					currency = data.GetCurrency();
-					break;
-				}
-			}
+			var data = product.MatchedDatas
+				.Where(d => d.Price != null)
+				.WhereMatched(parameters.MatchParameters).FirstOrDefault();
+			var basePrice = (data == null) ? 0M : data.Price.Value;
+			var currency = (data == null) ? currencyManager.GetDefaultCurrency() : data.GetCurrency();
 			result.Currency = currency.Type;
 			result.Parts.Add(new OrderPriceCalcResult.Part("ProductUnitPrice", basePrice));
 		}

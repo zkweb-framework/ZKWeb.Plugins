@@ -12,6 +12,18 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 	/// </summary>
 	public static class ProductMatchedDataExtensions {
 		/// <summary>
+		/// 返回匹配的商品匹配数据
+		/// </summary>
+		/// <param name="list">商品匹配数据的列表</param>
+		/// <param name="matchParameters">商品匹配参数</param>
+		/// <returns></returns>
+		public static IEnumerable<ProductMatchedData> WhereMatched(
+			this IEnumerable<ProductMatchedData> list, IDictionary<string, object> matchParameters) {
+			var matchers = Application.Ioc.ResolveMany<IProductMatchedDataMatcher>();
+			return list.Where(data => matchers.All(m => m.IsMatched(matchParameters, data)));
+		}
+
+		/// <summary>
 		/// 获取货币信息
 		/// 没有设置时返回默认货币信息
 		/// </summary>

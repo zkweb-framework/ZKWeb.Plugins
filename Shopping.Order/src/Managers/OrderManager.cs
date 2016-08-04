@@ -87,7 +87,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 			var regionId = shippingAddress.GetOrDefault<long?>("RegionId");
 			// 获取订单商品的总重量
 			var productManager = Application.Ioc.Resolve<ProductManager>();
-			var matchers = Application.Ioc.ResolveMany<IProductMatchedDataMatcher>();
 			var totalWeight = 0M;
 			foreach (var productParameters in parameters.OrderProductParametersList) {
 				var product = productManager.GetProduct(productParameters.ProductId);
@@ -100,12 +99,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 					continue;
 				}
 				var orderCount = productParameters.MatchParameters.GetOrDefault<long>("OrderCount");
-				foreach (var data in product.MatchedDatas) {
-					if (data.Weight != null &&
-						matchers.All(m => m.IsMatched(productParameters.MatchParameters, data))) {
-						totalWeight += checked(totalWeight + data.Weight.Value * orderCount);
-						break;
-					}
+				var data = product.MatchedDatas
+					.Where(d => d.Weight != null)
+					.WhereMatched(productParameters.MatchParameters).FirstOrDefault();
+				if (data != null) {
+					totalWeight = checked(totalWeight + data.Weight.Value * orderCount);
 				}
 			}
 			// 使用物流管理器计算运费

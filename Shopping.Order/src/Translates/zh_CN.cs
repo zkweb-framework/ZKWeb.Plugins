@@ -70,7 +70,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Please select the products you want to purchase", "请选择您想要购买的商品" },
 			{ "Selected logistics is not available for this seller", "该卖家不可使用选择的物流" },
 			{ "Please select logistics", "请选择物流" },
-			{ "Please select payment api", "请选择支付接口" }
+			{ "Please select payment api", "请选择支付接口" },
+			// TODO: 添加翻译
+			{ "Order contains product that not exist or deleted", "订单包含不存在或已删除的商品" },
+			{ "Insufficient stock of product [{0}]", "商品[{0}]的库存不足" },
+			{ "Order contains real products, please select a logistics", "订单包含实体商品，请选择一个物流" },
+			{ "Please provide detailed address", "请提供详细的地址" },
+			{ "Please provide receiver name", "请提供收货人姓名" },
+			{ "Please provide receiver tel or mobile", "请提供收货人电话或手机" }
 		};
 
 		public bool CanTranslate(string code) {

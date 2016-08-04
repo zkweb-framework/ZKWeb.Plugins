@@ -9,6 +9,8 @@ using System.Linq;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Managers;
+using ZKWeb.Plugins.Common.Admin.src.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// <summary>
@@ -25,7 +27,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		public IActionResult CreateOrder() {
 			var orderManager = Application.Ioc.Resolve<OrderManager>();
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var parameters = HttpManager.CurrentContext.Request.Get<CreateOrderParameters>("CreateOrderParameters");
+			var user = sessionManager.GetSession().GetUser();
+			parameters.UserId = (user == null) ? null : (long?)user.Id;
 			var result = orderManager.CreateOrder(parameters);
 			var transactionId = result.CreatedTransactionIds.Last();
 			var paymentUrl = transactionManager.GetPaymentUrl(transactionId);
