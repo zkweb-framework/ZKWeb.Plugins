@@ -78,7 +78,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Please provide detailed address", "请提供详细的地址" },
 			{ "Please provide receiver name", "请提供收货人姓名" },
 			{ "Please provide receiver tel or mobile", "请提供收货人电话或手机" },
-			{ "To create order please login first", "请先登录再创建订单" }
+			{ "To create order please login first", "请先登录再创建订单" },
+			{ "Selected logistics is not allowed to use", "选择的物流并不允许使用，请选择其他物流" },
+			{ "Selected payment api is not allowed to use", "选择的支付接口并不允许使用，请选择其他支付接口" }
 		};
 
 		public bool CanTranslate(string code) {

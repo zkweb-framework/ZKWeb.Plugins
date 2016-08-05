@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using ZKWeb.Plugins.Shopping.Logistics.src.Manager;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderLogisticsProviders {
-	using ZKWebStandard.Extensions;
 	using Logistics = Logistics.src.Database.Logistics;
 
 	/// <summary>
