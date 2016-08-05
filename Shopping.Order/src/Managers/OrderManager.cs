@@ -97,7 +97,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 					// 跳过非实体商品
 					continue;
 				}
-				var orderCount = productParameters.MatchParameters.GetOrDefault<long>("OrderCount");
+				var orderCount = productParameters.MatchParameters.GetOrderCount();
 				var data = product.MatchedDatas
 					.Where(d => d.Weight != null)
 					.WhereMatched(productParameters.MatchParameters).FirstOrDefault();

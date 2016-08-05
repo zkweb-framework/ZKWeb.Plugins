@@ -72,7 +72,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// <summary>
 		/// 附加数据
 		/// </summary>
-		public virtual Dictionary<string, object> ExtraData { get; set; }
+		public virtual PaymentTransactionExtraData ExtraData { get; set; }
 		/// <summary>
 		/// 最后发生的错误
 		/// 没有发生错误时等于空
@@ -99,7 +99,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// 初始化
 		/// </summary>
 		public PaymentTransaction() {
-			ExtraData = new Dictionary<string, object>();
+			ExtraData = new PaymentTransactionExtraData();
 		}
 
 		/// <summary>
@@ -133,7 +133,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 			Map(t => t.ReleatedId).Index("Idx_ReleatedId");
 			Map(t => t.Description).Length(0xffff);
 			Map(t => t.State).Index("Idx_State");
-			Map(t => t.ExtraData).CustomType<JsonSerializedType<Dictionary<string, object>>>();
+			Map(t => t.ExtraData).CustomType<JsonSerializedType<PaymentTransactionExtraData>>();
 			Map(t => t.LastError).Length(0xffff);
 			Map(t => t.CreateTime);
 			Map(t => t.LastUpdated);

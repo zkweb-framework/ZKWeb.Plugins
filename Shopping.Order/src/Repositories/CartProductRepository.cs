@@ -50,9 +50,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 		/// <param name="session">会话</param>
 		/// <param name="productId">商品Id</param>
 		/// <param name="type">购物车商品类型</param>
-		/// <param name="parameters">匹配参数</param>
+		/// <param name="parameters">商品匹配参数</param>
 		public virtual void AddOrIncrease(Session session,
-			long productId, CartProductType type, IDictionary<string, object> parameters) {
+			long productId, CartProductType type, ProductMatchParameters parameters) {
 			// 判断商品是否可以购买（只判断商品本身，不判断规格等匹配参数）
 			var productRepository = RepositoryResolver.Resolve<Product>(Context);
 			var product = productRepository.GetByIdWhereNotDeleted(productId);
@@ -62,7 +62,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 				throw new BadRequestException(new T("The product you are try to purchase does not purchasable."));
 			}
 			// 获取订购数量
-			var orderCount = parameters.GetOrDefault<long>("OrderCount");
+			var orderCount = parameters.GetOrderCount();
 			if (orderCount <= 0) {
 				throw new BadRequestException(new T("Order count must larger than 0"));
 			}
@@ -93,20 +93,21 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Repositories {
 				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 				var orderSettings = configManager.GetData<OrderSettings>();
 				var userRepository = RepositoryResolver.Resolve<User>(Context);
-				var cartProduct = new CartProduct();
-				Save(ref cartProduct, p => {
-					p.Type = type;
-					p.Buyer = userRepository.GetById(session.ReleatedId);
-					p.BuyerSession = (session.ReleatedId > 0) ? null : session.Id;
-					p.Product = product;
-					p.Count = orderCount;
-					p.MatchParameters = new Dictionary<string, object>(parameters);
-					p.CreateTime = DateTime.UtcNow;
-					p.ExpireTime = DateTime.UtcNow.AddDays(
+				var now = DateTime.UtcNow;
+				var cartProduct = new CartProduct() {
+					Type = type,
+					Buyer = userRepository.GetById(session.ReleatedId),
+					BuyerSession = (session.ReleatedId > 0) ? null : session.Id,
+					Product = product,
+					Count = orderCount,
+					MatchParameters = parameters,
+					CreateTime = now,
+					ExpireTime = now.AddDays(
 						(type == CartProductType.Buynow) ?
 						orderSettings.BuynowCartProductExpiresDays :
-						orderSettings.NormalCartProductExpiresDays);
-				});
+						orderSettings.NormalCartProductExpiresDays)
+				};
+				Save(ref cartProduct);
 			}
 		}
 

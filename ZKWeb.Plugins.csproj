@@ -195,6 +195,7 @@
     <Compile Include="Common.Admin\src\Managers\PrivilegeManager.cs" />
     <Compile Include="Common.Admin\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Common.Admin\src\Model\IAdminApp.cs" />
+    <Compile Include="Common.Admin\src\Model\UserItems.cs" />
     <Compile Include="Common.Admin\src\Scaffolding\CrudPageBuilder.cs" />
     <Compile Include="Common.Admin\src\Scaffolding\TabUserOwnedDataEditFormBuilder.cs" />
     <Compile Include="Common.Admin\src\Scaffolding\UserOwnedDataEditFormBuilder.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Common.Base\src\Model\_BaseTable\EntityToTableRow.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\BaseTableSearchRequest.cs" />
     <Compile Include="Common.Base\src\Model\_BaseTable\BaseTableSearchResponse.cs" />
+    <Compile Include="Common.Base\src\Model\_Database\SessionItems.cs" />
     <Compile Include="Common.Base\src\Model\_Exceptions\BadRequestException.cs" />
     <Compile Include="Common.Base\src\Model\_Exceptions\ForbiddenException.cs" />
     <Compile Include="Common.Base\src\Model\_Exceptions\NotFoundException.cs" />
@@ -298,6 +300,7 @@
     <Compile Include="Common.Base\src\TypeTraits\RecyclableTrait.cs" />
     <Compile Include="Common.Captcha\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Common.GenericClass\src\Model\ExtraConfigKeys.cs" />
+    <Compile Include="Common.GenericRecord\src\Model\GenericRecordExtraData.cs" />
     <Compile Include="Common.GenericTag\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Common.MenuPage\src\Extensions\MenuItemGroupExtensions.cs" />
     <Compile Include="Common.MenuPage\src\Model\IMenuPage.cs" />
@@ -325,6 +328,8 @@
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelSimplePageBuilder.cs" />
     <Compile Include="Finance.Payment\src\Managers\PaymentApiManager.cs" />
     <Compile Include="Finance.Payment\src\Model\ExtraConfigKeys.cs" />
+    <Compile Include="Finance.Payment\src\Model\PaymentApiExtraData.cs" />
+    <Compile Include="Finance.Payment\src\Model\PaymentTransactionExtraData.cs" />
     <Compile Include="Finance.Payment\src\PaymentTransactionHandlers\MergedTransactionHandlerBase.cs" />
     <Compile Include="Shopping.Logistics\src\Manager\LogisticsManager.cs" />
     <Compile Include="Shopping.Logistics\src\Model\ExtraConfigKeys.cs" />
@@ -336,6 +341,7 @@
     <Compile Include="Shopping.Order\src\Extensions\CartProductExtensions.cs" />
     <Compile Include="Shopping.Order\src\Extensions\CreateOrderParametersExtensions.cs" />
     <Compile Include="Shopping.Order\src\Extensions\CreateOrderProductParametersExtensions.cs" />
+    <Compile Include="Shopping.Order\src\Extensions\OrderParametersExtensions.cs" />
     <Compile Include="Shopping.Order\src\Extensions\OrderPriceCalcResultExtensions.cs" />
     <Compile Include="Shopping.Order\src\AdminSettingsPages\OrderSettingsForm.cs" />
     <Compile Include="Shopping.Order\src\Extensions\OrderProductDisplayInfoExtensions.cs" />
@@ -357,7 +363,9 @@
     <Compile Include="Shopping.Order\src\Model\IOrderPriceCalculator.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderProductUnitPriceCalculator.cs" />
     <Compile Include="Shopping.Order\src\Model\IOrderShippingAddressProvider.cs" />
+    <Compile Include="Shopping.Order\src\Model\OrderParameters.cs" />
     <Compile Include="Shopping.Order\src\Model\OrderProductDisplayInfo.cs" />
+    <Compile Include="Shopping.Order\src\Model\OrderStateTimes.cs" />
     <Compile Include="Shopping.Order\src\OrderCreators\DefaultOrderCreator.cs" />
     <Compile Include="Shopping.Order\src\OrderLogisticsProviders\DefaultOrderLogisticsProvider.cs" />
     <Compile Include="Shopping.Order\src\OrderPaymentApiProviders\DefaultOrderPaymentApiProvider.cs" />
@@ -437,6 +445,8 @@
     <Compile Include="Shopping.Product\src\AdminApps\ProductPropertyManageApp.cs" />
     <Compile Include="Shopping.Product\src\Config\ProductListSettings.cs" />
     <Compile Include="Shopping.Product\src\Controllers\ApiController.cs" />
+    <Compile Include="Shopping.Product\src\Extensions\ProductMatchedDataConditionsExtensions.cs" />
+    <Compile Include="Shopping.Product\src\Extensions\ProductMatchParametersExtensions.cs" />
     <Compile Include="Shopping.Product\src\Extensions\ProductPropertyValueExtensions.cs" />
     <Compile Include="Shopping.Product\src\FormFieldAttributes\ProductPropertyValuesEditorAttribute.cs" />
     <Compile Include="Shopping.Product\src\FormFieldHandlers\ProductPropertyValuesEditor.cs" />
@@ -522,7 +532,9 @@
     <Content Include="Shopping.Product\templates\shopping.product.widgets\product_details.html" />
     <Compile Include="Shopping.Product\src\Model\IProductMatchParametersComparer.cs" />
     <Compile Include="Shopping.Product\src\Model\IProductMatchParametersDescriptionProvider.cs" />
-    <Compile Include="Shopping.Product\src\Model\ProductToPropertyValueForMatch.cs" />
+    <Compile Include="Shopping.Product\src\Model\ProductMatchedDataAffects.cs" />
+    <Compile Include="Shopping.Product\src\Model\ProductMatchedDataConditions.cs" />
+    <Compile Include="Shopping.Product\src\Model\ProductMatchParameters.cs" />
     <Compile Include="Shopping.Product\src\Model\ProductPropertyValueForEdit.cs" />
     <Compile Include="Shopping.Product\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Shopping.Product\src\Model\IProductMatchedDataMatcher.cs" />

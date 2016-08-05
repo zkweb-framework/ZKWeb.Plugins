@@ -98,8 +98,7 @@ $(function () {
 			if ($selected.length) {
 				properties.push({
 					PropertyId: $property.data("property-id"),
-					PropertyValueId: $selected.data("property-value-id"),
-					PropertyValueName: $selected.attr("title")
+					PropertyValueId: $selected.data("property-value-id")
 				});
 			}
 		});

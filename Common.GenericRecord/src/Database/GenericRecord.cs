@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using ZKWeb.Database.UserTypes;
 using ZKWeb.Plugins.Common.Admin.src.Database;
+using ZKWeb.Plugins.Common.GenericRecord.src.Model;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.GenericRecord.src.Database {
@@ -43,7 +44,14 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Database {
 		/// <summary>
 		/// 附加数据
 		/// </summary>
-		public virtual Dictionary<string, object> ExtraData { get; set; }
+		public virtual GenericRecordExtraData ExtraData { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public GenericRecord() {
+			ExtraData = new GenericRecordExtraData();
+		}
 	}
 
 	/// <summary>
@@ -62,7 +70,7 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Database {
 			Map(r => r.CreateTime);
 			Map(r => r.KeepUntil).Nullable().Index("Idx_KeepUntil");
 			Map(r => r.Content);
-			Map(r => r.ExtraData).CustomType<JsonSerializedType<Dictionary<string, object>>>();
+			Map(r => r.ExtraData).CustomType<JsonSerializedType<GenericRecordExtraData>>();
 		}
 	}
 }

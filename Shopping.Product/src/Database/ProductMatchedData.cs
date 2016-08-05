@@ -1,6 +1,6 @@
 ﻿using FluentNHibernate.Mapping;
-using System.Collections.Generic;
 using ZKWeb.Database.UserTypes;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Database {
@@ -20,11 +20,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		/// <summary>
 		/// 匹配条件
 		/// </summary>
-		public virtual Dictionary<string, object> Conditions { get; set; }
+		public virtual ProductMatchedDataConditions Conditions { get; set; }
 		/// <summary>
 		/// 影响数据
 		/// </summary>
-		public virtual Dictionary<string, object> Affects { get; set; }
+		public virtual ProductMatchedDataAffects Affects { get; set; }
 		/// <summary>
 		/// 价格，等于null时继续匹配下一项
 		/// </summary>
@@ -54,8 +54,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		/// 初始化
 		/// </summary>
 		public ProductMatchedData() {
-			Conditions = new Dictionary<string, object>();
-			Affects = new Dictionary<string, object>();
+			Conditions = new ProductMatchedDataConditions();
+			Affects = new ProductMatchedDataAffects();
 		}
 	}
 
@@ -70,8 +70,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		public ProductMatchedDataMap() {
 			Id(d => d.Id);
 			References(d => d.Product);
-			Map(d => d.Conditions).CustomType<JsonSerializedType<Dictionary<string, object>>>();
-			Map(d => d.Affects).CustomType<JsonSerializedType<Dictionary<string, object>>>();
+			Map(d => d.Conditions).CustomType<JsonSerializedType<ProductMatchedDataConditions>>();
+			Map(d => d.Affects).CustomType<JsonSerializedType<ProductMatchedDataAffects>>();
 			Map(d => d.Price);
 			Map(d => d.PriceCurrency);
 			Map(d => d.Weight);

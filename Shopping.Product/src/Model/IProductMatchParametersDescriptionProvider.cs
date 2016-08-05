@@ -14,6 +14,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// <param name="product">商品Id</param>
 		/// <param name="parameters">商品匹配参数</param>
 		/// <returns></returns>
-		string GetDescription(Database.Product product, IDictionary<string, object> parameters);
+		string GetDescription(Database.Product product, ProductMatchParameters parameters);
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
+using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Server;
 using ZKWebStandard.Extensions;
@@ -15,15 +16,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchedDataMatchers {
 		/// <summary>
 		/// 判断是否匹配
 		/// </summary>
-		public bool IsMatched(IDictionary<string, object> parameters, ProductMatchedData data) {
+		public bool IsMatched(ProductMatchParameters parameters, ProductMatchedData data) {
 			// 获取订购数量的条件
-			var orderCountGE = data.Conditions.GetOrDefault<long?>("OrderCountGE");
+			var orderCountGE = data.Conditions.GetOrderCountGE();
 			if (orderCountGE == null || orderCountGE <= 1) {
 				return true; // 没有指定条件
 			}
 			// 判断订购数量是否大于条件中指定的数量
-			var orderCount = parameters.GetOrDefault<long?>("OrderCount");
-			return (orderCount != null && orderCount.Value >= orderCountGE.Value);
+			var orderCount = parameters.GetOrderCount();
+			return orderCount >= orderCountGE.Value;
 		}
 
 		/// <summary>

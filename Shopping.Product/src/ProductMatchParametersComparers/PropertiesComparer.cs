@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
@@ -16,16 +17,16 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchParametersComparers {
 		/// 判断商品匹配参数是否部分相等
 		/// </summary>
 		public bool IsPartialEqual(
-			IDictionary<string, object> lhs, IDictionary<string, object> rhs) {
-			var propertiesLhs = lhs.GetOrDefault<IList<ProductToPropertyValueForMatch>>("Properties");
-			var propertiesRhs = rhs.GetOrDefault<IList<ProductToPropertyValueForMatch>>("Properties");
+			ProductMatchParameters lhs, ProductMatchParameters rhs) {
+			var propertiesLhs = lhs.GetProperties();
+			var propertiesRhs = rhs.GetProperties();
 			if (propertiesLhs == null && propertiesRhs == null) {
 				return true;
 			} else if (propertiesLhs == null || propertiesRhs == null) {
 				return false;
 			}
 			var disinctCount = propertiesLhs.Concat(propertiesRhs) // 计算并集去除重复后的大小
-				.Select(p => new Pair<long, long?>(p.PropertyId, p.PropertyValueId)).Distinct().Count();
+				.Select(p => new Pair<long, long>(p.PropertyId, p.PropertyValueId)).Distinct().Count();
 			return propertiesLhs.Count == disinctCount && propertiesLhs.Count == propertiesRhs.Count;
 		}
 	}

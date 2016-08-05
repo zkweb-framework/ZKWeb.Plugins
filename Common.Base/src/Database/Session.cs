@@ -1,10 +1,10 @@
 ﻿using FluentNHibernate.Mapping;
 using System;
-using System.Collections.Generic;
 using ZKWebStandard.Utils;
 using ZKWeb.Database.UserTypes;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Common.Base.src.Database {
 	/// <summary>
@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		/// <summary>
 		/// 会话数据
 		/// </summary>
-		public virtual Dictionary<string, object> Items { get; set; }
+		public virtual SessionItems Items { get; set; }
 		/// <summary>
 		/// 会话对应的Ip地址
 		/// </summary>
@@ -47,7 +47,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		/// 初始化
 		/// </summary>
 		public Session() {
-			Items = new Dictionary<string, object>();
+			Items = new SessionItems();
 		}
 	}
 
@@ -88,7 +88,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		public SessionMap() {
 			Id(s => s.Id);
 			Map(s => s.ReleatedId);
-			Map(s => s.Items).CustomType<JsonSerializedType<Dictionary<string, object>>>();
+			Map(s => s.Items).CustomType<JsonSerializedType<SessionItems>>();
 			Map(s => s.IpAddress);
 			Map(s => s.RememberLogin);
 			Map(s => s.Expires).Index("Idx_Expires");

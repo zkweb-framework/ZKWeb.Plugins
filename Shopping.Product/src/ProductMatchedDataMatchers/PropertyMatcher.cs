@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using ZKWeb.Plugins.Shopping.Product.src.Database;
+using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWeb.Server;
 using ZKWebStandard.Extensions;
@@ -14,27 +15,19 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchedDataMatchers {
 	[ExportMany]
 	public class PropertyMatcher : IProductMatchedDataMatcher {
 		/// <summary>
-		/// 属性条件或参数的格式
-		/// </summary>
-		class PropertyCondition {
-			public long PropertyId { get; set; }
-			public long PropertyValueId { get; set; }
-		}
-
-		/// <summary>
 		/// 判断是否匹配
 		/// </summary>
-		public bool IsMatched(IDictionary<string, object> parameters, ProductMatchedData data) {
+		public bool IsMatched(ProductMatchParameters parameters, ProductMatchedData data) {
 			// 获取规格的条件
 			// 格式 [ { PropertyId: ..., PropertyValueId: ... }, ... ]
-			var exceptedProperties = data.Conditions.GetOrDefault<IList<PropertyCondition>>("Properties");
+			var exceptedProperties = data.Conditions.GetProperties();
 			if (exceptedProperties == null || !exceptedProperties.Any()) {
 				return true; // 没有指定条件
 			}
 			// 判断参数中的规格值列表是否包含条件中的所有规格值
 			// 例如 参数 { 颜色: 黑色, 尺码: XXS, 款式: 2013 }, 条件 { 颜色: 黑色, 尺码: XXS }时匹配成功
 			// 参数的格式同上
-			var incomeProperties = parameters.GetOrDefault<IList<PropertyCondition>>("Properties");
+			var incomeProperties = parameters.GetProperties();
 			if (incomeProperties == null || !incomeProperties.Any()) {
 				return false; // 有指定条件，但参数中没有包含任何规格值
 			}

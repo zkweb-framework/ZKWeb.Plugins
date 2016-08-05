@@ -66,10 +66,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 		/// </summary>
 		protected virtual void CheckOrderParameters() {
 			var productManager = Application.Ioc.Resolve<ProductManager>();
-			var sellerToLogisticsId = Parameters.OrderParameters
-				.GetOrDefault<IDictionary<long, long>>("SellerToLogistics") ?? new Dictionary<long, long>();
-			var shippingAddress = Parameters.OrderParameters
-				.GetOrDefault<IDictionary<string, object>>("ShippingAddress") ?? new Dictionary<string, object>();
+			var sellerToLogisticsId = Parameters.OrderParameters.GetSellerToLogistics();
+			var shippingAddress = Parameters.OrderParameters.GetShippingAddress();
 			foreach (var productParameters in Parameters.OrderProductParametersList) {
 				// 检查商品是否存在
 				var product = productManager.GetProduct(productParameters.ProductId);
@@ -77,7 +75,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 					throw new BadRequestException(new T("Order contains product that not exist or deleted"));
 				}
 				// 检查库存是否足够
-				var orderCount = productParameters.MatchParameters.GetOrDefault<long>("OrderCount");
+				var orderCount = productParameters.MatchParameters.GetOrderCount();
 				var data = product.MatchedDatas
 					.Where(d => d.Stock != null)
 					.WhereMatched(productParameters.MatchParameters).FirstOrDefault();
@@ -98,11 +96,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 				}
 				// 如果有实体商品，必须填写收货地址
 				if (!typeTrait.IsReal) {
-				} else if (string.IsNullOrEmpty(shippingAddress.GetOrDefault<string>("DetailedAddress"))) {
+				} else if (string.IsNullOrEmpty(shippingAddress.DetailedAddress)) {
 					throw new BadRequestException(new T("Please provide detailed address"));
-				} else if (string.IsNullOrEmpty(shippingAddress.GetOrDefault<string>("ReceiverName"))) {
+				} else if (string.IsNullOrEmpty(shippingAddress.ReceiverName)) {
 					throw new BadRequestException(new T("Please provide receiver name"));
-				} else if (string.IsNullOrEmpty(shippingAddress.GetOrDefault<string>("ReceiverTel"))) {
+				} else if (string.IsNullOrEmpty(shippingAddress.ReceiverTel)) {
 					throw new BadRequestException(new T("Please provide receiver tel or mobile"));
 				}
 			}
@@ -149,9 +147,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 					OriginalTotalCostCalcResult = orderPrice,
 					CreateTime = now,
 					LastUpdated = now,
-					StateTimes = new Dictionary<OrderState, DateTime>() {
-						{ OrderState.WaitingBuyerPay, now }
-					},
+					StateTimes = new OrderStateTimes() { { OrderState.WaitingBuyerPay, now } }
 				};
 				// 添加关联的订单商品
 				// 这里会重新计算单价，但应该和之前的计算结果一样
@@ -162,8 +158,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 						Order = order,
 						Product = obj.product,
 						MatchParameters = obj.productParameters.MatchParameters,
-						Count = obj.productParameters
-							.MatchParameters.GetOrDefault<long>("OrderCount"),
+						Count = obj.productParameters.MatchParameters.GetOrderCount(),
 						UnitPrice = unitPrice.Parts.Sum(),
 						Currency = unitPrice.Currency,
 						UnitPriceCalcResult = unitPrice,
@@ -174,7 +169,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 					});
 				}
 				// 添加关联的订单留言
-				var comment = Parameters.OrderParameters.GetOrDefault<string>("OrderComment");
+				var comment = Parameters.OrderParameters.GetOrderComment();
 				if (!string.IsNullOrEmpty(comment)) {
 					order.OrderComments.Add(new Database.OrderComment() {
 						Order = order,

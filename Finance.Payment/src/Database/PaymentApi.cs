@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using ZKWeb.Database.UserTypes;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
+using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Database {
@@ -34,7 +35,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// <summary>
 		/// 附加数据
 		/// </summary>
-		public virtual Dictionary<string, object> ExtraData { get; set; }
+		public virtual PaymentApiExtraData ExtraData { get; set; }
 		/// <summary>
 		/// 支持的交易类型列表
 		/// </summary>
@@ -65,7 +66,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// </summary>
 		public PaymentApi() {
 			DisplayOrder = 10000;
-			ExtraData = new Dictionary<string, object>();
+			ExtraData = new PaymentApiExtraData();
 			SupportTransactionTypes = new List<string>();
 		}
 
@@ -99,7 +100,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 			Map(a => a.Name);
 			Map(a => a.Type).Index("Idx_Type");
 			References(a => a.Owner).Nullable();
-			Map(a => a.ExtraData).CustomType<JsonSerializedType<Dictionary<string, object>>>();
+			Map(a => a.ExtraData).CustomType<JsonSerializedType<PaymentApiExtraData>>();
 			Map(a => a.SupportTransactionTypes).CustomType<JsonSerializedType<List<string>>>();
 			Map(a => a.CreateTime);
 			Map(a => a.LastUpdated);

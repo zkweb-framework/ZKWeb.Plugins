@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ZKWeb.Plugins.Shopping.Product.src.Model {
+﻿namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 	/// <summary>
 	/// 商品关联的匹配数据，用于反序列化客户端传回的值
 	/// 编辑商品时使用
@@ -41,18 +39,18 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// <summary>
 		/// 匹配条件
 		/// </summary>
-		public Dictionary<string, object> Conditions { get; set; }
+		public ProductMatchedDataConditions Conditions { get; set; }
 		/// <summary>
 		/// 影响的数据
 		/// </summary>
-		public Dictionary<string, object> Affects { get; set; }
+		public ProductMatchedDataAffects Affects { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public ProductMatchedDataForEdit() {
-			Conditions = new Dictionary<string, object>();
-			Affects = new Dictionary<string, object>();
+			Conditions = new ProductMatchedDataConditions();
+			Affects = new ProductMatchedDataAffects();
 		}
 	}
 }

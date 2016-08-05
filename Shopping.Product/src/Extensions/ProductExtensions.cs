@@ -65,6 +65,25 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		}
 
 		/// <summary>
+		/// 根据属性参数查找商品的属性
+		/// 属性在属性参数中时返回该属性
+		/// </summary>
+		/// <param name="product">商品</param>
+		/// <param name="properties">商品属性参数</param>
+		/// <returns></returns>
+		public static IEnumerable<ProductToPropertyValue> FindPropertyValuesFromPropertyParameters(
+			this Database.Product product, IList<ProductMatchParametersExtensions.PropertyParameter> properties) {
+			foreach (var propertyValue in product.PropertyValues) {
+				if (propertyValue.PropertyValue != null &&
+					properties.Any(p =>
+						p.PropertyId == propertyValue.Property.Id &&
+						p.PropertyValueId == propertyValue.PropertyValue.Id)) {
+					yield return propertyValue;
+				}
+			}
+		}
+
+		/// <summary>
 		/// 获取商品状态的特征
 		/// </summary>
 		/// <param name="product">商品</param>

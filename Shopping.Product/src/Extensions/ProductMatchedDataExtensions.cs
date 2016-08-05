@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		/// <param name="matchParameters">商品匹配参数</param>
 		/// <returns></returns>
 		public static IEnumerable<ProductMatchedData> WhereMatched(
-			this IEnumerable<ProductMatchedData> list, IDictionary<string, object> matchParameters) {
+			this IEnumerable<ProductMatchedData> list, ProductMatchParameters matchParameters) {
 			var matchers = Application.Ioc.ResolveMany<IProductMatchedDataMatcher>();
 			return list.Where(data => matchers.All(m => m.IsMatched(matchParameters, data)));
 		}

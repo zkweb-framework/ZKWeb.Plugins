@@ -14,6 +14,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// <param name="lhs">商品匹配参数</param>
 		/// <param name="rhs">商品匹配参数</param>
 		/// <returns></returns>
-		bool IsPartialEqual(IDictionary<string, object> lhs, IDictionary<string, object> rhs);
+		bool IsPartialEqual(ProductMatchParameters lhs, ProductMatchParameters rhs);
 	}
 }

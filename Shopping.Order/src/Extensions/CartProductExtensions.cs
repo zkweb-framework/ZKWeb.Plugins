@@ -1,5 +1,6 @@
 ﻿using ZKWeb.Plugins.Shopping.Order.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 	/// <summary>
@@ -42,7 +43,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 		/// <param name="orderCount">订购数量</param>
 		public static void UpdateOrderCount(this CartProduct cartProduct, long orderCount) {
 			cartProduct.Count = orderCount;
-			cartProduct.MatchParameters["OrderCount"] = orderCount;
+			cartProduct.MatchParameters.SetOrderCount(orderCount);
 		}
 	}
 }

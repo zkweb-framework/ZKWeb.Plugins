@@ -1,10 +1,10 @@
 ﻿using FluentNHibernate.Mapping;
 using System;
-using System.Collections.Generic;
 using ZKWeb.Database.UserTypes;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWebStandard.Ioc;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 	using Product = Product.src.Database.Product;
@@ -46,7 +46,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 商品匹配参数
 		/// 包含规格等信息，这里会包含购买数量但不应该使用这里的数量
 		/// </summary>
-		public virtual Dictionary<string, object> MatchParameters { get; set; }
+		public virtual ProductMatchParameters MatchParameters { get; set; }
 		/// <summary>
 		/// 创建时间
 		/// </summary>
@@ -60,7 +60,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 初始化
 		/// </summary>
 		public CartProduct() {
-			MatchParameters = new Dictionary<string, object>();
+			MatchParameters = new ProductMatchParameters();
 		}
 	}
 
@@ -79,7 +79,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 			Map(c => c.BuyerSession).Index("Idx_BuyerSession");
 			References(c => c.Product);
 			Map(c => c.Count);
-			Map(c => c.MatchParameters).CustomType<JsonSerializedType<Dictionary<string, object>>>();
+			Map(c => c.MatchParameters).CustomType<JsonSerializedType<ProductMatchParameters>>();
 			Map(c => c.CreateTime);
 			Map(c => c.ExpireTime).Index("Idx_ExpireTime");
 		}

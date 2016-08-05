@@ -5,6 +5,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
@@ -43,7 +44,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 					throw new BadRequestException(new T("Create order contains multi currency is not supported"));
 				}
 				// 添加到商品总价
-				var orderCount = productParameters.MatchParameters.GetOrDefault<long>("OrderCount");
+				var orderCount = productParameters.MatchParameters.GetOrderCount();
 				if (orderCount <= 0) {
 					throw new BadRequestException(new T("Order count must larger than 0"));
 				}

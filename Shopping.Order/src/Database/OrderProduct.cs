@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using ZKWeb.Database.UserTypes;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
@@ -28,7 +29,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 商品匹配参数
 		/// 包含规格等信息，这里会包含购买数量但不应该使用这里的数量
 		/// </summary>
-		public virtual IDictionary<string, object> MatchParameters { get; set; }
+		public virtual ProductMatchParameters MatchParameters { get; set; }
 		/// <summary>
 		/// 购买数量
 		/// </summary>
@@ -67,7 +68,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 初始化
 		/// </summary>
 		public OrderProduct() {
-			MatchParameters = new Dictionary<string, object>();
+			MatchParameters = new ProductMatchParameters();
 			PropertyValues = new HashSet<OrderProductToPropertyValue>();
 		}
 	}
@@ -84,7 +85,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 			Id(p => p.Id);
 			References(p => p.Order).Not.Nullable();
 			References(p => p.Product).Not.Nullable();
-			Map(p => p.MatchParameters).CustomType<JsonSerializedType<Dictionary<string, object>>>();
+			Map(p => p.MatchParameters).CustomType<JsonSerializedType<ProductMatchParameters>>();
 			Map(p => p.Count);
 			Map(p => p.UnitPrice);
 			Map(p => p.Currency).Not.Nullable();

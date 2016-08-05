@@ -40,7 +40,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 订单参数
 		/// 包含收货地址，选择的物流Id和收款接口Id等
 		/// </summary>
-		public virtual IDictionary<string, object> OrderParameters { get; set; }
+		public virtual OrderParameters OrderParameters { get; set; }
 		/// <summary>
 		/// 当前的订单总金额
 		/// </summary>
@@ -69,7 +69,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// <summary>
 		/// 各个状态的切换时间
 		/// </summary>
-		public virtual IDictionary<OrderState, DateTime> StateTimes { get; set; }
+		public virtual OrderStateTimes StateTimes { get; set; }
 		/// <summary>
 		/// 买家备注
 		/// </summary>
@@ -91,8 +91,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 初始化
 		/// </summary>
 		public Order() {
-			OrderParameters = new Dictionary<string, object>();
-			StateTimes = new Dictionary<OrderState, DateTime>();
+			OrderParameters = new OrderParameters();
+			StateTimes = new OrderStateTimes();
 			OrderProducts = new HashSet<OrderProduct>();
 			OrderComments = new HashSet<OrderComment>();
 		}
@@ -121,14 +121,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 			Map(o => o.BuyerSessionId).Column("BuyerSessionId_").Index("Idx_BuyerSessionId_");
 			References(o => o.Seller);
 			Map(o => o.State);
-			Map(o => o.OrderParameters).CustomType<JsonSerializedType<Dictionary<string, object>>>();
+			Map(o => o.OrderParameters).CustomType<JsonSerializedType<OrderParameters>>();
 			Map(o => o.TotalCost);
 			Map(o => o.Currency).Not.Nullable();
 			Map(o => o.TotalCostCalcResult).CustomType<JsonSerializedType<OrderPriceCalcResult>>();
 			Map(o => o.OriginalTotalCostCalcResult).CustomType<JsonSerializedType<OrderPriceCalcResult>>();
 			Map(o => o.CreateTime);
 			Map(o => o.LastUpdated);
-			Map(o => o.StateTimes).CustomType<JsonSerializedType<Dictionary<OrderState, DateTime>>>();
+			Map(o => o.StateTimes).CustomType<JsonSerializedType<OrderStateTimes>>();
 			Map(o => o.BuyerRemark).Length(0xffff);
 			Map(o => o.SellerRemark).Length(0xffff);
 			HasMany(o => o.OrderProducts).Cascade.AllDeleteOrphan();

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// <summary>
@@ -15,7 +16,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// 商品匹配参数
 		/// 订购数量在OrderCount键下
 		/// </summary>
-		public IDictionary<string, object> MatchParameters { get; set; }
+		public ProductMatchParameters MatchParameters { get; set; }
 		/// <summary>
 		/// 附加数据
 		/// 计算价格等时可以使用这里传递数据，但创建订单后不会保留
@@ -26,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// 初始化
 		/// </summary>
 		public CreateOrderProductParameters() {
-			MatchParameters = new Dictionary<string, object>();
+			MatchParameters = new ProductMatchParameters();
 			Extra = new Dictionary<string, object>();
 		}
 	}

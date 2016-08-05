@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		///		...
 		/// }
 		/// </summary>
-		public IDictionary<string, object> OrderParameters { get; set; }
+		public OrderParameters OrderParameters { get; set; }
 		/// <summary>
 		/// 创建订单商品的参数列表
 		/// </summary>
@@ -37,7 +37,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// 初始化
 		/// </summary>
 		public CreateOrderParameters() {
-			OrderParameters = new Dictionary<string, object>();
+			OrderParameters = new OrderParameters();
 			OrderProductParametersList = new List<CreateOrderProductParameters>();
 		}
 	}

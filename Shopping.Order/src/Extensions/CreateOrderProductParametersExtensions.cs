@@ -9,7 +9,6 @@ using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
-using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 	/// <summary>
@@ -51,7 +50,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 			info.UnitPriceDescription = unitPrice.Parts.GetDescription();
 			info.OriginalUnitPriceString = info.UnitPriceString;
 			info.OriginalUnitPriceDescription = info.UnitPriceDescription;
-			info.Count = parameters.MatchParameters.GetOrDefault<long>("OrderCount");
+			info.Count = parameters.MatchParameters.GetOrderCount();
 			info.SellerId = (product.Seller == null) ? null : (long?)product.Seller.Id;
 			info.Seller = (product.Seller == null) ? null : product.Seller.Username;
 			info.State = product.State;

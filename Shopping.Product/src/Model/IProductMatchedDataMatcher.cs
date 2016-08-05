@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// <param name="parameters">商品匹配参数</param>
 		/// <param name="data">商品匹配数据</param>
 		/// <returns></returns>
-		bool IsMatched(IDictionary<string, object> parameters, ProductMatchedData data);
+		bool IsMatched(ProductMatchParameters parameters, ProductMatchedData data);
 
 		/// <summary>
 		/// 获取使用Javascript判断是否匹配的函数
