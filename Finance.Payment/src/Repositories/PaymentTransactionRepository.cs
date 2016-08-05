@@ -15,7 +15,6 @@ using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 	/// <summary>
@@ -69,7 +68,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 				ReleatedId = releatedId,
 				Description = description,
 				State = PaymentTransactionState.Initial,
-				ExtraData = extraData.ConvertOrDefault<Dictionary<string, object>>(),
+				ExtraData = extraData.ConvertOrDefault<PaymentTransactionExtraData>(),
 				CreateTime = DateTime.UtcNow,
 				LastUpdated = DateTime.UtcNow
 			};

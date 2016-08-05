@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using ZKWeb.Plugins.Shopping.Product.src.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
@@ -16,20 +17,20 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// </summary>
 		public virtual OrderProduct OrderProduct { get; set; }
 		/// <summary>
-		/// 类目Id
+		/// 商品类目
 		/// 从ProductToPropertyValue复制
 		/// </summary>
-		public virtual long CategoryId { get; set; }
+		public virtual ProductCategory Category { get; set; }
 		/// <summary>
-		/// 属性Id
+		/// 商品属性
 		/// 从ProductToPropertyValue复制
 		/// </summary>
-		public virtual long PropertyId { get; set; }
+		public virtual ProductProperty Property { get; set; }
 		/// <summary>
-		/// 属性值Id
+		/// 商品属性值
 		/// 从ProductToPropertyValue复制
 		/// </summary>
-		public virtual long? PropertyValueId { get; set; }
+		public virtual ProductPropertyValue PropertyValue { get; set; }
 		/// <summary>
 		/// 属性值名称
 		/// 从ProductToPropertyValue复制
@@ -48,9 +49,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		public OrderProductToPropertyValueMap() {
 			Id(v => v.Id);
 			References(v => v.OrderProduct).Not.Nullable();
-			Map(v => v.CategoryId).Index("Idx_CategoryId");
-			Map(v => v.PropertyId).Index("Idx_PropertyId");
-			Map(v => v.PropertyValueId).Index("Idx_PropertyValueId");
+			References(v => v.Category);
+			References(v => v.Property);
+			References(v => v.PropertyValue);
 			Map(v => v.PropertyValueName);
 		}
 	}

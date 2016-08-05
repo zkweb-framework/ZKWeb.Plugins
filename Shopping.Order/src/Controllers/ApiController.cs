@@ -15,6 +15,7 @@ using ZKWebStandard.Web;
 using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// <summary>
@@ -66,7 +67,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			HttpRequestChecker.RequieAjaxRequest();
 			var request = HttpManager.CurrentContext.Request;
 			var productId = request.Get<long>("productId");
-			var matchParameters = request.Get<IDictionary<string, object>>("matchParameters");
+			var matchParameters = request.Get<ProductMatchParameters>("matchParameters");
 			var isBuyNow = request.Get<bool>("isBuyNow");
 			var cartProductType = isBuyNow ? CartProductType.Buynow : CartProductType.Default;
 			// 添加购物车商品，抛出无权限错误时跳转到登陆页面

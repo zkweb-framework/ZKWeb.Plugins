@@ -63,7 +63,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 		/// <param name="type">购物车商品类型</param>
 		/// <param name="parameters">匹配参数</param>
 		public virtual void AddCartProduct(
-			long productId, CartProductType type, IDictionary<string, object> parameters) {
+			long productId, CartProductType type, Product.src.Model.ProductMatchParameters parameters) {
 			// 检查是否允许非会员下单
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var settings = configManager.GetData<OrderSettings>();

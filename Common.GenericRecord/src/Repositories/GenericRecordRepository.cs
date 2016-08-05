@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
+using ZKWeb.Plugins.Common.GenericRecord.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -32,7 +33,7 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Repositories {
 				CreateTime = now,
 				KeepUntil = (keepTime == null) ? null : (DateTime?)now.Add(keepTime.Value),
 				Content = content,
-				ExtraData = extraData.ConvertOrDefault<Dictionary<string, object>>()
+				ExtraData = extraData.ConvertOrDefault<GenericRecordExtraData>()
 			};
 			Context.Save(ref record);
 		}

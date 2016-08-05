@@ -154,19 +154,32 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 				foreach (var obj in group) {
 					var unitPrice = orderManager.CalculateOrderProductUnitPrice(
 						Parameters.UserId, obj.productParameters);
-					order.OrderProducts.Add(new Database.OrderProduct() {
+					var orderCount = obj.productParameters.MatchParameters.GetOrderCount();
+					var properties = obj.productParameters.MatchParameters.GetProperties();
+					var orderProduct = new Database.OrderProduct() {
 						Order = order,
 						Product = obj.product,
 						MatchParameters = obj.productParameters.MatchParameters,
-						Count = obj.productParameters.MatchParameters.GetOrderCount(),
+						Count = orderCount,
 						UnitPrice = unitPrice.Parts.Sum(),
 						Currency = unitPrice.Currency,
 						UnitPriceCalcResult = unitPrice,
 						OriginalUnitPriceCalcResult = unitPrice,
 						CreateTime = now,
-						LastUpdated = now,
-						PropertyValues = null
-					});
+						LastUpdated = now
+					};
+					// 添加关联的属性
+					foreach (var productToPropertyValue in obj.product
+						.FindPropertyValuesFromPropertyParameters(properties)) {
+						orderProduct.PropertyValues.Add(new Database.OrderProductToPropertyValue() {
+							OrderProduct = orderProduct,
+							Category = obj.product.Category,
+							Property = productToPropertyValue.Property,
+							PropertyValue = productToPropertyValue.PropertyValue,
+							PropertyValueName = productToPropertyValue.PropertyValueName
+						});
+					}
+					order.OrderProducts.Add(orderProduct);
 				}
 				// 添加关联的订单留言
 				var comment = Parameters.OrderParameters.GetOrderComment();

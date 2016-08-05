@@ -20,10 +20,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductMatchParametersDescriptionPr
 				return null;
 			}
 			var parts = new List<string>();
-			foreach (var propertyValue in product.FindPropertyValuesFromPropertyParameters(properties)) {
+			foreach (var productToPropertyValue in product.FindPropertyValuesFromPropertyParameters(properties)) {
 				parts.Add(string.Format("{0}: {1}",
-					new T(propertyValue.Property.Name),
-					new T(propertyValue.PropertyValueName)));
+					new T(productToPropertyValue.Property.Name),
+					new T(productToPropertyValue.PropertyValueName)));
 			}
 			return string.Join(" ", parts);
 		}
