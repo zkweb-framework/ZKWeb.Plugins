@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Database;
 using ZKWeb.Localize;
@@ -9,6 +10,7 @@ using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Common.SerialGenerate.src.Generator;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Config;
+using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Managers;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
@@ -17,20 +19,18 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
-	using Extensions;
-	using System;
 	using Product = Product.src.Database.Product;
 
 	/// <summary>
 	/// 默认的订单创建器
 	/// 实现功能
 	/// - 检查订单参数 (CheckOrderParameters)
-	/// - 按卖家分别创建订单 (TODO)
-	///   - 计算订单的价格 (TODO)
-	///   - 添加关联的订单商品 (TODO)
-	///   - 添加关联的订单留言 (TODO)
-	///   - 生成订单编号 (TODO)
-	///   - 创建订单交易 (TODO)
+	/// - 按卖家分别创建订单 (CreateOrdersBySellers)
+	///   - 计算订单的价格
+	///   - 添加关联的订单商品
+	///   - 添加关联的订单留言
+	///   - 生成订单编号
+	///   - 创建订单交易
 	/// - 删除相应的购物车商品 (TODO)
 	/// - 保存收货地址的修改 (TODO)
 	/// - 如果设置了下单时扣减库存，减少对应商品的库存 (TODO)
@@ -121,6 +121,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 		/// 按卖家分别创建订单
 		/// </summary>
 		protected virtual void CreateOrdersBySellers() {
+			throw new NotImplementedException("not yet");
 			var orderManager = Application.Ioc.Resolve<OrderManager>();
 			var userRepository = RepositoryResolver.Resolve<User>(Context);
 			var productRepository = RepositoryResolver.Resolve<Product>(Context);
@@ -130,6 +131,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 				productParameters = p,
 				product = products.GetOrCreate(p.ProductId, () => productRepository.GetById(p.ProductId))
 			}).GroupBy(p => (p.product.Seller == null) ? null : (long?)p.product.Seller.Id).ToList();
+			var now = DateTime.UtcNow;
 			foreach (var group in groupedProductParameters) {
 				// 计算订单的价格
 				var orderPrice = orderManager.CalculateOrderPrice(
@@ -145,16 +147,43 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 					Currency = orderPrice.Currency,
 					TotalCostCalcResult = orderPrice,
 					OriginalTotalCostCalcResult = orderPrice,
-					CreateTime = DateTime.UtcNow,
-					LastUpdated = DateTime.UtcNow,
+					CreateTime = now,
+					LastUpdated = now,
 					StateTimes = new Dictionary<OrderState, DateTime>() {
-						{ OrderState.WaitingBuyerPay, DateTime.UtcNow }
+						{ OrderState.WaitingBuyerPay, now }
 					},
 				};
 				// 添加关联的订单商品
-
+				// 这里会重新计算单价，但应该和之前的计算结果一样
+				foreach (var obj in group) {
+					var unitPrice = orderManager.CalculateOrderProductUnitPrice(
+						Parameters.UserId, obj.productParameters);
+					order.OrderProducts.Add(new Database.OrderProduct() {
+						Order = order,
+						Product = obj.product,
+						MatchParameters = obj.productParameters.MatchParameters,
+						Count = obj.productParameters
+							.MatchParameters.GetOrDefault<long>("OrderCount"),
+						UnitPrice = unitPrice.Parts.Sum(),
+						Currency = unitPrice.Currency,
+						UnitPriceCalcResult = unitPrice,
+						OriginalUnitPriceCalcResult = unitPrice,
+						CreateTime = now,
+						LastUpdated = now,
+						PropertyValues = null
+					});
+				}
 				// 添加关联的订单留言
-
+				var comment = Parameters.OrderParameters.GetOrDefault<string>("OrderComment");
+				if (!string.IsNullOrEmpty(comment)) {
+					order.OrderComments.Add(new Database.OrderComment() {
+						Order = order,
+						Creator = order.Buyer,
+						Side = OrderCommentSide.BuyerComment,
+						Content = comment,
+						CreateTime = now
+					});
+				}
 				// 生成订单编号
 				order.Serial = SerialGenerator.GenerateFor(order);
 				// 保存订单

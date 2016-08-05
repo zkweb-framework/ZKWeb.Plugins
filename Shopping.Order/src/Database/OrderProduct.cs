@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 商品匹配参数
 		/// 包含规格等信息，这里会包含购买数量但不应该使用这里的数量
 		/// </summary>
-		public virtual Dictionary<string, object> MatchParameters { get; set; }
+		public virtual IDictionary<string, object> MatchParameters { get; set; }
 		/// <summary>
 		/// 购买数量
 		/// </summary>
