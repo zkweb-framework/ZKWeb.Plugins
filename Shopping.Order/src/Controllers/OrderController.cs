@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Finance.Payment.src.Managers;
 using ZKWeb.Plugins.Common.Base.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Extensions;
+using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// <summary>
@@ -18,25 +19,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// </summary>
 	[ExportMany]
 	public class OrderController : IController {
-		/// <summary>
-		/// 创建订单
-		/// 创建后跳转到支付页面
-		/// </summary>
-		/// <returns></returns>
-		[Action("order/create_order", HttpMethods.POST)]
-		public IActionResult CreateOrder() {
-			var orderManager = Application.Ioc.Resolve<OrderManager>();
-			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var parameters = HttpManager.CurrentContext.Request.Get<CreateOrderParameters>("CreateOrderParameters");
-			var user = sessionManager.GetSession().GetUser();
-			parameters.UserId = (user == null) ? null : (long?)user.Id;
-			var result = orderManager.CreateOrder(parameters);
-			var transactionId = result.CreatedTransactionIds.Last();
-			var paymentUrl = transactionManager.GetPaymentUrl(transactionId);
-			return new JsonResult(new { script = ScriptStrings.Redirect(paymentUrl) });
-		}
-
 		/// <summary>
 		/// 跳转到订单支付页面
 		/// </summary>

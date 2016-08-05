@@ -9,7 +9,6 @@ using ZKWeb.Plugins.Shopping.Order.src.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Managers;
-using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;

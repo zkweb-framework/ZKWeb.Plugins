@@ -12,6 +12,9 @@ using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
 using ZKWebStandard.Web;
+using ZKWeb.Plugins.Shopping.Order.src.Extensions;
+using ZKWeb.Plugins.Finance.Payment.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// <summary>
@@ -125,9 +128,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			HttpRequestChecker.RequieAjaxRequest();
 			var createOrderParameters = HttpManager.CurrentContext.Request
 				.Get<CreateOrderParameters>("CreateOrderParameters") ?? new CreateOrderParameters();
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var session = sessionManager.GetSession();
-			createOrderParameters.UserId = session.ReleatedId;
+			createOrderParameters.SetLoginInfo();
 			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
 			try {
 				var info = cartProductManager.GetCartCalculatePriceApiInfo(createOrderParameters);
@@ -144,7 +145,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		[Action("api/order/create", HttpMethods.POST)]
 		public IActionResult Create() {
 			HttpRequestChecker.RequieAjaxRequest();
-			throw new NotImplementedException();
+			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var createOrderParameters = HttpManager.CurrentContext.Request
+				.Get<CreateOrderParameters>("CreateOrderParameters") ?? new CreateOrderParameters();
+			createOrderParameters.SetLoginInfo();
+			var result = orderManager.CreateOrder(createOrderParameters);
+			var transactionId = result.CreatedTransactionIds.Last();
+			var paymentUrl = transactionManager.GetPaymentUrl(transactionId);
+			return new JsonResult(new { script = ScriptStrings.Redirect(paymentUrl) });
 		}
 	}
 }

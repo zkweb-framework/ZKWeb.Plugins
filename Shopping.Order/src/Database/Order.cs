@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 买家会话，已有买家用户时等于null
 		/// 这里不关联会话对象避免删除问题
 		/// </summary>
-		public virtual long? BuyerSessionId { get; set; }
+		public virtual string BuyerSessionId { get; set; }
 		/// <summary>
 		/// 卖家用户，没有时等于null
 		/// </summary>
@@ -40,7 +40,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 订单参数
 		/// 包含收货地址，选择的物流Id和收款接口Id等
 		/// </summary>
-		public virtual Dictionary<string, object> OrderParameters { get; set; }
+		public virtual IDictionary<string, object> OrderParameters { get; set; }
 		/// <summary>
 		/// 当前的订单总金额
 		/// </summary>
@@ -69,7 +69,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// <summary>
 		/// 各个状态的切换时间
 		/// </summary>
-		public virtual Dictionary<OrderState, DateTime> StateTimes { get; set; }
+		public virtual IDictionary<OrderState, DateTime> StateTimes { get; set; }
 		/// <summary>
 		/// 买家备注
 		/// </summary>
@@ -118,7 +118,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 			Id(o => o.Id);
 			Map(o => o.Serial).Not.Nullable().Unique();
 			References(o => o.Buyer);
-			Map(o => o.BuyerSessionId).Index("Idx_BuyerSessionId");
+			Map(o => o.BuyerSessionId).Column("BuyerSessionId_").Index("Idx_BuyerSessionId_");
 			References(o => o.Seller);
 			Map(o => o.State);
 			Map(o => o.OrderParameters).CustomType<JsonSerializedType<Dictionary<string, object>>>();

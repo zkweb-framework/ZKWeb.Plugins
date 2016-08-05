@@ -77,7 +77,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Translates {
 			{ "Order contains real products, please select a logistics", "订单包含实体商品，请选择一个物流" },
 			{ "Please provide detailed address", "请提供详细的地址" },
 			{ "Please provide receiver name", "请提供收货人姓名" },
-			{ "Please provide receiver tel or mobile", "请提供收货人电话或手机" }
+			{ "Please provide receiver tel or mobile", "请提供收货人电话或手机" },
+			{ "To create order please login first", "请先登录再创建订单" }
 		};
 
 		public bool CanTranslate(string code) {

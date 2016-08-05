@@ -7,7 +7,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Forms {
 	/// <summary>
 	/// 用于创建订单的表单
 	/// </summary>
-	[Form("CreateOrderForm", "/order/create_order", SubmitButtonText = "SubmitOrder")]
+	[Form("CreateOrderForm", "/api/order/create", SubmitButtonText = "SubmitOrder")]
 	public class CreateOrderForm : ModelFormBuilder {
 		/// <summary>
 		/// 创建订单的参数，格式是Json

@@ -8,9 +8,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// </summary>
 	public class CreateOrderParameters {
 		/// <summary>
-		/// 下单的用户Id，未登录时等于null
+		/// 下单的用户Id
+		/// 未登录时等于null
 		/// </summary>
 		public long? UserId { get; set; }
+		/// <summary>
+		/// 下单的会话Id
+		/// </summary>
+		public string SessionId { get; set; }
 		/// <summary>
 		/// 订单参数
 		/// 包含收货地址，选择的物流Id和收款接口Id等
