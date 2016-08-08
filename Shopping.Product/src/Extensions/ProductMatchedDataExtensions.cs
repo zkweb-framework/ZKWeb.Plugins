@@ -68,6 +68,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Extensions {
 		}
 
 		/// <summary>
+		/// 减少匹配数据中的库存
+		/// 有可能会减到负数但不会失败
+		/// </summary>
+		/// <param name="matchedData">匹配数据</param>
+		/// <param name="delta">减少值</param>
+		public static void ReduceStock(this ProductMatchedData matchedData, long delta) {
+			matchedData.Stock -= delta;
+			matchedData.Affects["Stock"] = matchedData.Stock;
+		}
+
+		/// <summary>
 		/// 转换到编辑使用的列表
 		/// </summary>
 		/// <param name="values">数据库中的商品匹配数据列表</param>

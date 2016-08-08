@@ -12,31 +12,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 	/// </summary>
 	public static class CreateOrderParametersExtensions {
 		/// <summary>
-		/// 获取卖家Id到物流Id的索引
-		/// </summary>
-		/// <param name="parameters">订单创建参数</param>
-		/// <returns></returns>
-		public static IDictionary<long, long> GetSellerToLogistics(
-			this CreateOrderParameters parameters) {
-			return parameters.OrderParameters
-				.GetOrDefault<IDictionary<long, long>>("SellerToLogistics") ??
-				new Dictionary<long, long>();
-		}
-
-		/// <summary>
-		/// 获取支付接口Id
-		/// </summary>
-		/// <param name="parameters">订单创建参数</param>
-		/// <returns></returns>
-		public static long GetPaymentApiId(this CreateOrderParameters parameters) {
-			var paymentApiId = parameters.OrderParameters.GetOrDefault<long>("PaymentApiId");
-			if (paymentApiId <= 0) {
-				throw new BadRequestException(new T("Please select payment api"));
-			}
-			return paymentApiId;
-		}
-
-		/// <summary>
 		/// 设置登录信息（用户Id和会话Id）
 		/// </summary>
 		/// <param name="parameters">订单创建参数</param>

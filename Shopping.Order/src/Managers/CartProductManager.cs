@@ -311,7 +311,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 				.GetAvailablePaymentApis(parameters.UserId)
 				.Select(a => {
 					var paymentFee = paymentApiManager.CalculatePaymentFee(
-						parameters.GetPaymentApiId(), orderPriceWithoutPaymentFee);
+						parameters.OrderParameters.GetPaymentApiId(), orderPriceWithoutPaymentFee);
 					return new { apiId = a.Id, feeString = orderCurrency.Format(paymentFee) };
 				})
 				.Where(a => a != null).ToList<object>();

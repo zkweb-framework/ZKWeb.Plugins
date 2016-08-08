@@ -1,4 +1,5 @@
 ﻿using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Shopping.Order.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Config {
 	/// <summary>
@@ -22,6 +23,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Config {
 		/// 允许非会员下单，默认允许
 		/// </summary>
 		public bool AllowAnonymousVisitorCreateOrder { get; set; }
+		/// <summary>
+		/// 库存减少模式，默认不减少
+		/// </summary>
+		public StockReductionMode StockReductionMode { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -31,6 +36,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Config {
 			NormalCartProductExpiresDays = 90;
 			AutoConfirmOrderAfterDays = 14;
 			AllowAnonymousVisitorCreateOrder = true;
+			StockReductionMode = StockReductionMode.NoReduction;
 		}
 	}
 }

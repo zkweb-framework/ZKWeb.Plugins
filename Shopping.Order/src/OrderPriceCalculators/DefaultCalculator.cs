@@ -54,7 +54,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 			// 计算运费
 			// 非实体商品不需要计算运费
 			var productManager = Application.Ioc.Resolve<ProductManager>();
-			var sellerToLogistics = parameters.GetSellerToLogistics();
+			var sellerToLogistics = parameters.OrderParameters.GetSellerToLogistics();
 			var sellerIds = parameters.OrderProductParametersList.GetSellerIdsHasRealProducts();
 			var totalLogisticsCost = 0M;
 			foreach (var sellerId in sellerIds) {
@@ -91,7 +91,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderPriceCalculators {
 				result.Parts.RemoveAt(oldPartIndex);
 			}
 			var paymentApiManager = Application.Ioc.Resolve<PaymentApiManager>();
-			var paymentApiId = parameters.GetPaymentApiId();
+			var paymentApiId = parameters.OrderParameters.GetPaymentApiId();
 			var paymentFee = paymentApiManager.CalculatePaymentFee(paymentApiId, result.Parts.Sum());
 			if (paymentFee != 0) {
 				result.Parts.Add(new OrderPriceCalcResult.Part("PaymentFee", paymentFee));

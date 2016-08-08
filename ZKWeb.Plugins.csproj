@@ -366,6 +366,7 @@
     <Compile Include="Shopping.Order\src\Model\OrderParameters.cs" />
     <Compile Include="Shopping.Order\src\Model\OrderProductDisplayInfo.cs" />
     <Compile Include="Shopping.Order\src\Model\OrderStateTimes.cs" />
+    <Compile Include="Shopping.Order\src\Model\StockReductionMode.cs" />
     <Compile Include="Shopping.Order\src\OrderCreators\DefaultOrderCreator.cs" />
     <Compile Include="Shopping.Order\src\OrderLogisticsProviders\DefaultOrderLogisticsProvider.cs" />
     <Compile Include="Shopping.Order\src\OrderPaymentApiProviders\DefaultOrderPaymentApiProvider.cs" />

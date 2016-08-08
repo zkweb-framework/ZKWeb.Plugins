@@ -30,6 +30,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Extensions {
 		}
 
 		/// <summary>
+		/// 获取需要保存收货地址的Id
+		/// 如果不保存则返回null，如果更新则返回id，如果添加则返回0
+		/// </summary>
+		/// <param name="parameters">订单参数</param>
+		/// <returns></returns>
+		public static long? GetSaveShipppingAddressId(this OrderParameters parameters) {
+			var shippingAddress = parameters.GetOrDefault<IDictionary<string, object>>("ShippingAddress");
+			var selectedAddressId = shippingAddress.GetOrDefault<long>("SelectedAddressId");
+			var saveAddress = shippingAddress.GetOrDefault<bool>("SaveAddress");
+			return saveAddress ? (long?)selectedAddressId : null;
+		}
+
+		/// <summary>
 		/// 获取订单留言
 		/// </summary>
 		/// <param name="parameters">订单参数</param>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ZKWeb.Plugins.Finance.Payment.src.Database;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// <summary>
@@ -6,21 +7,21 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 	/// </summary>
 	public class CreateOrderResult {
 		/// <summary>
-		/// 创建的订单Id列表
+		/// 创建的订单列表
 		/// </summary>
-		public IList<long> CreatedOrderIds { get; set; }
+		public IList<Database.Order> CreatedOrders { get; set; }
 		/// <summary>
-		/// 创建的支付交易Id列表
+		/// 创建的支付交易列表
 		/// 如果有多个，最后一个支付交易应该是合并交易
 		/// </summary>
-		public IList<long> CreatedTransactionIds { get; set; }
+		public IList<PaymentTransaction> CreatedTransactions { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public CreateOrderResult() {
-			CreatedOrderIds = new List<long>();
-			CreatedTransactionIds = new List<long>();
+			CreatedOrders = new List<Database.Order>();
+			CreatedTransactions = new List<PaymentTransaction>();
 		}
 	}
 }

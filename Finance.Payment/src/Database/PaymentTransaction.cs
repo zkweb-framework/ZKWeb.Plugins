@@ -62,6 +62,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// </summary>
 		public virtual long? ReleatedId { get; set; }
 		/// <summary>
+		/// 关联的交易列表
+		/// 可以用于合并交易等有关联的交易类型
+		/// </summary>
+		public virtual ISet<PaymentTransaction> ReleatedTransactions { get; set; }
+		/// <summary>
 		/// 交易描述
 		/// </summary>
 		public virtual string Description { get; set; }
@@ -99,6 +104,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		/// 初始化
 		/// </summary>
 		public PaymentTransaction() {
+			ReleatedTransactions = new HashSet<PaymentTransaction>();
 			ExtraData = new PaymentTransactionExtraData();
 		}
 
@@ -131,6 +137,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 			References(t => t.Payer).Nullable();
 			References(t => t.Payee).Nullable();
 			Map(t => t.ReleatedId).Index("Idx_ReleatedId");
+			HasMany(t => t.ReleatedTransactions);
 			Map(t => t.Description).Length(0xffff);
 			Map(t => t.State).Index("Idx_State");
 			Map(t => t.ExtraData).CustomType<JsonSerializedType<PaymentTransactionExtraData>>();
