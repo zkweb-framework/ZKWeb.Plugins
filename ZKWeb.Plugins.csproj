@@ -326,6 +326,7 @@
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelCrudPageBuilder.cs" />
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelFormPageBuilder.cs" />
     <Compile Include="Common.UserPanel\src\Scaffolding\UserPanelSimplePageBuilder.cs" />
+    <Compile Include="Finance.Payment\src\Extensions\PaymentApiExtensions.cs" />
     <Compile Include="Finance.Payment\src\Managers\PaymentApiManager.cs" />
     <Compile Include="Finance.Payment\src\Model\ExtraConfigKeys.cs" />
     <Compile Include="Finance.Payment\src\Model\PaymentApiExtraData.cs" />
@@ -819,7 +820,6 @@
     <Compile Include="Finance.Payment\src\Database\PaymentTransaction.cs" />
     <Compile Include="Finance.Payment\src\DataCallbacks\CannotChangeTypeOrOwnerAfterPaymentApiCreated.cs" />
     <Compile Include="Finance.Payment\src\DataCallbacks\DeleteReleatedDetailRecords.cs" />
-    <Compile Include="Finance.Payment\src\Extensions\ContainerExtensions.cs" />
     <Compile Include="Finance.Payment\src\Extensions\PaymentTransactionExtensions.cs" />
     <Compile Include="Finance.Payment\src\Forms\PaymentApiEditForm.cs" />
     <Compile Include="Finance.Payment\src\Forms\TestPaymentForm.cs" />

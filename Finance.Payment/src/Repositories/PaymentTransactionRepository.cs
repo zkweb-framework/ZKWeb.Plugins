@@ -35,13 +35,14 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 		/// <param name="releatedId">关联对象Id</param>
 		/// <param name="description">描述</param>
 		/// <param name="extraData">附加数据</param>
+		/// <param name="releatedTransactions">关联的交易列表</param>
 		/// <returns></returns>
 		public virtual PaymentTransaction CreateTransaction(
 			string transactionType, long paymentApiId,
 			decimal amount, decimal paymentFee, string currencyType, long? payerId, long? payeeId,
-			long? releatedId, string description, object extraData = null) {
+			long? releatedId, string description, object extraData = null,
+			IList<PaymentTransaction> releatedTransactions = null) {
 			// 检查参数
-			var handlers = Application.Ioc.ResolveTransactionHandlers(transactionType);
 			if (amount <= 0) {
 				throw new BadRequestException("Transaction amount must large than zero");
 			} else if (string.IsNullOrEmpty(description)) {
@@ -72,9 +73,13 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 				CreateTime = DateTime.UtcNow,
 				LastUpdated = DateTime.UtcNow
 			};
+			if (releatedTransactions != null) {
+				transaction.ReleatedTransactions.AddRange(releatedTransactions);
+			}
 			transaction.Serial = SerialGenerator.GenerateFor(transaction);
 			Save(ref transaction);
 			// 调用创建交易后的处理
+			var handlers = transaction.GetHandlers();
 			handlers.ForEach(h => h.OnCreated(Context, transaction));
 			// 记录结果到数据库
 			AddDetailRecord(transaction.Id, null, new T("Transaction Created"));
@@ -162,7 +167,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 				throw new BadRequestException(result.Second);
 			}
 			// 获取交易类型对应的处理器
-			var handlers = Application.Ioc.ResolveTransactionHandlers(transaction.Type);
+			var handlers = transaction.GetHandlers();
 			// 设置交易状态
 			var previousState = transaction.State;
 			Context.Save(ref transaction, t => {
@@ -174,11 +179,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 				}
 			});
 			// 使用处理器处理指定的交易状态
-			AutoSendGoodsParameters parameters = null;
+			var parameters = new List<AutoSendGoodsParameters>();
 			if (state == PaymentTransactionState.WaitingPaying) {
 				handlers.ForEach(h => h.OnWaitingPaying(Context, transaction, previousState));
 			} else if (state == PaymentTransactionState.SecuredPaid) {
-				handlers.ForEach(h => h.OnSecuredPaid(Context, transaction, previousState, ref parameters));
+				handlers.ForEach(h => h.OnSecuredPaid(Context, transaction, previousState, parameters));
 			} else if (state == PaymentTransactionState.Success) {
 				handlers.ForEach(h => h.OnSuccess(Context, transaction, previousState));
 			} else if (state == PaymentTransactionState.Aborted) {
@@ -190,8 +195,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 			AddDetailRecord(transaction.Id, null, string.Format(
 				new T("Change transaction state to {0}"), new T(transaction.State.GetDescription())));
 			// 需要自动发货时进行发货
-			if (parameters != null) {
-				SendGoods(transaction.Id, parameters.LogisticsName, parameters.InvoiceNo);
+			foreach (var parameter in parameters) {
+				SendGoods(transaction.Id, parameter.LogisticsName, parameter.InvoiceNo);
 			}
 		}
 
@@ -213,7 +218,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Repositories {
 				throw new BadRequestException(result.Second);
 			}
 			// 调用支付接口的处理器处理发货
-			var handlers = Application.Ioc.ResolvePaymentApiHandlers(transaction.Api.Type);
+			var handlers = transaction.Api.GetHandlers();
 			handlers.ForEach(h => h.SendGoods(Context, transaction, logisticsName, invoiceNo));
 			// 成功时添加详细记录
 			AddDetailRecord(transactionId, null, new T("Notify goods sent to payment api success"));

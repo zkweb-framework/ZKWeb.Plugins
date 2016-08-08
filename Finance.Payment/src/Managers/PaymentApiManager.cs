@@ -88,7 +88,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 			if (api == null) {
 				throw new ArgumentNullException(new T("Selected payment api does not exist"));
 			}
-			var handlers = Application.Ioc.ResolvePaymentApiHandlers(api.Type);
+			var handlers = api.GetHandlers();
 			handlers.ForEach(h => h.CalculatePaymentFee(api, amount, ref paymentFee));
 			return paymentFee;
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
@@ -37,7 +38,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// </summary>
 		public void OnSecuredPaid(
 			DatabaseContext context, PaymentTransaction transaction,
-			PaymentTransactionState previousState, ref AutoSendGoodsParameters parameters) {
+			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
 			throw new NotImplementedException();
 		}
 
@@ -60,7 +61,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// <summary>
 		/// 获取显示交易结果的Html
 		/// </summary>
-		public void GetResultHtml(PaymentTransaction transaction, ref HtmlString html) {
+		public void GetResultHtml(PaymentTransaction transaction, IList<HtmlString> html) {
 			throw new NotImplementedException();
 		}
 	}

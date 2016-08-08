@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Plugins.Finance.Payment.src.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWebStandard.Collection;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 	/// <summary>
@@ -10,12 +13,20 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 	/// 因为合并交易需要安全检查和区分类别
 	/// 这个处理器不注册到容器中，需要继承使用
 	/// </summary>
-	public abstract class MergedTransactionHandlerBase {
+	public abstract class MergedTransactionHandlerBase : IPaymentTransactionHandler {
+		/// <summary>
+		/// 交易类型
+		/// </summary>
+		public abstract string Type { get; }
+
 		/// <summary>
 		/// 交易创建后
 		/// </summary>
 		public virtual void OnCreated(DatabaseContext context, PaymentTransaction transaction) {
-			throw new NotImplementedException();
+			foreach (var childTransaction in transaction.ReleatedTransactions) {
+				var handlers = childTransaction.GetHandlers();
+				handlers.ForEach(h => h.OnCreated(context, childTransaction));
+			}
 		}
 
 		/// <summary>
@@ -23,7 +34,10 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// </summary>
 		public virtual void OnWaitingPaying(
 			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
-			throw new NotImplementedException();
+			foreach (var childTransaction in transaction.ReleatedTransactions) {
+				var handlers = childTransaction.GetHandlers();
+				handlers.ForEach(h => h.OnWaitingPaying(context, childTransaction, previousState));
+			}
 		}
 
 		/// <summary>
@@ -31,8 +45,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// </summary>
 		public virtual void OnSecuredPaid(
 			DatabaseContext context, PaymentTransaction transaction,
-			PaymentTransactionState previousState, ref AutoSendGoodsParameters parameters) {
-			throw new NotImplementedException();
+			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
+			foreach (var childTransaction in transaction.ReleatedTransactions) {
+				var handlers = childTransaction.GetHandlers();
+				handlers.ForEach(h => h.OnSecuredPaid(context, childTransaction, previousState, parameters));
+			}
 		}
 
 		/// <summary>
@@ -40,22 +57,29 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// </summary>
 		public virtual void OnSuccess(
 			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
-			throw new NotImplementedException();
+			foreach (var childTransaction in transaction.ReleatedTransactions) {
+				var handlers = childTransaction.GetHandlers();
+				handlers.ForEach(h => h.OnSuccess(context, childTransaction, previousState));
+			}
 		}
 
 		/// <summary>
 		/// 交易终止时
+		/// 不会终止关联交易，只会清除所有关联交易
 		/// </summary>
 		public virtual void OnAbort(
 			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
-			throw new NotImplementedException();
+			transaction.ReleatedTransactions.Clear();
 		}
 
 		/// <summary>
 		/// 获取显示交易结果的Html
 		/// </summary>
-		public virtual void GetResultHtml(PaymentTransaction transaction, ref HtmlString html) {
-			throw new NotImplementedException();
+		public virtual void GetResultHtml(PaymentTransaction transaction, IList<HtmlString> html) {
+			foreach (var childTransaction in transaction.ReleatedTransactions) {
+				var handlers = childTransaction.GetHandlers();
+				handlers.ForEach(h => h.GetResultHtml(childTransaction, html));
+			}
 		}
 	}
 }

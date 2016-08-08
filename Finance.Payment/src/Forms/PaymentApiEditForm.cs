@@ -51,18 +51,18 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		/// <summary>
 		/// 使用的支付接口处理器列表
 		/// </summary>
-		public List<IPaymentApiHandler> Handlers { get; set; }
+		public IList<IPaymentApiHandler> Handlers { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public PaymentApiEditForm() {
 			var id = GetRequestId();
-			Handlers = UnitOfWork.ReadData<PaymentApi, List<IPaymentApiHandler>>(r => {
-				var api = string.IsNullOrEmpty(id) ? null : r.GetById(id);
-				var type = api == null ? null : api.Type;
-				type = type ?? HttpManager.CurrentContext.Request.Get<string>("type");
-				return Application.Ioc.ResolvePaymentApiHandlers(type);
+			Handlers = UnitOfWork.ReadData<PaymentApi, IList<IPaymentApiHandler>>(r => {
+				var api = string.IsNullOrEmpty(id) ?
+					new PaymentApi() { Type = HttpManager.CurrentContext.Request.Get<string>("type") } :
+					r.GetById(id);
+				return api.GetHandlers();
 			});
 			Handlers.ForEach(h => h.OnFormCreated(this));
 		}

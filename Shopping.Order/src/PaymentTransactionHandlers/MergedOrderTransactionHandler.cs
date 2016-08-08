@@ -10,7 +10,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// <summary>
 		/// 交易类型
 		/// </summary>
-		public string Type { get { return ConstType; } }
+		public override string Type { get { return ConstType; } }
 		public const string ConstType = "MergedOrderTransaction";
 	}
 }

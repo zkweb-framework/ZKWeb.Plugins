@@ -316,9 +316,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 				firstTransaction.CurrencyType,
 				(firstTransaction.Payer == null) ? null : (long?)firstTransaction.Payer.Id,
 				null, null,
-				string.Join(":", Result.CreatedTransactions.Select(t => t.Description)));
-			transactionRepository.Save(ref transaction, t =>
-				t.ReleatedTransactions.AddRange(Result.CreatedTransactions));
+				string.Join(":", Result.CreatedTransactions.Select(t => t.Description)),
+				null, Result.CreatedTransactions);
 			Result.CreatedTransactions.Add(transaction);
 		}
 

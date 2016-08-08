@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
@@ -83,7 +84,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 			}
 			// 调用接口处理器生成支付html
 			var html = new HtmlString("No Result");
-			var handlers = Application.Ioc.ResolvePaymentApiHandlers(api.Type);
+			var handlers = api.GetHandlers();
 			handlers.ForEach(h => h.GetPaymentHtml(transaction, ref html));
 			return html;
 		}
@@ -102,10 +103,10 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Managers {
 				return BuildErrorHtml(result.Second);
 			}
 			// 调用接口处理器生成结果html
-			var html = new HtmlString("No Result");
-			var handlers = Application.Ioc.ResolveTransactionHandlers(transaction.Type);
-			handlers.ForEach(h => h.GetResultHtml(transaction, ref html));
-			return html;
+			var html = new List<HtmlString>();
+			var handlers = transaction.GetHandlers();
+			handlers.ForEach(h => h.GetResultHtml(transaction, html));
+			return new HtmlString(string.Join("", html));
 		}
 
 		/// <summary>

@@ -1,4 +1,5 @@
-﻿using ZKWeb.Database;
+﻿using System.Collections.Generic;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWebStandard.Collection;
 
@@ -18,7 +19,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// </summary>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="transaction">支付交易</param>
-		void OnCreated(DatabaseContext context, PaymentTransaction transaction);
+		void OnCreated(
+			DatabaseContext context,
+			PaymentTransaction transaction);
 
 		/// <summary>
 		/// 等待付款时的处理
@@ -42,12 +45,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <param name="context">数据库上下文</param>
 		/// <param name="transaction">支付交易</param>
 		/// <param name="previousState">原有的状态</param>
-		/// <param name="parameters">自动发货参数，需要自动发货时请设置这个参数</param>
+		/// <param name="parameters">自动发货参数，需要自动发货时请添加这个参数</param>
 		void OnSecuredPaid(
 			DatabaseContext context,
 			PaymentTransaction transaction,
 			PaymentTransactionState previousState,
-			ref AutoSendGoodsParameters parameters);
+			IList<AutoSendGoodsParameters> parameters);
 
 		/// <summary>
 		/// 交易成功时的处理
@@ -85,6 +88,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// </summary>
 		/// <param name="transaction">支付交易</param>
 		/// <param name="html">显示的Html内容</param>
-		void GetResultHtml(PaymentTransaction transaction, ref HtmlString html);
+		void GetResultHtml(
+			PaymentTransaction transaction,
+			IList<HtmlString> html);
 	}
 }

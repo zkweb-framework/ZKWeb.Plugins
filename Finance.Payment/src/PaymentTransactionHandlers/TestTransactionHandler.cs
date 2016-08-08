@@ -1,4 +1,5 @@
-﻿using ZKWeb.Database;
+﻿using System.Collections.Generic;
+using ZKWeb.Database;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
@@ -42,10 +43,10 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// </summary>
 		public void OnSecuredPaid(
 			DatabaseContext context, PaymentTransaction transaction,
-			PaymentTransactionState previousState, ref AutoSendGoodsParameters parameters) {
+			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("TestTransaction Secured Paid: {0}", transaction.Serial));
-			parameters = new AutoSendGoodsParameters() { LogisticsName = "TestLogistics", InvoiceNo = "00000000" };
+			parameters.Add(new AutoSendGoodsParameters() { LogisticsName = "TestLogistics", InvoiceNo = "00000000" });
 		}
 
 		/// <summary>
@@ -69,10 +70,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// <summary>
 		/// 获取显示交易结果的Html
 		/// </summary>
-		public void GetResultHtml(PaymentTransaction transaction, ref HtmlString html) {
+		public void GetResultHtml(PaymentTransaction transaction, IList<HtmlString> html) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var args = new { serial = transaction.Serial, state = transaction.State.GetDescription() };
-			html = new HtmlString(templateManager.RenderTemplate("finance.payment/test_transaction_result.html", args));
+			html.Add(new HtmlString(
+				templateManager.RenderTemplate("finance.payment/test_transaction_result.html", args)));
 		}
 	}
 }
