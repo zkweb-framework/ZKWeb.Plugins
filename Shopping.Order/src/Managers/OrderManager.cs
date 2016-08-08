@@ -2,6 +2,7 @@
 using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Repositories;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Shopping.Logistics.src.Manager;
 using ZKWeb.Plugins.Shopping.Order.src.Database;
@@ -153,7 +154,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Managers {
 		/// <returns></returns>
 		public virtual CreateOrderResult CreateOrder(CreateOrderParameters parameters) {
 			var orderCreator = Application.Ioc.Resolve<IOrderCreator>();
-			return orderCreator.CreateOrder(parameters);
+			return UnitOfWork.Write(context => orderCreator.CreateOrder(context, parameters));
 		}
 	}
 }

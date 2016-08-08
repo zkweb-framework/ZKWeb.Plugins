@@ -324,18 +324,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 		/// <summary>
 		/// 创建订单
 		/// </summary>
-		public virtual CreateOrderResult CreateOrder(CreateOrderParameters parameters) {
-			UnitOfWork.Write(context => {
-				Parameters = parameters;
-				Context = context;
-				Result = new CreateOrderResult();
-				CheckOrderParameters();
-				CreateOrdersBySellers();
-				RemoveCartProducts();
-				SaveShippingAddress();
-				ReduceProductsStock();
-				CreateMergedTransaction();
-			});
+		public virtual CreateOrderResult CreateOrder(DatabaseContext context, CreateOrderParameters parameters) {
+			Parameters = parameters;
+			Context = context;
+			Result = new CreateOrderResult();
+			CheckOrderParameters();
+			CreateOrdersBySellers();
+			RemoveCartProducts();
+			SaveShippingAddress();
+			ReduceProductsStock();
+			CreateMergedTransaction();
 			return Result;
 		}
 	}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ZKWeb.Database;
+using ZKWeb.Logging;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWebStandard.Collection;
@@ -22,7 +23,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// 交易创建后
 		/// </summary>
 		public void OnCreated(DatabaseContext context, PaymentTransaction transaction) {
-			throw new NotImplementedException();
+			// 记录到日志
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(string.Format("OrderTransaction created: {0}", transaction.Serial));
 		}
 
 		/// <summary>
@@ -30,7 +33,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// </summary>
 		public void OnWaitingPaying(
 			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
-			throw new NotImplementedException();
+			// 记录到日志
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(string.Format("OrderTransaction waiting paying: {0}", transaction.Serial));
 		}
 
 		/// <summary>
@@ -39,7 +44,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		public void OnSecuredPaid(
 			DatabaseContext context, PaymentTransaction transaction,
 			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
-			throw new NotImplementedException();
+			// 记录到日志
+			
+			// 记录到订单记录
+			
+			// 处理订单已付款
+
 		}
 
 		/// <summary>
