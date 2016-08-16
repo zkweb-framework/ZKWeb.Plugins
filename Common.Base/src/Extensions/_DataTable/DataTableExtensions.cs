@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿#if !NETCORE
+using System.Data;
 using System.Text;
 using ZKWeb.Localize;
 using ZKWebStandard.Collection;
@@ -48,3 +49,4 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		}
 	}
 }
+#endif
