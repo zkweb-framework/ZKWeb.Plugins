@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <typeparam name="TData">编辑的数据类型</typeparam>
 	/// <typeparam name="TForm">继承类自身的类型</typeparam>
 	public abstract class UserOwnedDataEditFormBuilder<TData, TForm> :
-		DataEditFormBuilder<TData, TForm> where TData : class, new() {
+		DataEditFormBuilder<TData, TForm> where TData : class, IEntity, new() {
 		/// <summary>
 		/// 初始化
 		/// </summary>
@@ -41,7 +41,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 		/// </summary>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="data">数据</param>
-		protected virtual void AssignOwnedUser(DatabaseContext context, TData data) {
+		protected virtual void AssignOwnedUser(IDatabaseContext context, TData data) {
 			// 通过指定的数据库上下文获取当前登录用户
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();

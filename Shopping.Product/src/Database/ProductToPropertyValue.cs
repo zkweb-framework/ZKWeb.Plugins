@@ -1,11 +1,14 @@
-﻿using FluentNHibernate.Mapping;
+﻿using System;
+using ZKWeb.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 	/// <summary>
 	/// 商品使用的属性值
 	/// </summary>
-	public class ProductToPropertyValue {
+	[ExportMany]
+	public class ProductToPropertyValue :
+		IEntity<long>, IEntityMappingProvider<ProductToPropertyValue> {
 		/// <summary>
 		/// 数据Id
 		/// 因为数据在编辑时会删除重建，其他表不能关联这里的Id
@@ -27,22 +30,16 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		/// 属性值名称，允许手动修改
 		/// </summary>
 		public virtual string PropertyValueName { get; set; }
-	}
 
-	/// <summary>
-	/// 商品使用的属性值的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class ProductToPropertyValueMap : ClassMap<ProductToPropertyValue> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public ProductToPropertyValueMap() {
-			Id(v => v.Id);
-			References(v => v.Product);
-			References(v => v.Property).Not.Nullable();
-			References(v => v.PropertyValue);
-			Map(v => v.PropertyValueName).Length(0xffff);
+		public virtual void Configure(IEntityMappingBuilder<ProductToPropertyValue> builder) {
+			builder.Id(v => v.Id);
+			builder.References(v => v.Product, new EntityMappingOptions() { Nullable = false });
+			builder.References(v => v.Property, new EntityMappingOptions() { Nullable = false });
+			builder.References(v => v.PropertyValue);
+			builder.Map(v => v.PropertyValueName);
 		}
 	}
 }

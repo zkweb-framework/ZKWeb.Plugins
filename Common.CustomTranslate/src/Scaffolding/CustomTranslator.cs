@@ -33,7 +33,8 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding {
 	/// }
 	/// </example>
 	public abstract class CustomTranslator :
-		AdminSettingsCrudPageBuilder<Translation>, ITranslateProvider, ICacheCleaner {
+		AdminSettingsCrudPageBuilder<Translation>,
+		ITranslateProvider, ICacheCleaner {
 		public override string Group { get { return "CustomTranslate"; } }
 		public override string GroupIconClass { get { return "fa fa-language"; } }
 		public override string IconClass { get { return "fa fa-language"; } }

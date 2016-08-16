@@ -1,12 +1,11 @@
-﻿using FluentNHibernate.Mapping;
-using System;
-using ZKWeb.Database.UserTypes;
+﻿using System;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWebStandard.Ioc;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
+	using ZKWeb.Database;
 	using Product = Product.src.Database.Product;
 
 	/// <summary>
@@ -15,7 +14,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 	/// 类型可以是默认也可以是立刻购买，立刻购买时需要指定比较短的过期时间
 	/// 删除：直接从数据库中删除
 	/// </summary>
-	public class CartProduct {
+	[ExportMany]
+	public class CartProduct : IEntity<long>, IEntityMappingProvider<CartProduct> {
 		/// <summary>
 		/// 数据Id
 		/// </summary>
@@ -62,26 +62,26 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		public CartProduct() {
 			MatchParameters = new ProductMatchParameters();
 		}
-	}
 
-	/// <summary>
-	/// 购物车商品的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class CartProductMap : ClassMap<CartProduct> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public CartProductMap() {
-			Id(c => c.Id);
-			Map(c => c.Type);
-			References(c => c.Buyer);
-			Map(c => c.BuyerSession).Index("Idx_BuyerSession");
-			References(c => c.Product);
-			Map(c => c.Count);
-			Map(c => c.MatchParameters).CustomType<JsonSerializedType<ProductMatchParameters>>();
-			Map(c => c.CreateTime);
-			Map(c => c.ExpireTime).Index("Idx_ExpireTime");
+		public virtual void Configure(IEntityMappingBuilder<CartProduct> builder) {
+			builder.Id(c => c.Id);
+			builder.Map(c => c.Type);
+			builder.References(c => c.Buyer);
+			builder.Map(c => c.BuyerSession, new EntityMappingOptions() {
+				Index = "Idx_BuyerSession"
+			});
+			builder.References(c => c.Product);
+			builder.Map(c => c.Count);
+			builder.Map(c => c.MatchParameters, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(c => c.CreateTime);
+			builder.Map(c => c.ExpireTime, new EntityMappingOptions() {
+				Index = "Idx_ExpireTime"
+			});
 		}
 	}
 }

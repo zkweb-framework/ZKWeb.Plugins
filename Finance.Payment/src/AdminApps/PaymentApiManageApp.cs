@@ -65,7 +65,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// 查询数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<PaymentApi> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<PaymentApi> query) {
 				// 按回收站
 				query = query.FilterByRecycleBin(request);
 				// 按关键字
@@ -80,7 +80,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// <summary>
 			/// 排序数据
 			/// </summary>
-			public void OnSort(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<PaymentApi> query) {
+			public void OnSort(AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<PaymentApi> query) {
 				query = query.OrderBy(q => q.DisplayOrder).ThenByDescending(q => q.Id);
 			}
 

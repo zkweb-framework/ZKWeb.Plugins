@@ -1,16 +1,16 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
 using ZKWebStandard.Utils;
-using ZKWeb.Database.UserTypes;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Database;
 
 namespace ZKWeb.Plugins.Common.Base.src.Database {
 	/// <summary>
 	/// 会话
 	/// </summary>
-	public class Session {
+	[ExportMany]
+	public class Session : IEntity<string>, IEntityMappingProvider<Session> {
 		/// <summary>
 		/// 会话Id
 		/// </summary>
@@ -49,6 +49,18 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		public Session() {
 			Items = new SessionItems();
 		}
+
+		/// <summary>
+		/// 配置数据库结构
+		/// </summary>
+		public virtual void Configure(IEntityMappingBuilder<Session> builder) {
+			builder.Id(s => s.Id);
+			builder.Map(s => s.ReleatedId);
+			builder.Map(s => s.Items, new EntityMappingOptions() { WithSerialization = true });
+			builder.Map(s => s.IpAddress);
+			builder.Map(s => s.RememberLogin);
+			builder.Map(s => s.Expires, new EntityMappingOptions() { Index = "Idx_Expires" });
+		}
 	}
 
 	/// <summary>
@@ -74,24 +86,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 				session.Expires = expires;
 				session.ExpiresUpdated = true;
 			}
-		}
-	}
-
-	/// <summary>
-	/// 会话的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class SessionMap : ClassMap<Session> {
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		public SessionMap() {
-			Id(s => s.Id);
-			Map(s => s.ReleatedId);
-			Map(s => s.Items).CustomType<JsonSerializedType<SessionItems>>();
-			Map(s => s.IpAddress);
-			Map(s => s.RememberLogin);
-			Map(s => s.Expires).Index("Idx_Expires");
 		}
 	}
 }

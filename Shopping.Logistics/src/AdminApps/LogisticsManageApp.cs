@@ -61,7 +61,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// 查询数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Logistics> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.Logistics> query) {
 				// 按回收站
 				query = query.FilterByRecycleBin(request);
 				// 按关键字
@@ -76,7 +76,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// 排序数据
 			/// </summary>
 			public void OnSort(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Logistics> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.Logistics> query) {
 				query = query.OrderByDescending(q => q.Id);
 			}
 
@@ -162,7 +162,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// <summary>
 			/// 绑定表单
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, Database.Logistics bindFrom) {
+			protected override void OnBind(IDatabaseContext context, Database.Logistics bindFrom) {
 				Name = bindFrom.Name;
 				Type = bindFrom.Type ??
 					new LogisticsTypeListItemProvider().GetItems().Select(i => i.Value).FirstOrDefault();
@@ -178,7 +178,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.AdminApps {
 			/// <summary>
 			/// 提交表单
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, Database.Logistics saveTo) {
+			protected override object OnSubmit(IDatabaseContext context, Database.Logistics saveTo) {
 				if (saveTo.Id <= 0) {
 					saveTo.CreateTime = DateTime.UtcNow;
 				}

@@ -30,7 +30,7 @@ namespace ZKWeb.Plugins.Common.Base.src.ScheduledTasks {
 		public void Execute() {
 			var count = UnitOfWork.WriteData<Session, long>(r => {
 				var now = DateTime.UtcNow;
-				return r.DeleteWhere(s => s.Expires < now);
+				return r.BatchDelete(s => s.Expires < now);
 			});
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogInfo(string.Format(

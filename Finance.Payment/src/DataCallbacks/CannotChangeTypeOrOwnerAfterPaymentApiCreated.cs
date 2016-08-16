@@ -9,18 +9,18 @@ namespace ZKWeb.Plugins.Finance.Payment.src.DataCallbacks {
 	/// 支付接口创建后不能修改类型和所属人
 	/// </summary>
 	[ExportMany]
-	public class CannotChangeTypeOrOwnerAfterPaymentApiCreated : IDataSaveCallback<PaymentApi> {
+	public class CannotChangeTypeOrOwnerAfterPaymentApiCreated : IEntityOperationHandler<PaymentApi> {
 		private long OldId { get; set; }
 		private string OldType { get; set; }
 		private string OldOwner { get; set; }
 
-		public void BeforeSave(DatabaseContext context, PaymentApi data) {
+		public void BeforeSave(IDatabaseContext context, PaymentApi data) {
 			OldId = data.Id;
 			OldType = data.Type;
 			OldOwner = data.Owner == null ? null : data.Owner.Username;
 		}
 
-		public void AfterSave(DatabaseContext context, PaymentApi data) {
+		public void AfterSave(IDatabaseContext context, PaymentApi data) {
 			if (OldId > 0) {
 				var newType = data.Type;
 				var newOwner = data.Owner == null ? null : data.Owner.Username;
@@ -31,5 +31,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.DataCallbacks {
 				}
 			}
 		}
+
+		public void BeforeDelete(IDatabaseContext context, PaymentApi entity) { }
+
+		public void AfterDelete(IDatabaseContext context, PaymentApi entity) { }
 	}
 }

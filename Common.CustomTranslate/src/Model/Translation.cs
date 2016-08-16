@@ -1,8 +1,10 @@
-﻿namespace ZKWeb.Plugins.Common.CustomTranslate.src.Model {
+﻿using ZKWeb.Database;
+
+namespace ZKWeb.Plugins.Common.CustomTranslate.src.Model {
 	/// <summary>
 	/// 翻译内容
 	/// </summary>
-	public class Translation {
+	public class Translation : IEntity {
 		/// <summary>
 		/// 原文
 		/// </summary>

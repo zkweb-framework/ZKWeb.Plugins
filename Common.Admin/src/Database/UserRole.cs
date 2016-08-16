@@ -1,14 +1,14 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using ZKWeb.Database.UserTypes;
+using ZKWeb.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Database {
 	/// <summary>
 	/// 用户角色
 	/// </summary>
-	public class UserRole {
+	[ExportMany]
+	public class UserRole : IEntity<long>, IEntityMappingProvider<UserRole> {
 		/// <summary>
 		/// 角色Id
 		/// </summary>
@@ -52,21 +52,18 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		public override string ToString() {
 			return Name;
 		}
-	}
 
-	/// <summary>
-	/// 用户角色的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class UserRoleMap : ClassMap<UserRole> {
-		public UserRoleMap() {
-			Id(r => r.Id);
-			Map(r => r.Name);
-			Map(r => r.Privileges).CustomType<JsonSerializedType<HashSet<string>>>();
-			Map(r => r.CreateTime);
-			Map(r => r.LastUpdated);
-			Map(r => r.Remark).Length(0xffff);
-			Map(r => r.Deleted);
+		/// <summary>
+		/// 配置数据库结构
+		/// </summary>
+		public virtual void Configure(IEntityMappingBuilder<UserRole> builder) {
+			builder.Id(r => r.Id);
+			builder.Map(r => r.Name);
+			builder.Map(r => r.Privileges, new EntityMappingOptions() { WithSerialization = true });
+			builder.Map(r => r.CreateTime);
+			builder.Map(r => r.LastUpdated);
+			builder.Map(r => r.Remark);
+			builder.Map(r => r.Deleted);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.Base.src.Repositories;
 
@@ -18,7 +19,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Extensions {
 		/// <returns></returns>
 		public static StaticTableSearchResponse BuildResponseFromDatabase<TData>(
 			this StaticTableSearchRequest request, IEnumerable<IStaticTableCallback<TData>> callbacks)
-			where TData : class {
+			where TData : class, IEntity {
 			var response = new StaticTableSearchResponse();
 			UnitOfWork.Read(context => {
 				// 从数据库获取数据，过滤并排序

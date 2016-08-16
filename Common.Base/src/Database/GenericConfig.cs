@@ -1,12 +1,13 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
+using ZKWeb.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Base.src.Database {
 	/// <summary>
 	/// 通用配置
 	/// </summary>
-	public class GenericConfig {
+	[ExportMany]
+	public class GenericConfig : IEntity<long>, IEntityMappingProvider<GenericConfig> {
 		/// <summary>
 		/// 主键，没有意义
 		/// </summary>
@@ -23,22 +24,17 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		/// 最后更新时间
 		/// </summary>
 		public virtual DateTime LastUpdated { get; set; }
-	}
 
-	/// <summary>
-	/// 通用配置的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class GenericConfigMap : ClassMap<GenericConfig> {
 		/// <summary>
-		/// 初始化
-		/// key在sqlserver中是关键字，需要改名
+		/// 通用配置的数据库结构
 		/// </summary>
-		public GenericConfigMap() {
-			Id(c => c.Id);
-			Map(c => c.Key).Column("key_").Length(255).Unique();
-			Map(c => c.Value).Length(0xffff);
-			Map(c => c.LastUpdated);
+		public virtual void Configure(IEntityMappingBuilder<GenericConfig> builder) {
+			builder.Id(c => c.Id);
+			builder.Map(c => c.Key, new EntityMappingOptions() {
+				Column = "key_", Unique = true, Length = 255
+			});
+			builder.Map(c => c.Value);
+			builder.Map(c => c.LastUpdated);
 		}
 	}
 }

@@ -1,13 +1,15 @@
 ﻿using DotLiquid;
-using FluentNHibernate.Mapping;
 using System;
+using ZKWeb.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 	/// <summary>
 	/// 商品属性值
 	/// </summary>
-	public class ProductPropertyValue : ILiquidizable {
+	[ExportMany]
+	public class ProductPropertyValue :
+		ILiquidizable, IEntity<long>, IEntityMappingProvider<ProductPropertyValue> {
 		/// <summary>
 		/// 属性值Id
 		/// </summary>
@@ -52,24 +54,18 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		public override string ToString() {
 			return Name;
 		}
-	}
 
-	/// <summary>
-	/// 商品属性值的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class ProductPropertyValueMap : ClassMap<ProductPropertyValue> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public ProductPropertyValueMap() {
-			Id(p => p.Id);
-			Map(p => p.Name).Length(0xffff);
-			References(p => p.Property);
-			Map(p => p.DisplayOrder);
-			Map(p => p.CreateTime);
-			Map(p => p.LastUpdated);
-			Map(p => p.Remark).Length(0xffff);
+		public virtual void Configure(IEntityMappingBuilder<ProductPropertyValue> builder) {
+			builder.Id(p => p.Id);
+			builder.Map(p => p.Name);
+			builder.References(p => p.Property);
+			builder.Map(p => p.DisplayOrder);
+			builder.Map(p => p.CreateTime);
+			builder.Map(p => p.LastUpdated);
+			builder.Map(p => p.Remark);
 		}
 	}
 }

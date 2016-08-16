@@ -11,9 +11,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 执行读取数据使用的工作
 		/// </summary>
 		/// <param name="func">工作内容</param>
-		public static void Read(Action<DatabaseContext> func) {
+		public static void Read(Action<IDatabaseContext> func) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
+			using (var context = databaseManager.CreateContext()) {
 				func(context);
 			}
 		}
@@ -23,9 +23,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 返回执行结果
 		/// </summary>
 		/// <param name="func">工作内容</param>
-		public static TResult Read<TResult>(Func<DatabaseContext, TResult> func) {
+		public static TResult Read<TResult>(Func<IDatabaseContext, TResult> func) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
+			using (var context = databaseManager.CreateContext()) {
 				return func(context);
 			}
 		}
@@ -34,11 +34,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 执行修改数据使用的工作
 		/// </summary>
 		/// <param name="func">工作内容</param>
-		public static void Write(Action<DatabaseContext> func) {
+		public static void Write(Action<IDatabaseContext> func) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
+			using (var context = databaseManager.CreateContext()) {
 				func(context);
-				context.SaveChanges();
 			}
 		}
 
@@ -47,11 +46,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// 返回执行结果
 		/// </summary>
 		/// <param name="func">工作内容</param>
-		public static TResult Write<TResult>(Func<DatabaseContext, TResult> func) {
+		public static TResult Write<TResult>(Func<IDatabaseContext, TResult> func) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
+			using (var context = databaseManager.CreateContext()) {
 				var result = func(context);
-				context.SaveChanges();
 				return result;
 			}
 		}
@@ -63,7 +61,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="func">工作内容</param>
 		public static void ReadData<TData>(Action<GenericRepository<TData>> func)
-			where TData : class {
+			where TData : class, IEntity {
 			Read(context => {
 				var repository = RepositoryResolver.Resolve<TData>(context);
 				func(repository);
@@ -78,7 +76,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <typeparam name="TResult">结果类型</typeparam>
 		/// <param name="func">工作内容</param>
 		public static TResult ReadData<TData, TResult>(Func<GenericRepository<TData>, TResult> func)
-			where TData : class {
+			where TData : class, IEntity {
 			return Read(context => {
 				var repository = RepositoryResolver.Resolve<TData>(context);
 				return func(repository);
@@ -92,7 +90,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <typeparam name="TData">数据仓储类型</typeparam>
 		/// <param name="func">工作内容</param>
 		public static void WriteData<TData>(Action<GenericRepository<TData>> func)
-			where TData : class {
+			where TData : class, IEntity {
 			Write(context => {
 				var repository = RepositoryResolver.Resolve<TData>(context);
 				func(repository);
@@ -107,7 +105,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <typeparam name="TResult">结果类型</typeparam>
 		/// <param name="func">工作内容</param>
 		public static TResult WriteData<TData, TResult>(Func<GenericRepository<TData>, TResult> func)
-			where TData : class {
+			where TData : class, IEntity {
 			return Write(context => {
 				var repository = RepositoryResolver.Resolve<TData>(context);
 				return func(repository);

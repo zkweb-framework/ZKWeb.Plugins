@@ -29,7 +29,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.ScheduledTasks {
 		public void Execute() {
 			var count = UnitOfWork.WriteData<CartProduct, long>(r => {
 				var now = DateTime.UtcNow;
-				return r.DeleteWhere(p => p.ExpireTime < now);
+				return r.BatchDelete(p => p.ExpireTime < now);
 			});
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogInfo(string.Format(

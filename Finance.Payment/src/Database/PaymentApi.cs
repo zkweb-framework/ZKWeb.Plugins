@@ -1,8 +1,7 @@
 ﻿using DotLiquid;
-using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
-using ZKWeb.Database.UserTypes;
+using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
@@ -13,7 +12,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 	/// 支付接口
 	/// 用于用户支付金钱给网站或其他用户
 	/// </summary>
-	public class PaymentApi : ILiquidizable {
+	[ExportMany]
+	public class PaymentApi :
+		ILiquidizable, IEntity<long>, IEntityMappingProvider<PaymentApi> {
 		/// <summary>
 		/// 接口Id
 		/// </summary>
@@ -85,28 +86,30 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		public override string ToString() {
 			return new T(Name);
 		}
-	}
 
-	/// <summary>
-	/// 支付接口的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class PaymentApiMap : ClassMap<PaymentApi> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public PaymentApiMap() {
-			Id(a => a.Id);
-			Map(a => a.Name);
-			Map(a => a.Type).Index("Idx_Type");
-			References(a => a.Owner).Nullable();
-			Map(a => a.ExtraData).CustomType<JsonSerializedType<PaymentApiExtraData>>();
-			Map(a => a.SupportTransactionTypes).CustomType<JsonSerializedType<List<string>>>();
-			Map(a => a.CreateTime);
-			Map(a => a.LastUpdated);
-			Map(a => a.Deleted);
-			Map(a => a.DisplayOrder);
-			Map(a => a.Remark).Length(0xffff);
+		public virtual void Configure(IEntityMappingBuilder<PaymentApi> builder) {
+			builder.Id(a => a.Id);
+			builder.Map(a => a.Name);
+			builder.Map(a => a.Type, new EntityMappingOptions() {
+				Index = "Idx_Type"
+			});
+			builder.References(a => a.Owner, new EntityMappingOptions() {
+				Nullable = true
+			});
+			builder.Map(a => a.ExtraData, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(a => a.SupportTransactionTypes, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(a => a.CreateTime);
+			builder.Map(a => a.LastUpdated);
+			builder.Map(a => a.Deleted);
+			builder.Map(a => a.DisplayOrder);
+			builder.Map(a => a.Remark);
 		}
 	}
 }

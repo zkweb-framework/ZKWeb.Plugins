@@ -1,16 +1,17 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
+	using ZKWeb.Database;
 	using Logistics = Logistics.src.Database.Logistics;
 
 	/// <summary>
 	/// 订单发货单
 	/// </summary>
-	public class OrderDelivery {
+	[ExportMany]
+	public class OrderDelivery : IEntity<long>, IEntityMappingProvider<OrderDelivery> {
 		/// <summary>
 		/// 发货单Id
 		/// </summary>
@@ -60,25 +61,23 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		public OrderDelivery() {
 			OrderProducts = new HashSet<OrderDeliveryToOrderProduct>();
 		}
-	}
 
-	/// <summary>
-	/// 订单发货单的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class OrderDeliveryMap : ClassMap<OrderDelivery> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public OrderDeliveryMap() {
-			Id(d => d.Id);
-			Map(d => d.Serial).Not.Nullable().Unique();
-			References(d => d.Order).Not.Nullable();
-			References(d => d.Operator);
-			Map(d => d.CreateTime);
-			Map(d => d.LastUpdated);
-			Map(d => d.Remark).Length(0xffff);
-			HasMany(d => d.OrderProducts).Cascade.AllDeleteOrphan();
+		public virtual void Configure(IEntityMappingBuilder<OrderDelivery> builder) {
+			builder.Id(d => d.Id);
+			builder.Map(d => d.Serial, new EntityMappingOptions() {
+				Nullable = false, Unique = true, Length = 255
+			});
+			builder.References(d => d.Order, new EntityMappingOptions() {
+				Nullable = false
+			});
+			builder.References(d => d.Operator);
+			builder.Map(d => d.CreateTime);
+			builder.Map(d => d.LastUpdated);
+			builder.Map(d => d.Remark);
+			builder.HasMany(d => d.OrderProducts);
 		}
 	}
 }

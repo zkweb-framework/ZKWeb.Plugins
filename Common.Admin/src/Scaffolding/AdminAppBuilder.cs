@@ -1,4 +1,5 @@
-﻿using ZKWeb.Plugins.Common.Admin.src.Model;
+﻿using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Admin.src.Model;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>
@@ -18,7 +19,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// </example>
 	/// <typeparam name="TData">数据类型</typeparam>
 	public abstract class AdminAppBuilder<TData> : CrudPageBuilder<TData>, IAdminApp
-		where TData : class {
+		where TData : class, IEntity {
 		/// <summary>
 		/// 格子的css类名
 		/// </summary>

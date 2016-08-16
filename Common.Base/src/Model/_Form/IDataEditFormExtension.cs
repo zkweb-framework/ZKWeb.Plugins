@@ -20,7 +20,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="form">表单</param>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="bindFrom">来源的数据</param>
-		void OnBind(TForm form, DatabaseContext context, TData bindFrom);
+		void OnBind(TForm form, IDatabaseContext context, TData bindFrom);
 
 		/// <summary>
 		/// 保存表单到数据，这个函数会在原表单保存后调用
@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="form">表单</param>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="saveTo">保存到的数据</param>
-		void OnSubmit(TForm form, DatabaseContext context, TData saveTo);
+		void OnSubmit(TForm form, IDatabaseContext context, TData saveTo);
 
 		/// <summary>
 		/// 数据保存后的处理，用于添加关联数据等
@@ -36,6 +36,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="form">表单</param>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="saved">已保存的数据，Id已分配</param>
-		void OnSubmitSaved(TForm form, DatabaseContext context, TData saved);
+		void OnSubmitSaved(TForm form, IDatabaseContext context, TData saved);
 	}
 }

@@ -1,14 +1,16 @@
 ﻿using DotLiquid;
-using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
+using ZKWeb.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 	/// <summary>
 	/// 商品类目
 	/// </summary>
-	public class ProductCategory : ILiquidizable {
+	[ExportMany]
+	public class ProductCategory : 
+		ILiquidizable, IEntity<long>, IEntityMappingProvider<ProductCategory> {
 		/// <summary>
 		/// 类目Id
 		/// </summary>
@@ -60,24 +62,18 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		public override string ToString() {
 			return Name;
 		}
-	}
 
-	/// <summary>
-	/// 商品类目的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class ProductCategoryMap : ClassMap<ProductCategory> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public ProductCategoryMap() {
-			Id(c => c.Id);
-			Map(c => c.Name);
-			HasManyToMany(c => c.Properties);
-			Map(c => c.CreateTime);
-			Map(c => c.LastUpdated);
-			Map(c => c.Deleted);
-			Map(c => c.Remark).Length(0xffff);
+		public virtual void Configure(IEntityMappingBuilder<ProductCategory> builder) {
+			builder.Id(c => c.Id);
+			builder.Map(c => c.Name);
+			builder.HasManyToMany(c => c.Properties);
+			builder.Map(c => c.CreateTime);
+			builder.Map(c => c.LastUpdated);
+			builder.Map(c => c.Deleted);
+			builder.Map(c => c.Remark);
 		}
 	}
 }

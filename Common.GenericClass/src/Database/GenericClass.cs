@@ -1,12 +1,13 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
+using ZKWeb.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.GenericClass.src.Database {
 	/// <summary>
 	/// 通用分类
 	/// </summary>
-	public class GenericClass {
+	[ExportMany]
+	public class GenericClass : IEntity<long>, IEntityMappingProvider<GenericClass> {
 		/// <summary>
 		/// 分类Id
 		/// </summary>
@@ -54,25 +55,19 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Database {
 		public override string ToString() {
 			return Name;
 		}
-	}
 
-	/// <summary>
-	/// 通用分类的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class GenericClassMap : ClassMap<GenericClass> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public GenericClassMap() {
-			Id(c => c.Id);
-			Map(c => c.Type).Index("Idx_Type");
-			References(c => c.Parent).Nullable();
-			Map(c => c.Name);
-			Map(c => c.CreateTime);
-			Map(c => c.DisplayOrder);
-			Map(c => c.Remark).Length(0xffff);
-			Map(c => c.Deleted);
+		public virtual void Configure(IEntityMappingBuilder<GenericClass> builder) {
+			builder.Id(c => c.Id);
+			builder.Map(c => c.Type, new EntityMappingOptions() { Index = "Idx_Type" });
+			builder.References(c => c.Parent, new EntityMappingOptions() { Nullable = true });
+			builder.Map(c => c.Name);
+			builder.Map(c => c.CreateTime);
+			builder.Map(c => c.DisplayOrder);
+			builder.Map(c => c.Remark);
+			builder.Map(c => c.Deleted);
 		}
 	}
 }

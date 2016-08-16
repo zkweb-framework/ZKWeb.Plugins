@@ -22,7 +22,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// <summary>
 		/// 交易创建后
 		/// </summary>
-		public void OnCreated(DatabaseContext context, PaymentTransaction transaction) {
+		public void OnCreated(IDatabaseContext context, PaymentTransaction transaction) {
 			// 记录到日志
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("OrderTransaction created: {0}", transaction.Serial));
@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// 等待付款时
 		/// </summary>
 		public void OnWaitingPaying(
-			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			// 记录到日志
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("OrderTransaction waiting paying: {0}", transaction.Serial));
@@ -42,7 +42,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// 担保交易付款后
 		/// </summary>
 		public void OnSecuredPaid(
-			DatabaseContext context, PaymentTransaction transaction,
+			IDatabaseContext context, PaymentTransaction transaction,
 			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
 			// 记录到日志
 			
@@ -56,7 +56,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// 交易成功时
 		/// </summary>
 		public void OnSuccess(
-			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			throw new NotImplementedException();
 		}
 
@@ -64,7 +64,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers {
 		/// 交易终止时
 		/// </summary>
 		public void OnAbort(
-			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			throw new NotImplementedException();
 		}
 

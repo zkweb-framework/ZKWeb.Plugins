@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Scaffolding;
 using ZKWeb.Plugins.Common.Base.src.Model;
 using ZKWeb.Plugins.Common.MenuPage.src.Extensions;
@@ -11,7 +12,7 @@ namespace ZKWeb.Plugins.Common.MenuPage.src.Scaffolding {
 	/// </summary>
 	/// <typeparam name="TData"></typeparam>
 	public abstract class CrudMenuPageBuilder<TData> : CrudPageBuilder<TData>, IMenuPage
-		where TData : class {
+		where TData : class, IEntity {
 		/// <summary>
 		/// 所属的菜单分组
 		/// </summary>

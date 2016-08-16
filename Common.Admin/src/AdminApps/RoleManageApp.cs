@@ -48,7 +48,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 过滤数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<UserRole> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<UserRole> query) {
 				query = query.FilterByRecycleBin(request);
 				var keyword = request.Keyword;
 				if (!string.IsNullOrEmpty(keyword)) {
@@ -60,7 +60,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 排序数据
 			/// </summary>
 			public void OnSort(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<UserRole> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<UserRole> query) {
 				query = query.OrderByDescending(r => r.Id);
 			}
 
@@ -120,7 +120,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 绑定数据到表单
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, UserRole bindFrom) {
+			protected override void OnBind(IDatabaseContext context, UserRole bindFrom) {
 				Name = bindFrom.Name;
 				Privileges = bindFrom.Privileges;
 				Remark = bindFrom.Remark;
@@ -129,7 +129,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, UserRole saveTo) {
+			protected override object OnSubmit(IDatabaseContext context, UserRole saveTo) {
 				saveTo.Name = Name;
 				saveTo.Privileges = Privileges;
 				saveTo.Remark = Remark;

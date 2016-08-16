@@ -10,11 +10,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.DataCallbacks {
 	/// 防止删除自身
 	/// </summary>
 	[ExportMany]
-	public class PreventDeleteSelf : IDataDeleteCallback<User>, IDataSaveCallback<User> {
-		public void AfterDelete(DatabaseContext context, User data) { }
-		public void BeforeSave(DatabaseContext context, User data) { }
+	public class PreventDeleteSelf : IEntityOperationHandler<User> {
+		public void AfterDelete(IDatabaseContext context, User data) { }
+		public void BeforeSave(IDatabaseContext context, User data) { }
 
-		public void AfterSave(DatabaseContext context, User data) {
+		public void AfterSave(IDatabaseContext context, User data) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
 			if (data.Deleted && session.ReleatedId == data.Id) {
@@ -22,7 +22,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.DataCallbacks {
 			}
 		}
 
-		public void BeforeDelete(DatabaseContext context, User data) {
+		public void BeforeDelete(IDatabaseContext context, User data) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
 			if (session.ReleatedId == data.Id) {

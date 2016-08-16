@@ -1,4 +1,5 @@
-﻿using ZKWeb.Plugins.Common.Admin.src.Model;
+﻿using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.AdminSettings.src.Model;
 using ZKWeb.Plugins.Common.MenuPage.src.Scaffolding;
 
@@ -23,7 +24,7 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding {
 	/// <typeparam name="TData">数据类型</typeparam>
 	public abstract class AdminSettingsCrudPageBuilder<TData> :
 		CrudMenuPageBuilder<TData>, IAdminSettingsMenuProvider
-		where TData : class {
+		where TData : class, IEntity {
 		/// <summary>
 		/// 默认需要管理员权限
 		/// </summary>

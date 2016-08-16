@@ -1,12 +1,13 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
+using ZKWeb.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.GenericTag.src.Database {
 	/// <summary>
 	/// 通用标签
 	/// </summary>
-	public class GenericTag {
+	[ExportMany]
+	public class GenericTag : IEntity<long>, IEntityMappingProvider<GenericTag> {
 		/// <summary>
 		/// 标签Id
 		/// </summary>
@@ -50,24 +51,18 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Database {
 		public override string ToString() {
 			return Name;
 		}
-	}
 
-	/// <summary>
-	/// 通用标签的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class GenericTagMap : ClassMap<GenericTag> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public GenericTagMap() {
-			Id(t => t.Id);
-			Map(t => t.Type).Index("Idx_Type");
-			Map(t => t.Name);
-			Map(t => t.CreateTime);
-			Map(t => t.DisplayOrder);
-			Map(t => t.Remark).Length(0xffff);
-			Map(t => t.Deleted);
+		public virtual void Configure(IEntityMappingBuilder<GenericTag> builder) {
+			builder.Id(t => t.Id);
+			builder.Map(t => t.Type, new EntityMappingOptions() { Index = "Idx_Type" });
+			builder.Map(t => t.Name);
+			builder.Map(t => t.CreateTime);
+			builder.Map(t => t.DisplayOrder);
+			builder.Map(t => t.Remark);
+			builder.Map(t => t.Deleted);
 		}
 	}
 }

@@ -47,7 +47,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 查询数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<ProductCategory> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<ProductCategory> query) {
 				// 按回收站
 				query = query.FilterByRecycleBin(request);
 				// 按关键字
@@ -62,7 +62,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// 排序数据
 			/// </summary>
 			public void OnSort(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<ProductCategory> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<ProductCategory> query) {
 				query = query.OrderByDescending(q => q.Id);
 			}
 
@@ -131,7 +131,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// <summary>
 			/// 绑定表单
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, ProductCategory bindFrom) {
+			protected override void OnBind(IDatabaseContext context, ProductCategory bindFrom) {
 				Name = bindFrom.Name;
 				SalesProperties = new HashSet<long>(
 					bindFrom.OrderedProperties().Where(p => p.IsSalesProperty).Select(p => p.Id));
@@ -143,7 +143,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.AdminApps {
 			/// <summary>
 			/// 提交表单
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, ProductCategory saveTo) {
+			protected override object OnSubmit(IDatabaseContext context, ProductCategory saveTo) {
 				if (saveTo.Id <= 0) {
 					saveTo.CreateTime = DateTime.UtcNow;
 				}

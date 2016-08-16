@@ -12,6 +12,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Model {
 		/// <param name="context">数据库上下文</param>
 		/// <param name="parameters">创建参数</param>
 		/// <returns></returns>
-		CreateOrderResult CreateOrder(DatabaseContext context, CreateOrderParameters parameters);
+		CreateOrderResult CreateOrder(IDatabaseContext context, CreateOrderParameters parameters);
 	}
 }

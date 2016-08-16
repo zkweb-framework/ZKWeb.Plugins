@@ -19,7 +19,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 		/// <summary>
 		/// 获取显示的Html
 		/// </summary>
-		public string GetDisplayHtml(DatabaseContext context, Database.Product product) {
+		public string GetDisplayHtml(IDatabaseContext context, Database.Product product) {
 			// 获取名称中带货号的属性并返回该值
 			// 没有时返回null
 			var value = product.FindPropertyValuesWhereNameContains(Name).FirstOrDefault();

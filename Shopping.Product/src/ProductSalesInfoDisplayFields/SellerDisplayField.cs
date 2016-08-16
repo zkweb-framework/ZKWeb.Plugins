@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 		/// <summary>
 		/// 获取显示的Html
 		/// </summary>
-		public string GetDisplayHtml(DatabaseContext context, Database.Product product) {
+		public string GetDisplayHtml(IDatabaseContext context, Database.Product product) {
 			var seller = product.Seller;
 			return seller == null ? null : HttpUtils.HtmlEncode(seller.Username);
 		}

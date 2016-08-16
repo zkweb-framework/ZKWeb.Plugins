@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// 交易创建后
 		/// </summary>
 		public void OnCreated(
-			DatabaseContext context, PaymentTransaction transaction) {
+			IDatabaseContext context, PaymentTransaction transaction) {
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("TestTransaction Created: {0}", transaction.Serial));
 		}
@@ -32,7 +32,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// 等待付款时
 		/// </summary>
 		public void OnWaitingPaying(
-			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("TestTransaction Waiting Paying: {0}", transaction.Serial));
 		}
@@ -42,7 +42,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// 付款后自动发货
 		/// </summary>
 		public void OnSecuredPaid(
-			DatabaseContext context, PaymentTransaction transaction,
+			IDatabaseContext context, PaymentTransaction transaction,
 			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("TestTransaction Secured Paid: {0}", transaction.Serial));
@@ -53,7 +53,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// 交易成功时
 		/// </summary>
 		public void OnSuccess(
-			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("TestTransaction Success: {0}", transaction.Serial));
 		}
@@ -62,7 +62,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// 交易终止时
 		/// </summary>
 		public void OnAbort(
-			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("TestTransaction Aborted: {0}", transaction.Serial));
 		}

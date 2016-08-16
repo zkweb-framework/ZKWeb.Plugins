@@ -20,7 +20,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <param name="context">数据库上下文</param>
 		/// <param name="transaction">支付交易</param>
 		void OnCreated(
-			DatabaseContext context,
+			IDatabaseContext context,
 			PaymentTransaction transaction);
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <param name="transaction">支付交易</param>
 		/// <param name="previousState">原有的状态</param>
 		void OnWaitingPaying(
-			DatabaseContext context,
+			IDatabaseContext context,
 			PaymentTransaction transaction,
 			PaymentTransactionState previousState);
 
@@ -47,7 +47,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <param name="previousState">原有的状态</param>
 		/// <param name="parameters">自动发货参数，需要自动发货时请添加这个参数</param>
 		void OnSecuredPaid(
-			DatabaseContext context,
+			IDatabaseContext context,
 			PaymentTransaction transaction,
 			PaymentTransactionState previousState,
 			IList<AutoSendGoodsParameters> parameters);
@@ -62,7 +62,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <param name="transaction">支付交易</param>
 		/// <param name="previousState">原有的状态</param>
 		void OnSuccess(
-			DatabaseContext context,
+			IDatabaseContext context,
 			PaymentTransaction transaction,
 			PaymentTransactionState previousState);
 
@@ -75,7 +75,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <param name="transaction">支付交易</param>
 		/// <param name="previousState">原有的状态</param>
 		void OnAbort(
-			DatabaseContext context,
+			IDatabaseContext context,
 			PaymentTransaction transaction,
 			PaymentTransactionState previousState);
 

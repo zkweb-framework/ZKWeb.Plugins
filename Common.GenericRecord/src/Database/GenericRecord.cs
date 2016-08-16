@@ -1,7 +1,5 @@
-﻿using FluentNHibernate.Mapping;
-using System;
-using System.Collections.Generic;
-using ZKWeb.Database.UserTypes;
+﻿using System;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.GenericRecord.src.Model;
 using ZKWebStandard.Ioc;
@@ -12,7 +10,8 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Database {
 	/// 删除时将直接从数据库中删除
 	/// 这个类型只应该用于记录性的数据，不应该储存有业务关联的数据
 	/// </summary>
-	public class GenericRecord {
+	[ExportMany]
+	public class GenericRecord : IEntity<long>, IEntityMappingProvider<GenericRecord> {
 		/// <summary>
 		/// 记录Id
 		/// </summary>
@@ -52,25 +51,31 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Database {
 		public GenericRecord() {
 			ExtraData = new GenericRecordExtraData();
 		}
-	}
 
-	/// <summary>
-	/// 通用记录的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class GenericRecordMap : ClassMap<GenericRecord> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public GenericRecordMap() {
-			Id(r => r.Id);
-			Map(r => r.Type).Not.Nullable().Index("Idx_Type");
-			Map(r => r.ReleatedId).Index("Idx_ReleatedId");
-			References(r => r.Creator).Nullable();
-			Map(r => r.CreateTime);
-			Map(r => r.KeepUntil).Nullable().Index("Idx_KeepUntil");
-			Map(r => r.Content);
-			Map(r => r.ExtraData).CustomType<JsonSerializedType<GenericRecordExtraData>>();
+		public virtual void Configure(IEntityMappingBuilder<GenericRecord> builder) {
+			builder.Id(r => r.Id);
+			builder.Map(r => r.Type, new EntityMappingOptions() {
+				Nullable = false,
+				Index = "Idx_Type"
+			});
+			builder.Map(r => r.ReleatedId, new EntityMappingOptions() {
+				Index = "Idx_ReleatedId"
+			});
+			builder.References(r => r.Creator, new EntityMappingOptions() {
+				Nullable = true
+			});
+			builder.Map(r => r.CreateTime);
+			builder.Map(r => r.KeepUntil, new EntityMappingOptions() {
+				Nullable = true,
+				Index = "Idx_KeepUntil"
+			});
+			builder.Map(r => r.Content);
+			builder.Map(r => r.ExtraData, new EntityMappingOptions() {
+				WithSerialization = true
+			});
 		}
 	}
 }

@@ -118,7 +118,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// 查询数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.GenericClass> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.GenericClass> query) {
 				// 提供类型给其他回调
 				request.Conditions["Type"] = Builder.Type;
 				// 按类型
@@ -135,7 +135,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// 排序数据
 			/// </summary>
 			public void OnSort(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.GenericClass> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.GenericClass> query) {
 				// 默认按显示顺序排列
 				query = query.OrderBy(q => q.DisplayOrder).ThenByDescending(q => q.Id);
 			}
@@ -227,7 +227,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// 根据当前请求传入的parentId参数获取上级分类，不存在时返回null
 			/// 这个函数只在添加时使用
 			/// </summary>
-			protected Database.GenericClass GetParentClass(DatabaseContext context) {
+			protected Database.GenericClass GetParentClass(IDatabaseContext context) {
 				var parentId = HttpManager.CurrentContext.Request.Get<long>("parentId");
 				if (parentId <= 0) {
 					return null;
@@ -244,7 +244,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// <summary>
 			/// 从数据绑定表单
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, Database.GenericClass bindFrom) {
+			protected override void OnBind(IDatabaseContext context, Database.GenericClass bindFrom) {
 				if (bindFrom.Id <= 0) {
 					// 添加时
 					var parent = GetParentClass(context);
@@ -265,7 +265,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, Database.GenericClass saveTo) {
+			protected override object OnSubmit(IDatabaseContext context, Database.GenericClass saveTo) {
 				if (saveTo.Id <= 0) {
 					// 添加时
 					saveTo.Type = Type;

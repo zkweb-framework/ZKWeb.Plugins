@@ -49,7 +49,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 		/// <summary>
 		/// 当前的数据库上下文
 		/// </summary>
-		protected DatabaseContext Context { get; set; }
+		protected IDatabaseContext Context { get; set; }
 		/// <summary>
 		/// 创建订单的结果
 		/// </summary>
@@ -324,7 +324,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.OrderCreators {
 		/// <summary>
 		/// 创建订单
 		/// </summary>
-		public virtual CreateOrderResult CreateOrder(DatabaseContext context, CreateOrderParameters parameters) {
+		public virtual CreateOrderResult CreateOrder(IDatabaseContext context, CreateOrderParameters parameters) {
 			Parameters = parameters;
 			Context = context;
 			Result = new CreateOrderResult();

@@ -70,7 +70,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		/// <summary>
 		/// 绑定数据到表单
 		/// </summary>
-		protected override void OnBind(DatabaseContext context, PaymentApi bindFrom) {
+		protected override void OnBind(IDatabaseContext context, PaymentApi bindFrom) {
 			// 获取接口类型
 			var type = bindFrom.Type ?? HttpManager.CurrentContext.Request.Get<string>("type");
 			if (string.IsNullOrEmpty(type)) {
@@ -89,7 +89,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Forms {
 		/// <summary>
 		/// 保存表单到数据
 		/// </summary>
-		protected override object OnSubmit(DatabaseContext context, PaymentApi saveTo) {
+		protected override object OnSubmit(IDatabaseContext context, PaymentApi saveTo) {
 			// 添加接口时设置类型和创建时间
 			if (saveTo.Id <= 0) {
 				saveTo.Type = HttpManager.CurrentContext.Request.Get<string>("type");

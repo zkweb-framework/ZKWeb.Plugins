@@ -52,7 +52,7 @@ namespace ZKWeb.Plugins.Common.UserContact.src.DataEditFormCallbacks {
 		/// <summary>
 		/// 绑定数据到表单
 		/// </summary>
-		public void OnBind(UserManageApp.BaseForm form, DatabaseContext context, User bindFrom) {
+		public void OnBind(UserManageApp.BaseForm form, IDatabaseContext context, User bindFrom) {
 			var contact = context.Get<Database.UserContact>(c => c.User.Id == bindFrom.Id) ??
 				new Database.UserContact();
 			Tel = contact.Tel;
@@ -65,12 +65,12 @@ namespace ZKWeb.Plugins.Common.UserContact.src.DataEditFormCallbacks {
 		/// <summary>
 		/// 保存表单到数据
 		/// </summary>
-		public void OnSubmit(UserManageApp.BaseForm form, DatabaseContext context, User saveTo) { }
+		public void OnSubmit(UserManageApp.BaseForm form, IDatabaseContext context, User saveTo) { }
 
 		/// <summary>
 		/// 保存数据后的处理
 		/// </summary>
-		public void OnSubmitSaved(UserManageApp.BaseForm form, DatabaseContext context, User saved) {
+		public void OnSubmitSaved(UserManageApp.BaseForm form, IDatabaseContext context, User saved) {
 			var contact = context.Get<Database.UserContact>(c => c.User.Id == saved.Id) ??
 				new Database.UserContact() { User = saved };
 			contact.Tel = Tel;

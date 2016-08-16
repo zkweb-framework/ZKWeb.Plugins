@@ -58,8 +58,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 		/// <param name="executor">定时任务执行器</param>
 		public void HandleTask(IScheduledTaskExecutor executor) {
 			var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
-			using (var context = databaseManager.GetContext()) {
+			using (var context = databaseManager.CreateContext()) {
 				// 从数据库获取任务的最后执行时间，判断是否需要立刻执行
+				context.BeginTransaction();
 				var task = context.Get<ScheduledTask>(t => t.Key == executor.Key);
 				if (!executor.ShouldExecuteNow(task != null ? task.LastExecuted : DateTime.MinValue)) {
 					return;
@@ -70,7 +71,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 					task = new ScheduledTask() { Key = executor.Key, CreateTime = DateTime.UtcNow };
 				}
 				context.Save(ref task, t => t.LastExecuted = DateTime.UtcNow);
-				context.SaveChanges();
+				context.FinishTransaction();
 			}
 			// 执行定时任务
 			executor.Execute();

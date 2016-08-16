@@ -15,11 +15,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 	/// 注册这个类型到IoC容器时不可以使用单例，否则多线程下会出现问题
 	/// </summary>
 	public class GenericRepository<TData> : IRepository
-		where TData : class {
+		where TData : class, IEntity {
 		/// <summary>
 		/// 数据库上下文，需要在创建后设置
 		/// </summary>
-		public virtual DatabaseContext Context { get; set; }
+		public virtual IDatabaseContext Context { get; set; }
 
 		/// <summary>
 		/// 获取满足条件的单个对象，找不到时返回null
@@ -52,8 +52,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// </summary>
 		/// <param name="expression">删除条件</param>
 		/// <returns></returns>
-		public virtual long DeleteWhere(Expression<Func<TData, bool>> expression) {
-			return Context.DeleteWhere(expression);
+		public virtual long BatchDelete(Expression<Func<TData, bool>> expression) {
+			return Context.BatchDelete(expression);
 		}
 
 		/// <summary>
@@ -170,7 +170,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 			var trait = EntityTrait.For<TData>();
 			long count = 0;
 			foreach (var id in ids) {
-				count += Context.DeleteWhere(
+				count += Context.BatchDelete(
 					ExpressionUtils.MakeMemberEqualiventExpression<TData>(
 						trait.PrimaryKey,
 						id.ConvertOrDefault(trait.PrimaryKeyType, null)));

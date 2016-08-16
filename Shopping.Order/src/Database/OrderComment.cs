@@ -1,5 +1,5 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWebStandard.Ioc;
@@ -8,7 +8,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 	/// <summary>
 	/// 订单留言
 	/// </summary>
-	public class OrderComment {
+	[ExportMany]
+	public class OrderComment : IEntity<long>, IEntityMappingProvider<OrderComment> {
 		/// <summary>
 		/// 留言Id
 		/// </summary>
@@ -34,23 +35,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		/// 创建时间
 		/// </summary>
 		public virtual DateTime CreateTime { get; set; }
-	}
 
-	/// <summary>
-	/// 订单留言的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class OrderCommentMap : ClassMap<OrderComment> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public OrderCommentMap() {
-			Id(c => c.Id);
-			References(c => c.Order).Not.Nullable();
-			References(c => c.Creator);
-			Map(c => c.Side);
-			Map(c => c.Content).Length(0xffff);
-			Map(c => c.CreateTime);
+		public virtual void Configure(IEntityMappingBuilder<OrderComment> builder) {
+			builder.Id(c => c.Id);
+			builder.References(c => c.Order, new EntityMappingOptions() {
+				Nullable = false
+			});
+			builder.References(c => c.Creator);
+			builder.Map(c => c.Side);
+			builder.Map(c => c.Content);
+			builder.Map(c => c.CreateTime);
 		}
 	}
 }

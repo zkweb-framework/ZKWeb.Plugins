@@ -1,4 +1,5 @@
-﻿using ZKWeb.Plugins.Common.Base.src.Scaffolding;
+﻿using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Base.src.Scaffolding;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>
@@ -9,7 +10,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <typeparam name="TForm">继承类自身的类型</typeparam>
 	public abstract class TabUserOwnedDataEditFormBuilder<TData, TForm> :
 		UserOwnedDataEditFormBuilder<TData, TForm>
-		where TData : class, new() {
+		where TData : class, IEntity, new() {
 		/// <summary>
 		/// 初始化
 		/// </summary>

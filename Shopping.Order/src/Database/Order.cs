@@ -1,7 +1,6 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using ZKWeb.Database.UserTypes;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWebStandard.Ioc;
@@ -10,7 +9,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 	/// <summary>
 	/// 订单
 	/// </summary>
-	public class Order {
+	[ExportMany]
+	public class Order : IEntity<long>, IEntityMappingProvider<Order> {
 		/// <summary>
 		/// 订单Id
 		/// </summary>
@@ -104,35 +104,44 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		public override string ToString() {
 			return Serial;
 		}
-	}
 
-	/// <summary>
-	/// 订单的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class OrderMap : ClassMap<Order> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public OrderMap() {
-			Id(o => o.Id);
-			Map(o => o.Serial).Not.Nullable().Unique();
-			References(o => o.Buyer);
-			Map(o => o.BuyerSessionId).Column("BuyerSessionId_").Index("Idx_BuyerSessionId_");
-			References(o => o.Seller);
-			Map(o => o.State);
-			Map(o => o.OrderParameters).CustomType<JsonSerializedType<OrderParameters>>();
-			Map(o => o.TotalCost);
-			Map(o => o.Currency).Not.Nullable();
-			Map(o => o.TotalCostCalcResult).CustomType<JsonSerializedType<OrderPriceCalcResult>>();
-			Map(o => o.OriginalTotalCostCalcResult).CustomType<JsonSerializedType<OrderPriceCalcResult>>();
-			Map(o => o.CreateTime);
-			Map(o => o.LastUpdated);
-			Map(o => o.StateTimes).CustomType<JsonSerializedType<OrderStateTimes>>();
-			Map(o => o.BuyerRemark).Length(0xffff);
-			Map(o => o.SellerRemark).Length(0xffff);
-			HasMany(o => o.OrderProducts).Cascade.AllDeleteOrphan();
-			HasMany(o => o.OrderComments).Cascade.AllDeleteOrphan();
+		public virtual void Configure(IEntityMappingBuilder<Order> builder) {
+			builder.Id(o => o.Id);
+			builder.Map(o => o.Serial, new EntityMappingOptions() {
+				Nullable = false, Unique = true, Length = 255
+			});
+			builder.References(o => o.Buyer);
+			builder.Map(o => o.BuyerSessionId, new EntityMappingOptions() {
+				Column = "BuyerSessionId_",
+				Index = "Idx_BuyerSessionId_"
+			});
+			builder.References(o => o.Seller);
+			builder.Map(o => o.State);
+			builder.Map(o => o.OrderParameters, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(o => o.TotalCost);
+			builder.Map(o => o.Currency, new EntityMappingOptions() {
+				Nullable = false
+			});
+			builder.Map(o => o.TotalCostCalcResult, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(o => o.OriginalTotalCostCalcResult, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(o => o.CreateTime);
+			builder.Map(o => o.LastUpdated);
+			builder.Map(o => o.StateTimes, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(o => o.BuyerRemark);
+			builder.Map(o => o.SellerRemark);
+			builder.HasMany(o => o.OrderProducts);
+			builder.HasMany(o => o.OrderComments);
 		}
 	}
 }

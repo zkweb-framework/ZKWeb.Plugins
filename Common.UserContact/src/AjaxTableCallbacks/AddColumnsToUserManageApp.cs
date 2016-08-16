@@ -21,9 +21,9 @@ namespace ZKWeb.Plugins.Common.UserContact.src.AjaxTableCallbacks {
 	public class AddColumnsToUserManageApp : IAjaxTableCallbackExtension<User, UserManageApp.TableCallback> {
 		public void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) { }
 
-		public void OnQuery(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) { }
+		public void OnQuery(AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<User> query) { }
 
-		public void OnSort(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) { }
+		public void OnSort(AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<User> query) { }
 
 		public void OnSelect(AjaxTableSearchRequest request, List<EntityToTableRow<User>> pairs) {
 			var contacts = UnitOfWork.ReadRepository<

@@ -46,7 +46,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 过滤数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<User> query) {
 				query = query.FilterByRecycleBin(request);
 				if (!string.IsNullOrEmpty(request.Keyword)) {
 					query = query.Where(u => u.Username.Contains(request.Keyword));
@@ -57,7 +57,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// 排序数据
 			/// </summary>
 			public void OnSort(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<User> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<User> query) {
 				query = query.OrderByDescending(u => u.Id);
 			}
 
@@ -125,7 +125,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, User saveTo) {
+			protected override object OnSubmit(IDatabaseContext context, User saveTo) {
 				// 添加时设置创建时间，并要求填密码
 				// 添加时设置用户类型是"用户"
 				if (saveTo.Id <= 0) {
@@ -153,7 +153,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 保存头像
 			/// </summary>
-			protected override void OnSubmitSaved(DatabaseContext context, User saved) {
+			protected override void OnSubmitSaved(IDatabaseContext context, User saved) {
 				var userManagr = Application.Ioc.Resolve<UserManager>();
 				if (Avatar != null) {
 					userManagr.SaveAvatar(saved.Id, Avatar.OpenReadStream());
@@ -175,12 +175,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 绑定数据到表单
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, User bindFrom) { }
+			protected override void OnBind(IDatabaseContext context, User bindFrom) { }
 
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, User saveTo) {
+			protected override object OnSubmit(IDatabaseContext context, User saveTo) {
 				saveTo.Username = Username;
 				return base.OnSubmit(context, saveTo);
 			}
@@ -196,7 +196,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.AdminApps {
 			/// <summary>
 			/// 绑定数据到表单
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, User bindFrom) {
+			protected override void OnBind(IDatabaseContext context, User bindFrom) {
 				Username = bindFrom.Username;
 			}
 		}

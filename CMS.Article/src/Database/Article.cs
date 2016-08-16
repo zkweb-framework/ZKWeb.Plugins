@@ -1,6 +1,6 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.GenericClass.src.Database;
 using ZKWeb.Plugins.Common.GenericTag.src.Database;
@@ -10,7 +10,8 @@ namespace ZKWeb.Plugins.CMS.Article.src.Database {
 	/// <summary>
 	/// 文章
 	/// </summary>
-	public class Article {
+	[ExportMany]
+	public class Article : IEntity<long>, IEntityMappingProvider<Article> {
 		/// <summary>
 		/// 文章Id
 		/// </summary>
@@ -76,29 +77,23 @@ namespace ZKWeb.Plugins.CMS.Article.src.Database {
 		public override string ToString() {
 			return Title;
 		}
-	}
 
-	/// <summary>
-	/// 文章的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class ArticleMap : ClassMap<Article> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public ArticleMap() {
-			Id(a => a.Id);
-			Map(a => a.Title).Length(0xffff);
-			Map(a => a.Summary).Length(0xffff);
-			Map(a => a.Contents).Length(0xffff);
-			References(a => a.Author);
-			Map(a => a.CreateTime);
-			Map(a => a.LastUpdated);
-			Map(a => a.DisplayOrder);
-			Map(a => a.Remark).Length(0xffff);
-			Map(a => a.Deleted);
-			HasManyToMany(a => a.Classes);
-			HasManyToMany(a => a.Tags);
+		public virtual void Configure(IEntityMappingBuilder<Article> builder) {
+			builder.Id(a => a.Id);
+			builder.Map(a => a.Title);
+			builder.Map(a => a.Summary);
+			builder.Map(a => a.Contents);
+			builder.References(a => a.Author);
+			builder.Map(a => a.CreateTime);
+			builder.Map(a => a.LastUpdated);
+			builder.Map(a => a.DisplayOrder);
+			builder.Map(a => a.Remark);
+			builder.Map(a => a.Deleted);
+			builder.HasManyToMany(a => a.Classes);
+			builder.HasManyToMany(a => a.Tags);
 		}
 	}
 }

@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 	/// <typeparam name="TData">编辑的数据类型</typeparam>
 	/// <typeparam name="TForm">继承类自身的类型</typeparam>
 	public abstract class DataEditFormBuilder<TData, TForm> : ModelFormBuilder
-		where TData : class, new() {
+		where TData : class, IEntity, new() {
 		/// <summary>
 		/// 扩展列表
 		/// </summary>
@@ -46,7 +46,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// </summary>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="bindFrom">来源的数据</param>
-		protected abstract void OnBind(DatabaseContext context, TData bindFrom);
+		protected abstract void OnBind(IDatabaseContext context, TData bindFrom);
 
 		/// <summary>
 		/// 保存表单到数据，返回处理结果
@@ -54,14 +54,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Scaffolding {
 		/// <param name="context">数据库上下文</param>
 		/// <param name="saveTo">保存到的数据</param>
 		/// <returns></returns>
-		protected abstract object OnSubmit(DatabaseContext context, TData saveTo);
+		protected abstract object OnSubmit(IDatabaseContext context, TData saveTo);
 
 		/// <summary>
 		/// 数据保存后的处理，用于添加关联数据等
 		/// </summary>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="saved">已保存的数据，Id已分配</param>
-		protected virtual void OnSubmitSaved(DatabaseContext context, TData saved) { }
+		protected virtual void OnSubmitSaved(IDatabaseContext context, TData saved) { }
 
 		/// <summary>
 		/// 获取传入参数请求的数据Id

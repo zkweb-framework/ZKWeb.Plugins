@@ -17,6 +17,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Model {
 		/// <param name="context">数据库上下文</param>
 		/// <param name="product">商品</param>
 		/// <returns></returns>
-		string GetDisplayHtml(DatabaseContext context, Database.Product product);
+		string GetDisplayHtml(IDatabaseContext context, Database.Product product);
 	}
 }

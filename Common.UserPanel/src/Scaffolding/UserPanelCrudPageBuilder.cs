@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Managers;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWeb.Plugins.Common.MenuPage.src.Scaffolding;
@@ -25,7 +26,7 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Scaffolding {
 	/// <typeparam name="TData">数据类型</typeparam>
 	public abstract class UserPanelCrudPageBuilder<TData> :
 		CrudMenuPageBuilder<TData>, IUserPanelMenuProvider
-		where TData : class {
+		where TData : class, IEntity {
 		/// <summary>
 		/// 默认需要用户登录
 		/// </summary>

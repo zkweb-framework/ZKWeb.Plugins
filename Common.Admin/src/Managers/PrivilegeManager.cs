@@ -17,6 +17,7 @@ using ZKWebStandard.Ioc;
 using ZKWeb.Web;
 using ZKWebStandard.Web;
 using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Database;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 	/// <summary>
@@ -108,7 +109,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="ids">数据Id列表</param>
 		public virtual void CheckOwnership<TData>(IList<object> ids)
-			where TData : class {
+			where TData : class, IEntity {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			if (user == null || !HasOwnership<TData>(user.Id, ids)) {
@@ -135,7 +136,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Managers {
 		/// <param name="ids">数据Id列表</param>
 		/// <returns></returns>
 		public virtual bool HasOwnership<TData>(long userId, IList<object> ids)
-			where TData : class {
+			where TData : class, IEntity {
 			// 检查数据类型是否有所属用户
 			var userOwnedTrait = UserOwnedTrait.For<TData>();
 			if (!userOwnedTrait.IsUserOwned) {

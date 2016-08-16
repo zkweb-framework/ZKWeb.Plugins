@@ -68,7 +68,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 				r.Save(ref session);
 				// 检测到会话Id有变化时删除原会话
 				if (cookieSessionId != session.Id) {
-					r.DeleteWhere(s => s.Id == cookieSessionId);
+					r.BatchDelete(s => s.Id == cookieSessionId);
 				}
 			});
 			// 发送会话Cookies到客户端
@@ -97,7 +97,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			if (string.IsNullOrEmpty(id)) {
 				return;
 			}
-			UnitOfWork.WriteData<Session>(r => r.DeleteWhere(s => s.Id == id));
+			UnitOfWork.WriteData<Session>(r => r.BatchDelete(s => s.Id == id));
 			if (removeCookie) {
 				// 删除客户端中的会话Cookie
 				context.RemoveCookie(SessionKey);

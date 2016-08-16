@@ -1,6 +1,6 @@
 ﻿using DotLiquid;
-using FluentNHibernate.Mapping;
 using System;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWebStandard.Ioc;
 
@@ -8,7 +8,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 	/// <summary>
 	/// 收货地址
 	/// </summary>
-	public class UserShippingAddress : ILiquidizable {
+	[ExportMany]
+	public class UserShippingAddress :
+		ILiquidizable, IEntity<long>, IEntityMappingProvider<UserShippingAddress> {
 		/// <summary>
 		/// 收货地址Id
 		/// </summary>
@@ -93,31 +95,29 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 		public override string ToString() {
 			return Summary;
 		}
-	}
 
-	/// <summary>
-	/// 收货地址的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class UserShippingAddressMap : ClassMap<UserShippingAddress> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public UserShippingAddressMap() {
-			Id(a => a.Id);
-			References(a => a.User).Not.Nullable();
-			Map(a => a.Country).Not.Nullable();
-			Map(a => a.RegionId);
-			Map(a => a.ZipCode);
-			Map(a => a.DetailedAddress).Length(0xffff);
-			Map(a => a.ReceiverName).Length(0xffff);
-			Map(a => a.ReceiverTel).Length(0xffff);
-			Map(a => a.Summary).Length(0xffff);
-			Map(a => a.CreateTime);
-			Map(a => a.LastUpdated);
-			Map(a => a.DisplayOrder);
-			Map(a => a.Deleted);
-			Map(a => a.Remark).Length(0xffff);
+		public virtual void Configure(IEntityMappingBuilder<UserShippingAddress> builder) {
+			builder.Id(a => a.Id);
+			builder.References(a => a.User, new EntityMappingOptions() {
+				Nullable = false
+			});
+			builder.Map(a => a.Country, new EntityMappingOptions() {
+				Nullable = false
+			});
+			builder.Map(a => a.RegionId);
+			builder.Map(a => a.ZipCode);
+			builder.Map(a => a.DetailedAddress);
+			builder.Map(a => a.ReceiverName);
+			builder.Map(a => a.ReceiverTel);
+			builder.Map(a => a.Summary);
+			builder.Map(a => a.CreateTime);
+			builder.Map(a => a.LastUpdated);
+			builder.Map(a => a.DisplayOrder);
+			builder.Map(a => a.Deleted);
+			builder.Map(a => a.Remark);
 		}
 	}
 }

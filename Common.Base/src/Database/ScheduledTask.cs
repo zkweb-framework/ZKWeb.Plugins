@@ -1,12 +1,13 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
+using ZKWeb.Database;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Base.src.Database {
 	/// <summary>
 	/// 定时任务
 	/// </summary>
-	public class ScheduledTask {
+	[ExportMany]
+	public class ScheduledTask : IEntity<long>, IEntityMappingProvider<ScheduledTask> {
 		/// <summary>
 		/// 主键，没有意义
 		/// </summary>
@@ -23,22 +24,17 @@ namespace ZKWeb.Plugins.Common.Base.src.Database {
 		/// 最后一次执行的时间
 		/// </summary>
 		public virtual DateTime LastExecuted { get; set; }
-	}
 
-	/// <summary>
-	/// 定时任务的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class ScheduledTaskMap : ClassMap<ScheduledTask> {
 		/// <summary>
-		/// 初始化
-		/// key在sqlserver中是关键字，需要改名
+		/// 配置数据库结构
 		/// </summary>
-		public ScheduledTaskMap() {
-			Id(t => t.Id);
-			Map(t => t.Key).Column("key_").Length(255).Unique();
-			Map(t => t.CreateTime);
-			Map(t => t.LastExecuted);
+		public virtual void Configure(IEntityMappingBuilder<ScheduledTask> builder) {
+			builder.Id(t => t.Id);
+			builder.Map(t => t.Key, new EntityMappingOptions() {
+				Column = "key_", Unique = true, Length = 255
+			});
+			builder.Map(t => t.CreateTime);
+			builder.Map(t => t.LastExecuted);
 		}
 	}
 }

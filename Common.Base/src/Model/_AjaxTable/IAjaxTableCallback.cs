@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="request">搜索请求</param>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="query">查询对象</param>
-		void OnQuery(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<T> query);
+		void OnQuery(AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<T> query);
 
 		/// <summary>
 		/// 排序数据
@@ -31,7 +31,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <param name="request">搜索请求</param>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="query">查询对象</param>
-		void OnSort(AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<T> query);
+		void OnSort(AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<T> query);
 
 		/// <summary>
 		/// 选择需要的字段

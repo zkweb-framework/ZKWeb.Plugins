@@ -104,7 +104,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Managers {
 			// 从缓存删除
 			ConfigValueCache.Remove(typeof(T));
 			// 从数据库删除
-			UnitOfWork.WriteData<GenericConfig>(r => r.DeleteWhere(c => c.Key == key));
+			UnitOfWork.WriteData<GenericConfig>(r => r.BatchDelete(c => c.Key == key));
 		}
 
 		/// <summary>

@@ -16,6 +16,7 @@ using ZKWebStandard.Extensions;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Web;
+using ZKWeb.Database;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <summary>
@@ -24,7 +25,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Scaffolding {
 	/// <typeparam name="TData">数据类型</typeparam>
 	public abstract class CrudPageBuilder<TData> :
 		ICrudPageBuilder, IPrivilegesProvider, IWebsiteStartHandler
-		where TData : class {
+		where TData : class, IEntity {
 		/// <summary>
 		/// 名称
 		/// </summary>

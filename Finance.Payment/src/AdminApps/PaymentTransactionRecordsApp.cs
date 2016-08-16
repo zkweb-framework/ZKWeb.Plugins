@@ -52,7 +52,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// 过滤数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<PaymentTransaction> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<PaymentTransaction> query) {
 				// 按回收站
 				query = query.FilterByRecycleBin(request);
 				// 按关键字
@@ -71,7 +71,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// 排序数据
 			/// </summary>
 			public void OnSort(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<PaymentTransaction> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<PaymentTransaction> query) {
 				query = query.OrderByDescending(t => t.Id);
 			}
 
@@ -205,7 +205,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// <summary>
 			/// 绑定数据到表单
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, PaymentTransaction bindFrom) {
+			protected override void OnBind(IDatabaseContext context, PaymentTransaction bindFrom) {
 				var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
 				var currency = currencyManager.GetCurrency(bindFrom.CurrencyType);
 				var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
@@ -228,7 +228,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.AdminApps {
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, PaymentTransaction saveTo) {
+			protected override object OnSubmit(IDatabaseContext context, PaymentTransaction saveTo) {
 				saveTo.Remark = Remark;
 				return new {
 					message = new T("Saved Successfully"),

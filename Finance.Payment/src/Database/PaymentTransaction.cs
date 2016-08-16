@@ -1,7 +1,6 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using ZKWeb.Database.UserTypes;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Model;
 using ZKWebStandard.Ioc;
@@ -11,7 +10,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 	/// 支付交易
 	/// 用于储存单笔交易的信息
 	/// </summary>
-	public class PaymentTransaction {
+	[ExportMany]
+	public class PaymentTransaction : IEntity<long>, IEntityMappingProvider<PaymentTransaction> {
 		/// <summary>
 		/// 交易Id
 		/// </summary>
@@ -115,37 +115,55 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Database {
 		public override string ToString() {
 			return Serial;
 		}
-	}
 
-	/// <summary>
-	/// 支付交易的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class PaymentTransactionMap : ClassMap<PaymentTransaction> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public PaymentTransactionMap() {
-			Id(t => t.Id);
-			Map(t => t.Serial).Not.Nullable().Unique();
-			Map(t => t.Type).Index("Idx_Type");
-			References(t => t.Api).Not.Nullable();
-			Map(t => t.ExternalSerial).Index("Idx_ExternalSerial");
-			Map(t => t.Amount).Index("Idx_Amount");
-			Map(t => t.PaymentFee).Index("Idx_PaymentFee");
-			Map(t => t.CurrencyType).Index("Idx_CurrencyType");
-			References(t => t.Payer).Nullable();
-			References(t => t.Payee).Nullable();
-			Map(t => t.ReleatedId).Index("Idx_ReleatedId");
-			HasMany(t => t.ReleatedTransactions);
-			Map(t => t.Description).Length(0xffff);
-			Map(t => t.State).Index("Idx_State");
-			Map(t => t.ExtraData).CustomType<JsonSerializedType<PaymentTransactionExtraData>>();
-			Map(t => t.LastError).Length(0xffff);
-			Map(t => t.CreateTime);
-			Map(t => t.LastUpdated);
-			Map(t => t.Deleted);
-			Map(t => t.Remark).Length(0xffff);
+		public virtual void Configure(IEntityMappingBuilder<PaymentTransaction> builder) {
+			builder.Id(t => t.Id);
+			builder.Map(t => t.Serial, new EntityMappingOptions() {
+				Nullable = false, Unique = true, Length = 255
+			});
+			builder.Map(t => t.Type, new EntityMappingOptions() {
+				Index = "Idx_Type"
+			});
+			builder.References(t => t.Api, new EntityMappingOptions() {
+				Nullable = false
+			});
+			builder.Map(t => t.ExternalSerial, new EntityMappingOptions() {
+				Index = "Idx_ExternalSerial"
+			});
+			builder.Map(t => t.Amount, new EntityMappingOptions() {
+				Index = "Idx_Amount"
+			});
+			builder.Map(t => t.PaymentFee, new EntityMappingOptions() {
+				Index = "Idx_PaymentFee"
+			});
+			builder.Map(t => t.CurrencyType, new EntityMappingOptions() {
+				Index = "Idx_CurrencyType"
+			});
+			builder.References(t => t.Payer, new EntityMappingOptions() {
+				Nullable = true
+			});
+			builder.References(t => t.Payee, new EntityMappingOptions() {
+				Nullable = true
+			});
+			builder.Map(t => t.ReleatedId, new EntityMappingOptions() {
+				Index = "Idx_ReleatedId"
+			});
+			builder.HasMany(t => t.ReleatedTransactions);
+			builder.Map(t => t.Description);
+			builder.Map(t => t.State, new EntityMappingOptions() {
+				Index = "Idx_State"
+			});
+			builder.Map(t => t.ExtraData, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(t => t.LastError);
+			builder.Map(t => t.CreateTime);
+			builder.Map(t => t.LastUpdated);
+			builder.Map(t => t.Deleted);
+			builder.Map(t => t.Remark);
 		}
 	}
 }

@@ -8,6 +8,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Model {
 		/// <summary>
 		/// 当前使用的数据库上下文
 		/// </summary>
-		DatabaseContext Context { get; set; }
+		IDatabaseContext Context { get; set; }
 	}
 }

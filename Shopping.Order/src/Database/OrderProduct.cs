@@ -1,18 +1,18 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using ZKWeb.Database.UserTypes;
 using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
-using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Database {
+	using ZKWeb.Database;
+	using ZKWebStandard.Ioc;
 	using Product = Product.src.Database.Product;
 
 	/// <summary>
 	/// 订单商品
 	/// </summary>
-	public class OrderProduct {
+	[ExportMany]
+	public class OrderProduct : IEntity<long>, IEntityMappingProvider<OrderProduct> {
 		/// <summary>
 		/// 订单商品Id
 		/// </summary>
@@ -71,29 +71,35 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Database {
 			MatchParameters = new ProductMatchParameters();
 			PropertyValues = new HashSet<OrderProductToPropertyValue>();
 		}
-	}
 
-	/// <summary>
-	/// 订单商品的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class OrderProductMap : ClassMap<OrderProduct> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public OrderProductMap() {
-			Id(p => p.Id);
-			References(p => p.Order).Not.Nullable();
-			References(p => p.Product).Not.Nullable();
-			Map(p => p.MatchParameters).CustomType<JsonSerializedType<ProductMatchParameters>>();
-			Map(p => p.Count);
-			Map(p => p.UnitPrice);
-			Map(p => p.Currency).Not.Nullable();
-			Map(p => p.UnitPriceCalcResult).CustomType<JsonSerializedType<OrderPriceCalcResult>>();
-			Map(p => p.OriginalUnitPriceCalcResult).CustomType<JsonSerializedType<OrderPriceCalcResult>>();
-			Map(p => p.CreateTime);
-			Map(p => p.LastUpdated);
-			HasMany(p => p.PropertyValues).Cascade.AllDeleteOrphan();
+		public virtual void Configure(IEntityMappingBuilder<OrderProduct> builder) {
+			builder.Id(p => p.Id);
+			builder.References(p => p.Order, new EntityMappingOptions() {
+				Nullable = false
+			});
+			builder.References(p => p.Product, new EntityMappingOptions() {
+				Nullable = false
+			});
+			builder.Map(p => p.MatchParameters, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(p => p.Count);
+			builder.Map(p => p.UnitPrice);
+			builder.Map(p => p.Currency, new EntityMappingOptions() {
+				Nullable = false
+			});
+			builder.Map(p => p.UnitPriceCalcResult, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(p => p.OriginalUnitPriceCalcResult, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.Map(p => p.CreateTime);
+			builder.Map(p => p.LastUpdated);
+			builder.HasMany(p => p.PropertyValues);
 		}
 	}
 }

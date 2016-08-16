@@ -26,7 +26,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <param name="form">表单</param>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="bindFrom">支付接口</param>
-		void OnFormBind(PaymentApiEditForm form, DatabaseContext context, PaymentApi bindFrom);
+		void OnFormBind(PaymentApiEditForm form, IDatabaseContext context, PaymentApi bindFrom);
 
 		/// <summary>
 		/// 后台编辑表单保存时的处理
@@ -34,7 +34,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <param name="form">表单</param>
 		/// <param name="context">数据库上下文</param>
 		/// <param name="saveTo">支付接口</param>
-		void OnFormSubmit(PaymentApiEditForm form, DatabaseContext context, PaymentApi saveTo);
+		void OnFormSubmit(PaymentApiEditForm form, IDatabaseContext context, PaymentApi saveTo);
 
 		/// <summary>
 		/// 计算支付手续费
@@ -62,6 +62,6 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Model {
 		/// <param name="transaction">支付交易</param>
 		/// <param name="logisticsName">快递或物流名称</param>
 		/// <param name="invoiceNo">发货单号</param>
-		void SendGoods(DatabaseContext context, PaymentTransaction transaction, string logisticsName, string invoiceNo);
+		void SendGoods(IDatabaseContext context, PaymentTransaction transaction, string logisticsName, string invoiceNo);
 	}
 }

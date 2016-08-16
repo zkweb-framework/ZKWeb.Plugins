@@ -1,5 +1,4 @@
-﻿using FluentNHibernate.Mapping;
-using ZKWeb.Database.UserTypes;
+﻿using ZKWeb.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Ioc;
 
@@ -7,7 +6,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 	/// <summary>
 	/// 商品匹配数据
 	/// </summary>
-	public class ProductMatchedData {
+	[ExportMany]
+	public class ProductMatchedData : IEntity<long>, IEntityMappingProvider<ProductMatchedData> {
 		/// <summary>
 		/// 数据Id
 		/// 因为数据在编辑时会删除重建，其他表不能关联这里的Id
@@ -57,27 +57,21 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 			Conditions = new ProductMatchedDataConditions();
 			Affects = new ProductMatchedDataAffects();
 		}
-	}
 
-	/// <summary>
-	/// 商品匹配数据的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class ProductMatchedDataMap : ClassMap<ProductMatchedData> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public ProductMatchedDataMap() {
-			Id(d => d.Id);
-			References(d => d.Product);
-			Map(d => d.Conditions).CustomType<JsonSerializedType<ProductMatchedDataConditions>>();
-			Map(d => d.Affects).CustomType<JsonSerializedType<ProductMatchedDataAffects>>();
-			Map(d => d.Price);
-			Map(d => d.PriceCurrency);
-			Map(d => d.Weight);
-			Map(d => d.Stock);
-			Map(d => d.MatchOrder);
-			Map(d => d.Remark).Length(0xffff);
+		public virtual void Configure(IEntityMappingBuilder<ProductMatchedData> builder) {
+			builder.Id(d => d.Id);
+			builder.References(d => d.Product);
+			builder.Map(d => d.Conditions, new EntityMappingOptions() { WithSerialization = true });
+			builder.Map(d => d.Affects, new EntityMappingOptions() { WithSerialization = true });
+			builder.Map(d => d.Price);
+			builder.Map(d => d.PriceCurrency);
+			builder.Map(d => d.Weight);
+			builder.Map(d => d.Stock);
+			builder.Map(d => d.MatchOrder);
+			builder.Map(d => d.Remark);
 		}
 	}
 }

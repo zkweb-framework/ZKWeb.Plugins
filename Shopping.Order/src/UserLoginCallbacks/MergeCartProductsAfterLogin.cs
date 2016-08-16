@@ -20,7 +20,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserLoginCallbacks {
 		/// <summary>
 		/// 查找用户，这里不负责查找
 		/// </summary>
-		public User FindUser(DatabaseContext context, string username) {
+		public User FindUser(IDatabaseContext context, string username) {
 			return null;
 		}
 

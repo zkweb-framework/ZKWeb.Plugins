@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks {
 		/// 过滤数据
 		/// </summary>
 		public void OnQuery(
-			StaticTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Product> query) {
+			StaticTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.Product> query) {
 			// 按分类
 			var classId = request.Conditions.GetOrDefault<long?>("class");
 			if (classId != null) {
@@ -55,7 +55,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.StaticTableCallbacks {
 		/// 排序数据
 		/// </summary>
 		public void OnSort(
-			StaticTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Product> query) {
+			StaticTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.Product> query) {
 			var order = request.Conditions.GetOrDefault<string>("order");
 			if (order == "best_sales") {
 				// 最佳销量

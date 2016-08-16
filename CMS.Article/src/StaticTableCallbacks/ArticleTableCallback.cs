@@ -14,7 +14,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.StaticTableCallbacks {
 		/// 过滤数据
 		/// </summary>
 		public void OnQuery(
-			StaticTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Article> query) {
+			StaticTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.Article> query) {
 			// 按分类
 			var classId = request.Conditions.GetOrDefault<long?>("class");
 			if (classId != null) {
@@ -40,7 +40,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.StaticTableCallbacks {
 		/// 排序数据
 		/// </summary>
 		public void OnSort(
-			StaticTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Article> query) {
+			StaticTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.Article> query) {
 			// 默认先按显示顺序再按更新时间排序
 			query = query.OrderBy(q => q.DisplayOrder).ThenByDescending(q => q.LastUpdated);
 		}

@@ -1,8 +1,7 @@
 ﻿using DotLiquid;
-using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
-using ZKWeb.Database.UserTypes;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Shopping.Logistics.src.Model;
 using ZKWebStandard.Ioc;
@@ -11,7 +10,8 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Database {
 	/// <summary>
 	/// 物流
 	/// </summary>
-	public class Logistics : ILiquidizable {
+	[ExportMany]
+	public class Logistics : ILiquidizable, IEntity<long>, IEntityMappingProvider<Logistics> {
 		/// <summary>
 		/// 物流Id
 		/// </summary>
@@ -76,27 +76,25 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Database {
 		public override string ToString() {
 			return Name;
 		}
-	}
 
-	/// <summary>
-	/// 物流的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class LogisticsMap : ClassMap<Logistics> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public LogisticsMap() {
-			Id(l => l.Id);
-			Map(l => l.Name);
-			Map(l => l.Type).Index("Idx_Type");
-			Map(l => l.PriceRules).CustomType<JsonSerializedType<List<PriceRule>>>();
-			References(l => l.Owner);
-			Map(l => l.CreateTime);
-			Map(l => l.LastUpdated);
-			Map(l => l.Deleted);
-			Map(l => l.DisplayOrder);
-			Map(l => l.Remark).Length(0xffff);
+		public virtual void Configure(IEntityMappingBuilder<Logistics> builder) {
+			builder.Id(l => l.Id);
+			builder.Map(l => l.Name);
+			builder.Map(l => l.Type, new EntityMappingOptions() {
+				Index = "Idx_Type"
+			});
+			builder.Map(l => l.PriceRules, new EntityMappingOptions() {
+				WithSerialization = true
+			});
+			builder.References(l => l.Owner);
+			builder.Map(l => l.CreateTime);
+			builder.Map(l => l.LastUpdated);
+			builder.Map(l => l.Deleted);
+			builder.Map(l => l.DisplayOrder);
+			builder.Map(l => l.Remark);
 		}
 	}
 }

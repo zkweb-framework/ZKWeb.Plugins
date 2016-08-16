@@ -18,8 +18,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <typeparam name="TData">数据类型</typeparam>
 		/// <param name="context">数据库上下文</param>
 		/// <returns></returns>
-		public static GenericRepository<TData> Resolve<TData>(DatabaseContext context)
-			where TData : class {
+		public static GenericRepository<TData> Resolve<TData>(IDatabaseContext context)
+			where TData : class, IEntity {
 			var repository = Application.Ioc.ResolveMany<GenericRepository<TData>>().LastOrDefault();
 			repository = repository ?? new GenericRepository<TData>();
 			repository.Context = context;
@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Repositories {
 		/// <typeparam name="TRepository">数据仓储类型</typeparam>
 		/// <param name="context">数据库上下文</param>
 		/// <returns></returns>
-		public static TRepository ResolveRepository<TRepository>(DatabaseContext context)
+		public static TRepository ResolveRepository<TRepository>(IDatabaseContext context)
 			where TRepository : IRepository {
 			var repository = Application.Ioc.ResolveMany<TRepository>().Last();
 			repository.Context = context;

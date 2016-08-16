@@ -1,6 +1,6 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWeb.Plugins.Common.GenericClass.src.Database;
 using ZKWeb.Plugins.Common.GenericTag.src.Database;
@@ -10,7 +10,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 	/// <summary>
 	/// 商品
 	/// </summary>
-	public class Product {
+	[ExportMany]
+	public class Product : IEntity<long>, IEntityMappingProvider<Product> {
 		/// <summary>
 		/// 商品Id
 		/// </summary>
@@ -94,33 +95,33 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		public override string ToString() {
 			return Name;
 		}
-	}
 
-	/// <summary>
-	/// 商品的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class ProductMap : ClassMap<Product> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public ProductMap() {
-			Id(p => p.Id);
-			References(p => p.Category).Index("Idx_Category");
-			Map(p => p.Name).Length(0xffff);
-			Map(p => p.Introduction).Length(0xffff);
-			Map(p => p.Type).Not.Nullable().Index("Idx_Type");
-			Map(p => p.State).Not.Nullable().Index("Idx_State");
-			References(p => p.Seller);
-			Map(p => p.CreateTime);
-			Map(p => p.LastUpdated);
-			Map(p => p.DisplayOrder);
-			Map(p => p.Remark).Length(0xffff);
-			Map(p => p.Deleted);
-			HasManyToMany(p => p.Classes);
-			HasManyToMany(p => p.Tags);
-			HasMany(p => p.MatchedDatas).Cascade.AllDeleteOrphan();
-			HasMany(p => p.PropertyValues).Cascade.AllDeleteOrphan();
+		public virtual void Configure(IEntityMappingBuilder<Product> builder) {
+			builder.Id(p => p.Id);
+			builder.References(p => p.Category, new EntityMappingOptions() {
+				Index = "Idx_Category"
+			});
+			builder.Map(p => p.Name);
+			builder.Map(p => p.Introduction);
+			builder.Map(p => p.Type, new EntityMappingOptions() {
+				Nullable = false, Index = "Idx_Type"
+			});
+			builder.Map(p => p.State, new EntityMappingOptions() {
+				Nullable = false, Index = "Idx_State"
+			});
+			builder.References(p => p.Seller);
+			builder.Map(p => p.CreateTime);
+			builder.Map(p => p.LastUpdated);
+			builder.Map(p => p.DisplayOrder);
+			builder.Map(p => p.Remark);
+			builder.Map(p => p.Deleted);
+			builder.HasManyToMany(p => p.Classes);
+			builder.HasManyToMany(p => p.Tags);
+			builder.HasMany(p => p.MatchedDatas);
+			builder.HasMany(p => p.PropertyValues);
 		}
 	}
 }

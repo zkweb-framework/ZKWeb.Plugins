@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.ProductSalesInfoDisplayFields {
 		/// <summary>
 		/// 获取显示的Html
 		/// </summary>
-		public string GetDisplayHtml(DatabaseContext context, Database.Product product) {
+		public string GetDisplayHtml(IDatabaseContext context, Database.Product product) {
 			// 获取最小和最大重量
 			var weights = product.MatchedDatas.Where(d => d.Weight != null).Select(d => d.Weight.Value);
 			var min = weights.Any() ? weights.Min() : 0;

@@ -1,4 +1,5 @@
-﻿using FluentNHibernate.Mapping;
+﻿using System;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Database;
 using ZKWebStandard.Ioc;
 
@@ -6,7 +7,8 @@ namespace ZKWeb.Plugins.Common.UserContact.src.Database {
 	/// <summary>
 	/// 用户的联系信息
 	/// </summary>
-	public class UserContact {
+	[ExportMany]
+	public class UserContact : IEntity<long>, IEntityMappingProvider<UserContact> {
 		/// <summary>
 		/// 信息Id
 		/// </summary>
@@ -35,24 +37,20 @@ namespace ZKWeb.Plugins.Common.UserContact.src.Database {
 		/// 地址
 		/// </summary>
 		public virtual string Address { get; set; }
-	}
 
-	/// <summary>
-	/// 联系信息的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class UserContactMap : ClassMap<UserContact> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public UserContactMap() {
-			Id(c => c.Id);
-			References(c => c.User).Not.Nullable().Unique();
-			Map(c => c.Tel);
-			Map(c => c.Mobile);
-			Map(c => c.QQ);
-			Map(c => c.Email);
-			Map(c => c.Address).Length(0xffff);
+		public virtual void Configure(IEntityMappingBuilder<UserContact> builder) {
+			builder.Id(c => c.Id);
+			builder.References(c => c.User, new EntityMappingOptions() {
+				Nullable = false, Unique = true
+			});
+			builder.Map(c => c.Tel);
+			builder.Map(c => c.Mobile);
+			builder.Map(c => c.QQ);
+			builder.Map(c => c.Email);
+			builder.Map(c => c.Address);
 		}
 	}
 }

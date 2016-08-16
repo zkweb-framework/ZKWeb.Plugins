@@ -35,7 +35,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.PaymentApiHandlers {
 		/// <summary>
 		/// 后台编辑表单绑定时的处理
 		/// </summary>
-		public void OnFormBind(PaymentApiEditForm form, DatabaseContext context, PaymentApi bindFrom) {
+		public void OnFormBind(PaymentApiEditForm form, IDatabaseContext context, PaymentApi bindFrom) {
 			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
 			ApiDataEditing.PartnerId = apiData.PartnerId;
 			ApiDataEditing.PartnerKey = apiData.PartnerKey;
@@ -47,7 +47,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.PaymentApiHandlers {
 		/// <summary>
 		/// 后台编辑表单保存时的处理
 		/// </summary>
-		public void OnFormSubmit(PaymentApiEditForm form, DatabaseContext context, PaymentApi saveTo) {
+		public void OnFormSubmit(PaymentApiEditForm form, IDatabaseContext context, PaymentApi saveTo) {
 			saveTo.ExtraData["ApiData"] = ApiDataEditing;
 		}
 
@@ -69,7 +69,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.PaymentApiHandlers {
 		/// 调用发货接口
 		/// </summary>
 		public void SendGoods(
-			DatabaseContext context, PaymentTransaction transaction, string logisticsName, string invoiceNo) {
+			IDatabaseContext context, PaymentTransaction transaction, string logisticsName, string invoiceNo) {
 			throw new NotImplementedException();
 		}
 

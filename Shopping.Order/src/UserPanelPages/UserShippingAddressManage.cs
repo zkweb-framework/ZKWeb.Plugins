@@ -50,7 +50,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			/// 过滤数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<UserShippingAddress> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<UserShippingAddress> query) {
 				// 按所属用户
 				query = query.FilterByOwnedUser();
 				// 按回收站
@@ -65,7 +65,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			/// 排序数据
 			/// </summary>
 			public void OnSort(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<UserShippingAddress> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<UserShippingAddress> query) {
 				query = query.OrderByDescending(q => q.Id);
 			}
 
@@ -149,7 +149,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			/// <summary>
 			/// 绑定表单
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, UserShippingAddress bindFrom) {
+			protected override void OnBind(IDatabaseContext context, UserShippingAddress bindFrom) {
 				Region = new CountryAndRegion(bindFrom.Country, bindFrom.RegionId);
 				ZipCode = bindFrom.ZipCode;
 				DetailedAddress = bindFrom.DetailedAddress;
@@ -162,7 +162,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			/// <summary>
 			/// 提交表单
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, UserShippingAddress saveTo) {
+			protected override object OnSubmit(IDatabaseContext context, UserShippingAddress saveTo) {
 				if (saveTo.Id <= 0) {
 					saveTo.CreateTime = DateTime.UtcNow;
 					AssignOwnedUser(context, saveTo);

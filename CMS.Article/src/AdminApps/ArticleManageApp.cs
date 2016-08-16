@@ -53,7 +53,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 			/// 查询数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Article> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.Article> query) {
 				// 按回收站
 				query = query.FilterByRecycleBin(request);
 				// 按关键字
@@ -69,7 +69,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 			/// 排序数据
 			/// </summary>
 			public void OnSort(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.Article> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.Article> query) {
 				query = query.OrderByDescending(a => a.Id);
 			}
 
@@ -160,7 +160,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 			/// <summary>
 			/// 绑定表单
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, Database.Article bindFrom) {
+			protected override void OnBind(IDatabaseContext context, Database.Article bindFrom) {
 				Title = bindFrom.Title;
 				Summary = bindFrom.Summary;
 				ArticleClass = new HashSet<long>(bindFrom.Classes.Select(c => c.Id));
@@ -173,7 +173,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.AdminApps {
 			/// <summary>
 			/// 提交表单
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, Database.Article saveTo) {
+			protected override object OnSubmit(IDatabaseContext context, Database.Article saveTo) {
 				if (saveTo.Id <= 0) {
 					var sessionManager = Application.Ioc.Resolve<SessionManager>();
 					var session = sessionManager.GetSession();

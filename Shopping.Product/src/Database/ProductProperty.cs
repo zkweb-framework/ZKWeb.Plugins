@@ -1,7 +1,7 @@
 ﻿using DotLiquid;
-using FluentNHibernate.Mapping;
 using System;
 using System.Collections.Generic;
+using ZKWeb.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Model;
 using ZKWebStandard.Ioc;
 
@@ -9,7 +9,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 	/// <summary>
 	/// 商品属性
 	/// </summary>
-	public class ProductProperty : ILiquidizable {
+	[ExportMany]
+	public class ProductProperty :
+		ILiquidizable, IEntity<long>, IEntityMappingProvider<ProductProperty> {
 		/// <summary>
 		/// 属性Id
 		/// </summary>
@@ -78,27 +80,21 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Database {
 		public override string ToString() {
 			return Name;
 		}
-	}
 
-	/// <summary>
-	/// 商品属性的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class ProductPropertyMap : ClassMap<ProductProperty> {
 		/// <summary>
-		/// 初始化
+		/// 配置数据库结构
 		/// </summary>
-		public ProductPropertyMap() {
-			Id(p => p.Id);
-			Map(p => p.Name);
-			Map(p => p.IsSalesProperty);
-			Map(p => p.ControlType);
-			HasMany(p => p.PropertyValues).Cascade.AllDeleteOrphan();
-			Map(p => p.DisplayOrder);
-			Map(p => p.CreateTime);
-			Map(p => p.LastUpdated);
-			Map(p => p.Deleted);
-			Map(p => p.Remark).Length(0xffff);
+		public virtual void Configure(IEntityMappingBuilder<ProductProperty> builder) {
+			builder.Id(p => p.Id);
+			builder.Map(p => p.Name);
+			builder.Map(p => p.IsSalesProperty);
+			builder.Map(p => p.ControlType);
+			builder.HasMany(p => p.PropertyValues);
+			builder.Map(p => p.DisplayOrder);
+			builder.Map(p => p.CreateTime);
+			builder.Map(p => p.LastUpdated);
+			builder.Map(p => p.Deleted);
+			builder.Map(p => p.Remark);
 		}
 	}
 }

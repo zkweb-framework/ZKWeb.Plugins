@@ -22,7 +22,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// <summary>
 		/// 交易创建后
 		/// </summary>
-		public virtual void OnCreated(DatabaseContext context, PaymentTransaction transaction) {
+		public virtual void OnCreated(IDatabaseContext context, PaymentTransaction transaction) {
 			foreach (var childTransaction in transaction.ReleatedTransactions) {
 				var handlers = childTransaction.GetHandlers();
 				handlers.ForEach(h => h.OnCreated(context, childTransaction));
@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// 等待付款时
 		/// </summary>
 		public virtual void OnWaitingPaying(
-			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			foreach (var childTransaction in transaction.ReleatedTransactions) {
 				var handlers = childTransaction.GetHandlers();
 				handlers.ForEach(h => h.OnWaitingPaying(context, childTransaction, previousState));
@@ -44,7 +44,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// 担保交易付款后
 		/// </summary>
 		public virtual void OnSecuredPaid(
-			DatabaseContext context, PaymentTransaction transaction,
+			IDatabaseContext context, PaymentTransaction transaction,
 			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
 			foreach (var childTransaction in transaction.ReleatedTransactions) {
 				var handlers = childTransaction.GetHandlers();
@@ -56,7 +56,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// 交易成功时
 		/// </summary>
 		public virtual void OnSuccess(
-			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			foreach (var childTransaction in transaction.ReleatedTransactions) {
 				var handlers = childTransaction.GetHandlers();
 				handlers.ForEach(h => h.OnSuccess(context, childTransaction, previousState));
@@ -68,7 +68,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers {
 		/// 不会终止关联交易，只会清除所有关联交易
 		/// </summary>
 		public virtual void OnAbort(
-			DatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
 			transaction.ReleatedTransactions.Clear();
 		}
 

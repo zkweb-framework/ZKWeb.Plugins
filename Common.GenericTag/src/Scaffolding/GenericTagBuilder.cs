@@ -100,7 +100,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 			/// 查询数据
 			/// </summary>
 			public void OnQuery(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.GenericTag> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.GenericTag> query) {
 				// 在第一页显示所有分类
 				request.PageNo = 0;
 				request.PageSize = 0x7ffffffe;
@@ -120,7 +120,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 			/// 排序数据
 			/// </summary>
 			public void OnSort(
-				AjaxTableSearchRequest request, DatabaseContext context, ref IQueryable<Database.GenericTag> query) {
+				AjaxTableSearchRequest request, IDatabaseContext context, ref IQueryable<Database.GenericTag> query) {
 				// 默认按显示顺序排列
 				query = query.OrderBy(q => q.DisplayOrder).ThenByDescending(q => q.Id);
 			}
@@ -196,7 +196,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 			/// <summary>
 			/// 绑定数据到表单
 			/// </summary>
-			protected override void OnBind(DatabaseContext context, Database.GenericTag bindFrom) {
+			protected override void OnBind(IDatabaseContext context, Database.GenericTag bindFrom) {
 				if (bindFrom.Id > 0 && bindFrom.Type != Type) {
 					// 检查类型，防止越权操作
 					throw new ForbiddenException(new T("Try to access tag that type not matched"));
@@ -209,7 +209,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Scaffolding {
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
-			protected override object OnSubmit(DatabaseContext context, Database.GenericTag saveTo) {
+			protected override object OnSubmit(IDatabaseContext context, Database.GenericTag saveTo) {
 				if (saveTo.Id <= 0) {
 					// 添加时
 					saveTo.Type = Type;

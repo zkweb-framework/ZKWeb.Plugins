@@ -1,16 +1,16 @@
-﻿using FluentNHibernate.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using ZKWeb.Database.UserTypes;
 using ZKWeb.Plugins.Common.Admin.src.Model;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
+using ZKWeb.Database;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Database {
 	/// <summary>
 	/// 用户
 	/// </summary>
-	public class User {
+	[ExportMany]
+	public class User : IEntity<long>, IEntityMappingProvider<User> {
 		/// <summary>
 		/// 用户Id
 		/// </summary>
@@ -59,6 +59,22 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 		public override string ToString() {
 			return Username;
 		}
+
+		/// <summary>
+		/// 配置数据库结构
+		/// </summary>
+		public virtual void Configure(IEntityMappingBuilder<User> builder) {
+			builder.Id(u => u.Id);
+			builder.Map(u => u.Type, new EntityMappingOptions() { Index = "Idx_Type" });
+			builder.Map(u => u.Username, new EntityMappingOptions() {
+				Unique = true, Length = 255
+			});
+			builder.Map(u => u.Password, new EntityMappingOptions() { WithSerialization = true });
+			builder.Map(u => u.CreateTime);
+			builder.HasManyToMany(u => u.Roles);
+			builder.Map(u => u.Items, new EntityMappingOptions() { WithSerialization = true });
+			builder.Map(u => u.Deleted);
+		}
 	}
 
 	/// <summary>
@@ -83,26 +99,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Database {
 				return false;
 			}
 			return user.Password.Check(password);
-		}
-	}
-
-	/// <summary>
-	/// 用户的数据库结构
-	/// </summary>
-	[ExportMany]
-	public class UserMap : ClassMap<User> {
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		public UserMap() {
-			Id(u => u.Id);
-			Map(u => u.Type).CustomType<int>().Index("Idx_Type");
-			Map(u => u.Username).Unique();
-			Map(u => u.Password).CustomType<JsonSerializedType<PasswordInfo>>();
-			Map(u => u.CreateTime);
-			HasManyToMany(u => u.Roles);
-			Map(u => u.Items).CustomType<JsonSerializedType<UserItems>>();
-			Map(u => u.Deleted);
 		}
 	}
 }
