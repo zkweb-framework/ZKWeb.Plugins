@@ -10,6 +10,9 @@
 		Repositories
 		UIBuilder
 		其他服务（ICurrency, IOrderCreator等），名称未定义
+	dotnet build -f net461
+	dotnet run -f net461
+	while true; do dotnet run -f net461; done
 
 开发路线
 	单元测试
