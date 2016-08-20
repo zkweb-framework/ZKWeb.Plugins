@@ -43,11 +43,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="DotLiquid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\zkweb\ZKWeb\ZKWeb\bin\Debug\net461\DotLiquid.dll</HintPath>
+      <HintPath>packages\ZKWeb.Fork.DotLiquid.2.0.0\lib\net45\DotLiquid.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="FastReflection">
-      <HintPath>..\zkweb\ZKWeb\ZKWeb\bin\Debug\net461\FastReflection.dll</HintPath>
+    <Reference Include="FastReflection, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ZKWeb.Fork.FastReflection.2.0.0\lib\net45\FastReflection.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="HtmlSanitizer, Version=2.0.5735.24296, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -62,8 +63,8 @@
       <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
-      <HintPath>packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
+    <Reference Include="NSubstitute, Version=2.0.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>packages\NSubstitute.2.0.0-rc\lib\net45\NSubstitute.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -82,6 +83,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Data.Common.4.1.0\lib\net451\System.Data.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Diagnostics.FileVersionInfo, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Diagnostics.FileVersionInfo.4.0.0\lib\net46\System.Diagnostics.FileVersionInfo.dll</HintPath>
       <Private>True</Private>
@@ -136,12 +141,16 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ZKWeb, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\zkweb\ZKWeb\ZKWeb\bin\Debug\net461\ZKWeb.dll</HintPath>
+      <HintPath>packages\ZKWeb.1.0.0-rc-3\lib\net461\ZKWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ZKWeb.System.Drawing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ZKWeb.System.Drawing.1.0.1\lib\net45\ZKWeb.System.Drawing.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ZKWebStandard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\zkweb\ZKWeb\ZKWeb\bin\Debug\net461\ZKWebStandard.dll</HintPath>
+      <HintPath>packages\ZKWeb.1.0.0-rc-3\lib\net461\ZKWebStandard.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
