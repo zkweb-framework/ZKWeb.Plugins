@@ -1,0 +1,6 @@
+﻿{
+	"Name": "User Contact",
+	"Version": "0.9 testing",
+	"Description": "Manage contact information for users",
+	"Dependencies": [ "Common.Admin", "Common.UserPanel" ]
+}

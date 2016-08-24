@@ -1,0 +1,6 @@
+﻿{
+	"Name": "Generic Tag",
+	"Version": "0.9 testing",
+	"Description": "Generic tag management",
+	"Dependencies": [ "Common.Admin", "Common.AdminSettings" ]
+}

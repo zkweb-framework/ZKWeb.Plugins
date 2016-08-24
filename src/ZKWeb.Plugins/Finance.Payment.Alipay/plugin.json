@@ -1,0 +1,6 @@
+﻿{
+	"Name": "AlipayPaymentApi",
+	"Version": "0.0 not done",
+	"Description": "Support pay transactions by alipay",
+	"Dependencies": [ "Common.Admin", "Finance.Payment" ]
+}
