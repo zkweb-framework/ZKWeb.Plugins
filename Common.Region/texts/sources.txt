@@ -1,7 +1,0 @@
-﻿China: http://www.stats.gov.cn/tjsj/tjbz/xzqhdm/
-Taiwan: http://www.ip138.com/post/taiwang/
-Hongkong: http://www.ip138.com/xianggang/
-United States, United Kingdom, France, Czech, Germany, Italy, Spain, Poland:
-	http://bindasmonkeys.com/database-countries-states-regions-cities-world-sql-format-free/
-Japan: http://www.post.japanpost.jp/zipcode/dl/oogaki-zip.html
-Koera: http://www.koreapost.go.kr/kpost/sub/subpage.jsp?contId=010101040100

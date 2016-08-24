@@ -1,6 +1,0 @@
-﻿{
-	"Name": "WechatPaymentApi",
-	"Version": "0.0 not done",
-	"Description": "Support pay transactions by wechat",
-	"Dependencies": [ "Common.Admin", "Finance.Payment" ]
-}

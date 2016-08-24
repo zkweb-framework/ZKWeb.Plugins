@@ -1,6 +1,0 @@
-﻿{
-	"Name": "ImageBrowser",
-	"Version": "0.9 testing",
-	"Description": "Provide image browse and upload functions",
-	"Dependencies": [ "Common.Base", "Common.Admin" ]
-}

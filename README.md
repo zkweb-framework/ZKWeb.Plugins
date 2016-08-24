@@ -1,8 +1,8 @@
-Default plugins for zkweb framework.<br />
-This project is for manage plugin files.<br />
+Default plugins for zkweb framework. **(Refactoring now)**<br />
+This project is used to manage plugin files.<br />
 
 Framework: http://github.com/zkweb-framework/ZKWeb<br/>
-Document: http://zkweb-framework.github.io (Chinese only)<br/>
+Document: http://zkweb-framework.github.io (Chinese)<br/>
 
 Plugins information:<br/>
 

@@ -1,7 +1,0 @@
-﻿<% var noChilds = row.{{ noChildsMember }}; %>
-<% var level = row.{{ levelMember }} %>
-<span class="treenode <%-noChilds && 'no-childs'%>"
-	  onclick="$(this).closestAjaxTable().treeNodeToggleChilds(this, '{{ levelMember }}')">
-	<i class="fa" style="padding-left: <%-level * 20%>px;"></i>
-	<%-row.{{ nameMember }}%>
-</span>
