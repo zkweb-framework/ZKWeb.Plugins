@@ -1,0 +1,15 @@
+﻿<div class="checkbox-group" data-toggle="checkbox-group">
+	<label class="checkbox-inline">
+		<input type="checkbox" class="select-all" />
+		{{ "Select All" | trans }}
+	</label>
+	<div class="checkbox-list">
+		{% for item in items %}
+		<label class="checkbox-inline">
+			<input type="checkbox" merge-to="input[name='{{ fieldName }}']" value="{{ item.value }}" />
+			{{ item.name | trans }}
+		</label>
+		{% endfor %}
+	</div>
+	{{ fieldHtml }}
+</div>

@@ -1,0 +1,38 @@
+﻿<div class="table-container ajax-table-container">
+	<div class="table-scroller">
+		<table class="table table-bordered table-hover dataTable">
+			<thead>
+				<tr role="row" class="heading">
+					<% _.each(result.Columns, function(column, index) { %>
+						<% column.compiledCellTemplate = _.template(column.CellTemplate); %>
+						<% var scope = { column: column, result: result, index: index }; %>
+						<th width="<%-column.Width%>"><%=_.template(column.HeadTemplate)(scope)%></th>
+					<% }); %>
+				</tr>
+			</thead>
+			<tbody>
+				<% _.each(result.Rows, function(row, index) { %>
+					<% var scope = { row: row, result: result, index: index }; %>
+					<tr role="row" data-row="<%-JSON.stringify(row)%>">
+						<% _.each(result.Columns, function(column) { %>
+							<td><%=column.compiledCellTemplate(scope)%></td>
+						<% }); %>
+					</tr>
+				<% }); %>
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<ul class="pagination pull-right">
+				<% _.each(result.Pagination.Links, function(link) { %>
+					<% if (link.State == "active") { %>
+						<li><input type="text" class="pagination-input form-control" value="<%-link.Name%>" /></li>
+					<% } else { %>
+						<li><a class="<%-link.State%>" data-page="<%-link.PageNo%>" title="<%-link.Name%>"><%-link.Name%></a></li>
+					<% } %>
+				<% }); %>
+			</ul>
+		</div>
+	</div>
+</div>

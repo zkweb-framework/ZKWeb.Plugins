@@ -1,0 +1,58 @@
+﻿<div class="actions search-bar ajax-table-search-bar" ajax-table="#{{ tableId }}">
+	<div class="search-bar-before-items">
+		{% for item in beforeItems -%}
+		{{ item }}
+		{% endfor -%}
+	</div>
+	<div class="search-bar-body">
+		<div class="btn-group">
+			<a class="btn btn-default btn-circle" aria-expanded="true" data-toggle="dropdown" title="{{ "Menu" | trans }}">
+				<i class="fa fa-angle-down"></i>
+			</a>
+			<ul class="dropdown-menu pull-right ajax-table-menu" ajax-table="#{{ tableId }}">
+				{% for item in menuItems %}
+				{{ item }}
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="portlet-input input-inline input-medium">
+			<div class="input-group">
+				<input class="form-control keyword" placeholder="{{ placeholder }}" type="text">
+				<div class="input-group-btn">
+					<a class="btn btn-default search-button" title="{{ "Search" | trans }}">
+						<i class="fa fa-search"></i>
+					</a>
+					{% if conditions.size > 0 %}
+					<div class="btn-group">
+						<a class="btn btn-default" aria-expanded="true" data-toggle="dropdown" title="{{ "AdvanceSearch" | trans }}">
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<ul class="dropdown-menu pull-right">
+							<div class="portlet-body form advanced-search">
+								<div class="form-horizontal">
+									{% for condition in conditions %}
+									{{ condition }}
+									{% endfor %}
+									<div class="form-actions bottom">
+										<a class="btn btn-success advance-search-button" type="submit">
+											<i class="fa fa-search"></i>{{ "AdvanceSearch" | trans }}
+										</a>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>
+						</ul>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="search-bar-after-items">
+		{% for item in afterItems -%}
+		{{ item }}
+		{% endfor -%}
+	</div>
+	<div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>

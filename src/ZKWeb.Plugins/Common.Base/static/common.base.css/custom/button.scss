@@ -1,0 +1,18 @@
+﻿/* 使用当前主题的按钮样式 */
+.btn.btn-themed {
+	background-color: #C40000;
+	color: #FFF;
+	text-decoration: none;
+	border-radius: 2px;
+	text-align: center;
+	padding: 0px;
+}
+
+/* 工具栏按钮组换行时的上边距 */
+.btn-toolbar {
+	margin-top: -5px;
+
+	.btn {
+		margin-top: 5px;
+	}
+}

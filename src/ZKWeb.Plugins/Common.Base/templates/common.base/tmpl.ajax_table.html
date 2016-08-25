@@ -1,0 +1,19 @@
+﻿{% if menuItems.size <= 0 %}
+<div id="{{ id }}" class="ajax-table"
+	 ajax-table-target="{{ target }}"
+	 ajax-table-template="{{ template }}"
+	 ajax-table-extra-options="{{ extraOptions }}"></div>
+{% else %}
+<div id="{{ id }}" class="ajax-table"
+	 ajax-table-target="{{ target }}"
+	 ajax-table-template="{{ template }}"
+	 ajax-table-extra-options="{{ extraOptions }}"
+	 data-toggle="context" data-target="#{{ menuId }}"></div>
+<div id="{{ menuId }}" class="ajax-table-menu" ajax-table="#{{ id }}">
+	<ul class="dropdown-menu" role="menu">
+		{% for item in menuItems %}
+		{{ item }}
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}
