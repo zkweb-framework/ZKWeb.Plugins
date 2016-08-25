@@ -19,6 +19,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories {
 		IRepository<TEntity, TPrimaryKey>
 		where TEntity : class, IEntity<TPrimaryKey> {
 		/// <summary>
+		/// 获取工作单元
+		/// </summary>
+		protected virtual IUnitOfWork UnitOfWork {
+			get { return Application.Ioc.Resolve<IUnitOfWork>(); }
+		}
+
+		/// <summary>
 		/// 包装更新函数
 		/// </summary>
 		protected virtual Action<TEntity> WrapUpdateMethod(Action<TEntity> update) {
@@ -50,49 +57,43 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories {
 		/// 查询实体
 		/// </summary>
 		public virtual IQueryable<TEntity> Query() {
-			var uow = Application.Ioc.Resolve<IUnitOfWork>();
-			return uow.Context.Query<TEntity>();
+			return UnitOfWork.Context.Query<TEntity>();
 		}
 
 		/// <summary>
 		/// 获取符合条件的单个实体
 		/// </summary>
 		public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate) {
-			var uow = Application.Ioc.Resolve<IUnitOfWork>();
-			return uow.Context.Get(predicate);
+			return UnitOfWork.Context.Get(predicate);
 		}
 
 		/// <summary>
 		/// 计算符合条件的实体数量
 		/// </summary>
 		public long Count(Expression<Func<TEntity, bool>> predicate) {
-			var uow = Application.Ioc.Resolve<IUnitOfWork>();
-			return uow.Context.Count(predicate);
+			return UnitOfWork.Context.Count(predicate);
 		}
 
 		/// <summary>
 		/// 添加或更新实体
 		/// </summary>
 		public virtual void Save(ref TEntity entity, Action<TEntity> update) {
-			var uow = Application.Ioc.Resolve<IUnitOfWork>();
-			uow.Context.Save(ref entity, WrapUpdateMethod(update));
+			UnitOfWork.Context.Save(ref entity, WrapUpdateMethod(update));
 		}
 
 		/// <summary>
 		/// 删除实体
 		/// </summary>
 		public virtual void Delete(TEntity entity) {
-			var uow = Application.Ioc.Resolve<IUnitOfWork>();
-			uow.Context.Delete(entity);
+			UnitOfWork.Context.Delete(entity);
 		}
 
 		/// <summary>
 		/// 批量保存实体
 		/// </summary>
 		public virtual void BatchSave(
-			ref IEnumerable<TEntity> entities, Action<TEntity> update = null) {
-			var uow = Application.Ioc.Resolve<IUnitOfWork>();
-			uow.Context.BatchSave(ref entities, WrapUpdateMethod(update));
+			ref IEnumerable<TEntity> entities, Action<TEntity> update) {
+			UnitOfWork.Context.BatchSave(ref entities, WrapUpdateMethod(update));
 		}
 
 		/// <summary>
@@ -100,16 +101,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories {
 		/// </summary
 		public virtual long BatchUpdate(
 			Expression<Func<TEntity, bool>> predicate, Action<TEntity> update) {
-			var uow = Application.Ioc.Resolve<IUnitOfWork>();
-			return uow.Context.BatchUpdate(predicate, WrapUpdateMethod(update));
+			return UnitOfWork.Context.BatchUpdate(predicate, WrapUpdateMethod(update));
 		}
 
 		/// <summary>
 		/// 批量删除实体
 		/// </summary>
 		public virtual long BatchDelete(Expression<Func<TEntity, bool>> predicate) {
-			var uow = Application.Ioc.Resolve<IUnitOfWork>();
-			return uow.Context.BatchDelete(predicate);
+			return UnitOfWork.Context.BatchDelete(predicate);
 		}
 	}
 }
