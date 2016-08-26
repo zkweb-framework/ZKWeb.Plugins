@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems {
+namespace ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces {
 	/// <summary>
 	/// 下拉框或单选按钮使用的选项列表来源的接口
 	/// </summary>

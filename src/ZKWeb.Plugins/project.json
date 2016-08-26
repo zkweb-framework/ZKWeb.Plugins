@@ -1,6 +1,7 @@
-﻿{
+{
 	"version": "1.0.0-*",
 	"dependencies": {
+		"System.Threading.Thread": "4.0.0",
 		"ZKWeb": "1.0.0-rc-3"
 	},
 	"frameworks": {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems {
 	/// <summary>

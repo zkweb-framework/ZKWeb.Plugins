@@ -65,6 +65,16 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 根据过滤函数获取实体列表
+		/// </summary>
+		public virtual TResult GetMany<TResult>(
+			Func<IQueryable<TEntity>, TResult> fetch) {
+			using (UnitOfWork.Scope()) {
+				return fetch(Repository.Query());
+			}
+		}
+
+		/// <summary>
 		/// 保存实体
 		/// </summary>
 		public virtual void Save(ref TEntity entity, Action<TEntity> update = null) {

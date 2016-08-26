@@ -1,6 +1,6 @@
 ﻿using ZKWebStandard.Utils;
 
-namespace ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems {
+namespace ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces {
 	/// <summary>
 	/// 勾选框使用的选项树来源的接口
 	/// </summary>

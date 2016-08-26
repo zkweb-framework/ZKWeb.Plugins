@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems {
+namespace ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces {
 	/// <summary>
 	/// 勾选框使用的选项分组列表来源的接口
 	/// </summary>

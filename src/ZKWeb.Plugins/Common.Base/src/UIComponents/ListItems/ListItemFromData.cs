@@ -2,6 +2,7 @@
 using System.Linq;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems {
 	/// <summary>

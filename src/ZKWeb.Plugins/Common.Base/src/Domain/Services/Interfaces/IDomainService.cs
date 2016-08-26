@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using ZKWeb.Database;
 
@@ -14,7 +15,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 	/// </summary>
 	/// <typeparam name="TEntity">实体类型</typeparam>
 	/// <typeparam name="TPrimaryKey">主键类型</typeparam>
-	public interface IDomainService<TEntity, TPrimaryKey>
+	public interface IDomainService<TEntity, TPrimaryKey> :
+		IDomainService
 		where TEntity : class, IEntity<TPrimaryKey> {
 		/// <summary>
 		/// 根据主键获取实体
@@ -38,6 +40,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 		IList<TEntity> GetMany(Expression<Func<TEntity, bool>> predicate = null);
 
 		/// <summary>
+		/// 根据查询函数获取实体列表
+		/// </summary>
+		/// <param name="fetch">查询函数</param>
+		/// <returns></returns>
+		TResult GetMany<TResult>(Func<IQueryable<TEntity>, TResult> fetch);
+
+		/// <summary>
 		/// 保存实体
 		/// </summary>
 		/// <param name="entity">实体</param>
@@ -46,6 +55,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 
 		/// <summary>
 		/// 根据主键删除实体
+		/// 返回是否找到并删除了实体
 		/// </summary>
 		/// <param name="id">主键值</param>
 		/// <returns></returns>
@@ -59,7 +69,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 
 		/// <summary>
 		/// 批量标记已删除
-		/// 不会实际删除
+		/// 返回标记的数量，不会实际删除
 		/// </summary>
 		/// <param name="ids">实体Id列表</param>
 		/// <returns></returns>
@@ -67,6 +77,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 
 		/// <summary>
 		/// 批量标记未删除
+		/// 返回标记的数量
 		/// </summary>
 		/// <param name="ids">实体Id列表</param>
 		/// <returns></returns>
@@ -74,6 +85,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 
 		/// <summary>
 		/// 批量永久删除
+		/// 返回实际删除的数量
 		/// </summary>
 		/// <param name="ids">批量永久删除</param>
 		/// <returns></returns>
