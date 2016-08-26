@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using ZKWeb.Database;
 
 namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
@@ -18,17 +19,23 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 		/// <summary>
 		/// 根据主键获取实体
 		/// </summary>
-		/// <param name="id">主键Id</param>
+		/// <param name="id">主键值</param>
 		/// <returns></returns>
 		TEntity Get(TPrimaryKey id);
 
 		/// <summary>
-		/// 根据主键获取实体
-		/// 如果实体标记为已删除则返回null
+		/// 根据条件获取实体
 		/// </summary>
-		/// <param name="id">主键Id</param>
+		/// <param name="predicate">条件</param>
 		/// <returns></returns>
-		TEntity GetIfNotDeleted(TPrimaryKey id);
+		TEntity Get(Expression<Func<TEntity, bool>> predicate);
+
+		/// <summary>
+		/// 根据条件获取实体列表
+		/// </summary>
+		/// <param name="predicate">条件，等于null时获取所有实体</param>
+		/// <returns></returns>
+		IList<TEntity> GetMany(Expression<Func<TEntity, bool>> predicate = null);
 
 		/// <summary>
 		/// 保存实体
@@ -36,6 +43,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 		/// <param name="entity">实体</param>
 		/// <param name="update">更新函数</param>
 		void Save(ref TEntity entity, Action<TEntity> update = null);
+
+		/// <summary>
+		/// 根据主键删除实体
+		/// </summary>
+		/// <param name="id">主键值</param>
+		/// <returns></returns>
+		bool Delete(TPrimaryKey id);
 
 		/// <summary>
 		/// 删除实体

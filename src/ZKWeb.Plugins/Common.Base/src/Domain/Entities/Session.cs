@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Entities {
 		/// 关联Id
 		/// 一般是用户Id
 		/// </summary>
-		public virtual long ReleatedId { get; set; }
+		public virtual Guid ReleatedId { get; set; }
 		/// <summary>
 		/// 会话数据
 		/// </summary>

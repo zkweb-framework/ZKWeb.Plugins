@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces;
@@ -41,24 +42,43 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 		}
 
 		/// <summary>
-		/// 根据主键获取实体
-		/// 如果实体标记为已删除则返回null
+		/// 根据条件获取实体
 		/// </summary>
-		public virtual TEntity GetIfNotDeleted(TPrimaryKey id) {
-			var entity = Get(id);
-			if (entity == null ||
-				(entity is IHaveDeleted) && ((IHaveDeleted)entity).Deleted) {
-				return null;
+		public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate) {
+			using (UnitOfWork.Scope()) {
+				return Repository.Get(predicate);
 			}
-			return entity;
+		}
+
+		/// <summary>
+		/// 根据条件获取实体列表
+		/// </summary
+		public virtual IList<TEntity> GetMany(
+			Expression<Func<TEntity, bool>> predicate = null) {
+			using (UnitOfWork.Scope()) {
+				var query = Repository.Query();
+				if (predicate != null) {
+					query = query.Where(predicate);
+				}
+				return query.ToList();
+			}
 		}
 
 		/// <summary>
 		/// 保存实体
 		/// </summary>
-		public virtual void Save(ref TEntity entity, Action<TEntity> update) {
+		public virtual void Save(ref TEntity entity, Action<TEntity> update = null) {
 			using (UnitOfWork.Scope()) {
 				Repository.Save(ref entity, update);
+			}
+		}
+
+		/// <summary>
+		/// 根据主键删除实体
+		/// </summary>
+		public virtual bool Delete(TPrimaryKey id) {
+			using (UnitOfWork.Scope()) {
+				return Repository.BatchDelete(e => e.Id.Equals(id)) > 0;
 			}
 		}
 

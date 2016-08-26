@@ -1,8 +1,7 @@
 ﻿using System;
-using ZKWeb.Plugins.Common.Base.src.Domain.Entities;
 using ZKWebStandard.Utils;
 
-namespace ZKWeb.Plugins.Common.Base.src.Extensions {
+namespace ZKWeb.Plugins.Common.Base.src.Domain.Entities.Extensions {
 	/// <summary>
 	/// 会话的扩展函数
 	/// </summary>
