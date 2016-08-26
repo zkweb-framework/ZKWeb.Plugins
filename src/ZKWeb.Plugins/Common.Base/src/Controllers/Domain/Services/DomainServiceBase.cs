@@ -7,6 +7,7 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 	/// <summary>
@@ -36,8 +37,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 		/// 根据主键获取实体
 		/// </summary>
 		public virtual TEntity Get(TPrimaryKey id) {
+			var expr = ExpressionUtils.MakeMemberEqualiventExpression<TEntity>("Id", id);
 			using (UnitOfWork.Scope()) {
-				return Repository.Get(e => e.Id.Equals(id));
+				return Repository.Get(expr);
 			}
 		}
 
@@ -87,8 +89,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 		/// 根据主键删除实体
 		/// </summary>
 		public virtual bool Delete(TPrimaryKey id) {
+			var expr = ExpressionUtils.MakeMemberEqualiventExpression<TEntity>("Id", id);
 			using (UnitOfWork.Scope()) {
-				return Repository.BatchDelete(e => e.Id.Equals(id)) > 0;
+				return Repository.BatchDelete(expr) > 0;
 			}
 		}
 

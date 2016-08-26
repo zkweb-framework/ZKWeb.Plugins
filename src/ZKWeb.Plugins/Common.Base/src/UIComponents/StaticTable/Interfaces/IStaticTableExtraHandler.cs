@@ -8,7 +8,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Interfaces {
 	/// <typeparam name="TEntity">实体类型</typeparam>
 	/// <typeparam name="TPrimaryKey">主键类型</typeparam>
 	/// <typeparam name="TOriginalHandler">原有的处理器</typeparam>
-	public interface IStaticTableCallbackExtension<TEntity, TPrimaryKey, TOriginalHandler> :
+	public interface IStaticTableExtraHandler<TEntity, TPrimaryKey, TOriginalHandler> :
 		IStaticTableHandler<TEntity, TPrimaryKey>
 		where TEntity : class, IEntity<TPrimaryKey>
 		where TOriginalHandler : IStaticTableHandler<TEntity, TPrimaryKey> { }
