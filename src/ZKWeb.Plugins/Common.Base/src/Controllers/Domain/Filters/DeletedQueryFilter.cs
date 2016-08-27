@@ -11,7 +11,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 	/// 字段没有删除状态时返回原查询
 	/// </summary>
 	[ExportMany]
-	public class QueryFilterForDeleted : IEntityQueryFilter {
+	public class DeletedQueryFilter : IEntityQueryFilter {
 		/// <summary>
 		/// true: 查询已删除的对象
 		/// false: 查询未删除的对象
@@ -22,7 +22,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 		/// 初始化
 		/// 默认查询未删除的对象
 		/// </summary>s
-		public QueryFilterForDeleted() {
+		public DeletedQueryFilter() {
 			Deleted = false;
 		}
 
@@ -40,7 +40,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 		/// <summary>
 		/// 过滤查询
 		/// </summary>
-		public IQueryable<TEntity> Filter<TEntity, TPrimaryKey>(IQueryable<TEntity> query)
+		public virtual IQueryable<TEntity> Filter<TEntity, TPrimaryKey>(IQueryable<TEntity> query)
 			where TEntity : class, IEntity<TPrimaryKey> {
 			if (TypeTrait<TEntity>.HaveDeleted) {
 				query = query.Where(e => ((IHaveDeleted)e).Deleted == Deleted);

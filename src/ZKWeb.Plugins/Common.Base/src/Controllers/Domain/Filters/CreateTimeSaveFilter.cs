@@ -6,18 +6,20 @@ using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 	/// <summary>
-	/// 自动设置实体的更新时间
+	/// 自动设置实体的创建时间
 	/// </summary>
 	[ExportMany]
-	public class SaveFilterForUpdateTime : IEntitySaveFilter {
+	public class CreateTimeSaveFilter : IEntitySaveFilter {
 		/// <summary>
-		/// 自动设置实体的更新时间
+		/// 自动设置实体的创建时间
 		/// </summary>
-		public void Filter<TEntity, TPrimaryKey>(TEntity entity)
+		public virtual void Filter<TEntity, TPrimaryKey>(TEntity entity)
 			where TEntity : class, IEntity<TPrimaryKey> {
-			if (entity is IHaveUpdateTime) {
-				var et = (IHaveUpdateTime)entity;
-				et.UpdateTime = DateTime.UtcNow;
+			if (entity is IHaveCreateTime) {
+				var et = (IHaveCreateTime)entity;
+				if (et.CreateTime == default(DateTime)) {
+					et.CreateTime = DateTime.UtcNow;
+				}
 			}
 		}
 	}

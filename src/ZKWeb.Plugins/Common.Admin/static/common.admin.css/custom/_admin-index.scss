@@ -1,0 +1,9 @@
+﻿/* 后台首页样式 */
+.page-container {
+	/* 低分辨率时左右不留空 */
+	@media (max-width: 768px) {
+		> .portlet {
+			padding: 12px 0px 15px;
+		}
+	}
+}

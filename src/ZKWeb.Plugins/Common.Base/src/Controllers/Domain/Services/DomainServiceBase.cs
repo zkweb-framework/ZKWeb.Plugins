@@ -12,20 +12,26 @@ using ZKWebStandard.Utils;
 namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 	/// <summary>
 	/// 领域服务的基础类
-	/// 提供一系列基础功能
 	/// </summary>
-	/// <typeparam name="TEntity">实体类型</typeparam>
-	/// <typeparam name="TPrimaryKey">主键类型</typeparam>
-	public abstract class DomainServiceBase<TEntity, TPrimaryKey> :
-		IDomainService<TEntity, TPrimaryKey>
-		where TEntity : class, IEntity<TPrimaryKey> {
+	public abstract class DomainServiceBase : IDomainService {
 		/// <summary>
 		/// 获取工作单元
 		/// </summary>
 		protected virtual IUnitOfWork UnitOfWork {
 			get { return Application.Ioc.Resolve<IUnitOfWork>(); }
 		}
+	}
 
+	/// <summary>
+	/// 领域服务的基础类
+	/// 提供一系列基础功能
+	/// </summary>
+	/// <typeparam name="TEntity">实体类型</typeparam>
+	/// <typeparam name="TPrimaryKey">主键类型</typeparam>
+	public abstract class DomainServiceBase<TEntity, TPrimaryKey> :
+		DomainServiceBase,
+		IDomainService<TEntity, TPrimaryKey>
+		where TEntity : class, IEntity<TPrimaryKey> {
 		/// <summary>
 		/// 获取仓储
 		/// </summary>
@@ -73,6 +79,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 			Func<IQueryable<TEntity>, TResult> fetch) {
 			using (UnitOfWork.Scope()) {
 				return fetch(Repository.Query());
+			}
+		}
+
+		/// <summary>
+		/// 计算符合条件的实体数量
+		/// </summary>
+		public long Count(Expression<Func<TEntity, bool>> predicate) {
+			using (UnitOfWork.Scope()) {
+				return Repository.Count(predicate);
 			}
 		}
 

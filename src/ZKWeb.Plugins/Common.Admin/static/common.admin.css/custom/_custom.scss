@@ -1,0 +1,49 @@
+﻿/* 用户菜单的样式 */
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+	height: 115px;
+
+	> img {
+		height: 45px;
+		width: 45px;
+	}
+}
+
+/* 导航菜单的样式 */
+.main-header .navbar {
+	.sidebar-toggle {
+		height: 50px;
+	}
+
+	.template_area {
+		float: left;
+
+		> .template_widget {
+			float: left;
+
+			> li {
+				list-style: none;
+				height: 50px;
+			}
+			/* 顶级菜单 */
+			> li > a, > a {
+				color: #fff;
+				float: left;
+				padding: 15px 15px;
+				height: 50px;
+
+				&:hover {
+					background-color: #367fa9;
+				}
+			}
+			/* 子菜单 */
+			.dropdown-menu li > a {
+				color: #777;
+
+				&:hover {
+					color: #fff;
+					background-color: #367fa9;
+				}
+			}
+		}
+	}
+}

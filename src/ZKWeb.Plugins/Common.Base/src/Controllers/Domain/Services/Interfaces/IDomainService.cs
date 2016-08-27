@@ -15,8 +15,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 	/// </summary>
 	/// <typeparam name="TEntity">实体类型</typeparam>
 	/// <typeparam name="TPrimaryKey">主键类型</typeparam>
-	public interface IDomainService<TEntity, TPrimaryKey> :
-		IDomainService
+	public interface IDomainService<TEntity, TPrimaryKey> : IDomainService
 		where TEntity : class, IEntity<TPrimaryKey> {
 		/// <summary>
 		/// 根据主键获取实体
@@ -45,6 +44,13 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 		/// <param name="fetch">查询函数</param>
 		/// <returns></returns>
 		TResult GetMany<TResult>(Func<IQueryable<TEntity>, TResult> fetch);
+
+		/// <summary>
+		/// 计算符合条件的实体数量
+		/// </summary>
+		/// <param name="predicate">条件</param>
+		/// <returns></returns>
+		long Count(Expression<Func<TEntity, bool>> predicate);
 
 		/// <summary>
 		/// 保存实体
