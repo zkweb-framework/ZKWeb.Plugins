@@ -74,20 +74,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 		void Delete(TEntity entity);
 
 		/// <summary>
-		/// 批量标记已删除
+		/// 批量标记已删除或未删除
 		/// 返回标记的数量，不会实际删除
 		/// </summary>
 		/// <param name="ids">实体Id列表</param>
 		/// <returns></returns>
-		long BatchSetDeleted(IEnumerable<TPrimaryKey> ids);
-
-		/// <summary>
-		/// 批量标记未删除
-		/// 返回标记的数量
-		/// </summary>
-		/// <param name="ids">实体Id列表</param>
-		/// <returns></returns>
-		long BatchUnsetDeleted(IEnumerable<TPrimaryKey> ids);
+		long BatchSetDeleted(IEnumerable<TPrimaryKey> ids, bool deleted);
 
 		/// <summary>
 		/// 批量永久删除

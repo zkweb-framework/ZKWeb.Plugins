@@ -127,7 +127,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 			var service = Application.Ioc.Resolve<IDomainService<TEntity, TPrimaryKey>>();
 			using (uow.Scope())
 			using (uow.DisableQueryFilters())
-			using (uow.WithQueryFilter(new OwnerQueryFilter(userId))) {
+			using (uow.EnableQueryFilter(new OwnerQueryFilter(userId))) {
 				var count = service.Count(e => ids.Contains(e.Id));
 				return count == ids.Count;
 			}

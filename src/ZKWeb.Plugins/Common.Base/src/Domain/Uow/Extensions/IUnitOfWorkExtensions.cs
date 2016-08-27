@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Domain.Filters.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWebStandard.Collections;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions {
 	/// <summary>
@@ -50,6 +52,20 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions {
 		}
 
 		/// <summary>
+		/// 在一定范围内禁用指定类型的查询过滤器
+		/// </summary>
+		/// <param name="uow">工作单元</param>
+		/// <param name="filterType">查询过滤器类型</param>
+		/// <returns></returns>
+		public static IDisposable DisableQueryFilter(this IUnitOfWork uow, Type filterType) {
+			var oldFilters = uow.QueryFilters;
+			var filterTypeInfo = filterType.GetTypeInfo();
+			uow.QueryFilters = uow.QueryFilters.Where(
+				f => !filterTypeInfo.IsAssignableFrom(f.GetType())).ToList();
+			return new SimpleDisposable(() => uow.QueryFilters = oldFilters);
+		}
+
+		/// <summary>
 		/// 在一定范围内禁用所有查询过滤器
 		/// </summary>
 		/// <param name="uow">工作单元</param>
@@ -58,6 +74,20 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions {
 			var oldFilters = uow.QueryFilters;
 			uow.QueryFilters = new List<IEntityQueryFilter>();
 			return new SimpleDisposable(() => uow.QueryFilters = oldFilters);
+		}
+
+		/// <summary>
+		/// 在一定范围内禁用指定类型的保存过滤器
+		/// </summary>
+		/// <param name="uow">工作单元</param>
+		/// <param name="filterType">过滤器类型</param>
+		/// <returns></returns>
+		public static IDisposable DisableSaveFilter(this IUnitOfWork uow, Type filterType) {
+			var oldFilters = uow.SaveFilters;
+			var filterTypeInfo = filterType.GetTypeInfo();
+			uow.SaveFilters = uow.SaveFilters.Where(
+				f => !filterTypeInfo.IsAssignableFrom(f.GetType())).ToList();
+			return new SimpleDisposable(() => uow.SaveFilters = oldFilters);
 		}
 
 		/// <summary>
@@ -77,9 +107,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions {
 		/// <param name="uow">工作单元</param>
 		/// <param name="filter">查询过滤器</param>
 		/// <returns></returns>
-		public static IDisposable WithQueryFilter(this IUnitOfWork uow, IEntityQueryFilter filter) {
-			uow.QueryFilters.Add(filter);
-			return new SimpleDisposable(() => uow.QueryFilters.Remove(filter));
+		public static IDisposable EnableQueryFilter(this IUnitOfWork uow, IEntityQueryFilter filter) {
+			var oldFilters = uow.QueryFilters;
+			uow.QueryFilters = uow.QueryFilters.ConcatIfNotNull(filter).ToList();
+			return new SimpleDisposable(() => uow.QueryFilters = oldFilters);
 		}
 
 		/// <summary>
@@ -88,9 +119,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions {
 		/// <param name="uow">工作单元</param>
 		/// <param name="filter">保存过滤器</param>
 		/// <returns></returns>
-		public static IDisposable WithSaveFilter(this IUnitOfWork uow, IEntitySaveFilter filter) {
-			uow.SaveFilters.Add(filter);
-			return new SimpleDisposable(() => uow.SaveFilters.Remove(filter));
+		public static IDisposable EnableSaveFilter(this IUnitOfWork uow, IEntitySaveFilter filter) {
+			var oldFilters = uow.SaveFilters;
+			uow.SaveFilters = uow.SaveFilters.ConcatIfNotNull(filter).ToList();
+			return new SimpleDisposable(() => uow.SaveFilters = oldFilters);
 		}
 	}
 }

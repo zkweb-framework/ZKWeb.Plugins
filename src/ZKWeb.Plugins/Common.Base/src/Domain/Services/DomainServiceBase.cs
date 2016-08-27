@@ -4,8 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.Domain.Filters;
 using ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWebStandard.Utils;
 
@@ -120,29 +122,17 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 		}
 
 		/// <summary>
-		/// 批量标记已删除
-		/// 不会实际删除
+		/// 批量标记已删除或未删除
+		/// 返回标记的数量，不会实际删除
 		/// </summary>
-		public virtual long BatchSetDeleted(IEnumerable<TPrimaryKey> ids) {
-			using (UnitOfWork.Scope()) {
-				var entities = Repository.Query()
-					.Where(e => ids.Contains(e.Id)).AsEnumerable();
-				Repository.BatchSave(
-					ref entities, e => ((IHaveDeleted)e).Deleted = true);
-				return entities.LongCount();
-			}
-		}
-
-		/// <summary>
-		/// 批量标记未删除
-		/// </summary>
-		public virtual long BatchUnsetDeleted(IEnumerable<TPrimaryKey> ids) {
-			using (UnitOfWork.Scope()) {
-				var entities = Repository.Query()
-					.Where(e => ids.Contains(e.Id)).AsEnumerable();
-				Repository.BatchSave(
-					ref entities, e => ((IHaveDeleted)e).Deleted = false);
-				return entities.LongCount();
+		public virtual long BatchSetDeleted(IEnumerable<TPrimaryKey> ids, bool deleted) {
+			var uow = UnitOfWork;
+			using (uow.Scope())
+			using (uow.DisableQueryFilter(typeof(DeletedQueryFilter))) {
+				var entities = Repository.Query().Where(e => ids.Contains(e.Id)).ToList();
+				var entitiesRef = entities.AsEnumerable();
+				Repository.BatchSave(ref entitiesRef, e => ((IHaveDeleted)e).Deleted = deleted);
+				return entities.Count;
 			}
 		}
 
