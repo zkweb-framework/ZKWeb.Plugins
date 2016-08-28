@@ -78,7 +78,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <summary>
 		/// 永久删除需要的权限
 		/// </summary>
-		public virtual string[] DeleteForeverPrivilege { get { return new[] { Name + ":DeleteForever" }; } }
+		public virtual string[] DeleteForeverPrivileges { get { return new[] { Name + ":DeleteForever" }; } }
 		/// <summary>
 		/// 数据类型
 		/// </summary>
@@ -116,9 +116,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		protected virtual IDictionary<string, object> ExtraTemplateArguments { get; set; }
 		/// <summary>
-		/// 批量操作对应的函数
+		/// 批量操作对应的函数和权限列表
 		/// </summary>
-		protected virtual IDictionary<string, Func<IActionResult>> BatchActions { get; set; }
+		protected virtual IDictionary<string, Tuple<Func<IActionResult>, string[]>>
+			BatchActions { get; set; }
 		/// <summary>
 		/// 是否关心实体的所属用户
 		/// 等于true时会启用所属用户使用的查询和保存过滤器，并且在批量操作时进行检查
@@ -158,11 +159,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			IncludeCss = new List<string>();
 			IncludeJs = new List<string>();
 			ExtraTemplateArguments = new Dictionary<string, object>();
-			BatchActions = new Dictionary<string, Func<IActionResult>>();
-			BatchActions["delete_forever"] = BatchActionForDeleteForever;
+			BatchActions = new Dictionary<string, Tuple<Func<IActionResult>, string[]>>();
+			BatchActions["delete_forever"] = Tuple.Create(
+				new Func<IActionResult>(BatchActionForDeleteForever), DeleteForeverPrivileges);
 			if (TypeTrait.HaveDeleted) {
-				BatchActions["delete"] = BatchActionForDelete;
-				BatchActions["recover"] = BatchActionForRecover;
+				BatchActions["delete"] = Tuple.Create(
+					new Func<IActionResult>(BatchActionForDelete), DeletePrivileges);
+				BatchActions["recover"] = Tuple.Create(
+					new Func<IActionResult>(BatchActionForRecover), DeletePrivileges);
 			}
 		}
 
@@ -171,9 +175,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult Action() {
-			// 检查权限
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(RequiredUserType, ViewPrivileges);
 			// 表格构建器
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
 			table.Id = ListTableId;
@@ -199,9 +200,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult SearchAction() {
-			// 检查权限
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(RequiredUserType, ViewPrivileges);
 			// 获取参数并转换到搜索请求
 			var json = HttpManager.CurrentContext.Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
@@ -219,18 +217,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		protected virtual IActionResult AddAction() {
 			var form = GetAddForm();
 			var request = HttpManager.CurrentContext.Request;
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			if (request.Method == HttpMethods.POST) {
-				// 检查权限
-				privilegeManager.Check(RequiredUserType, EditPrivileges);
-				// 提交表单
 				return new JsonResult(form.Submit());
 			} else {
-				// 检查权限
-				privilegeManager.Check(RequiredUserType, ViewPrivileges);
-				// 绑定表单
 				form.Bind();
-				return new TemplateResult(AddTemplatePath, new { form });
+				return new TemplateResult(AddTemplatePath,
+					new { form, extra = ExtraTemplateArguments });
 			}
 		}
 
@@ -241,18 +233,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		protected virtual IActionResult EditAction() {
 			var form = GetEditForm();
 			var request = HttpManager.CurrentContext.Request;
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			if (request.Method == HttpMethods.POST) {
-				// 检查权限
-				privilegeManager.Check(RequiredUserType, EditPrivileges);
-				// 提交表单
 				return new JsonResult(form.Submit());
 			} else {
-				// 检查权限
-				privilegeManager.Check(RequiredUserType, ViewPrivileges);
-				// 绑定表单
 				form.Bind();
-				return new TemplateResult(EditTemplatePath, new { form });
+				return new TemplateResult(EditTemplatePath,
+					new { form, extra = ExtraTemplateArguments });
 			}
 		}
 
@@ -261,6 +247,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchAction() {
+			// 防跨站攻击
 			this.RequireAjaxRequest();
 			var request = HttpManager.CurrentContext.Request;
 			var actionName = request.Get<string>("action");
@@ -269,7 +256,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 				// 找不到对应的操作
 				throw new NotFoundException(string.Format(new T("Action {0} not exist"), actionName));
 			}
-			return action();
+			// 检查权限
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(RequiredUserType, action.Item2);
+			return action.Item1();
 		}
 
 		/// <summary>
@@ -298,10 +288,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchActionForDelete() {
-			// 检查权限
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(RequiredUserType, DeletePrivileges);
-			// 批量删除
 			var service = Application.Ioc.Resolve<IDomainService<TEntity, TPrimaryKey>>();
 			service.BatchSetDeleted(GetBatchActionIds(), true);
 			return new JsonResult(new { message = new T("Batch Delete Successful") });
@@ -312,10 +298,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchActionForRecover() {
-			// 检查权限
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(RequiredUserType, DeletePrivileges);
-			// 批量恢复
 			var service = Application.Ioc.Resolve<IDomainService<TEntity, TPrimaryKey>>();
 			service.BatchSetDeleted(GetBatchActionIds(), false);
 			return new JsonResult(new { message = new T("Batch Recover Successful") });
@@ -326,10 +308,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchActionForDeleteForever() {
-			// 检查权限
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(RequiredUserType, DeleteForeverPrivilege);
-			// 批量永久删除
 			var service = Application.Ioc.Resolve<IDomainService<TEntity, TPrimaryKey>>();
 			service.BatchDeleteForever(GetBatchActionIds());
 			return new JsonResult(new { message = new T("Batch Delete Forever Successful") });
@@ -359,7 +337,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 					}
 				}
 				// 注册永久删除权限
-				foreach (var privilege in DeleteForeverPrivilege) {
+				foreach (var privilege in DeleteForeverPrivileges) {
 					yield return privilege;
 				}
 			}
@@ -369,12 +347,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// 对处理函数进行包装
 		/// </summary>
 		/// <param name="action">处理函数</param>
+		/// <param name="privilege">要求的权限列表</param>
 		/// <returns></returns>
-		protected virtual Func<IActionResult> WrapAction(Func<IActionResult> action) {
+		protected virtual Func<IActionResult> WrapAction(
+			Func<IActionResult> action, params string[] privileges) {
 			return () => {
+				// 检查权限
+				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+				privilegeManager.Check(RequiredUserType, privileges);
+				// 使用工作单元包装处理函数
 				var uow = Application.Ioc.Resolve<IUnitOfWork>();
 				using (uow.Scope()) {
-					// 使用工作单元包装处理函数
 					if (ConcernEntityOwnership) {
 						// 启用所属用户使用的查询和操作过滤器
 						var filter = new OwnerFilter();
@@ -395,21 +378,28 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		public virtual void OnWebsiteStart() {
 			// 注册列表页和搜索接口
 			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			controllerManager.RegisterAction(Url, HttpMethods.GET, WrapAction(Action));
-			controllerManager.RegisterAction(SearchUrl, HttpMethods.POST, WrapAction(SearchAction));
+			controllerManager.RegisterAction(
+				Url, HttpMethods.GET, WrapAction(Action, ViewPrivileges));
+			controllerManager.RegisterAction(
+				SearchUrl, HttpMethods.POST, WrapAction(SearchAction, ViewPrivileges));
 			if (!string.IsNullOrEmpty(AddUrl)) {
 				// 注册添加页和添加接口
-				controllerManager.RegisterAction(AddUrl, HttpMethods.GET, WrapAction(AddAction));
-				controllerManager.RegisterAction(AddUrl, HttpMethods.POST, WrapAction(AddAction));
+				controllerManager.RegisterAction(
+					AddUrl, HttpMethods.GET, WrapAction(AddAction, ViewPrivileges));
+				controllerManager.RegisterAction(
+					AddUrl, HttpMethods.POST, WrapAction(AddAction, EditPrivileges));
 			}
 			if (!string.IsNullOrEmpty(EditUrl)) {
 				// 注册编辑页和编辑接口
-				controllerManager.RegisterAction(EditUrl, HttpMethods.GET, WrapAction(EditAction));
-				controllerManager.RegisterAction(EditUrl, HttpMethods.POST, WrapAction(EditAction));
+				controllerManager.RegisterAction(
+					EditUrl, HttpMethods.GET, WrapAction(EditAction, ViewPrivileges));
+				controllerManager.RegisterAction(
+					EditUrl, HttpMethods.POST, WrapAction(EditAction, EditPrivileges));
 			}
 			if (!string.IsNullOrEmpty(BatchUrl)) {
-				// 注册批量操作接口
-				controllerManager.RegisterAction(BatchUrl, HttpMethods.POST, WrapAction(BatchAction));
+				// 注册批量操作接口，具体权限需要在里面检查
+				controllerManager.RegisterAction(
+					BatchUrl, HttpMethods.POST, WrapAction(BatchAction));
 			}
 		}
 	}

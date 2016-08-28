@@ -51,7 +51,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces {
 		/// <summary>
 		/// 永久删除需要的权限
 		/// </summary>
-		string[] DeleteForeverPrivilege { get; }
+		string[] DeleteForeverPrivileges { get; }
 		/// <summary>
 		/// 实体类型
 		/// </summary>

@@ -180,7 +180,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <returns></returns>
-		public virtual string GetAvatarStoragePath(long userId) {
+		public virtual string GetAvatarStoragePath(Guid userId) {
 			var pathManager = Application.Ioc.Resolve<PathManager>();
 			return pathManager.GetStorageFullPath(
 				"static", "common.admin.images", string.Format("avatar_{0}.jpg", userId));
@@ -191,7 +191,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <param name="imageStream">图片数据流</param>
-		public virtual void SaveAvatar(long userId, Stream imageStream) {
+		public virtual void SaveAvatar(Guid userId, Stream imageStream) {
 			if (imageStream == null) {
 				throw new BadRequestException(new T("Please select avatar file"));
 			}
@@ -214,7 +214,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		/// 删除头像
 		/// </summary>
 		/// <param name="userId">用户Id</param>
-		public void DeleteAvatar(long userId) {
+		public void DeleteAvatar(Guid userId) {
 			var path = GetAvatarStoragePath(userId);
 			if (File.Exists(path)) {
 				File.Delete(path);
