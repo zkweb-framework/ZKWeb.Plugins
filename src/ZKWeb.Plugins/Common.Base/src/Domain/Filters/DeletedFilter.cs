@@ -22,9 +22,17 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 		/// <summary>
 		/// 初始化
 		/// 默认查询未删除的对象
-		/// </summary>s
+		/// </summary>
 		public DeletedFilter() {
 			Deleted = false;
+		}
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		/// <param name="deleted">查询已删除或未删除对象</param>
+		public DeletedFilter(bool deleted) {
+			Deleted = deleted;
 		}
 
 		/// <summary>

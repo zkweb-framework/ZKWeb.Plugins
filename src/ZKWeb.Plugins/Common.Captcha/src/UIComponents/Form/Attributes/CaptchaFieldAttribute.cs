@@ -1,5 +1,5 @@
-﻿using ZKWeb.Plugins.Common.Base.src.UIComponents.Form.Attributes;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Form.Interfaces;
+﻿using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 
 namespace ZKWeb.Plugins.Common.Captcha.src.UIComponents.Form.Attributes {
 	/// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
@@ -11,6 +12,16 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Interfaces {
 	/// <typeparam name="TPrimaryKey">主键类型</typeparam>
 	public interface IStaticTableHandler<TEntity, TPrimaryKey>
 		where TEntity : class, IEntity<TPrimaryKey> {
+		/// <summary>
+		/// 包装查询函数
+		/// 可以在这里控制使用的过滤器等
+		/// </summary>
+		/// <param name="request">搜索请求</param>
+		/// <param name="queryMethod">查询函数</param>
+		/// <returns></returns>
+		Func<TResult> WrapQueryMethod<TResult>(
+			StaticTableSearchRequest request, Func<TResult> queryMethod);
+
 		/// <summary>
 		/// 过滤数据
 		/// </summary>

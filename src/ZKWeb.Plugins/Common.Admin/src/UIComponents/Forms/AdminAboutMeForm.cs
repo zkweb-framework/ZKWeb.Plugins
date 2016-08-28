@@ -9,8 +9,8 @@ using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Admin.src.UIComponents.ListItemProviders;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Form;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Form.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings;
 using ZKWebStandard.Web;
 

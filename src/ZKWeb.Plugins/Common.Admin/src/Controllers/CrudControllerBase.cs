@@ -20,11 +20,10 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Interfaces;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Form.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -186,7 +185,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			// 搜索栏构建器
 			var searchBar = Application.Ioc.Resolve<AjaxTableSearchBarBuilder>();
 			searchBar.TableId = table.Id;
-			handlers.ForEach(s => s.OnBuildTable(table, searchBar));
+			handlers.ForEach(s => s.BuildTable(table, searchBar));
 			return new TemplateResult(ListTemplatePath, new {
 				title = new T(Name),
 				includeCss = IncludeCss,
@@ -208,7 +207,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			// 表格处理器，内置+使用Ioc注册的扩展回调
 			var handlers = GetTableHandler().WithExtraHandlers();
 			// 构建搜索回应
-			var response = request.BuildResponseFromDatabase(handlers);
+			var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
+			var response = request.BuildResponse(handlers);
+
 			return new JsonResult(response);
 		}
 

@@ -74,7 +74,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		/// <param name="privileges">权限列表</param>
 		/// <returns></returns>
 		public virtual bool HasPrivileges(User user, params string[] privileges) {
-			var userType = user.GetUserType();
+			var userType = user?.GetUserType();
 			if (userType is IAmSuperAdmin) {
 				// 超级管理员拥有所有权限
 				return true;

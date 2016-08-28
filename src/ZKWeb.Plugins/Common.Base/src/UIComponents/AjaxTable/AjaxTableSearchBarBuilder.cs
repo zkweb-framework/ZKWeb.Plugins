@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Form;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.HtmlItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems.Extensions;

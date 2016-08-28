@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
@@ -17,7 +18,17 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Interfaces {
 		/// </summary>
 		/// <param name="table">表格</param>
 		/// <param name="searchBar">搜索栏</param>
-		void OnBuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar);
+		void BuildTable(AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar);
+
+		/// <summary>
+		/// 包装查询函数
+		/// 可以在这里控制使用的过滤器等
+		/// </summary>
+		/// <param name="request">搜索请求</param>
+		/// <param name="queryMethod">查询函数</param>
+		/// <returns></returns>
+		Func<TResult> WrapQueryMethod<TResult>(
+			AjaxTableSearchRequest request, Func<TResult> queryMethod);
 
 		/// <summary>
 		/// 过滤数据

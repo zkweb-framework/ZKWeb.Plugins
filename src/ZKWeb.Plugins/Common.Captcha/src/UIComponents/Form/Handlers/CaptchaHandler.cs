@@ -4,9 +4,9 @@ using ZKWeb.Plugins.Common.Captcha.src.Managers;
 using ZKWebStandard.Ioc;
 using ZKWeb.Templating;
 using ZKWeb.Plugins.Common.Captcha.src.UIComponents.Form.Attributes;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Form.Interfaces;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Form;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Form.Extensions;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 
 namespace ZKWeb.Plugins.Common.Captcha.src.UIComponents.Handlers {

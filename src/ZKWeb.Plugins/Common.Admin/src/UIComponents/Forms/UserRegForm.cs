@@ -2,8 +2,8 @@
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Form;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Form.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Captcha.src.UIComponents.Form.Attributes;
 
 namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.Forms {
