@@ -7,7 +7,6 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web;
 using ZKWebStandard.Web;
-using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Components.PrivilegeProviders;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
@@ -16,9 +15,6 @@ using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Components.PrivilegeTranslators.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateFilters;
-using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
-using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions;
-using ZKWeb.Plugins.Common.Admin.src.Domain.Filters;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 	/// <summary>
@@ -93,44 +89,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 			}
 			// 检查通过
 			return true;
-		}
-
-		/// <summary>
-		/// 检查当前登录用户是否有指定数据的所有权
-		/// 如果没有部分或全部数据的所有权，或部分数据不存在，则抛出403错误
-		/// </summary>
-		/// <typeparam name="TData">数据类型</typeparam>
-		/// <param name="ids">数据Id列表</param>
-		public virtual void CheckOwnership<TEntity, TPrimaryKey>(IList<TPrimaryKey> ids)
-			where TEntity : class, IEntity<TPrimaryKey> {
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var user = sessionManager.GetSession().GetUser();
-			if (user == null || !HasOwnership<TEntity, TPrimaryKey>(user.Id, ids)) {
-				throw new ForbiddenException(string.Format(
-					new T("Action require the ownership of {0}: {1}"),
-					new T(typeof(TEntity).Name), string.Join(", ", ids)));
-			}
-		}
-
-		/// <summary>
-		/// 判断用户是否有指定数据的所有权
-		/// 如果部分数据不存在，会返回false
-		/// </summary>
-		/// <typeparam name="TData">数据类型</typeparam>
-		/// <param name="userId">用户Id</param>
-		/// <param name="ids">数据Id列表</param>
-		/// <returns></returns>
-		public virtual bool HasOwnership<TEntity, TPrimaryKey>(
-			Guid userId, IList<TPrimaryKey> ids)
-			where TEntity : class, IEntity<TPrimaryKey> {
-			var uow = UnitOfWork;
-			var service = Application.Ioc.Resolve<IDomainService<TEntity, TPrimaryKey>>();
-			using (uow.Scope())
-			using (uow.DisableQueryFilters())
-			using (uow.EnableQueryFilter(new OwnerQueryFilter(userId))) {
-				var count = service.Count(e => ids.Contains(e.Id));
-				return count == ids.Count;
-			}
 		}
 	}
 }

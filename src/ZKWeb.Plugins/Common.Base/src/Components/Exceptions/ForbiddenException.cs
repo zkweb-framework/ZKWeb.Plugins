@@ -9,6 +9,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.Exceptions {
 		/// 初始化
 		/// </summary>
 		/// <param name="message">错误消息</param>
-		public ForbiddenException(string message) : base(401, message) { }
+		public ForbiddenException(string message) : base(403, message) { }
 	}
 }

@@ -128,7 +128,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 		public virtual long BatchSetDeleted(IEnumerable<TPrimaryKey> ids, bool deleted) {
 			var uow = UnitOfWork;
 			using (uow.Scope())
-			using (uow.DisableQueryFilter(typeof(DeletedQueryFilter))) {
+			using (uow.DisableQueryFilter(typeof(DeletedFilter))) {
 				var entities = Repository.Query().Where(e => ids.Contains(e.Id)).ToList();
 				var entitiesRef = entities.AsEnumerable();
 				Repository.BatchSave(ref entitiesRef, e => ((IHaveDeleted)e).Deleted = deleted);

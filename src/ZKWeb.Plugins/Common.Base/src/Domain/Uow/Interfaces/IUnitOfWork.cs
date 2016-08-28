@@ -21,10 +21,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces {
 		IList<IEntityQueryFilter> QueryFilters { get; set; }
 
 		/// <summary>
-		/// 当前的保存过滤器列表
+		/// 当前的操作过滤器列表
 		/// 不存在时抛出错误
 		/// </summary>
-		IList<IEntitySaveFilter> SaveFilters { get; set; }
+		IList<IEntityOperationFilter> OperationFilters { get; set; }
 
 		/// <summary>
 		/// 在指定的范围内使用工作单元

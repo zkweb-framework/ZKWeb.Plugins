@@ -1,5 +1,4 @@
 ﻿using System;
-using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Filters.Interfaces;
 using ZKWebStandard.Ioc;
@@ -9,12 +8,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 	/// 自动设置实体的创建时间
 	/// </summary>
 	[ExportMany]
-	public class CreateTimeSaveFilter : IEntitySaveFilter {
+	public class CreateTimeFilter : IEntityOperationFilter {
 		/// <summary>
 		/// 自动设置实体的创建时间
 		/// </summary>
-		public virtual void Filter<TEntity, TPrimaryKey>(TEntity entity)
-			where TEntity : class, IEntity<TPrimaryKey> {
+		void IEntityOperationFilter.FilterSave<TEntity, TPrimaryKey>(TEntity entity) {
 			if (entity is IHaveCreateTime) {
 				var et = (IHaveCreateTime)entity;
 				if (et.CreateTime == default(DateTime)) {
@@ -22,5 +20,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 				}
 			}
 		}
+
+		/// <summary>
+		/// 不需要处理删除
+		/// </summary>
+		void IEntityOperationFilter.FilterDelete<TEntity, TPrimaryKey>(TEntity entity) { }
 	}
 }

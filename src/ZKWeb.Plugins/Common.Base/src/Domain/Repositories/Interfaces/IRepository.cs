@@ -14,12 +14,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces {
 		where TEntity : class, IEntity<TPrimaryKey> {
 		/// <summary>
 		/// 查询实体
+		/// 受这些过滤器的影响: 查询过滤器
 		/// </summary>
 		/// <returns></returns>
 		IQueryable<TEntity> Query();
 
 		/// <summary>
 		/// 获取符合条件的单个实体
+		/// 受这些过滤器的影响: 查询过滤器
 		/// </summary>
 		/// <param name="predicate">条件</param>
 		/// <returns></returns>
@@ -27,6 +29,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces {
 
 		/// <summary>
 		/// 计算符合条件的实体数量
+		/// 受这些过滤器的影响: 查询过滤器
 		/// </summary>
 		/// <param name="predicate">条件</param>
 		/// <returns></returns>
@@ -34,6 +37,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces {
 
 		/// <summary>
 		/// 添加或更新实体
+		/// 受这些过滤器的影响: 操作过滤器
 		/// </summary>
 		/// <param name="entity">实体</param>
 		/// <param name="update">更新函数</param>
@@ -41,12 +45,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces {
 
 		/// <summary>
 		/// 删除实体
+		/// 受这些过滤器的影响: 操作过滤器
 		/// </summary>
 		/// <param name="entity">实体</param>
 		void Delete(TEntity entity);
 
 		/// <summary>
 		/// 批量保存实体
+		/// 受这些过滤器的影响: 操作过滤器
 		/// </summary>
 		/// <param name="entities">实体列表</param>
 		/// <param name="update">更新函数</param>
@@ -55,6 +61,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces {
 
 		/// <summary>
 		/// 批量更新实体
+		/// 受这些过滤器的影响: 查询过滤器, 操作过滤器
 		/// </summary>
 		/// <param name="predicate">更新条件</param>
 		/// <param name="update">更新函数</param>
@@ -64,9 +71,12 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces {
 
 		/// <summary>
 		/// 批量删除实体
+		/// 受这些过滤器的影响: 查询过滤器, 操作过滤器
 		/// </summary>
 		/// <param name="predicate">删除条件</param>
+		/// <param name="beforeDelete">删除前的函数</param>
 		/// <returns></returns>
-		long BatchDelete(Expression<Func<TEntity, bool>> predicate);
+		long BatchDelete(
+			Expression<Func<TEntity, bool>> predicate, Action<TEntity> beforeDelete = null);
 	}
 }

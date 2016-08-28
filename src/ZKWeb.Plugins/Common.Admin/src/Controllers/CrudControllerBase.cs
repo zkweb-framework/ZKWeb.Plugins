@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Filters;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions;
@@ -260,7 +261,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchAction() {
-			HttpRequestChecker.RequieAjaxRequest();
+			this.RequireAjaxRequest();
 			var request = HttpManager.CurrentContext.Request;
 			var actionName = request.Get<string>("action");
 			var action = BatchActions.GetOrDefault(actionName);
@@ -288,11 +289,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			} else {
 				throw new ArgumentException(string.Format(
 					"get batch action ids failed, unknown format: {0}", json));
-			}
-			if (ConcernEntityOwnership) {
-				// 批量删除或其他操作可能不适用于过滤器，这里手动检查用户对数据的所有权
-				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-				privilegeManager.CheckOwnership<TEntity, TPrimaryKey>(result);
 			}
 			return result;
 		}
@@ -380,9 +376,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 				using (uow.Scope()) {
 					// 使用工作单元包装处理函数
 					if (ConcernEntityOwnership) {
-						// 启用所属用户使用的查询和保存过滤器
-						using (uow.EnableQueryFilter(new OwnerQueryFilter()))
-						using (uow.EnableSaveFilter(new OwnerSaveFilter())) {
+						// 启用所属用户使用的查询和操作过滤器
+						var filter = new OwnerFilter();
+						using (uow.EnableQueryFilter(filter))
+						using (uow.EnableOperationFilter(filter)) {
 							return action();
 						}
 					} else {

@@ -11,6 +11,10 @@ using ZKWebStandard.Ioc;
 namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow {
 	/// <summary>
 	/// 工作单元
+	/// 工作单元用于在一个区域中共享数据库上下文和事务
+	/// 工作单元支持过滤器，这是对框架中的数据事件的补充，但不同的是
+	/// - 工作单元过滤器用于处理拥有某一特征(例如有创建时间)的所有实体，可以在一定的范围内启用和禁用
+	/// - 数据事件用于处理某一类型的实体，全局一直有效且不能禁用
 	/// </summary>
 	[ExportMany, SingletonReuse]
 	public class UnitOfWork : IUnitOfWork {
@@ -27,9 +31,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow {
 			/// </summary>
 			public IList<IEntityQueryFilter> QueryFilters { get; set; }
 			/// <summary>
-			/// 默认的保存过滤器
+			/// 默认的操作过滤器
 			/// </summary>
-			public IList<IEntitySaveFilter> SaveFilters { get; set; }
+			public IList<IEntityOperationFilter> OperationFilters { get; set; }
 
 			/// <summary>
 			/// 初始化
@@ -38,7 +42,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow {
 				var databaseManager = Application.Ioc.Resolve<DatabaseManager>();
 				Context = databaseManager.CreateContext();
 				QueryFilters = Application.Ioc.ResolveMany<IEntityQueryFilter>().ToList();
-				SaveFilters = Application.Ioc.ResolveMany<IEntitySaveFilter>().ToList();
+				OperationFilters = Application.Ioc.ResolveMany<IEntityOperationFilter>().ToList();
 			}
 
 			/// <summary>
@@ -99,9 +103,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow {
 		/// <summary>
 		/// 当前的保存过滤器列表
 		/// </summary>
-		public IList<IEntitySaveFilter> SaveFilters {
+		public IList<IEntityOperationFilter> OperationFilters {
 			get {
-				var filters = Data.Value?.SaveFilters;
+				var filters = Data.Value?.OperationFilters;
 				if (filters == null) {
 					throw new InvalidOperationException("Please call Scope() first");
 				}
@@ -113,7 +117,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Uow {
 				} else if (Data.Value == null) {
 					throw new InvalidOperationException("Please call Scope() first");
 				}
-				Data.Value.SaveFilters = value;
+				Data.Value.OperationFilters = value;
 			}
 		}
 
