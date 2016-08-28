@@ -1,24 +1,31 @@
 ﻿using System;
 using System.Linq;
+using ZKWeb.Localize;
+using ZKWeb.Plugin;
 using ZKWeb.Plugins.Common.Admin.src.Controllers.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Admin.src.UIComponents.Forms;
+using ZKWeb.Plugins.Common.Base.src.Components.GenericConfigs;
+using ZKWeb.Plugins.Common.Base.src.Controllers;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateFilters;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
+using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
 	/// 后台的控制器
 	/// </summary>
 	[ExportMany]
-	public class AdminController : IController {
+	public class AdminController : ControllerBase {
 		/// <summary>
 		/// 后台首页
 		/// 显示应用列表，会根据当前用户权限进行过滤
@@ -51,8 +58,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			}
 			// 否则显示登陆表单
 			var form = new AdminLoginForm();
-			var context = HttpManager.CurrentContext;
-			if (context.Request.Method == HttpMethods.POST) {
+			if (Request.Method == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
@@ -90,10 +96,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		[Action("admin/about_me", HttpMethods.POST)]
 		public IActionResult AboutMe() {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(UserTypesGroup.AdminOrParter);
+			privilegeManager.Check(typeof(ICanUseAdminPanel));
 			var form = new AdminAboutMeForm();
-			var context = HttpManager.CurrentContext;
-			if (context.Request.Method == HttpMethods.POST) {
+			if (Request.Method == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
@@ -108,7 +113,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		[Action("admin/about_website")]
 		public IActionResult AboutWebsite() {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(UserTypesGroup.AdminOrParter);
+			privilegeManager.Check(typeof(ICanUseAdminPanel));
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var pluginManager = Application.Ioc.Resolve<PluginManager>();
 			var websiteSettings = configManager.GetData<WebsiteSettings>();
@@ -117,14 +122,19 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			var zkwebVersion = Application.Version;
 			var zkwebFullVersion = Application.FullVersion;
 			var memoryUsage = SystemUtils.GetUsedMemoryBytes() / 1024 / 1024;
-			var pluginInfoTable = new DataTable();
+			var pluginInfoTable = new StaticTableBuilder();
 			pluginInfoTable.Columns.Add("DirectoryName");
 			pluginInfoTable.Columns.Add("Name");
 			pluginInfoTable.Columns.Add("Version");
 			pluginInfoTable.Columns.Add("FullVersion");
 			pluginInfoTable.Columns.Add("Description");
-			pluginManager.Plugins.ForEach(p => pluginInfoTable.Rows.Add(
-				p.DirectoryName(), new T(p.Name), p.VersionObject(), p.Version, new T(p.Description)));
+			pluginInfoTable.Rows.AddRange(pluginManager.Plugins.Select(p => new {
+				DirectoryName = p.DirectoryName(),
+				Name = new T(p.Name),
+				Version = p.VersionObject(),
+				FullVersion = p.Version,
+				Description = new T(p.Description)
+			}));
 			return new TemplateResult("common.admin/about_website.html", new {
 				websiteName = websiteSettings.WebsiteName,
 				defaultLanguage = localeSettings.DefaultLanguage,
@@ -133,7 +143,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 				zkwebVersion = zkwebVersion.ToString(),
 				zkwebFullVersion = zkwebFullVersion,
 				memoryUsage = memoryUsage,
-				pluginInfoTable = pluginInfoTable.ToHtml()
+				pluginInfoTable = pluginInfoTable
 			});
 		}
 	}

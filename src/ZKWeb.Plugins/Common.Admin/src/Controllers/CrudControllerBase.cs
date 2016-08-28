@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Filters;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Base.src.Controllers;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
@@ -30,6 +31,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// 用于增删查改数据的控制器的基础类
 	/// </summary>
 	public abstract class CrudControllerBase<TEntity, TPrimaryKey> :
+		ControllerBase,
 		ICrudController, IPrivilegesProvider, IWebsiteStartHandler
 		where TEntity : class, IEntity<TPrimaryKey> {
 		/// <summary>
@@ -201,7 +203,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		protected virtual IActionResult SearchAction() {
 			// 获取参数并转换到搜索请求
-			var json = HttpManager.CurrentContext.Request.Get<string>("json");
+			var json = Request.Get<string>("json");
 			var request = AjaxTableSearchRequest.FromJson(json);
 			// 表格处理器，内置+使用Ioc注册的扩展回调
 			var handlers = GetTableHandler().WithExtraHandlers();
@@ -216,8 +218,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		protected virtual IActionResult AddAction() {
 			var form = GetAddForm();
-			var request = HttpManager.CurrentContext.Request;
-			if (request.Method == HttpMethods.POST) {
+			if (Request.Method == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
@@ -232,8 +233,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		protected virtual IActionResult EditAction() {
 			var form = GetEditForm();
-			var request = HttpManager.CurrentContext.Request;
-			if (request.Method == HttpMethods.POST) {
+			if (Request.Method == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
@@ -249,8 +249,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		protected virtual IActionResult BatchAction() {
 			// 防跨站攻击
 			this.RequireAjaxRequest();
-			var request = HttpManager.CurrentContext.Request;
-			var actionName = request.Get<string>("action");
+			var actionName = Request.Get<string>("action");
 			var action = BatchActions.GetOrDefault(actionName);
 			if (action == null) {
 				// 找不到对应的操作
@@ -267,7 +266,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IList<TPrimaryKey> GetBatchActionIds() {
-			var json = HttpManager.CurrentContext.Request.Get<string>("json");
+			var json = Request.Get<string>("json");
 			var obj = JsonConvert.DeserializeObject<JToken>(json);
 			IList<TPrimaryKey> result;
 			if (obj is JArray) {

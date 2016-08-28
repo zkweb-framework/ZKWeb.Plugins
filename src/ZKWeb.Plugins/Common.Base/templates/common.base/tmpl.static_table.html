@@ -1,0 +1,30 @@
+﻿<table class="{{ tableClass }}">
+	<thead>
+		<tr role="row" class="heading">
+			{% for column in columns %}
+			<th width="{{ column.width }}">
+				{% if column.allowHtml %}
+				{% raw_html column.caption %}
+				{% else %}
+				{{ column.caption }}
+				{% endif %}
+			</th>
+			{% endfor %}
+		</tr>
+	</thead>
+	<tbody>
+		{% for row in rows %}
+		<tr role="row">
+			{% for column in columns %}
+			<td>
+				{% if column.allowHtml %}
+				{% raw_html row[column.member] %}
+				{% else %}
+				{{ row[column.member] }}
+				{% endif %}
+			</td>
+			{% endfor %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>

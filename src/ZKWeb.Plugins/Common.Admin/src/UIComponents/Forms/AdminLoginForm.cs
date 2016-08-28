@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Admin.src.Managers;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Captcha.src.FormFieldAttributes;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Form;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Form.Attributes;
 
 namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.Forms {
 	/// <summary>

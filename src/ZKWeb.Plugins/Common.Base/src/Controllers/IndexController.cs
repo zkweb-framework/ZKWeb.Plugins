@@ -8,7 +8,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 	/// 首页控制器
 	/// </summary>
 	[ExportMany]
-	public class IndexController : IController {
+	public class IndexController : ControllerBase {
 		/// <summary>
 		/// 首页
 		/// </summary>

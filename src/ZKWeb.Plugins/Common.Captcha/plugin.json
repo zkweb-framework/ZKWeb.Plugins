@@ -1,9 +1,7 @@
 ﻿{
 	"Name": "Captcha",
-	"Version": "0.9 testing",
+	"Version": "1.0.0 beta 1",
 	"Description": "Provide captcha form field and validation",
 	"Dependencies": [ "Common.Base" ],
-	"References": [
-		"System.Speech, Version=1.0.2004.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
-	]
+	"References": []
 }

@@ -6,7 +6,11 @@
 		"ZKWeb": "1.0.0-rc-3e"
 	},
 	"frameworks": {
-		"net461": {},
+		"net461": {
+			"frameworkAssemblies": {
+				"System.Speech": "4.0.0.0"
+			}
+		},
 		"netstandard1.6": {
 			"buildOptions": { "define": [ "NETCORE" ] }
 		}
