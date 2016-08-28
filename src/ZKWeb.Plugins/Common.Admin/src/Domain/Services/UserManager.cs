@@ -167,7 +167,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <returns></returns>
-		public virtual string GetAvatarWebPath(long userId) {
+		public virtual string GetAvatarWebPath(Guid userId) {
 			if (!File.Exists(GetAvatarStoragePath(userId))) {
 				// 没有自定义头像时使用默认头像
 				return "/static/common.admin.images/default-avatar.jpg";

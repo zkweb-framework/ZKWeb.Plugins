@@ -118,7 +118,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			var pluginManager = Application.Ioc.Resolve<PluginManager>();
 			var websiteSettings = configManager.GetData<WebsiteSettings>();
 			var localeSettings = configManager.GetData<LocaleSettings>();
+#if NETCORE
+			var serverUsername = "";
+#else
 			var serverUsername = Environment.UserName;
+#endif
 			var zkwebVersion = Application.Version;
 			var zkwebFullVersion = Application.FullVersion;
 			var memoryUsage = SystemUtils.GetUsedMemoryBytes() / 1024 / 1024;
