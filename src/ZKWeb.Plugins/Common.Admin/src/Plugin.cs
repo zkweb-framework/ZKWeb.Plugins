@@ -1,4 +1,6 @@
-﻿using ZKWeb.Plugin;
+﻿using DotLiquid;
+using System;
+using ZKWeb.Plugin;
 using ZKWeb.Templating.DynamicContents;
 using ZKWebStandard.Ioc;
 
@@ -18,6 +20,8 @@ namespace ZKWeb.Plugins.Common.Admin.src {
 			areaManager.GetArea("header_navbar_right").DefaultWidgets.Add("common.admin.widgets/enter_admin_panel");
 			areaManager.GetArea("admin_navbar").DefaultWidgets.Add("common.admin.widgets/admin_apps_menu");
 			areaManager.GetArea("admin_footer_area").DefaultWidgets.Add("common.base.widgets/copyright");
+			// 注册模板可描画类型
+			Template.RegisterSafeType(typeof(Version), s => s.ToString());
 		}
 	}
 }

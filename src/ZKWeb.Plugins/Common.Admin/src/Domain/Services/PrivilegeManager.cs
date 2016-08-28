@@ -41,12 +41,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		public virtual void Check(Type userType, params string[] privileges) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var userTypeMatched = userType.GetTypeInfo()
-				.IsAssignableFrom(user.GetUserType().GetType());
+			var userTypeMatched = (user != null &&
+				userType.GetTypeInfo().IsAssignableFrom(user.GetUserType().GetType()));
 			var context = HttpManager.CurrentContext;
 			if (context.Request.Method == HttpMethods.GET && (user == null || !userTypeMatched)) {
 				// 要求管理员时跳转到后台登陆页面，否则跳转到前台登陆页面
-				if (typeof(IAmAdmin).GetTypeInfo().IsAssignableFrom(userType)) {
+				if (typeof(ICanUseAdminPanel).GetTypeInfo().IsAssignableFrom(userType)) {
 					context.Response.RedirectByScript(BaseFilters.Url("/admin/login"));
 				} else {
 					context.Response.RedirectByScript(BaseFilters.Url("/user/login"));

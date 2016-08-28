@@ -58,7 +58,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.Translates {
 			{ "FirstPage", "첫" },
 			{ "PrevPage", "이전" },
 			{ "NextPage", "다음" },
-			{ "LastPage", "마지막" }
+			{ "LastPage", "마지막" },
+			{ "Saved Successfully", "성공적으로 저장" }
 		};
 
 		public bool CanTranslate(string code) {

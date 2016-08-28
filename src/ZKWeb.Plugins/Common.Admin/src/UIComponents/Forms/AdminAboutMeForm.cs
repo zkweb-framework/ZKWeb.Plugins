@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Constants;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
@@ -11,7 +10,7 @@ using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.Forms {
@@ -74,11 +73,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.Forms {
 		protected override void OnBind() {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
+			var isSuperAdmin = user.GetUserType() is IAmSuperAdmin;
 			Username = user.Username;
 			Roles = string.Join(", ", user.Roles.Select(r => r.Name));
-			SuperAdmin = new T(user.GetUserType() is IAmSuperAdmin ? "Yes" : "No");
+			SuperAdmin = new T(isSuperAdmin ? "Yes" : "No");
 			Privileges = new HashSet<string>(user.Roles.SelectMany(r => r.Privileges));
-			if (user.Type == UserTypes.SuperAdmin) {
+			if (isSuperAdmin) {
 				// 超级管理员时勾选所有权限
 				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 				Privileges = new HashSet<string>(privilegeManager.GetPrivileges());
@@ -106,10 +106,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.Forms {
 			} else if (DeleteAvatar) {
 				userManager.DeleteAvatar(session.ReleatedId);
 			}
-			return new {
-				message = new T("Saved Successfully"),
-				script = BaseScriptStrings.RefreshAfter(1500)
-			};
+			return this.SaveSuccessAndRefreshPage(1500);
 		}
 	}
 }

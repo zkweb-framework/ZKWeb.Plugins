@@ -140,7 +140,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 		/// 批量永久删除
 		/// </summary>
 		public virtual long BatchDeleteForever(IEnumerable<TPrimaryKey> ids) {
-			using (UnitOfWork.Scope()) {
+			var uow = UnitOfWork;
+			using (uow.Scope())
+			using (uow.DisableQueryFilter(typeof(DeletedFilter))) {
 				return Repository.BatchDelete(e => ids.Contains(e.Id));
 			}
 		}

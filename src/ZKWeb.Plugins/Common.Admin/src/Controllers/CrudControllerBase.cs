@@ -272,10 +272,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			IList<TPrimaryKey> result;
 			if (obj is JArray) {
 				// [ id列表 ]
-				result = obj.Values<TPrimaryKey>().ToList();
+				result = obj.Values<object>()
+					.Select(o => o.ConvertOrDefault<TPrimaryKey>()).ToList();
 			} else if (obj is JObject) {
 				// { ids: [ id列表 ], ... }
-				result = ((JObject)obj).GetValue("ids").Values<TPrimaryKey>().ToList();
+				result = ((JObject)obj).GetValue("ids").Values<object>()
+					.Select(o => o.ConvertOrDefault<TPrimaryKey>()).ToList();
 			} else {
 				throw new ArgumentException(string.Format(
 					"get batch action ids failed, unknown format: {0}", json));

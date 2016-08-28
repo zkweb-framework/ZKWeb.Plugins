@@ -5,6 +5,7 @@ using ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 	/// <summary>
@@ -87,7 +88,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 		/// <summary>
 		/// 对增删查改页面使用的Ajax表格操作列进行标准的设置
 		/// 添加以下按钮
-		/// - 查看按钮（如果编辑Url不是空）
+		/// - 查看按钮（如果编辑Url不是空，且不要求的数据为已删除）
 		/// </summary>
 		/// <typeparam name="TCrudController">控制器的类型</typeparam>
 		/// <param name="column">操作列</param>
@@ -96,7 +97,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 			this AjaxTableActionColumn column, AjaxTableSearchRequest request)
 			where TCrudController : class, ICrudController, new() {
 			var app = new TCrudController();
-			if (!string.IsNullOrEmpty(app.EditUrl)) {
+			var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
+			if (!string.IsNullOrEmpty(app.EditUrl) && !deleted) {
 				column.AddEditActionFor<TCrudController>();
 			}
 		}

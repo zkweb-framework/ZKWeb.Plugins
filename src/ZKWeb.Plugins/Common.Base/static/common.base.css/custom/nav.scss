@@ -26,7 +26,7 @@
 			background-color: transparent;
 			/* 选中时改变颜色和添加下划线 */
 			&:hover, &:focus, &:active {
-				color: #C40000;
+				color: #2296d4;
 				text-decoration: underline;
 			}
 		}
@@ -47,7 +47,7 @@
 	.top-menubar {
 		min-height: 42px;
 		line-height: 42px;
-		background-color: #E4393C;
+		background-color: #0080BF;
 		/* 菜单的样式 */
 		.nav {
 			float: left;
@@ -60,10 +60,10 @@
 				padding: 0px 15px;
 				font-size: 14px;
 				color: #FFF;
-				background-color: #E4393C;
+				background-color: #0080BF;
 				/* 选中时改变背景 */
 				&:hover, &:focus, &:active {
-					background-color: #C40000;
+					background-color: #2296d4;
 				}
 			}
 		}

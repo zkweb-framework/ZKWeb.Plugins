@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities {
@@ -8,7 +9,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities {
 	/// 用户角色
 	/// </summary>
 	[ExportMany]
-	public class UserRole : IEntity<Guid>, IEntityMappingProvider<UserRole> {
+	public class UserRole :
+		IEntity<Guid>, IHaveCreateTime, IHaveUpdateTime, IHaveDeleted,
+		IEntityMappingProvider<UserRole> {
 		/// <summary>
 		/// 角色Id
 		/// </summary>
@@ -20,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities {
 		/// <summary>
 		/// 权限列表
 		/// </summary>
-		public virtual ISet<string> Privileges { get; set; }
+		public virtual HashSet<string> Privileges { get; set; }
 		/// <summary>
 		/// 创建时间
 		/// </summary>
@@ -28,7 +31,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities {
 		/// <summary>
 		/// 更新时间
 		/// </summary>
-		public virtual DateTime LastUpdated { get; set; }
+		public virtual DateTime UpdateTime { get; set; }
 		/// <summary>
 		/// 备注
 		/// </summary>
@@ -61,7 +64,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities {
 			builder.Map(r => r.Name);
 			builder.Map(r => r.Privileges, new EntityMappingOptions() { WithSerialization = true });
 			builder.Map(r => r.CreateTime);
-			builder.Map(r => r.LastUpdated);
+			builder.Map(r => r.UpdateTime);
 			builder.Map(r => r.Remark);
 			builder.Map(r => r.Deleted);
 		}

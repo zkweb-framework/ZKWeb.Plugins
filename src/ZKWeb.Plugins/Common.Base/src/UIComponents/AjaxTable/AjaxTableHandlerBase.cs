@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Database;
+using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.Domain.Entities.TypeTraits;
 using ZKWeb.Plugins.Common.Base.src.Domain.Filters;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
@@ -49,11 +51,17 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable {
 
 		/// <summary>
 		/// 排序数据
-		/// 默认按Id倒序排列
+		/// 默认更新时间或创建时间或Id倒序排列
 		/// </summary>
 		public virtual void OnSort(
 			AjaxTableSearchRequest request, ref IQueryable<TEntity> query) {
-			query = query.OrderByDescending(e => e.Id);
+			if (UpdateTimeTypeTrait<TEntity>.HaveUpdateTime) {
+				query = query.OrderByDescending(e => ((IHaveUpdateTime)e).UpdateTime);
+			} else if (CreateTimeTypeTrait<TEntity>.HaveCreateTime) {
+				query = query.OrderByDescending(e => ((IHaveCreateTime)e).CreateTime);
+			} else {
+				query = query.OrderByDescending(e => e.Id);
+			}
 		}
 
 		/// <summary>

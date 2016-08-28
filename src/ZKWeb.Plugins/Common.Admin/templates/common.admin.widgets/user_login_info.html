@@ -1,6 +1,6 @@
 ﻿{% fetch /api/user/login_info > login_info %}
 <div class="user-login-info">
-	{% if login_info.userId > 0 %}
+	{% if login_info.userId %}
 	<div>
 		{{ "Welcome to " | trans }}{% website_name %}
 		<a class="nav-link" href="{{ "/home" | url }}">{{ login_info.username }}</a> |

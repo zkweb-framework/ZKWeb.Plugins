@@ -58,7 +58,8 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.Translates {
 			{ "FirstPage", "首頁" },
 			{ "PrevPage", "上一頁" },
 			{ "NextPage", "下一頁" },
-			{ "LastPage", "末頁" }
+			{ "LastPage", "末頁" },
+			{ "Saved Successfully", "保存成功" },
 		};
 
 		public bool CanTranslate(string code) {

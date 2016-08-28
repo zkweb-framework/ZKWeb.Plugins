@@ -10,7 +10,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems {
 	/// </summary>
 	/// <typeparam name="TEntity">实体类型</typeparam>
 	/// <typeparam name="TPrimaryKey">实体主键</typeparam>
-	public class ListItemFromData<TEntity, TPrimaryKey> : IListItemProvider
+	public class ListItemFromEntities<TEntity, TPrimaryKey> : IListItemProvider
 		where TEntity : class, IEntity<TPrimaryKey> {
 		/// <summary>
 		/// 获取选项列表

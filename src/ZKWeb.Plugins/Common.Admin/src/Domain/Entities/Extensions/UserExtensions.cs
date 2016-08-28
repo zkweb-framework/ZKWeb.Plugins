@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions {
 		/// </summary>
 		public static IUserType GetUserType(this User user) {
 			var type = Application.Ioc.ResolveMany<IUserType>()
-				.FirstOrDefault(t => t.Type == user.Type);
+				.FirstOrDefault(t => t.Type == user?.Type);
 			if (type == null) {
 				throw new NotSupportedException(string.Format(
 					"Unsupported user type: {0}", user.Type));

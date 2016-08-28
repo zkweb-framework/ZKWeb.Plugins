@@ -38,6 +38,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// 编辑页的模板路径
 		/// </summary>
 		public override string EditTemplatePath { get { return "common.admin/generic_edit.html"; } }
+		/// <summary>
+		/// 管理员操作数据默认不考虑所属用户
+		/// </summary>
+		protected override bool ConcernEntityOwnership { get { return false; } }
 
 		/// <summary>
 		/// 初始化

@@ -22,17 +22,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		[Action("api/user/login_info", HttpMethods.POST)]
 		public IActionResult UserLoginInfo() {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var user = sessionManager.GetSession().GetUser() ?? new User();
+			var user = sessionManager.GetSession().GetUser();
 			var userType = user.GetUserType();
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			return new JsonResult(new {
-				userId = user.Id,
-				username = user.Username,
-				userType = user.Type.ToString(),
+				userId = user?.Id,
+				username = user?.Username,
+				userType = user?.Type,
 				userIsAdmin = userType is IAmAdmin,
 				userIsParter = userType is IAmCooperationPartner,
 				userCanUseAdminPanel = userType is ICanUseAdminPanel,
-				avatar = userManager.GetAvatarWebPath(user.Id)
+				avatar = userManager.GetAvatarWebPath(user?.Id ?? Guid.Empty)
 			});
 		}
 	}
