@@ -26,8 +26,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 		/// <summary>
 		/// 不需要处理删除
 		/// </summary>
-		void IEntityOperationFilter.FilterDelete<TEntity, TPrimaryKey>(TEntity entity) {
-			throw new NotImplementedException();
-		}
+		void IEntityOperationFilter.FilterDelete<TEntity, TPrimaryKey>(TEntity entity) { }
 	}
 }

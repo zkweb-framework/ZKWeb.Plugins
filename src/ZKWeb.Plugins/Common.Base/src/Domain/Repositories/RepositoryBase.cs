@@ -101,7 +101,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories {
 			Expression<Func<TEntity, bool>> predicate, Action<TEntity> beforeDelete) {
 			var uow = UnitOfWork;
 			predicate = uow.WrapPredicate<TEntity, TPrimaryKey>(predicate);
-			beforeDelete = uow.WrapUpdateMethod<TEntity, TPrimaryKey>(beforeDelete);
+			beforeDelete = uow.WrapBeforeDeleteMethod<TEntity, TPrimaryKey>(beforeDelete);
 			return uow.Context.BatchDelete(predicate, beforeDelete);
 		}
 	}
