@@ -8,11 +8,13 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.Controllers {
 	/// <summary>
 	/// 后台设置的Api控制器
 	/// </summary>
+	[ExportMany]
 	public class AdminSettingsApiController : ControllerBase {
 		/// <summary>
 		/// 获取后台设置的菜单项分组列表
