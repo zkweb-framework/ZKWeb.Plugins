@@ -41,8 +41,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		public virtual void Check(Type userType, params string[] privileges) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var userTypeMatched = (user != null &&
-				userType.GetTypeInfo().IsAssignableFrom(user.GetUserType().GetType()));
+			var userTypeMatched = HasUserType(user, userType);
 			var context = HttpManager.CurrentContext;
 			if (context.Request.Method == HttpMethods.GET && (user == null || !userTypeMatched)) {
 				// 要求管理员时跳转到后台登陆页面，否则跳转到前台登陆页面
@@ -65,6 +64,16 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 				throw new ForbiddenException(string.Format(
 					new T("Action require {0}"), new T(userType.Name)));
 			}
+		}
+
+		/// <summary>
+		/// 判断用户是否拥有指定的用户类型
+		/// </summary>
+		/// <param name="user">用户</param>
+		/// <param name="userType">用户类型的接口或基础类</param>
+		/// <returns></returns>
+		public virtual bool HasUserType(User user, Type userType) {
+			return userType.GetTypeInfo().IsAssignableFrom(user.GetUserType().GetType());
 		}
 
 		/// <summary>

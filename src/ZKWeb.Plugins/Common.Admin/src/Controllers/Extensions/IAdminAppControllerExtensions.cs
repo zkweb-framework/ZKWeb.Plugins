@@ -36,8 +36,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Extensions {
 		/// <returns></returns>
 		public static bool IsAccessableFormUser(this IAdminAppController app, User user) {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			var requiredUserTypeInfo = app.RequiredUserType.GetTypeInfo();
-			return (requiredUserTypeInfo.IsAssignableFrom(user.GetUserType().GetType()) &&
+			return (privilegeManager.HasUserType(user, app.RequiredUserType) &&
 				privilegeManager.HasPrivileges(user, app.RequiredPrivileges));
 		}
 	}

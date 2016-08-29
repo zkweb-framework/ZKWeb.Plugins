@@ -74,7 +74,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems.Extensions {
 		/// <param name="iconClass">图标css类</param>
 		/// <param name="onClick">点击时执行的Javascript代码</param>
 		public static void AddItemForClickEvent(
-			this List<MenuItem> items, string name, string iconClass, string onClick) {
+			this IList<MenuItem> items, string name, string iconClass, string onClick) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var html = templateManager.RenderTemplate(
 				"common.base/tmpl.menu_item.onclick.html",
@@ -91,7 +91,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems.Extensions {
 		/// <param name="href">链接地址</param>
 		/// <param name="target">打开目标</param>
 		public static void AddItemForLink(
-			this List<MenuItem> items, string name, string iconClass,
+			this IList<MenuItem> items, string name, string iconClass,
 			string href, string target = "_self") {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var html = templateManager.RenderTemplate(
@@ -132,7 +132,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems.Extensions {
 		/// <param name="urlTemplate">远程链接的模板，格式是underscore.js的默认格式，参数传入row</param>
 		/// <param name="dialogParameters">用于覆盖传入给BootstrapDialog.show的参数</param>
 		public static void AddRemoteModalForSelectedRow(
-			this List<MenuItem> items, string name, string iconClass,
+			this IList<MenuItem> items, string name, string iconClass,
 			string titleTemplate, string urlTemplate, object dialogParameters = null) {
 			items.AddItemForClickEvent(name, iconClass, string.Format(@"
 				var table = $(this).closestAjaxTable();
@@ -149,7 +149,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems.Extensions {
 		/// <param name="items">菜单项列表</param>
 		/// <param name="levelMember">保存节点等级的成员名称</param>
 		public static void AddToggleAllForAjaxTableTree(
-			this List<MenuItem> items, string levelMember) {
+			this IList<MenuItem> items, string levelMember) {
 			items.AddItemForClickEvent(new T("Expand/Collapse All"), "fa fa-expand",
 				string.Format("$(this).closestAjaxTable().treeNodeToggleAll({0})",
 				JsonConvert.SerializeObject(levelMember)));
