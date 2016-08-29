@@ -122,6 +122,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 		protected virtual IDictionary<string, Tuple<Func<IActionResult>, string[]>>
 			BatchActions { get; set; }
 		/// <summary>
+		/// 是否在增删查改操作中使用事务
+		/// </summary>
+		protected virtual bool UseTransaction { get { return false; } }
+		/// <summary>
 		/// 是否关心实体的所属用户
 		/// 等于true时会启用所属用户使用的查询和保存过滤器，并且在批量操作时进行检查
 		/// </summary>
@@ -358,19 +362,31 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 				privilegeManager.Check(RequiredUserType, privileges);
 				// 使用工作单元包装处理函数
+				// 指定使用事务时开启事务
 				var uow = Application.Ioc.Resolve<IUnitOfWork>();
+				var useTransaction = UseTransaction;
+				IActionResult result;
 				using (uow.Scope()) {
+					if (useTransaction) {
+						// 开始事务
+						uow.Context.BeginTransaction();
+					}
 					if (ConcernEntityOwnership) {
 						// 启用所属用户使用的查询和操作过滤器
 						var filter = new OwnerFilter();
 						using (uow.EnableQueryFilter(filter))
 						using (uow.EnableOperationFilter(filter)) {
-							return action();
+							result = action();
 						}
 					} else {
-						return action();
+						result = action();
+					}
+					if (useTransaction) {
+						// 结束事务
+						uow.Context.FinishTransaction();
 					}
 				}
+				return result;
 			};
 		}
 
