@@ -6,7 +6,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities.UserTypes {
 	/// 用户类型: 普通用户
 	/// </summary>
 	[ExportMany]
-	public class NormalUserType : IUserType {
+	public class NormalUserType : IAmUser {
 		public const string ConstType = "User";
 		public string Type { get { return ConstType; } }
 	}

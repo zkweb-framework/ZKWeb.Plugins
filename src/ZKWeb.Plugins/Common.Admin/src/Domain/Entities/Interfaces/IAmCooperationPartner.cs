@@ -2,5 +2,5 @@
 	/// <summary>
 	/// 标记用户类型是合作伙伴
 	/// </summary>
-	public interface IAmCooperationPartner : ICanUseAdminPanel { }
+	public interface IAmCooperationPartner : IAmUser, ICanUseAdminPanel { }
 }

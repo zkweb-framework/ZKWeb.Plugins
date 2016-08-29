@@ -2,5 +2,5 @@
 	/// <summary>
 	/// 标记用户类型是管理员
 	/// </summary>
-	public interface IAmAdmin : ICanUseAdminPanel { }
+	public interface IAmAdmin : IAmUser, ICanUseAdminPanel { }
 }

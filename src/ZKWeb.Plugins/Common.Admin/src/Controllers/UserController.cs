@@ -80,7 +80,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		[Action("home")]
 		public IActionResult Home() {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(typeof(IUserType)); // 只要求登陆
+			privilegeManager.Check(typeof(IAmUser)); // 只要求登陆
 			return new TemplateResult("common.admin/user_home.html");
 		}
 	}

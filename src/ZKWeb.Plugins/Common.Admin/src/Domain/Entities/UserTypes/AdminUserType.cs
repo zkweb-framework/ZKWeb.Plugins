@@ -6,7 +6,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities.UserTypes {
 	/// 用户类型: 管理员
 	/// </summary>
 	[ExportMany]
-	public class AdminUserType : IUserType, IAmAdmin {
+	public class AdminUserType : IAmAdmin {
 		public const string ConstType = "Admin";
 		public string Type { get { return ConstType; } }
 	}

@@ -6,7 +6,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities.UserTypes {
 	/// 匿名用户
 	/// </summary>
 	[ExportMany]
-	public class AnonymouseUserType : IUserType {
+	public class AnonymouseUserType : IAmAnonymouseUser {
 		public string Type { get { return null; } }
 	}
 }

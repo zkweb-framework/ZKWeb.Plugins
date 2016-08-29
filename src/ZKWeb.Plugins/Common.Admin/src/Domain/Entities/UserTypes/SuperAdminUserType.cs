@@ -6,7 +6,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities.UserTypes {
 	/// 用户类型: 超级管理员
 	/// </summary>
 	[ExportMany]
-	public class SuperAdminUserType : IUserType, IAmSuperAdmin {
+	public class SuperAdminUserType : IAmSuperAdmin {
 		public const string ConstType = "SuperAdmin";
 		public string Type { get { return ConstType; } }
 	}

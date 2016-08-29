@@ -29,5 +29,9 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Controllers.Bases {
 		/// 编辑页的模板路径
 		/// </summary>
 		public override string EditTemplatePath { get { return "common.admin_settings/generic_edit.html"; } }
+		/// <summary>
+		/// 默认不需要按实体的所属用户进行隔离
+		/// </summary>
+		protected override bool ConcernEntityOwnership { get { return false; } }
 	}
 }

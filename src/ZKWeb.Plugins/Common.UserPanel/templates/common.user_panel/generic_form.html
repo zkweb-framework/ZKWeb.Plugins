@@ -1,0 +1,15 @@
+﻿{% use_title title -%}
+{% include common.user_panel/header.html %}
+<div class="portlet">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="{{ iconClass }}"></i>
+			<span class="caption-subject">{{ title | trans }}</span>
+			<span class="caption-helper"></span>
+		</div>
+	</div>
+	<div class="portlet-body">
+		{{ form }}
+	</div>
+</div>
+{% include common.user_panel/footer.html %}

@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using ZKWeb.Web.ActionResults;
+using ZKWebStandard.Extensions;
+using ZKWeb.Web;
+using ZKWebStandard.Ioc;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems;
+using ZKWeb.Plugins.Common.UserPanel.src.MenuPages.UIComponents.Interfaces;
+
+namespace ZKWeb.Plugins.Common.UserPanel.src.Controllers {
+	/// <summary>
+	/// Api控制器
+	/// </summary>
+	[ExportMany]
+	public class UserPanelApiController : IController {
+		/// <summary>
+		/// 获取用户中心的菜单项分组列表
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/user/panel/menu_groups")]
+		public IActionResult UserPanelMenuGroups() {
+			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+			privilegeManager.Check(typeof(IAmUser));
+			var groups = new List<MenuItemGroup>();
+			var providers = Application.Ioc.ResolveMany<IUserPanelMenuProvider>();
+			providers.ForEach(h => h.Setup(groups));
+			return new JsonResult(groups);
+		}
+	}
+}
