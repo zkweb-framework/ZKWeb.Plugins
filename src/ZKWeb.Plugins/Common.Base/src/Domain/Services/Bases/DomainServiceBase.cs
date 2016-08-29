@@ -11,7 +11,7 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWebStandard.Utils;
 
-namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
+namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases {
 	/// <summary>
 	/// 领域服务的基础类
 	/// </summary>

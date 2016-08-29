@@ -4,7 +4,7 @@ using ZKWeb.Cache;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
-using ZKWeb.Plugins.Common.Base.src.Controllers;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;

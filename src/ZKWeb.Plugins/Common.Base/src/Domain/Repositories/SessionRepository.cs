@@ -1,5 +1,6 @@
 ﻿using System;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities;
+using ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Bases;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories {

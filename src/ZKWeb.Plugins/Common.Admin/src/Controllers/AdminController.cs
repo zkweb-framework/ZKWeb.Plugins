@@ -9,7 +9,7 @@ using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Admin.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.Components.GenericConfigs;
-using ZKWeb.Plugins.Common.Base.src.Controllers;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;

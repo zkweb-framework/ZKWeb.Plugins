@@ -18,6 +18,8 @@ using ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Enums;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases;
+using ZKWeb.Plugins.Common.Admin.src.Controllers.Bases;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems;
 
-namespace ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuPage.Interfaces {
+namespace ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuPages.Interfaces {
 	/// <summary>
 	/// 菜单分组和菜单项的提供器接口
 	/// 这个接口需要再次继承，请勿直接使用

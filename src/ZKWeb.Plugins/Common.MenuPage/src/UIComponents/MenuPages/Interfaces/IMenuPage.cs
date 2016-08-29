@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuPage.Interfaces {
+namespace ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuPages.Interfaces {
 	/// <summary>
 	/// 菜单页的接口
 	/// </summary>

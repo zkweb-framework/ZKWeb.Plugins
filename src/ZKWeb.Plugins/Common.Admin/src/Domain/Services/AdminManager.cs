@@ -12,6 +12,7 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateFilters;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.UserTypes;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 	/// <summary>

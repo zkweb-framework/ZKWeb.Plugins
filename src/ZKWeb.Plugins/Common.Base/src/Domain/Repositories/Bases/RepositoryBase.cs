@@ -7,7 +7,7 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 
-namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories {
+namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Bases {
 	/// <summary>
 	/// 仓储的基础类
 	/// 提供一系列基础操作

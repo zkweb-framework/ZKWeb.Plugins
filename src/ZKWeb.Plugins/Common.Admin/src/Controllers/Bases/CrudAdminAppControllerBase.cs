@@ -3,7 +3,7 @@ using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 
-namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
+namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 	/// <summary>
 	/// 增删查改使用的后台控制器的基础类
 	/// </summary>

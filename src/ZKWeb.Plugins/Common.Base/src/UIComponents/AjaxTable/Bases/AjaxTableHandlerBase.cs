@@ -11,7 +11,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
 using ZKWebStandard.Extensions;
 
-namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable {
+namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases {
 	/// <summary>
 	/// Ajax表格处理器的基础类
 	/// </summary>

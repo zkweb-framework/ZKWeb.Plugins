@@ -2,6 +2,7 @@
 using ZKWeb.Plugins.Common.Base.src.Components.SessionIdStore.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Web;

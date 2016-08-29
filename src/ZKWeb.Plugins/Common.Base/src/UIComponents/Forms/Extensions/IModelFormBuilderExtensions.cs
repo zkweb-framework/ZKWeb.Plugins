@@ -8,6 +8,15 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions {
 	/// </summary>
 	public static class IModelFormBuilderExtensions {
 		/// <summary>
+		/// 返回保存成功
+		/// </summary>
+		/// <param name="form">表单</param>
+		/// <returns></returns>
+		public static object SaveSuccess(this IModelFormBuilder form) {
+			return new { message = new T("Saved Successfully") };
+		}
+
+		/// <summary>
 		/// 返回保存成功，关掉模态框并且通知Ajax表格更新数据
 		/// </summary>
 		/// <param name="form">表单</param>

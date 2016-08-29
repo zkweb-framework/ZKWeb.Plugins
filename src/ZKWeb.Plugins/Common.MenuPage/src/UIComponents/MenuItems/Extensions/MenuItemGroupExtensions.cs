@@ -6,7 +6,7 @@ using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems.Extensions;
-using ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuPage.Interfaces;
+using ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuPages.Interfaces;
 
 namespace ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuItems.Extensions {
 	/// <summary>

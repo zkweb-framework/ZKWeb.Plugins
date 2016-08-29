@@ -11,7 +11,7 @@ using ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Filters;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
-using ZKWeb.Plugins.Common.Base.src.Controllers;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
@@ -25,7 +25,7 @@ using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
 
-namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
+namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 	/// <summary>
 	/// 用于增删查改数据的控制器的基础类
 	/// </summary>

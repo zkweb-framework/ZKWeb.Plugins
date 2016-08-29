@@ -24,6 +24,8 @@ using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.UserTypes;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
+using ZKWeb.Plugins.Common.Admin.src.Controllers.Bases;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>

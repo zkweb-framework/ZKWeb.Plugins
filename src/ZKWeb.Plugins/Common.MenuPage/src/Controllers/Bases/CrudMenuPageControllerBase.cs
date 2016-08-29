@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using ZKWeb.Database;
-using ZKWeb.Plugins.Common.Admin.src.Controllers;
+using ZKWeb.Plugins.Common.Admin.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems;
 using ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuItems.Extensions;
-using ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuPage.Interfaces;
+using ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuPages.Interfaces;
 
-namespace ZKWeb.Plugins.Common.MenuPage.src.Controllers {
+namespace ZKWeb.Plugins.Common.MenuPage.src.Controllers.Bases {
 	/// <summary>
 	/// 支持增删查改数据的菜单页面构建器
 	/// 需要再次经过包装，请勿直接使用

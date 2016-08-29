@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.UserTypes;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateFilters;
 using ZKWeb.Server;
 using ZKWebStandard.Extensions;

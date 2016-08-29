@@ -4,6 +4,7 @@ using System.Threading;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Components.ScheduledTasks.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {

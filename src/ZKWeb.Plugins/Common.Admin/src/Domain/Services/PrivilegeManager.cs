@@ -15,6 +15,7 @@ using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Components.PrivilegeTranslators.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateFilters;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 	/// <summary>

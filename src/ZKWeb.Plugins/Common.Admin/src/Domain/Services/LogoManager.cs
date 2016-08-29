@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.IO;
-using ZKWeb.Plugins.Common.Base.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Server;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;

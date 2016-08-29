@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 #if !NETCORE
 using System.Speech.Synthesis;
 #endif

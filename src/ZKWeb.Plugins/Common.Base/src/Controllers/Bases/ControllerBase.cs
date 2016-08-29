@@ -1,7 +1,7 @@
 ﻿using ZKWeb.Web;
 using ZKWebStandard.Web;
 
-namespace ZKWeb.Plugins.Common.Base.src.Controllers {
+namespace ZKWeb.Plugins.Common.Base.src.Controllers.Bases {
 	/// <summary>
 	/// 控制器的基础类
 	/// </summary>

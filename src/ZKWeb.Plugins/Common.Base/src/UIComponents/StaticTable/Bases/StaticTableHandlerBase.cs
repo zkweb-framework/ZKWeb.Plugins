@@ -11,7 +11,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Interfaces;
 using ZKWebStandard.Extensions;
 
-namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable {
+namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Bases {
 	/// <summary>
 	/// 静态表格处理器的基础类
 	/// </summary>

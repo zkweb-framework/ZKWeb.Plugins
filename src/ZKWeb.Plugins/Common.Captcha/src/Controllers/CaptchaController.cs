@@ -3,7 +3,7 @@ using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
 using ZKWeb.Plugins.Common.Captcha.src.Managers;
 using ZKWebStandard.Ioc;
-using ZKWeb.Plugins.Common.Base.src.Controllers;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 
 namespace ZKWeb.Plugins.Common.Captcha.src.Controllers {
 	/// <summary>

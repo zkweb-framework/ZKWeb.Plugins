@@ -5,6 +5,7 @@ using System.Reflection;
 using ZKWeb.Cache;
 using ZKWeb.Plugins.Common.Base.src.Components.GenericConfigs.Attributes;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;

@@ -1,0 +1,15 @@
+﻿{% include common.admin/header.html %}
+{% fetch /api/admin/settings/menu_groups > menu_groups %}
+<div class="page-content">
+	<div class="panel-sidebar">
+		<div class="portlet">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-wrench"></i>
+					<span class="caption-subject bold uppercase">{{ "Settings" | trans }}</span>
+				</div>
+			</div>
+			{% include common.menu_page/menu_groups_nav.html %}
+		</div>
+	</div>
+	<div class="panel-content">

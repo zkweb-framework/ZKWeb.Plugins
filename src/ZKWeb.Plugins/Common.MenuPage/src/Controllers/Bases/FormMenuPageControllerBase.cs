@@ -2,7 +2,7 @@
 using ZKWeb.Web;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 
-namespace ZKWeb.Plugins.Common.MenuPage.src.Controllers {
+namespace ZKWeb.Plugins.Common.MenuPage.src.Controllers.Bases {
 	/// <summary>
 	/// 带单个表单的菜单页面控制器的基础类
 	/// 需要再次经过包装，请勿直接使用
