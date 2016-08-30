@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZKWeb.Cache;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.GenericClass.src.Components.ExtraConfigKeys;
 using ZKWeb.Server;
@@ -14,7 +15,8 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Domain.Services {
 	/// 通用分类管理器
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class GenericClassManager : DomainServiceBase<Entities.GenericClass, Guid> {
+	public class GenericClassManager :
+		DomainServiceBase<Entities.GenericClass, Guid>, ICacheCleaner {
 		/// <summary>
 		/// 通用分类列表的缓存时间
 		/// 默认是15秒，可通过网站配置指定

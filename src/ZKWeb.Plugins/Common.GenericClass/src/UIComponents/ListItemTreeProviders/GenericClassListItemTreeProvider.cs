@@ -1,7 +1,7 @@
 ﻿using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
+using ZKWeb.Plugins.Common.GenericClass.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.GenericClass.src.Domain.Services;
-using ZKWeb.Plugins.Common.GenericClass.src.Scaffolding;
 using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.GenericClass.src.UIComponents.ListItemProviders {
@@ -11,7 +11,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.UIComponents.ListItemProviders {
 	/// <typeparam name="TController">定义通用分类的控制器类型</typeparam>
 	public class GenericClassListItemTreeProvider<TController> :
 		IListItemTreeProvider
-		where TController : CrudGenericClassControllerBase, new() {
+		where TController : GenericClassControllerBase, new() {
 		/// <summary>
 		/// 获取选项列表树
 		/// </summary>

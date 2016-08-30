@@ -20,30 +20,27 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems.Extensions;
-using ZKWeb.Plugins.Common.GenericClass.src.Domain.Services;
+using ZKWeb.Plugins.Common.GenericTag.src.Domain.Services;
 using ZKWebStandard.Extensions;
-using ZKWebStandard.Utils;
-using ZKWebStandard.Web;
 
-namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
-	using GenericClass = Domain.Entities.GenericClass;
+namespace ZKWeb.Plugins.Common.GenericTag.src.Controllers.Bases {
+	using GenericTag = Domain.Entities.GenericTag;
 
 	/// <summary>
-	/// 通用分类的增删查改控制器的基础类
+	/// 通用标签构建器
 	/// </summary>
-	public abstract class CrudGenericClassControllerBase :
-		CrudAdminSettingsControllerBase<GenericClass, Guid> {
+	public abstract class GenericTagControllerBase :
+		CrudAdminSettingsControllerBase<GenericTag, Guid> {
 		public virtual string Type { get { return Name.Replace(" ", ""); } }
-		public override string Group { get { return "ClassManage"; } }
-		public override string GroupIconClass { get { return "fa fa-list"; } }
-		public override string IconClass { get { return "fa fa-list"; } }
-		public override string Url { get { return "/admin/settings/generic_class/" + Type.ToLower(); } }
-		public override string[] ViewPrivileges { get { return new[] { "ClassManage:" + Type }; } }
+		public override string Group { get { return "TagManage"; } }
+		public override string GroupIconClass { get { return "fa fa-tags"; } }
+		public override string IconClass { get { return "fa fa-tags"; } }
+		public override string Url { get { return "/admin/settings/generic_tag/" + Type.ToLower(); } }
+		public override string[] ViewPrivileges { get { return new[] { "TagManage:" + Type }; } }
 		public override string[] EditPrivileges { get { return ViewPrivileges; } }
 		public override string[] DeletePrivileges { get { return ViewPrivileges; } }
 		public override string[] DeleteForeverPrivileges { get { return ViewPrivileges; } }
-		public override string ListTemplatePath { get { return "common.generic_class/class_list.html"; } }
-		protected override IAjaxTableHandler<GenericClass, Guid> GetTableHandler() { return new TableHandler(this); }
+		protected override IAjaxTableHandler<GenericTag, Guid> GetTableHandler() { return new TableHandler(this); }
 		protected override IModelFormBuilder GetAddForm() { return new Form(Type); }
 		protected override IModelFormBuilder GetEditForm() { return new Form(Type); }
 
@@ -52,13 +49,11 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 		/// </summary>
 		/// <returns></returns>
 		protected override IList<Guid> GetBatchActionIds() {
-			// 获取参数
-			// 其中Id列表需要把顺序倒转，用于先删除子分类再删除上级分类
-			var ids = base.GetBatchActionIds().Reverse().ToList();
 			// 检查是否所有Id都属于指定的类型，防止越权操作
-			var genericClassManager = Application.Ioc.Resolve<GenericClassManager>();
-			if (!genericClassManager.IsAllClassesTypeEqualTo(ids, Type)) {
-				throw new ForbiddenException(new T("Try to access class that type not matched"));
+			var ids = base.GetBatchActionIds();
+			var genericTagManager = Application.Ioc.Resolve<GenericTagManager>();
+			if (!genericTagManager.IsAllTagsTypeEqualTo(ids, Type)) {
+				throw new ForbiddenException(new T("Try to access tag that type not matched"));
 			}
 			return ids;
 		}
@@ -66,17 +61,17 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 		/// <summary>
 		/// 表格回调
 		/// </summary>
-		public class TableHandler : AjaxTableHandlerBase<GenericClass, Guid> {
+		public class TableHandler : AjaxTableHandlerBase<GenericTag, Guid> {
 			/// <summary>
-			/// 分类控制器
+			/// 标签控制器
 			/// </summary>
-			public CrudGenericClassControllerBase Controller { get; set; }
+			public GenericTagControllerBase Controller { get; set; }
 
 			/// <summary>
 			/// 初始化
 			/// </summary>
-			/// <param name="controller">分类控制器</param>
-			public TableHandler(CrudGenericClassControllerBase controller) {
+			/// <param name="controller">标签控制器</param>
+			public TableHandler(GenericTagControllerBase controller) {
 				Controller = controller;
 			}
 
@@ -85,40 +80,29 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// </summary>
 			public override void BuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.ExtraOptions["pageSize"] = int.MaxValue;
-				table.ExtraOptions["hidePagination"] = true;
-				table.MenuItems.AddToggleAllForAjaxTableTree("Level");
 				table.MenuItems.AddDivider();
 				table.MenuItems.AddEditAction(
 					Controller.Type, Controller.EditUrl, dialogParameters: new { size = "size-wide" });
 				table.MenuItems.AddAddAction(
-					Controller.Type, Controller.AddUrl,
-					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
-				table.MenuItems.AddRemoteModalForSelectedRow(
-					new T("Add Same Level Class"), "fa fa-plus",
-					string.Format(new T("Add {0}"), new T(Controller.Type)),
-					Controller.AddUrl + "?parentId=<%-row.ParentId%>", new { size = "size-wide" });
-				table.MenuItems.AddRemoteModalForSelectedRow(
-					new T("Add Child Class"), "fa fa-plus",
-					string.Format(new T("Add {0}"), new T(Controller.Type)),
-					Controller.AddUrl + "?parentId=<%-row.Id%>", new { size = "size-wide" });
+					Controller.Type, Controller.AddUrl, dialogParameters: new { size = "size-wide" });
 				searchBar.KeywordPlaceHolder = "Name/Remark";
 				searchBar.MenuItems.AddDivider();
 				searchBar.MenuItems.AddRecycleBin();
 				searchBar.MenuItems.AddAddAction(
-					Controller.Type, Controller.AddUrl,
-					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
+					Controller.Type, Controller.AddUrl, dialogParameters: new { size = "size-wide" });
 				searchBar.BeforeItems.AddAddAction(
-					Controller.Type, Controller.AddUrl,
-					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
+					Controller.Type, Controller.AddUrl, dialogParameters: new { size = "size-wide" });
 			}
 
 			/// <summary>
 			/// 查询数据
 			/// </summary>
 			public override void OnQuery(
-				AjaxTableSearchRequest request, ref IQueryable<GenericClass> query) {
-				// 提供类型给其他处理器
+				AjaxTableSearchRequest request, ref IQueryable<GenericTag> query) {
+				// 在第一页显示所有分类
+				request.PageNo = 0;
+				request.PageSize = 0x7ffffffe;
+				// 提供类型给其他回调
 				request.Conditions["Type"] = Controller.Type;
 				// 按类型
 				query = query.Where(q => q.Type == Controller.Type);
@@ -132,32 +116,22 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// 排序数据
 			/// </summary>
 			public override void OnSort(
-				AjaxTableSearchRequest request, ref IQueryable<GenericClass> query) {
+				AjaxTableSearchRequest request, ref IQueryable<GenericTag> query) {
 				// 默认按显示顺序排列
 				query = query.OrderBy(q => q.DisplayOrder).ThenByDescending(q => q.Id);
 			}
 
 			/// <summary>
-			/// 选择数据
+			/// 选择字段
 			/// </summary>
 			public override void OnSelect(
-				AjaxTableSearchRequest request, IList<EntityToTableRow<GenericClass>> pairs) {
-				// 按上下级关系重新生成数据列表
-				var classMapping = pairs.ToDictionary(p => p.Entity.Id);
-				var tree = TreeUtils.CreateTree(pairs, p => p,
-					p => classMapping.GetOrDefault(p.Entity.Parent?.Id ?? Guid.Empty));
-				pairs.Clear();
-				foreach (var node in tree.EnumerateAllNodes().Skip(1)) {
-					var pair = node.Value;
+				AjaxTableSearchRequest request, IList<EntityToTableRow<GenericTag>> pairs) {
+				foreach (var pair in pairs) {
 					pair.Row["Id"] = pair.Entity.Id;
 					pair.Row["Name"] = pair.Entity.Name;
-					pair.Row["ParentId"] = pair.Entity.Parent?.Id;
 					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
 					pair.Row["DisplayOrder"] = pair.Entity.DisplayOrder;
 					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
-					pair.Row["Level"] = node.GetParents().Count() - 1;
-					pair.Row["NoChilds"] = !node.Childs.Any();
-					pairs.Add(pair);
 				}
 			}
 
@@ -167,7 +141,8 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			public override void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
 				var idColumn = response.Columns.AddIdColumn("Id");
-				response.Columns.AddTreeNodeColumn("Name", "Level", "NoChilds");
+				response.Columns.AddNoColumn();
+				response.Columns.AddMemberColumn("Name", "45%");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
@@ -176,29 +151,24 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 					Controller.Type, Controller.EditUrl, dialogParameters: new { size = "size-wide" });
 				idColumn.AddDivider();
 				idColumn.AddDeleteActions(
-					request, typeof(GenericClass), Controller.Type, Controller.BatchUrl);
+					request, typeof(GenericTag), Controller.Type, Controller.BatchUrl);
 			}
 		}
 
 		/// <summary>
 		/// 添加和编辑使用的表单
 		/// </summary>
-		public class Form : EntityFormBuilder<GenericClass, Guid, Form> {
+		public class Form : EntityFormBuilder<GenericTag, Guid, Form> {
 			/// <summary>
-			/// 分类类型
+			/// 标签类型
 			/// </summary>
 			public string Type { get; set; }
-			/// <summary>
-			/// 上级分类名称
-			/// </summary>
-			[LabelField("ParentClass")]
-			public string ParentClass { get; set; }
 			/// <summary>
 			/// 名称
 			/// </summary>
 			[Required]
 			[StringLength(100)]
-			[TextBoxField("Name")]
+			[TextBoxField("Name", "Name")]
 			public string Name { get; set; }
 			/// <summary>
 			/// 显示顺序
@@ -215,45 +185,18 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// <summary>
 			/// 初始化
 			/// </summary>
-			/// <param name="type">分类类型</param>
+			/// <param name="type">标签类型</param>
 			public Form(string type) {
 				Type = type;
 			}
 
 			/// <summary>
-			/// 根据当前请求传入的parentId参数获取上级分类，不存在时返回null
-			/// 这个函数只在添加时使用
+			/// 绑定数据到表单
 			/// </summary>
-			protected GenericClass GetParentClass() {
-				var parentId = HttpManager.CurrentContext.Request.Get<Guid>("parentId");
-				if (parentId == Guid.Empty) {
-					return null;
-				}
-				var genericClassManager = Application.Ioc.Resolve<GenericClassManager>();
-				var parent = genericClassManager.Get(parentId);
-				if (parent == null) {
-					return null;
-				} else if (parent.Type != Type) {
-					throw new ForbiddenException(new T("Try to access class that type not matched"));
-				}
-				return parent;
-			}
-
-			/// <summary>
-			/// 从数据绑定表单
-			/// </summary>
-			protected override void OnBind(GenericClass bindFrom) {
-				if (bindFrom.Id == Guid.Empty) {
-					// 添加时
-					var parent = GetParentClass();
-					ParentClass = parent == null ? "" : parent.Name;
-				} else {
-					// 编辑时
-					ParentClass = bindFrom.Parent == null ? "" : bindFrom.Parent.Name;
+			protected override void OnBind(GenericTag bindFrom) {
+				if (bindFrom.Type != null && bindFrom.Type != Type) {
 					// 检查类型，防止越权操作
-					if (bindFrom.Type != Type) {
-						throw new ForbiddenException(new T("Try to access class that type not matched"));
-					}
+					throw new ForbiddenException(new T("Try to access tag that type not matched"));
 				}
 				Name = bindFrom.Name;
 				DisplayOrder = bindFrom.DisplayOrder;
@@ -263,14 +206,14 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Scaffolding {
 			/// <summary>
 			/// 保存表单到数据
 			/// </summary>
-			protected override object OnSubmit(GenericClass saveTo) {
+			protected override object OnSubmit(GenericTag saveTo) {
 				if (saveTo.Type == null) {
 					// 添加时
 					saveTo.Type = Type;
-					saveTo.Parent = GetParentClass();
-				} else if (saveTo.Type != Type) {
+					saveTo.CreateTime = DateTime.UtcNow;
+				} else if (saveTo.Type != null && saveTo.Type != Type) {
 					// 编辑时检查类型，防止越权操作
-					throw new ForbiddenException(new T("Try to access class that type not matched"));
+					throw new ForbiddenException(new T("Try to access tag that type not matched"));
 				}
 				saveTo.Name = Name;
 				saveTo.DisplayOrder = DisplayOrder;
