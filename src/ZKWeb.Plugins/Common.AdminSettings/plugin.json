@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "AdminSettings",
-	"Version": "0.9 testing",
+	"Version": "1.0.0 beta 1",
 	"Description": "Centralized management for admin settings",
 	"Dependencies": [ "Common.Admin" ]
 }

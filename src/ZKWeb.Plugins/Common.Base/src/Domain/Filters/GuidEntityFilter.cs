@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 		void IEntityOperationFilter.FilterSave<TEntity, TPrimaryKey>(TEntity entity) {
 			if (typeof(TPrimaryKey) == typeof(Guid)) {
 				var eg = (IEntity<Guid>)entity;
-				if (eg.Id == default(Guid)) {
+				if (eg.Id == Guid.Empty) {
 					// 主键是空时自动生成主键
 					eg.Id = GuidUtils.SequentialGuid(DateTime.UtcNow);
 				}

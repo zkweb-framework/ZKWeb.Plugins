@@ -13,19 +13,6 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 	/// <summary>
 	/// 用于编辑实体的表单
 	/// </summary>
-	/// <example>
-	/// public class UserEditForm : DataEditFormBuilder[User, UserEditForm] {
-	///		[TextBoxField("Username")]
-	///		public string Username { get; set; }
-	///		protected override void OnBind(User bindFrom) {
-	///			Username = bindFrom.Username;
-	///		}
-	///		protected override object OnSubmit(User saveTo) {
-	///			saveTo.Username = Username;
-	///			return new { message = new T("Saved Successfully") };
-	///		}
-	/// }
-	/// </example>
 	/// <typeparam name="TEntity">实体类型</typeparam>
 	/// <typeparam name="TPrimaryKey">主键类型</typeparam>
 	/// <typeparam name="TForm">继承类自身的类型</typeparam>
