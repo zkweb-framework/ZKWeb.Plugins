@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Reflection;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.UIComponents.HtmlItems.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.UIComponents.MenuItems.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems.Extensions;
 
@@ -31,7 +29,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 			searchBar.KeywordPlaceHolder = new T(keywordPlaceHolder);
 			var addDividerOnce = new Lazy<Action>(
 				() => { searchBar.MenuItems.AddDivider(); return () => { }; });
-			if (typeof(IHaveDeleted).GetTypeInfo().IsAssignableFrom(app.EntityType)) {
+			if (app.AllowDeleteRecover) {
 				addDividerOnce.Value();
 				searchBar.MenuItems.AddRecycleBin();
 			}

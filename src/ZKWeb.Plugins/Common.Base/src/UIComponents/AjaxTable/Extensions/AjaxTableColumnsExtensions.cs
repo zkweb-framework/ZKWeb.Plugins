@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Enums;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Enums.Attributes;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
@@ -225,8 +224,8 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		/// <param name="columns">列列表</param>
 		/// <param name="width">宽度</param>
 		public static AjaxTableActionColumn AddActionColumn(
-			this IList<AjaxTableColumn> columns, string width = "5%") {
-			var column = new AjaxTableActionColumn() { Width = width };
+			this IList<AjaxTableColumn> columns, string width = null) {
+			var column = new AjaxTableActionColumn() { Width = width ?? "130" };
 			columns.Add(column);
 			return column;
 		}

@@ -88,7 +88,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		}
 
 		/// <summary>
-		/// 添加对多选框选中的数据进行的需要确认的批量操作菜单项
+		/// 添加对按钮所在行的数据进行的需要确认的批量操作菜单项
 		/// 确认时会使用模态框
 		/// </summary>
 		/// <param name="column">操作列</param>

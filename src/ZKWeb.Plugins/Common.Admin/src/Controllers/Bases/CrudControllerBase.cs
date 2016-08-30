@@ -14,6 +14,7 @@ using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.Domain.Entities.TypeTraits;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
@@ -81,6 +82,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 		/// </summary>
 		public virtual string[] DeleteForeverPrivileges { get { return new[] { Name + ":DeleteForever" }; } }
 		/// <summary>
+		/// 是否允许标记已删除或未删除
+		/// </summary>
+		public virtual bool AllowDeleteRecover { get { return DeletedTypeTrait<TEntity>.HaveDeleted; } }
+		/// <summary>
+		/// 是否允许永久删除
+		/// </summary>
+		public virtual bool AllowDeleteForever { get { return true; } }
+		/// <summary>
 		/// 数据类型
 		/// </summary>
 		public virtual Type EntityType { get { return typeof(TEntity); } }
@@ -147,17 +156,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 		protected abstract IModelFormBuilder GetEditForm();
 
 		/// <summary>
-		/// 类型特征
-		/// </summary>
-		protected static class TypeTrait {
-			/// <summary>
-			/// 类型包含已删除标记
-			/// </summary>
-			public readonly static bool HaveDeleted =
-				typeof(IHaveDeleted).GetTypeInfo().IsAssignableFrom(typeof(TEntity));
-		}
-
-		/// <summary>
 		/// 初始化
 		/// </summary>
 		public CrudControllerBase() {
@@ -165,13 +163,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 			IncludeJs = new List<string>();
 			ExtraTemplateArguments = new Dictionary<string, object>();
 			BatchActions = new Dictionary<string, Tuple<Func<IActionResult>, string[]>>();
-			BatchActions["delete_forever"] = Tuple.Create(
-				new Func<IActionResult>(BatchActionForDeleteForever), DeleteForeverPrivileges);
-			if (TypeTrait.HaveDeleted) {
+			if (AllowDeleteRecover) {
 				BatchActions["delete"] = Tuple.Create(
 					new Func<IActionResult>(BatchActionForDelete), DeletePrivileges);
 				BatchActions["recover"] = Tuple.Create(
 					new Func<IActionResult>(BatchActionForRecover), DeletePrivileges);
+			}
+			if (AllowDeleteForever) {
+				BatchActions["delete_forever"] = Tuple.Create(
+					new Func<IActionResult>(BatchActionForDeleteForever), DeleteForeverPrivileges);
 			}
 		}
 
@@ -336,15 +336,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 			}
 			// 允许批量操作数据时注册删除权限
 			if (!string.IsNullOrEmpty(BatchUrl)) {
-				// 可标记删除时注册删除权限
-				if (TypeTrait.HaveDeleted) {
+				// 注册删除恢复权限
+				if (AllowDeleteRecover) {
 					foreach (var privilege in DeletePrivileges) {
 						yield return privilege;
 					}
 				}
 				// 注册永久删除权限
-				foreach (var privilege in DeleteForeverPrivileges) {
-					yield return privilege;
+				if (AllowDeleteForever) {
+					foreach (var privilege in DeleteForeverPrivileges) {
+						yield return privilege;
+					}
 				}
 			}
 		}

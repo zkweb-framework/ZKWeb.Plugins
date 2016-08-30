@@ -53,6 +53,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces {
 		/// </summary>
 		string[] DeleteForeverPrivileges { get; }
 		/// <summary>
+		/// 是否允许标记已删除或未删除
+		/// </summary>
+		bool AllowDeleteRecover { get; }
+		/// <summary>
+		/// 是否允许永久删除
+		/// </summary>
+		bool AllowDeleteForever { get; }
+		/// <summary>
 		/// 实体类型
 		/// </summary>
 		Type EntityType { get; }

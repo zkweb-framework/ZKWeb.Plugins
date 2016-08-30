@@ -5,6 +5,10 @@
 	支持在core下编译（但还不需要支持运行，等待EntityFramework Core支持Many to many和Lazy loading）
 	支持用户类型的扩展
 
+改版TODO
+	支持通用分类和标签的删除恢复按钮
+	翻译删除恢复相关的文本
+
 开发路线
 	单元测试
 		ok 实现单元测试
