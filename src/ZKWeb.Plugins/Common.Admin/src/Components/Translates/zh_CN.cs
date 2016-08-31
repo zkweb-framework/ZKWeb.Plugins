@@ -120,7 +120,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "ZKWeb Version", "ZKWeb版本" },
 			{ "ZKWeb Full Version", "ZKWeb完整版本" },
 			{ "Memory Usage", "使用内存" },
-			{ "Action require the ownership of {0}: {1}", "操作需要拥有以下{0}的所有权: {1}" }
+			{ "Action require the ownership of {0}: {1}", "操作需要拥有以下{0}的所有权: {1}" },
+			// TODO: 翻译到其他语言
+			{ "System Manage", "系统管理" },
+			{ "Other", "其它" },
+			{ "Toggle navigation", "切换导航栏" },
+			{ "Online", "在线" }
 		};
 
 		public bool CanTranslate(string code) {

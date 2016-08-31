@@ -31,18 +31,21 @@
 	.bootstrap-dialog-title {
 		font-size: 14px;
 	}
-	/* 关闭按钮在左边 */
-	.bootstrap-dialog-close-button {
-		opacity: 1;
 
+	&.type-primary .modal-header {
+		background-color: #34495E;
+	}
+
+	.bootstrap-dialog-close-button {
 		button.close {
-			opacity: 1;
+			font-size: 18px;
 			color: #fff;
 			text-shadow: none;
-			padding: 0px 8px 0px 0px;
+			padding: 4px 4px 0px 0px;
+			opacity: 0.8;
 
 			&:hover {
-				text-shadow: 0px 0px 12px #eee;
+				opacity: 1;
 			}
 		}
 	}

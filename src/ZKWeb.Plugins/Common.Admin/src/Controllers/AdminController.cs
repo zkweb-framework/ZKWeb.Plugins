@@ -2,8 +2,6 @@
 using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Plugin;
-using ZKWeb.Plugins.Common.Admin.src.Controllers.Extensions;
-using ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
@@ -35,12 +33,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		public IActionResult Admin() {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(typeof(ICanUseAdminPanel));
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var user = sessionManager.GetSession().GetUser();
-			var apps = Application.Ioc.ResolveMany<IAdminAppController>()
-				.Where(app => app.IsAccessableFormUser(user))
-				.Select(app => app.ToTileHtml()).ToList();
-			return new TemplateResult("common.admin/admin_index.html", new { apps });
+			return new TemplateResult("common.admin/admin_index.html");
 		}
 
 		/// <summary>

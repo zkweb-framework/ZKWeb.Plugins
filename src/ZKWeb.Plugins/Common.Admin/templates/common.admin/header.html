@@ -12,21 +12,26 @@
 	{% include_css_here "/static/common.admin.css/components.css" %}
 	{% render_included_css -%}
 </head>
-<body class="skin-default">
+<body class="skin-default sidebar-mini">
 	<div class="page-header">
 		<header class="main-header">
 			<a href="{{ "/admin" | url }}" class="logo" title="logo">
 				<img src="/static/common.admin.images/logo.png" alt="logo">
 			</a>
 			<nav class="navbar navbar-static-top" role="navigation">
-				{% area admin_navbar %}
+				<div class="admin-navbar-left pull-left">
+					<a class="sidebar-toggle" data-toggle="offcanvas" role="button">
+						<span class="sr-only">{{ "Toggle navigation" | trans }}</span>
+					</a>
+					{% area admin_navbar_left %}
+				</div>
 				<div class="navbar-custom-menu">
 					<ul class="nav navbar-nav">
 						<li class="dropdown user user-menu">
 							{% fetch /api/user/login_info > login_info %}
 							<a aria-expanded="false" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" title="{{ "Menu" | trans }}">
 								<img src="{{ login_info.avatar }}" class="user-image" alt="{{ "Avatar" | trans }}">
-								<span class="hidden-xs">{{ login_info.username }}</span>
+								<span class="username">{{ login_info.username }}</span>
 							</a>
 							<ul class="dropdown-menu">
 								<li class="user-header">
@@ -56,9 +61,18 @@
 						</li>
 					</ul>
 				</div>
+				<div class="admin-navbar-right pull-right">
+					{% area admin_navbar_right %}
+				</div>
+				<div class="clearfix"></div>
 			</nav>
 		</header>
+		<aside class="main-sidebar">
+			<section class="sidebar">
+				{% area admin_sidebar %}
+			</section>
+		</aside>
 	</div>
-	<div class="page-body">
+	<div class="content-wrapper page-body">
 		<div class="page-container admin-page-container">
 			<div class="portlet">

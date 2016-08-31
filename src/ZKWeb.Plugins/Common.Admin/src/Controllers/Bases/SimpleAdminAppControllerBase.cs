@@ -13,6 +13,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 	public abstract class SimpleAdminAppControllerBase :
 		IPrivilegesProvider, IWebsiteStartHandler, IAdminAppController {
 		/// <summary>
+		/// 分组名称
+		/// </summary>
+		public virtual string Group { get { return "Other"; } }
+		/// <summary>
+		/// 分组图标的css类
+		/// </summary>
+		public virtual string GroupIconClass { get { return "fa fa-archive"; } }
+		/// <summary>
 		/// 应用名称
 		/// </summary>
 		public abstract string Name { get; }

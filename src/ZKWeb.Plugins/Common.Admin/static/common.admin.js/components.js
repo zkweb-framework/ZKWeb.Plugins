@@ -1,1 +1,1 @@
-// @koala-append "custom/_admin.top-menubar-activities.js"
+// @koala-append "custom/_admin.push-menu.js"

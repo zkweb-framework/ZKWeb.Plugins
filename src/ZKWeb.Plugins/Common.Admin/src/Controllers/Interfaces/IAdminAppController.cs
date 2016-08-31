@@ -6,6 +6,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces {
 	/// </summary>
 	public interface IAdminAppController {
 		/// <summary>
+		/// 分组名称
+		/// </summary>
+		string Group { get; }
+		/// <summary>
+		/// 分组图标的css类
+		/// 分组下有多个应用时，只使用第一个图标
+		/// </summary>
+		string GroupIconClass { get; }
+		/// <summary>
 		/// 应用名称
 		/// </summary>
 		string Name { get; }
@@ -14,11 +23,11 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces {
 		/// </summary>
 		string Url { get; }
 		/// <summary>
-		/// 格子的css类名
+		/// 格子的css类
 		/// </summary>
 		string TileClass { get; }
 		/// <summary>
-		/// 图标的css类名
+		/// 图标的css类
 		/// </summary>
 		string IconClass { get; }
 		/// <summary>
@@ -28,6 +37,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces {
 		Type RequiredUserType { get; }
 		/// <summary>
 		/// 显示此应用要求的权限列表
+		/// 一般是查看权限
 		/// </summary>
 		string[] RequiredPrivileges { get; }
 	}

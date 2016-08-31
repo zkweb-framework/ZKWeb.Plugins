@@ -11,11 +11,19 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 		CrudControllerBase<TEntity, TPrimaryKey>, IAdminAppController
 		where TEntity : class, IEntity<TPrimaryKey> {
 		/// <summary>
-		/// 格子的css类名
+		/// 分组名称
+		/// </summary>
+		public virtual string Group { get { return "Other"; } }
+		/// <summary>
+		/// 分组图标的css类
+		/// </summary>
+		public virtual string GroupIconClass { get { return "fa fa-archive"; } }
+		/// <summary>
+		/// 格子的css类
 		/// </summary>
 		public virtual string TileClass { get { return "tile bg-navy"; } }
 		/// <summary>
-		/// 图标的css类名
+		/// 图标的css类
 		/// </summary>
 		public virtual string IconClass { get { return "fa fa-archive"; } }
 		/// <summary>

@@ -1,9 +1,7 @@
 ﻿/* 后台首页样式 */
 .page-container {
-	/* 低分辨率时左右不留空 */
-	@media (max-width: 768px) {
-		> .portlet {
-			padding: 12px 0px 15px;
-		}
+	/* 应用分组的下边距 */
+	.app-group-body {
+		margin: 0px 0px 12px 0px;
 	}
 }

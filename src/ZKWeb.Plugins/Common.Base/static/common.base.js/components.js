@@ -30,4 +30,5 @@
 // @koala-append "custom/_jquery.select.js"
 // @koala-append "custom/_jquery.switchery.js"
 // @koala-append "custom/_jquery.toast.setup.js"
+// @koala-append "custom/_jquery.treemenu.js"
 // @koala-append "custom/_jquery.fullscreen.js"

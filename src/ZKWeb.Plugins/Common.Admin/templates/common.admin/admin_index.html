@@ -1,17 +1,21 @@
-﻿{% use_title "Admin Panel" -%}
+﻿{% fetch /api/admin/app_groups > app_groups %}
+{% include_css_here "/static/common.admin.css/admin-index.css" %}
+{% use_title "Admin Panel" -%}
 {% include common.admin/header.html %}
-<div class="portlet-title">
+{% for group in app_groups %}
+<div class="portlet-title app-group-title">
 	<div class="caption">
-		<i class="fa fa-navicon"></i>
-		<span class="caption-subject">{{ "My Apps" | trans }}</span>
+		<i class="{{ group.groupIconClass }}"></i>
+		<span class="caption-subject">{{ group.group }}</span>
 	</div>
 </div>
-<div class="portlet-body">
+<div class="portlet-body app-group-body">
 	<div class="tiles">
-		{% for app in apps %}
-		{{ app }}
+		{% for app in group.apps %}
+		{{ app.tileHtml }}
 		{% endfor %}
 	</div>
 	<div class="clearfix"></div>
 </div>
+{% endfor %}
 {% include common.admin/footer.html %}

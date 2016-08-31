@@ -1,0 +1,22 @@
+﻿{% fetch /api/admin/app_groups > app_groups %}
+<ul class="sidebar-menu">
+	<li class="header">{% website_name %}</li>
+	<li class="treeview">
+		<a href="{{ "/admin" | url }}">
+			<i class="fa fa-home"></i><span>{{ "HomePage" | trans }}</span>
+		</a>
+	</li>
+	{% for group in app_groups -%}
+	<li class="treeview">
+		<a class="treeview-toggle">
+			<i class="{{ group.groupIconClass }}"></i>
+			<span>{{ group.group }}</span>
+		</a>
+		<ul class="treeview-menu">
+			{% for app in group.apps -%}
+			<li><a href="{{ app.url | url }}"><i class="{{ app.iconClass }}"></i>{{ app.name }}</a></li>
+			{% endfor -%}
+		</ul>
+	</li>
+	{% endfor -%}
+</ul>
