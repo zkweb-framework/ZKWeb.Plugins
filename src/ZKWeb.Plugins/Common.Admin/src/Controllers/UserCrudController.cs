@@ -31,6 +31,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// </summary>
 	[ExportMany]
 	public class UserCrudController : CrudAdminAppControllerBase<User, Guid> {
+		public override string Group { get { return "System Manage"; } }
+		public override string GroupIconClass { get { return "fa fa-gear"; } }
 		public override string Name { get { return "User Manage"; } }
 		public override string Url { get { return "/admin/users"; } }
 		public override string TileClass { get { return "tile bg-blue"; } }

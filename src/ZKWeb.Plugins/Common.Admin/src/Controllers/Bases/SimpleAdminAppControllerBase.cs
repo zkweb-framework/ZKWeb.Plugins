@@ -4,6 +4,7 @@ using ZKWeb.Plugins.Common.Admin.src.Components.PrivilegeProviders;
 using ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Web;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
@@ -11,6 +12,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 	/// 简单的后台控制器的基础类
 	/// </summary>
 	public abstract class SimpleAdminAppControllerBase :
+		ControllerBase,
 		IPrivilegesProvider, IWebsiteStartHandler, IAdminAppController {
 		/// <summary>
 		/// 分组名称

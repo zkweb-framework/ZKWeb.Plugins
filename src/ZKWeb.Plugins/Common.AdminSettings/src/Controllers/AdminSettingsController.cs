@@ -12,6 +12,8 @@ namespace ZKWeb.Plugins.Common.AdminSettings.src.Controllers {
 	/// </summary>
 	[ExportMany]
 	public class AdminSettingsController : SimpleAdminAppControllerBase {
+		public override string Group { get { return "System Manage"; } }
+		public override string GroupIconClass { get { return "fa fa-gear"; } }
 		public override string Name { get { return "Settings"; } }
 		public override string Url { get { return "/admin/settings"; } }
 		public override string TileClass { get { return "tile bg-blue"; } }

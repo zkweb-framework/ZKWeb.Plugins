@@ -29,8 +29,8 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.UrlFilters {
 
 				Assert.Equals(testUrl("/test/abc.jpg"), "/test/abc.jpg");
 				Assert.Equals(testUrl("/test/abc/"), "/test/abc/");
-				Assert.Equals(testUrl("/test/abc/a-b?id=1"), "/test/abc/a-b?id=1");
-				Assert.Equals(testUrl("/test/a-bc/ab?id=1"), "/test/a-bc/ab-1.html");
+				Assert.Equals(testUrl("/test/abc/a.b?id=1"), "/test/abc/a.b?id=1");
+				Assert.Equals(testUrl("/test/a-bc/ab?id=1"), "/test/a-bc/ab.1.html");
 
 				Assert.Equals(testUrl("/exclude/me"), "/exclude/me");
 				settings.PesudoStaticPolicy = PesudoStaticPolicies.WhiteListPolicy;
@@ -44,15 +44,15 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.UrlFilters {
 				Assert.Equals(testUrl("/enabled"), "/enabled.html");
 
 				Assert.Equals(testUrl("login"), "login.html");
-				Assert.Equals(testUrl("/example/view?id=1"), "/example/view-1.html");
-				Assert.Equals(testUrl("/example/view?Id=1"), "/example/view-Id-1.html");
+				Assert.Equals(testUrl("/example/view?id=1"), "/example/view.1.html");
+				Assert.Equals(testUrl("/example/view?Id=1"), "/example/view.Id.1.html");
 
 				var result = testUrl("/example/view?tag=123&key=asd");
 				Assert.IsTrueWith(
-					(result == "/example/view-tag-123-key-asd.html" ||
-					result == "/example/view-key-asd-tag-123.html"), result);
-				Assert.Equals(testUrl("view?name=john&key=1-1"), "view-name-john.html?key=1-1");
-				Assert.Equals(testUrl("view?name=john&key=%26"), "view-name-john.html?key=%26");
+					(result == "/example/view.tag.123.key.asd.html" ||
+					result == "/example/view.key.asd.tag.123.html"), result);
+				Assert.Equals(testUrl("view?name=john&key=1.1"), "view.name.john.html?key=1.1");
+				Assert.Equals(testUrl("view?name=john&key=%26"), "view.name.john.html?key=%26");
 			}
 		}
 	}
