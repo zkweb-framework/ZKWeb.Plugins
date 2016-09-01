@@ -1,0 +1,15 @@
+﻿{% fetch /api/locale/language_switcher_settings > settings %}
+{% if settings.SwitchableLanguages.size > 0 and settings.DisplaySwitcherOnFrontPages %}
+<li class="dropdown">
+	<a class="dropdown-toggle nav-link" data-hover="dropdown" data-toggle="dropdown">{{ "Switch Language" | trans }}</a>
+	<ul class="dropdown-menu pull-right">
+		{% for language in settings.SwitchableLanguages %}
+		<li>
+			<a post-href="/api/locale/switch_to_language?language={{ language }}" ajax="true">
+				{{ language | trans }}({{ language }})
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+</li>
+{% endif %}
