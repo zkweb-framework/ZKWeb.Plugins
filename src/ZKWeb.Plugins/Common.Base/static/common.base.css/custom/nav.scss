@@ -4,7 +4,6 @@
 	padding: 0px;
 	border: none;
 	font-size: $font-size-normal;
-	z-index: 0;
 	/* 顶部导航栏 */
 	.top-navbar {
 		background-color: #f7f7f7;
@@ -68,6 +67,13 @@
 				}
 			}
 		}
+	}
+}
+
+/* 全屏时降低顶部栏的显示优先度 */
+.page-portlet-fullscreen {
+	.page-header {
+		z-index: 0;
 	}
 }
 

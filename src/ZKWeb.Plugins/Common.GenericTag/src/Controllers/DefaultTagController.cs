@@ -6,7 +6,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Controllers {
 	/// 默认标签
 	/// </summary>
 	[ExportMany]
-	public class DefaultTag : GenericTagControllerBase {
+	public class DefaultTag : GenericTagControllerBase<DefaultTag> {
 		public override string Name { get { return "DefaultTag"; } }
 	}
 }

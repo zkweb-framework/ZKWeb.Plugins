@@ -6,7 +6,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Controllers {
 	/// 默认分类的控制器
 	/// </summary>
 	[ExportMany]
-	public class DefaultClassController : GenericClassControllerBase {
+	public class DefaultClassController : GenericClassControllerBase<DefaultClassController> {
 		public override string Name { get { return "DefaultClass"; } }
 	}
 }

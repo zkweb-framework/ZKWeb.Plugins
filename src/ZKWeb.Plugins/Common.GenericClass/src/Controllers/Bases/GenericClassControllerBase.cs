@@ -31,8 +31,9 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Controllers.Bases {
 	/// <summary>
 	/// 通用分类的增删查改控制器的基础类
 	/// </summary>
-	public abstract class GenericClassControllerBase :
-		CrudAdminSettingsControllerBase<GenericClass, Guid> {
+	public abstract class GenericClassControllerBase<TController> :
+		CrudAdminSettingsControllerBase<GenericClass, Guid>
+		where TController : GenericClassControllerBase<TController>, new() {
 		public virtual string Type { get { return Name.Replace(" ", ""); } }
 		public override string Group { get { return "ClassManage"; } }
 		public override string GroupIconClass { get { return "fa fa-list"; } }
@@ -43,7 +44,8 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Controllers.Bases {
 		public override string[] DeletePrivileges { get { return ViewPrivileges; } }
 		public override string[] DeleteForeverPrivileges { get { return ViewPrivileges; } }
 		public override string ListTemplatePath { get { return "common.generic_class/class_list.html"; } }
-		protected override IAjaxTableHandler<GenericClass, Guid> GetTableHandler() { return new TableHandler(this); }
+		public override string EntityTypeName { get { return Type; } }
+		protected override IAjaxTableHandler<GenericClass, Guid> GetTableHandler() { return new TableHandler(); }
 		protected override IModelFormBuilder GetAddForm() { return new Form(Type); }
 		protected override IModelFormBuilder GetEditForm() { return new Form(Type); }
 
@@ -67,49 +69,34 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Controllers.Bases {
 		/// </summary>
 		public class TableHandler : AjaxTableHandlerBase<GenericClass, Guid> {
 			/// <summary>
-			/// 分类控制器
-			/// </summary>
-			public GenericClassControllerBase Controller { get; set; }
-
-			/// <summary>
-			/// 初始化
-			/// </summary>
-			/// <param name="controller">分类控制器</param>
-			public TableHandler(GenericClassControllerBase controller) {
-				Controller = controller;
-			}
-
-			/// <summary>
 			/// 构建表格时的处理
 			/// </summary>
 			public override void BuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
+				var app = new TController();
+				var dialogParameters = new { size = "size-wide" };
 				table.ExtraOptions["pageSize"] = int.MaxValue;
 				table.ExtraOptions["hidePagination"] = true;
 				table.MenuItems.AddToggleAllForAjaxTableTree("Level");
 				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditAction(
-					Controller.Type, Controller.EditUrl, dialogParameters: new { size = "size-wide" });
-				table.MenuItems.AddAddAction(
-					Controller.Type, Controller.AddUrl,
-					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
+				table.MenuItems.AddEditAction(app.Type, app.EditUrl, dialogParameters: dialogParameters);
+				table.MenuItems.AddAddAction(app.Type, app.AddUrl,
+					name: new T("Add Top Level Class"), dialogParameters: dialogParameters);
 				table.MenuItems.AddRemoteModalForSelectedRow(
 					new T("Add Same Level Class"), "fa fa-plus",
-					string.Format(new T("Add {0}"), new T(Controller.Type)),
-					Controller.AddUrl + "?parentId=<%-row.ParentId%>", new { size = "size-wide" });
+					string.Format(new T("Add {0}"), new T(app.Type)),
+					app.AddUrl + "?parentId=<%-row.ParentId%>", dialogParameters);
 				table.MenuItems.AddRemoteModalForSelectedRow(
 					new T("Add Child Class"), "fa fa-plus",
-					string.Format(new T("Add {0}"), new T(Controller.Type)),
-					Controller.AddUrl + "?parentId=<%-row.Id%>", new { size = "size-wide" });
+					string.Format(new T("Add {0}"), new T(app.Type)),
+					app.AddUrl + "?parentId=<%-row.Id%>", dialogParameters);
 				searchBar.KeywordPlaceHolder = "Name/Remark";
 				searchBar.MenuItems.AddDivider();
 				searchBar.MenuItems.AddRecycleBin();
-				searchBar.MenuItems.AddAddAction(
-					Controller.Type, Controller.AddUrl,
-					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
-				searchBar.BeforeItems.AddAddAction(
-					Controller.Type, Controller.AddUrl,
-					name: new T("Add Top Level Class"), dialogParameters: new { size = "size-wide" });
+				searchBar.MenuItems.AddAddAction(app.Type, app.AddUrl,
+					name: new T("Add Top Level Class"), dialogParameters: dialogParameters);
+				searchBar.BeforeItems.AddAddAction(app.Type, app.AddUrl,
+					name: new T("Add Top Level Class"), dialogParameters: dialogParameters);
 			}
 
 			/// <summary>
@@ -118,9 +105,10 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Controllers.Bases {
 			public override void OnQuery(
 				AjaxTableSearchRequest request, ref IQueryable<GenericClass> query) {
 				// 提供类型给其他处理器
-				request.Conditions["Type"] = Controller.Type;
+				var app = new TController();
+				request.Conditions["Type"] = app.Type;
 				// 按类型
-				query = query.Where(q => q.Type == Controller.Type);
+				query = query.Where(q => q.Type == app.Type);
 				// 按关键词
 				if (!string.IsNullOrEmpty(request.Keyword)) {
 					query = query.Where(q => q.Name.Contains(request.Keyword) || q.Remark.Contains(request.Keyword));
@@ -165,17 +153,21 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Controllers.Bases {
 			/// </summary>
 			public override void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddIdColumn("Id").StandardSetupFor<TController>(request);
 				response.Columns.AddTreeNodeColumn("Name", "Level", "NoChilds");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditAction(
-					Controller.Type, Controller.EditUrl, dialogParameters: new { size = "size-wide" });
-				idColumn.AddDivider();
-				idColumn.AddDeleteActions(
-					request, typeof(GenericClass), Controller.Type, Controller.BatchUrl);
+				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
+				var dialogParameters = new { size = "size-wide" };
+				if (!deleted) {
+					actionColumn.AddEditActionFor<TController>(dialogParameters: dialogParameters);
+					actionColumn.AddDeleteActionFor<TController>();
+				} else {
+					actionColumn.AddRecoverActionFor<TController>();
+					actionColumn.AddDeleteForeverActionFor<TController>();
+				}
 			}
 		}
 

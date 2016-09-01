@@ -125,7 +125,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "System Manage", "系统管理" },
 			{ "Other", "其它" },
 			{ "Toggle navigation", "切换导航栏" },
-			{ "Online", "在线" }
+			{ "Recover", "恢复" },
+			{ "Delete Forever", "永久删除" },
+			{ "Recover {0}", "恢复{0}" },
+			{ "Delete {0} Forever", "永久删除{0}" }
 		};
 
 		public bool CanTranslate(string code) {

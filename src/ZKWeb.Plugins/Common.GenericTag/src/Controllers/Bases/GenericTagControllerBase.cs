@@ -27,10 +27,12 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Controllers.Bases {
 	using GenericTag = Domain.Entities.GenericTag;
 
 	/// <summary>
-	/// 通用标签构建器
+	/// 通用标签控制器的基础类
 	/// </summary>
-	public abstract class GenericTagControllerBase :
-		CrudAdminSettingsControllerBase<GenericTag, Guid> {
+	/// <typeparam name="TController">继承这个类的类型</typeparam>
+	public abstract class GenericTagControllerBase<TController> :
+		CrudAdminSettingsControllerBase<GenericTag, Guid>
+		where TController : GenericTagControllerBase<TController>, new() {
 		public virtual string Type { get { return Name.Replace(" ", ""); } }
 		public override string Group { get { return "TagManage"; } }
 		public override string GroupIconClass { get { return "fa fa-tags"; } }
@@ -40,7 +42,8 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Controllers.Bases {
 		public override string[] EditPrivileges { get { return ViewPrivileges; } }
 		public override string[] DeletePrivileges { get { return ViewPrivileges; } }
 		public override string[] DeleteForeverPrivileges { get { return ViewPrivileges; } }
-		protected override IAjaxTableHandler<GenericTag, Guid> GetTableHandler() { return new TableHandler(this); }
+		public override string EntityTypeName { get { return Type; } }
+		protected override IAjaxTableHandler<GenericTag, Guid> GetTableHandler() { return new TableHandler(); }
 		protected override IModelFormBuilder GetAddForm() { return new Form(Type); }
 		protected override IModelFormBuilder GetEditForm() { return new Form(Type); }
 
@@ -63,35 +66,20 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Controllers.Bases {
 		/// </summary>
 		public class TableHandler : AjaxTableHandlerBase<GenericTag, Guid> {
 			/// <summary>
-			/// 标签控制器
-			/// </summary>
-			public GenericTagControllerBase Controller { get; set; }
-
-			/// <summary>
-			/// 初始化
-			/// </summary>
-			/// <param name="controller">标签控制器</param>
-			public TableHandler(GenericTagControllerBase controller) {
-				Controller = controller;
-			}
-
-			/// <summary>
 			/// 构建表格时的处理
 			/// </summary>
 			public override void BuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
+				var app = new TController();
+				var dialogParameters = new { size = "size-wide" };
 				table.MenuItems.AddDivider();
-				table.MenuItems.AddEditAction(
-					Controller.Type, Controller.EditUrl, dialogParameters: new { size = "size-wide" });
-				table.MenuItems.AddAddAction(
-					Controller.Type, Controller.AddUrl, dialogParameters: new { size = "size-wide" });
+				table.MenuItems.AddEditAction(app.Type, app.EditUrl, dialogParameters: dialogParameters);
+				table.MenuItems.AddAddAction(app.Type, app.AddUrl, dialogParameters: dialogParameters);
 				searchBar.KeywordPlaceHolder = "Name/Remark";
 				searchBar.MenuItems.AddDivider();
 				searchBar.MenuItems.AddRecycleBin();
-				searchBar.MenuItems.AddAddAction(
-					Controller.Type, Controller.AddUrl, dialogParameters: new { size = "size-wide" });
-				searchBar.BeforeItems.AddAddAction(
-					Controller.Type, Controller.AddUrl, dialogParameters: new { size = "size-wide" });
+				searchBar.MenuItems.AddAddAction(app.Type, app.AddUrl, dialogParameters: dialogParameters);
+				searchBar.BeforeItems.AddAddAction(app.Type, app.AddUrl, dialogParameters: dialogParameters);
 			}
 
 			/// <summary>
@@ -103,9 +91,10 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Controllers.Bases {
 				request.PageNo = 0;
 				request.PageSize = 0x7ffffffe;
 				// 提供类型给其他回调
-				request.Conditions["Type"] = Controller.Type;
+				var app = new TController();
+				request.Conditions["Type"] = app.Type;
 				// 按类型
-				query = query.Where(q => q.Type == Controller.Type);
+				query = query.Where(q => q.Type == app.Type);
 				// 按关键词
 				if (!string.IsNullOrEmpty(request.Keyword)) {
 					query = query.Where(q => q.Name.Contains(request.Keyword) || q.Remark.Contains(request.Keyword));
@@ -140,18 +129,22 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Controllers.Bases {
 			/// </summary>
 			public override void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				var idColumn = response.Columns.AddIdColumn("Id");
+				response.Columns.AddIdColumn("Id").StandardSetupFor<TController>(request);
 				response.Columns.AddNoColumn();
 				response.Columns.AddMemberColumn("Name", "45%");
 				response.Columns.AddMemberColumn("CreateTime");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn();
-				actionColumn.AddEditAction(
-					Controller.Type, Controller.EditUrl, dialogParameters: new { size = "size-wide" });
-				idColumn.AddDivider();
-				idColumn.AddDeleteActions(
-					request, typeof(GenericTag), Controller.Type, Controller.BatchUrl);
+				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
+				var dialogParameters = new { size = "size-wide" };
+				if (!deleted) {
+					actionColumn.AddEditActionFor<TController>(dialogParameters: dialogParameters);
+					actionColumn.AddDeleteActionFor<TController>();
+				} else {
+					actionColumn.AddRecoverActionFor<TController>();
+					actionColumn.AddDeleteForeverActionFor<TController>();
+				}
 			}
 		}
 

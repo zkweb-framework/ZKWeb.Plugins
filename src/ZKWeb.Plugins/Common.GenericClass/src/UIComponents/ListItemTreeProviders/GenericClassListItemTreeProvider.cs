@@ -11,7 +11,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.UIComponents.ListItemProviders {
 	/// <typeparam name="TController">定义通用分类的控制器类型</typeparam>
 	public class GenericClassListItemTreeProvider<TController> :
 		IListItemTreeProvider
-		where TController : GenericClassControllerBase, new() {
+		where TController : GenericClassControllerBase<TController>, new() {
 		/// <summary>
 		/// 获取选项列表树
 		/// </summary>

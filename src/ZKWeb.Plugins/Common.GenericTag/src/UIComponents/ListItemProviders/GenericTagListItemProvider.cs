@@ -11,7 +11,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.UIComponents.ListItemProviders {
 	/// </summary>
 	/// <typeparam name="TController">定义通用标签的控制器类型</typeparam>
 	public class GenericTagListItemProvider<TController> : IListItemProvider
-		where TController : GenericTagControllerBase, new() {
+		where TController : GenericTagControllerBase<TController>, new() {
 		/// <summary>
 		/// 获取选项列表
 		/// </summary>
