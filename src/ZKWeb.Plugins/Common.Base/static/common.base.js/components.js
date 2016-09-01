@@ -13,6 +13,7 @@
 // @koala-append "components/bootstrap-dialog.min.js"
 // @koala-append "components/uri.min.js"
 // @koala-append "components/switchery.min.js"
+// @koala-append "custom/_adminLTE.js"
 // @koala-append "custom/_bootstrap.contextmenu.setup.js"
 // @koala-append "custom/_bootstrap.dialog.additional.js"
 // @koala-append "custom/_bootstrap.dropdownmenu.setup.js"
@@ -30,5 +31,4 @@
 // @koala-append "custom/_jquery.select.js"
 // @koala-append "custom/_jquery.switchery.js"
 // @koala-append "custom/_jquery.toast.setup.js"
-// @koala-append "custom/_jquery.treemenu.js"
 // @koala-append "custom/_jquery.fullscreen.js"

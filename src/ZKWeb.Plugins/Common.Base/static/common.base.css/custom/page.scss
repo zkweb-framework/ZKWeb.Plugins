@@ -109,6 +109,8 @@ body {
 
 	> .page-body {
 		flex: 1;
+		min-height: initial;
+		background: #fff;
 	}
 }
 
