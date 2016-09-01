@@ -1,0 +1,20 @@
+﻿[
+{ Id: 999077, ParentId: 0, Name: "北區" },
+{ Id: 999078, ParentId: 0, Name: "南區" },
+{ Id: 999079, ParentId: 0, Name: "深水埗區" },
+{ Id: 999080, ParentId: 0, Name: "黃大仙區" },
+{ Id: 999081, ParentId: 0, Name: "中西區" },
+{ Id: 999082, ParentId: 0, Name: "大埔區" },
+{ Id: 999083, ParentId: 0, Name: "西貢區" },
+{ Id: 999084, ParentId: 0, Name: "屯門區" },
+{ Id: 999085, ParentId: 0, Name: "葵青區" },
+{ Id: 999086, ParentId: 0, Name: "東區" },
+{ Id: 999087, ParentId: 0, Name: "油尖旺區" },
+{ Id: 999088, ParentId: 0, Name: "九龍城區" },
+{ Id: 999089, ParentId: 0, Name: "觀塘區" },
+{ Id: 999090, ParentId: 0, Name: "灣仔區" },
+{ Id: 999091, ParentId: 0, Name: "沙田區" },
+{ Id: 999092, ParentId: 0, Name: "荃灣區" },
+{ Id: 999093, ParentId: 0, Name: "元朗區" },
+{ Id: 999094, ParentId: 0, Name: "離島區" }
+]
