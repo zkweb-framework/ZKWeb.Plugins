@@ -62,7 +62,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Controllers.Bases {
 		}
 
 		/// <summary>
-		/// 表格回调
+		/// 表格处理器
 		/// </summary>
 		public class TableHandler : AjaxTableHandlerBase<GenericTag, Guid> {
 			/// <summary>

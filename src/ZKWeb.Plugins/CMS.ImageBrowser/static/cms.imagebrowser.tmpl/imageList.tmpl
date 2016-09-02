@@ -1,0 +1,28 @@
+﻿<div class="table-container ajax-table-container">
+	<div class="image-tiles">
+		<% _.each(result.Rows, function(row, index) { %>
+			<div class="image-tile">
+				<img title="<%- row.name %>" alt="<%- row.name %>" src="<%- row.thumbnailPath %>" data-src-original="<%- row.path %>">
+				<div title="<%- row.name %>" class="image-name"><%- row.name %></div>
+				<div title="<%- row.name %>" class="image-last-write-time"><%- row.lastWriteTime %></div>
+				<div class="image-actions">
+					<a class="btn btn-xs btn-success use-this-image"><%- $(".translations .use-this-image").text() %></a>
+					<a class="btn btn-xs btn-danger remove"><%- $(".translations .remove").text() %></a>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<ul class="pagination pull-right">
+				<% _.each(result.Pagination.Links, function(link) { %>
+					<% if (link.State == "active") { %>
+						<li><input type="text" class="pagination-input form-control" value="<%-link.Name%>" /></li>
+					<% } else { %>
+						<li><a class="<%-link.State%>" data-page="<%-link.PageNo%>" title="<%-link.Name%>"><%-link.Name%></a></li>
+					<% } %>
+				<% }); %>
+			</ul>
+		</div>
+	</div>
+</div>

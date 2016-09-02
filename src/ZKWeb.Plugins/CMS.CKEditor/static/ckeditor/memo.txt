@@ -1,0 +1,10 @@
+﻿下载
+	http://ckeditor.com/builder
+	上传build-config.js下载即可
+
+配置
+	修改config.js
+	添加之前版本的Custom settings和Add fonts下的内容
+
+	添加之前版本下的额外插件
+	imagebrowser

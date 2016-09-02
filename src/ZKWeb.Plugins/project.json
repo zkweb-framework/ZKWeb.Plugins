@@ -9,6 +9,10 @@
 		"net461": {
 			"frameworkAssemblies": {
 				"System.Speech": "4.0.0.0"
+			},
+			"dependencies": {
+				"CsQuery": "1.3.5-beta5",
+				"HtmlSanitizer": "2.0.5735.24296"
 			}
 		},
 		"netstandard1.6": {

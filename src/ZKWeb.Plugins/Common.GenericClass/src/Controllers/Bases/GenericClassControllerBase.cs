@@ -65,7 +65,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Controllers.Bases {
 		}
 
 		/// <summary>
-		/// 表格回调
+		/// 表格处理器
 		/// </summary>
 		public class TableHandler : AjaxTableHandlerBase<GenericClass, Guid> {
 			/// <summary>

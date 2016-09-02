@@ -1,0 +1,24 @@
+﻿.image-browser-container {
+	.image-tiles {
+		.image-tile {
+			display: block;
+			float: left;
+			margin: 0px 8px 24px 0px;
+
+			img {
+				width: 135px;
+				height: 135px;
+				margin: 0px 8px 4px 0px;
+			}
+
+			.image-name {
+				width: 135px;
+				height: 14px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				margin: 0px 0px 4px 0px;
+			}
+		}
+	}
+}

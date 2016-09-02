@@ -1,0 +1,17 @@
+﻿{% use_title "ArticleList" -%}
+{% include_css_later "/static/cms.article.css/article-list.css" -%}
+{% include_js_later "/static/cms.article.js/article-list.min.js" -%}
+{% include common.base/header.html %}
+<div class="page-container article-page-container screen-center-block">
+	<div class="portlet">
+		<div class="page-content">
+			<div class="panel-sidebar article-list-nav-row">
+				{% area article_list_nav %}
+			</div>
+			<div class="panel-content article-list-table-row">
+				{% area article_list_table %}
+			</div>
+		</div>
+	</div>
+</div>
+{% include common.base/footer.html %}

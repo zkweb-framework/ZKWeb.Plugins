@@ -46,7 +46,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		protected override IModelFormBuilder GetEditForm() { return new Form(); }
 
 		/// <summary>
-		/// 表格回调
+		/// 表格处理器
 		/// </summary>
 		public class TableHandler : AjaxTableHandlerBase<PaymentTransaction, Guid> {
 			/// <summary>

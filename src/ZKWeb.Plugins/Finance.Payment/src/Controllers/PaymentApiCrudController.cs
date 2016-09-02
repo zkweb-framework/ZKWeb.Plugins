@@ -58,7 +58,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		}
 
 		/// <summary>
-		/// 表格回调
+		/// 表格处理器
 		/// </summary>
 		public class TableHandler : AjaxTableHandlerBase<PaymentApi, Guid> {
 			/// <summary>
