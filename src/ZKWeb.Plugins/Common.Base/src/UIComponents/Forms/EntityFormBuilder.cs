@@ -58,7 +58,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 		/// </summary>
 		/// <returns></returns>
 		protected virtual TPrimaryKey GetRequestId() {
-			var request = HttpManager.CurrentContext.Request;
+			var request = Request;
 			var id = request.Get<string>("id") ?? request.Get<string>("Id");
 			return id.ConvertOrDefault<TPrimaryKey>();
 		}

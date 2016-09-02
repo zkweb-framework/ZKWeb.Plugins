@@ -113,15 +113,15 @@ namespace ZKWeb.Plugins.Testing.WebTester.src.Domain.Services {
 		/// 获取当前的测试信息，只获取差异部分
 		/// 返回的列表是克隆后的内容
 		/// </summary>
-		/// <param name="lastUpdateds">{ 程序集: 更新时间 }</param>
+		/// <param name="updateTimes">{ 程序集: 更新时间 }</param>
 		/// <returns></returns>
 		public virtual IList<AssemblyTestInfo> GetInformations(
-			IDictionary<string, string> lastUpdateds) {
+			IDictionary<string, string> updateTimes) {
 			var result = new List<AssemblyTestInfo>();
 			lock (InformationsLock) {
 				foreach (var information in Informations) {
-					var clientLastUpdated = lastUpdateds.GetOrDefault(information.AssemblyName);
-					if (clientLastUpdated != information.LastUpdated) {
+					var clientUpdateTime = updateTimes.GetOrDefault(information.AssemblyName);
+					if (clientUpdateTime != information.UpdateTime) {
 						result.Add(information.CloneByJson());
 					}
 				}

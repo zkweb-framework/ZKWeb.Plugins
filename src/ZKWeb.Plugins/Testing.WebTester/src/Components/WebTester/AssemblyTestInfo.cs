@@ -45,7 +45,7 @@ namespace ZKWeb.Plugins.Testing.WebTester.src.Components.WebTester {
 		/// <summary>
 		/// 更新时间 (Ticks)
 		/// </summary>
-		public string LastUpdated { get; set; }
+		public string UpdateTime { get; set; }
 
 		/// <summary>
 		/// 初始化，反序列化时使用
@@ -67,7 +67,7 @@ namespace ZKWeb.Plugins.Testing.WebTester.src.Components.WebTester {
 		/// 设置更新时间
 		/// </summary>
 		public void Updated() {
-			LastUpdated = DateTime.UtcNow.Ticks.ToString();
+			UpdateTime = DateTime.UtcNow.Ticks.ToString();
 		}
 
 		/// <summary>

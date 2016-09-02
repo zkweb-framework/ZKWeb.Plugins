@@ -122,7 +122,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "Memory Usage", "使用内存" },
 			{ "Action require the ownership of {0}: {1}", "操作需要拥有以下{0}的所有权: {1}" },
 			// TODO: 翻译到其他语言
-			{ "System Manage", "系统管理" },
+			{ "System", "系统" },
 			{ "Other", "其它" },
 			{ "Toggle navigation", "切换导航栏" },
 			{ "Recover", "恢复" },

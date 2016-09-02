@@ -46,9 +46,9 @@ namespace ZKWeb.Plugins.Testing.WebTester.src.Controllers {
 			var webTesterManager = Application.Ioc.Resolve<WebTesterManager>();
 			if (action == "fetch") {
 				// 抓取测试信息
-				var lastUpdateds = request.Get<Dictionary<string, string>>("lastUpdateds") ??
+				var updateTimes = request.Get<Dictionary<string, string>>("updateTimes") ??
 					new Dictionary<string, string>();
-				var informations = webTesterManager.GetInformations(lastUpdateds);
+				var informations = webTesterManager.GetInformations(updateTimes);
 				return new JsonResult(new { informations });
 			} else if (action == "reset_all") {
 				// 重置测试结果

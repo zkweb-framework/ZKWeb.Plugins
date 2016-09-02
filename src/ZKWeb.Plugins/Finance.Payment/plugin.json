@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "PaymentApi",
-	"Version": "0.9 testing",
+	"Version": "1.0.0 beta 1",
 	"Description": "Support receive money through payment api",
 	"Dependencies": [ "Common.Admin", "Common.SerialGenerate", "Common.Currency", "Common.GenericRecord" ]
 }

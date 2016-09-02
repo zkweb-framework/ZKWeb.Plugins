@@ -41,6 +41,21 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 		/// </summary>
 		[JsonIgnore]
 		public IDictionary<FormField, Pair<object, PropertyInfo>> FieldToProperty { get; protected set; }
+		/// <summary>
+		/// 当前的Http上下文
+		/// </summary>
+		[JsonIgnore]
+		public virtual IHttpContext Context { get { return HttpManager.CurrentContext; } }
+		/// <summary>
+		/// 当前的Http请求
+		/// </summary>
+		[JsonIgnore]
+		public virtual IHttpRequest Request { get { return Context.Request; } }
+		/// <summary>
+		/// 当前的Http回应
+		/// </summary>
+		[JsonIgnore]
+		public virtual IHttpResponse Response { get { return Context.Response; } }
 
 		/// <summary>
 		/// 初始化
@@ -108,8 +123,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 		/// <returns></returns>
 		public object Submit() {
 			// 把提交的值设置到模型
-			var request = HttpManager.CurrentContext.Request;
-			var submitValues = request.GetAllDictionary();
+			var submitValues = Request.GetAllDictionary();
 			var values = Form.ParseValues(submitValues);
 			Pair<object, PropertyInfo> property;
 			foreach (var field in Form.Fields) {

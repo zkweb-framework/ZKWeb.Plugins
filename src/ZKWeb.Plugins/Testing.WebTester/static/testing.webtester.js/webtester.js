@@ -20,7 +20,7 @@ $(function () {
 	$table.on("click", "pre", function () { return false; });
 
 	// 定时向服务器抓取测试信息
-	var lastUpdateds = {}; // { 程序集: 最后更新时间 }
+	var updateTimes = {}; // { 程序集: 最后更新时间 }
 	var getLines = function (message) {
 		return _.countBy(message, function (c) { return c == '\n'; }).true || 0;
 	};
@@ -29,7 +29,7 @@ $(function () {
 		clearTimeout(timeoutObject); // 直接调用可重新安排定时抓取
 		$.post(
 			"/admin/unit_test/web_tester",
-			{ action: "fetch", lastUpdateds: JSON.stringify(lastUpdateds) }
+			{ action: "fetch", updateTimes: JSON.stringify(updateTimes) }
 		).success(function (data) {
 			_.each(data.informations, function (info) {
 				var $row = $table.find("tr[data-assembly-name='" + info.AssemblyName + "']");
@@ -43,7 +43,7 @@ $(function () {
 				$row.find(".error-message pre").text(info.ErrorMessage || "");
 				$row.find(".debug-message a").text(getLines(info.ErrorMessage));
 				$row.find(".debug-message pre").text(info.DebugMessage || "");
-				lastUpdateds[info.AssemblyName] = info.LastUpdated;
+				updateTimes[info.AssemblyName] = info.UpdateTime;
 			});
 		}).always(function () {
 			timeoutObject = setTimeout(fetchTestInformations, 2000);
