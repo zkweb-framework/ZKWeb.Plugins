@@ -29,7 +29,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 	/// </summary>
 	[ExportMany]
 	public class PaymentApiCrudController : CrudAdminAppControllerBase<PaymentApi, Guid> {
-		public override string Group { get { return "Payment"; } }
+		public override string Group { get { return "Finance"; } }
 		public override string GroupIconClass { get { return "fa fa-money"; } }
 		public override string Name { get { return "PaymentApiManage"; } }
 		public override string Url { get { return "/admin/payment_apis"; } }
