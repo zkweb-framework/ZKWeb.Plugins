@@ -7,13 +7,13 @@
 		line-height: 38px;
 		height: 38px;
 		padding: 0px 5px;
-		border: 3px solid #E4393C;
+		border: 3px solid #0080BF;
 	}
 
 	.submit {
-		border: 3px solid #E4393C;
+		border: 3px solid #0080BF;
 		height: 38px;
-		background-color: #E4393C;
+		background-color: #0080BF;
 		color: #fff;
 		font-size: 14px;
 		margin: -5px;
@@ -64,7 +64,7 @@
 	}
 	/* 悬浮菜单 */
 	.nav .dropdown > .dropdown-menu {
-		border: 2px solid #E4393C;
+		border: 2px solid #0080BF;
 		border-radius: 0px;
 		width: 240px;
 		margin: -2px 0px 0px 0px;
@@ -84,7 +84,7 @@
 					color: #666;
 
 					&:hover, &:focus, &:active {
-						color: #C40000;
+						color: #2296d4;
 						text-decoration: underline;
 					}
 				}
