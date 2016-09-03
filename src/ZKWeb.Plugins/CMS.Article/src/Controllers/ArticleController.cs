@@ -2,13 +2,14 @@
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 
 namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 	/// <summary>
 	/// 文章控制器
 	/// </summary>
 	[ExportMany]
-	public class ArticleController : IController {
+	public class ArticleController : ControllerBase {
 		/// <summary>
 		/// 前台文章详情页
 		/// </summary>

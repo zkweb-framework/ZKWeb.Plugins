@@ -1,4 +1,4 @@
-﻿using ZKWeb.Plugins.Common.CustomTranslate.src.Scaffolding;
+﻿using ZKWeb.Plugins.Common.CustomTranslate.src.Controllers.Bases;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.CustomTranslate.src.Controllers {

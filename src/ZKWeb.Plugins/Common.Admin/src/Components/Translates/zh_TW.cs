@@ -120,7 +120,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "ZKWeb Version", "ZKWeb版本" },
 			{ "ZKWeb Full Version", "ZKWeb完整版本" },
 			{ "Memory Usage", "使用内存" },
-			{ "Action require the ownership of {0}: {1}", "操作需要擁有以下{0}的所有權: {1}" }
+			{ "Action require the ownership of {0}: {1}", "操作需要擁有以下{0}的所有權: {1}" },
+			{ "System Manage", "系統管理" },
+			{ "Other", "其它" },
+			{ "Toggle navigation", "切換導航欄" },
+			{ "Recover", "恢復" },
+			{ "Delete Forever", "永久刪除" },
+			{ "Recover {0}", "恢復{0}" },
+			{ "Delete {0} Forever", "永久刪除{0}" }
 		};
 
 		public bool CanTranslate(string code) {

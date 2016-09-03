@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Testing.WebTester.src.Controllers {
 	/// </summary>
 	[ExportMany]
 	public class WebTesterController : SimpleAdminAppControllerBase {
-		public override string Group { get { return "Testing"; } }
+		public override string Group { get { return "Function Test"; } }
 		public override string GroupIconClass { get { return "fa fa-flask"; } }
 		public override string Name { get { return "Run tests"; } }
 		public override string Url { get { return "/admin/unit_test/web_tester"; } }

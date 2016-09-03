@@ -30,7 +30,9 @@ namespace ZKWeb.Plugins.Testing.WebTester.src.Components.Translates {
 			{ "Running", "運行中" },
 			{ "FinishedRunning", "運行完畢" },
 			{ "Getting", "獲取中" },
-			{ "Request submitted, wait processing", "請求已提交，正在等待處理" }
+			{ "Request submitted, wait processing", "請求已提交，正在等待處理" },
+			{ "Function Test", "功能測試" },
+			{ "Run tests", "運行測試" }
 		};
 
 		public bool CanTranslate(string code) {

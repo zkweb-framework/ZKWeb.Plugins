@@ -89,7 +89,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "PayResult", "支払い結果" },
 			{ "Test", "テスト" },
 			{ "PaymentFee", "支払い手数料" },
-			{ "Selected payment api does not exist", "選択した支払方法は存在しません" }
+			{ "Selected payment api does not exist", "選択した支払方法は存在しません" },
+			{ "Finance Manage", "財務管理" }
 		};
 
 		public bool CanTranslate(string code) {

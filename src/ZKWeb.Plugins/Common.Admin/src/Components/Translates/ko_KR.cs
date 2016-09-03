@@ -121,7 +121,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "ZKWeb Version", "ZKWeb 버전" },
 			{ "ZKWeb Full Version", "ZKWeb 풀 버전" },
 			{ "Memory Usage", "메모리 사용량" },
-			{ "Action require the ownership of {0}: {1}", "다음 작업의 소유권을 가질 필요가 {0}: {1}" }
+			{ "Action require the ownership of {0}: {1}", "다음 작업의 소유권을 가질 필요가 {0}: {1}" },
+			{ "System Manage", "시스템 관리" },
+			{ "Other", "다른" },
+			{ "Toggle navigation", "탐색 모음 전환" },
+			{ "Recover", "회복" },
+			{ "Delete Forever", "영구적으로 삭제" },
+			{ "Recover {0}", "회복 {0}" },
+			{ "Delete {0} Forever", "영구적으로 삭제 {0}" }
 		};
 
 		public bool CanTranslate(string code) {

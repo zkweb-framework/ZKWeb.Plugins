@@ -35,6 +35,8 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 	/// </summary>
 	[ExportMany]
 	public class ArticleCrudController : CrudAdminAppControllerBase<Article, Guid> {
+		public override string Group { get { return "CMS"; } }
+		public override string GroupIconClass { get { return "fa fa-pencil"; } }
 		public override string Name { get { return "ArticleManage"; } }
 		public override string Url { get { return "/admin/articles"; } }
 		public override string TileClass { get { return "tile bg-green"; } }
@@ -108,7 +110,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 				response.Columns.AddEditColumnFor<UserCrudController>("Author", "AuthorId");
 				response.Columns.AddMemberColumn("ArticleClass");
 				response.Columns.AddMemberColumn("CreateTime");
-				response.Columns.AddMemberColumn("LastUpdated");
+				response.Columns.AddMemberColumn("UpdateTime");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn("150");
@@ -181,12 +183,11 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 			/// 提交表单
 			/// </summary>
 			protected override object OnSubmit(Article saveTo) {
-				if (saveTo.Id <= 0) {
+				if (saveTo.Author == null) {
 					var sessionManager = Application.Ioc.Resolve<SessionManager>();
 					var session = sessionManager.GetSession();
 					var userManager = Application.Ioc.Resolve<UserManager>();
 					saveTo.Author = userManager.Get(session.ReleatedId);
-					saveTo.CreateTime = DateTime.UtcNow;
 				}
 				saveTo.Title = Title;
 				saveTo.Summary = Summary;

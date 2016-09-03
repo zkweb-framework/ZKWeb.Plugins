@@ -94,12 +94,14 @@ namespace ZKWeb.Plugins.CMS.Article.src.Domain.Services {
 		/// <returns></returns>
 		public virtual StaticTableSearchResponse GetArticleSearchResponseFromHttpRequest() {
 			return ArticleSearchResultCache.GetOrCreate(0, () => {
-				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
-				var articleListSettings = configManager.GetData<ArticleListSettings>();
-				var searchRequest = StaticTableSearchRequest.FromHttpRequest(
-					articleListSettings.ArticlesPerPage);
-				var handlers = new ArticleTableCallback().WithExtensions();
-				return searchRequest.BuildResponse(handlers);
+				using (UnitOfWork.Scope()) {
+					var configManager = Application.Ioc.Resolve<GenericConfigManager>();
+					var articleListSettings = configManager.GetData<ArticleListSettings>();
+					var searchRequest = StaticTableSearchRequest.FromHttpRequest(
+						articleListSettings.ArticlesPerPage);
+					var handlers = new ArticleTableCallback().WithExtensions();
+					return searchRequest.BuildResponse(handlers);
+				}
 			}, ArticleSearchResultCacheTime);
 		}
 

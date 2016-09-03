@@ -31,8 +31,7 @@ namespace ZKWeb.Plugins.Testing.WebTester.src.Components.Translates {
 			{ "FinishedRunning", "运行完毕" },
 			{ "Getting", "获取中" },
 			{ "Request submitted, wait processing", "请求已提交，正在等待处理" },
-			// TODO: 翻译到其他语言
-			{ "Testing", "测试" },
+			{ "Function Test", "功能测试" },
 			{ "Run tests", "运行测试" }
 		};
 

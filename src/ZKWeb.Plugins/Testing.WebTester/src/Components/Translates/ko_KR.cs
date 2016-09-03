@@ -30,7 +30,9 @@ namespace ZKWeb.Plugins.Testing.WebTester.src.Components.Translates {
 			{ "Running", "운전" },
 			{ "FinishedRunning", "완료 실행" },
 			{ "Getting", "에서 가져 오기" },
-			{ "Request submitted, wait processing", "요청 제출, 처리 기다립니다" }
+			{ "Request submitted, wait processing", "요청 제출, 처리 기다립니다" },
+			{ "Function Test", "기능 시험" },
+			{ "Run tests", "테스트 실행" }
 		};
 
 		public bool CanTranslate(string code) {

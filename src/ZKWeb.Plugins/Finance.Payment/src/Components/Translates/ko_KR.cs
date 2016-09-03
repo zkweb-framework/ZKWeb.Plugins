@@ -92,7 +92,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "PayResult", "지불의 결과" },
 			{ "Test", "테스트" },
 			{ "PaymentFee", "결제 수수료" },
-			{ "Selected payment api does not exist", "선택한 결제 인터페이스가 존재하지 않습니다" }
+			{ "Selected payment api does not exist", "선택한 결제 인터페이스가 존재하지 않습니다" },
+			{ "Finance Manage", "재무 관리" }
 		};
 
 		public bool CanTranslate(string code) {

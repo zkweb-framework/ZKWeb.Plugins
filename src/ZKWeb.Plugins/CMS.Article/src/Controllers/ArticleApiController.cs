@@ -1,20 +1,19 @@
 ﻿using System;
-using ZKWeb.Plugins.CMS.Article.src.GenericClasses;
-using ZKWeb.Plugins.CMS.Article.src.Managers;
-using ZKWeb.Plugins.Common.GenericClass.src.Manager;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
-using ZKWebStandard.Web;
+using ZKWeb.Plugins.Common.GenericClass.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
+using ZKWeb.Plugins.CMS.Article.src.Domain.Services;
 
 namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 	/// <summary>
 	/// Api控制器
 	/// </summary>
 	[ExportMany]
-	public class ArticleApiController : IController {
+	public class ArticleApiController : ControllerBase {
 		/// <summary>
 		/// 获取文章分类树
 		/// </summary>
@@ -22,7 +21,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 		[Action("api/article/class_tree", HttpMethods.POST)]
 		public IActionResult ArticleClassTree() {
 			var classManager = Application.Ioc.Resolve<GenericClassManager>();
-			var classTree = classManager.GetClassTree(new ArticleClass().Type);
+			var classTree = classManager.GetTreeWithCache(new ArticleClassController().Type);
 			var tree = TreeUtils.Transform(classTree, c => c == null ? null : new { c.Id, c.Name });
 			return new JsonResult(new { tree });
 		}
@@ -33,10 +32,10 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 		/// <returns></returns>
 		[Action("api/article/class_info", HttpMethods.POST)]
 		public IActionResult ArticleClassName() {
-			var classId = HttpManager.CurrentContext.Request.Get<long>("class");
+			var classId = Request.Get<Guid>("class");
 			var classManager = Application.Ioc.Resolve<GenericClassManager>();
-			var classObj = classManager.GetClass(classId);
-			if (classObj == null || classObj.Type != new ArticleClass().Type) {
+			var classObj = classManager.GetWithCache(classId);
+			if (classObj == null || classObj.Type != new ArticleClassController().Type) {
 				return new JsonResult(null);
 			}
 			return new JsonResult(new { name = classObj.Name });
@@ -48,7 +47,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 		/// <returns></returns>
 		[Action("api/article/info", HttpMethods.POST)]
 		public IActionResult ArticleInfo() {
-			var articleId = HttpManager.CurrentContext.Request.Get<long>("id");
+			var articleId = Request.Get<Guid>("id");
 			var articleManager = Application.Ioc.Resolve<ArticleManager>();
 			var info = articleManager.GetArticleApiInfo(articleId);
 			return new JsonResult(info);

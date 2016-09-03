@@ -203,7 +203,6 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Controllers.Bases {
 				if (saveTo.Type == null) {
 					// 添加时
 					saveTo.Type = Type;
-					saveTo.CreateTime = DateTime.UtcNow;
 				} else if (saveTo.Type != null && saveTo.Type != Type) {
 					// 编辑时检查类型，防止越权操作
 					throw new ForbiddenException(new T("Try to access tag that type not matched"));

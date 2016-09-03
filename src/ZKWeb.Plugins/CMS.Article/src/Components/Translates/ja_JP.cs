@@ -31,7 +31,8 @@ namespace ZKWeb.Plugins.CMS.Article.src.Components.Translates {
 			{ "Preview", "プレビュー" },
 			{ "ArticleSettings", "文章設定" },
 			{ "ArticleListSettings", "文章リスト設定" },
-			{ "ArticlesPerPage", "ページごとに表示する文章数" }
+			{ "ArticlesPerPage", "ページごとに表示する文章数" },
+			{ "CMS", "コンテンツ管理" }
 		};
 
 		public bool CanTranslate(string code) {

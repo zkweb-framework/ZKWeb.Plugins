@@ -121,7 +121,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "ZKWeb Full Version", "ZKWebのフルバージョン" },
 			{ "Memory Usage", "メモリ使用量" },
 			{ "Action require the ownership of {0}: {1}",
-				"このアクションを実行するためには以下の{0}の所有権が必要です: {1}" }
+				"このアクションを実行するためには以下の{0}の所有権が必要です: {1}" },
+			{ "System Manage", "システム管理" },
+			{ "Other", "その他" },
+			{ "Toggle navigation", "ナビを畳む/展開する" },
+			{ "Recover", "戻す" },
+			{ "Delete Forever", "完全削除" },
+			{ "Recover {0}", "{0}を戻す" },
+			{ "Delete {0} Forever", "{0}を完全削除する" }
 		};
 
 		public bool CanTranslate(string code) {
