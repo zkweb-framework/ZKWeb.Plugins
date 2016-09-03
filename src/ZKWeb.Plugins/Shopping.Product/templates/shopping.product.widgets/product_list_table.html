@@ -1,0 +1,35 @@
+﻿{% fetch /api/product/search?{*query} > product_search_result %}
+<div class="table-container static-table-container">
+	{% if product_search_result.response.Rows.size > 0 %}
+	<div class="product-list-table">
+		{% for row in product_search_result.response.Rows %}
+		<div class="product-cell">
+			<dl>
+				<dt class="main-album">
+					<a href="{{ "/product/view?id=[0]" | format: row.Id | url }}" target="_blank" title="{{ row.Name }}">
+						<img src="{{ row.MainAlbumThumbnail }}" />
+					</a>
+				</dt>
+				<dd class="product-price">
+					<div title="{{ row.Price }}">{{ row.Price }}</div>
+				</dd>
+				<dd class="product-name">
+					<a href="{{ "/product/view?id=[0]" | format: row.Id | url }}" target="_blank" title="{{ row.Name }}">
+						{{ row.Name }}
+					</a>
+				</dd>
+			</dl>
+		</div>
+		{% endfor %}
+		<div class="clearfix"></div>
+	</div>
+	{% else %}
+	<div class="no-matched-records no-matched-products">
+		{{ "No matching products found, please change the condition and search again." | trans }}
+	</div>
+	{% endif %}
+	<div class="product-list-table-pagination">
+		{% url_pagination product_search_result.response.Pagination %}
+		<div class="clearfix"></div>
+	</div>
+</div>

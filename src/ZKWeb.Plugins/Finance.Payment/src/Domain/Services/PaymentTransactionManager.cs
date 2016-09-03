@@ -14,6 +14,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandlers;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Enums;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Structs;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Collections;
@@ -78,8 +79,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 					ReleatedId = releatedId,
 					Description = description,
 					State = PaymentTransactionState.Initial,
-					ExtraData = extraData.ConvertOrDefault<
-						PaymentTransaction.PaymentTransactionExtraData>()
+					ExtraData = extraData.ConvertOrDefault<PaymentTransactionExtraData>()
 				};
 				if (releatedTransactions != null) {
 					transaction.ReleatedTransactions.AddRange(releatedTransactions);

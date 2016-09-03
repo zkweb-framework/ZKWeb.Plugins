@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
+using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Structs;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities {
@@ -85,10 +85,5 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities {
 				WithSerialization = true
 			});
 		}
-
-		/// <summary>
-		/// 通用记录的附加数据
-		/// </summary>
-		public class GenericRecordExtraData : Dictionary<string, object> { }
 	}
 }

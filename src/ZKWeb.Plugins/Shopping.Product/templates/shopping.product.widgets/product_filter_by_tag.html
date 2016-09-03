@@ -1,0 +1,26 @@
+﻿{% fetch /api/product/tag_filter_info > tag_filter_info %}
+{% if tag_filter_info.tags.size > 0 %}
+<div class="product-filter-by-tag nav-group">
+	<ul>
+		<li>
+			<dl>
+				<dt>
+					<a>{{ "ProductTag" | trans }}</a>
+				</dt>
+				<dd>
+					{% assign base_url = "" | url_remove_param: "page" %}
+					{% assign request_tag = base_url | url_get_param: "tag" %}
+					{% for tag in tag_filter_info.tags %}
+					{% assign name = tag.Name | trans %}
+					{% if request_tag == tag.Id %}
+					<a class="selected" href="{{ base_url | url_remove_param: "tag" | url }}" title="{{ name }}">{{ name }}<i class="fa fa-remove"></i></a>
+					{% else %}
+					<a href="{{ base_url | url_set_param: "tag", tag.Id | url }}" title="{{ name }}">{{ name }}</a>
+					{% endif %}
+					{% endfor %}
+				</dd>
+			</dl>
+		</li>
+	</ul>
+</div>
+{% endif %}

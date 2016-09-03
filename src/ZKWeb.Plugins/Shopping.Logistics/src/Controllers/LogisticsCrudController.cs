@@ -8,25 +8,25 @@ using ZKWebStandard.Extensions;
 using Newtonsoft.Json;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Collection;
+using ZKWeb.Plugins.Common.Admin.src.Controllers;
+using ZKWeb.Plugins.Common.Admin.src.Controllers.Bases;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
+using ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Enums;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
+using ZKWeb.Plugins.Shopping.Logistics.src.Domain.Structs;
+using ZKWeb.Plugins.Shopping.Logistics.src.UIComponents.FormFieldAttributes;
+using ZKWeb.Plugins.Shopping.Logistics.src.UIComponents.ListItemProviders;
 
 namespace ZKWeb.Plugins.Shopping.Logistics.src.Controllers {
-	using Common.Admin.src.Controllers;
-	using Common.Admin.src.Controllers.Bases;
-	using Common.Admin.src.Domain.Services;
-	using Common.Admin.src.UIComponents.AjaxTable.Extensions;
-	using Common.Base.src.UIComponents.AjaxTable;
-	using Common.Base.src.UIComponents.AjaxTable.Bases;
-	using Common.Base.src.UIComponents.AjaxTable.Extensions;
-	using Common.Base.src.UIComponents.AjaxTable.Interfaces;
-	using Common.Base.src.UIComponents.BaseTable;
-	using Common.Base.src.UIComponents.Enums;
-	using Common.Base.src.UIComponents.Forms;
-	using Common.Base.src.UIComponents.Forms.Attributes;
-	using Common.Base.src.UIComponents.Forms.Extensions;
-	using Common.Base.src.UIComponents.Forms.Interfaces;
-	using Domain.Structs;
-	using UIComponents.FormFieldAttributes;
-	using UIComponents.ListItemProviders;
 	using Logistics = Domain.Entities.Logistics;
 
 	/// <summary>
@@ -40,7 +40,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Controllers {
 		public override string Url { get { return "/admin/logistics"; } }
 		public override string TileClass { get { return "tile bg-aqua"; } }
 		public override string IconClass { get { return "fa fa-truck"; } }
-		protected override IAjaxTableHandler<Logistics, Guid> GetTableHandler() { return new TableCallback(); }
+		protected override IAjaxTableHandler<Logistics, Guid> GetTableHandler() { return new TableHandler(); }
 		protected override IModelFormBuilder GetAddForm() { return new Form(); }
 		protected override IModelFormBuilder GetEditForm() { return new Form(); }
 
@@ -57,7 +57,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Controllers {
 		/// <summary>
 		/// 表格回调
 		/// </summary>
-		public class TableCallback : AjaxTableHandlerBase<Logistics, Guid> {
+		public class TableHandler : AjaxTableHandlerBase<Logistics, Guid> {
 			/// <summary>
 			/// 构建表格
 			/// </summary>

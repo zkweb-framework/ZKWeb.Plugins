@@ -5,6 +5,7 @@ using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Structs;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Entities {
@@ -113,10 +114,5 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Entities {
 			builder.Map(a => a.DisplayOrder);
 			builder.Map(a => a.Remark);
 		}
-
-		/// <summary>
-		/// 支付接口的附加数据
-		/// </summary>
-		public class PaymentApiExtraData : Dictionary<string, object> { }
 	}
 }

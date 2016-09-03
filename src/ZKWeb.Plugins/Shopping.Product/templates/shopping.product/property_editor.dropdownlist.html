@@ -1,0 +1,15 @@
+﻿<div class="form-group">
+	<label class="control-label">{{ property.Name | trans }}</label>
+	<div class="form-controls">
+		<div data-property-type="dropdown-list" data-property-id="{{ property.Id }}">
+			<select class="form-control">
+				<option value="">{{ "Please Select" | trans }}</option>
+				{% for value in propertyValues %}
+				<option value="{{ value.Id }}">
+					{{ value.Name }}
+				</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+</div>

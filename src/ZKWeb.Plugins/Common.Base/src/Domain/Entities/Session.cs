@@ -1,7 +1,7 @@
 ﻿using System;
 using ZKWebStandard.Ioc;
 using ZKWeb.Database;
-using System.Collections.Generic;
+using ZKWeb.Plugins.Common.Base.src.Domain.Structs;
 
 namespace ZKWeb.Plugins.Common.Base.src.Domain.Entities {
 	/// <summary>
@@ -59,10 +59,5 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Entities {
 			builder.Map(s => s.RememberLogin);
 			builder.Map(s => s.Expires, new EntityMappingOptions() { Index = "Idx_Expires" });
 		}
-
-		/// <summary>
-		/// 会话数据
-		/// </summary>
-		public class SessionItems : Dictionary<string, object> { }
 	}
 }

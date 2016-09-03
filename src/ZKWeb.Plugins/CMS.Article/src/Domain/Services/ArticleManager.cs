@@ -3,7 +3,7 @@ using System.Linq;
 using ZKWeb.Cache;
 using ZKWeb.Plugins.CMS.Article.src.Components.ExtraConfigKeys;
 using ZKWeb.Plugins.CMS.Article.src.Components.GenericConfigs;
-using ZKWeb.Plugins.CMS.Article.src.UIComponents.StaticTableCallbacks;
+using ZKWeb.Plugins.CMS.Article.src.UIComponents.StaticTableHandlers;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
@@ -99,7 +99,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Domain.Services {
 					var articleListSettings = configManager.GetData<ArticleListSettings>();
 					var searchRequest = StaticTableSearchRequest.FromHttpRequest(
 						articleListSettings.ArticlesPerPage);
-					var handlers = new ArticleTableCallback().WithExtensions();
+					var handlers = new ArticleTableHandler().WithExtensions();
 					return searchRequest.BuildResponse(handlers);
 				}
 			}, ArticleSearchResultCacheTime);

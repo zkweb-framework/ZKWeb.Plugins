@@ -4,6 +4,7 @@ using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Enums;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Structs;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Entities {
@@ -168,10 +169,5 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Entities {
 			builder.Map(t => t.Deleted);
 			builder.Map(t => t.Remark);
 		}
-
-		/// <summary>
-		/// 支付交易的附加数据
-		/// </summary>
-		public class PaymentTransactionExtraData : Dictionary<string, object> { }
 	}
 }

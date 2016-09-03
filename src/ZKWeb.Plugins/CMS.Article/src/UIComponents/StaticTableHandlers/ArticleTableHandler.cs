@@ -7,13 +7,13 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Bases;
 using System;
 
-namespace ZKWeb.Plugins.CMS.Article.src.UIComponents.StaticTableCallbacks {
+namespace ZKWeb.Plugins.CMS.Article.src.UIComponents.StaticTableHandlers {
 	using Article = Domain.Entities.Article;
 
 	/// <summary>
 	/// 前台文章列表使用的文章表格的回调
 	/// </summary>
-	public class ArticleTableCallback :
+	public class ArticleTableHandler :
 		StaticTableHandlerBase<Article, Guid> {
 		/// <summary>
 		/// 过滤数据

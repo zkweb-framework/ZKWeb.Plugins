@@ -4,6 +4,7 @@ using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Structs;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities {
 	/// <summary>
@@ -84,9 +85,4 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities {
 			builder.Map(u => u.Deleted);
 		}
 	}
-
-	/// <summary>
-	/// 用户的附加数据
-	/// </summary>
-	public class UserItems : Dictionary<string, object> { }
 }

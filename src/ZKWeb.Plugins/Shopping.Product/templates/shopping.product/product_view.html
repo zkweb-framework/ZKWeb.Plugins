@@ -1,0 +1,27 @@
+﻿{% fetch /api/product/info?id={id} > product_info -%}
+{% use_title product_info.name -%}
+{% use_meta_keywords product_info.keywords -%}
+{% use_meta_description product_info.name -%}
+{% include_css_later "/static/shopping.product.css/product-view.css" -%}
+{% include_js_later "/static/shopping.product.js/product-view.min.js" -%}
+{% include common.base/header.html %}
+<div class="screen-center-block">
+	{% unless product_info %}
+	<div class="text-center-row">
+		{{ "The product you are visiting does not exist." | trans }}
+	</div>
+	{% else %}
+	<div class="product-view">
+		<div class="product-summary-row">
+			{% area product_gallery %}
+			{% area product_sales_info %}
+			<div class="clearfix"></div>
+		</div>
+		<div class="product-details-row">
+			{% area product_details %}
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	{% endunless %}
+</div>
+{% include common.base/footer.html %}

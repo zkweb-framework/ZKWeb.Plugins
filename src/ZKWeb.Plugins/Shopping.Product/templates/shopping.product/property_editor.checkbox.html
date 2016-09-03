@@ -1,0 +1,17 @@
+﻿<div class="form-group">
+	<label class="control-label">{{ property.Name | trans }}</label>
+	<div class="form-controls">
+		<div class="checkbox-list" data-property-type="checkbox" data-property-id="{{ property.Id }}">
+			{% for value in propertyValues %}
+			<label class="checkbox-inline">
+				<input type="checkbox" value="{{ value.Id }}" />
+				<div class="property-value-alias">
+					<input class="alias-editor" value="" type="text" />
+					<span class="alias-text">{{ value.Name }}</span>
+					<i class="fa fa-pencil-square alias-edit-btn"></i>
+				</div>
+			</label>
+			{% endfor %}
+		</div>
+	</div>
+</div>

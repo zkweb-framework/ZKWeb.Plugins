@@ -4,6 +4,7 @@ using System.Linq;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
+using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Structs;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -33,7 +34,7 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services {
 				Creator = (creatorId == null) ? null : userService.Get(creatorId.Value),
 				KeepUntil = (keepTime == null) ? null : (DateTime?)now.Add(keepTime.Value),
 				Content = content,
-				ExtraData = extraData.ConvertOrDefault<Entities.GenericRecord.GenericRecordExtraData>()
+				ExtraData = extraData.ConvertOrDefault<GenericRecordExtraData>()
 			};
 			Save(ref record);
 		}
