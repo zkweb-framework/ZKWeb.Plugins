@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "User Panel",
-	"Version": "0.9 testing",
+	"Version": "1.0.0 beta 1",
 	"Description": "Pages for user panel",
 	"Dependencies": [ "Common.Admin", "Common.MenuPage" ]
 }
