@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Web;
 
-namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions {
+namespace ZKWeb.Plugins.Common.Admin.src.Domain.Extensions {
 	/// <summary>
 	/// 会话的扩展函数
 	/// </summary>
@@ -33,7 +34,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions {
 			var service = Application.Ioc.Resolve<IDomainService<User, Guid>>();
 			var user = service.GetMany(query => {
 				var u = query.FirstOrDefault(ux => ux.Id == session.ReleatedId);
-				var _ = u.Roles.SelectMany(role => role.Privileges).ToList(); // 预读数据
+				var _ = u?.Roles.SelectMany(role => role.Privileges).ToList(); // 预读数据
 				return u;
 			});
 			context.PutData(SessionUserKey, Tuple.Create(session, user));

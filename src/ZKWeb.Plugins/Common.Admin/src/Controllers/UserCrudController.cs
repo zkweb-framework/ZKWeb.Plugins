@@ -5,7 +5,7 @@ using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
-using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.UserTypes;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;

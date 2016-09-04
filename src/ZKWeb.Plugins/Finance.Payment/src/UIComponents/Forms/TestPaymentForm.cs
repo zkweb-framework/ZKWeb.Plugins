@@ -9,7 +9,7 @@ using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Currency.src.UIComponents.ListItemProviders;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Currency.src.Components.GenericConfigs;
-using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using System;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings;

@@ -6,7 +6,7 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Components.ExtraConfigKeys;
 using ZKWeb.Plugins.Common.Admin.src.Components.UserLoginHandlers.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
-using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.UserTypes;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Extensions;

@@ -48,7 +48,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities.Bases {
 			builder.Map(o => o.Serial, new EntityMappingOptions() {
 				Nullable = false, Unique = true, Length = 255
 			});
-			builder.Map(o => o.Owner);
+			builder.References(o => o.Owner);
 			builder.Map(o => o.CreateTime);
 			builder.Map(o => o.UpdateTime);
 			builder.Map(o => o.Deleted);

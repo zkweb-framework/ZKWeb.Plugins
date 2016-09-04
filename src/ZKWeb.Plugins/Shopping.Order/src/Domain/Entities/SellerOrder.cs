@@ -87,8 +87,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 			builder.Map(o => o.OriginalTotalCostCalcResult, new EntityMappingOptions() {
 				WithSerialization = true
 			});
-			builder.Map(o => o.CreateTime);
-			builder.Map(o => o.UpdateTime);
 			builder.Map(o => o.StateTimes, new EntityMappingOptions() {
 				WithSerialization = true
 			});

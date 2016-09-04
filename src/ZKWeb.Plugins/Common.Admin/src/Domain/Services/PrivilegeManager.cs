@@ -9,7 +9,7 @@ using ZKWeb.Web;
 using ZKWebStandard.Web;
 using ZKWeb.Plugins.Common.Admin.src.Components.PrivilegeProviders;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
-using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Admin.src.Components.PrivilegeTranslators.Interfaces;

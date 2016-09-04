@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWebStandard.Utils;
 
-namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions {
+namespace ZKWeb.Plugins.Common.Admin.src.Domain.Extensions {
 	/// <summary>
 	/// 用户的扩展函数
 	/// </summary>
