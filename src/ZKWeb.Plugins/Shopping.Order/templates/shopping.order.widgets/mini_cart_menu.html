@@ -1,0 +1,8 @@
+﻿{% fetch /api/cart/product_total_count > cart_product_total_count %}
+<li class="dropdown minicart-menu" require-script="/static/shopping.order.js/cart-minicart.min.js">
+	{% include_css_here "/static/shopping.order.css/cart-minicart.css" %}
+	<a class="dropdown-toggle nav-link" data-hover="dropdown" data-toggle="dropdown">
+		{{ "Cart <em>[0]</em> products" | trans | format: cart_product_total_count.totalCount | raw_html }}
+	</a>
+	<ul class="dropdown-menu"></ul>
+</li>

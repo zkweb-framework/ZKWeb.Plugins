@@ -10,6 +10,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Components.ExtraConfigKeys;
 using ZKWeb.Plugins.Shopping.Product.src.Components.GenericConfigs;
+using ZKWeb.Plugins.Shopping.Product.src.Components.ProductStates.Interfaces;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductSalesInfoDisplayFields.Interfaces;
@@ -182,6 +183,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 						state = product.State,
 						stateName = new T(product.State),
 						stateText = new T(string.Format("Product is {0}", product.State)),
+						isPurchasable = product.GetProductState() is IAmPurchasable,
 						sellerId = seller == null ? null : (Guid?)seller.Id,
 						sellerName = seller == null ? null : seller.Username,
 						classes,

@@ -1,0 +1,44 @@
+﻿<div class="cart-product-table">
+	<div class="table-scroller">
+		<table class="table table-bordered table-hover" data-toggle="checkbox-group">
+			<thead>
+				<tr class="heading" role="row">
+					<th width="25"><input type="checkbox" class="select-all" checked="checked" /></th>
+					<th>{{ "Product" | trans }}</th>
+					<th width="110">{{ "ProductType" | trans }}</th>
+					<th width="110">{{ "Seller" | trans }}</th>
+					<th width="110">{{ "ProductUnitPrice" | trans }}</th>
+					<th width="110">{{ "OrderCount" | trans }}</th>
+					<th width="90">{{ "Actions" | trans }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for info in cart_info.displayInfos %}
+				<tr class="cart-product" role="row"
+					data-cart-product-id="{{ info.Extra.cartProductId }}"
+					data-product-id="{{ info.ProductId }}"
+					data-matched-parameters="{{ info.MatchedParameters | json }}"
+					data-seller-id="{{ info.SellerId }}"
+					data-is-real="{{ info.TypeTrait.IsReal | json }}">
+					<td class="selection"><input type="checkbox" checked="checked" /></td>
+					<td class="summary">{{ info | order_product_summary }}</td>
+					<td class="type">{{ info | order_product_type }}</td>
+					<td class="seller">{{ info | order_product_seller }}</td>
+					<td class="unit-price">{{ info | order_product_price }}</td>
+					<td class="order-count">{{ info | order_product_count_editor }}</td>
+					<td class="actions">
+						<a class="delete" data-id="{{ info.Extra.cartProductId }}">{{ "Delete" | trans }}</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<input type="hidden" name="createOrderProductParametersList" />
+	<input type="hidden" name="cartProducts" data-order-parameter="CartProducts" />
+	<div class="cart-product-total">
+		<span class="total-count">{{ "Products total count: <em>0</em>" | trans | raw_html }}</span>
+		<span class="total-price">{{ "Products total price: <em>0</em>" | trans | raw_html }}</span>
+	</div>
+	<div class="clearfix"></div>
+</div>

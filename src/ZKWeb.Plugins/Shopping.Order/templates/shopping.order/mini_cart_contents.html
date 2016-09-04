@@ -1,0 +1,41 @@
+﻿{% fetch /api/cart/minicart_info > minicart_info %}
+{% unless minicart_info.totalCount > 0 %}
+<li class="minicart-contents">
+	<div class="minicart-empty text-center">
+		<i class="fa fa-shopping-cart"></i>
+		{{ "Cart is empty" | trans }}
+	</div>
+</li>
+{% else %}
+<li class="minicart-contents">
+	<div class="minicart-title">{{ "Recently add to cart" | trans }}</div>
+	<div class="minicart-products">
+		{% for info in minicart_info.displayInfos %}
+		<dl class="minicart-product">
+			<dt class="minicart-product-image">
+				{% include shopping.order/tmpl.order_product_image.html %}
+			</dt>
+			<dd class="minicart-product-description">
+				<div class="minicart-product-actions">
+					<div title="{{ info.UnitPriceDescription }}">
+						<span class="price">{{ info.UnitPriceString }}</span>&nbsp;x
+						<span>{{ info.Count }}</span>
+					</div>
+					<a class="delete" data-id="{{ info.Extra.cartProductId }}">{{ "Delete" | trans }}</a>
+				</div>
+				{% include shopping.order/tmpl.order_product_name.html %}
+				{% include shopping.order/tmpl.order_product_description.html %}
+			</dd>
+		</dl>
+		{% endfor %}
+	</div>
+	<div class="minicart-summary">
+		<div class="summary">
+			<span class="total-count">{{ "<em>[0]</em> Products" | trans | format: minicart_info.totalCount | raw_html }}</span>
+			<span class="total-price">{{ "Total <em>[0]</em>" | trans | format: minicart_info.totalPriceString | raw_html }}</span>
+		</div>
+		<a class="btn btn-themed btn-goto-cart" href="{{ "/cart" | url }}">{{ "Checkout >>>" | trans }}</a>
+		<div class="clearfix"></div>
+	</div>
+</li>
+{% endunless %}

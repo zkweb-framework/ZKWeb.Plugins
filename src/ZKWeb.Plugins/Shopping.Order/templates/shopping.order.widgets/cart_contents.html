@@ -1,0 +1,18 @@
+﻿{% fetch /api/cart/info?type={type} > cart_info %}
+{% assign cart_type = "" | url_get_param: "type" %}
+<div class="panel panel-themed cart-container" data-type="{{ cart_type }}">
+	<div class="panel-heading">
+		<i class="fa fa-shopping-cart">&nbsp;{{ "Cart" | trans }}</i>
+	</div>
+	<div class="page-content">
+		<div class="cart-inner">
+			{% include shopping.order.widgets/cart_contents.product_table.html %}
+			{% include shopping.order.widgets/cart_contents.shipping_address.html %}
+			{% include shopping.order.widgets/cart_contents.order_comment.html %}
+			{% include shopping.order.widgets/cart_contents.logistics_select.html %}
+			{% include shopping.order.widgets/cart_contents.payment_api_select.html %}
+			{% include shopping.order.widgets/cart_contents.order_price_description.html %}
+		</div>
+		{% include shopping.order.widgets/cart_contents.submit_order.html %}
+	</div>
+</div>
