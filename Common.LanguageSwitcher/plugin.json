@@ -1,6 +1,0 @@
-﻿{
-	"Name": "Language Switcher",
-	"Version": "0.9 testing",
-	"Description": "Provide manually language switch menu for visitor",
-	"Dependencies": [ "Common.Base", "Common.AdminSettings" ]
-}

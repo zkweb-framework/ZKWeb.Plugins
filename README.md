@@ -1,10 +1,15 @@
-Default plugins for zkweb framework.<br />
-This project is for manage plugin files.<br />
+# Default plugins for zkweb framework [![Build status](TODO](https://ci.appveyor.com/project/303248153/zkweb.plugins) [![NuGet](https://buildstats.info/nuget/ZKWeb.Plugins)](http://www.nuget.org/packages/ZKWeb.Plugins)
+
+## Links and License
 
 Framework: http://github.com/zkweb-framework/ZKWeb<br/>
-Document: http://zkweb-framework.github.io (Chinese only)<br/>
+Document: http://zkweb-framework.github.io (Chinese)<br/>
 
-Plugins information:<br/>
+MIT License<br />
+Copyright © 2016 303248153@github<br />
+If you have any license issue please contact 303248153@qq.com.
+
+# Plugins informations:<br/>
 
 | Directory Name          | Name                | Version | Full Version | Description                                       |
 |-------------------------|---------------------|---------|--------------|---------------------------------------------------|
@@ -37,14 +42,4 @@ Plugins information:<br/>
 | UnitTest.WebTester      | Web Tester          | 0.9     | 0.9 testing  | Support running unit test from admin panel        |
 | Common.CustomTranslate  | Custom Translate    | 0.9     | 0.9 testing  | Support custom translate through admin panel      |
 
-| Status   | Meanning                                                                      |
-|----------|-------------------------------------------------------------------------------|
-| not done | main features are not implemented                                             |
-| testing  | main features are implemented, but backward compatibility is not provided yet |
-| stable   | main features are implemented, and backward compatibility is provided         |
-
 (Thanks [Tables Generator](http://www.tablesgenerator.com/markdown_tables))
-
-MIT License<br />
-Copyright © 2016 303248153@github<br />
-If you have any license issue please contact 303248153@qq.com.

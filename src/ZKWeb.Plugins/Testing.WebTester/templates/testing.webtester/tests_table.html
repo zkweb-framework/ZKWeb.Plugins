@@ -1,0 +1,65 @@
+﻿<div class="table-container testing-table-container">
+	<div class="table-scroller">
+		<table class="table table-bordered table-hover dataTable">
+			<thead>
+				<tr>
+					<th>{{ "Assembly" | trans }}</th>
+					<th width="100">{{ "State" | trans }}</th>
+					<th width="100">{{ "Passed" | trans }}</th>
+					<th width="100">{{ "Skipped" | trans }}</th>
+					<th width="100">{{ "Failed" | trans }}</th>
+					<th width="100">{{ "ErrorMessage" | trans }}</th>
+					<th width="100">{{ "DebugMessage" | trans }}</th>
+					<th width="230">
+						<a class="btn btn-warning pull-left reset-all-tests">
+							{{ "ResetAll" | trans }}
+						</a>
+						<a class="btn btn-primary pull-right start-all-tests">
+							{{ "StartAll" | trans }}
+						</a>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for assemblyName in assemblyNames %}
+				<tr data-assembly-name="{{ assemblyName }}">
+					<td>{{ assemblyName }}</td>
+					<td>
+						<div class="state">{{ "Getting" | trans }}</div>
+					</td>
+					<td>
+						<div class="passed green"></div>
+					</td>
+					<td>
+						<div class="dropdown skipped">
+							<a class="dropdown-toggle" data-toggle="dropdown"></a>
+							<div class="dropdown-menu pull-right"><pre></pre></div>
+						</div>
+					</td>
+					<td>
+						<div class="dropdown failed">
+							<a class="dropdown-toggle" data-toggle="dropdown"></a>
+							<div class="dropdown-menu pull-right"><pre></pre></div>
+						</div>
+					</td>
+					<td>
+						<div class="dropdown error-message">
+							<a class="dropdown-toggle" data-toggle="dropdown">0</a>
+							<div class="dropdown-menu pull-right"><pre></pre></div>
+						</div>
+					</td>
+					<td>
+						<div class="dropdown debug-message">
+							<a class="dropdown-toggle" data-toggle="dropdown">0</a>
+							<div class="dropdown-menu pull-right"><pre></pre></div>
+						</div>
+					</td>
+					<td>
+						<a class="btn btn-primary pull-right start-test">{{ "Start" | trans }}</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>

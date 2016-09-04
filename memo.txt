@@ -1,20 +1,4 @@
-﻿改版工作
-	重新分层，改善代码结构
-	改进对工作单元的处理，允许多项业务代码在同一个工作单元中运行
-	把所有主键改为guid
-	支持在core下编译（但还不需要支持运行）
-	分层
-		Controllers (包含ApplicationServices)
-		DomainServices
-		Entities
-		Repositories
-		UIBuilder
-		其他服务（ICurrency, IOrderCreator等），名称未定义
-	dotnet build -f net461
-	dotnet run -f net461
-	while true; do dotnet run -f net461; done
-
-开发路线
+﻿开发路线
 	单元测试
 		ok 实现单元测试
 		ok 支持单元测试相关的事件

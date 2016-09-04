@@ -1,0 +1,45 @@
+﻿{% unless product_info.isPurchasable %}
+<div class="product-unpurchasable-message">
+	{% include_css_here "/static/shopping.order.css/product-view.css" %}
+	<div class="message">{{ product_info.stateText | trans }}</div>
+</div>
+{% else %}
+<div class="product-purchase-buttons" require-script="/static/shopping.order.js/product-view.min.js">
+	{% include_css_here "/static/shopping.order.css/product-view.css" %}
+	<form class="product-purchase-form" action="/api/cart/add" method="post" ajax="true">
+		<input type="hidden" name="productId" value="{{ product_info.id }}" />
+		<input type="hidden" name="matchParameters" value="{}" />
+		<input type="hidden" name="isBuyNow" value="false" />
+		<a class="btn btn-buynow">{{ "Buynow" | trans }}</a>
+		<a class="btn btn-add-to-cart"><i class="fa fa-cart-plus"></i>{{ "AddToCart" | trans }}</a>
+	</form>
+	<div class="dialog dialog-themed product-added-to-cart-dialog hide">
+		<div class="title">
+			<a class="dialog-close"><i class="fa fa-close"></i>&nbsp;{{ "Close" | trans }}</a>
+		</div>
+		<div class="contents">
+			<div>
+				<div class="cart-icon">
+					<i class="fa fa-cart-arrow-down"></i>
+				</div>
+				<div class="description">
+					<span>{{ "Add product to cart success" | trans }}</span>
+					<span>
+						{{ "Total products" | trans }}:&nbsp;
+						<em class="total-count">0</em>
+					</span>
+					<span>
+						{{ "Product total price" | trans }}:&nbsp;
+						<em class="total-price">0</em>
+					</span>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="btn-goto-cart">
+				<a class="btn btn-themed" href="{{ "/cart" | url }}">{{ "Checkout >>>" | trans }}</a>
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+{% endunless %}

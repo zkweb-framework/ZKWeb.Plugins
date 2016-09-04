@@ -1,0 +1,6 @@
+﻿{
+	"Name": "Multishop",
+	"Version": "0.0",
+	"Description": "Provide base multi shop support (add seller manage panel)",
+	"Dependencies": [ "Common.Admin" ]
+}

@@ -1,0 +1,4 @@
+﻿{% fetch /api/user/login_info > login_info %}
+{% if login_info.userCanUseAdminPanel %}
+<a class="nav-link" href="{{ "/admin" | url }}">{{ "Admin Panel" | trans }}</a>
+{% endif %}

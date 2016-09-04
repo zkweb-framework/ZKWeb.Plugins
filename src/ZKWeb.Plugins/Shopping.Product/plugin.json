@@ -1,0 +1,14 @@
+﻿{
+	"Name": "Product",
+	"Version": "1.0.0 beta 1",
+	"Description": "Product management for ec site",
+	"Dependencies": [
+		"Common.Base",
+		"Common.Admin",
+		"Common.AdminSettings",
+		"Common.Currency",
+		"Common.GenericClass",
+		"Common.GenericTag",
+		"CMS.ImageBrowser"
+	]
+}

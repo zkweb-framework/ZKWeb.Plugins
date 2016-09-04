@@ -1,0 +1,34 @@
+{
+	"PrependPlugins": [
+		"Common.Base",
+		"Common.Captcha",
+		"Common.Admin",
+		"Common.MenuPage",
+		"Common.AdminSettings",
+		"Common.UserPanel",
+		"Common.UserContact",
+		"Common.GenericClass",
+		"Common.GenericTag",
+		"Common.GenericRecord",
+		"Common.LanguageSwitcher",
+		"Common.Currency",
+		"Common.PesudoStatic",
+		"Common.Region",
+		"Common.SerialGenerate",
+		"Finance.Payment",
+		"Finance.Payment.Alipay",
+		"Finance.Payment.Tenpay",
+		"Finance.Payment.WeChat",
+		"CMS.CKEditor",
+		"CMS.ImageBrowser",
+		"CMS.Article",
+		"Shopping.Product",
+		"Shopping.Logistics",
+		"Shopping.Order",
+		"Shopping.AfterSales",
+		"Testing.WebTester"
+	],
+	"AppendPlugins": [
+		"Common.CustomTranslate"
+	]
+}

@@ -1,6 +1,0 @@
-﻿{
-	"Name": "Generic Record",
-	"Version": "0.9 testing",
-	"Description": "Generic records management",
-	"Dependencies": [ "Common.Admin" ]
-}

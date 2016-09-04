@@ -1,0 +1,7 @@
+﻿{
+	"Name": "Captcha",
+	"Version": "1.0.0 beta 1",
+	"Description": "Provide captcha form field and validation",
+	"Dependencies": [ "Common.Base" ],
+	"References": []
+}

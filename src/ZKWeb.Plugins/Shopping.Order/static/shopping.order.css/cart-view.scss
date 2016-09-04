@@ -1,0 +1,186 @@
+﻿/* 购物车页的样式 */
+.cart-container {
+	/* 内容留空 低分辨率时不留 */
+	.page-content {
+		padding: 30px 50px;
+	}
+
+	@media (max-width: 768px) {
+		.page-content {
+			padding: 0px;
+		}
+	}
+	/* 购物车内部内容的样式 */
+	.cart-inner {
+		border: 1px solid #DDD;
+	}
+	/* 商品表格 */
+	.cart-product-table {
+		border-bottom: 1px solid #DDD;
+		/* 表格样式 */
+		.table-scroller {
+			min-height: 0px;
+			overflow-x: auto;
+			overflow-y: hidden;
+		}
+
+		.table {
+			margin: -1px -1px -1px -1px;
+			min-width: 900px;
+
+			> thead > tr > th {
+				border-bottom: none;
+				text-align: center;
+			}
+
+			> tbody > tr {
+				background-color: #fff;
+			}
+			/* 购物车商品单元格 */
+			.cart-product .order-product-summary {
+				margin: 0px 0px 0px 4px;
+			}
+			/* 类型, 卖家, 单价单元格 */
+			.type, .seller, .price {
+				font-weight: bold;
+				text-align: center;
+				line-height: 32px;
+			}
+			/* 数量单元格 */
+			.order-count {
+				.up {
+					margin: 0px 0px 3px 0px;
+				}
+
+				.down {
+					margin: 0px;
+				}
+			}
+			/* 操作单元格 */
+			.actions {
+				text-align: center;
+				line-height: 32px;
+			}
+		}
+		/* 商品数量合计和商品金额总计 */
+		/* 这里用border-top代替table的border-bottom，避免样式不一致 */
+		.cart-product-total {
+			text-align: right;
+			padding: 0px 20px 3px 0px;
+			border-top: 1px solid #DDD;
+			line-height: 32px;
+			display: block;
+
+			.total-count > em, .total-price > em {
+				font-size: 14px;
+				color: #E4393C;
+				margin: 0px 5px;
+				font-weight: bold;
+				font-style: normal;
+			}
+		}
+	}
+	/* 收货地址 */
+	.shipping-address {
+		border-bottom: 1px solid #DDD;
+		/* 收货地址表单的上边距 */
+		.user-shipping-address-form {
+			margin: 15px 0px 0px 0px;
+		}
+		/* 收货地址下的控件 */
+		.user-shipping-address-addin {
+			margin-top: -12px;
+
+			.checkbox-inline {
+				height: 20px;
+				line-height: 20px;
+				padding-top: 0px;
+				margin: -3px 0px 0px 5px;
+			}
+		}
+	}
+	/* 留言 */
+	.order-comment {
+		border-bottom: 1px solid #DDD;
+		/* 留言表单的上边距 */
+		.order-comment-form {
+			margin: 15px 0px 0px 0px;
+		}
+	}
+	/* 收货地址和留言的标题栏 */
+	.shipping-address, .order-comment {
+		.title {
+			background-color: #F3F3F3;
+			height: 33px;
+			line-height: 33px;
+			border-bottom: 1px solid #DDD;
+			padding-left: 15px;
+			font-weight: bold;
+		}
+	}
+	/* 物流 */
+	.logistics-select {
+		background-color: #F3F3F3;
+		border-bottom: 1px solid #DDD;
+
+		.form-group {
+			margin-bottom: 0px;
+			padding-bottom: 10px;
+		}
+	}
+	/* 支付接口*/
+	.payment-api-select {
+		background-color: #F3F3F3;
+		border-bottom: 1px solid #DDD;
+
+		.form-group {
+			margin-bottom: 0px;
+			padding-bottom: 10px;
+		}
+	}
+	/* 物流或支付接口不可用时的样式 */
+	.radio-list .radio-inline.not-available {
+		text-decoration: line-through;
+
+		em {
+			display: none;
+		}
+	}
+	/* 价格Html */
+	.order-price-description {
+		.description {
+			float: right;
+			line-height: 35px;
+			color: #E4393C;
+			font-size: 14px;
+			font-weight: bold;
+			margin: 0px 15px 3px 0px;
+		}
+	}
+	/* 提交订单的按钮 */
+	.btn-submit-order {
+		margin: 10px 0px 0px 0px;
+
+		> form {
+			margin: 0px;
+		}
+
+		.btn-submit {
+			float: right;
+			width: 140px;
+			font-size: 14px;
+			font-weight: bold;
+			background-color: #2296d4;
+		}
+	}
+	/* 低分辨率时让按钮全屏 */
+	@media (max-width: 768px) {
+		.btn-submit-order {
+			margin: 10px;
+
+			.btn-submit {
+				width: 100%;
+			}
+		}
+	}
+}

@@ -1,6 +1,0 @@
-﻿{
-	"Name": "Menu Page Functions",
-	"Version": "0.9 testing",
-	"Description": "Functions for building menu page",
-	"Dependencies": [ "Common.Admin" ]
-}

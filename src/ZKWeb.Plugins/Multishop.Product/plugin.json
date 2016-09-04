@@ -1,0 +1,6 @@
+﻿{
+	"Name": "Multishop product management",
+	"Version": "0.0",
+	"Description": "Provide product management for seller",
+	"Dependencies": [ "Common.Admin", "Shopping.Product", "Multishop.Base" ]
+}

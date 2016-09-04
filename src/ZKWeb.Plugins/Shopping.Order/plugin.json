@@ -1,0 +1,12 @@
+﻿{
+	"Name": "Order",
+	"Version": "0.0",
+	"Description": "Order management for ec site",
+	"Dependencies": [
+		"Common.Base",
+		"Common.Admin",
+		"Finance.Payment",
+		"Shopping.Product",
+		"Shopping.Logistics"
+	]
+}
