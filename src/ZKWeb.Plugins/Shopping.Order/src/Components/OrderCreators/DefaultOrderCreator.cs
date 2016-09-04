@@ -3,27 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Database;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Admin.src.Database;
-using ZKWeb.Plugins.Common.Base.src.Managers;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Base.src.Repositories;
-using ZKWeb.Plugins.Common.SerialGenerate.src.Generator;
-using ZKWeb.Plugins.Finance.Payment.src.Managers;
-using ZKWeb.Plugins.Finance.Payment.src.Repositories;
-using ZKWeb.Plugins.Shopping.Order.src.Config;
-using ZKWeb.Plugins.Shopping.Order.src.Database;
-using ZKWeb.Plugins.Shopping.Order.src.Extensions;
-using ZKWeb.Plugins.Shopping.Order.src.Managers;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
-using ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers;
-using ZKWeb.Plugins.Shopping.Product.src.Database;
-using ZKWeb.Plugins.Shopping.Product.src.Extensions;
-using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
-	using Product = Product.src.Database.Product;
+	using Common.Admin.src.Domain.Services;
+	using Common.Base.src.Components.Exceptions;
+	using Common.Base.src.Domain.Services;
+	using Common.SerialGenerate.src.Components.SerialGenerate;
+	using Domain.Enums;
+	using Domain.Extensions;
+	using Domain.Services;
+	using Domain.Structs;
+	using Finance.Payment.src.Domain.Services;
+	using GenericConfigs;
+	using Interfaces;
+	using PaymentTransactionHandlers;
+	using Product.src.Components.ProductTypes.Interfaces;
+	using Product.src.Domain.Extensions;
+	using Product.src.Domain.Services;
+	using Product = Product.src.Domain.Entities.Product;
 
 	/// <summary>
 	/// 默认的订单创建器
@@ -67,13 +66,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 		/// - 检查选择的支付接口是否允许使用
 		/// </summary>
 		protected virtual void CheckOrderParameters() {
-			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var productManager = Application.Ioc.Resolve<ProductManager>();
 			var sellerToLogisticsId = Parameters.OrderParameters.GetSellerToLogistics();
 			var shippingAddress = Parameters.OrderParameters.GetShippingAddress();
 			foreach (var productParameters in Parameters.OrderProductParametersList) {
 				// 检查商品是否存在
-				var product = productManager.GetProduct(productParameters.ProductId);
+				var product = productManager.GetWithCache(productParameters.ProductId);
 				if (product == null) {
 					throw new BadRequestException(new T("Order contains product that not exist or deleted"));
 				}
@@ -91,14 +90,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 					throw new BadRequestException(new T("Order count must larger than 0"));
 				}
 				// 如果有实体商品，必须选择物流
-				var typeTrait = product.GetTypeTrait();
-				var sellerId = (product.Seller == null) ? 0 : product.Seller.Id;
-				if (typeTrait.IsReal && sellerToLogisticsId.GetOrDefault(sellerId) <= 0) {
+				var isRealProduct = product.GetProductType() is IAmRealProduct;
+				var sellerId = product.Seller?.Id ?? Guid.Empty;
+				if (isRealProduct && sellerToLogisticsId.GetOrDefault(sellerId) == Guid.Empty) {
 					throw new BadRequestException(
 						new T("Order contains real products, please select a logistics"));
 				}
 				// 如果有实体商品，必须填写收货地址
-				if (!typeTrait.IsReal) {
+				if (!isRealProduct) {
 				} else if (string.IsNullOrEmpty(shippingAddress.DetailedAddress)) {
 					throw new BadRequestException(new T("Please provide detailed address"));
 				} else if (string.IsNullOrEmpty(shippingAddress.ReceiverName)) {
@@ -108,17 +107,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				}
 			}
 			// 检查是否支持非会员下单
-			var userRepository = RepositoryResolver.Resolve<User>(Context);
+			var userManager = Application.Ioc.Resolve<UserManager>();
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var settings = configManager.GetData<OrderSettings>();
 			if (!settings.AllowAnonymousVisitorCreateOrder &&
 				(Parameters.UserId == null ||
-				userRepository.Count(u => u.Id == Parameters.UserId) <= 0)) {
+				userManager.Count(u => u.Id == Parameters.UserId) <= 0)) {
 				throw new BadRequestException(new T("To create order please login first"));
 			}
 			// 检查选择的物流是否允许使用
 			if (sellerToLogisticsId.Any(s => !orderManager
-				.GetAvailableLogistics(Parameters.UserId, (s.Key == 0) ? null : (long?)s.Key)
+				.GetAvailableLogistics(Parameters.UserId, (s.Key == Guid.Empty) ? null : (Guid?)s.Key)
 				.Any(l => l.Id == s.Value))) {
 				throw new BadRequestException(new T("Selected logistics is not allowed to use"));
 			}
@@ -133,7 +132,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 		/// 按卖家分别创建订单
 		/// </summary>
 		protected virtual void CreateOrdersBySellers() {
-			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var userRepository = RepositoryResolver.Resolve<User>(Context);
 			var productRepository = RepositoryResolver.Resolve<Product>(Context);
 			var orderRepository = RepositoryResolver.Resolve<Database.Order>(Context);
@@ -143,7 +142,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 			var groupedProductParameters = Parameters.OrderProductParametersList.Select(p => new {
 				productParameters = p,
 				product = products.GetOrCreate(p.ProductId, () => productRepository.GetById(p.ProductId))
-			}).GroupBy(p => (p.product.Seller == null) ? null : (long?)p.product.Seller.Id).ToList();
+			}).GroupBy(p => p.product.Seller?.Id).ToList();
 			var now = DateTime.UtcNow;
 			foreach (var group in groupedProductParameters) {
 				// 计算订单的价格
@@ -164,7 +163,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 					TotalCostCalcResult = orderPrice,
 					OriginalTotalCostCalcResult = orderPrice,
 					CreateTime = now,
-					LastUpdated = now,
+					UpdateTime = now,
 					StateTimes = new OrderStateTimes() { { OrderState.WaitingBuyerPay, now } }
 				};
 				// 添加关联的订单商品
@@ -184,7 +183,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 						UnitPriceCalcResult = unitPrice,
 						OriginalUnitPriceCalcResult = unitPrice,
 						CreateTime = now,
-						LastUpdated = now
+						UpdateTime = now
 					};
 					// 添加关联的属性
 					foreach (var productToPropertyValue in obj.product
@@ -220,8 +219,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				var paymentApiId = Parameters.OrderParameters.GetPaymentApiId();
 				var transaction = transactionRepository.CreateTransaction(
 					OrderTransactionHandler.ConstType, paymentApiId, order.TotalCost,
-					(paymentFee == null) ? 0 : paymentFee.Delta, order.Currency,
-					(order.Buyer == null) ? null : (long?)order.Buyer.Id, null, order.Id, order.Serial);
+					paymentFee?.Delta ?? 0, order.Currency,
+					order.Buyer?.Id, null, order.Id, order.Serial);
 				Result.CreatedTransactions.Add(transaction);
 			}
 		}
@@ -244,12 +243,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				return;
 			}
 			// 获取原地址，获取时同时检查所属用户
-			var addressRepository = RepositoryResolver.Resolve<UserShippingAddress>(Context);
+			var addressRepository = RepositoryResolver.Resolve<ShippingAddress>(Context);
 			var existAddress = addressId > 0 ?
 				addressRepository.Get(a => a.Id == addressId && a.User.Id == Parameters.UserId) : null;
 			if (existAddress == null) {
 				var userRepository = RepositoryResolver.Resolve<User>(Context);
-				existAddress = new UserShippingAddress() {
+				existAddress = new ShippingAddress() {
 					User = userRepository.GetById(Parameters.UserId),
 					CreateTime = DateTime.UtcNow
 				};
@@ -263,7 +262,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				address.RegionId = newAddress.RegionId;
 				address.ZipCode = newAddress.ZipCode;
 				address.DetailedAddress = newAddress.DetailedAddress;
-				address.LastUpdated = DateTime.UtcNow;
+				address.UpdateTime = DateTime.UtcNow;
 				address.GenerateSummary();
 			});
 		}
@@ -279,15 +278,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				return;
 			}
 			// 获取匹配数据并减少数据中的库存数量
-			var matchedDataRepository = RepositoryResolver.Resolve<ProductMatchedData>(Context);
+			var productManager = Application.Ioc.Resolve<ProductManager>();
 			foreach (var order in Result.CreatedOrders) {
-				foreach (var orderProduct in order.OrderProducts) {
+				foreach (var orderProduct in order.SellerOrder.OrderProducts) {
 					var data = orderProduct.Product.MatchedDatas
 						.Where(d => d.Stock != null)
 						.WhereMatched(orderProduct.MatchParameters).FirstOrDefault();
-					if (data != null) {
-						matchedDataRepository.Save(ref data, d => d.ReduceStock(orderProduct.Count));
-					}
+					data?.ReduceStock(orderProduct.Count);
 				}
 			}
 		}
@@ -303,21 +300,21 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 			// 因为目前只能使用后台的支付接口，所以收款人应该是null
 			// 手续费会在这里按合并后的金额重新计算
 			var apiManager = Application.Ioc.Resolve<PaymentApiManager>();
-			var transactionRepository = RepositoryResolver
-				.ResolveRepository<PaymentTransactionRepository>(Context);
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			var firstTransaction = Result.CreatedTransactions.First();
 			var amount = Result.CreatedTransactions.Sum(t => t.Amount);
 			var paymentFee = apiManager.CalculatePaymentFee(firstTransaction.Api.Id, amount);
-			var transaction = transactionRepository.CreateTransaction(
+			var transaction = transactionManager.CreateTransaction(
 				MergedOrderTransactionHandler.ConstType,
 				firstTransaction.Api.Id,
 				amount,
 				paymentFee,
 				firstTransaction.CurrencyType,
-				(firstTransaction.Payer == null) ? null : (long?)firstTransaction.Payer.Id,
-				null, null,
-				string.Join(":", Result.CreatedTransactions.Select(t => t.Description)),
-				null, Result.CreatedTransactions);
+				firstTransaction.Payer?.Id,
+				null, null, // 无收款人Id，无关联Id
+				string.Join("; ", Result.CreatedTransactions.Select(t => t.Description)),
+				null, // 无附加数据
+				Result.CreatedTransactions);
 			Result.CreatedTransactions.Add(transaction);
 		}
 

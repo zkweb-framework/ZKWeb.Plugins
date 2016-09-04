@@ -16,7 +16,7 @@
 	控件值改变时，收集值到ShippingAddressJson控件
 */
 
-$.fn.userShippingAddressForm = function () {
+$.fn.shippingAddressForm = function () {
 	var $form = $(this);
 	// 防止重复初始化
 	if ($form.data("initialized")) {
@@ -35,7 +35,7 @@ $.fn.userShippingAddressForm = function () {
 	// 收货地址改变时，把选择的地址信息复制到各个输入框中
 	// 复制时不收集，全部复制完后再触发收集事件
 	var copyingLockName = "copyingLock";
-	var collectEventName = "collect.userShippingAddressForm";
+	var collectEventName = "collect.shippingAddressForm";
 	var onSelectedAddressChanged = function () {
 		// 锁定复制锁
 		$form.data(copyingLockName, true);

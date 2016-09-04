@@ -102,8 +102,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 					pair.Row["Id"] = pair.Entity.Id;
 					pair.Row["Name"] = new T(pair.Entity.Name);
 					pair.Row["Type"] = new T(pair.Entity.Type);
-					pair.Row["Owner"] = owner == null ? null : owner.Username;
-					pair.Row["OwnerId"] = owner == null ? null : (Guid?)owner.Id;
+					pair.Row["Owner"] = owner?.Username;
+					pair.Row["OwnerId"] = owner?.Id;
 					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
 					pair.Row["UpdateTime"] = pair.Entity.UpdateTime.ToClientTimeString();
 					pair.Row["DisplayOrder"] = pair.Entity.DisplayOrder;

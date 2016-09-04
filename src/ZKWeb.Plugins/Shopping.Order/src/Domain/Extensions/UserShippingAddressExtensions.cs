@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 	/// <summary>
 	/// 收货地址的扩展函数
 	/// </summary>
-	public static class UserShippingAddressExtensions {
+	public static class ShippingAddressExtensions {
 		/// <summary>
 		/// 生成完整的收货地址字符串
 		/// </summary>

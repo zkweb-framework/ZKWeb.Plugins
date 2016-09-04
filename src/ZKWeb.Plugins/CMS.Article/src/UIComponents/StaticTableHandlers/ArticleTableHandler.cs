@@ -61,11 +61,11 @@ namespace ZKWeb.Plugins.CMS.Article.src.UIComponents.StaticTableHandlers {
 				pair.Row["Id"] = pair.Entity.Id;
 				pair.Row["Title"] = pair.Entity.Title;
 				pair.Row["Summary"] = pair.Entity.Summary;
-				pair.Row["Author"] = author == null ? null : author.Username;
-				pair.Row["AuthorId"] = author == null ? null : (Guid?)author.Id;
+				pair.Row["Author"] = author?.Username;
+				pair.Row["AuthorId"] = author?.Id;
 				pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
-				pair.Row["LastClass"] = lastClass == null ? null : new T(lastClass.Name).ToString();
-				pair.Row["LastClassId"] = lastClass == null ? null : (Guid?)lastClass.Id;
+				pair.Row["LastClass"] = new T(lastClass?.Name).ToString();
+				pair.Row["LastClassId"] = lastClass?.Id;
 				pair.Row["Tags"] = pair.Entity.Tags.Select(t => new { t.Id, t.Name }).ToList();
 			}
 		}

@@ -27,7 +27,7 @@ $(function () {
 	onCartProductsChange();
 	// 启用收货地址表单的功能
 	var $shippingAddressForm = $cartContainer.find(".user-shipping-address-form");
-	$shippingAddressForm.userShippingAddressForm();
+	$shippingAddressForm.shippingAddressForm();
 	// 支持保存收货地址到订单创建参数
 	var $shippingAddressJson = $shippingAddressForm.find("input[name='ShippingAddressJson']");
 	$shippingAddressJson.attr("data-order-parameter", "ShippingAddress");

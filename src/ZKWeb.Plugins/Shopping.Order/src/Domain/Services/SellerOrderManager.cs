@@ -98,7 +98,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			var totalWeight = 0M;
 			foreach (var productParameters in parameters.OrderProductParametersList) {
 				var product = productManager.GetWithCache(productParameters.ProductId);
-				var productSellerId = (product.Seller == null) ? null : (Guid?)product.Seller.Id;
+				var productSellerId = product.Seller?.Id;
 				if (sellerId != productSellerId) {
 					// 跳过其他卖家的商品
 					continue;

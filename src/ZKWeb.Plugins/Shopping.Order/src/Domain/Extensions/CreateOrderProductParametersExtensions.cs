@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
 using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
@@ -53,8 +54,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 			info.OriginalUnitPriceString = info.UnitPriceString;
 			info.OriginalUnitPriceDescription = info.UnitPriceDescription;
 			info.Count = parameters.MatchParameters.GetOrderCount();
-			info.SellerId = (product.Seller == null) ? null : (Guid?)product.Seller.Id;
-			info.Seller = (product.Seller == null) ? null : product.Seller.Username;
+			info.SellerId = product.Seller?.Id;
+			info.Seller = product.Seller?.Username;
 			info.State = product.State;
 			info.Type = product.Type;
 			info.IsRealProduct = product.GetProductType() is IAmRealProduct;
@@ -63,17 +64,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 
 		/// <summary>
 		/// 获取包含了实体商品的卖家Id列表
-		/// 无卖家的Id等于null
+		/// 无卖家的Id等于Guid.Empty
 		/// </summary>
 		/// <param name="parametersList">订单商品创建参数</param>
 		/// <returns></returns>
-		public static IList<Guid?> GetSellerIdsHasRealProducts(
+		public static IList<Guid> GetSellerIdsHasRealProducts(
 			this IList<CreateOrderProductParameters> parametersList) {
 			var productManager = Application.Ioc.Resolve<ProductManager>();
 			return parametersList
 				.Select(p => productManager.GetWithCache(p.ProductId))
 				.Where(p => p.GetProductType() is IAmRealProduct)
-				.Select(p => p.Seller == null ? null : (Guid?)p.Seller.Id)
+				.Select(p => p.Seller?.Id ?? Guid.Empty)
 				.Distinct().ToList();
 		}
 	}

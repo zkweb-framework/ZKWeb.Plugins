@@ -50,7 +50,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Delete Successfully", "削除に成功しました" },
 			{ "OrderList", "注文リスト" },
 			{ "ShippingAddress", "お届け先の住所" },
-			{ "UserShippingAddress", "お届け先の住所" },
+			{ "ShippingAddress", "お届け先の住所" },
 			{ "Address/Name/Tel", "アドレス/名前/電話" },
 			{ "ZipCode", "郵便番号" },
 			{ "DetailedAddress", "詳細のアドレス" },

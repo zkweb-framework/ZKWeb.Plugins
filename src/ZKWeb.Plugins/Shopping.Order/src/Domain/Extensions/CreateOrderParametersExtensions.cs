@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
 			var user = session.GetUser();
-			parameters.UserId = (user == null) ? null : (Guid?)user.Id;
+			parameters.UserId = user?.Id;
 			parameters.SessionId = session.Id;
 		}
 

@@ -7,7 +7,7 @@ using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// <summary>
-	/// 订单管理的控制器
+	/// 后台的订单管理的控制器
 	/// 只在后台使用，需要卖家使用的订单管理请安装多商城插件
 	/// </summary>
 	[ExportMany]

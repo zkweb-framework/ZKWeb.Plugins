@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using ZKWeb.Plugins.Shopping.Order.src.Database;
-using ZKWeb.Plugins.Shopping.Order.src.Managers;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
+﻿using System;
+using System.Collections.Generic;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderShippingAddressProviders.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -15,8 +16,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderShippingAddressProvid
 		/// 获取可用的收货地址
 		/// 获取用户添加的收货地址
 		/// </summary>
-		public void GetShippingAddresses(long? userId, IList<UserShippingAddress> addresses) {
-			var shippingAddressManager = Application.Ioc.Resolve<UserShippingAddressManager>();
+		public void GetShippingAddresses(Guid? userId, IList<ShippingAddress> addresses) {
+			var shippingAddressManager = Application.Ioc.Resolve<ShippingAddressManager>();
 			addresses.AddRange(shippingAddressManager.GetShippingAddresses(userId));
 		}
 	}

@@ -21,7 +21,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions {
 			}
 			return values.Select(value => new ProductToPropertyValueForEdit() {
 				propertyId = value.Property.Id,
-				propertyValueId = value.PropertyValue == null ? null : (Guid?)value.PropertyValue.Id,
+				propertyValueId = value.PropertyValue?.Id,
 				name = value.PropertyValueName
 			}).ToList();
 		}

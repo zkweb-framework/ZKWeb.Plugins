@@ -31,7 +31,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		public static OrderProductDisplayInfo ToOrderProductDisplayInfo(
 			this CartProduct cartProduct) {
 			var parameters = cartProduct.ToCreateOrderProductParameters();
-			var userId = cartProduct.Owner == null ? null : (Guid?)cartProduct.Owner.Id;
+			var userId = cartProduct.Owner?.Id;
 			var displayInfo = parameters.ToOrderProductDisplayInfo(userId);
 			displayInfo.Extra["cartProductId"] = cartProduct.Id;
 			return displayInfo;

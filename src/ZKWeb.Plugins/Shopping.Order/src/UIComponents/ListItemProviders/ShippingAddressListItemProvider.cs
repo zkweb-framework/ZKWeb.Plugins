@@ -21,7 +21,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ListItemProviders {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var userId = (user == null) ? null : (Guid?)user.Id;
+			var userId = user?.Id;
 			foreach (var address in orderManager.GetAvailableShippingAddress(userId)) {
 				yield return new ListItem(address.Summary, JsonConvert.SerializeObject(address.ToLiquid()));
 			}

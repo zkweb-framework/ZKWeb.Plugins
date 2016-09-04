@@ -193,7 +193,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var userId = user == null ? null : (Guid?)user.Id;
+			var userId = user?.Id;
 			var result = new Dictionary<string, decimal>();
 			foreach (var cartProduct in cartProducts) {
 				var parameters = cartProduct.ToCreateOrderProductParameters();
@@ -235,8 +235,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var userId = (user == null) ? null : (Guid?)user.Id;
-			var shippingAddressForm = new UserShippingAddressForm();
+			var userId = user?.Id;
+			var shippingAddressForm = new ShippingAddressForm();
 			shippingAddressForm.Bind();
 			// 订单留言表单
 			var commentForm = new CreateOrderCommenForm();

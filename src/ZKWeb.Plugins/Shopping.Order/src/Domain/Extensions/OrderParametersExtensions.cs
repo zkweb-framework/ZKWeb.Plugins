@@ -58,9 +58,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		/// </summary>
 		/// <param name="parameters">订单参数</param>
 		/// <returns></returns>
-		public static IDictionary<Guid, long> GetSellerToLogistics(this OrderParameters parameters) {
-			return parameters.GetOrDefault<IDictionary<Guid, long>>("SellerToLogistics") ??
-				new Dictionary<Guid, long>();
+		public static IDictionary<Guid, Guid> GetSellerToLogistics(this OrderParameters parameters) {
+			return parameters.GetOrDefault<IDictionary<Guid, Guid>>("SellerToLogistics") ??
+				new Dictionary<Guid, Guid>();
 		}
 
 		/// <summary>
@@ -68,8 +68,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		/// </summary>
 		/// <param name="parameters">订单参数</param>
 		/// <returns></returns>
-		public static long GetPaymentApiId(this OrderParameters parameters) {
-			return parameters.GetOrDefault<long>("PaymentApiId");
+		public static Guid GetPaymentApiId(this OrderParameters parameters) {
+			return parameters.GetOrDefault<Guid>("PaymentApiId");
 		}
 	}
 }

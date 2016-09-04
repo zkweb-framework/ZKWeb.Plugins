@@ -49,7 +49,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Delete Successfully", "성공적으로 삭제" },
 			{ "OrderList", "주문 목록" },
 			{ "ShippingAddress", "배송 주소" },
-			{ "UserShippingAddress", "배송 주소" },
+			{ "ShippingAddress", "배송 주소" },
 			{ "Address/Name/Tel", "주소/이름/전화" },
 			{ "ZipCode", "우편 번호" },
 			{ "DetailedAddress", "주소" },

@@ -75,13 +75,13 @@ namespace ZKWeb.Plugins.CMS.Article.src.Domain.Services {
 						title = article.Title,
 						summary = article.Summary,
 						contents = article.Contents,
-						authorId = author == null ? null : (Guid?)author.Id,
-						authorName = author == null ? null : author.Username,
+						authorId = author?.Id,
+						authorName = author?.Username,
 						classes,
 						tags,
 						keywords,
 						createTime = article.CreateTime,
-						UpdateTime = article.UpdateTime
+						updateTime = article.UpdateTime
 					};
 				}
 			}, ArticleApiInfoCacheTime);

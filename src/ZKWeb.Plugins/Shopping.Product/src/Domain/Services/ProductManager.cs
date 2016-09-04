@@ -166,7 +166,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 								.OrderBy(value =>
 									value.PropertyValue == null ? 0 : value.PropertyValue.DisplayOrder)
 								.Select(value => new {
-									id = value.PropertyValue == null ? null : (Guid?)value.PropertyValue.Id,
+									id = value.PropertyValue?.Id,
 									name = new T(value.PropertyValueName)
 								}).ToList()
 						};
@@ -174,8 +174,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 					}
 					return new {
 						id = product.Id,
-						categoryId = category == null ? null : (Guid?)category.Id,
-						categoryName = category == null ? null : category.Name,
+						categoryId = category?.Id,
+						categoryName = category?.Name,
 						name = new T(product.Name),
 						introduction = product.Introduction,
 						type = product.Type,
@@ -184,8 +184,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 						stateName = new T(product.State),
 						stateText = new T(string.Format("Product is {0}", product.State)),
 						isPurchasable = product.GetProductState() is IAmPurchasable,
-						sellerId = seller == null ? null : (Guid?)seller.Id,
-						sellerName = seller == null ? null : seller.Username,
+						sellerId = seller?.Id,
+						sellerName = seller?.Username,
 						classes,
 						tags,
 						keywords,

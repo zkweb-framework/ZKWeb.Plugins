@@ -80,7 +80,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.UIComponents.Forms {
 			var api = GetApiFromRequest();
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var payerId = sessionManager.GetSession().GetUser().Id;
-			var payeeId = api.Owner == null ? null : (Guid?)api.Owner.Id;
+			var payeeId = api.Owner?.Id;
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			var apiManager = Application.Ioc.Resolve<PaymentApiManager>();
 			var paymentFee = apiManager.CalculatePaymentFee(api.Id, Amount);

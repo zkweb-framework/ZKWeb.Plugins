@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.AdminSettings.src.Scaffolding;
-using ZKWeb.Plugins.Common.Base.src.Managers;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
-using ZKWeb.Plugins.Shopping.Order.src.Config;
+using ZKWeb.Plugins.Common.AdminSettings.src.Controllers.Bases;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Components.GenericConfigs;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
@@ -12,7 +13,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// 订单设置
 	/// </summary>
 	[ExportMany]
-	public class OrderSettingsController : AdminSettingsFormPageBuilder {
+	public class OrderSettingsController : FormAdminSettingsControllerBase {
 		public override string Group { get { return "OrderSettings"; } }
 		public override string GroupIconClass { get { return "fa fa-cart-arrow-down"; } }
 		public override string Name { get { return "OrderSettings"; } }

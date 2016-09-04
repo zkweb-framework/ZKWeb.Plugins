@@ -89,8 +89,8 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 					var author = pair.Entity.Author;
 					pair.Row["Id"] = pair.Entity.Id;
 					pair.Row["Title"] = pair.Entity.Title;
-					pair.Row["Author"] = author == null ? null : author.Username;
-					pair.Row["AuthorId"] = author == null ? null : (Guid?)author.Id;
+					pair.Row["Author"] = author?.Username;
+					pair.Row["AuthorId"] = author?.Id;
 					pair.Row["ArticleClass"] = string.Join(", ", pair.Entity.Classes.Select(c => c.Name));
 					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
 					pair.Row["UpdateTime"] = pair.Entity.UpdateTime.ToClientTimeString();

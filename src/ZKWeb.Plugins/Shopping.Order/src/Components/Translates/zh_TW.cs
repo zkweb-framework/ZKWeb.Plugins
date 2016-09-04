@@ -46,7 +46,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Delete Successfully", "刪除成功" },
 			{ "OrderList", "訂單列表" },
 			{ "ShippingAddress", "收貨地址" },
-			{ "UserShippingAddress", "收貨地址" },
+			{ "ShippingAddress", "收貨地址" },
 			{ "Address/Name/Tel", "地址/姓名/電話" },
 			{ "ZipCode", "郵政編碼" },
 			{ "DetailedAddress", "詳細地址" },

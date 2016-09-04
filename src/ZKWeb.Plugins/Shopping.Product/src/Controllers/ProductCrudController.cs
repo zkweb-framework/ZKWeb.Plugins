@@ -143,8 +143,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 					pair.Row["UpdateTime"] = pair.Entity.UpdateTime.ToClientTimeString();
 					pair.Row["Type"] = new T(pair.Entity.Type);
 					pair.Row["State"] = new T(pair.Entity.State);
-					pair.Row["Seller"] = seller == null ? "" : seller.Username;
-					pair.Row["SellerId"] = seller == null ? null : (Guid?)seller.Id;
+					pair.Row["Seller"] = seller?.Username;
+					pair.Row["SellerId"] = seller?.Id;
 					pair.Row["DisplayOrder"] = pair.Entity.DisplayOrder;
 					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 				}
@@ -286,7 +286,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 					}));
 				ProductAlbum = new ProductAlbumUploadData(bindFrom.Id);
 				// 属性规格
-				Category = bindFrom.Category == null ? null : (Guid?)bindFrom.Category.Id;
+				Category = bindFrom.Category?.Id;
 				PropertyValues = bindFrom.PropertyValues.ToEditList();
 				// 价格库存
 				MatchedDatas = bindFrom.MatchedDatas.ToEditList();

@@ -95,10 +95,10 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 					pair.Row["ExternalSerial"] = pair.Entity.ExternalSerial;
 					pair.Row["Amount"] = currency.Format(pair.Entity.Amount);
 					pair.Row["PaymentFee"] = currency.Format(pair.Entity.PaymentFee);
-					pair.Row["Payer"] = payer == null ? null : payer.Username;
-					pair.Row["Payee"] = payee == null ? null : payee.Username;
-					pair.Row["PayerId"] = payer == null ? null : (Guid?)payer.Id;
-					pair.Row["PayeeId"] = payee == null ? null : (Guid?)payee.Id;
+					pair.Row["Payer"] = payer?.Username;
+					pair.Row["Payee"] = payee?.Username;
+					pair.Row["PayerId"] = payer?.Id;
+					pair.Row["PayeeId"] = payee?.Id;
 					pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
 					pair.Row["UpdateTime"] = pair.Entity.UpdateTime.ToClientTimeString();
 					pair.Row["State"] = pair.Entity.State;

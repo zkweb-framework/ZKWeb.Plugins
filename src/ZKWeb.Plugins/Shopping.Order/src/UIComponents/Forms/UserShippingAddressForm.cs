@@ -11,7 +11,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 	/// <summary>
 	/// 用户收货地址表单
 	/// </summary>
-	public class UserShippingAddressForm : FieldsOnlyModelFormBuilder {
+	public class ShippingAddressForm : FieldsOnlyModelFormBuilder {
 		/// <summary>
 		/// 收货地址
 		/// </summary>
