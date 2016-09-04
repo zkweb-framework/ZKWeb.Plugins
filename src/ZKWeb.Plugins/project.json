@@ -3,7 +3,7 @@
 	"dependencies": {
 		"System.ComponentModel.Annotations": "4.1.0",
 		"System.Threading.Thread": "4.0.0",
-		"ZKWeb": "1.0.0-rc-3e"
+		"ZKWeb": "1.0.0-final"
 	},
 	"frameworks": {
 		"net461": {
@@ -18,5 +18,8 @@
 		"netstandard1.6": {
 			"buildOptions": { "define": [ "NETCORE" ] }
 		}
+	},
+	"buildOptions": {
+		"xmlDoc": false
 	}
 }

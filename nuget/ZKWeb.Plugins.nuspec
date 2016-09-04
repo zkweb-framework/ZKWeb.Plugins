@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>ZKWeb.Plugins</id>
-		<version>0.9.0.1</version>
+		<version>1.0.0-beta-1</version>
 		<title>ZKWeb.Plugins</title>
 		<authors>303248153</authors>
 		<owners>303248153</owners>
@@ -18,7 +18,9 @@
 	</metadata>
 	<files>
 		<file src="..\LICENSE.txt" target="." />
-		<file src="..\bin\Debug\ZKWeb.Plugins.dll" target="lib\net461" />
-		<file src="..\bin\Debug\ZKWeb.Plugins.xml" target="lib\net461" />
+		<file src="..\src\ZKWeb.Plugins\bin\Debug\net461\ZKWeb.Plugins.dll" target="lib\net461" />
+		<file src="..\src\ZKWeb.Plugins\bin\Debug\net461\ZKWeb.Plugins.xml" target="lib\net461" />
+		<file src="..\src\ZKWeb.Plugins\bin\Debug\netstandard1.6\ZKWeb.Plugins.dll" target="lib\netstandard1.6" />
+		<file src="..\src\ZKWeb.Plugins\bin\Debug\netstandard1.6\ZKWeb.Plugins.xml" target="lib\netstandard1.6" />
 	</files>
 </package>
