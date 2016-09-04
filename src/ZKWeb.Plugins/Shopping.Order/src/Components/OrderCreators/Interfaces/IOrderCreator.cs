@@ -1,5 +1,4 @@
-﻿using ZKWeb.Database;
-using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
+﻿using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators.Interfaces {
 	/// <summary>
@@ -10,7 +9,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators.Interfaces {
 		/// <summary>
 		/// 创建订单
 		/// </summary>
-		/// <param name="context">数据库上下文</param>
 		/// <param name="parameters">创建参数</param>
 		/// <returns></returns>
 		CreateOrderResult CreateOrder(CreateOrderParameters parameters);

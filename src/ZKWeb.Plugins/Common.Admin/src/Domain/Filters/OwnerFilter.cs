@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Filters {
 		/// </summary>
 		public OwnerFilter() {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			ExceptedOwnerId = sessionManager.GetSession().ReleatedId;
+			ExceptedOwnerId = sessionManager.GetSession().ReleatedId ?? Guid.Empty;
 		}
 
 		/// <summary>

@@ -10,6 +10,7 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
 using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.Components.ExtraConfigKeys;
 using ZKWeb.Plugins.Shopping.Order.src.Components.GenericConfigs;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
@@ -230,7 +231,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			// 购物车商品显示信息
 			var cartProducts = GetCartProducts(type);
 			var displayInfos = cartProducts.Select(c => c.ToOrderProductDisplayInfo()).ToList();
-			var anyRealProducts = displayInfos.Any(d => d.TypeTrait.IsReal);
+			var anyRealProducts = displayInfos.Any(d => d.IsRealProduct);
 			// 收货地址表单
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
@@ -244,7 +245,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			// 物流列表，各个卖家都有单独的列表
 			// 没有实体商品的卖家不包含在列表中
 			var sellers = displayInfos
-				.Where(d => d.TypeTrait.IsReal)
+				.Where(d => d.IsRealProduct)
 				.Select(d => new { d.SellerId, d.Seller }).GroupBy(d => d.SellerId);
 			var logisticsWithSellers = sellers.Select(s => new {
 				sellerId = s.Key,
@@ -299,10 +300,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				orderProductTotalPricePart == null ? 0 : orderProductTotalPricePart.Delta);
 			// 计算各个物流的运费
 			// 同时选择可用的物流（部分物流不能送到选择的地区）
-			var availableLogistics = new Dictionary<long, IList<object>>();
+			var availableLogistics = new Dictionary<Guid, IList<object>>();
 			var sellerIds = parameters.OrderProductParametersList.GetSellerIdsHasRealProducts();
 			foreach (var sellerId in sellerIds) {
-				var sellerIdOrNull = sellerId <= 0 ? null : (long?)sellerId;
+				var sellerIdOrNull = sellerId == Guid.Empty ? null : (Guid?)sellerId;
 				var logisticsList = orderManager
 					.GetAvailableLogistics(parameters.UserId, sellerIdOrNull)
 					.Select(l => {
@@ -334,6 +335,18 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				orderProductTotalPriceString, orderProductUnitPrices,
 				availableLogistics, availablePaymentApis
 			};
+		}
+
+		/// <summary>
+		/// 删除过期的购物车商品
+		/// 返回删除的数量
+		/// </summary>
+		/// <returns></returns>
+		public long ClearExpiredCartProducts() {
+			var now = DateTime.UtcNow;
+			using (UnitOfWork.Scope()) {
+				return Repository.BatchDelete(p => p.ExpireTime < now);
+			}
 		}
 
 		/// <summary>

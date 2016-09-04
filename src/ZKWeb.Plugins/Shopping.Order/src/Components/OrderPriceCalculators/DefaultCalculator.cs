@@ -1,15 +1,13 @@
 ﻿using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Finance.Payment.src.Managers;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderPriceCalculators.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
-using ZKWeb.Plugins.Shopping.Order.src.Extensions;
-using ZKWeb.Plugins.Shopping.Order.src.Managers;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Services;
-using ZKWeb.Plugins.Shopping.Product.src.Extensions;
-using ZKWeb.Plugins.Shopping.Product.src.Managers;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -32,7 +30,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderPriceCalculators {
 			if (!parameters.OrderProductParametersList.Any()) {
 				throw new BadRequestException(new T("Please select the products you want to purchase"));
 			}
-			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var orderProductTotalPrice = 0.0M;
 			var currencyIsSet = false;
 			foreach (var productParameters in parameters.OrderProductParametersList) {

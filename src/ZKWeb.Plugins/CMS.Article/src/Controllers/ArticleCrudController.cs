@@ -187,7 +187,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 					var sessionManager = Application.Ioc.Resolve<SessionManager>();
 					var session = sessionManager.GetSession();
 					var userManager = Application.Ioc.Resolve<UserManager>();
-					saveTo.Author = userManager.Get(session.ReleatedId);
+					saveTo.Author = userManager.Get(session.ReleatedId.Value);
 				}
 				saveTo.Title = Title;
 				saveTo.Summary = Summary;

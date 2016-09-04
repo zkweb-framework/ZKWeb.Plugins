@@ -1,4 +1,4 @@
-﻿using ZKWeb.Plugins.Finance.Payment.src.PaymentTransactionHandlers;
+﻿using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandlers.Bases;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers {

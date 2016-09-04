@@ -8,6 +8,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.UserPanel.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 
 namespace ZKWeb.Plugins.Common.UserPanel.src.Controllers {
 	/// <summary>
@@ -63,9 +64,10 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Controllers {
 				}
 				var sessionManager = Application.Ioc.Resolve<SessionManager>();
 				var session = sessionManager.GetSession();
+				var userId = session.ReleatedId.Value;
 				var userManager = Application.Ioc.Resolve<UserManager>();
-				userManager.ChangePassword(session.ReleatedId, OldPassword, Password);
-				return new { message = new T("Saved Successfully") };
+				userManager.ChangePassword(userId, OldPassword, Password);
+				return this.SaveSuccess();
 			}
 		}
 	}

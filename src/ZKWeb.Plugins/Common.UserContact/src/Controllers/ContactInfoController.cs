@@ -63,7 +63,7 @@ namespace ZKWeb.Plugins.Common.UserContact.src.Controllers {
 				var sessionManager = Application.Ioc.Resolve<SessionManager>();
 				var userContactManager = Application.Ioc.Resolve<UserContactManager>();
 				var session = sessionManager.GetSession();
-				var contact = userContactManager.GetContact(session.ReleatedId);
+				var contact = userContactManager.GetContact(session.ReleatedId.Value);
 				Tel = contact.Tel;
 				Mobile = contact.Mobile;
 				QQ = contact.QQ;
@@ -79,7 +79,7 @@ namespace ZKWeb.Plugins.Common.UserContact.src.Controllers {
 				var sessionManager = Application.Ioc.Resolve<SessionManager>();
 				var userContactManager = Application.Ioc.Resolve<UserContactManager>();
 				var session = sessionManager.GetSession();
-				userContactManager.SetContact(session.ReleatedId, c => {
+				userContactManager.SetContact(session.ReleatedId.Value, c => {
 					c.Tel = Tel;
 					c.Mobile = Mobile;
 					c.QQ = QQ;

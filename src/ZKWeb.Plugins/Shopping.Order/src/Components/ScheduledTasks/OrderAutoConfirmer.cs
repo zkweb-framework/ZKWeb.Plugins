@@ -1,10 +1,10 @@
 ﻿using System;
-using ZKWeb.Plugins.Common.Base.src.Model;
+using ZKWeb.Plugins.Common.Base.src.Components.ScheduledTasks.Interfaces;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.ScheduledTasks {
 	/// <summary>
-	/// 自动确认订单
+	/// 订单自动确认收货
 	/// </summary>
 	[ExportMany, SingletonReuse]
 	public class OrderAutoConfirmer : IScheduledTaskExecutor {

@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ZKWeb.Database;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
+using ZKWeb.Plugins.Common.SerialGenerate.src.Components.SerialGenerate;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Components.GenericConfigs;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
+using ZKWeb.Plugins.Shopping.Product.src.Components.ProductTypes.Interfaces;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Services;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
-	using Common.Admin.src.Domain.Services;
-	using Common.Base.src.Components.Exceptions;
-	using Common.Base.src.Domain.Services;
-	using Common.SerialGenerate.src.Components.SerialGenerate;
-	using Domain.Enums;
-	using Domain.Extensions;
-	using Domain.Services;
-	using Domain.Structs;
-	using Finance.Payment.src.Domain.Services;
-	using GenericConfigs;
-	using Interfaces;
-	using PaymentTransactionHandlers;
-	using Product.src.Components.ProductTypes.Interfaces;
-	using Product.src.Domain.Extensions;
-	using Product.src.Domain.Services;
 	using Product = Product.src.Domain.Entities.Product;
 
 	/// <summary>
@@ -45,10 +46,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 		/// 当前的创建订单的参数
 		/// </summary>
 		protected CreateOrderParameters Parameters { get; set; }
-		/// <summary>
-		/// 当前的数据库上下文
-		/// </summary>
-		protected IDatabaseContext Context { get; set; }
 		/// <summary>
 		/// 创建订单的结果
 		/// </summary>
@@ -133,16 +130,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 		/// </summary>
 		protected virtual void CreateOrdersBySellers() {
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
-			var userRepository = RepositoryResolver.Resolve<User>(Context);
-			var productRepository = RepositoryResolver.Resolve<Product>(Context);
-			var orderRepository = RepositoryResolver.Resolve<Database.Order>(Context);
-			var transactionRepository = RepositoryResolver
-				.ResolveRepository<PaymentTransactionRepository>(Context);
-			var products = new Dictionary<long, Product>();
+			var userManager = Application.Ioc.Resolve<UserManager>();
+			var productManager = Application.Ioc.Resolve<ProductManager>();
+			var buyerOrderManager = Application.Ioc.Resolve<BuyerOrderManager>();
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var products = new Dictionary<Guid, Product>();
 			var groupedProductParameters = Parameters.OrderProductParametersList.Select(p => new {
 				productParameters = p,
-				product = products.GetOrCreate(p.ProductId, () => productRepository.GetById(p.ProductId))
-			}).GroupBy(p => p.product.Seller?.Id).ToList();
+				product = products.GetOrCreate(p.ProductId, () => productManager.Get(p.ProductId))
+			}).GroupBy(p => p.product.Seller?.Id).ToList(); // { 卖家: [ (参数, 商品) ] }
 			var now = DateTime.UtcNow;
 			foreach (var group in groupedProductParameters) {
 				// 计算订单的价格
@@ -151,19 +147,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 					Parameters.CloneWith(group.Select(o => o.productParameters).ToList()));
 				var paymentFee = orderPrice.Parts.FirstOrDefault(p => p.Type == "PaymentFee");
 				orderPrice.Parts.Remove(paymentFee);
-				// 生成订单
-				var order = new Database.Order() {
-					Buyer = userRepository.GetById(Parameters.UserId),
-					BuyerSessionId = Parameters.SessionId,
-					Seller = (group.Key == null) ? null : userRepository.GetById(group.Key),
+				// 生成卖家订单
+				var sellerOrder = new SellerOrder() {
+					Buyer = Parameters.UserId == null ? null : userManager.Get(Parameters.UserId.Value),
+					Owner = (group.Key == null) ? null : userManager.Get(group.Key.Value),
 					State = OrderState.WaitingBuyerPay,
 					OrderParameters = Parameters.OrderParameters,
 					TotalCost = orderPrice.Parts.Sum(),
 					Currency = orderPrice.Currency,
 					TotalCostCalcResult = orderPrice,
 					OriginalTotalCostCalcResult = orderPrice,
-					CreateTime = now,
-					UpdateTime = now,
 					StateTimes = new OrderStateTimes() { { OrderState.WaitingBuyerPay, now } }
 				};
 				// 添加关联的订单商品
@@ -174,7 +167,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 					var orderCount = obj.productParameters.MatchParameters.GetOrderCount();
 					var properties = obj.productParameters.MatchParameters.GetProperties();
 					var orderProduct = new OrderProduct() {
-						Order = order,
+						Id = GuidUtils.SequentialGuid(now),
+						Order = sellerOrder,
 						Product = obj.product,
 						MatchParameters = obj.productParameters.MatchParameters,
 						Count = orderCount,
@@ -188,7 +182,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 					// 添加关联的属性
 					foreach (var productToPropertyValue in obj.product
 						.FindPropertyValuesFromPropertyParameters(properties)) {
-						orderProduct.PropertyValues.Add(new Database.OrderProductToPropertyValue() {
+						orderProduct.PropertyValues.Add(new OrderProductToPropertyValue() {
+							Id = GuidUtils.SequentialGuid(now),
 							OrderProduct = orderProduct,
 							Category = obj.product.Category,
 							Property = productToPropertyValue.Property,
@@ -196,31 +191,48 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 							PropertyValueName = productToPropertyValue.PropertyValueName
 						});
 					}
-					order.OrderProducts.Add(orderProduct);
+					sellerOrder.OrderProducts.Add(orderProduct);
 				}
 				// 添加关联的订单留言
 				var comment = Parameters.OrderParameters.GetOrderComment();
 				if (!string.IsNullOrEmpty(comment)) {
-					order.OrderComments.Add(new Database.OrderComment() {
-						Order = order,
-						Creator = order.Buyer,
+					sellerOrder.OrderComments.Add(new OrderComment() {
+						Id = GuidUtils.SequentialGuid(now),
+						Order = sellerOrder,
+						Owner = sellerOrder.Buyer,
 						Side = OrderCommentSide.BuyerComment,
-						Content = comment,
-						CreateTime = now
+						Contents = comment,
+						CreateTime = now,
+						UpdateTime = now
 					});
 				}
 				// 生成订单编号
-				order.Serial = SerialGenerator.GenerateFor(order);
-				// 保存订单
-				orderRepository.Save(ref order);
-				Result.CreatedOrders.Add(order);
+				sellerOrder.Serial = SerialGenerator.GenerateFor(sellerOrder);
+				// 保存卖家订单
+				orderManager.Save(ref sellerOrder);
+				// 生成买家订单
+				var buyerOrder = new BuyerOrder() {
+					Serial = sellerOrder.Serial,
+					Owner = sellerOrder.Buyer,
+					SellerOrder = sellerOrder,
+					BuyerSessionId = (sellerOrder.Buyer != null) ? null : (Guid?)Parameters.SessionId
+				};
+				// 保存买家订单
+				buyerOrderManager.Save(ref buyerOrder);
+				Result.CreatedOrders.Add(buyerOrder);
 				// 创建订单交易
 				// 因为目前只能使用后台的支付接口，所以收款人应该是null
 				var paymentApiId = Parameters.OrderParameters.GetPaymentApiId();
-				var transaction = transactionRepository.CreateTransaction(
-					OrderTransactionHandler.ConstType, paymentApiId, order.TotalCost,
-					paymentFee?.Delta ?? 0, order.Currency,
-					order.Buyer?.Id, null, order.Id, order.Serial);
+				var transaction = transactionManager.CreateTransaction(
+					OrderTransactionHandler.ConstType,
+					paymentApiId,
+					sellerOrder.TotalCost,
+					paymentFee?.Delta ?? 0,
+					sellerOrder.Currency,
+					sellerOrder.Buyer?.Id,
+					null,
+					sellerOrder.Id,
+					sellerOrder.Serial);
 				Result.CreatedTransactions.Add(transaction);
 			}
 		}
@@ -230,8 +242,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 		/// </summary>
 		protected virtual void RemoveCartProducts() {
 			var cartProducts = Parameters.OrderParameters.GetCartProducts();
-			var cartProductRepository = RepositoryResolver.Resolve<CartProduct>(Context);
-			cartProductRepository.BatchDeleteForever(cartProducts.Keys.OfType<object>());
+			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
+			cartProductManager.BatchDeleteForever(cartProducts.Keys);
 		}
 
 		/// <summary>
@@ -243,26 +255,23 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				return;
 			}
 			// 获取原地址，获取时同时检查所属用户
-			var addressRepository = RepositoryResolver.Resolve<ShippingAddress>(Context);
-			var existAddress = addressId > 0 ?
-				addressRepository.Get(a => a.Id == addressId && a.User.Id == Parameters.UserId) : null;
+			var addressManager = Application.Ioc.Resolve<ShippingAddressManager>();
+			var existAddress = addressId == null ? null : addressManager.Get(addressId.Value);
 			if (existAddress == null) {
-				var userRepository = RepositoryResolver.Resolve<User>(Context);
+				var userManager = Application.Ioc.Resolve<UserManager>();
 				existAddress = new ShippingAddress() {
-					User = userRepository.GetById(Parameters.UserId),
-					CreateTime = DateTime.UtcNow
+					Owner = userManager.Get(Parameters.UserId.Value)
 				};
 			}
 			// 更新或创建收货地址
 			var newAddress = Parameters.OrderParameters.GetShippingAddress();
-			addressRepository.Save(ref existAddress, address => {
+			addressManager.Save(ref existAddress, address => {
 				address.ReceiverName = newAddress.ReceiverName;
 				address.ReceiverTel = newAddress.ReceiverTel;
 				address.Country = newAddress.Country;
 				address.RegionId = newAddress.RegionId;
 				address.ZipCode = newAddress.ZipCode;
 				address.DetailedAddress = newAddress.DetailedAddress;
-				address.UpdateTime = DateTime.UtcNow;
 				address.GenerateSummary();
 			});
 		}
@@ -321,9 +330,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 		/// <summary>
 		/// 创建订单
 		/// </summary>
-		public virtual CreateOrderResult CreateOrder(IDatabaseContext context, CreateOrderParameters parameters) {
+		public virtual CreateOrderResult CreateOrder(CreateOrderParameters parameters) {
 			Parameters = parameters;
-			Context = context;
 			Result = new CreateOrderResult();
 			CheckOrderParameters();
 			CreateOrdersBySellers();

@@ -92,19 +92,20 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.Forms {
 		protected override object OnSubmit() {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
+			var userId = session.ReleatedId.Value;
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			// 修改密码
 			if (!string.IsNullOrEmpty(OldPassword) && !string.IsNullOrEmpty(Password)) {
 				if (Password != ConfirmPassword) {
 					throw new BadRequestException(new T("Please repeat the password exactly"));
 				}
-				userManager.ChangePassword(session.ReleatedId, OldPassword, Password);
+				userManager.ChangePassword(userId, OldPassword, Password);
 			}
 			// 修改头像
 			if (Avatar != null) {
-				userManager.SaveAvatar(session.ReleatedId, Avatar.OpenReadStream());
+				userManager.SaveAvatar(userId, Avatar.OpenReadStream());
 			} else if (DeleteAvatar) {
-				userManager.DeleteAvatar(session.ReleatedId);
+				userManager.DeleteAvatar(userId);
 			}
 			return this.SaveSuccessAndRefreshPage(1500);
 		}

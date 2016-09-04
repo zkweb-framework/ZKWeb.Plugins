@@ -1,6 +1,6 @@
 ﻿using DotLiquid;
 using ZKWeb.Plugin;
-using ZKWeb.Plugins.Shopping.Order.src.TemplateFilters;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.TemplateFilters;
 using ZKWeb.Templating.DynamicContents;
 using ZKWebStandard.Ioc;
 

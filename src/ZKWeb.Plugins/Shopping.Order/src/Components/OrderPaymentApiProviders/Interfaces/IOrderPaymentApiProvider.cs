@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ZKWeb.Plugins.Finance.Payment.src.Database;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderPaymentApiProviders.Interfaces {

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using ZKWeb.Plugins.Finance.Payment.src.Database;
-using ZKWeb.Plugins.Finance.Payment.src.Managers;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
-using ZKWeb.Plugins.Shopping.Order.src.PaymentTransactionHandlers;
+﻿using System;
+using System.Collections.Generic;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderPaymentApiProviders.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -16,9 +17,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderPaymentApiProviders {
 		/// 获取可使用的支付接口
 		/// 只返回后台添加的接口
 		/// </summary>
-		public void GetPaymentApis(long? userId, IList<PaymentApi> apis) {
+		public void GetPaymentApis(Guid? userId, IList<PaymentApi> apis) {
 			var paymentApiManager = Application.Ioc.Resolve<PaymentApiManager>();
-			apis.AddRange(paymentApiManager.GetPaymentApis(
+			apis.AddRange(paymentApiManager.GetManyWithCache(
 				null, OrderTransactionHandler.ConstType));
 		}
 	}

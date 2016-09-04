@@ -48,11 +48,12 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Controllers {
 			protected override object OnSubmit() {
 				var sessionManager = Application.Ioc.Resolve<SessionManager>();
 				var session = sessionManager.GetSession();
+				var userId = session.ReleatedId.Value;
 				var userManager = Application.Ioc.Resolve<UserManager>();
 				if (Avatar != null) {
-					userManager.SaveAvatar(session.ReleatedId, Avatar.OpenReadStream());
+					userManager.SaveAvatar(userId, Avatar.OpenReadStream());
 				} else if (DeleteAvatar) {
-					userManager.DeleteAvatar(session.ReleatedId);
+					userManager.DeleteAvatar(userId);
 				}
 				return this.SaveSuccessAndRefreshPage(1500);
 			}

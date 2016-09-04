@@ -1,5 +1,5 @@
-﻿using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
+﻿using ZKWeb.Plugins.Common.Base.src.Components.GenericConfigs.Attributes;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.GenericConfigs {
 	/// <summary>

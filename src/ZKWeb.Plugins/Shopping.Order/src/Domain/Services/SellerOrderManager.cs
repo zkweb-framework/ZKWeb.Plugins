@@ -22,6 +22,7 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
+	using Extensions;
 	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>

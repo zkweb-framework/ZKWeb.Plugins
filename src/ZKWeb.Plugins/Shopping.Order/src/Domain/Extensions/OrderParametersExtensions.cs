@@ -36,11 +36,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		/// </summary>
 		/// <param name="parameters">订单参数</param>
 		/// <returns></returns>
-		public static long? GetSaveShipppingAddressId(this OrderParameters parameters) {
+		public static Guid? GetSaveShipppingAddressId(this OrderParameters parameters) {
 			var shippingAddress = parameters.GetOrDefault<IDictionary<string, object>>("ShippingAddress");
-			var selectedAddressId = shippingAddress.GetOrDefault<long>("SelectedAddressId");
+			var selectedAddressId = shippingAddress.GetOrDefault<Guid>("SelectedAddressId");
 			var saveAddress = shippingAddress.GetOrDefault<bool>("SaveAddress");
-			return saveAddress ? (long?)selectedAddressId : null;
+			return saveAddress ? (Guid?)selectedAddressId : null;
 		}
 
 		/// <summary>

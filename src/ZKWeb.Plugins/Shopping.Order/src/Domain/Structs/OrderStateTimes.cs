@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
 	/// <summary>

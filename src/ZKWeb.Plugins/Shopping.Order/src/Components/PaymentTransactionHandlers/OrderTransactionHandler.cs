@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using ZKWeb.Database;
 using ZKWeb.Logging;
-using ZKWeb.Plugins.Finance.Payment.src.Database;
-using ZKWeb.Plugins.Finance.Payment.src.Model;
+using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandlers;
+using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandlers.Interfaces;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Enums;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Ioc;
 
@@ -22,7 +23,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// <summary>
 		/// 交易创建后
 		/// </summary>
-		public void OnCreated(IDatabaseContext context, PaymentTransaction transaction) {
+		public void OnCreated(PaymentTransaction transaction) {
 			// 记录到日志
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("OrderTransaction created: {0}", transaction.Serial));
@@ -32,7 +33,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// 等待付款时
 		/// </summary>
 		public void OnWaitingPaying(
-			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			PaymentTransaction transaction, PaymentTransactionState previousState) {
 			// 记录到日志
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format("OrderTransaction waiting paying: {0}", transaction.Serial));
@@ -41,14 +42,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// <summary>
 		/// 担保交易付款后
 		/// </summary>
-		public void OnSecuredPaid(
-			IDatabaseContext context, PaymentTransaction transaction,
+		public void OnSecuredPaid(PaymentTransaction transaction,
 			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
-			// 记录到日志
-			
-			// 记录到订单记录
-			
-			// 处理订单已付款
+			// TODO:记录到日志
+
+			// TODO: 记录到订单记录
+
+			// TODO: 处理订单已付款
 
 		}
 
@@ -56,7 +56,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// 交易成功时
 		/// </summary>
 		public void OnSuccess(
-			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			PaymentTransaction transaction, PaymentTransactionState previousState) {
 			throw new NotImplementedException();
 		}
 
@@ -64,7 +64,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// 交易终止时
 		/// </summary>
 		public void OnAbort(
-			IDatabaseContext context, PaymentTransaction transaction, PaymentTransactionState previousState) {
+			PaymentTransaction transaction, PaymentTransactionState previousState) {
 			throw new NotImplementedException();
 		}
 

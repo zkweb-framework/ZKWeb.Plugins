@@ -114,7 +114,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		[Action("api/cart/update_counts", HttpMethods.POST)]
 		public IActionResult UpdateCounts() {
 			this.RequireAjaxRequest();
-			var counts = Request.Get<IDictionary<long, long>>("counts");
+			var counts = Request.Get<IDictionary<Guid, long>>("counts");
 			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
 			cartProductManager.UpdateCartProductCounts(counts);
 			return new JsonResult(new { });
