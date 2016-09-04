@@ -14,11 +14,12 @@ $(function () {
 	var $cartContainer = $(".cart-container");
 	var $logisticsSelects = $cartContainer.find(".logistics-select");
 	var $sellerToLogistics = $cartContainer.find("[name='sellerToLogistics']");
+	var emptySellerId = "00000000-0000-0000-0000-000000000000";
 	$logisticsSelects.on("change", "input[type='radio']", function () {
 		var sellerToLogistics = {};
 		$logisticsSelects.each(function () {
 			var $logisticsSelect = $(this);
-			var sellerId = $logisticsSelect.data("seller-id") || 0;
+			var sellerId = $logisticsSelect.data("seller-id") || emptySellerId;
 			var logisticsId = $logisticsSelect.find("input[type='radio']:checked").val();
 			sellerToLogistics[sellerId] = logisticsId;
 		});
@@ -41,13 +42,13 @@ $(function () {
 		_.each(cartProducts, function (_, key) {
 			var $cartProduct = $(cartProductMapping[key]);
 			if ($cartProduct.data("is-real")) {
-				sellerIdsHasRealProducts.push($cartProduct.data("seller-id") || 0);
+				sellerIdsHasRealProducts.push($cartProduct.data("seller-id") || emptySellerId);
 			}
 		});
 		// 枚举收货地址选择器，判断卖家不包含实体商品时隐藏
 		$logisticsSelects.each(function () {
 			var $logisticsSelect = $(this);
-			var sellerId = $logisticsSelect.data("seller-id") || 0;
+			var sellerId = $logisticsSelect.data("seller-id") || emptySellerId;
 			var hasRealProducts = _.contains(sellerIdsHasRealProducts, sellerId);
 			if (hasRealProducts) {
 				$logisticsSelect.removeClass("hide");
@@ -66,11 +67,12 @@ $(function () {
 	// 订单计算价格后隐藏不可使用的物流配送
 	var $cartContainer = $(".cart-container");
 	var $logisticsSelects = $cartContainer.find(".logistics-select");
+	var emptySellerId = "00000000-0000-0000-0000-000000000000";
 	$cartContainer.on("calcPriceSuccess.cartView", function () {
 		var priceInfo = $cartContainer.data("priceInfo");
 		$logisticsSelects.each(function () {
 			var $logisticsSelect = $(this);
-			var sellerId = $logisticsSelect.data("seller-id") || 0;
+			var sellerId = $logisticsSelect.data("seller-id") || emptySellerId;
 			var availableList = priceInfo.availableLogistics[sellerId] || [];
 			var availableMap = _.indexBy(availableList, "logisticsId");
 			$logisticsSelect.find("input[type='radio']").each(function () {

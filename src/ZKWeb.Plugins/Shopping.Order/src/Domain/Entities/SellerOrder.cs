@@ -15,6 +15,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 	[ExportMany]
 	public class SellerOrder : OrderBase<SellerOrder> {
 		/// <summary>
+		/// 订单编号，唯一键
+		/// </summary>
+		public virtual string Serial { get; set; }
+		/// <summary>
 		/// 买家用户
 		/// </summary>
 		public virtual User Buyer { get; set; }
@@ -68,10 +72,21 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 		}
 
 		/// <summary>
+		/// 显示名称
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() {
+			return Serial;
+		}
+
+		/// <summary>
 		/// 配置数据库结构
 		/// </summary>
 		public override void Configure(IEntityMappingBuilder<SellerOrder> builder) {
 			base.Configure(builder);
+			builder.Map(o => o.Serial, new EntityMappingOptions() {
+				Nullable = false, Unique = true, Length = 255
+			});
 			builder.References(o => o.Buyer);
 			builder.Map(o => o.State);
 			builder.Map(o => o.OrderParameters, new EntityMappingOptions() {

@@ -12,6 +12,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// </summary>
 	[ExportMany]
 	public class OrderCrudController : CrudAdminAppControllerBase<SellerOrder, Guid> {
+		public override string Group { get { return "Shop Manage"; } }
+		public override string GroupIconClass { get { return "fa fa-building"; } }
 		public override string Name { get { return "OrderManage"; } }
 		public override string Url { get { return "/admin/orders"; } }
 		public override string TileClass { get { return "tile bg-aqua"; } }

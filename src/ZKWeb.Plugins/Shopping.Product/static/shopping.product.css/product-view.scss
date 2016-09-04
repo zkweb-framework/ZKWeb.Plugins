@@ -56,7 +56,7 @@
 			.product-name {
 				font-size: 18px;
 				font-weight: bold;
-				color: #F40;
+				color: red;
 				margin-bottom: 18px;
 			}
 			/* 价格 */
@@ -66,7 +66,7 @@
 
 				.prefix, .suffix, .price {
 					font-size: 18px;
-					color: #F40;
+					color: red;
 				}
 			}
 			/* 显示字段 */
@@ -127,7 +127,7 @@
 					color: #666;
 					/* 鼠标悬浮时 */
 					&:hover {
-						color: #F40;
+						color: #c40000;
 					}
 					/* 选中时 */
 					&.selected {

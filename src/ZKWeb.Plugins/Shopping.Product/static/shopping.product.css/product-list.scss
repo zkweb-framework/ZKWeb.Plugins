@@ -141,7 +141,7 @@
 			}
 
 			.product-price {
-				color: #F40;
+				color: red;
 				font-weight: bold;
 				font-size: 14px;
 				line-height: 18px;
@@ -156,12 +156,13 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				margin: 0px 4px;
+				font-weight: bold;
 
 				> a {
 					color: #666;
 
 					&:active, &:hover {
-						color: #F40;
+						color: #c40000;
 					}
 				}
 			}

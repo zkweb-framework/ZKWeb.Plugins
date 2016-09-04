@@ -212,7 +212,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				orderManager.Save(ref sellerOrder);
 				// 生成买家订单
 				var buyerOrder = new BuyerOrder() {
-					Serial = sellerOrder.Serial,
 					Owner = sellerOrder.Buyer,
 					SellerOrder = sellerOrder,
 					BuyerSessionId = (sellerOrder.Buyer != null) ? null : (Guid?)Parameters.SessionId

@@ -16,10 +16,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities.Bases {
 		/// </summary>
 		public virtual Guid Id { get; set; }
 		/// <summary>
-		/// 订单编号，唯一键
-		/// </summary>
-		public virtual string Serial { get; set; }
-		/// <summary>
 		/// 所属人，买家或卖家，没有时等于null
 		/// </summary>
 		public virtual User Owner { get; set; }
@@ -45,22 +41,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities.Bases {
 		/// </summary>
 		public virtual void Configure(IEntityMappingBuilder<TOrder> builder) {
 			builder.Id(o => o.Id);
-			builder.Map(o => o.Serial, new EntityMappingOptions() {
-				Nullable = false, Unique = true, Length = 255
-			});
 			builder.References(o => o.Owner);
 			builder.Map(o => o.CreateTime);
 			builder.Map(o => o.UpdateTime);
 			builder.Map(o => o.Deleted);
 			builder.Map(o => o.Remark);
-		}
-
-		/// <summary>
-		/// 显示名称
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString() {
-			return Serial;
 		}
 	}
 }
