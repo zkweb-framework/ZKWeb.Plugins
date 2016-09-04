@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Structs;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
@@ -11,7 +12,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
 		/// <summary>
 		/// 商品Id
 		/// </summary>
-		public long ProductId { get; set; }
+		public Guid ProductId { get; set; }
 		/// <summary>
 		/// 商品匹配参数
 		/// 订购数量在OrderCount键下

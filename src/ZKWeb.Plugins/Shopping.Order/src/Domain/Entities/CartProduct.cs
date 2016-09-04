@@ -37,7 +37,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 		/// 所属人会话Id
 		/// 已有用户时等于null
 		/// </summary>
-		public virtual string OwnerSessionId { get; set; }
+		public virtual Guid? OwnerSessionId { get; set; }
 		/// <summary>
 		/// 商品
 		/// </summary>

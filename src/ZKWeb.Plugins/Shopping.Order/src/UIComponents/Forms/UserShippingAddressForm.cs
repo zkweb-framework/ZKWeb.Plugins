@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
-using ZKWeb.Plugins.Common.Region.src.FormFieldAttributes;
-using ZKWeb.Plugins.Common.Region.src.Model;
-using ZKWeb.Plugins.Shopping.Order.src.ListItemProviders;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.Region.src.Components.Regions;
+using ZKWeb.Plugins.Common.Region.src.UIComponents.FormFieldAttributes;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ListItemProviders;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 

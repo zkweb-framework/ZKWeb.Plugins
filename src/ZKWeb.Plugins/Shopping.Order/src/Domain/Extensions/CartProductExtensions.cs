@@ -1,6 +1,7 @@
-﻿using ZKWeb.Plugins.Shopping.Order.src.Database;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
-using ZKWeb.Plugins.Shopping.Product.src.Extensions;
+﻿using System;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 	/// <summary>
@@ -30,7 +31,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		public static OrderProductDisplayInfo ToOrderProductDisplayInfo(
 			this CartProduct cartProduct) {
 			var parameters = cartProduct.ToCreateOrderProductParameters();
-			var userId = cartProduct.Buyer == null ? null : (long?)cartProduct.Buyer.Id;
+			var userId = cartProduct.Owner == null ? null : (Guid?)cartProduct.Owner.Id;
 			var displayInfo = parameters.ToOrderProductDisplayInfo(userId);
 			displayInfo.Extra["cartProductId"] = cartProduct.Id;
 			return displayInfo;

@@ -1,27 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Base.src.Repositories;
-using ZKWeb.Plugins.Finance.Payment.src.Database;
-using ZKWeb.Plugins.Shopping.Logistics.src.Manager;
-using ZKWeb.Plugins.Shopping.Order.src.Database;
-using ZKWeb.Plugins.Shopping.Order.src.Extensions;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
-using ZKWeb.Plugins.Shopping.Product.src.Extensions;
-using ZKWeb.Plugins.Shopping.Product.src.Managers;
+using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Logistics.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderLogisticsProviders.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderPaymentApiProviders.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderPriceCalculators.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderProductUnitPriceCalaculators.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderShippingAddressProviders.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
+using ZKWeb.Plugins.Shopping.Product.src.Components.ProductTypes.Interfaces;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Services;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
-	using Logistics = Logistics.src.Database.Logistics;
+	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>
-	/// 订单管理器
+	/// 卖家订单管理器
+	/// 包含费用计算，订单创建和卖家使用的订单操作
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class OrderManager {
+	public class SellerOrderManager : DomainServiceBase<SellerOrder, Guid> {
 		/// <summary>
 		/// 计算订单商品的单价
 		/// 返回价格保证大于或等于0
@@ -30,7 +38,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <param name="parameters">创建订单商品的参数</param>
 		/// <returns></returns>
 		public virtual OrderPriceCalcResult CalculateOrderProductUnitPrice(
-			long? userId, CreateOrderProductParameters parameters) {
+			Guid? userId, CreateOrderProductParameters parameters) {
 			var result = new OrderPriceCalcResult();
 			var calculators = Application.Ioc.ResolveMany<IOrderProductUnitPriceCalculator>();
 			foreach (var calculator in calculators) {
@@ -70,10 +78,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <param name="parameters">订单创建参数</param>
 		/// <returns></returns>
 		public virtual Pair<Pair<decimal, string>, string> CalculateLogisticsCost(
-			long logisticsId, long? sellerId, CreateOrderParameters parameters) {
+			Guid logisticsId, Guid? sellerId, CreateOrderParameters parameters) {
 			// 判断物流的所属人是否空或卖家
 			var logisticsManager = Application.Ioc.Resolve<LogisticsManager>();
-			var logistics = logisticsManager.GetLogistics(logisticsId);
+			var logistics = logisticsManager.GetWithCache(logisticsId);
 			if (logistics == null) {
 				throw new BadRequestException(new T("Please select logistics"));
 			} else if (logistics.Owner != null && logistics.Owner.Id != sellerId) {
@@ -89,12 +97,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			var productManager = Application.Ioc.Resolve<ProductManager>();
 			var totalWeight = 0M;
 			foreach (var productParameters in parameters.OrderProductParametersList) {
-				var product = productManager.GetProduct(productParameters.ProductId);
-				var productSellerId = (product.Seller == null) ? null : (long?)product.Seller.Id;
+				var product = productManager.GetWithCache(productParameters.ProductId);
+				var productSellerId = (product.Seller == null) ? null : (Guid?)product.Seller.Id;
 				if (sellerId != productSellerId) {
 					// 跳过其他卖家的商品
 					continue;
-				} else if (product.GetTypeTrait().IsReal) {
+				} else if (!(product.GetProductType() is IAmRealProduct)) {
 					// 跳过非实体商品
 					continue;
 				}
@@ -115,11 +123,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <returns></returns>
-		public virtual IList<UserShippingAddress> GetAvailableShippingAddress(long? userId) {
-			var addresses = new List<UserShippingAddress>();
+		public virtual IList<ShippingAddress> GetAvailableShippingAddress(Guid? userId) {
+			var addresses = new List<ShippingAddress>();
 			var providers = Application.Ioc.ResolveMany<IOrderShippingAddressProvider>();
-			providers.ForEach(p => p.GetShippingAddresses(userId, addresses));
-			return addresses;
+			using (UnitOfWork.Scope()) {
+				providers.ForEach(p => p.GetShippingAddresses(userId, addresses));
+				return addresses;
+			}
 		}
 
 		/// <summary>
@@ -127,11 +137,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <returns></returns>
-		public virtual IList<PaymentApi> GetAvailablePaymentApis(long? userId) {
+		public virtual IList<PaymentApi> GetAvailablePaymentApis(Guid? userId) {
 			var apis = new List<PaymentApi>();
 			var providers = Application.Ioc.ResolveMany<IOrderPaymentApiProvider>();
-			providers.ForEach(p => p.GetPaymentApis(userId, apis));
-			return apis;
+			using (UnitOfWork.Scope()) {
+				providers.ForEach(p => p.GetPaymentApis(userId, apis));
+				return apis;
+			}
 		}
 
 		/// <summary>
@@ -140,11 +152,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <param name="userId">用户Id</param>
 		/// <param name="sellerId">卖家Id</param>
 		/// <returns></returns>
-		public virtual IList<Logistics> GetAvailableLogistics(long? userId, long? sellerId) {
+		public virtual IList<Logistics> GetAvailableLogistics(Guid? userId, Guid? sellerId) {
 			var logisticsList = new List<Logistics>();
 			var providers = Application.Ioc.ResolveMany<IOrderLogisticsProvider>();
-			providers.ForEach(p => p.GetLogisticsList(userId, sellerId, logisticsList));
-			return logisticsList;
+			using (UnitOfWork.Scope()) {
+				providers.ForEach(p => p.GetLogisticsList(userId, sellerId, logisticsList));
+				return logisticsList;
+			}
 		}
 
 		/// <summary>
@@ -154,7 +168,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <returns></returns>
 		public virtual CreateOrderResult CreateOrder(CreateOrderParameters parameters) {
 			var orderCreator = Application.Ioc.Resolve<IOrderCreator>();
-			return UnitOfWork.Write(context => orderCreator.CreateOrder(context, parameters));
+			var uow = UnitOfWork;
+			using (uow.Scope()) {
+				uow.Context.BeginTransaction();
+				var result = orderCreator.CreateOrder(parameters);
+				uow.Context.FinishTransaction();
+				return result;
+			}
 		}
 	}
 }

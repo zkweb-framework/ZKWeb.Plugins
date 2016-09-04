@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ZKWeb.Plugins.Finance.Payment.src.Database;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderPaymentApiProviders.Interfaces {
 	/// <summary>
@@ -11,6 +13,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderPaymentApiProviders.I
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <param name="apis">可使用的支付接口列表</param>
-		void GetPaymentApis(long? userId, IList<PaymentApi> apis);
+		void GetPaymentApis(Guid? userId, IList<PaymentApi> apis);
 	}
 }

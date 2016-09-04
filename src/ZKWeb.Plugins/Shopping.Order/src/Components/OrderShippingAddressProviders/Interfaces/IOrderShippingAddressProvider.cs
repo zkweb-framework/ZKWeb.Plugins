@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ZKWeb.Plugins.Shopping.Order.src.Database;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderShippingAddressProviders.Interfaces {
 	/// <summary>
@@ -11,6 +13,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderShippingAddressProvid
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <param name="addresses">收货地址列表</param>
-		void GetShippingAddresses(long? userId, IList<UserShippingAddress> addresses);
+		void GetShippingAddresses(Guid? userId, IList<ShippingAddress> addresses);
 	}
 }

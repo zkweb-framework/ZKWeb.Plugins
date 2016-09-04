@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderLogisticsProviders.Interfaces {
-	using Logistics = Logistics.src.Database.Logistics;
+	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>
 	/// 创建订单可使用的物流的提供器
@@ -13,6 +14,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderLogisticsProviders.In
 		/// <param name="userId">用户Id</param>
 		/// <param name="sellerId">卖家Id</param>
 		/// <param name="logisticsList">物流列表</param>
-		void GetLogisticsList(long? userId, long? sellerId, IList<Logistics> logisticsList);
+		void GetLogisticsList(Guid? userId, Guid? sellerId, IList<Logistics> logisticsList);
 	}
 }

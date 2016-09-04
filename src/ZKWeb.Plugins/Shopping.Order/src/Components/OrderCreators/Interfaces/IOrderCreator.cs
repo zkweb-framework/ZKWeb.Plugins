@@ -13,6 +13,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators.Interfaces {
 		/// <param name="context">数据库上下文</param>
 		/// <param name="parameters">创建参数</param>
 		/// <returns></returns>
-		CreateOrderResult CreateOrder(IDatabaseContext context, CreateOrderParameters parameters);
+		CreateOrderResult CreateOrder(CreateOrderParameters parameters);
 	}
 }

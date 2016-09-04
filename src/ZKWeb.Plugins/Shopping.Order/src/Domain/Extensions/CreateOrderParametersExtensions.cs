@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
-using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Admin.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Managers;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
-using ZKWebStandard.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 	/// <summary>

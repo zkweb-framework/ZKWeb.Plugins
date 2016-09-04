@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Admin.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Managers;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Shopping.Order.src.Managers;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ListItemProviders {
 	/// <summary>
@@ -17,9 +19,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ListItemProviders {
 		/// <returns></returns>
 		public IEnumerable<ListItem> GetItems() {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var userId = (user == null) ? null : (long?)user.Id;
+			var userId = (user == null) ? null : (Guid?)user.Id;
 			foreach (var address in orderManager.GetAvailableShippingAddress(userId)) {
 				yield return new ListItem(address.Summary, JsonConvert.SerializeObject(address.ToLiquid()));
 			}

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Base.src.Scaffolding;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 	/// <summary>

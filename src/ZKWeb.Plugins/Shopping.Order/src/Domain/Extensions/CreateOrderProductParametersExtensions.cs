@@ -1,14 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Currency.src.Managers;
-using ZKWeb.Plugins.Common.Currency.src.Model;
-using ZKWeb.Plugins.Shopping.Order.src.Managers;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
-using ZKWeb.Plugins.Shopping.Product.src.Extensions;
-using ZKWeb.Plugins.Shopping.Product.src.Managers;
-using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 	/// <summary>
@@ -22,8 +17,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		/// <param name="userId">用户Id，未登录时等于null</param>
 		/// <returns></returns>
 		public static OrderProductDisplayInfo ToOrderProductDisplayInfo(
-			this CreateOrderProductParameters parameters, long? userId) {
-			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			this CreateOrderProductParameters parameters, Guid? userId) {
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var productManager = Application.Ioc.Resolve<ProductManager>();
 			var productAlbumManager = Application.Ioc.Resolve<ProductAlbumManager>();
 			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();

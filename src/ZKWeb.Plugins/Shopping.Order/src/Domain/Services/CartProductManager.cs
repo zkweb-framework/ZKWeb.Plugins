@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Cache;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Admin.src.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Database;
-using ZKWeb.Plugins.Common.Base.src.Managers;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Base.src.Repositories;
-using ZKWeb.Plugins.Common.Currency.src.Managers;
-using ZKWeb.Plugins.Common.Currency.src.Model;
-using ZKWeb.Plugins.Finance.Payment.src.Managers;
-using ZKWeb.Plugins.Shopping.Order.src.Config;
-using ZKWeb.Plugins.Shopping.Order.src.Database;
-using ZKWeb.Plugins.Shopping.Order.src.Extensions;
-using ZKWeb.Plugins.Shopping.Order.src.Forms;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
-using ZKWeb.Plugins.Shopping.Order.src.Repositories;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
+using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
+using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
+using ZKWeb.Plugins.Shopping.Order.src.Components.ExtraConfigKeys;
+using ZKWeb.Plugins.Shopping.Order.src.Components.GenericConfigs;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Repositories;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Structs;
 using ZKWeb.Server;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
@@ -26,7 +28,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 	/// 购物车商品管理器
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class CartProductManager {
+	public class CartProductManager :
+		DomainServiceBase<CartProduct, Guid>, ICacheCleaner {
 		/// <summary>
 		/// 购物车商品的总数量的缓存时间
 		/// 默认是3秒，可通过网站配置指定
@@ -47,12 +50,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// </summary>
 		public CartProductManager() {
 			var configManager = Application.Ioc.Resolve<ConfigManager>();
-			CartProductTotalCountCacheTime = TimeSpan.FromSeconds(
-				configManager.WebsiteConfig.Extra.GetOrDefault(ExtraConfigKeys.CartProductTotalCountCacheTime, 3));
+			var extra = configManager.WebsiteConfig.Extra;
+			CartProductTotalCountCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
+				OrderExtraConfigKeys.CartProductTotalCountCacheTime, 3));
 			CartProductTotalCountCache = new IsolatedMemoryCache<CartProductType, long?>("Ident");
-			SessionExpireDaysForNonUserPurcharse = TimeSpan.FromDays(
-				configManager.WebsiteConfig.Extra.GetOrDefault(
-				ExtraConfigKeys.SessionExpireDaysForNonUserPurcharse, 1));
+			SessionExpireDaysForNonUserPurcharse = TimeSpan.FromDays(extra.GetOrDefault(
+				OrderExtraConfigKeys.SessionExpireDaysForNonUserPurcharse, 1));
 		}
 
 		/// <summary>
@@ -63,7 +66,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <param name="type">购物车商品类型</param>
 		/// <param name="parameters">匹配参数</param>
 		public virtual void AddCartProduct(
-			long productId, CartProductType type, Product.src.Model.ProductMatchParameters parameters) {
+			Guid productId, CartProductType type, ProductMatchParameters parameters) {
 			// 检查是否允许非会员下单
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var settings = configManager.GetData<OrderSettings>();
@@ -74,8 +77,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				throw new ForbiddenException(new T("Create order require user logged in"));
 			}
 			// 调用仓储添加购物车商品
-			UnitOfWork.WriteRepository<CartProductRepository>(
-				r => r.AddOrIncrease(session, productId, type, parameters));
+			using (UnitOfWork.Scope()) {
+				var repository = Application.Ioc.Resolve<CartProductRepository>();
+				repository.AddOrIncrease(session, productId, type, parameters);
+			}
 			// 非会员登录时，在购物车商品添加成功后需要延长会话时间
 			if (user == null) {
 				session.SetExpiresAtLeast(SessionExpireDaysForNonUserPurcharse);
@@ -90,20 +95,23 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// </summary>
 		/// <param name="cartProductId">购物车商品Id</param>
 		/// <returns></returns>
-		public virtual bool DeleteCartProduct(long cartProductId) {
+		public virtual bool DeleteCartProduct(Guid cartProductId) {
 			// 从数据库删除，只删除当前会话下的购物车商品
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			bool result = UnitOfWork.WriteRepository<CartProductRepository, bool>(r => {
-				var cartProduct = r.GetManyBySession(sessionManager.GetSession(), null)
+			var repository = Application.Ioc.Resolve<CartProductRepository>();
+			bool result;
+			using (UnitOfWork.Scope()) {
+				var cartProduct = repository.GetManyBySession(sessionManager.GetSession(), null)
 					.FirstOrDefault(c => c.Id == cartProductId);
 				if (cartProduct != null) {
-					r.Delete(cartProduct);
-					return true;
+					repository.Delete(cartProduct);
+					result = true;
 				}
-				return false;
-			});
+				result = false;
+			}
 			// 删除相关的缓存
-			CartProductTotalCountCache.Clear();
+			CartProductTotalCountCache.Remove(CartProductType.Default);
+			CartProductTotalCountCache.Remove(CartProductType.Buynow);
 			return result;
 		}
 
@@ -111,28 +119,31 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// 更新当前会话下的购物车商品数量
 		/// </summary>
 		/// <param name="counts">{ 购物车商品Id: 数量 }</param>
-		public virtual void UpdateCartProductCounts(IDictionary<long, long> counts) {
+		public virtual void UpdateCartProductCounts(IDictionary<Guid, long> counts) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			UnitOfWork.WriteRepository<CartProductRepository>(r => {
-				var cartProducts = r.GetManyBySession(sessionManager.GetSession(), null);
+			var session = sessionManager.GetSession();
+			var repository = Application.Ioc.Resolve<CartProductRepository>();
+			using (UnitOfWork.Scope()) {
+				var cartProducts = repository.GetManyBySession(session, null);
 				foreach (var cartProduct in cartProducts) {
 					var count = counts.GetOrDefault(cartProduct.Id);
 					if (count > 0) {
 						var cartProductRef = cartProduct;
-						r.Save(ref cartProductRef, p => p.UpdateOrderCount(count));
+						repository.Save(ref cartProductRef, p => p.UpdateOrderCount(count));
 					}
 				}
-			});
+			}
 		}
 
 		/// <summary>
 		/// 把属于会话的购物车商品整合到用户中
 		/// 用于允许非会员下单时，未登录前添加的商品可以在登录后整合到自身的购物车中
 		/// </summary>
-		public virtual void MergeToUser(string sessionId, long userId) {
-			UnitOfWork.WriteRepository<CartProductRepository>(r => {
-				r.MergeToUser(sessionId, userId);
-			});
+		public virtual void MergeToUser(Guid sessionId, Guid userId) {
+			var repository = Application.Ioc.Resolve<CartProductRepository>();
+			using (UnitOfWork.Scope()) {
+				repository.MergeToUser(sessionId, userId);
+			}
 		}
 
 		/// <summary>
@@ -143,8 +154,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <returns></returns>
 		public virtual IList<CartProduct> GetCartProducts(CartProductType type) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			return UnitOfWork.ReadRepository<CartProductRepository, IList<CartProduct>>(r =>
-				r.GetManyBySession(sessionManager.GetSession(), type).OrderBy(c => c.Id).ToList());
+			var session = sessionManager.GetSession();
+			var repository = Application.Ioc.Resolve<CartProductRepository>();
+			using (UnitOfWork.Scope()) {
+				return repository
+					.GetManyBySession(sessionManager.GetSession(), type)
+					.OrderBy(c => c.Id).ToList();
+			}
 		}
 
 		/// <summary>
@@ -154,18 +170,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <param name="type">购物车商品类型</param>
 		/// <returns></returns>
 		public virtual long GetCartProductTotalCount(CartProductType type) {
-			// 从缓存获取
-			var count = CartProductTotalCountCache.GetOrDefault(type);
-			if (count != null) {
-				return count.Value;
-			}
-			// 从数据库获取
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			count = UnitOfWork.ReadRepository<CartProductRepository, long>(r =>
-				r.GetManyBySession(sessionManager.GetSession(), type).Sum(p => (long?)p.Count) ?? 0);
-			// 保存到缓存并返回
-			CartProductTotalCountCache.Put(type, count, CartProductTotalCountCacheTime);
-			return count.Value;
+			return CartProductTotalCountCache.GetOrCreate(type, () => {
+				var sessionManager = Application.Ioc.Resolve<SessionManager>();
+				var session = sessionManager.GetSession();
+				var repository = Application.Ioc.Resolve<CartProductRepository>();
+				using (UnitOfWork.Scope()) {
+					return repository
+						.GetManyBySession(sessionManager.GetSession(), type)
+						.Sum(p => (long?)p.Count);
+				}
+			}, CartProductTotalCountCacheTime) ?? 0;
 		}
 
 		/// <summary>
@@ -176,10 +190,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <returns></returns>
 		public virtual IDictionary<string, decimal> GetCartProductTotalPrice(
 			IList<CartProduct> cartProducts) {
-			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var userId = user == null ? null : (long?)user.Id;
+			var userId = user == null ? null : (Guid?)user.Id;
 			var result = new Dictionary<string, decimal>();
 			foreach (var cartProduct in cartProducts) {
 				var parameters = cartProduct.ToCreateOrderProductParameters();
@@ -219,9 +233,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			var anyRealProducts = displayInfos.Any(d => d.TypeTrait.IsReal);
 			// 收货地址表单
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var user = sessionManager.GetSession().GetUser();
-			var userId = (user == null) ? null : (long?)user.Id;
+			var userId = (user == null) ? null : (Guid?)user.Id;
 			var shippingAddressForm = new UserShippingAddressForm();
 			shippingAddressForm.Bind();
 			// 订单留言表单
@@ -261,7 +275,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		public virtual object GetCartCalculatePriceApiInfo(CreateOrderParameters parameters) {
 			// 计算各个商品的单价（数量等改变后有可能会改变单价）
 			var orderProductUnitPrices = new List<object>();
-			var orderManager = Application.Ioc.Resolve<OrderManager>();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
 			foreach (var productParameters in parameters.OrderProductParametersList) {
 				var productResult = orderManager.CalculateOrderProductUnitPrice(
@@ -320,6 +334,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				orderProductTotalPriceString, orderProductUnitPrices,
 				availableLogistics, availablePaymentApis
 			};
+		}
+
+		/// <summary>
+		/// 清理缓存
+		/// </summary>
+		public void ClearCache() {
+			CartProductTotalCountCache.Clear();
 		}
 	}
 }

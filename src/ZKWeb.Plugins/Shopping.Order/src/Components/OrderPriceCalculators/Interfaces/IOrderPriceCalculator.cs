@@ -1,4 +1,6 @@
-﻿namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderPriceCalculators.Interfaces {
+﻿using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
+
+namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderPriceCalculators.Interfaces {
 	/// <summary>
 	/// 订单价格计算器
 	/// </summary>
