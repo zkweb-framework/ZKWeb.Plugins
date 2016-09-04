@@ -52,7 +52,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Entities {
 		/// 配置数据库结构
 		/// </summary>
 		public virtual void Configure(IEntityMappingBuilder<Session> builder) {
-			builder.Id(s => s.Id, new EntityMappingOptions() { CustomSqlType = "uuid" });
+			builder.Id(s => s.Id);
 			builder.Map(s => s.ReleatedId);
 			builder.Map(s => s.Items, new EntityMappingOptions() { WithSerialization = true });
 			builder.Map(s => s.IpAddress);
