@@ -1,4 +1,4 @@
-﻿using ZKWeb.Plugins.Shopping.Order.src.Model;
+﻿using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 

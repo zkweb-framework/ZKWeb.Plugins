@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Base.src.Managers;
-using ZKWeb.Plugins.Common.Currency.src.Managers;
-using ZKWeb.Plugins.Common.Currency.src.Model;
-using ZKWeb.Plugins.Shopping.Order.src.Managers;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
 using ZKWebStandard.Web;
-using ZKWeb.Plugins.Shopping.Order.src.Extensions;
-using ZKWeb.Plugins.Finance.Payment.src.Managers;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Shopping.Product.src.Model;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Structs;
+using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
+using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// <summary>
 	/// 购物车Api控制器
 	/// </summary>
 	[ExportMany]
-	public class CartApiController : IController {
+	public class CartApiController : ControllerBase {
 		/// <summary>
 		/// 获取购物车商品的总数量
 		/// </summary>
@@ -51,7 +51,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <returns></returns>
 		[Action("api/cart/info", HttpMethods.POST)]
 		public IActionResult CartInfo() {
-			var type = HttpManager.CurrentContext.Request.Get<string>("type");
+			var type = Request.Get<string>("type");
 			var cartProductType = (type == "buynow") ? CartProductType.Buynow : CartProductType.Default;
 			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
 			var info = cartProductManager.GetCartApiInfo(cartProductType);
@@ -64,9 +64,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <returns></returns>
 		[Action("api/cart/add", HttpMethods.POST)]
 		public IActionResult Add() {
-			HttpRequestChecker.RequieAjaxRequest();
-			var request = HttpManager.CurrentContext.Request;
-			var productId = request.Get<long>("productId");
+			this.RequireAjaxRequest();
+			var request = Request;
+			var productId = request.Get<Guid>("productId");
 			var matchParameters = request.Get<ProductMatchParameters>("matchParameters");
 			var isBuyNow = request.Get<bool>("isBuyNow");
 			var cartProductType = isBuyNow ? CartProductType.Buynow : CartProductType.Default;
@@ -100,8 +100,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <returns></returns>
 		[Action("api/cart/delete", HttpMethods.POST)]
 		public IActionResult Delete() {
-			HttpRequestChecker.RequieAjaxRequest();
-			var id = HttpManager.CurrentContext.Request.Get<long>("id");
+			this.RequireAjaxRequest();
+			var id = Request.Get<Guid>("id");
 			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
 			cartProductManager.DeleteCartProduct(id);
 			return new JsonResult(new { message = new T("Delete Successfully") });
@@ -113,8 +113,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <returns></returns>
 		[Action("api/cart/update_counts", HttpMethods.POST)]
 		public IActionResult UpdateCounts() {
-			HttpRequestChecker.RequieAjaxRequest();
-			var counts = HttpManager.CurrentContext.Request.Get<IDictionary<long, long>>("counts");
+			this.RequireAjaxRequest();
+			var counts = Request.Get<IDictionary<long, long>>("counts");
 			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
 			cartProductManager.UpdateCartProductCounts(counts);
 			return new JsonResult(new { });
@@ -126,8 +126,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <returns></returns>
 		[Action("api/cart/calculate_price", HttpMethods.POST)]
 		public IActionResult CalculatePrice() {
-			HttpRequestChecker.RequieAjaxRequest();
-			var createOrderParameters = HttpManager.CurrentContext.Request
+			this.RequireAjaxRequest();
+			var createOrderParameters = Request
 				.Get<CreateOrderParameters>("CreateOrderParameters") ?? new CreateOrderParameters();
 			createOrderParameters.SetLoginInfo();
 			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();

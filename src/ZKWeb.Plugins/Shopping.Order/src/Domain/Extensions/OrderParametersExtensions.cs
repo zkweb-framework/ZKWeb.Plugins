@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using ZKWeb.Plugins.Shopping.Order.src.Database;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
+﻿using System;
+using System.Collections.Generic;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
@@ -13,9 +14,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		/// </summary>
 		/// <param name="parameters">订单参数</param>
 		/// <returns></returns>
-		public static IDictionary<long, long> GetCartProducts(this OrderParameters parameters) {
-			return parameters.GetOrDefault<IDictionary<long, long>>("CartProducts") ??
-				new Dictionary<long, long>();
+		public static IDictionary<Guid, long> GetCartProducts(this OrderParameters parameters) {
+			return parameters.GetOrDefault<IDictionary<Guid, long>>("CartProducts") ??
+				new Dictionary<Guid, long>();
 		}
 
 		/// <summary>
@@ -24,9 +25,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		/// </summary>
 		/// <param name="parameters">订单参数</param>
 		/// <returns></returns>
-		public static UserShippingAddress GetShippingAddress(this OrderParameters parameters) {
-			return parameters.GetOrDefault<UserShippingAddress>("ShippingAddress") ??
-				new UserShippingAddress();
+		public static ShippingAddress GetShippingAddress(this OrderParameters parameters) {
+			return parameters.GetOrDefault<ShippingAddress>("ShippingAddress") ??
+				new ShippingAddress();
 		}
 
 		/// <summary>
@@ -53,13 +54,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 
 		/// <summary>
 		/// 获取卖家Id => 选中的物流Id
-		/// 没有卖家时卖家Id等于0
+		/// 没有卖家时卖家Id等于Guid.Empty
 		/// </summary>
 		/// <param name="parameters">订单参数</param>
 		/// <returns></returns>
-		public static IDictionary<long, long> GetSellerToLogistics(this OrderParameters parameters) {
-			return parameters.GetOrDefault<IDictionary<long, long>>("SellerToLogistics") ??
-				new Dictionary<long, long>();
+		public static IDictionary<Guid, long> GetSellerToLogistics(this OrderParameters parameters) {
+			return parameters.GetOrDefault<IDictionary<Guid, long>>("SellerToLogistics") ??
+				new Dictionary<Guid, long>();
 		}
 
 		/// <summary>

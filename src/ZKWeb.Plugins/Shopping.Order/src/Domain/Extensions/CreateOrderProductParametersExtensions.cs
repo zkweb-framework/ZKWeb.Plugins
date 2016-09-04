@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
+using ZKWeb.Plugins.Shopping.Product.src.Components.ProductTypes.Interfaces;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Enums;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchParametersDescriptionProviders.Interfaces;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 	/// <summary>
@@ -25,12 +32,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 			var descriptionProviders = Application.Ioc.ResolveMany<IProductMatchParametersDescriptionProvider>();
 			var unitPrice = orderManager.CalculateOrderProductUnitPrice(userId, parameters);
 			var info = new OrderProductDisplayInfo();
-			var product = productManager.GetProduct(parameters.ProductId);
+			var product = productManager.GetWithCache(parameters.ProductId);
 			if (product == null) {
 				throw new BadRequestException(new T("The product you are try to purchase does not exist."));
 			}
 			info.ProductId = product.Id;
-			info.OrderProductId = 0;
+			info.OrderProductId = null;
 			info.Name = new T(product.Name);
 			info.ImageWebPath = productAlbumManager.GetAlbumImageWebPath(
 				product.Id, null, ProductAlbumImageType.Thumbnail);
@@ -46,28 +53,27 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 			info.OriginalUnitPriceString = info.UnitPriceString;
 			info.OriginalUnitPriceDescription = info.UnitPriceDescription;
 			info.Count = parameters.MatchParameters.GetOrderCount();
-			info.SellerId = (product.Seller == null) ? null : (long?)product.Seller.Id;
+			info.SellerId = (product.Seller == null) ? null : (Guid?)product.Seller.Id;
 			info.Seller = (product.Seller == null) ? null : product.Seller.Username;
 			info.State = product.State;
-			info.StateTrait = product.GetStateTrait();
 			info.Type = product.Type;
-			info.TypeTrait = product.GetTypeTrait();
+			info.IsRealProduct = product.GetProductType() is IAmRealProduct;
 			return info;
 		}
 
 		/// <summary>
 		/// 获取包含了实体商品的卖家Id列表
-		/// 无卖家的Id等于0
+		/// 无卖家的Id等于null
 		/// </summary>
 		/// <param name="parametersList">订单商品创建参数</param>
 		/// <returns></returns>
-		public static IList<long> GetSellerIdsHasRealProducts(
+		public static IList<Guid?> GetSellerIdsHasRealProducts(
 			this IList<CreateOrderProductParameters> parametersList) {
 			var productManager = Application.Ioc.Resolve<ProductManager>();
 			return parametersList
-				.Select(p => productManager.GetProduct(p.ProductId))
-				.Where(p => p.GetTypeTrait().IsReal)
-				.Select(p => p.Seller == null ? 0 : p.Seller.Id)
+				.Select(p => productManager.GetWithCache(p.ProductId))
+				.Where(p => p.GetProductType() is IAmRealProduct)
+				.Select(p => p.Seller == null ? null : (Guid?)p.Seller.Id)
 				.Distinct().ToList();
 		}
 	}

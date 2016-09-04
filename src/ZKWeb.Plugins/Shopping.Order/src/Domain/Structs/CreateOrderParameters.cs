@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
 	/// <summary>
@@ -11,11 +12,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
 		/// 下单的用户Id
 		/// 未登录时等于null
 		/// </summary>
-		public long? UserId { get; set; }
+		public Guid? UserId { get; set; }
 		/// <summary>
 		/// 下单的会话Id
 		/// </summary>
-		public string SessionId { get; set; }
+		public Guid SessionId { get; set; }
 		/// <summary>
 		/// 订单参数
 		/// 包含收货地址，选择的物流Id和收款接口Id等

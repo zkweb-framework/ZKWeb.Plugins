@@ -19,7 +19,7 @@
 					data-product-id="{{ info.ProductId }}"
 					data-matched-parameters="{{ info.MatchedParameters | json }}"
 					data-seller-id="{{ info.SellerId }}"
-					data-is-real="{{ info.TypeTrait.IsReal | json }}">
+					data-is-real="{{ info.IsRealProduct | json }}">
 					<td class="selection"><input type="checkbox" checked="checked" /></td>
 					<td class="summary">{{ info | order_product_summary }}</td>
 					<td class="type">{{ info | order_product_type }}</td>

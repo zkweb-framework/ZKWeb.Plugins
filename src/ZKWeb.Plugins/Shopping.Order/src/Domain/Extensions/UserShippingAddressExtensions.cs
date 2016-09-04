@@ -1,9 +1,9 @@
 ﻿using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Base.src.Managers;
-using ZKWeb.Plugins.Common.Region.src.Config;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
+using ZKWeb.Plugins.Common.Region.src.Components.GenericConfigs;
+using ZKWeb.Plugins.Common.Region.src.Domain.Services;
 using ZKWeb.Plugins.Common.Region.src.Extensions;
-using ZKWeb.Plugins.Common.Region.src.Managers;
-using ZKWeb.Plugins.Shopping.Order.src.Database;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 	/// <summary>
@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		/// </summary>
 		/// <param name="address">收货地址</param>
 		/// <returns></returns>
-		public static string GenerateSummary(this UserShippingAddress address) {
+		public static string GenerateSummary(this ShippingAddress address) {
 			// 获取国家和地区名称
 			// 如果设置了不显示国家下拉框，则国家名称等于空
 			var regionManager = Application.Ioc.Resolve<RegionManager>();

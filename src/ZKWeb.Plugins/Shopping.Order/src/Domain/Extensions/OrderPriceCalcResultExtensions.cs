@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Shopping.Order.src.Model;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 	/// <summary>

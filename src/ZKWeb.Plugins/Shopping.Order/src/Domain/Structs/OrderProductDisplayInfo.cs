@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using System;
 using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
 
@@ -11,11 +12,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
 		/// <summary>
 		/// 商品Id
 		/// </summary>
-		public long ProductId { get; set; }
+		public Guid ProductId { get; set; }
 		/// <summary>
 		/// 订单商品Id，成员的值只有在显示"订单商品"时才会存在
 		/// </summary>
-		public long OrderProductId { get; set; }
+		public Guid? OrderProductId { get; set; }
 		/// <summary>
 		/// 商品名称
 		/// </summary>
@@ -67,7 +68,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
 		/// <summary>
 		/// 卖家Id
 		/// </summary>
-		public long? SellerId { get; set; }
+		public Guid? SellerId { get; set; }
 		/// <summary>
 		/// 卖家用户名
 		/// </summary>
@@ -80,6 +81,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
 		/// 商品类型
 		/// </summary>
 		public string Type { get; set; }
+		/// <summary>
+		/// 是否实体商品
+		/// </summary>
+		public bool IsRealProduct { get; set; }
 		/// <summary>
 		/// 附加数据
 		/// </summary>

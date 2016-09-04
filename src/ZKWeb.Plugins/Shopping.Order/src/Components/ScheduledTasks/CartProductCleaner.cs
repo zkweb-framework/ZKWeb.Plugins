@@ -1,8 +1,6 @@
 ﻿using System;
 using ZKWeb.Logging;
-using ZKWeb.Plugins.Common.Base.src.Model;
-using ZKWeb.Plugins.Common.Base.src.Repositories;
-using ZKWeb.Plugins.Shopping.Order.src.Database;
+using ZKWeb.Plugins.Common.Base.src.Components.ScheduledTasks.Interfaces;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.ScheduledTasks {

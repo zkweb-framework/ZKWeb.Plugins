@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 
@@ -15,7 +17,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
 			var user = session.GetUser();
-			parameters.UserId = (user == null) ? null : (long?)user.Id;
+			parameters.UserId = (user == null) ? null : (Guid?)user.Id;
 			parameters.SessionId = session.Id;
 		}
 

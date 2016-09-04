@@ -2,13 +2,14 @@
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// <summary>
 	/// 购物车控制器
 	/// </summary>
 	[ExportMany]
-	public class CartController : IController {
+	public class CartController : ControllerBase {
 		/// <summary>
 		/// 购物车页
 		/// </summary>

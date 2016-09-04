@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "Order",
-	"Version": "0.0 not done",
+	"Version": "0.0",
 	"Description": "Order management for ec site",
 	"Dependencies": [
 		"Common.Base",
