@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Finance.Payment.src.Components.ExtraConfigKeys;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
@@ -85,7 +86,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 			var paymentFee = 0M;
 			var api = GetWithCache(apiId);
 			if (api == null) {
-				throw new ArgumentNullException(new T("Selected payment api does not exist"));
+				throw new BadRequestException(new T("Selected payment api does not exist"));
 			}
 			var handlers = api.GetHandlers();
 			handlers.ForEach(h => h.CalculatePaymentFee(api, amount, ref paymentFee));

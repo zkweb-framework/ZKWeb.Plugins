@@ -35,8 +35,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			createOrderParameters.SetLoginInfo();
 			var result = orderManager.CreateOrder(createOrderParameters);
 			var transaction = result.CreatedTransactions.Last();
-			var paymentUrl = transactionManager.GetPaymentUrl(transaction.Id);
-			return new JsonResult(new { script = BaseScriptStrings.Redirect(paymentUrl) });
+			var resultUrl = transactionManager.GetResultUrl(transaction.Id);
+			return new JsonResult(new { script = BaseScriptStrings.Redirect(resultUrl) });
 		}
 	}
 }
