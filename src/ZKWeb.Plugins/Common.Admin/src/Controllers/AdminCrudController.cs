@@ -148,7 +148,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			/// </summary>
 			protected override object OnSubmit(User saveTo) {
 				// 添加时要求填密码
-				if (saveTo.Id == Guid.Empty && string.IsNullOrEmpty(Password)) {
+				if (saveTo.Password == null && string.IsNullOrEmpty(Password)) {
 					throw new BadRequestException(new T("Please enter password when creating admin"));
 				}
 				// 需要更新密码时

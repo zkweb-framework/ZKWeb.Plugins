@@ -129,11 +129,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			/// 保存表单到数据
 			/// </summary>
 			protected override object OnSubmit(User saveTo) {
-				// 添加时要求填密码，并设置用户类型是"用户"
-				if (saveTo.Id == Guid.Empty) {
+				// 密码为空时要求填密码
+				if (saveTo.Password == null) {
 					if (string.IsNullOrEmpty(Password)) {
 						throw new BadRequestException(new T("Please enter password when creating user"));
 					}
+				}
+				// 类型为空时设置为默认类型
+				if (string.IsNullOrEmpty(saveTo.Type)) {
 					saveTo.Type = NormalUserType.ConstType;
 				}
 				// 添加用户或修改密码需要超级管理员
