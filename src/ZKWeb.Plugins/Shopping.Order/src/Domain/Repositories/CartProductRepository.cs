@@ -99,7 +99,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Repositories {
 				var cartProduct = new CartProduct() {
 					Type = type,
 					Owner = userRepository.Get(u => u.Id == session.ReleatedId),
-					OwnerSessionId = (session.ReleatedId == null) ? null : (Guid?)session.Id,
+					OwnerSessionId = (session.ReleatedId != null) ? null : (Guid?)session.Id,
 					Product = product,
 					Count = orderCount,
 					MatchParameters = parameters,
