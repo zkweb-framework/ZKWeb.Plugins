@@ -210,6 +210,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				sellerOrder.Serial = SerialGenerator.GenerateFor(sellerOrder);
 				// 保存卖家订单
 				orderManager.Save(ref sellerOrder);
+				Result.CreatedSellerOrders.Add(sellerOrder);
 				// 生成买家订单
 				var buyerOrder = new BuyerOrder() {
 					Owner = sellerOrder.Buyer,
@@ -218,7 +219,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				};
 				// 保存买家订单
 				buyerOrderManager.Save(ref buyerOrder);
-				Result.CreatedOrders.Add(buyerOrder);
+				Result.CreatedBuyerOrders.Add(buyerOrder);
 				// 创建订单交易
 				// 因为目前只能使用后台的支付接口，所以收款人应该是null
 				var paymentApiId = Parameters.OrderParameters.GetPaymentApiId();
@@ -287,7 +288,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 			}
 			// 获取匹配数据并减少数据中的库存数量
 			var productManager = Application.Ioc.Resolve<ProductManager>();
-			foreach (var order in Result.CreatedOrders) {
+			foreach (var order in Result.CreatedBuyerOrders) {
 				foreach (var orderProduct in order.SellerOrder.OrderProducts) {
 					var data = orderProduct.Product.MatchedDatas
 						.Where(d => d.Stock != null)

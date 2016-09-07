@@ -3,12 +3,14 @@ using ZKWeb.Localize;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
-namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
+namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates
+{
 	/// <summary>
 	/// 中文翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class zh_CN : ITranslateProvider {
+	public class zh_CN : ITranslateProvider
+	{
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
@@ -80,14 +82,30 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "To create order please login first", "请先登录再创建订单" },
 			{ "Selected logistics is not allowed to use", "选择的物流并不允许使用，请选择其他物流" },
 			{ "Selected payment api is not allowed to use", "选择的支付接口并不允许使用，请选择其他支付接口" },
-			{ "MergedOrderTransaction", "合并订单交易" }
+			{ "MergedOrderTransaction", "合并订单交易" },
+			{ "Order not found", "订单不存在" },
+			{ "Unknow order state: [0]", "未知的订单状态: [0]" },
+			{ "Order Checkout", "订单结算" },
+			{ "Order successfully created, please continue to pay", "订单创建成功，请付款" },
+			{ "You have paid successful, please wait for the seller shipped", "您已付款成功，请等待卖家发货" },
+			{ "The seller has shipped, please confirm after receipt of the goods", "卖家已发货，请在收到货物后确认收货" },
+			{ "Order is successful, thank you for your patronage", "订单交易成功，感谢您的惠顾" },
+			{ "Order is canceled", "订单已取消" },
+			{ "Order is obsoleted", "订单已作废" },
+			{ "Order Serial", "订单流水号" },
+			{ "Order Amount", "订单金额" },
+			{ "Payment Amount", "支付金额" },
+			{ "Pay with [0]", "使用[0]支付" },
+			{ "Redirecting to order details page......", "正在跳转到订单详情页……" }
 		};
 
-		public bool CanTranslate(string code) {
+		public bool CanTranslate(string code)
+		{
 			return Codes.Contains(code);
 		}
 
-		public string Translate(string text) {
+		public string Translate(string text)
+		{
 			return Translates.GetOrDefault(text);
 		}
 	}

@@ -1,0 +1,47 @@
+﻿/* 订单结算页的样式 */
+.order-transaction-result {
+	/* 上下填充 */
+	.page-content {
+		padding: 12px 0px;
+	}
+	/* 每行的样式 */
+	.row {
+		text-align: center;
+		margin: 0px 0px 12px 0px;
+	}
+	/* 状态文本 */
+	.order-state {
+		color: #2980b9;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	/* 订单概要 */
+	.order-summary {
+		/* 金额 */
+		em {
+			color: #e4393c;
+			font-style: normal;
+			font-weight: bold;
+		}
+	}
+	/* 付款按钮 */
+	.order-payment .btn-pay {
+		width: 300px;
+		height: 35px;
+		line-height: 35px;
+		font-size: 14px;
+		font-weight: bold;
+		display: block;
+		margin: auto;
+	}
+	/* 低分辨率时的显示 */
+	@media (max-width: 768px) {
+		.order-payment {
+			margin: 0px 10px 0px 10px;
+
+			.btn-pay {
+				width: 100%;
+			}
+		}
+	}
+}

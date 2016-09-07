@@ -317,6 +317,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 			using (UnitOfWork.Scope()) {
 				// 获取交易
 				var transaction = Get(transactionId);
+				if (transaction == null) {
+					return BuildErrorHtml(new T("Payment transaction not found"));
+				}
 				// 检查当前登录用户是否可以查看
 				var result = transaction.Check(c => c.IsPayerLoggedIn);
 				if (!result.First) {
