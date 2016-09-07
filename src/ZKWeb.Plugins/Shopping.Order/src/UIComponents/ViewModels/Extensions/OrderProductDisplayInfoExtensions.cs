@@ -1,8 +1,7 @@
-﻿using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
-using ZKWeb.Templating;
+﻿using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 
-namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
+namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 	/// <summary>
 	/// 订单商品的显示信息的扩展函数
 	/// </summary>

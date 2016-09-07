@@ -38,6 +38,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		protected override IModelFormBuilder GetEditForm() { throw new NotImplementedException(); }
 
 		/// <summary>
+		/// 初始化
+		/// </summary>
+		public OrderCrudController() {
+			IncludeCss.Add("/static/shopping.order.css/order-list.css");
+		}
+
+		/// <summary>
 		/// 表格处理器
 		/// </summary>
 		public class TableHandler : AjaxTableHandlerBase<SellerOrder, Guid> {
@@ -47,6 +54,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			public override void BuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
 				table.StandardSetupFor<OrderCrudController>();
+				table.Template = "/static/shopping.order.tmpl/orderTable.tmpl";
 				searchBar.StandardSetupFor<OrderCrudController>("Serial/Remark");
 				searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("Buyer")));
 				searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("Seller")));
@@ -110,7 +118,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			public override void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
 				response.Columns.AddIdColumn("Id").StandardSetupFor<OrderCrudController>(request);
-				response.Columns.AddMemberColumn("Serial", "100");
 				response.Columns.AddHtmlColumn("OrderProducts", "30%");
 				response.Columns.AddHtmlColumn("Price", "70");
 				response.Columns.AddHtmlColumn("Quantity", "70");

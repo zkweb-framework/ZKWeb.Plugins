@@ -23,21 +23,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		}
 
 		/// <summary>
-		/// 从购物车商品生成显示信息
-		/// 生成后会设置购物车商品Id到附加数据
-		/// </summary>
-		/// <param name="cartProduct">购物车商品</param>
-		/// <returns></returns>
-		public static OrderProductDisplayInfo ToOrderProductDisplayInfo(
-			this CartProduct cartProduct) {
-			var parameters = cartProduct.ToCreateOrderProductParameters();
-			var userId = cartProduct.Owner?.Id;
-			var displayInfo = parameters.ToOrderProductDisplayInfo(userId);
-			displayInfo.Extra["cartProductId"] = cartProduct.Id;
-			return displayInfo;
-		}
-
-		/// <summary>
 		/// 更新购物车商品的订购数量
 		/// </summary>
 		/// <param name="cartProduct">购物车商品</param>

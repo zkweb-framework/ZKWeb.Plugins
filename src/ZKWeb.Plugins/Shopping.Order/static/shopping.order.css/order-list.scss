@@ -1,0 +1,61 @@
+﻿/* 订单列表页的样式 */
+
+.order-table-container {
+	/* 状态过滤器 */
+	.order-status-filter {
+	}
+	/* 头部文本居中 */
+	tr.heading > th {
+		text-align: center;
+	}
+	/* 订单头部行的样式，每个订单在表格中都会占两行，一行是头部一行是具体的内容 */
+	.order-row-heading {
+		> td {
+			background-color: #fbfbfb;
+			padding: 0px 8px;
+		}
+	}
+	/* 订单内容行的样式 */
+	.order-row-body {
+		/* 单元格文本居中 */
+		> td {
+			text-align: center;
+			/* 操作按钮 */
+			.btn {
+				padding: 1px 5px;
+			}
+		}
+	}
+	/* 订单商品信息区域的样式，为了对齐需要固定高度*/
+	.order-product-block {
+		margin: 8px 0px 0px 0px;
+		height: 48px;
+		overflow: hidden;
+
+		&:first-child {
+			/* 第一行无上边距 */
+			margin: 0px 0px 0px 0px;
+		}
+	}
+	/* 订单商品单价 */
+	.order-product-price {
+		line-height: 24px;
+		/* 订单商品原价 */
+		&.original-price {
+			line-height: 12px;
+			text-decoration: line-through;
+			color: #999;
+		}
+	}
+	/* 订单商品订购数量和已发数量 */
+	.order-product-order-count, .order-product-order-count {
+		line-height: 24px;
+		font-size: 14px;
+	}
+	/* 订单总价 */
+	.order-total-cost {
+		.parts-cost {
+			color: #666;
+		}
+	}
+}

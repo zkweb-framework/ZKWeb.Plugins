@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
 
-namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
+namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 	/// <summary>
 	/// 订单商品的显示信息
 	/// 用于显示在购物车页和订单列表页等
