@@ -63,6 +63,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 		/// </summary>
 		public virtual DateTime UpdateTime { get; set; }
 		/// <summary>
+		/// 附加数据
+		/// </summary>
+		public virtual OrderProductItems Items { get; set; }
+		/// <summary>
 		/// 关联的属性值集合
 		/// </summary>
 		public virtual ISet<OrderProductToPropertyValue> PropertyValues { get; set; }
@@ -95,6 +99,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 				new EntityMappingOptions() { WithSerialization = true });
 			builder.Map(p => p.CreateTime);
 			builder.Map(p => p.UpdateTime);
+			builder.Map(p => p.Items, new EntityMappingOptions() { WithSerialization = true });
 			builder.HasMany(p => p.PropertyValues);
 		}
 	}

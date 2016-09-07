@@ -3,14 +3,12 @@ using ZKWeb.Localize;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
-namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates
-{
+namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 	/// <summary>
 	/// 中文翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class zh_CN : ITranslateProvider
-	{
+	public class zh_CN : ITranslateProvider {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
@@ -96,16 +94,29 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates
 			{ "Order Amount", "订单金额" },
 			{ "Payment Amount", "支付金额" },
 			{ "Pay with [0]", "使用[0]支付" },
-			{ "Redirecting to order details page......", "正在跳转到订单详情页……" }
+			{ "Redirecting to order details page......", "正在跳转到订单详情页……" },
+			{ "RemarkFlags", "备注旗帜" },
+			{ "Serial/Remark", "流水号/备注" },
+			{ "Buyer", "买家" },
+			{ "Gray", "灰色" },
+			{ "Red", "红色" },
+			{ "Yellow", "黄色" },
+			{ "Green", "绿色" },
+			{ "Blue", "蓝色" },
+			{ "Purple", "紫色" },
+			{ "OrderProducts", "订单商品" },
+			{ "Quantity", "数量" },
+			{ "ShippedQuantity", "已发货数量" },
+			{ "TotalCost", "总金额" },
+			{ "SellerOrder", "卖家订单" },
+			{ "BuyerOrder", "买家订单" }
 		};
 
-		public bool CanTranslate(string code)
-		{
+		public bool CanTranslate(string code) {
 			return Codes.Contains(code);
 		}
 
-		public string Translate(string text)
-		{
+		public string Translate(string text) {
 			return Translates.GetOrDefault(text);
 		}
 	}

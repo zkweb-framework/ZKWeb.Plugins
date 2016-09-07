@@ -2,6 +2,8 @@
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities.Bases {
 	/// <summary>
@@ -35,6 +37,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities.Bases {
 		/// 备注
 		/// </summary>
 		public virtual string Remark { get; set; }
+		/// <summary>
+		/// 备注旗帜
+		/// </summary>
+		public virtual OrderRemarkFlags RemarkFlags { get; set; }
+		/// <summary>
+		/// 附加数据
+		/// </summary>
+		public virtual OrderItems Items { get; set; }
 
 		/// <summary>
 		/// 配置数据库结构
@@ -46,6 +56,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities.Bases {
 			builder.Map(o => o.UpdateTime);
 			builder.Map(o => o.Deleted);
 			builder.Map(o => o.Remark);
+			builder.Map(o => o.RemarkFlags, new EntityMappingOptions() { Index = "Idx_RemarkFlags" });
+			builder.Map(o => o.Items, new EntityMappingOptions() { WithSerialization = true });
 		}
 	}
 }
