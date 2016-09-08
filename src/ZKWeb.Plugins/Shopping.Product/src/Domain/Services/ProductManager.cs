@@ -207,15 +207,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 		/// <returns></returns>
 		public virtual StaticTableSearchResponse GetProductSearchResponseFromHttpRequest() {
 			return ProductSearchResultCache.GetOrCreate(0, () => {
-				using (UnitOfWork.Scope()) {
-					var configManager = Application.Ioc.Resolve<GenericConfigManager>();
-					var productListSettings = configManager.GetData<ProductListSettings>();
-					var searchRequest = StaticTableSearchRequest.FromHttpRequest(
-						productListSettings.ProductsPerPage);
-					var callbacks = new ProductTableHandler().WithExtensions();
-					var searchResponse = searchRequest.BuildResponse(callbacks);
-					return searchResponse;
-				}
+				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
+				var productListSettings = configManager.GetData<ProductListSettings>();
+				var searchRequest = StaticTableSearchRequest.FromHttpRequest(
+					productListSettings.ProductsPerPage);
+				var callbacks = new ProductTableHandler().WithExtensions();
+				var searchResponse = searchRequest.BuildResponse(callbacks);
+				return searchResponse;
 			}, ProductSearchResultCacheTime);
 		}
 
