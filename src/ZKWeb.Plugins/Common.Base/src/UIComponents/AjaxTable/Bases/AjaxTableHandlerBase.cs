@@ -35,7 +35,6 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases {
 			var uow = Application.Ioc.Resolve<IUnitOfWork>();
 			var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
 			return () => {
-				using (uow.Scope())
 				using (uow.DisableQueryFilter(typeof(DeletedFilter)))
 				using (uow.EnableQueryFilter(new DeletedFilter(deleted))) {
 					return queryMethod();

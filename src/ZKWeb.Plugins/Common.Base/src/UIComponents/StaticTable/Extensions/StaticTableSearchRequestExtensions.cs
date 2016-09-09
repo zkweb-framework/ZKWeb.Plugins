@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Interfaces;
@@ -24,9 +25,9 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions {
 			this StaticTableSearchRequest request,
 			IEnumerable<IStaticTableHandler<TEntity, TPrimaryKey>> handlers)
 			where TEntity : class, IEntity<TPrimaryKey> {
+			var uow = Application.Ioc.Resolve<IUnitOfWork>();
 			var response = new StaticTableSearchResponse();
 			var service = Application.Ioc.Resolve<IDomainService<TEntity, TPrimaryKey>>();
-			// 搜索数据
 			var queryMethod = new Func<IList<TEntity>>(() => service.GetMany(query => {
 				// 从服务获取数据，过滤并排序
 				foreach (var handler in handlers) {
@@ -43,20 +44,23 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions {
 				// 包装查询函数
 				queryMethod = handler.WrapQueryMethod(request, queryMethod);
 			}
-			var result = queryMethod();
-			// 设置当前页和每页数量
-			response.PageNo = request.PageNo;
-			response.PageSize = request.PageSize;
-			// 选择数据
-			// 默认把对象转换到的字符串保存到ToString中
-			var pairs = result.Select(r => new EntityToTableRow<TEntity>(r)).ToList();
-			foreach (var pair in pairs) {
-				pair.Row["ToString"] = pair.Entity.ToString();
+			using (uow.Scope()) {
+				// 查询数据
+				var result = queryMethod();
+				// 设置当前页和每页数量
+				response.PageNo = request.PageNo;
+				response.PageSize = request.PageSize;
+				// 选择数据
+				// 默认把对象转换到的字符串保存到ToString中
+				var pairs = result.Select(r => new EntityToTableRow<TEntity>(r)).ToList();
+				foreach (var pair in pairs) {
+					pair.Row["ToString"] = pair.Entity.ToString();
+				}
+				foreach (var callback in handlers) {
+					callback.OnSelect(request, pairs);
+				}
+				response.Rows = pairs.Select(p => p.Row).ToList();
 			}
-			foreach (var callback in handlers) {
-				callback.OnSelect(request, pairs);
-			}
-			response.Rows = pairs.Select(p => p.Row).ToList();
 			return response;
 		}
 	}

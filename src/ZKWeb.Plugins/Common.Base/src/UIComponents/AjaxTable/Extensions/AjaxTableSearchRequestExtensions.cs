@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable.Extensions;
@@ -25,9 +26,9 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 			this AjaxTableSearchRequest request,
 			IEnumerable<IAjaxTableHandler<TEntity, TPrimaryKey>> handlers)
 			where TEntity : class, IEntity<TPrimaryKey> {
+			var uow = Application.Ioc.Resolve<IUnitOfWork>();
 			var response = new AjaxTableSearchResponse();
 			var service = Application.Ioc.Resolve<IDomainService<TEntity, TPrimaryKey>>();
-			// 搜索数据
 			var queryMethod = new Func<IList<TEntity>>(() => service.GetMany(query => {
 				// 从服务获取数据，过滤并排序
 				foreach (var handler in handlers) {
@@ -44,23 +45,26 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 				// 包装查询函数
 				queryMethod = handler.WrapQueryMethod(request, queryMethod);
 			}
-			var result = queryMethod();
-			// 设置当前页和每页数量
-			response.PageNo = request.PageNo;
-			response.PageSize = request.PageSize;
-			// 选择数据
-			// 默认把对象转换到的字符串保存到ToString中
-			var pairs = result.Select(r => new EntityToTableRow<TEntity>(r)).ToList();
-			foreach (var pair in pairs) {
-				pair.Row["ToString"] = pair.Entity.ToString();
-			}
-			foreach (var handler in handlers) {
-				handler.OnSelect(request, pairs);
-			}
-			response.Rows = pairs.Select(p => p.Row).ToList();
-			// 调用返回搜索回应前的处理器，这里会添加需要的列
-			foreach (var handler in handlers) {
-				handler.OnResponse(request, response);
+			using (uow.Scope()) {
+				// 查询数据
+				var result = queryMethod();
+				// 设置当前页和每页数量
+				response.PageNo = request.PageNo;
+				response.PageSize = request.PageSize;
+				// 选择数据
+				// 默认把对象转换到的字符串保存到ToString中
+				var pairs = result.Select(r => new EntityToTableRow<TEntity>(r)).ToList();
+				foreach (var pair in pairs) {
+					pair.Row["ToString"] = pair.Entity.ToString();
+				}
+				foreach (var handler in handlers) {
+					handler.OnSelect(request, pairs);
+				}
+				response.Rows = pairs.Select(p => p.Row).ToList();
+				// 调用返回搜索回应前的处理器，这里会添加需要的列
+				foreach (var handler in handlers) {
+					handler.OnResponse(request, response);
+				}
 			}
 			return response;
 		}
