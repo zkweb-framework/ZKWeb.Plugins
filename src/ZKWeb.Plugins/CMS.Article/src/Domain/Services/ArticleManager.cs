@@ -98,7 +98,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Domain.Services {
 				var articleListSettings = configManager.GetData<ArticleListSettings>();
 				var searchRequest = StaticTableSearchRequest.FromHttpRequest(
 					articleListSettings.ArticlesPerPage);
-				var handlers = new ArticleTableHandler().WithExtensions();
+				var handlers = new ArticleTableHandler().WithExtraHandlers();
 				return searchRequest.BuildResponse(handlers);
 			}, ArticleSearchResultCacheTime);
 		}

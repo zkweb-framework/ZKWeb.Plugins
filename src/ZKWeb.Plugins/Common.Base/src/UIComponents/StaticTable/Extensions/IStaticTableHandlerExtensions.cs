@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions {
 		/// <param name="callback">原始的表格处理器</param>
 		/// <returns></returns>
 		public static IList<IStaticTableHandler<TEntity, TPrimaryKey>>
-			WithExtensions<TEntity, TPrimaryKey>(
+			WithExtraHandlers<TEntity, TPrimaryKey>(
 			this IStaticTableHandler<TEntity, TPrimaryKey> handler)
 			where TEntity : class, IEntity<TPrimaryKey> {
 			var result = new List<IStaticTableHandler<TEntity, TPrimaryKey>>() { handler };

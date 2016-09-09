@@ -211,7 +211,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 				var productListSettings = configManager.GetData<ProductListSettings>();
 				var searchRequest = StaticTableSearchRequest.FromHttpRequest(
 					productListSettings.ProductsPerPage);
-				var callbacks = new ProductTableHandler().WithExtensions();
+				var callbacks = new ProductTableHandler().WithExtraHandlers();
 				var searchResponse = searchRequest.BuildResponse(callbacks);
 				return searchResponse;
 			}, ProductSearchResultCacheTime);
