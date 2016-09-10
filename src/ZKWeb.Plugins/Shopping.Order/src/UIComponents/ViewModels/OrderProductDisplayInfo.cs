@@ -66,6 +66,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// </summary>
 		public long Count { get; set; }
 		/// <summary>
+		/// 已发货数量
+		/// </summary>
+		public long ShippedCount { get; set; }
+		/// <summary>
 		/// 卖家Id
 		/// </summary>
 		public Guid? SellerId { get; set; }

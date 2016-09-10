@@ -15,6 +15,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -96,13 +97,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			public override void OnSelect(
 				AjaxTableSearchRequest request, IList<EntityToTableRow<SellerOrder>> pairs) {
 				foreach (var pair in pairs) {
+					var displayInfo = pair.Entity.ToDisplayInfo();
 					pair.Row["Id"] = pair.Entity.Id;
 					pair.Row["Serial"] = pair.Entity.Serial;
-					pair.Row["HeadingHtml"] = null;
-					pair.Row["OrderProducts"] = null;
-					pair.Row["Price"] = null;
-					pair.Row["Quantity"] = null;
-					pair.Row["ShippedQuantity"] = null;
+					pair.Row["HeadingHtml"] = displayInfo.GetTableHeadingHtmlForAdmin().ToString();
+					pair.Row["OrderProducts"] = displayInfo.OrderProducts.GetSummryListHtml().ToString();
+					pair.Row["Price"] = displayInfo.OrderProducts.GetPriceListHtml().ToString();
+					pair.Row["Quantity"] = displayInfo.OrderProducts.GetOrderCountListHtml().ToString();
+					pair.Row["ShippedQuantity"] = displayInfo.OrderProducts.GetShippedCountListHtml().ToString();
 					pair.Row["TotalCost"] = null;
 					pair.Row["State"] = null;
 					pair.Row["Buyer"] = null;

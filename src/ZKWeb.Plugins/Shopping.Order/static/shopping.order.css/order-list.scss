@@ -12,7 +12,11 @@
 	.order-row-heading {
 		> td {
 			background-color: #fbfbfb;
-			padding: 0px 8px;
+			padding: 6px 8px 0px 8px;
+		}
+		/* 选中时的颜色 */
+		&.selected > td {
+			background-color: #4B8DF8;
 		}
 	}
 	/* 订单内容行的样式 */
@@ -24,6 +28,10 @@
 			.btn {
 				padding: 1px 5px;
 			}
+		}
+		/* 选中时的颜色 */
+		&.selected dl.entity-summary .description {
+			color: #eee;
 		}
 	}
 	/* 订单商品信息区域的样式，为了对齐需要固定高度*/
@@ -48,7 +56,7 @@
 		}
 	}
 	/* 订单商品订购数量和已发数量 */
-	.order-product-order-count, .order-product-order-count {
+	.order-product-order-count, .order-product-shipped-count {
 		line-height: 24px;
 		font-size: 14px;
 	}

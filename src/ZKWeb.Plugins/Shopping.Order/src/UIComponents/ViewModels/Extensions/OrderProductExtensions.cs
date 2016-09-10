@@ -43,6 +43,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			info.OriginalUnitPriceString = info.Currency.Format(info.OriginalUnitPrice);
 			info.OriginalUnitPriceDescription = orderProduct.OriginalUnitPriceCalcResult.Parts.GetDescription();
 			info.Count = orderProduct.Count;
+			info.ShippedCount = orderProduct.Deliveries.Sum(d => (long?)d.Count) ?? 0;
 			info.SellerId = product.Seller?.Id;
 			info.Seller = product.Seller?.Username;
 			info.State = product.State;

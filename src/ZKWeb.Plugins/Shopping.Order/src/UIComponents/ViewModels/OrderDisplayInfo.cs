@@ -60,6 +60,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// </summary>
 		public OrderRemarkFlags RemarkFlags { get; set; }
 		/// <summary>
+		/// 创建时间
+		/// </summary>
+		public string CreateTime { get; set; }
+		/// <summary>
 		/// 订单商品的显示信息列表
 		/// </summary>
 		public IList<OrderProductDisplayInfo> OrderProducts { get; set; }

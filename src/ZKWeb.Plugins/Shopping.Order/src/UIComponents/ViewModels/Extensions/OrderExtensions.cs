@@ -30,6 +30,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			info.OriginalTotalCost = order.OriginalTotalCostCalcResult.Parts.Sum();
 			info.Currency = currencyManager.GetCurrency(order.Currency);
 			info.RemarkFlags = order.RemarkFlags;
+			info.CreateTime = order.CreateTime.ToClientTimeString();
 			info.OrderProducts = order.OrderProducts.Select(p => p.ToDisplayInfo()).ToList();
 			return info;
 		}

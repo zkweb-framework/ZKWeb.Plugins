@@ -70,6 +70,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 		/// 关联的属性值集合
 		/// </summary>
 		public virtual ISet<OrderProductToPropertyValue> PropertyValues { get; set; }
+		/// <summary>
+		/// 发货记录
+		/// </summary>
+		public virtual ISet<OrderDeliveryToOrderProduct> Deliveries { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -77,6 +81,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 		public OrderProduct() {
 			MatchParameters = new ProductMatchParameters();
 			PropertyValues = new HashSet<OrderProductToPropertyValue>();
+			Deliveries = new HashSet<OrderDeliveryToOrderProduct>();
 		}
 
 		/// <summary>
@@ -101,6 +106,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 			builder.Map(p => p.UpdateTime);
 			builder.Map(p => p.Items, new EntityMappingOptions() { WithSerialization = true });
 			builder.HasMany(p => p.PropertyValues);
+			builder.HasMany(p => p.Deliveries);
 		}
 	}
 }

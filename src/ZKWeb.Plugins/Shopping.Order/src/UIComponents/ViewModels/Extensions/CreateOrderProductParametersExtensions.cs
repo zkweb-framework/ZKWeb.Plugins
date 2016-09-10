@@ -54,6 +54,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			info.OriginalUnitPriceString = info.UnitPriceString;
 			info.OriginalUnitPriceDescription = info.UnitPriceDescription;
 			info.Count = parameters.MatchParameters.GetOrderCount();
+			info.ShippedCount = 0;
 			info.SellerId = product.Seller?.Id;
 			info.Seller = product.Seller?.Username;
 			info.State = product.State;
