@@ -25,18 +25,18 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Enums {
 		/// 交易成功
 		/// </summary>
 		[LabelCssClass("label label-success")]
-		Success = 3,
+		OrderSuccess = 3,
 		/// <summary>
 		/// 已取消
 		/// 指买家操作取消
 		/// </summary>
 		[LabelCssClass("label label-danger")]
-		Cancelled = 4,
+		OrderCancelled = 4,
 		/// <summary>
 		/// 已作废
 		/// 指卖家操作作废
 		/// </summary>
 		[LabelCssClass("label label-danger")]
-		Invalid = 5,
+		OrderInvalid = 5,
 	}
 }

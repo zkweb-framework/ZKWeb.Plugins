@@ -109,7 +109,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "ShippedQuantity", "已发货数量" },
 			{ "TotalCost", "总金额" },
 			{ "SellerOrder", "卖家订单" },
-			{ "BuyerOrder", "买家订单" }
+			{ "BuyerOrder", "买家订单" },
+			{ "WaitingBuyerPay", "等待付款" },
+			{ "WaitingSellerSendGoods", "等待发货" },
+			{ "WaitingBuyerConfirm", "已发货" },
+			{ "OrderSuccess", "交易成功" },
+			{ "OrderCancelled", "已取消" },
+			{ "OrderInvalid", "已作废" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -105,12 +105,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 					pair.Row["Price"] = displayInfo.OrderProducts.GetPriceListHtml().ToString();
 					pair.Row["Quantity"] = displayInfo.OrderProducts.GetOrderCountListHtml().ToString();
 					pair.Row["ShippedQuantity"] = displayInfo.OrderProducts.GetShippedCountListHtml().ToString();
-					pair.Row["TotalCost"] = null;
-					pair.Row["State"] = null;
-					pair.Row["Buyer"] = null;
-					pair.Row["BuyerId"] = null;
-					pair.Row["Seller"] = null;
-					pair.Row["SellerId"] = null;
+					pair.Row["TotalCost"] = displayInfo.GetTotalCostWithPartsHtml().ToString();
+					pair.Row["State"] = displayInfo.State;
+					pair.Row["Buyer"] = displayInfo.Buyer;
+					pair.Row["BuyerId"] = displayInfo.BuyerId;
+					pair.Row["Seller"] = displayInfo.Seller;
+					pair.Row["SellerId"] = displayInfo.SellerId;
 				}
 			}
 

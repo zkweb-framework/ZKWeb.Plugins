@@ -121,6 +121,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			return new HtmlString(html);
 		}
 
+		/// <summary>
+		/// 获取订单商品已发数量列表的Html
+		/// </summary>
+		/// <param name="infos"></param>
+		/// <returns></returns>
 		public static HtmlString GetShippedCountListHtml(this IEnumerable<OrderProductDisplayInfo> infos) {
 			var shippedCountHtmls = infos.Select(info => info.GetShippedCountHtml());
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();

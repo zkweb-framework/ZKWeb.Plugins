@@ -1,0 +1,9 @@
+﻿<div class="price order-total-cost" title="{{ info.TotalCostDescription }}">
+	<div class="total-cost">{{ info.TotalCostString }}</div>
+	{% for part in info.TotalCostCalcResult.Parts %}
+	{% if part.Type == "ProductTotalPrice" %}
+	{% else %}
+	<div class="parts-cost">{{ part.Type | trans }}: {{ part.Delta | currency: info.Currency.Type }}</div>
+	{% endif %}
+	{% endfor %}
+</div>

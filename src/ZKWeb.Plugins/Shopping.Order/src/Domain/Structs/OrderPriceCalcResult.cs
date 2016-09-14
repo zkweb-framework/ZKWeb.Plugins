@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using DotLiquid;
+using System.Collections.Generic;
 using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
 	/// <summary>
 	/// 订单或订单商品的价格计算结果
 	/// </summary>
-	public class OrderPriceCalcResult {
+	public class OrderPriceCalcResult : ILiquidizable {
 		/// <summary>
 		/// 价格的组成部分
 		/// </summary>
@@ -23,9 +24,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
 		}
 
 		/// <summary>
+		/// 允许在模板中描画
+		/// </summary>
+		/// <returns></returns>
+		public object ToLiquid() {
+			return new { Parts, Currency };
+		}
+
+		/// <summary>
 		/// 价格的组成部分
 		/// </summary>
-		public class Part {
+		public class Part : ILiquidizable {
 			/// <summary>
 			/// 类型
 			/// </summary>
@@ -48,6 +57,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Structs {
 			public Part(string type, decimal delta) {
 				Type = type;
 				Delta = delta.Normalize();
+			}
+
+			/// <summary>
+			/// 允许在模板中描画
+			/// </summary>
+			/// <returns></returns>
+			public object ToLiquid() {
+				return new { Type, Delta };
 			}
 		}
 	}

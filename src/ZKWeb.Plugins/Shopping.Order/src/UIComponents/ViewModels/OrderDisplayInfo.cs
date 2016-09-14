@@ -48,9 +48,33 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// </summary>
 		public decimal TotalCost { get; set; }
 		/// <summary>
+		/// 订单总金额的字符串，经过货币格式化
+		/// </summary>
+		public string TotalCostString { get; set; }
+		/// <summary>
+		/// 订单总金额的描述
+		/// </summary>
+		public string TotalCostDescription { get; set; }
+		/// <summary>
+		/// 订单总金额的计算结果对象
+		/// </summary>
+		public OrderPriceCalcResult TotalCostCalcResult { get; set; }
+		/// <summary>
 		/// 原始订单总金额
 		/// </summary>
 		public decimal OriginalTotalCost { get; set; }
+		/// <summary>
+		/// 原始订单总金额的字符串，经过货币格式化
+		/// </summary>
+		public string OriginalTotalCostString { get; set; }
+		/// <summary>
+		/// 原始订单总金额的描述
+		/// </summary>
+		public string OriginalTotalCostDescription { get; set; }
+		/// <summary>
+		/// 原始订单总金额的计算结果对象
+		/// </summary>
+		public OrderPriceCalcResult OriginalTotalCostResult { get; set; }
 		/// <summary>
 		/// 货币单位
 		/// </summary>

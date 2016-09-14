@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
 using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
@@ -17,6 +18,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		/// <returns></returns>
 		public static OrderDisplayInfo ToDisplayInfo(this SellerOrder order) {
 			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
+			var currency = currencyManager.GetCurrency(order.Currency);
 			var info = new OrderDisplayInfo();
 			info.Serial = order.Serial;
 			info.BuyerId = order.Buyer?.Id;
@@ -27,7 +29,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			info.StateDescription = new T(order.State.GetDescription());
 			info.OrderParameters = order.OrderParameters;
 			info.TotalCost = order.TotalCost;
+			info.TotalCostString = currency.Format(info.TotalCost);
+			info.TotalCostDescription = order.TotalCostCalcResult.Parts.GetDescription();
+			info.TotalCostCalcResult = order.TotalCostCalcResult;
 			info.OriginalTotalCost = order.OriginalTotalCostCalcResult.Parts.Sum();
+			info.OriginalTotalCostString = currency.Format(info.OriginalTotalCost);
+			info.OriginalTotalCostDescription = order.OriginalTotalCostCalcResult.Parts.GetDescription();
+			info.OriginalTotalCostResult = order.OriginalTotalCostCalcResult;
 			info.Currency = currencyManager.GetCurrency(order.Currency);
 			info.RemarkFlags = order.RemarkFlags;
 			info.CreateTime = order.CreateTime.ToClientTimeString();
