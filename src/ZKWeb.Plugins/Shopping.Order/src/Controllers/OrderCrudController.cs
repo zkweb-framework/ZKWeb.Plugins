@@ -33,7 +33,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		public override string TileClass { get { return "tile bg-aqua"; } }
 		public override string IconClass { get { return "fa fa-cart-arrow-down"; } }
 		public override string AddUrl { get { return null; } }
-		public override string EditUrl { get { return null; } }
 		protected override IAjaxTableHandler<SellerOrder, Guid> GetTableHandler() { return new TableHandler(); }
 		protected override IModelFormBuilder GetAddForm() { throw new NotImplementedException(); }
 		protected override IModelFormBuilder GetEditForm() { throw new NotImplementedException(); }
@@ -129,6 +128,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				response.Columns.AddEditColumnFor<UserCrudController>("Buyer", "BuyerId", width: "70");
 				response.Columns.AddEditColumnFor<UserCrudController>("Seller", "SellerId", width: "70");
 				var actionColumn = response.Columns.AddActionColumn();
+				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
+				if (!deleted) {
+					actionColumn.AddEditActionFor<OrderCrudController>();
+				}
 			}
 		}
 	}
