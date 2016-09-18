@@ -40,5 +40,60 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			return new HtmlString(templateManager.RenderTemplate(
 				"shopping.order/tmpl.order_total_cost_with_parts.html", new { info }));
 		}
+
+		/// <summary>
+		/// 获取管理员查看的订单基本信息Html
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <returns></returns>
+		public static HtmlString GetBaseInformationHtmlForAdmin(this OrderDisplayInfo info) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			return new HtmlString(templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_base_information_for_admin.html", new { info }));
+		}
+
+		/// <summary>
+		/// 获取管理员查看的订单发货记录Html
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <returns></returns>
+		public static HtmlString GetDeliveryRecordsHtmlForAdmin(this OrderDisplayInfo info) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			return new HtmlString(templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_delivery_records_for_admin.html", new { info }));
+		}
+
+		/// <summary>
+		/// 获取管理员查看的订单记录Html
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <returns></returns>
+		public static HtmlString GetOrderRecordsHtmlForAdmin(this OrderDisplayInfo info) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			return new HtmlString(templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_records_for_admin.html", new { info }));
+		}
+
+		/// <summary>
+		/// 获取管理员查看的关联交易Html
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <returns></returns>
+		public static HtmlString GetReleatedTransactionsHtmlForAdmin(this OrderDisplayInfo info) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			return new HtmlString(templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_releated_transactions_for_admin.html", new { info }));
+		}
+
+		/// <summary>
+		/// 获取管理员查看的订单留言Html
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <returns></returns>
+		public static HtmlString GetOrderCommentsHtmlForAdmin(this OrderDisplayInfo info) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			return new HtmlString(templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_comments_for_admin.html", new { info }));
+		}
 	}
 }

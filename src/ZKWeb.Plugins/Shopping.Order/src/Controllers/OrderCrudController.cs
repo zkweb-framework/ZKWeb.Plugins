@@ -11,11 +11,13 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
+using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -35,7 +37,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		public override string AddUrl { get { return null; } }
 		protected override IAjaxTableHandler<SellerOrder, Guid> GetTableHandler() { return new TableHandler(); }
 		protected override IModelFormBuilder GetAddForm() { throw new NotImplementedException(); }
-		protected override IModelFormBuilder GetEditForm() { throw new NotImplementedException(); }
+		protected override IModelFormBuilder GetEditForm() { return new Form(); }
 
 		/// <summary>
 		/// 初始化
@@ -132,6 +134,63 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				if (!deleted) {
 					actionColumn.AddEditActionFor<OrderCrudController>();
 				}
+			}
+		}
+
+		/// <summary>
+		/// 订单表单
+		/// </summary>
+		public class Form : TabEntityFormBuilder<SellerOrder, Guid, Form> {
+			/// <summary>
+			/// 基本信息的Html
+			/// </summary>
+			[HtmlField("BaseInformationHtml")]
+			public HtmlString BaseInformationHtml { get; set; }
+			/// <summary>
+			/// 发货记录的Html
+			/// </summary>
+			[HtmlField("DeliveryRecordsHtml", Group = "DeliveryRecords")]
+			public HtmlString DeliveryRecordsHtml { get; set; }
+			/// <summary>
+			/// 订单记录的Html
+			/// </summary>
+			[HtmlField("OrderRecordsHtml", Group = "OrderRecords")]
+			public HtmlString OrderRecordsHtml { get; set; }
+			/// <summary>
+			/// 关联交易的Html
+			/// </summary>
+			[HtmlField("ReleatedTransactionsHtml", Group = "ReleatedTransactions")]
+			public HtmlString ReleatedTransactionsHtml { get; set; }
+			/// <summary>
+			/// 订单留言的Html
+			/// </summary>
+			[HtmlField("OrderCommentsHtml", Group = "OrderComments")]
+			public HtmlString OrderCommentsHtml { get; set; }
+			/// <summary>
+			/// 备注
+			/// </summary>
+			[RichTextEditor("Remark", Group = "Remark")]
+			public string Remark { get; set; }
+
+			/// <summary>
+			/// 绑定表单
+			/// </summary>
+			protected override void OnBind(SellerOrder bindFrom) {
+				var displayInfo = bindFrom.ToDisplayInfo();
+				BaseInformationHtml = displayInfo.GetBaseInformationHtmlForAdmin();
+				DeliveryRecordsHtml = displayInfo.GetDeliveryRecordsHtmlForAdmin();
+				OrderRecordsHtml = displayInfo.GetOrderRecordsHtmlForAdmin();
+				ReleatedTransactionsHtml = displayInfo.GetReleatedTransactionsHtmlForAdmin();
+				OrderCommentsHtml = displayInfo.GetOrderCommentsHtmlForAdmin();
+				Remark = bindFrom.Remark;
+			}
+
+			/// <summary>
+			/// 提交表单
+			/// </summary>
+			protected override object OnSubmit(SellerOrder saveTo) {
+				saveTo.Remark = Remark;
+				return this.SaveSuccessAndCloseModal();
 			}
 		}
 	}
