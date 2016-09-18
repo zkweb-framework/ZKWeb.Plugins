@@ -1,0 +1,16 @@
+﻿<div class="order-details">
+	<div class="order-details-heading">
+		{{ "Order Informations" | trans }}
+		<div class="tool-buttons">
+			{% for toolButton in info.ToolButtonHtmls %}
+			{{ toolButton }}
+			{% endfor %}
+		</div>
+	</div>
+	<div class="order-details-body">
+		{% for subject in info.SubjectHtmls %}
+		{{ subject }}
+		{% endfor %}
+		<div class='clearfix'></div>
+	</div>
+</div>

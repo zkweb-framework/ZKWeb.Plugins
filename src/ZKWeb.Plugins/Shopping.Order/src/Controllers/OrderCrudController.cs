@@ -44,6 +44,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// </summary>
 		public OrderCrudController() {
 			IncludeCss.Add("/static/shopping.order.css/order-list.css");
+			IncludeCss.Add("/static/shopping.order.css/order-view.css");
 		}
 
 		/// <summary>

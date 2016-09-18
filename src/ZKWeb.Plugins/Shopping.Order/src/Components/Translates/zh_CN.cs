@@ -119,7 +119,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "DeliveryRecords", "发货记录" },
 			{ "OrderRecords", "订单记录" },
 			{ "ReleatedTransactions", "关联交易" },
-			{ "OrderComments", "订单留言" }
+			{ "OrderComments", "订单留言" },
+			{ "Order Informations", "订单信息" }
 		};
 
 		public bool CanTranslate(string code) {

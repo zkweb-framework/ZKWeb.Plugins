@@ -88,6 +88,18 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// </summary>
 		public string CreateTime { get; set; }
 		/// <summary>
+		/// 管理员显示的警告信息列表
+		/// </summary>
+		public IList<string> WarningsForAdmin { get; set; }
+		/// <summary>
+		/// 卖家显示的警告信息列表
+		/// </summary>
+		public IList<string> WarningsForSeller { get; set; }
+		/// <summary>
+		/// 买家显示的警告信息列表
+		/// </summary>
+		public IList<string> WarningsForBuyer { get; set; }
+		/// <summary>
 		/// 订单商品的显示信息列表
 		/// </summary>
 		public IList<OrderProductDisplayInfo> OrderProducts { get; set; }
@@ -96,6 +108,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// 初始化
 		/// </summary>
 		public OrderDisplayInfo() {
+			WarningsForAdmin = new List<string>();
+			WarningsForSeller = new List<string>();
+			WarningsForBuyer = new List<string>();
 			OrderProducts = new List<OrderProductDisplayInfo>();
 		}
 

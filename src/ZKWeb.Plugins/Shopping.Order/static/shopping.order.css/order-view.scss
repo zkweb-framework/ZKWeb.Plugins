@@ -1,0 +1,158 @@
+﻿/* 订单详情页的样式 */
+
+/* 订单信息 */
+.order-overview {
+	/* 警告 */
+	.order-warnings {
+		.alert {
+			padding: 3px 6px;
+		}
+	}
+	/* 详细信息 */
+	.order-details {
+		float: left;
+		border: 1px solid #EEE;
+		width: 290px;
+		/* 头部 */
+		.order-details-heading {
+			height: 25px;
+			line-height: 25px;
+			background-color: #F3F3F3;
+			border-bottom: 1px solid #EEE;
+			padding: 0px 5px;
+
+			.tool-buttons {
+				float: right;
+			}
+		}
+		/* 内容 */
+		.order-details-body {
+			padding: 5px 0px;
+
+			> dl {
+				line-height: 25px;
+				color: #666;
+				clear: both;
+				margin: 0px;
+
+				> dt {
+					float: left;
+					text-align: right;
+					width: 80px;
+					padding: 4px 4px 4px 0px;
+				}
+
+				> dd {
+					float: left;
+					width: 190px;
+					padding: 4px 0px;
+
+					.more {
+						float: right;
+					}
+				}
+			}
+		}
+	}
+	/* 低分辨率时订单信息的样式 */
+	@media (max-width: 768px) {
+		.order-details {
+			width: 100%;
+		}
+	}
+	/* 订单状态和操作按钮列表 */
+	.order-state-and-actions {
+		float: left;
+		padding: 20px 0px 20px 20px;
+		/* 订单状态 */
+		.order-state {
+			font-size: 18px;
+			font-weight: bold;
+			margin: 0px 0px 15px 0px;
+
+			> i {
+				font-size: 26px;
+				border-radius: 50%;
+				border: 3px solid;
+				margin: 0px 12px 0px 0px;
+				width: 38px;
+				height: 38px;
+				/* 叹号 */
+				&.fa-exclamation {
+					padding: 11px 0px 0px 12px;
+				}
+				/* 勾 */
+				&.fa-check {
+					padding: 11px 0px 0px 3px;
+				}
+				/* 叉号 */
+				&.fa-remove {
+					padding: 9px 0px 0px 6px;
+				}
+			}
+		}
+		/* 操作按钮列表 */
+		.order-actions {
+		}
+	}
+}
+
+/* 商品表格 */
+.order-product-table {
+	margin: 15px 0px 0px 0px;
+	/* 订单商品单价 */
+	.order-product-price {
+		line-height: 24px;
+		/* 订单商品原价 */
+		&.original-price {
+			line-height: 12px;
+			text-decoration: line-through;
+			color: #999;
+		}
+	}
+	/* 订单商品订购数量和已发数量 */
+	.order-product-order-count, .order-product-order-count {
+		line-height: 24px;
+		font-size: 14px;
+	}
+}
+
+/* 订单金额详情 */
+.order-cost-details {
+	float: right;
+
+	> dl {
+		> dt {
+			float: left;
+			text-align: right;
+			width: 80px;
+			padding: 4px 4px 4px 0px;
+		}
+
+		> dd {
+			float: left;
+			width: 80px;
+			padding: 4px 0px;
+		}
+	}
+	/* 订单总价 */
+	.total-cost {
+		> dd {
+			font-size: 14px;
+			margin-top: -2px;
+			font-weight: bold;
+			color: #F13E46;
+		}
+	}
+	/* 订单原价 */
+	.original-total-cost {
+		color: #999;
+
+		> dd {
+			text-decoration: line-through;
+			font-size: 14px;
+			margin-top: -2px;
+			font-weight: bold;
+		}
+	}
+}
