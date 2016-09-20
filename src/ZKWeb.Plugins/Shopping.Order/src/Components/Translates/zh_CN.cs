@@ -120,7 +120,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "OrderRecords", "订单记录" },
 			{ "ReleatedTransactions", "关联交易" },
 			{ "OrderComments", "订单留言" },
-			{ "Order Informations", "订单信息" }
+			{ "Order Informations", "订单信息" },
+			{ "You're using secured paid, please confirm transaction on payment platform after received goods",
+				"您正在使用担保交易，请在收到货物后到支付平台上确认交易" },
+			{ "Buyer is using secured paid, please tell the buyer confirm transaction on payment platform after received goods",
+				"买家正在使用担保交易，请通知买家在收到货物后到支付平台上确认交易" },
+			{ "Releated transaction contains error: {0}", "关联交易包含错误: {0}" }
 		};
 
 		public bool CanTranslate(string code) {

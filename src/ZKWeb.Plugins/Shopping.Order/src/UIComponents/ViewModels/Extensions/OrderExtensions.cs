@@ -2,9 +2,11 @@
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
 using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderSubjectProviders.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderWarningProviders.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Enums;
 using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
@@ -16,11 +18,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		/// 转换订单到显示信息
 		/// </summary>
 		/// <param name="order">订单</param>
+		/// <param name="operatorType">操作人类型</param>
 		/// <returns></returns>
-		public static OrderDisplayInfo ToDisplayInfo(this SellerOrder order) {
+		public static OrderDisplayInfo ToDisplayInfo(this SellerOrder order, OrderOperatorType operatorType) {
 			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
 			var currency = currencyManager.GetCurrency(order.Currency);
 			var warningProviders = Application.Ioc.ResolveMany<IOrderWarningProvider>();
+			var subjectProviders = Application.Ioc.ResolveMany<IOrderSubjectProvider>();
 			var info = new OrderDisplayInfo();
 			info.Serial = order.Serial;
 			info.BuyerId = order.Buyer?.Id;
@@ -41,9 +45,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			info.Currency = currencyManager.GetCurrency(order.Currency);
 			info.RemarkFlags = order.RemarkFlags;
 			info.CreateTime = order.CreateTime.ToClientTimeString();
-			warningProviders.ForEach(p => p.AddWarningsForAdmin(order, info.WarningsForAdmin));
-			warningProviders.ForEach(p => p.AddWarningsForSeller(order, info.WarningsForSeller));
-			warningProviders.ForEach(p => p.AddWarningsForBuyer(order, info.WarningsForBuyer));
+			warningProviders.ForEach(p => p.AddWarnings(order, info.WarningHtmls, operatorType));
+			subjectProviders.ForEach(p => p.AddToolButtons(order, info.ToolButtonHtmls, operatorType));
+			subjectProviders.ForEach(p => p.AddSubjects(order, info.SubjectHtmls, operatorType));
 			info.OrderProducts = order.OrderProducts.Select(p => p.ToDisplayInfo()).ToList();
 			return info;
 		}

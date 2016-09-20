@@ -17,6 +17,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
@@ -106,7 +107,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			public override void OnSelect(
 				AjaxTableSearchRequest request, IList<EntityToTableRow<SellerOrder>> pairs) {
 				foreach (var pair in pairs) {
-					var displayInfo = pair.Entity.ToDisplayInfo();
+					var displayInfo = pair.Entity.ToDisplayInfo(OrderOperatorType.Admin);
 					pair.Row["Id"] = pair.Entity.Id;
 					pair.Row["Serial"] = pair.Entity.Serial;
 					pair.Row["HeadingHtml"] = displayInfo.GetTableHeadingHtmlForAdmin().ToString();
@@ -184,7 +185,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			/// 绑定表单
 			/// </summary>
 			protected override void OnBind(SellerOrder bindFrom) {
-				var displayInfo = bindFrom.ToDisplayInfo();
+				var displayInfo = bindFrom.ToDisplayInfo(OrderOperatorType.Admin);
 				BaseInformationHtml = displayInfo.GetBaseInformationHtmlForAdmin();
 				DeliveryRecordsHtml = displayInfo.GetDeliveryRecordsHtmlForAdmin();
 				OrderRecordsHtml = displayInfo.GetOrderRecordsHtmlForAdmin();

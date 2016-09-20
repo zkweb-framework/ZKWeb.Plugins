@@ -22,7 +22,9 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
+	using Components.PaymentTransactionHandlers;
 	using Extensions;
+	using Finance.Payment.src.Domain.Services;
 	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>
@@ -176,6 +178,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				uow.Context.FinishTransaction();
 				return result;
 			}
+		}
+
+		/// <summary>
+		/// 获取订单关联的交易列表
+		/// </summary>
+		/// <param name="orderId">订单Id</param>
+		/// <returns></returns>
+		public virtual IList<PaymentTransaction> GetReleatedTransactions(Guid orderId) {
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			return transactionManager.GetMany(OrderTransactionHandler.ConstType, orderId);
 		}
 	}
 }

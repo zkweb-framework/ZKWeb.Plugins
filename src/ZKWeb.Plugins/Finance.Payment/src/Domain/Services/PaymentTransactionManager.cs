@@ -127,6 +127,16 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 根据交易类型和关联Id获取交易列表
+		/// </summary>
+		/// <param name="type">交易类型</param>
+		/// <param name="releatedId">关联Id</param>
+		/// <returns></returns>
+		public virtual IList<PaymentTransaction> GetMany(string type, Guid? releatedId) {
+			return GetMany(t => t.Type == type && t.ReleatedId == releatedId);
+		}
+
+		/// <summary>
 		/// 设置交易最后发生的错误
 		/// </summary>
 		/// <param name="transactionId">交易Id</param>
