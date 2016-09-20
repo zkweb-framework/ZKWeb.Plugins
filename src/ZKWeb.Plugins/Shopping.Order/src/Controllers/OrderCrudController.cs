@@ -16,6 +16,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
@@ -59,6 +60,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				table.StandardSetupFor<OrderCrudController>();
 				table.Template = "/static/shopping.order.tmpl/orderTable.tmpl";
 				searchBar.StandardSetupFor<OrderCrudController>("Serial/Remark");
+				searchBar.BeforeItems.AddOrderFilterBar();
 				searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("Buyer")));
 				searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("Seller")));
 				searchBar.Conditions.Add(new FormField(new DropdownListFieldAttribute(
@@ -70,6 +72,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			/// </summary>
 			public override void OnQuery(
 				AjaxTableSearchRequest request, ref IQueryable<SellerOrder> query) {
+				// 按状态
+				var state = request.Conditions.GetOrDefault<OrderState?>("State");
+				if (state != null) {
+					query = query.Where(o => o.State == state);
+				}
 				// 按关键字
 				if (!string.IsNullOrEmpty(request.Keyword)) {
 					query = query.Where(q =>

@@ -155,16 +155,23 @@ $.fn.closestAjaxTable = function () {
 
 $(function () {
 	// 自动初始化ajax表格
-	$(".ajax-table").each(function () {
-		var $table = $(this);
-		var options = {
-			target: $table.attr("ajax-table-target"),
-			template: $table.attr("ajax-table-template") || undefined
-		};
-		options = $.extend(options,
-			JSON.parse($table.attr("ajax-table-extra-options") || "{}") || {});
-		var table = $table.ajaxTable(options)
-		options.target && table.refresh();
+	var setup = function ($elements) {
+		$elements.each(function () {
+			var $table = $(this);
+			var options = {
+				target: $table.attr("ajax-table-target"),
+				template: $table.attr("ajax-table-template") || undefined
+			};
+			options = $.extend(options,
+				JSON.parse($table.attr("ajax-table-extra-options") || "{}") || {});
+			var table = $table.ajaxTable(options)
+			options.target && table.refresh();
+		});
+	};
+	var rule = ".ajax-table";
+	setup($(rule));
+	$(document).on("dynamicLoaded", function (e, contents) {
+		setup($(contents).find(rule));
 	});
 	// ajax表格菜单功能
 	// 刷新
@@ -186,5 +193,15 @@ $(function () {
 	});
 	$body.on("click", ".ajax-table-search-bar .advance-search-button", function (e) {
 		$(this).closestAjaxTable().applySearch(this);
+	});
+	// ajax表格过滤按钮功能
+	// 点击时设置条件 data-key的值 等于 data-value的值
+	$body.on("click", ".ajax-table-search-bar .btn-filter", function (e) {
+		var $this = $(this);
+		var table = $(this).closestAjaxTable();
+		$this.closest(".btn-group").find(".btn-filter").removeClass("active");
+		$this.addClass("active");
+		table.searchRequest.Conditions[$this.data("key")] = $this.data("value");
+		table.applySearch(this);
 	});
 });
