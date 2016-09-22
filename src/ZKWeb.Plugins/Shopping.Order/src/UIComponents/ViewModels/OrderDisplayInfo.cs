@@ -35,11 +35,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// <summary>
 		/// 订单状态
 		/// </summary>
-		public OrderState State { get; set; }
+		public string State { get; set; }
 		/// <summary>
 		/// 订单状态的描述
 		/// </summary>
 		public string StateDescription { get; set; }
+		/// <summary>
+		/// 订单状态到各个状态的时间
+		/// </summary>
+		public IDictionary<string, string> StateTimes { get; set; }
 		/// <summary>
 		/// 订单参数
 		/// </summary>
@@ -109,6 +113,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// 初始化
 		/// </summary>
 		public OrderDisplayInfo() {
+			StateTimes = new Dictionary<string, string>();
 			WarningHtmls = new List<HtmlString>();
 			ToolButtonHtmls = new List<HtmlString>();
 			SubjectHtmls = new List<HtmlString>();

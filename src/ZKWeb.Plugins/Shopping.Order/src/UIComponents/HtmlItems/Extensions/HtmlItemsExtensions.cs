@@ -14,7 +14,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions {
 	/// </summary>
 	public static class HtmlItemsExtensions {
 		/// <summary>
-		/// 添加订单过滤栏
+		/// 添加订单列表过滤栏
 		/// 适合添加到搜索栏的旁边
 		/// </summary>
 		/// <param name="items">html项列表</param>
@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions {
 			var states = Enum.GetValues(typeof(OrderState)).OfType<OrderState>()
 				.Select(s => new { name = new T(s.GetDescription()), value = (int)s });
 			var html = templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_status_filter.html", new { states });
+				"shopping.order/tmpl.order_list.status_filter.html", new { states });
 			items.Add(new HtmlItem(html));
 		}
 	}

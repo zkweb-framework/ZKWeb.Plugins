@@ -45,6 +45,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// 初始化
 		/// </summary>
 		public OrderCrudController() {
+			IncludeCss.Add("/static/shopping.order.css/progress-wizard.css");
 			IncludeCss.Add("/static/shopping.order.css/order-list.css");
 			IncludeCss.Add("/static/shopping.order.css/order-view.css");
 			IncludeJs.Add("/static/shopping.order.js/order-list.min.js");
@@ -112,7 +113,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 					var displayInfo = pair.Entity.ToDisplayInfo(OrderOperatorType.Admin);
 					pair.Row["Id"] = pair.Entity.Id;
 					pair.Row["Serial"] = pair.Entity.Serial;
-					pair.Row["HeadingHtml"] = displayInfo.GetTableHeadingHtmlForAdmin().ToString();
+					pair.Row["HeadingHtml"] = displayInfo.GetTableHeadingHtml().ToString();
 					pair.Row["OrderProducts"] = displayInfo.OrderProducts.GetSummryListHtml().ToString();
 					pair.Row["Price"] = displayInfo.OrderProducts.GetPriceListHtml().ToString();
 					pair.Row["Quantity"] = displayInfo.OrderProducts.GetOrderCountListHtml().ToString();
@@ -188,11 +189,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			/// </summary>
 			protected override void OnBind(SellerOrder bindFrom) {
 				var displayInfo = bindFrom.ToDisplayInfo(OrderOperatorType.Admin);
-				BaseInformationHtml = displayInfo.GetBaseInformationHtmlForAdmin();
-				DeliveryRecordsHtml = displayInfo.GetDeliveryRecordsHtmlForAdmin();
-				OrderRecordsHtml = displayInfo.GetOrderRecordsHtmlForAdmin();
-				ReleatedTransactionsHtml = displayInfo.GetReleatedTransactionsHtmlForAdmin();
-				OrderCommentsHtml = displayInfo.GetOrderCommentsHtmlForAdmin();
+				BaseInformationHtml = displayInfo.GetBaseInformationHtml();
+				DeliveryRecordsHtml = displayInfo.GetDeliveryRecordsHtml();
+				OrderRecordsHtml = displayInfo.GetOrderRecordsHtml();
+				ReleatedTransactionsHtml = displayInfo.GetReleatedTransactionsHtml();
+				OrderCommentsHtml = displayInfo.GetOrderCommentsHtml();
 				Remark = bindFrom.Remark;
 			}
 

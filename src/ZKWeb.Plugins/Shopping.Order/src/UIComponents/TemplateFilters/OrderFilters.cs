@@ -1,4 +1,7 @@
-﻿using ZKWeb.Templating;
+﻿using DotLiquid;
+using System.Collections.Generic;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels;
+using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.TemplateFilters {
@@ -65,6 +68,26 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.TemplateFilters {
 			var html = templateManager.RenderTemplate(
 				"shopping.order/tmpl.order_product_count_editor.html", new { info });
 			return new HtmlString(html);
+		}
+
+		/// <summary>
+		/// 获取指定的订单状态在进度条中的css类
+		/// 如果状态和当前状态一致，返回active
+		/// 如果状态已经触发过，返回completed
+		/// 如果状态没有触发过，返回空值
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <param name="state">指定状态的名称</param>
+		/// <returns></returns>
+		public static string OrderStateProgressClass(Hash info, string state) {
+			var inState = info.Get<string>(nameof(OrderDisplayInfo.State));
+			var stateTimes = info.Get<IDictionary<string, string>>(nameof(OrderDisplayInfo.StateTimes));
+			if (state == inState) {
+				return "active";
+			} else if (stateTimes.ContainsKey(state)) {
+				return "completed";
+			}
+			return "";
 		}
 	}
 }

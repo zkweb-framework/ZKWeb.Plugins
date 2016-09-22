@@ -7,14 +7,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 	/// </summary>
 	public static class OrderDisplayInfoExtensions {
 		/// <summary>
-		/// 获取后台订单管理使用的表格头部
+		/// 获取订单列表页的表格头部
 		/// </summary>
 		/// <param name="info">订单显示信息</param>
 		/// <returns></returns>
-		public static HtmlString GetTableHeadingHtmlForAdmin(this OrderDisplayInfo info) {
+		public static HtmlString GetTableHeadingHtml(this OrderDisplayInfo info) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_table_heading_for_admin.html", new { info }));
+				"shopping.order/tmpl.order_list.table_heading.html", new { info }));
 		}
 
 		/// <summary>
@@ -25,7 +25,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		public static HtmlString GetTotalCostHtml(this OrderDisplayInfo info) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_total_cost.html", new { info }));
+				"shopping.order/tmpl.order_list.total_cost.html", new { info }));
 		}
 
 		/// <summary>
@@ -38,40 +38,40 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		public static HtmlString GetTotalCostWithPartsHtml(this OrderDisplayInfo info) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_total_cost_with_parts.html", new { info }));
+				"shopping.order/tmpl.order_list.total_cost_with_parts.html", new { info }));
 		}
 
 		/// <summary>
-		/// 获取管理员查看的订单基本信息Html
+		/// 获取订单基本信息的Html
 		/// </summary>
 		/// <param name="info">订单显示信息</param>
 		/// <returns></returns>
-		public static HtmlString GetBaseInformationHtmlForAdmin(this OrderDisplayInfo info) {
+		public static HtmlString GetBaseInformationHtml(this OrderDisplayInfo info) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_base_information_for_admin.html", new { info }));
+				"shopping.order/tmpl.order_view.tab_base_information.html", new { info }));
 		}
 
 		/// <summary>
-		/// 获取管理员查看的订单发货记录Html
+		/// 获取订单发货记录的Html
 		/// </summary>
 		/// <param name="info">订单显示信息</param>
 		/// <returns></returns>
-		public static HtmlString GetDeliveryRecordsHtmlForAdmin(this OrderDisplayInfo info) {
+		public static HtmlString GetDeliveryRecordsHtml(this OrderDisplayInfo info) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_delivery_records_for_admin.html", new { info }));
+				"shopping.order/tmpl.order_view.tab_delivery_records.html", new { info }));
 		}
 
 		/// <summary>
-		/// 获取管理员查看的订单记录Html
+		/// 获取订单记录的Html
 		/// </summary>
 		/// <param name="info">订单显示信息</param>
 		/// <returns></returns>
-		public static HtmlString GetOrderRecordsHtmlForAdmin(this OrderDisplayInfo info) {
+		public static HtmlString GetOrderRecordsHtml(this OrderDisplayInfo info) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_records_for_admin.html", new { info }));
+				"shopping.order/tmpl.order_view.tab_records.html", new { info }));
 		}
 
 		/// <summary>
@@ -79,21 +79,21 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		/// </summary>
 		/// <param name="info">订单显示信息</param>
 		/// <returns></returns>
-		public static HtmlString GetReleatedTransactionsHtmlForAdmin(this OrderDisplayInfo info) {
+		public static HtmlString GetReleatedTransactionsHtml(this OrderDisplayInfo info) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_releated_transactions_for_admin.html", new { info }));
+				"shopping.order/tmpl.order_view.tab_releated_transactions.html", new { info }));
 		}
 
 		/// <summary>
-		/// 获取管理员查看的订单留言Html
+		/// 获取订单留言的Html
 		/// </summary>
 		/// <param name="info">订单显示信息</param>
 		/// <returns></returns>
-		public static HtmlString GetOrderCommentsHtmlForAdmin(this OrderDisplayInfo info) {
+		public static HtmlString GetOrderCommentsHtml(this OrderDisplayInfo info) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_comments_for_admin.html", new { info }));
+				"shopping.order/tmpl.order_view.tab_comments.html", new { info }));
 		}
 	}
 }

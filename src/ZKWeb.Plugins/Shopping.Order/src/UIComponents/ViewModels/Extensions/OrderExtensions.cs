@@ -31,8 +31,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			info.Buyer = order.Buyer?.Username;
 			info.SellerId = order.Owner?.Id;
 			info.Seller = order.Owner?.Username;
-			info.State = order.State;
+			info.State = order.State.ToString();
 			info.StateDescription = new T(order.State.GetDescription());
+			info.StateTimes = order.StateTimes.ToDictionary(
+				e => e.Key.ToString(), e => e.Value.ToClientTimeString());
 			info.OrderParameters = order.OrderParameters;
 			info.TotalCost = order.TotalCost;
 			info.TotalCostString = currency.Format(info.TotalCost);

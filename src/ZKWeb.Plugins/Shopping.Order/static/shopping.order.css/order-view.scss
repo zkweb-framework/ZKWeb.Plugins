@@ -2,6 +2,7 @@
 
 /* 订单信息 */
 .order-overview {
+	display: flex;
 	/* 警告 */
 	.order-warnings {
 		.alert {
@@ -54,14 +55,9 @@
 			}
 		}
 	}
-	/* 低分辨率时订单信息的样式 */
-	@media (max-width: 768px) {
-		.order-details {
-			width: 100%;
-		}
-	}
 	/* 订单状态和操作按钮列表 */
 	.order-state-and-actions {
+		flex: 1;
 		float: left;
 		padding: 20px 0px 20px 20px;
 		/* 订单状态 */
@@ -93,6 +89,17 @@
 		}
 		/* 操作按钮列表 */
 		.order-actions {
+		}
+	}
+}
+
+/* 低分辨率时的样式 */
+@media (max-width: 768px) {
+	.order-overview {
+		display: block;
+
+		.order-details, .order-state-and-actions {
+			width: 100%;
 		}
 	}
 }

@@ -64,7 +64,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		protected override void OnBind() {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			ShippingAddressAddin = new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.user_shipping_address_addin.html", null));
+				"shopping.order/tmpl.cart_shipping_address_addin.html", null));
 		}
 	}
 }

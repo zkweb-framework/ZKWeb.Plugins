@@ -31,7 +31,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderSubjectProviders {
 			if (!string.IsNullOrEmpty(address.DetailedAddress)) {
 				var templateManager = Application.Ioc.Resolve<TemplateManager>();
 				toolButtons.Add(new HtmlString(templateManager.RenderTemplate(
-					"shopping.order/tmpl.order_shipping_address_copy_button.html",
+					"shopping.order/tmpl.order_view.details_copy_address.html",
 					new { summary = address.GenerateSummary() })));
 			}
 		}
@@ -46,7 +46,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderSubjectProviders {
 			var address = order.OrderParameters.GetShippingAddress();
 			if (!string.IsNullOrEmpty(address.DetailedAddress)) {
 				subjects.Add(new HtmlString(templateManager.RenderTemplate(
-					"shopping.order/tmpl.order_details_subject_row.html",
+					"shopping.order/tmpl.order_view.details_subject_row.html",
 					new { name = new T("ShippingAddress"), value = address.GenerateSummary() })));
 			}
 			// 买家留言和卖家留言
@@ -59,25 +59,25 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderSubjectProviders {
 				.OrderBy(c => c.CreateTime)
 				.LastOrDefault()?.Contents;
 			subjects.Add(new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_details_comment_row.html",
+				"shopping.order/tmpl.order_view.details_comment_row.html",
 				new { name = new T("BuyerComment"), value = lastBuyerComment })));
 			subjects.Add(new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_details_comment_row.html",
+				"shopping.order/tmpl.order_view.details_comment_row.html",
 				new { name = new T("SellerComment"), value = lastSellerComment })));
 			// 订单编号
 			subjects.Add(new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_details_subject_row.html",
+				"shopping.order/tmpl.order_view.details_subject_row.html",
 				new { name = new T("OrderSerial"), value = order.Serial })));
 			// 下单时间
 			subjects.Add(new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_details_subject_row.html",
+				"shopping.order/tmpl.order_view.details_subject_row.html",
 				new { name = new T("CreateTime"), value = order.CreateTime.ToClientTimeString() })));
 			// 支付接口
 			var paymentApiManager = Application.Ioc.Resolve<PaymentApiManager>();
 			var paymentApiId = order.OrderParameters.GetPaymentApiId();
 			var payment = paymentApiManager.GetWithCache(paymentApiId);
 			subjects.Add(new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_details_subject_row.html",
+				"shopping.order/tmpl.order_view.details_subject_row.html",
 				new { name = new T("PaymentApi"), value = new T(payment?.Name) })));
 			// 物流配送
 			// 这里只显示买家指定的，不显示后台实际发货使用的
@@ -87,7 +87,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderSubjectProviders {
 			var logistics = logisticsManager.GetWithCache(logisticsId);
 			if (logistics != null) {
 				subjects.Add(new HtmlString(templateManager.RenderTemplate(
-					"shopping.order/tmpl.order_details_subject_row.html",
+					"shopping.order/tmpl.order_view.details_subject_row.html",
 					new { name = new T("OrderLogistics"), value = new T(logistics?.Name) })));
 			}
 		}

@@ -1,0 +1,16 @@
+﻿<div>
+	<div class="order-overview">
+		{% include shopping.order/tmpl.order_view.warnings.html %}
+		{% include shopping.order/tmpl.order_view.details.html %}
+		{% include shopping.order/tmpl.order_view.state_and_actions.html %}
+		<div class="clearfix"></div>
+	</div>
+	<div class="order-product-table table-scroller">
+		{% include shopping.order/tmpl.order_view.products_table.html %}
+		<div class="clearfix"></div>
+	</div>
+	<div class="order-statistics">
+
+		<div class="clearfix"></div>
+	</div>
+</div>
