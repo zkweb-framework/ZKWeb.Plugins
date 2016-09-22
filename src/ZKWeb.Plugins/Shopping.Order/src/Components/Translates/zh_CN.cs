@@ -90,9 +90,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Order is successful, thank you for your patronage", "订单交易成功，感谢您的惠顾" },
 			{ "Order is canceled", "订单已取消" },
 			{ "Order is obsoleted", "订单已作废" },
-			{ "Order Serial", "订单流水号" },
-			{ "Order Amount", "订单金额" },
-			{ "Payment Amount", "支付金额" },
+			{ "OrderSerial", "订单流水号" },
+			{ "OrderAmount", "订单金额" },
+			{ "PaymentAmount", "支付金额" },
 			{ "Pay with [0]", "使用[0]支付" },
 			{ "Redirecting to order details page......", "正在跳转到订单详情页……" },
 			{ "RemarkFlags", "备注旗帜" },
@@ -125,7 +125,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 				"您正在使用担保交易，请在收到货物后到支付平台上确认交易" },
 			{ "Buyer is using secured paid, please tell the buyer confirm transaction on payment platform after received goods",
 				"买家正在使用担保交易，请通知买家在收到货物后到支付平台上确认交易" },
-			{ "Releated transaction contains error: {0}", "关联交易包含错误: {0}" }
+			{ "Releated transaction contains error: {0}", "关联交易包含错误: {0}" },
+			{ "Copy shipping address to clipboard", "复制收货地址" },
+			{ "BuyerComment", "买家留言" },
+			{ "SellerComment", "卖家留言" },
+			{ "More", "更多" },
+			{ "OrderLogistics", "物流配送" }
 		};
 
 		public bool CanTranslate(string code) {

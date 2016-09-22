@@ -52,8 +52,6 @@
 	/* 订单商品单价 */
 	.order-product-price {
 		line-height: 24px;
-		font-size: 14px;
-		font-weight: bold;
 		/* 订单商品原价 */
 		&.original-price {
 			line-height: 12px;
@@ -64,16 +62,13 @@
 	/* 订单商品订购数量和已发数量 */
 	.order-product-order-count, .order-product-shipped-count {
 		line-height: 24px;
-		font-size: 14px;
-		font-weight: bold;
 	}
 	/* 订单总价 */
 	.order-total-cost {
-		font-size: 14px;
 		font-weight: bold;
+		color: red;
 
 		.parts-cost {
-			font-size: 12px;
 			color: #666;
 		}
 	}
