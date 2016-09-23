@@ -17,6 +17,8 @@
 		"Common.SerialGenerate",
 		"Finance.Payment",
 		"Finance.Payment.Alipay",
+		"Finance.Payment.Cash",
+		"Finance.Payment.OnArrive",
 		"Finance.Payment.Tenpay",
 		"Finance.Payment.WeChat",
 		"CMS.CKEditor",

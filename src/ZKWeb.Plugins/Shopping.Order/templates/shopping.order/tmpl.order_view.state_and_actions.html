@@ -30,7 +30,9 @@
 		{% endif %}
 	</ul>
 	<div class="btn-toolbar order-actions">
-		TODO
-
+		{% for action in info.ActionHtmls %}
+		<div class="action">{{ action }}</div>
+		{% endfor %}
+		<div class="clearfix"></div>
 	</div>
 </div>

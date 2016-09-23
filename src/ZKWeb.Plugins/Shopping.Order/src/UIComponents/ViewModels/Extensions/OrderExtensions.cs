@@ -2,6 +2,7 @@
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
 using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderActionsProviders.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderSubjectProviders.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderWarningProviders.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
@@ -25,6 +26,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var currency = currencyManager.GetCurrency(order.Currency);
 			var warningProviders = Application.Ioc.ResolveMany<IOrderWarningProvider>();
 			var subjectProviders = Application.Ioc.ResolveMany<IOrderSubjectProvider>();
+			var actionProviders = Application.Ioc.ResolveMany<IOrderActionProvider>();
 			var info = new OrderDisplayInfo();
 			info.Serial = order.Serial;
 			info.BuyerId = order.Buyer?.Id;
@@ -50,6 +52,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			warningProviders.ForEach(p => p.AddWarnings(order, info.WarningHtmls, operatorType));
 			subjectProviders.ForEach(p => p.AddToolButtons(order, info.ToolButtonHtmls, operatorType));
 			subjectProviders.ForEach(p => p.AddSubjects(order, info.SubjectHtmls, operatorType));
+			actionProviders.ForEach(p => p.AddActions(order, info.ActionHtmls, operatorType));
 			info.OrderProducts = order.OrderProducts.Select(p => p.ToDisplayInfo()).ToList();
 			return info;
 		}

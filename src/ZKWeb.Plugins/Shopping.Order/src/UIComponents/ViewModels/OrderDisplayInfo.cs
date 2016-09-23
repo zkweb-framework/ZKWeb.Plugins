@@ -105,6 +105,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// </summary>
 		public IList<HtmlString> SubjectHtmls { get; set; }
 		/// <summary>
+		/// 操作列表
+		/// </summary>
+		public IList<HtmlString> ActionHtmls { get; set; }
+		/// <summary>
 		/// 订单商品的显示信息列表
 		/// </summary>
 		public IList<OrderProductDisplayInfo> OrderProducts { get; set; }
@@ -117,6 +121,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 			WarningHtmls = new List<HtmlString>();
 			ToolButtonHtmls = new List<HtmlString>();
 			SubjectHtmls = new List<HtmlString>();
+			ActionHtmls = new List<HtmlString>();
 			OrderProducts = new List<OrderProductDisplayInfo>();
 		}
 

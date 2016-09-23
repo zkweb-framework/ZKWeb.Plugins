@@ -1,0 +1,6 @@
+﻿{
+	"Name": "CashPaymentApi",
+	"Version": "0.0",
+	"Description": "Support pay transactions by cash",
+	"Dependencies": [ "Common.Admin", "Finance.Payment" ]
+}
