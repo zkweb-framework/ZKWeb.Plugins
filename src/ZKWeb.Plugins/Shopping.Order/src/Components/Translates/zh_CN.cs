@@ -157,7 +157,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Order can't be sent because not all products sent",
 				"订单中有未全部发货的商品，不能设为已发货" },
 			{ "Order can't be success because not waiting buyer confirm",
-				"订单不是已发货，不能设为交易成功" }
+				"订单不是已发货，不能设为交易成功" },
+			{ "No payable transaction releated to this order", "没有可以支付的订单交易" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -14,39 +14,152 @@ using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Enums;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
+using ZKWebStandard.Ioc;
 using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProviders {
 	/// <summary>
 	/// 默认的订单显示信息提供器
 	/// </summary>
+	[ExportMany]
 	public class DefaultOrderDisplayInfoProvider : IOrderDisplayInfoProvider {
+		/// <summary>
+		/// 获取打开模态框的订单操作
+		/// </summary>
+		/// <returns></returns>
+		public static HtmlString GetModalAction(
+			TemplateManager templateManager,
+			string name, string url, string iconClass,
+			string title = null, string buttonClass = null) {
+			buttonClass = buttonClass ?? "btn btn-primary";
+			title = title ?? name;
+			return new HtmlString(templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_action.btn_modal.html",
+				new { name, title, url, iconClass, buttonClass }));
+		}
+
+		/// <summary>
+		/// 获取已禁用的订单操作
+		/// </summary>
+		/// <returns></returns>
+		public static HtmlString GetDisabledAction(
+			TemplateManager templateManager,
+			string name, string warning, string iconClass) {
+			return new HtmlString(templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_action.btn_disabled.html",
+				new { name, warning, iconClass }));
+		}
+
+		/// <summary>
+		/// 获取跳转链接的订单操作
+		/// </summary>
+		/// <returns></returns>
+		public static HtmlString GetLinkAction(
+			TemplateManager templateManager,
+			string name, string url, string iconClass,
+			string buttonClass = null) {
+			buttonClass = buttonClass ?? "btn btn-primary";
+			return new HtmlString(templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_action.btn_link.html",
+				new { name, url, iconClass, buttonClass }));
+		}
+
 		/// <summary>
 		/// 添加订单操作
 		/// </summary>
 		public void AddActions(
 			SellerOrder order, IList<HtmlString> actions, OrderOperatorType operatorType) {
-			actions.Add(new HtmlString("<a>xxx</a>"));
+			// 买家
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			if (operatorType == OrderOperatorType.Buyer) {
-				// TODO:
 				// 立刻付款
-
+				var canPay = order.Check(c => c.CanPay);
+				if (canPay.First) {
+					actions.Add(GetLinkAction(templateManager,
+						new T("PayNow"),
+						orderManager.GetCheckoutUrl(order.Id), "fa fa-credit-card"));
+				}
 				// 取消订单
-
+				var canSetCancelled = order.Check(c => c.CanSetCancelled);
+				if (canSetCancelled.First) {
+					actions.Add(GetModalAction(templateManager,
+						new T("CancelOrder"),
+						$"/user/orders/cancel_order?serial={order.Serial}",
+						"fa fa-exclamation-triangle", buttonClass: "btn btn-warning"));
+				}
 				// 确认收货
-
-			} else {
+				var canConfirm = order.Check(c => c.CanConfirm);
+				if (canConfirm.First) {
+					actions.Add(GetLinkAction(templateManager,
+						new T("ConfirmOrder"),
+						$"/user/orders/confirm_order?serial={order.Serial}",
+						"fa fa-check", buttonClass: "btn btn-warning"));
+				}
+			}
+			// 卖家或管理员
+			if (operatorType == OrderOperatorType.Seller ||
+				operatorType == OrderOperatorType.Admin) {
 				// 修改价格
-
+				var canEditCost = order.Check(c => c.CanEditCost);
+				if (canEditCost.First) {
+					actions.Add(GetModalAction(templateManager,
+						new T("EditCost"),
+						$"/admin/orders/edit_cost?id={order.Id}", "fa fa-credit-card"));
+				} else {
+					actions.Add(GetDisabledAction(templateManager,
+						new T("EditCost"),
+						canEditCost.Second, "fa fa-credit-card"));
+				}
 				// 修改地址
-
+				var canEditShippingAddress = order.Check(c => c.CanEditShippingAddress);
+				if (canEditShippingAddress.First) {
+					actions.Add(GetModalAction(templateManager,
+						new T("EditShippingAddress"),
+						$"/admin/orders/edit_shipping_address?id={order.Id}", "fa fa-location-arrow"));
+				} else {
+					actions.Add(GetDisabledAction(templateManager,
+						new T("EditShippingAddress"),
+						canEditShippingAddress.Second, "fa fa-location-arrow"));
+				}
 				// 发货
-
+				var canSendGoods = order.Check(c => c.CanSendGoods);
+				if (canSendGoods.First) {
+					actions.Add(GetModalAction(templateManager,
+						new T("SendGoods"),
+						$"/admin/orders/send_goods?id={order.Id}", "fa fa-truck"));
+				} else {
+					actions.Add(GetDisabledAction(templateManager,
+						new T("SendGoods"),
+						canSendGoods.Second, "fa fa-truck"));
+				}
+			}
+			// 管理员
+			if (operatorType == OrderOperatorType.Admin) {
 				// 代确认收货
-
+				var canConfirm = order.Check(c => c.CanConfirm);
+				if (canConfirm.First) {
+					actions.Add(GetModalAction(templateManager,
+						new T("ConfirmInsteadOfBuyer"),
+						$"/admin/orders/confirm_instead_of_buyer?id={order.Id}",
+						"fa fa-check", buttonClass: "btn btn-success"));
+				} else {
+					actions.Add(GetDisabledAction(templateManager,
+						new T("ConfirmInsteadOfBuyer"),
+						canConfirm.Second, "fa fa-check"));
+				}
 				// 作废
-
-				actions.Add(new HtmlString("<a>asdasdas</a>"));
+				var canSetInvalid = order.Check(c => c.CanSetInvalid);
+				if (canSetInvalid.First) {
+					actions.Add(GetModalAction(templateManager,
+						new T("SetInvalid"),
+						$"/admin/orders/set_invalid?id={order.Id}",
+						"fa fa-exclamation-triangle", buttonClass: "btn btn-danger"));
+				} else {
+					actions.Add(GetDisabledAction(templateManager,
+						new T("SetInvalid"),
+						canConfirm.Second, "fa fa-exclamation-triangle"));
+				}
 			}
 		}
 

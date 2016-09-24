@@ -5,6 +5,8 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Logistics.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderLogisticsProviders.Interfaces;
@@ -12,7 +14,9 @@ using ZKWeb.Plugins.Shopping.Order.src.Components.OrderPaymentApiProviders.Inter
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderPriceCalculators.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderProductUnitPriceCalaculators.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderShippingAddressProviders.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 using ZKWeb.Plugins.Shopping.Product.src.Components.ProductTypes.Interfaces;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
@@ -22,9 +26,6 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
-	using Components.PaymentTransactionHandlers;
-	using Extensions;
-	using Finance.Payment.src.Domain.Services;
 	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>
@@ -188,6 +189,21 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		public virtual IList<PaymentTransaction> GetReleatedTransactions(Guid orderId) {
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			return transactionManager.GetMany(OrderTransactionHandler.ConstType, orderId);
+		}
+
+		/// <summary>
+		/// 获取用于支付订单的Url
+		/// </summary>
+		/// <param name="orderId">订单Id</param>
+		/// <returns></returns>
+		public string GetCheckoutUrl(Guid orderId) {
+			var transaction = GetReleatedTransactions(orderId)
+				.FirstOrDefault(t => t.Check(c => c.IsPayable).First);
+			if (transaction == null) {
+				throw new BadRequestException(new T("No payable transaction releated to this order"));
+			}
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			return transactionManager.GetResultUrl(transaction.Id);
 		}
 	}
 }
