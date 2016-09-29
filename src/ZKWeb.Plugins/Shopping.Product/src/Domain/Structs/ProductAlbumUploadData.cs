@@ -59,20 +59,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Structs {
 				ImageUrls.Add(albumManager.GetAlbumImageWebPath(
 					productId, x, ProductAlbumImageType.Thumbnail));
 			}
-			// 获取主图路径，不存在时返回
-			var mainPath = albumManager.GetAlbumImageStoragePath(
-				productId, null, ProductAlbumImageType.Normal);
-			var mainFileInfo = new FileInfo(mainPath);
-			if (!mainFileInfo.Exists) {
+			// 主图不存在时返回
+			if (!albumManager.GetAlbumImageStorageFile(
+				productId, null, ProductAlbumImageType.Normal).Exists) {
 				return;
 			}
 			// 判断相册中哪张图片的大小和修改时间和原图一致
 			// 没有时默认选择第一张
 			for (int x = 1; x <= MaxImageCount; ++x) {
-				var path = albumManager.GetAlbumImageStoragePath(productId, x, ProductAlbumImageType.Normal);
-				var fileInfo = new FileInfo(path);
-				if (fileInfo.Exists && fileInfo.Length == mainFileInfo.Length &&
-					fileInfo.LastWriteTimeUtc.Truncate() == mainFileInfo.LastWriteTimeUtc.Truncate()) {
+				var fileEntry = albumManager.GetAlbumImageStorageFile(productId, x, ProductAlbumImageType.Normal);
+				if (fileEntry.Exists && fileEntry.Length == fileEntry.Length &&
+					fileEntry.LastWriteTimeUtc.Truncate() == fileEntry.LastWriteTimeUtc.Truncate()) {
 					MainImageIndex = x;
 					return;
 				}

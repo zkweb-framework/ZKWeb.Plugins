@@ -67,8 +67,7 @@
 	ok 支持ckeditor上传保存图片
 	ok 底部copyright
 	ok 补充插件的文档
-	延迟 修复商品规格下拉框出现js错误的问题，难以重现
-	延迟 FileResult需要支持分割下载(Range头)
+	延迟 StreamResult需要支持分割下载(Range头)
 		http://stackoverflow.com/questions/3303029/http-range-header
 	逐步补充插件的单元测试
 	打印和导出xls菜单
@@ -117,3 +116,7 @@
 	- 首页 0.447ms, 0.430ms, 0.432ms
 	- 商品列表页 0.402ms, 0.408ms, 0.422ms
 	- 商品详情页 0.504ms, 0.506ms, 0.502ms
+2016-09-29 (i7 Q720 1.6Ghz x 4 core 8 threads, ab -n 8000 -c 16, real machine, asp.net core)
+	- 首页 0.986ms, 0.983ms, 0.998ms
+	- 商品列表页 1.006ms, 0.977ms, 0.996ms
+	- 商品详情页 1.111ms, 1.082ms, 1.080ms

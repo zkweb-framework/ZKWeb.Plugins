@@ -24,14 +24,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 		/// <summary>
 		/// 配置值的缓存
 		/// </summary>
-		protected MemoryCache<Type, object> ConfigValueCache { get; set; }
+		protected IKeyValueCache<Type, object> ConfigValueCache { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public GenericConfigManager() {
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
 			AttributeCache = new ConcurrentDictionary<Type, GenericConfigAttribute>();
-			ConfigValueCache = new MemoryCache<Type, object>();
+			ConfigValueCache = cacheFactory.CreateCache<Type, object>();
 		}
 
 		/// <summary>

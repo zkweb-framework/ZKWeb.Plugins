@@ -22,6 +22,7 @@ using ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Structs;
 using ZKWeb.Server;
+using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -40,7 +41,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <summary>
 		/// 购物车商品的总数量的缓存
 		/// </summary>
-		public IsolatedMemoryCache<CartProductType, long?> CartProductTotalCountCache { get; protected set; }
+		public IKeyValueCache<CartProductType, long?> CartProductTotalCountCache { get; protected set; }
 		/// <summary>
 		/// 非会员添加购物车商品时，保留会话的天数
 		/// 默认是1天，可通过网站配置指定
@@ -51,11 +52,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// 初始化
 		/// </summary>
 		public CartProductManager() {
-			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
 			var extra = configManager.WebsiteConfig.Extra;
 			CartProductTotalCountCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				OrderExtraConfigKeys.CartProductTotalCountCacheTime, 3));
-			CartProductTotalCountCache = new IsolatedMemoryCache<CartProductType, long?>("Ident");
+			CartProductTotalCountCache = cacheFactory.CreateCache<CartProductType, long?>(
+				CacheFactoryOptions.Default.WithIsolationPolicies("Ident"));
 			SessionExpireDaysForNonUserPurcharse = TimeSpan.FromDays(extra.GetOrDefault(
 				OrderExtraConfigKeys.SessionExpireDaysForNonUserPurcharse, 1));
 		}

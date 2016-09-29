@@ -7,6 +7,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataConditionBinders.Bases;
 using ZKWeb.Server;
+using ZKWeb.Storage;
 using ZKWeb.Templating;
 using ZKWebStandard.Ioc;
 
@@ -28,7 +29,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataCond
 				category.OrderedProperties().Where(p => p.IsSalesProperty).ToList() :
 				new List<ProductProperty>();
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var pathManager = Application.Ioc.Resolve<PathManager>();
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
 			Contents = string.Join("", salesProperties.Select(property => {
 				// 规格下拉框
 				var propertyValues = property.OrderedPropertyValues().ToList();
@@ -36,12 +37,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataCond
 					"shopping.product/condition_binder.property.dropdown.html",
 					new { property, propertyValues });
 			}));
-			Bind = File.ReadAllText(pathManager.GetResourceFullPath(
-				"static", "shopping.product.js", "condition_binders", "property.bind.js"));
-			Collect = File.ReadAllText(pathManager.GetResourceFullPath(
-				"static", "shopping.product.js", "condition_binders", "property.collect.js"));
-			Display = File.ReadAllText(pathManager.GetResourceFullPath(
-				"static", "shopping.product.js", "condition_binders", "property.display.js"));
+			Bind = fileStorage.GetResourceFile(
+				"static", "shopping.product.js", "condition_binders", "property.bind.js").ReadAllText();
+			Collect = fileStorage.GetResourceFile(
+				"static", "shopping.product.js", "condition_binders", "property.collect.js").ReadAllText();
+			Display = fileStorage.GetResourceFile(
+				"static", "shopping.product.js", "condition_binders", "property.display.js").ReadAllText();
 			return true;
 		}
 	}

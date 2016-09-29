@@ -4,6 +4,7 @@ using System.IO;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataConditionBinders.Bases;
 using ZKWeb.Server;
+using ZKWeb.Storage;
 using ZKWeb.Templating;
 using ZKWebStandard.Ioc;
 
@@ -20,15 +21,16 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataCond
 		/// </summary>
 		public override bool Init(Guid? categoryId) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var pathManager = Application.Ioc.Resolve<PathManager>();
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
 			Contents = templateManager.RenderTemplate(
 				"shopping.product/condition_binder.order_count_ge.html", null);
-			Bind = File.ReadAllText(pathManager.GetResourceFullPath(
-				"static", "shopping.product.js", "condition_binders", "order_count_ge.bind.js"));
-			Collect = File.ReadAllText(pathManager.GetResourceFullPath(
-				"static", "shopping.product.js", "condition_binders", "order_count_ge.collect.js"));
-			Display = File.ReadAllText(pathManager.GetResourceFullPath(
-				"static", "shopping.product.js", "condition_binders", "order_count_ge.display.js"))
+			Bind = fileStorage.GetResourceFile(
+				"static", "shopping.product.js", "condition_binders", "order_count_ge.bind.js").ReadAllText();
+			Collect = fileStorage.GetResourceFile(
+				"static", "shopping.product.js", "condition_binders", "order_count_ge.collect.js").ReadAllText();
+			Display = fileStorage
+				.GetResourceFile("static", "shopping.product.js", "condition_binders", "order_count_ge.display.js")
+				.ReadAllText()
 				.Replace("T_OrderCountGE", JsonConvert.SerializeObject(new T("OrderCountGE")));
 			return true;
 		}

@@ -17,6 +17,7 @@ using ZKWeb.Server;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Web;
+using ZKWeb.Storage;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 	/// <summary>
@@ -53,7 +54,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		/// 初始化
 		/// </summary>
 		public UserManager() {
-			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
 			var extra = configManager.WebsiteConfig.Extra;
 			SessionExpireDaysWithRememebrLogin = TimeSpan.FromDays(
 				extra.GetOrDefault(AdminExtraConfigKeys.SessionExpireDaysWithRememebrLogin, 30));
@@ -169,7 +170,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		/// <param name="userId">用户Id</param>
 		/// <returns></returns>
 		public virtual string GetAvatarWebPath(Guid userId) {
-			if (!File.Exists(GetAvatarStoragePath(userId))) {
+			if (!GetAvatarStorageFile(userId).Exists) {
 				// 没有自定义头像时使用默认头像
 				return "/static/common.admin.images/default-avatar.jpg";
 			}
@@ -181,9 +182,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		/// <returns></returns>
-		public virtual string GetAvatarStoragePath(Guid userId) {
-			var pathManager = Application.Ioc.Resolve<PathManager>();
-			return pathManager.GetStorageFullPath(
+		public virtual IFileEntry GetAvatarStorageFile(Guid userId) {
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+			return fileStorage.GetStorageFile(
 				"static", "common.admin.images", string.Format("avatar_{0}.jpg", userId));
 		}
 
@@ -203,10 +204,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 				throw new BadRequestException(new T("Parse uploaded image failed"));
 			}
 			using (image) {
-				var path = GetAvatarStoragePath(userId);
+				var fileEntry = GetAvatarStorageFile(userId);
 				using (var newImage = image.Resize(
 					AvatarWidth, AvatarHeight, ImageResizeMode.Padding, Color.White)) {
-					newImage.SaveAuto(path, AvatarImageQuality);
+					using (var stream = fileEntry.OpenWrite()) {
+						newImage.SaveAuto(stream, ".jpg", AvatarImageQuality);
+					}
 				}
 			}
 		}
@@ -216,10 +219,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		/// </summary>
 		/// <param name="userId">用户Id</param>
 		public void DeleteAvatar(Guid userId) {
-			var path = GetAvatarStoragePath(userId);
-			if (File.Exists(path)) {
-				File.Delete(path);
-			}
+			GetAvatarStorageFile(userId).Delete();
 		}
 
 		/// <summary>

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.IO;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataAffectsBinders.Bases;
-using ZKWeb.Server;
+using ZKWeb.Storage;
 using ZKWeb.Templating;
 using ZKWebStandard.Ioc;
 
@@ -19,14 +18,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataAffe
 		/// </summary>
 		public override bool Init(Guid? categoryId) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var pathManager = Application.Ioc.Resolve<PathManager>();
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
 			Header = new T("Remark");
 			Contents = templateManager.RenderTemplate(
 				 "shopping.product/affects_binder.remark.html", null);
-			Bind = File.ReadAllText(pathManager.GetResourceFullPath(
-				"static", "shopping.product.js", "affects_binders", "remark.bind.js"));
-			Collect = File.ReadAllText(pathManager.GetResourceFullPath(
-				"static", "shopping.product.js", "affects_binders", "remark.collect.js"));
+			Bind = fileStorage.GetResourceFile(
+				"static", "shopping.product.js", "affects_binders", "remark.bind.js").ReadAllText();
+			Collect = fileStorage.GetResourceFile(
+				"static", "shopping.product.js", "affects_binders", "remark.collect.js").ReadAllText();
 			return true;
 		}
 	}

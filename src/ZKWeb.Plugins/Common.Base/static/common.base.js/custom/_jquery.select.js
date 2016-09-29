@@ -30,7 +30,8 @@ $(function () {
 		$elements.each(function () {
 			var $this = $(this);
 			var size = $this.closest(advanceSelectSelector).data("select-size") || 5;
-			$this.attr("size", "5").change();
+			$this.attr("size", "5");
+			setTimeout(function () { $this.change() }, 0);
 		});
 	};
 	setup($(advanceSelectFieldSelector));

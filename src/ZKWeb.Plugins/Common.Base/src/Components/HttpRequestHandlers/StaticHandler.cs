@@ -1,4 +1,5 @@
 ﻿using ZKWeb.Server;
+using ZKWeb.Storage;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
@@ -28,11 +29,11 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.HttpRequestHandlers {
 			var context = HttpManager.CurrentContext;
 			var path = context.Request.Path;
 			if (path.StartsWith(Prefix)) {
-				var pathManager = Application.Ioc.Resolve<PathManager>();
-				var filePath = pathManager.GetResourceFullPath("static", path.Substring(Prefix.Length));
-				if (filePath != null) {
+				var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+				var fileEntry = fileStorage.GetResourceFile("static", path.Substring(Prefix.Length));
+				if (fileEntry.Exists) {
 					var ifModifiedSince = context.Request.GetIfModifiedSince();
-					new FileResult(filePath, ifModifiedSince).WriteResponse(context.Response);
+					new FileEntryResult(fileEntry, ifModifiedSince).WriteResponse(context.Response);
 					context.Response.End();
 				}
 			}

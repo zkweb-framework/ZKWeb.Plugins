@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.IO;
 using ZKWeb.Plugins.Common.Region.src.Components.Countries.Bases;
-using ZKWeb.Server;
+using ZKWeb.Storage;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Ioc;
 
@@ -16,9 +15,8 @@ namespace ZKWeb.Plugins.Common.Region.src.Components.Countries {
 
 		public US() {
 			RegionsCache = LazyCache.Create(() => {
-				var pathManager = Application.Ioc.Resolve<PathManager>();
-				var path = pathManager.GetResourceFullPath("texts", "regions_us.json");
-				var json = File.ReadAllText(path);
+				var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+				var json = fileStorage.GetResourceFile("texts", "regions_us.json").ReadAllText();
 				return JsonConvert.DeserializeObject<List<Regions.Region>>(json);
 			});
 		}

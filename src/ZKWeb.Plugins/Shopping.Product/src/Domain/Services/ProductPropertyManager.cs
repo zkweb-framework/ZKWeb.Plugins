@@ -26,17 +26,18 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 		/// 属性列表的缓存
 		/// 缓存中的属性不包括属性值
 		/// </summary>
-		protected MemoryCache<int, List<ProductProperty>> PropertyListCache { get; set; }
+		protected IKeyValueCache<int, List<ProductProperty>> PropertyListCache { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public ProductPropertyManager() {
-			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
 			var extra = configManager.WebsiteConfig.Extra;
 			CategoryCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				ProductExtraConfigKeys.ProductCategoryCacheTime, 180));
-			PropertyListCache = new MemoryCache<int, List<ProductProperty>>();
+			PropertyListCache = cacheFactory.CreateCache<int, List<ProductProperty>>();
 		}
 
 		/// <summary>

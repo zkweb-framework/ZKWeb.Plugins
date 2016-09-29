@@ -1,9 +1,8 @@
-﻿using System.IO;
-using ZKWeb.Plugins.Shopping.Product.src.Components.ProductMatchedDataMatchers.Interfaces;
+﻿using ZKWeb.Plugins.Shopping.Product.src.Components.ProductMatchedDataMatchers.Interfaces;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Structs;
-using ZKWeb.Server;
+using ZKWeb.Storage;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Components.ProductMatchedDataMatchers {
@@ -31,9 +30,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.ProductMatchedDataMatche
 		/// </summary>
 		/// <returns></returns>
 		public string GetJavascriptMatchFunction() {
-			var pathManager = Application.Ioc.Resolve<PathManager>();
-			return File.ReadAllText(pathManager.GetResourceFullPath(
-				"static", "shopping.product.js", "matched_data_matchers", "order_count.matcher.js"));
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+			return fileStorage.GetResourceFile(
+				"static", "shopping.product.js", "matched_data_matchers", "order_count.matcher.js").ReadAllText();
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZKWeb.Cache;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
@@ -27,23 +28,24 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 		/// 支付接口的缓存
 		/// { 接口Id: 接口, ... }
 		/// </summary>
-		protected MemoryCache<Guid, PaymentApi> PaymentApiCache { get; set; }
+		protected IKeyValueCache<Guid, PaymentApi> PaymentApiCache { get; set; }
 		/// <summary>
 		/// 支付接口列表的缓存
 		/// { (所有人Id, 交易类型): 接口, ... }
 		/// </summary>
-		protected MemoryCache<Pair<Guid, string>, IList<PaymentApi>> PaymentApisCache { get; set; }
+		protected IKeyValueCache<Pair<Guid, string>, IList<PaymentApi>> PaymentApisCache { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public PaymentApiManager() {
-			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
 			var extra = configManager.WebsiteConfig.Extra;
 			PaymentApiCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				PaymentExtraConfigKeys.PaymentApiCacheTime, 3));
-			PaymentApiCache = new MemoryCache<Guid, PaymentApi>();
-			PaymentApisCache = new MemoryCache<Pair<Guid, string>, IList<PaymentApi>>();
+			PaymentApiCache = cacheFactory.CreateCache<Guid, PaymentApi>();
+			PaymentApisCache = cacheFactory.CreateCache<Pair<Guid, string>, IList<PaymentApi>>();
 		}
 
 		/// <summary>

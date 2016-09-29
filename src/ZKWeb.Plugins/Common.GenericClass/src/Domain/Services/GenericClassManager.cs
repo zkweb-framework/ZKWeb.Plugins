@@ -25,27 +25,28 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Domain.Services {
 		/// <summary>
 		/// 通用分类的缓存，{ Id: 分类 }
 		/// </summary>
-		protected MemoryCache<Guid, Entities.GenericClass> ClassCache { get; set; }
+		protected IKeyValueCache<Guid, Entities.GenericClass> ClassCache { get; set; }
 		/// <summary>
 		/// 通用分类列表的缓存，{ 类型: 分类列表 }
 		/// </summary>
-		protected MemoryCache<string, IList<Entities.GenericClass>> ClassListCache { get; set; }
+		protected IKeyValueCache<string, IList<Entities.GenericClass>> ClassListCache { get; set; }
 		/// <summary>
 		/// 通用分类树的缓存，{ 类型: 分类树 }
 		/// </summary>
-		protected MemoryCache<string, ITreeNode<Entities.GenericClass>> ClassTreeCache { get; set; }
+		protected IKeyValueCache<string, ITreeNode<Entities.GenericClass>> ClassTreeCache { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public GenericClassManager() {
-			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
 			var extra = configManager.WebsiteConfig.Extra;
 			ClassCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				GenericConfigExtraConfigKeys.ClassCacheTime, 15));
-			ClassCache = new MemoryCache<Guid, Entities.GenericClass>();
-			ClassListCache = new MemoryCache<string, IList<Entities.GenericClass>>();
-			ClassTreeCache = new MemoryCache<string, ITreeNode<Entities.GenericClass>>();
+			ClassCache = cacheFactory.CreateCache<Guid, Entities.GenericClass>();
+			ClassListCache = cacheFactory.CreateCache<string, IList<Entities.GenericClass>>();
+			ClassTreeCache = cacheFactory.CreateCache<string, ITreeNode<Entities.GenericClass>>();
 		}
 
 		/// <summary>

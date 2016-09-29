@@ -24,22 +24,23 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Domain.Services {
 		/// <summary>
 		/// 通用标签的缓存，{ Id: 标签 }
 		/// </summary>
-		protected MemoryCache<Guid, Entities.GenericTag> TagCache { get; set; }
+		protected IKeyValueCache<Guid, Entities.GenericTag> TagCache { get; set; }
 		/// <summary>
 		/// 通用标签列表的缓存，{ 类型: 标签列表 }
 		/// </summary>
-		protected MemoryCache<string, IList<Entities.GenericTag>> TagListCache { get; set; }
+		protected IKeyValueCache<string, IList<Entities.GenericTag>> TagListCache { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public GenericTagManager() {
-			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
 			var extra = configManager.WebsiteConfig.Extra;
 			TagCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				GenericTagExtraConfigKeys.TagCacheTime, 15));
-			TagCache = new MemoryCache<Guid, Entities.GenericTag>();
-			TagListCache = new MemoryCache<string, IList<Entities.GenericTag>>();
+			TagCache = cacheFactory.CreateCache<Guid, Entities.GenericTag>();
+			TagListCache = cacheFactory.CreateCache<string, IList<Entities.GenericTag>>();
 		}
 
 		/// <summary>

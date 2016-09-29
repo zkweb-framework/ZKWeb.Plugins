@@ -123,11 +123,11 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 					CategoryLower, name, imageManager.ImageExtension);
 				var thumbnailPath = imageManager.GetImageWebPath(
 					CategoryLower, name, imageManager.ImageThumbnailExtension);
-				var storagePath = imageManager.GetImageStoragePath(
+				var storageFile = imageManager.GetImageStorageFile(
 					CategoryLower, name, imageManager.ImageExtension);
-				var fileInfo = new FileInfo(storagePath);
-				var lastWriteTime = fileInfo.LastWriteTimeUtc.ToClientTimeString();
-				var fileSize = FileUtils.GetSizeDisplayName(fileInfo.Length);
+				var lastWriteTime = storageFile.LastWriteTimeUtc.ToClientTimeString();
+				// TODO: beta3更新这里
+				var fileSize = FileUtils.GetSizeDisplayName(storageFile.Length);
 				return new Dictionary<string, object>() {
 					{ "name", name },
 					{ "path", path },

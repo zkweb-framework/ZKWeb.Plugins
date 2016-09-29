@@ -31,23 +31,24 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Domain.Services {
 		/// 物流的缓存
 		/// { 物流Id: 物流, ... }
 		/// </summary>
-		protected MemoryCache<Guid, Entities.Logistics> LogisticsCache { get; set; }
+		protected IKeyValueCache<Guid, Entities.Logistics> LogisticsCache { get; set; }
 		/// <summary>
 		/// 物流列表的缓存
 		/// { 所属Id: 物流列表, ... }
 		/// </summary>
-		protected MemoryCache<Guid, IList<Entities.Logistics>> LogisticsListCache { get; set; }
+		protected IKeyValueCache<Guid, IList<Entities.Logistics>> LogisticsListCache { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public LogisticsManager() {
-			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
 			var extra = configManager.WebsiteConfig.Extra;
 			LogisticsCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				LogisticsExtraConfigKeys.LogisticsCacheTime, 3));
-			LogisticsCache = new MemoryCache<Guid, Entities.Logistics>();
-			LogisticsListCache = new MemoryCache<Guid, IList<Entities.Logistics>>();
+			LogisticsCache = cacheFactory.CreateCache<Guid, Entities.Logistics>();
+			LogisticsListCache = cacheFactory.CreateCache<Guid, IList<Entities.Logistics>>();
 		}
 
 		/// <summary>

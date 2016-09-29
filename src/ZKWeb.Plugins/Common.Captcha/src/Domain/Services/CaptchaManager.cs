@@ -12,6 +12,7 @@ using System.Drawing.Drawing2D;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
+using ZKWeb.Cache;
 #if !NETCORE
 using System.Speech.Synthesis;
 #endif
@@ -76,14 +77,15 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 		/// <summary>
 		/// 验证码语音参数的缓存
 		/// </summary>
-		protected MemoryCache<string, PromptBuilder> CaptchaAudioPromptCache { get; set; }
+		protected IKeyValueCache<string, PromptBuilder> CaptchaAudioPromptCache { get; set; }
 #endif
 
 		/// <summary>
 		/// 验证码管理器
 		/// </summary>
 		public CaptchaManager() {
-			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
 			var extra = configManager.WebsiteConfig.Extra;
 #if NETCORE
 			SupportCaptchaAudio = false;
@@ -92,7 +94,7 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 				CaptchaExtraConfigKeys.SupportCaptchaAudio) ?? true;
 			CaptchaAudioPromptCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				CaptchaExtraConfigKeys.CaptchaAudioPromptCacheTime, 15));
-			CaptchaAudioPromptCache = new MemoryCache<string, PromptBuilder>();
+			CaptchaAudioPromptCache = cacheFactory.CreateCache<string, PromptBuilder>();
 #endif
 		}
 

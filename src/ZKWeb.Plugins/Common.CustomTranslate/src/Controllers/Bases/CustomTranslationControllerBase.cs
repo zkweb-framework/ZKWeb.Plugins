@@ -25,6 +25,7 @@ using ZKWeb.Web.ActionResults;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Server;
+using ZKWeb.Storage;
 
 namespace ZKWeb.Plugins.Common.CustomTranslate.src.Controllers.Bases {
 	/// <summary>
@@ -133,10 +134,10 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Controllers.Bases {
 		/// <summary>
 		/// 保存和载入翻译内容的路径
 		/// </summary>
-		public virtual string TranslatesPath {
+		public virtual IFileEntry TranslatesFile {
 			get {
-				var pathManager = Application.Ioc.Resolve<PathManager>();
-				return pathManager.GetStorageFullPath(
+				var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+				return fileStorage.GetStorageFile(
 					"texts", "common.custom_translate", string.Format("{0}.json", Name));
 			}
 		}
@@ -148,17 +149,16 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Controllers.Bases {
 		public virtual Dictionary<string, string> Translates {
 			get {
 				if (_Translates == null) {
-					var path = TranslatesPath;
-					_Translates = File.Exists(path) ?
-						JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(path)) :
+					var fileEntry = TranslatesFile;
+					_Translates = fileEntry.Exists ?
+						JsonConvert.DeserializeObject<Dictionary<string, string>>(fileEntry.ReadAllText()) :
 						new Dictionary<string, string>();
 				}
 				return _Translates;
 			}
 			set {
-				var path = TranslatesPath;
-				PathUtils.EnsureParentDirectory(path);
-				File.WriteAllText(path, JsonConvert.SerializeObject(
+				var fileEntry = TranslatesFile;
+				fileEntry.WriteAllText(JsonConvert.SerializeObject(
 					_Translates = value ?? new Dictionary<string, string>(), Formatting.Indented));
 			}
 		}

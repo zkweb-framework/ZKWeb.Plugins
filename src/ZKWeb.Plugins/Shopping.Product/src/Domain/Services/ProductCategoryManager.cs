@@ -26,23 +26,24 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 		/// 类目的缓存
 		/// 缓存中的类目包含属性和属性值
 		/// </summary>
-		protected MemoryCache<Guid, ProductCategory> CategoryCache { get; set; }
+		protected IKeyValueCache<Guid, ProductCategory> CategoryCache { get; set; }
 		/// <summary>
 		/// 类目列表的缓存
 		/// 缓存中的类目不包含属性和属性值
 		/// </summary>
-		protected MemoryCache<int, List<ProductCategory>> CategoryListCache { get; set; }
+		protected IKeyValueCache<int, List<ProductCategory>> CategoryListCache { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public ProductCategoryManager() {
-			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
 			var extra = configManager.WebsiteConfig.Extra;
 			CategoryCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				ProductExtraConfigKeys.ProductCategoryCacheTime, 180));
-			CategoryCache = new MemoryCache<Guid, ProductCategory>();
-			CategoryListCache = new MemoryCache<int, List<ProductCategory>>();
+			CategoryCache = cacheFactory.CreateCache<Guid, ProductCategory>();
+			CategoryListCache = cacheFactory.CreateCache<int, List<ProductCategory>>();
 		}
 
 		/// <summary>

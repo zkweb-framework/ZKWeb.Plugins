@@ -4,6 +4,7 @@ using System.IO;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Components.ScheduledTasks.Interfaces;
 using ZKWeb.Server;
+using ZKWeb.Storage;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Base.src.Components.ScheduledTasks {
@@ -36,14 +37,14 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.ScheduledTasks {
 		public void Execute() {
 			var now = DateTime.UtcNow.ToLocalTime();
 			var count = 0;
-			var pathConfig = Application.Ioc.Resolve<PathConfig>();
-			var logsDirectory = pathConfig.LogsDirectory;
-			if (!Directory.Exists(logsDirectory)) {
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+			var logsDirectory = fileStorage.GetStorageDirectory("logs");
+			if (!logsDirectory.Exists) {
 				return;
 			}
-			foreach (var path in Directory.EnumerateFiles(logsDirectory)) {
+			foreach (var fileEntry in logsDirectory.EnumerateFiles()) {
 				// 从文件名获取日志等级和记录日期
-				var filename = Path.GetFileName(path);
+				var filename = fileEntry.Filename;
 				var parts = filename.Split('.');
 				if (parts.Length != 3 || parts[2] != "log") {
 					continue;
@@ -57,7 +58,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.ScheduledTasks {
 				var timeSpan = now - createTime;
 				if (((parts[0] == "Debug" || parts[0] == "Info") && timeSpan.TotalDays > 3) ||
 					((parts[0] == "Error" || parts[0] == "Transaction") && timeSpan.TotalDays > 30)) {
-					File.Delete(path);
+					fileEntry.Delete();
 					++count;
 				}
 			}

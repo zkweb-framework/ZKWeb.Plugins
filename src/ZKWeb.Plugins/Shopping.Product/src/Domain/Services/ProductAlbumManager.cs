@@ -11,6 +11,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Components.GenericConfigs;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Structs;
 using ZKWeb.Server;
+using ZKWeb.Storage;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -29,24 +30,28 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 		/// </summary>
 		public const string AlbumImagePathFormat = "/static/shopping.product.images/{0}/album_{1}{2}.jpg";
 		/// <summary>
+		/// 商品相册图片的后缀
+		/// </summary>
+		public const string AlbumImageExtensions = ".jpg";
+		/// <summary>
 		/// 商品相册图片质量
 		/// </summary>
 		public const int AlbumImageQuality = 90;
 
 		/// <summary>
-		/// 获取商品相册图片的储存路径，路径不一定存在
+		/// 获取商品相册图片的储存文件
 		/// </summary>
 		/// <param name="id">商品Id</param>
 		/// <param name="index">图片序号，null时返回主图的路径</param>
 		/// <param name="type">商品相册的图片类型，原图或缩略图等</param>
 		/// <returns></returns>
-		public virtual string GetAlbumImageStoragePath(
+		public virtual IFileEntry GetAlbumImageStorageFile(
 			Guid id, long? index, ProductAlbumImageType type) {
-			var pathManager = Application.Ioc.Resolve<PathManager>();
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
 			var indexString = index.HasValue ? index.Value.ToString() : "main";
 			var suffix = type.GetAttribute<ProductAlbumImageSuffixAttribute>().Suffix;
 			var path = string.Format(AlbumImagePathFormat, id, indexString, suffix);
-			return pathManager.GetStorageFullPath(path.Split('/').Skip(1).ToArray());
+			return fileStorage.GetStorageFile(path.Split('/').Skip(1).ToArray());
 		}
 
 		/// <summary>
@@ -59,16 +64,14 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 		/// <returns></returns>
 		public virtual string GetAlbumImageWebPath(
 			Guid id, long? index, ProductAlbumImageType type, string defaultPath = DefaultAlbumImagePath) {
-			var storagePath = GetAlbumImageStoragePath(id, index, type);
-			var storagePathInfo = new FileInfo(storagePath);
-			if (!storagePathInfo.Exists) {
+			var storageFile = GetAlbumImageStorageFile(id, index, type);
+			if (!storageFile.Exists) {
 				return defaultPath;
 			}
-			var pathManager = Application.Ioc.Resolve<PathManager>();
 			var indexString = index.HasValue ? index.Value.ToString() : "main";
 			var suffix = type.GetAttribute<ProductAlbumImageSuffixAttribute>().Suffix;
 			var webPath = string.Format(AlbumImagePathFormat, id, indexString, suffix);
-			webPath += "?mtime=" + storagePathInfo.LastWriteTimeUtc.Ticks;
+			webPath += "?mtime=" + storageFile.LastWriteTimeUtc.Ticks;
 			return webPath;
 		}
 
@@ -118,14 +121,18 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 				// 保存原图
 				using (var newImage = image.Resize((int)settings.OriginalImageWidth,
 					(int)settings.OriginalImageHeight, ImageResizeMode.Cut, Color.White)) {
-					var path = GetAlbumImageStoragePath(id, index, ProductAlbumImageType.Normal);
-					newImage.SaveAuto(path, AlbumImageQuality);
+					var fileEntry = GetAlbumImageStorageFile(id, index, ProductAlbumImageType.Normal);
+					using (var stream = fileEntry.OpenWrite()) {
+						newImage.SaveAuto(stream, AlbumImageExtensions, AlbumImageQuality);
+					}
 				}
 				// 保存缩略图
 				using (var newImage = image.Resize((int)settings.ThumbnailImageWidth,
 					(int)settings.ThumbnailImageHeight, ImageResizeMode.Cut, Color.White)) {
-					var path = GetAlbumImageStoragePath(id, index, ProductAlbumImageType.Thumbnail);
-					newImage.SaveAuto(path, AlbumImageQuality);
+					var fileEntry = GetAlbumImageStorageFile(id, index, ProductAlbumImageType.Thumbnail);
+					using (var stream = fileEntry.OpenWrite()) {
+						newImage.SaveAuto(stream, AlbumImageExtensions, AlbumImageQuality);
+					}
 				}
 			}
 		}
@@ -137,10 +144,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 		/// <param name="index">图片序号，null时删除主图</param>
 		public virtual void DeleteAlbumImage(Guid id, long? index) {
 			foreach (ProductAlbumImageType type in Enum.GetValues(typeof(ProductAlbumImageType))) {
-				var path = GetAlbumImageStoragePath(id, index, type);
-				if (File.Exists(path)) {
-					File.Delete(path);
-				}
+				GetAlbumImageStorageFile(id, index, type).Delete();
 			}
 		}
 
@@ -152,15 +156,18 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 		/// <returns></returns>
 		public virtual bool SetMainAlbumImage(Guid id, long index) {
 			// 原图不存在时返回失败，存在时复制覆盖图片到主图
-			var path = GetAlbumImageStoragePath(id, index, ProductAlbumImageType.Normal);
-			if (!File.Exists(path)) {
+			var fileEntry = GetAlbumImageStorageFile(id, index, ProductAlbumImageType.Normal);
+			if (!fileEntry.Exists) {
 				return false;
 			}
 			foreach (ProductAlbumImageType type in Enum.GetValues(typeof(ProductAlbumImageType))) {
-				var src = GetAlbumImageStoragePath(id, index, type);
-				var dst = GetAlbumImageStoragePath(id, null, type);
-				if (File.Exists(src)) {
-					File.Copy(src, dst, true);
+				var srcFile = GetAlbumImageStorageFile(id, index, type);
+				var dstFile = GetAlbumImageStorageFile(id, null, type);
+				if (srcFile.Exists) {
+					using (var srcStream = srcFile.OpenRead())
+					using (var dstStream = dstFile.OpenWrite()) {
+						srcStream.CopyTo(dstStream);
+					}
 				}
 			}
 			return true;

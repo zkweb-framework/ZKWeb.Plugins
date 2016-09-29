@@ -9,6 +9,7 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
 using ZKWeb.Server;
+using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -27,7 +28,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Domain.Services {
 		/// <summary>
 		/// 文章信息的缓存
 		/// </summary>
-		protected IsolatedMemoryCache<Guid, object> ArticleApiInfoCache { get; set; }
+		protected IKeyValueCache<Guid, object> ArticleApiInfoCache { get; set; }
 		/// <summary>
 		/// 文章搜索结果的缓存时间
 		/// 默认是15秒，可通过网站配置指定
@@ -36,21 +37,23 @@ namespace ZKWeb.Plugins.CMS.Article.src.Domain.Services {
 		/// <summary>
 		/// 文章搜索结果的缓存
 		/// </summary>
-		protected IsolatedMemoryCache<int, StaticTableSearchResponse> ArticleSearchResultCache { get; set; }
+		protected IKeyValueCache<int, StaticTableSearchResponse> ArticleSearchResultCache { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		public ArticleManager() {
-			var configManager = Application.Ioc.Resolve<ConfigManager>();
+			var configManager = Application.Ioc.Resolve<WebsiteConfigManager>();
 			var extra = configManager.WebsiteConfig.Extra;
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
 			ArticleApiInfoCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				ArticleExtraConfigKeys.ArticleApiInfoCacheTime, 15));
-			ArticleApiInfoCache = new IsolatedMemoryCache<Guid, object>("Ident", "Locale");
+			ArticleApiInfoCache = cacheFactory.CreateCache<Guid, object>(
+				CacheFactoryOptions.Default.WithIsolationPolicies("Ident", "Locale"));
 			ArticleSearchResultCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				ArticleExtraConfigKeys.ArticleSearchResultCacheTime, 15));
-			ArticleSearchResultCache = (
-				new IsolatedMemoryCache<int, StaticTableSearchResponse>("Ident", "Locale", "Url"));
+			ArticleSearchResultCache = cacheFactory.CreateCache<int, StaticTableSearchResponse>(
+				CacheFactoryOptions.Default.WithIsolationPolicies("Ident", "Locale", "Url"));
 		}
 
 		/// <summary>
