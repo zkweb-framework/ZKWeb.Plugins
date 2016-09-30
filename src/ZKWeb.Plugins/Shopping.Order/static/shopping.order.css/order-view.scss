@@ -1,5 +1,22 @@
 ﻿/* 订单详情页的样式 */
 
+/* 订单详情页的面板 */
+.order-view-panel {
+	.panel-heading {
+		height: 25px;
+		line-height: 25px;
+		padding: 0px 8px;
+
+		.tool-buttons {
+			float: right;
+
+			a {
+				color: #fff;
+			}
+		}
+	}
+}
+
 /* 订单信息 */
 .order-overview {
 	display: flex;
@@ -7,22 +24,6 @@
 	.order-warnings {
 		.alert {
 			padding: 3px 6px;
-		}
-	}
-	/* 面板 */
-	.order-view-panel {
-		.panel-heading {
-			height: 25px;
-			line-height: 25px;
-			padding: 0px 5px;
-
-			.tool-buttons {
-				float: right;
-
-				a {
-					color: #fff;
-				}
-			}
 		}
 	}
 	/* 详细信息 */
@@ -89,7 +90,6 @@
 
 /* 商品表格 */
 .order-product-table {
-	margin: 15px 0px 0px 0px;
 	/* 订单商品单价 */
 	.order-product-price {
 		line-height: 24px;

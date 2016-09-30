@@ -71,6 +71,26 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.TemplateFilters {
 		}
 
 		/// <summary>
+		/// 获取订单商品数量的Html
+		/// </summary>
+		public static HtmlString OrderProductCount(object info) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var html = templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_product_count.html", new { info });
+			return new HtmlString(html);
+		}
+
+		/// <summary>
+		/// 获取订单商品已发货数量的Html
+		/// </summary>
+		public static HtmlString OrderProductShippedCount(object info) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var html = templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_product_shipped_count.html", new { info });
+			return new HtmlString(html);
+		}
+
+		/// <summary>
 		/// 获取指定的订单状态在进度条中的css类
 		/// 如果状态和当前状态一致，返回active
 		/// 如果状态已经触发过，返回completed

@@ -98,9 +98,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 						"fa fa-check", buttonClass: "btn btn-warning"));
 				}
 			}
-			// 卖家或管理员
-			if (operatorType == OrderOperatorType.Seller ||
-				operatorType == OrderOperatorType.Admin) {
+			// 管理员
+			if (operatorType == OrderOperatorType.Admin) {
 				// 修改价格
 				var canEditCost = order.Check(c => c.CanEditCost);
 				if (canEditCost.First) {
@@ -134,9 +133,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 						new T("SendGoods"),
 						canSendGoods.Second, "fa fa-truck"));
 				}
-			}
-			// 管理员
-			if (operatorType == OrderOperatorType.Admin) {
 				// 代确认收货
 				var canConfirm = order.Check(c => c.CanConfirm);
 				if (canConfirm.First) {
