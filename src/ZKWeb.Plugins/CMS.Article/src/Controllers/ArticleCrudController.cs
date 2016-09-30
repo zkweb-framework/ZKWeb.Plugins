@@ -113,7 +113,7 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 				response.Columns.AddMemberColumn("UpdateTime");
 				response.Columns.AddMemberColumn("DisplayOrder");
 				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
-				var actionColumn = response.Columns.AddActionColumn("150");
+				var actionColumn = response.Columns.AddActionColumn();
 				actionColumn.AddButtonForOpenLink(new T("Preview"),
 					"btn btn-xs btn-success", "fa fa-eye", "/article/view?id=<%-row.Id%>", "_blank");
 				actionColumn.StandardSetupFor<ArticleCrudController>(request);

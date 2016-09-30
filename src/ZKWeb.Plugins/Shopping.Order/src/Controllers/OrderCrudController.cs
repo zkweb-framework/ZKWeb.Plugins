@@ -124,6 +124,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 					pair.Row["BuyerId"] = displayInfo.BuyerId;
 					pair.Row["Seller"] = displayInfo.Seller;
 					pair.Row["SellerId"] = displayInfo.SellerId;
+					pair.Row["OrderActions"] = displayInfo.GetOrderActionsTableCellHtml().ToString();
 				}
 			}
 
@@ -141,11 +142,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				response.Columns.AddEnumLabelColumn("State", typeof(OrderState), "50");
 				response.Columns.AddEditColumnFor<UserCrudController>("Buyer", "BuyerId", width: "70");
 				response.Columns.AddEditColumnFor<UserCrudController>("Seller", "SellerId", width: "70");
-				var actionColumn = response.Columns.AddActionColumn();
+				var actionColumn = response.Columns.AddActionColumn("5%");
 				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
 				if (!deleted) {
 					actionColumn.AddEditActionFor<OrderCrudController>();
 				}
+				actionColumn.AddHtmlAction("OrderActions");
 			}
 		}
 

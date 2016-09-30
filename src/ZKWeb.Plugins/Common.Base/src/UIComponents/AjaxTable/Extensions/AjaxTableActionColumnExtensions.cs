@@ -10,6 +10,17 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 	/// </summary>
 	public static class AjaxTableActionColumnExtensions {
 		/// <summary>
+		/// 添加操作的Html代码
+		/// 由当前行的指定成员获取Html
+		/// </summary>
+		/// <param name="column">操作列</param>
+		/// <param name="member">成员名称</param>
+		public static void AddHtmlAction(
+			this AjaxTableActionColumn column, string member) {
+			column.ActionTemplates.Add(new HtmlString($"<%=row.{member}%>"));
+		}
+
+		/// <summary>
 		/// 添加点击事件按钮
 		/// </summary>
 		/// <param name="column">操作列</param>

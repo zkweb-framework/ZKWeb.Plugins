@@ -163,7 +163,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "CancelOrder", "取消订单" },
 			{ "ConfirmOrder", "确认收货" },
 			{ "EditCost", "编辑价格" },
-			{ "EditShippingAddress", "编辑收货地址" },
+			{ "EditShippingAddress", "编辑地址" },
 			{ "SendGoods", "发货" },
 			{ "ConfirmInsteadOfBuyer", "代确认收货" },
 			{ "SetInvalid", "作废" },

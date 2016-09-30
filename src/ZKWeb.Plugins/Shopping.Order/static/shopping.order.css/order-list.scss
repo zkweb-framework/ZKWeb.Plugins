@@ -26,6 +26,8 @@
 			text-align: center;
 			/* 操作按钮 */
 			.btn {
+				float: none;
+				display: block;
 				padding: 1px 5px;
 			}
 		}

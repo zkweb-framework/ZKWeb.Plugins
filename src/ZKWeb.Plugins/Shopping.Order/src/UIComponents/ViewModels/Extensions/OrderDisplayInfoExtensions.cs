@@ -1,4 +1,6 @@
-﻿using ZKWeb.Templating;
+﻿using System.Linq;
+using System.Text;
+using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
@@ -94,6 +96,23 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			return new HtmlString(templateManager.RenderTemplate(
 				"shopping.order/tmpl.order_view.tab_comments.html", new { info }));
+		}
+
+		/// <summary>
+		/// 获取订单操作在表格单元格(订单列表页)中的Html
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <returns></returns>
+		public static HtmlString GetOrderActionsTableCellHtml(this OrderDisplayInfo info) {
+			var result = new StringBuilder();
+			foreach (var action in info.ActionHtmls) {
+				var actionHtml = action.ToString();
+				if (actionHtml.Contains("btn-danger") || actionHtml.Contains("action-disabled")) {
+					continue;
+				}
+				result.AppendLine(actionHtml);
+			}
+			return new HtmlString(result.ToString());
 		}
 	}
 }

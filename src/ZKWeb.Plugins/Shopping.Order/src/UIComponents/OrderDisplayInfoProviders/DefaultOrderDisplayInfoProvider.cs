@@ -29,12 +29,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 		public static HtmlString GetModalAction(
 			TemplateManager templateManager,
 			string name, string url, string iconClass,
-			string title = null, string buttonClass = null) {
+			string title = null, string buttonClass = null, object dialogParameters = null) {
 			buttonClass = buttonClass ?? "btn btn-primary";
 			title = title ?? name;
 			return new HtmlString(templateManager.RenderTemplate(
 				"shopping.order/tmpl.order_action.btn_modal.html",
-				new { name, title, url, iconClass, buttonClass }));
+				new { name, title, url, iconClass, buttonClass, dialogParameters }));
 		}
 
 		/// <summary>
@@ -43,10 +43,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 		/// <returns></returns>
 		public static HtmlString GetDisabledAction(
 			TemplateManager templateManager,
-			string name, string warning, string iconClass) {
+			string name, string message, string iconClass) {
 			return new HtmlString(templateManager.RenderTemplate(
 				"shopping.order/tmpl.order_action.btn_disabled.html",
-				new { name, warning, iconClass }));
+				new { name, message, iconClass }));
 		}
 
 		/// <summary>
@@ -85,7 +85,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 					actions.Add(GetModalAction(templateManager,
 						new T("CancelOrder"),
 						$"/user/orders/cancel_order?serial={order.Serial}",
-						"fa fa-exclamation-triangle", buttonClass: "btn btn-warning"));
+						"fa fa-exclamation-triangle",
+						buttonClass: "btn btn-warning",
+						dialogParameters: new { type = "type-warning", size = "size-normal" }));
 				}
 				// 确认收货
 				var canConfirm = order.Check(c => c.CanConfirm);
@@ -153,7 +155,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 					actions.Add(GetModalAction(templateManager,
 						new T("SetInvalid"),
 						$"/admin/orders/set_invalid?id={order.Id}",
-						"fa fa-exclamation-triangle", buttonClass: "btn btn-danger"));
+						"fa fa-exclamation-triangle",
+						buttonClass: "btn btn-danger",
+						dialogParameters: new { type = "type-danger", size = "size-normal" }));
 				} else {
 					actions.Add(GetDisabledAction(templateManager,
 						new T("SetInvalid"),
