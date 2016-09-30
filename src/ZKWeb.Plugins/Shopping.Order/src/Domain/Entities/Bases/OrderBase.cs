@@ -52,8 +52,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities.Bases {
 		public virtual void Configure(IEntityMappingBuilder<TOrder> builder) {
 			builder.Id(o => o.Id);
 			builder.References(o => o.Owner);
-			builder.Map(o => o.CreateTime);
-			builder.Map(o => o.UpdateTime);
+			builder.Map(o => o.CreateTime, new EntityMappingOptions() { Index = "Idx_CreateTime" });
+			builder.Map(o => o.UpdateTime, new EntityMappingOptions() { Index = "Idx_UpdateTime" });
 			builder.Map(o => o.Deleted);
 			builder.Map(o => o.Remark);
 			builder.Map(o => o.RemarkFlags, new EntityMappingOptions() { Index = "Idx_RemarkFlags" });
