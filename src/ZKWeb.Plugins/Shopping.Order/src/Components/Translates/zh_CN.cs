@@ -168,7 +168,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "ConfirmInsteadOfBuyer", "代确认收货" },
 			{ "SetInvalid", "作废" },
 			{ "OrderState", "订单状态" },
-			{ "OrderActions", "订单操作" }
+			{ "OrderActions", "订单操作" },
+			{ "OriginalTotalCost", "原始总金额" }
 		};
 
 		public bool CanTranslate(string code) {

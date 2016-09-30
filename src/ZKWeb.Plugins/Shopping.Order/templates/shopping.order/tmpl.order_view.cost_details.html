@@ -1,0 +1,18 @@
+﻿<div class="order-cost-details">
+	<dl class="total-cost" title="{{ info.TotalCostDescription }}">
+		<dt>{{ "TotalCost" | trans }}:</dt>
+		<dd>{{ info.TotalCostString }}</dd>
+	</dl>
+	{% for part in info.TotalCostCalcResult.Parts %}
+	<dl class="parts-cost">
+		<dt>{{ part.Type | trans }}:</dt>
+		<dd>{{ part.Delta | currency: info.Currency.Type }}</dd>
+	</dl>
+	{% endfor %}
+	{% if info.TotalCost != info.OriginalTotalCost %}
+	<dl class="original-total-cost" title="{{ info.OriginalTotalCostDescription }}">
+		<dt>{{ "OriginalTotalCost" | trans }}:</dt>
+		<dd>{{ info.OriginalTotalCostString }}</dd>
+	</dl>
+	{% endif %}
+</div>

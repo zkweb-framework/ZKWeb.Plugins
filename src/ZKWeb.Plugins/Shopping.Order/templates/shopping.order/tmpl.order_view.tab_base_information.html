@@ -5,12 +5,12 @@
 		{% include shopping.order/tmpl.order_view.state_and_actions.html %}
 		<div class="clearfix"></div>
 	</div>
-	<div class="order-product-table table-scroller">
+	<div class="order-product-table">
 		{% include shopping.order/tmpl.order_view.products_table.html %}
 		<div class="clearfix"></div>
 	</div>
 	<div class="order-statistics">
-
+		{% include shopping.order/tmpl.order_view.cost_details.html %}
 		<div class="clearfix"></div>
 	</div>
 </div>

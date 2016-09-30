@@ -63,7 +63,7 @@
 	.order-state-and-actions {
 		flex: 1;
 		float: left;
-		padding: 0px 0px 20px 20px;
+		padding: 0px 0px 0px 20px;
 		/* 操作按钮列表 */
 		.order-actions {
 			margin: 0px 8px 0px 8px;
@@ -115,21 +115,22 @@
 		> dt {
 			float: left;
 			text-align: right;
-			width: 80px;
+			width: 130px;
 			padding: 4px 4px 4px 0px;
 		}
 
 		> dd {
 			float: left;
+			text-align: right;
 			width: 80px;
 			padding: 4px 0px;
 		}
 	}
 	/* 订单总价 */
 	.total-cost {
+		font-size: 16px;
+
 		> dd {
-			font-size: 14px;
-			margin-top: -2px;
 			font-weight: bold;
 			color: #F13E46;
 		}

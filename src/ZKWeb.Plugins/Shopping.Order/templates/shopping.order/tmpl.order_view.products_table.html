@@ -1,25 +1,23 @@
-﻿<div class="order-product-table">
-	<div class="panel panel-primary order-view-panel">
-		<div class="panel-heading">{{ "OrderProducts" | trans }}</div>
-		<table class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<th>{{ "Product" | trans }}</th>
-					<th width="100">{{ "Price" | trans }}</th>
-					<th width="100">{{ "Quantity" | trans }}</th>
-					<th width="100">{{ "ShippedQuantity" | trans }}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for product in info.OrderProducts %}
-				<tr>
-					<td>{{ product | order_product_summary }}</td>
-					<td>{{ product | order_product_price }}</td>
-					<td>{{ product | order_product_count }}</td>
-					<td>{{ product | order_product_shipped_count }}</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+﻿<div class="panel panel-primary order-view-panel">
+	<div class="panel-heading">{{ "OrderProducts" | trans }}</div>
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>{{ "Product" | trans }}</th>
+				<th width="100">{{ "Price" | trans }}</th>
+				<th width="100">{{ "Quantity" | trans }}</th>
+				<th width="100">{{ "ShippedQuantity" | trans }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for product in info.OrderProducts %}
+			<tr>
+				<td>{{ product | order_product_summary }}</td>
+				<td>{{ product | order_product_price }}</td>
+				<td>{{ product | order_product_count }}</td>
+				<td>{{ product | order_product_shipped_count }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
