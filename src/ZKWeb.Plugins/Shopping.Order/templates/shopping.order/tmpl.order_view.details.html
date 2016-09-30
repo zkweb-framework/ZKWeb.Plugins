@@ -1,5 +1,5 @@
-﻿<div class="order-details">
-	<div class="order-details-heading">
+﻿<div class="panel panel-primary order-view-panel order-details">
+	<div class="panel-heading">
 		{{ "Order Informations" | trans }}
 		<div class="tool-buttons">
 			{% for toolButton in info.ToolButtonHtmls %}
@@ -7,7 +7,7 @@
 			{% endfor %}
 		</div>
 	</div>
-	<div class="order-details-body">
+	<div class="panel-body">
 		{% for subject in info.SubjectHtmls %}
 		{{ subject }}
 		{% endfor %}

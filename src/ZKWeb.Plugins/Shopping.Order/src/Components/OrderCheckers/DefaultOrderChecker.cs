@@ -6,11 +6,13 @@ using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWebStandard.Collections;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers {
 	/// <summary>
 	/// 默认的订单检查器
 	/// </summary>
+	[ExportMany]
 	public class DefaultOrderChecker : IOrderChecker {
 		/// <summary>
 		/// 判断订单是否可以付款

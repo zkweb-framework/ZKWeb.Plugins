@@ -126,7 +126,6 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 				var storageFile = imageManager.GetImageStorageFile(
 					CategoryLower, name, imageManager.ImageExtension);
 				var lastWriteTime = storageFile.LastWriteTimeUtc.ToClientTimeString();
-				// TODO: beta3更新这里
 				var fileSize = FileUtils.GetSizeDisplayName(storageFile.Length);
 				return new Dictionary<string, object>() {
 					{ "name", name },

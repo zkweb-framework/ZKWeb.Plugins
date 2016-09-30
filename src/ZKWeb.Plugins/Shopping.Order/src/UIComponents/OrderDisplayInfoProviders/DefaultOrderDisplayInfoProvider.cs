@@ -15,7 +15,6 @@ using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProviders {
 	/// <summary>
@@ -57,11 +56,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 		public static HtmlString GetLinkAction(
 			TemplateManager templateManager,
 			string name, string url, string iconClass,
-			string buttonClass = null) {
+			string buttonClass = null, string target = null) {
 			buttonClass = buttonClass ?? "btn btn-primary";
 			return new HtmlString(templateManager.RenderTemplate(
 				"shopping.order/tmpl.order_action.btn_link.html",
-				new { name, url, iconClass, buttonClass }));
+				new { name, url, target, iconClass, buttonClass }));
 		}
 
 		/// <summary>
@@ -239,24 +238,22 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 		public void AddWarnings(
 			SellerOrder order, IList<HtmlString> warnings, OrderOperatorType operatorType) {
 			// 警告担保交易未确认收款
-			// TODO: 换成HtmlString.Encode
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var transactions = orderManager.GetReleatedTransactions(order.Id);
 			if (transactions.Any(t => t.State == PaymentTransactionState.SecuredPaid)) {
 				if (operatorType == OrderOperatorType.Buyer) {
-					warnings.Add(new HtmlString(HttpUtils.HtmlEncode(
-						new T("Buyer is using secured paid, please tell the buyer confirm transaction on payment platform after received goods"))));
+					warnings.Add(HtmlString.Encode(
+						new T("Buyer is using secured paid, please tell the buyer confirm transaction on payment platform after received goods")));
 				} else {
-					warnings.Add(new HtmlString(HttpUtils.HtmlEncode(
-						new T("You're using secured paid, please confirm transaction on payment platform after received goods"))));
+					warnings.Add(HtmlString.Encode(
+						new T("You're using secured paid, please confirm transaction on payment platform after received goods")));
 				}
 			}
 			// 警告关联交易的最后发生错误
-			// TODO: 换成HtmlString.Encode
 			var lastErrors = transactions.Select(t => t.LastError).Where(e => !string.IsNullOrEmpty(e));
 			foreach (var lastError in lastErrors) {
-				warnings.Add(new HtmlString(HttpUtils.HtmlEncode(
-					string.Format(new T("Releated transaction contains error: {0}"), new T(lastError)))));
+				warnings.Add(HtmlString.Encode(
+					string.Format(new T("Releated transaction contains error: {0}"), new T(lastError))));
 			}
 		}
 	}
