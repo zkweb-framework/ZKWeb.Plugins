@@ -9,7 +9,10 @@ BootstrapDialog.showRemote = function (title, url, extendParameters) {
 	$contents.on("reload", function () {
 		var url = $contents.attr("href");
 		$contents.empty().addClass("loading").load(url, function () {
-			$(document).trigger("dynamicLoaded", $contents); // 触发动态加载事件
+			// 待添加到dom后，触发动态加载事件
+			setTimeout(function () {
+				$(document).trigger("dynamicLoaded", $contents);
+			}, 0);
 			$contents.removeClass("loading");
 		});
 	});
