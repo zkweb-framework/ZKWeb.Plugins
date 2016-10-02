@@ -17,15 +17,16 @@
 	}
 }
 
+/* 警告 */
+.order-warnings {
+	.alert {
+		padding: 3px 6px;
+	}
+}
+
 /* 订单信息 */
 .order-overview {
 	display: flex;
-	/* 警告 */
-	.order-warnings {
-		.alert {
-			padding: 3px 6px;
-		}
-	}
 	/* 详细信息 */
 	.order-details {
 		float: left;
