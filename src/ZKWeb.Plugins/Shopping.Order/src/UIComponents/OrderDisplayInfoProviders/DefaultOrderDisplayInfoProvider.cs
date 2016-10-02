@@ -243,10 +243,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 			if (transactions.Any(t => t.State == PaymentTransactionState.SecuredPaid)) {
 				if (operatorType == OrderOperatorType.Buyer) {
 					warnings.Add(HtmlString.Encode(
-						new T("Buyer is using secured paid, please tell the buyer confirm transaction on payment platform after received goods")));
+						new T("You're using secured paid, please confirm transaction on payment platform after received goods")));
 				} else {
 					warnings.Add(HtmlString.Encode(
-						new T("You're using secured paid, please confirm transaction on payment platform after received goods")));
+						new T("Buyer is using secured paid, please tell the buyer confirm transaction on payment platform after received goods")));
 				}
 			}
 			// 警告关联交易的最后发生错误
