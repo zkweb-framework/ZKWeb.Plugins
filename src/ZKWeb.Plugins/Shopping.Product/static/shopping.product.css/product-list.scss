@@ -65,11 +65,11 @@
 		}
 		/* 选中的过滤条件 */
 		a.selected {
-			border: 2px solid #C00 !important;
+			border: 2px solid #0080BF !important;
 
 			> i {
 				margin: 0px 0px 0px 4px;
-				color: #C00;
+				color: #0080BF;
 			}
 
 			&:hover > i, &:active > i {

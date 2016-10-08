@@ -100,7 +100,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		public IActionResult ClassFilterInfo() {
 			var classManager = Application.Ioc.Resolve<GenericClassManager>();
 			var classTree = classManager.GetTreeWithCache(new ProductClassController().Type);
-			var tree = TreeUtils.Transform(classTree, c => c == null ? null : new { c.Id, c.Name });
+			var tree = TreeUtils.Transform(classTree,
+				c => c == null ? null : new { Id = c.Id.ToString(), c.Name });
 			return new JsonResult(new { tree });
 		}
 
@@ -112,7 +113,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		public IActionResult TagFilterInfo() {
 			var tagManager = Application.Ioc.Resolve<GenericTagManager>();
 			var tags = tagManager.GetManyWithCache(new ProductTagController().Type)
-				.Select(t => new { t.Id, t.Name }).ToList();
+				.Select(t => new { Id = t.Id.ToString(), t.Name }).ToList();
 			return new JsonResult(new { tags });
 		}
 
