@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 
@@ -53,40 +52,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			return new HtmlString(templateManager.RenderTemplate(
 				"shopping.order/tmpl.order_view.tab_base_information.html", new { info }));
 		}
-
-		/// <summary>
-		/// 获取订单发货记录的Html
-		/// </summary>
-		/// <param name="info">订单显示信息</param>
-		/// <returns></returns>
-		public static HtmlString GetDeliveryRecordsHtml(this OrderDisplayInfo info) {
-			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_view.tab_delivery_records.html", new { info }));
-		}
-
-		/// <summary>
-		/// 获取订单记录的Html
-		/// </summary>
-		/// <param name="info">订单显示信息</param>
-		/// <returns></returns>
-		public static HtmlString GetOrderRecordsHtml(this OrderDisplayInfo info) {
-			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_view.tab_records.html", new { info }));
-		}
-
-		/// <summary>
-		/// 获取管理员查看的关联交易Html
-		/// </summary>
-		/// <param name="info">订单显示信息</param>
-		/// <returns></returns>
-		public static HtmlString GetReleatedTransactionsHtml(this OrderDisplayInfo info) {
-			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_view.tab_releated_transactions.html", new { info }));
-		}
-
+		
 		/// <summary>
 		/// 获取订单留言的Html
 		/// </summary>

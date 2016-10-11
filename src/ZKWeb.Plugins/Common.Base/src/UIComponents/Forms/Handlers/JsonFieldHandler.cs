@@ -17,12 +17,12 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Handlers {
 		/// </summary>
 		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var hidden = templateManager.RenderTemplate("tmpl.form.hidden.html", new {
+			var hidden = templateManager.RenderTemplate("common.base/tmpl.form.hidden.html", new {
 				name = field.Attribute.Name,
 				value = JsonConvert.SerializeObject(field.Value),
 				attributes = htmlAttributes
 			});
-			return field.WrapFieldHtml(htmlAttributes, hidden);
+			return hidden;
 		}
 
 		/// <summary>

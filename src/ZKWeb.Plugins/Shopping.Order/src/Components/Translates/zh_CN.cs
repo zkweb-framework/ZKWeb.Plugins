@@ -169,7 +169,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "SetInvalid", "作废" },
 			{ "OrderState", "订单状态" },
 			{ "OrderActions", "订单操作" },
-			{ "OriginalTotalCost", "原始总金额" }
+			{ "OriginalTotalCost", "原始总金额" },
+			{ "LogisticsSerial", "快递单编号" },
+			{ "DeliveryOperator", "发货人" },
+			{ "DeliveryTime", "发货时间" }
 		};
 
 		public bool CanTranslate(string code) {

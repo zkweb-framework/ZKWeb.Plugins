@@ -3,24 +3,9 @@
 /* 订单详情页的面板 */
 .order-view-panel {
 	.panel-heading {
-		height: 25px;
-		line-height: 25px;
-		padding: 0px 8px;
-
 		.tool-buttons {
 			float: right;
-
-			a {
-				color: #fff;
-			}
 		}
-	}
-}
-
-/* 警告 */
-.order-warnings {
-	.alert {
-		padding: 3px 6px;
 	}
 }
 

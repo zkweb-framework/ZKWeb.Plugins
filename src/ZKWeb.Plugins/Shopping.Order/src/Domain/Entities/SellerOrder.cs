@@ -60,6 +60,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 		/// 订单留言的集合
 		/// </summary>
 		public virtual ISet<OrderComment> OrderComments { get; set; }
+		/// <summary>
+		/// 订单发货单的集合
+		/// </summary>
+		public virtual ISet<OrderDelivery> OrderDeliveries { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -69,6 +73,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 			StateTimes = new OrderStateTimes();
 			OrderProducts = new HashSet<OrderProduct>();
 			OrderComments = new HashSet<OrderComment>();
+			OrderDeliveries = new HashSet<OrderDelivery>();
 		}
 
 		/// <summary>
@@ -107,6 +112,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 			});
 			builder.HasMany(o => o.OrderProducts);
 			builder.HasMany(o => o.OrderComments);
+			builder.HasMany(o => o.OrderDeliveries);
 		}
 	}
 }

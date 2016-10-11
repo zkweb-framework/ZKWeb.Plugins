@@ -16,6 +16,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
@@ -190,11 +191,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			/// 绑定表单
 			/// </summary>
 			protected override void OnBind(SellerOrder bindFrom) {
+				var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 				var displayInfo = bindFrom.ToDisplayInfo(OrderOperatorType.Admin);
 				BaseInformationHtml = displayInfo.GetBaseInformationHtml();
-				DeliveryRecordsHtml = displayInfo.GetDeliveryRecordsHtml();
-				OrderRecordsHtml = displayInfo.GetOrderRecordsHtml();
-				ReleatedTransactionsHtml = displayInfo.GetReleatedTransactionsHtml();
+				DeliveryRecordsHtml = orderManager.GetDeliveryRecordsHtml(bindFrom);
+				OrderRecordsHtml = orderManager.GetOrderRecordsHtml(bindFrom.Id);
+				ReleatedTransactionsHtml = orderManager.GetReleatedTransactionsHtml(bindFrom.Id);
 				OrderCommentsHtml = displayInfo.GetOrderCommentsHtml();
 				Remark = bindFrom.Remark;
 			}
