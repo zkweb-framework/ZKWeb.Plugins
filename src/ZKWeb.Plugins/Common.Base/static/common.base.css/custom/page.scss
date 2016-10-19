@@ -108,7 +108,7 @@ body {
 	flex-direction: column;
 
 	> .page-body {
-		flex: 1;
+		flex: 1 0 auto;
 		min-height: initial;
 		background: #fff;
 	}

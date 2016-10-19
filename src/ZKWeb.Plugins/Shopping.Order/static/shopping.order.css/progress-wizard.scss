@@ -52,10 +52,10 @@ $mobile-size: 400px !default;
 }
 
 .flexer-element {
-	-ms-flex: 1;
-	-webkit-flex: 1;
-	-moz-flex: 1;
-	flex: 1;
+	-ms-flex: 1 0 auto;
+	-webkit-flex: 1 0 auto;
+	-moz-flex: 1 0 auto;
+	flex: 1 0 auto;
 }
 
 .progress-indicator {

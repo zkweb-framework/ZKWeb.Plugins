@@ -1,3 +1,4 @@
+// @koala-append "custom/_iefix.js"
 // @koala-append "components/jquery.min.js"
 // @koala-append "components/jquery.mobile.events.min.js"
 // @koala-append "components/jquery-migrate.min.js"

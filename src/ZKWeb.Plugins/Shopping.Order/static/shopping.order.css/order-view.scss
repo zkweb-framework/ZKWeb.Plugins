@@ -47,7 +47,7 @@
 	}
 	/* 订单状态和操作按钮列表 */
 	.order-state-and-actions {
-		flex: 1;
+		flex: 1 0 auto;
 		float: left;
 		padding: 0px 0px 0px 20px;
 		/* 操作按钮列表 */
