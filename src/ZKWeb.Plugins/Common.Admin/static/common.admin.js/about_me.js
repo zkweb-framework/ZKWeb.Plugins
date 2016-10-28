@@ -1,3 +1,3 @@
 ﻿$(function () {
-	$("#TabBasicInformation input[type=checkbox]").attr("disabled", "disabled");
+	$(".tab-content [key='Basic Information'] input[type=checkbox]").attr("disabled", "disabled");
 });

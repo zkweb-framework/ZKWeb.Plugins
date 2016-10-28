@@ -4,6 +4,7 @@ using System.Text;
 using ZKWeb.Localize;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 	/// <summary>
@@ -15,6 +16,17 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 		/// 默认分组名称
 		/// </summary>
 		public const string DefaultGroupName = "Basic Information";
+		/// <summary>
+		/// 标签的前缀
+		/// </summary>
+		private string TabPrefix { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public TabFormBuilder() {
+			TabPrefix = "Tab" + RandomUtils.RandomString(5) + "_";
+		}
 
 		/// <summary>
 		/// 从分组名称获取标签Id，不带#
@@ -22,7 +34,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 		/// <param name="groupName">分组名称</param>
 		/// <returns></returns>
 		protected virtual string GetTabId(string groupName) {
-			return "Tab" + groupName.Replace(" ", "");
+			return TabPrefix + groupName.Replace(" ", "");
 		}
 
 		/// <summary>
@@ -57,7 +69,11 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 			RenderSubmitButton(submitButton);
 			html.AppendLine(
 				templateManager.RenderTemplate("common.base/tmpl.tab_form.tabs.html", new {
-					groups = groups.Select(g => new { tabId = GetTabId(g.Key), name = new T(g.Key) }),
+					groups = groups.Select(g => new {
+						tabId = GetTabId(g.Key),
+						key = g.Key,
+						name = new T(g.Key)
+					}),
 					submitButton = new HtmlString(submitButton.ToString())
 				}));
 		}
@@ -74,6 +90,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 				templateManager.RenderTemplate("common.base/tmpl.tab_form.tab_contents.html", new {
 					groups = groups.Select(g => new {
 						tabId = GetTabId(g.Key),
+						key = g.Key,
 						formFields = g.Select(field => {
 							var formFieldHtml = new StringBuilder();
 							RenderFormField(formFieldHtml, field);

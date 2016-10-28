@@ -15,6 +15,6 @@ $(function () {
 $(function () {
 	$(document).on("click", ".order-details .show-tab", function () {
 		var tab = $(this).attr("data-tab");
-		$("[href='" + tab + "']").tab("show");
+		$(".nav-tabs [key='" + tab + "']").tab("show");
 	});
 });

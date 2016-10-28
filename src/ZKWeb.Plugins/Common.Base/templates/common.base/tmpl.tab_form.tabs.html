@@ -6,7 +6,7 @@
 	{% assign cssClass = "" %}
 	{% endif %}
 	<li class="{{ cssClass }}" aria-expanded="true">
-		<a href="#{{ group.tabId }}" data-toggle="tab">{{ group.name }}</a>
+		<a href="#{{ group.tabId }}" key="{{ group.key }}" data-toggle="tab">{{ group.name }}</a>
 	</li>
 	{% endfor %}
 	<li class="buttons">

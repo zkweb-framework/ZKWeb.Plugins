@@ -5,7 +5,7 @@
 	{% else %}
 	{% assign cssClass = "tab-pane" %}
 	{% endif %}
-	<div id="{{ group.tabId }}" class="{{ cssClass }}">
+	<div id="{{ group.tabId }}" key="{{ group.key }}" class="{{ cssClass }}">
 		<div>
 			{% for formField in group.formFields %}
 			{{ formField }}
