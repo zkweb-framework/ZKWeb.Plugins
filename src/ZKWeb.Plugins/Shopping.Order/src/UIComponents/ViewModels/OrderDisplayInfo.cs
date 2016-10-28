@@ -13,6 +13,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 	/// </summary>
 	public class OrderDisplayInfo : ILiquidizable {
 		/// <summary>
+		/// 订单Id
+		/// </summary>
+		public Guid Id { get; set; }
+		/// <summary>
 		/// 流水号
 		/// </summary>
 		public string Serial { get; set; }

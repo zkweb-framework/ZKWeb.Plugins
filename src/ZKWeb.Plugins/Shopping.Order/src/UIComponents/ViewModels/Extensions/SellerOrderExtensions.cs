@@ -24,6 +24,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var currency = currencyManager.GetCurrency(order.Currency);
 			var displayInfoProviders = Application.Ioc.ResolveMany<IOrderDisplayInfoProvider>();
 			var info = new OrderDisplayInfo();
+			info.Id = order.Id;
 			info.Serial = order.Serial;
 			info.BuyerId = order.Buyer?.Id;
 			info.Buyer = order.Buyer?.Username;

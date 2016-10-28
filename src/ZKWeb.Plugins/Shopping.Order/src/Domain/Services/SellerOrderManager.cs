@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZKWeb.Cache;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
+using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
+using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
+using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities;
+using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
@@ -29,10 +34,8 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
-	using Common.Currency.src.Components.Interfaces;
-	using Common.Currency.src.Domain.Service;
-	using Common.GenericRecord.src.Domain.Entities;
-	using Common.GenericRecord.src.Domain.Services;
+	using Templating;
+	using UIComponents.OrderDisplayInfoProviders;
 	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>
@@ -41,6 +44,20 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 	/// </summary>
 	[ExportMany, SingletonReuse]
 	public class SellerOrderManager : DomainServiceBase<SellerOrder, Guid> {
+		/// <summary>
+		/// 订单关联交易的缓存，只在同一个Http上下文中有效
+		/// </summary>
+		private IKeyValueCache<Guid, IList<PaymentTransaction>> ReleatedTransactionsCache { get; set; }
+		
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public SellerOrderManager() {
+			var cacheFactory = Application.Ioc.Resolve<ICacheFactory>();
+			ReleatedTransactionsCache = cacheFactory.CreateCache<Guid, IList<PaymentTransaction>>(
+				CacheFactoryOptions.Default.WithLifetime(CacheLifetime.PerHttpContext));
+		}
+
 		/// <summary>
 		/// 计算订单商品的单价
 		/// 返回价格保证大于或等于0
@@ -223,9 +240,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <param name="orderId">订单Id</param>
 		/// <returns></returns>
 		public virtual IList<PaymentTransaction> GetReleatedTransactions(Guid orderId) {
-			// TODO: 添加在Http上下文中共享的缓存
-			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
-			return transactionManager.GetMany(OrderTransactionHandler.ConstType, orderId);
+			return ReleatedTransactionsCache.GetOrCreate(orderId, () => {
+				var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+				return transactionManager.GetMany(OrderTransactionHandler.ConstType, orderId);
+			}, TimeSpan.FromSeconds(1));
 		}
 
 		/// <summary>
@@ -241,81 +259,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			}
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			return transactionManager.GetResultUrl(transaction.Id);
-		}
-		
-		/// <summary>
-		/// 获取发货记录的Html
-		/// </summary>
-		/// <param name="order">订单</param>
-		/// <returns></returns>
-		public virtual HtmlString GetDeliveryRecordsHtml(SellerOrder order) {
-			var table = new StaticTableBuilder();
-			table.Columns.Add("Serial");
-			table.Columns.Add("OrderLogistics", "150");
-			table.Columns.Add("LogisticsSerial", "150");
-			table.Columns.Add("DeliveryOperator", "150");
-			table.Columns.Add("DeliveryTime", "150");
-			table.Columns.Add("Actions", "150");
-			var deliveries = order.OrderDeliveries.OrderByDescending(d => d.CreateTime);
-			foreach (var delivery in deliveries) {
-				table.Rows.Add(new {
-					Serial = delivery.Serial,
-					OrderLogistics = delivery.Logistics?.Name,
-					LogisticsSerial = delivery.LogisticsSerial,
-					DeliveryOperator = delivery.Operator?.Username,
-					DeliveryTime = delivery.CreateTime.ToClientTimeString(),
-					Action = "" // TODO: 添加查看发货记录详情的代码
-				});
-			}
-			return (HtmlString)table.ToLiquid();
-		}
-
-		/// <summary>
-		/// 获取订单详细记录的html
-		/// </summary>
-		/// <param name="orderId">订单Id</param>
-		/// <returns></returns>
-		public virtual HtmlString GetOrderRecordsHtml(Guid orderId) {
-			var table = new StaticTableBuilder();
-			table.Columns.Add("CreateTime", "150");
-			table.Columns.Add("Creator", "150");
-			table.Columns.Add("Contents");
-			var records = GetDetailRecords(orderId);
-			foreach (var record in records) {
-				table.Rows.Add(new {
-					Time = record.CreateTime.ToClientTimeString(),
-					Creator = record.Creator?.Username,
-					Contents = record.Content
-				});
-			}
-			return (HtmlString)table.ToLiquid();
-		}
-
-		/// <summary>
-		/// 获取相关交易的Html
-		/// </summary>
-		/// <param name="orderId">订单Id</param>
-		/// <returns></returns>
-		public virtual HtmlString GetReleatedTransactionsHtml(Guid orderId) {
-			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
-			var table = new StaticTableBuilder();
-			table.Columns.Add("Serial");
-			table.Columns.Add("PaymentApi", "150");
-			table.Columns.Add("ExternalSerial", "150");
-			table.Columns.Add("Amount", "150");
-			table.Columns.Add("State", "150");
-			var transactions = GetReleatedTransactions(orderId);
-			foreach (var transaction in transactions) {
-				var currency = currencyManager.GetCurrency(transaction.CurrencyType);
-				table.Rows.Add(new {
-					Serial = transaction.Serial,
-					PaymentApi = transaction.Api?.Name,
-					ExternalSerial = transaction.ExternalSerial,
-					Amount = currency.Format(transaction.Amount),
-					State = new T(transaction.State.GetDescription())
-				});
-			}
-			return (HtmlString)table.ToLiquid();
 		}
 	}
 }

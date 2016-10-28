@@ -24,6 +24,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Controllers;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
+using ZKWeb.Plugins.Finance.Payment.src.UIComponents.HtmlProviders;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 	/// <summary>
@@ -209,7 +210,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 			protected override void OnBind(PaymentTransaction bindFrom) {
 				var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
 				var currency = currencyManager.GetCurrency(bindFrom.CurrencyType);
-				var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+				var transactionHtmlProvider = Application.Ioc.Resolve<PaymentTransactionHtmlProvider>();
 				Type = new T(bindFrom.Type);
 				PaymentApi = bindFrom.Api.ToString();
 				State = new T(bindFrom.State.GetDescription());
@@ -222,7 +223,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 				Payee = bindFrom.Payee == null ? null : bindFrom.Payee.Username;
 				Description = bindFrom.Description;
 				LastError = bindFrom.LastError;
-				DetailRecords = transactionManager.GetDetailRecordsHtml(bindFrom.Id);
+				DetailRecords = transactionHtmlProvider.GetDetailRecordsHtml(bindFrom.Id);
 				Remark = bindFrom.Remark;
 			}
 

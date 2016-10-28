@@ -10,6 +10,7 @@ using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Finance.Payment.src.UIComponents.Forms;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentApiHandlers;
+using ZKWeb.Plugins.Finance.Payment.src.UIComponents.HtmlProviders;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 	/// <summary>
@@ -55,9 +56,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		/// <returns></returns>
 		[Action("payment/transaction/pay")]
 		public IActionResult Pay() {
-			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var transactionHtmlProvider = Application.Ioc.Resolve<PaymentTransactionHtmlProvider>();
 			var id = Request.Get<Guid>("id");
-			var html = transactionManager.GetPaymentHtml(id);
+			var html = transactionHtmlProvider.GetPaymentHtml(id);
 			return new TemplateResult("finance.payment/transaction_pay.html", new { html });
 		}
 
@@ -68,9 +69,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		/// <returns></returns>
 		[Action("payment/transaction/pay_result")]
 		public IActionResult PayResult() {
-			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var transactionHtmlProvider = Application.Ioc.Resolve<PaymentTransactionHtmlProvider>();
 			var id = Request.Get<Guid>("id");
-			var html = transactionManager.GetResultHtml(id);
+			var html = transactionHtmlProvider.GetResultHtml(id);
 			return new TemplateResult("finance.payment/transaction_pay_result.html", new { html });
 		}
 	}

@@ -1,6 +1,18 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
+using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
+using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProviders;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
+using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 	/// <summary>
@@ -52,7 +64,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			return new HtmlString(templateManager.RenderTemplate(
 				"shopping.order/tmpl.order_view.tab_base_information.html", new { info }));
 		}
-		
+
 		/// <summary>
 		/// 获取订单留言的Html
 		/// </summary>
@@ -79,6 +91,92 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 				result.AppendLine(actionHtml);
 			}
 			return new HtmlString(result.ToString());
+		}
+
+		/// <summary>
+		/// 获取发货记录的Html
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <param name="deliveries">发货记录</param>
+		/// <returns></returns>
+		public static HtmlString GetDeliveryRecordsHtml(
+			this OrderDisplayInfo info, IEnumerable<OrderDelivery> deliveries) {
+			var table = new StaticTableBuilder();
+			table.Columns.Add("Serial");
+			table.Columns.Add("OrderLogistics", "150");
+			table.Columns.Add("LogisticsSerial", "150");
+			table.Columns.Add("DeliveryOperator", "150");
+			table.Columns.Add("DeliveryTime", "150");
+			table.Columns.Add("Actions", "150");
+			deliveries = deliveries.OrderByDescending(d => d.CreateTime);
+			foreach (var delivery in deliveries) {
+				table.Rows.Add(new {
+					Serial = delivery.Serial,
+					OrderLogistics = delivery.Logistics?.Name,
+					LogisticsSerial = delivery.LogisticsSerial,
+					DeliveryOperator = delivery.Operator?.Username,
+					DeliveryTime = delivery.CreateTime.ToClientTimeString(),
+					Action = "" // TODO: 添加查看发货记录详情的代码
+				});
+			}
+			return (HtmlString)table.ToLiquid();
+		}
+
+		/// <summary>
+		/// 获取订单详细记录的html
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <returns></returns>
+		public static HtmlString GetOrderRecordsHtml(
+			this OrderDisplayInfo info) {
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var table = new StaticTableBuilder();
+			table.Columns.Add("CreateTime", "150");
+			table.Columns.Add("Creator", "150");
+			table.Columns.Add("Contents");
+			var records = orderManager.GetDetailRecords(info.Id);
+			foreach (var record in records) {
+				table.Rows.Add(new {
+					Time = record.CreateTime.ToClientTimeString(),
+					Creator = record.Creator?.Username,
+					Contents = record.Content
+				});
+			}
+			return (HtmlString)table.ToLiquid();
+		}
+
+		/// <summary>
+		/// 获取相关交易的Html
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <returns></returns>
+		public static HtmlString GetReleatedTransactionsHtml(
+			this OrderDisplayInfo info) {
+			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var table = new StaticTableBuilder();
+			table.Columns.Add("Serial");
+			table.Columns.Add("PaymentApi", "150");
+			table.Columns.Add("ExternalSerial", "150");
+			table.Columns.Add("Amount", "150");
+			table.Columns.Add("State", "150");
+			table.Columns.Add("Actions", "150");
+			var transactions = orderManager.GetReleatedTransactions(info.Id);
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			foreach (var transaction in transactions) {
+				var currency = currencyManager.GetCurrency(transaction.CurrencyType);
+				var action = DefaultOrderDisplayInfoProvider.GetModalAction(
+					templateManager, new T("View Transaction"), "/test", "fa fa-pen");
+				table.Rows.Add(new {
+					Serial = transaction.Serial,
+					PaymentApi = transaction.Api?.Name,
+					ExternalSerial = transaction.ExternalSerial,
+					Amount = currency.Format(transaction.Amount),
+					State = new T(transaction.State.GetDescription()),
+					Actions = action
+				});
+			}
+			return (HtmlString)table.ToLiquid();
 		}
 	}
 }

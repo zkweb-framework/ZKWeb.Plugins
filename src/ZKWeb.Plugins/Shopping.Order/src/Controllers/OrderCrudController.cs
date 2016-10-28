@@ -194,9 +194,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 				var displayInfo = bindFrom.ToDisplayInfo(OrderOperatorType.Admin);
 				BaseInformationHtml = displayInfo.GetBaseInformationHtml();
-				DeliveryRecordsHtml = orderManager.GetDeliveryRecordsHtml(bindFrom);
-				OrderRecordsHtml = orderManager.GetOrderRecordsHtml(bindFrom.Id);
-				ReleatedTransactionsHtml = orderManager.GetReleatedTransactionsHtml(bindFrom.Id);
+				DeliveryRecordsHtml = displayInfo.GetDeliveryRecordsHtml(bindFrom.OrderDeliveries);
+				OrderRecordsHtml = displayInfo.GetOrderRecordsHtml();
+				ReleatedTransactionsHtml = displayInfo.GetReleatedTransactionsHtml();
 				OrderCommentsHtml = displayInfo.GetOrderCommentsHtml();
 				Remark = bindFrom.Remark;
 			}
