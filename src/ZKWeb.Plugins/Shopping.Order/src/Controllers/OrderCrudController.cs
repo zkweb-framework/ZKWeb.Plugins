@@ -20,6 +20,8 @@ using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
+using ZKWeb.Web;
+using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
@@ -51,6 +53,40 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			IncludeCss.Add("/static/shopping.order.css/order-view.css");
 			IncludeJs.Add("/static/shopping.order.js/order-list.min.js");
 			IncludeJs.Add("/static/shopping.order.js/order-view.min.js");
+		}
+
+		/// <summary>
+		/// 编辑价格
+		/// </summary>
+		public IActionResult EditCost() {
+			return new PlainResult("<p>Edit Cost</p>");
+		}
+
+		/// <summary>
+		/// 编辑地址
+		/// </summary>
+		public IActionResult EditShippingAddress() {
+			return new PlainResult("<p>Edit shipping Address</p>");
+		}
+
+		/// <summary>
+		/// 网站启动时添加处理函数
+		/// </summary>
+		public override void OnWebsiteStart() {
+			base.OnWebsiteStart();
+			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
+			// 编辑价格
+			var editCostUrl = Url + "/edit_cost";
+			controllerManager.RegisterAction(
+				editCostUrl, HttpMethods.GET, WrapAction(EditCost, EditPrivileges));
+			controllerManager.RegisterAction(
+				editCostUrl, HttpMethods.POST, WrapAction(EditCost, EditPrivileges));
+			// 编辑地址
+			var editShippingAddressUrl = Url + "/edit_shipping_address";
+			controllerManager.RegisterAction(
+				editShippingAddressUrl, HttpMethods.GET, WrapAction(EditShippingAddress, EditPrivileges));
+			controllerManager.RegisterAction(
+				editShippingAddressUrl, HttpMethods.POST, WrapAction(EditShippingAddress, EditPrivileges));
 		}
 
 		/// <summary>
