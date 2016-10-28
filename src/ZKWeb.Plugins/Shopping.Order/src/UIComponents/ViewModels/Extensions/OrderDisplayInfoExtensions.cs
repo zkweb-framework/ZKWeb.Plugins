@@ -109,14 +109,20 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			table.Columns.Add("DeliveryTime", "150");
 			table.Columns.Add("Actions", "150");
 			deliveries = deliveries.OrderByDescending(d => d.CreateTime);
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			foreach (var delivery in deliveries) {
+				var viewUrl = string.Format(info.ViewDeliveryUrlFormat, delivery.Id);
+				var action = string.IsNullOrEmpty(viewUrl) ? new HtmlString("") :
+					DefaultOrderDisplayInfoProvider.GetModalAction(templateManager,
+						new T("View"), viewUrl, "fa fa-edit",
+						new T("View Delivery"), "btn btn-xs btn-info");
 				table.Rows.Add(new {
 					Serial = delivery.Serial,
 					OrderLogistics = delivery.Logistics?.Name,
 					LogisticsSerial = delivery.LogisticsSerial,
 					DeliveryOperator = delivery.Operator?.Username,
 					DeliveryTime = delivery.CreateTime.ToClientTimeString(),
-					Action = "" // TODO: 添加查看发货记录详情的代码
+					Action = action
 				});
 			}
 			return (HtmlString)table.ToLiquid();
@@ -127,8 +133,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		/// </summary>
 		/// <param name="info">订单显示信息</param>
 		/// <returns></returns>
-		public static HtmlString GetOrderRecordsHtml(
-			this OrderDisplayInfo info) {
+		public static HtmlString GetOrderRecordsHtml(this OrderDisplayInfo info) {
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var table = new StaticTableBuilder();
 			table.Columns.Add("CreateTime", "150");
@@ -150,8 +155,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		/// </summary>
 		/// <param name="info">订单显示信息</param>
 		/// <returns></returns>
-		public static HtmlString GetReleatedTransactionsHtml(
-			this OrderDisplayInfo info) {
+		public static HtmlString GetReleatedTransactionsHtml(this OrderDisplayInfo info) {
 			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var table = new StaticTableBuilder();
@@ -165,8 +169,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			foreach (var transaction in transactions) {
 				var currency = currencyManager.GetCurrency(transaction.CurrencyType);
-				var action = DefaultOrderDisplayInfoProvider.GetModalAction(
-					templateManager, new T("View Transaction"), "/test", "fa fa-pen");
+				var viewUrl = string.Format(info.ViewTransactionUrlFormat, transaction.Id);
+				var action = string.IsNullOrEmpty(viewUrl) ? new HtmlString("") :
+					DefaultOrderDisplayInfoProvider.GetModalAction(templateManager,
+						new T("View"), viewUrl, "fa fa-edit",
+						new T("View Transaction"), "btn btn-xs btn-info");
 				table.Rows.Add(new {
 					Serial = transaction.Serial,
 					PaymentApi = transaction.Api?.Name,

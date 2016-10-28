@@ -9,11 +9,13 @@ using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.UIComponents.HtmlProviders {
 	/// <summary>
 	/// 支付交易的Html提供器
 	/// </summary>
+	[ExportMany]
 	public class PaymentTransactionHtmlProvider {
 		/// <summary>
 		/// 构建显示错误信息的Html

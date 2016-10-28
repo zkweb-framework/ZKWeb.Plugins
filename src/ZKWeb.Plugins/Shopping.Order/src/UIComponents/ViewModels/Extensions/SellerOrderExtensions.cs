@@ -46,6 +46,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			info.Currency = currencyManager.GetCurrency(order.Currency);
 			info.RemarkFlags = order.RemarkFlags;
 			info.CreateTime = order.CreateTime.ToClientTimeString();
+			if (operatorType == OrderOperatorType.Admin) {
+				info.ViewTransactionUrlFormat = "/admin/payment_transactions/edit?id={0}";
+			} else {
+				info.ViewTransactionUrlFormat = "";
+			}
+			info.ViewDeliveryUrlFormat = ""; // TODO: 补充这个地址
 			foreach (var provider in displayInfoProviders) {
 				provider.AddWarnings(order, info.WarningHtmls, operatorType);
 				provider.AddToolButtons(order, info.ToolButtonHtmls, operatorType);

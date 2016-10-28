@@ -97,6 +97,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// </summary>
 		public string CreateTime { get; set; }
 		/// <summary>
+		/// 查看交易的Url格式
+		/// </summary>
+		public string ViewTransactionUrlFormat { get; set; }
+		/// <summary>
+		/// 查看发货单的Url格式
+		/// </summary>
+		public string ViewDeliveryUrlFormat { get; set; }
+		/// <summary>
 		/// 警告信息列表
 		/// </summary>
 		public IList<HtmlString> WarningHtmls { get; set; }

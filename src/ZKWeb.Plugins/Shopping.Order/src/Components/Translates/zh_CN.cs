@@ -172,7 +172,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "OriginalTotalCost", "原始总金额" },
 			{ "LogisticsSerial", "快递单编号" },
 			{ "DeliveryOperator", "发货人" },
-			{ "DeliveryTime", "发货时间" }
+			{ "DeliveryTime", "发货时间" },
+			{ "View Transaction", "查看交易" },
+			{ "View Delivery", "查看发货单" }
 		};
 
 		public bool CanTranslate(string code) {
