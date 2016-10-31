@@ -107,7 +107,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "OrderProducts", "订单商品" },
 			{ "Quantity", "数量" },
 			{ "ShippedQuantity", "已发货数量" },
+			{ "Cost", "金额" },
 			{ "TotalCost", "总金额" },
+			{ "OrderPricePart", "订单价格组成部分" },
 			{ "SellerOrder", "卖家订单" },
 			{ "BuyerOrder", "买家订单" },
 			{ "WaitingBuyerPay", "等待付款" },
@@ -175,7 +177,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "DeliveryTime", "发货时间" },
 			{ "View Transaction", "查看交易" },
 			{ "View Delivery", "查看发货单" },
-			{ "To delete product change the quantity to zero", "删除商品请把数量设为0" }
+			{ "To delete product please change the quantity to zero, and check transaction amount after modification",
+				"删除商品请把数量设为0，并且在修改价格后检查交易的金额" }
 		};
 
 		public bool CanTranslate(string code) {

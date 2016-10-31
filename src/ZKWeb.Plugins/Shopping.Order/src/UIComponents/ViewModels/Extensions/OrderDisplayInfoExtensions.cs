@@ -198,7 +198,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			foreach (var product in info.OrderProducts) {
 				table.Rows.Add(new {
 					Product = product.GetSummaryHtml(),
-					ProductUnitPrice = product.GetPriceHtml(), // TODO 修改这里
+					ProductUnitPrice = product.GetPriceEditor(),
 					Quantity = product.GetCountEditor()
 				});
 			}
@@ -209,14 +209,34 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		/// 获取订单各项价格编辑表格的Html
 		/// </summary>
 		public static HtmlString GetOrderCostEditHtml(this OrderDisplayInfo info) {
-			return new HtmlString(""); // TODO
+			var table = new StaticTableBuilder();
+			table.Columns.Add("OrderPricePart");
+			table.Columns.Add("Cost", "110");
+			foreach (var part in info.TotalCostCalcResult.Parts) {
+				table.Rows.Add(new {
+					OrderPricePart = new T(part.Type), // TODO
+					Cost = part.Delta // TODO
+				});
+			}
+			return (HtmlString)table.ToLiquid();
 		}
 
 		/// <summary>
 		/// 获取订单交易金额编辑表格的Html
 		/// </summary>
 		public static HtmlString GetOrderTransactionEditHtml(this OrderDisplayInfo info) {
-			return new HtmlString(""); // TODO
+			var table = new StaticTableBuilder();
+			table.Columns.Add("PaymentTransaction");
+			table.Columns.Add("Amount", "110");
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var transactions = orderManager.GetReleatedTransactions(info.Id);
+			foreach (var transaction in transactions) {
+				table.Rows.Add(new {
+					PaymentTransaction = transaction.Serial,
+					Amount = transaction.Amount // TODO
+				});
+			}
+			return (HtmlString)table.ToLiquid();
 		}
 	}
 }
