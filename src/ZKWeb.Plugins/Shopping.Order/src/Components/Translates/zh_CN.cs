@@ -174,7 +174,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "DeliveryOperator", "发货人" },
 			{ "DeliveryTime", "发货时间" },
 			{ "View Transaction", "查看交易" },
-			{ "View Delivery", "查看发货单" }
+			{ "View Delivery", "查看发货单" },
+			{ "To delete product change the quantity to zero", "删除商品请把数量设为0" }
 		};
 
 		public bool CanTranslate(string code) {

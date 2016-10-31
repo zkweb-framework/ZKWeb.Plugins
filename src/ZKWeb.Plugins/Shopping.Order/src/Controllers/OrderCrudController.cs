@@ -17,6 +17,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
@@ -59,14 +60,26 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// 编辑价格
 		/// </summary>
 		public IActionResult EditCost() {
-			return new PlainResult("<p>Edit Cost</p>");
+			var form = new OrderEditCostForm(OrderOperatorType.Admin);
+			if (Request.Method == HttpMethods.GET) {
+				form.Bind();
+				return new TemplateResult("shopping.order/order_edit_cost.html", new { form });
+			} else {
+				return new JsonResult(form.Submit());
+			}
 		}
 
 		/// <summary>
 		/// 编辑地址
 		/// </summary>
 		public IActionResult EditShippingAddress() {
-			return new PlainResult("<p>Edit shipping Address</p>");
+			var form = new OrderEditShippingAddressForm();
+			if (Request.Method == HttpMethods.GET) {
+				form.Bind();
+				return new TemplateResult("shopping.order/order_edit_shipping_address", new { form });
+			} else {
+				return new JsonResult(form.Submit());
+			}
 		}
 
 		/// <summary>

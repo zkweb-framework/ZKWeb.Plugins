@@ -185,5 +185,38 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			}
 			return (HtmlString)table.ToLiquid();
 		}
+
+		/// <summary>
+		/// 获取订单商品编辑表格的Html
+		/// </summary>
+		public static HtmlString GetOrderProductPriceEditHtml(this OrderDisplayInfo info) {
+			var table = new StaticTableBuilder();
+			table.TableClass += " order-product-price-edit-table";
+			table.Columns.Add("Product");
+			table.Columns.Add("ProductUnitPrice", "110");
+			table.Columns.Add("Quantity", "110");
+			foreach (var product in info.OrderProducts) {
+				table.Rows.Add(new {
+					Product = product.GetSummaryHtml(),
+					ProductUnitPrice = product.GetPriceHtml(), // TODO 修改这里
+					Quantity = product.GetCountEditor()
+				});
+			}
+			return (HtmlString)table.ToLiquid();
+		}
+
+		/// <summary>
+		/// 获取订单各项价格编辑表格的Html
+		/// </summary>
+		public static HtmlString GetOrderCostEditHtml(this OrderDisplayInfo info) {
+			return new HtmlString(""); // TODO
+		}
+
+		/// <summary>
+		/// 获取订单交易金额编辑表格的Html
+		/// </summary>
+		public static HtmlString GetOrderTransactionEditHtml(this OrderDisplayInfo info) {
+			return new HtmlString(""); // TODO
+		}
 	}
 }
