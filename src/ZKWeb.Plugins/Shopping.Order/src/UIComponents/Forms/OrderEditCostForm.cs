@@ -13,6 +13,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 	/// <summary>
 	/// 编辑订单价格的表单
 	/// </summary>
+	[Form("OrderEditCostForm")]
 	public class OrderEditCostForm : EntityFormBuilder<SellerOrder, Guid, OrderEditCostForm> {
 		/// <summary>
 		/// 订单操作人的类型
@@ -38,7 +39,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		/// </summary>
 		[HtmlField("OrderTransactionAmountEditTable")]
 		public HtmlString OrderTransactionAmountEditTable { get; set; }
-		
+
 		/// <summary>
 		/// 初始化
 		/// </summary>

@@ -214,8 +214,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			table.Columns.Add("Cost", "110");
 			foreach (var part in info.TotalCostCalcResult.Parts) {
 				table.Rows.Add(new {
-					OrderPricePart = new T(part.Type), // TODO
-					Cost = part.Delta // TODO
+					OrderPricePart = part.GetTypeNameHtml(),
+					Cost = part.GetDeltaEditor()
 				});
 			}
 			return (HtmlString)table.ToLiquid();
@@ -233,7 +233,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			foreach (var transaction in transactions) {
 				table.Rows.Add(new {
 					PaymentTransaction = transaction.Serial,
-					Amount = transaction.Amount // TODO
+					Amount = transaction.GetAmountEditor()
 				});
 			}
 			return (HtmlString)table.ToLiquid();

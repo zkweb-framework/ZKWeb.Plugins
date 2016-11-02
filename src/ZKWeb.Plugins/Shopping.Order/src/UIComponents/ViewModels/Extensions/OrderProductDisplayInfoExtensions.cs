@@ -54,7 +54,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		public static HtmlString GetPriceEditor(this OrderProductDisplayInfo info) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var html = templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_product_price_editor.html", new { info });
+				"common.base/tmpl.number_input_decimal.html",
+				new { extraClass = "order-product-price", value = info.UnitPrice });
 			return new HtmlString(html);
 		}
 
@@ -66,7 +67,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		public static HtmlString GetCountEditor(this OrderProductDisplayInfo info) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var html = templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_product_count_editor.html", new { info });
+				"common.base/tmpl.number_input_integer.html",
+				new { extraClass = "order-count", value = info.Count });
 			return new HtmlString(html);
 		}
 
