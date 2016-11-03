@@ -1,7 +1,11 @@
 ﻿using System;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
@@ -59,7 +63,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		/// 提交表单
 		/// </summary>
 		protected override object OnSubmit(SellerOrder saveTo) {
-			throw new NotImplementedException();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var operatorId = sessionManager.GetSession().GetUser()?.Id;
+			orderManager.EditCost(saveTo, operatorId, OrderEditParametersJson);
+			return this.SaveSuccessAndCloseModal();
 		}
 	}
 }

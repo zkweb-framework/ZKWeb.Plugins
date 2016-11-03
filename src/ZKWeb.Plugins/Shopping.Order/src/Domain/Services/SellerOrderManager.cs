@@ -206,6 +206,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 修改订单，订单商品和订单交易的金额
+		/// </summary>
+		/// <param name="order">订单</param>
+		/// <param name="operatorId">操作人的Id</param>
+		/// <param name="parameters">修改参数</param>
+		public virtual void EditCost(
+			SellerOrder order, Guid? operatorId, OrderEditCostParameters parameters) {
+			throw new NotSupportedException();
+		}
+
+		/// <summary>
 		/// 订单明细记录类型
 		/// </summary>
 		public const string RecordType = "OrderDetail";
