@@ -22,7 +22,7 @@ $(function () {
 			size: "size-wide",
 			onshow: function (dialog) {
 				var $modal = dialog.getModal();
-				$modal.one("updated.order", function () {
+				$modal.one("updated.ajaxTable", function () {
 					$modal.one("hide.bs.modal", function () {
 						// 包含订单列表时: 刷新ajax表格
 						var table = $(".order-table-container").closestAjaxTable();
