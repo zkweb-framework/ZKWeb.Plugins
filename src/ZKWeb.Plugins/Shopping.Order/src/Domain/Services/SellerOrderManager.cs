@@ -48,7 +48,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// 订单关联交易的缓存，只在同一个Http上下文中有效
 		/// </summary>
 		private IKeyValueCache<Guid, IList<PaymentTransaction>> ReleatedTransactionsCache { get; set; }
-		
+
 		/// <summary>
 		/// 初始化
 		/// </summary>
@@ -213,7 +213,78 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <param name="parameters">修改参数</param>
 		public virtual void EditCost(
 			SellerOrder order, Guid? operatorId, OrderEditCostParameters parameters) {
-			throw new NotSupportedException();
+			// 检查是否可以修改
+			var result = order.Check(a => a.CanEditCost);
+			if (!result.First) {
+				throw new BadRequestException(result.Second);
+			}
+			// 修改订单总价
+			var previousTotalCost = order.TotalCost;
+			order.TotalCost = parameters.OrderTotalCostCalcResult.Sum();
+			order.TotalCostCalcResult = new OrderPriceCalcResult() {
+				Currency = order.TotalCostCalcResult.Currency,
+				Parts = parameters.OrderTotalCostCalcResult
+			};
+			// 修改订单商品数量和价格
+			var orderProducts = order.OrderProducts.ToDictionary(p => p.Id);
+			if (parameters.OrderProductCountMapping.Any(p => !orderProducts.ContainsKey(p.Key)) ||
+				parameters.OrderProductUnitPriceMapping.Any(p => !orderProducts.ContainsKey(p.Key))) {
+				throw new BadRequestException(new T("Order product not exist"));
+			} else if (parameters.OrderProductCountMapping.Any() &&
+				parameters.OrderProductCountMapping.All(p => p.Value <= 0)) {
+				throw new BadRequestException(new T("Can't delete all products in the order"));
+			}
+			var removeProducts = new HashSet<OrderProduct>();
+			foreach (var orderProduct in orderProducts.Values) {
+				var count = parameters.OrderProductCountMapping.GetOrDefault(
+					orderProduct.Id, orderProduct.Count);
+				var unitPrice = parameters.OrderProductUnitPriceMapping.GetOrDefault(
+					orderProduct.Id, orderProduct.UnitPrice);
+				if (count == orderProduct.Count && unitPrice == orderProduct.UnitPrice) {
+					// 没有修改时跳过更新
+					continue;
+				}
+				if (count <= 0) {
+					// 数量等于0时删除订单商品
+					order.OrderProducts.Remove(orderProduct);
+				} else {
+					// 修改数量和单价
+					orderProduct.Count = count;
+					orderProduct.UnitPrice = unitPrice;
+					// 当前价格不等于原始价格时，添加"手动改价"项
+					var parts = orderProduct.UnitPriceCalcResult.Parts
+						.Where(p => p.Type != "ManuallyEditPrice").ToList();
+					var difference = orderProduct.UnitPrice - parts.Sum();
+					if (difference != 0) {
+						parts.Add(new OrderPriceCalcResult.Part("ManuallyEditPrice", difference));
+						orderProduct.UnitPriceCalcResult = new OrderPriceCalcResult() {
+							Currency = orderProduct.UnitPriceCalcResult.Currency,
+							Parts = parts
+						};
+					}
+				}
+			}
+			// 修改订单交易金额
+			var releatedTransactionIds = GetReleatedTransactions(order.Id).Select(t => t.Id).ToList();
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			foreach (var entry in parameters.TransactionAmountMapping) {
+				var transaction = transactionManager.Get(entry.Key);
+				if (transaction == null || !releatedTransactionIds.Contains(transaction.Id)) {
+					throw new BadRequestException(new T("Payment transaction not found"));
+				}
+				// 没有修改时跳过更新
+				if (entry.Value == transaction.Amount) {
+					continue;
+				}
+				var previousAmount = transaction.Amount;
+				transactionManager.Save(ref transaction, t => t.Amount = entry.Value);
+				// 添加交易记录
+				transactionManager.AddDetailRecord(transaction.Id, operatorId, string.Format(
+					new T("Amount changed by edit order cost, previous value is {0}"), previousAmount));
+			}
+			// 添加订单记录
+			AddDetailRecord(order.Id, operatorId, string.Format(
+				new T("Order total cost changed, previous value is {0}"), previousTotalCost));
 		}
 
 		/// <summary>

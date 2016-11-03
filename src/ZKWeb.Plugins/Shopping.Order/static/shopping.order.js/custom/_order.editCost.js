@@ -29,7 +29,7 @@
 		OrderEditCostParametersJson {
 			OrderProductCountMapping: { 订单商品Id: 数量，删除时为0, ... },
 			OrderProductUnitPriceMapping: { 订单商品Id: 单价, ... },
-			OrderTotalCostCalcResult: [{ Delta: 100, Type: "ZKShop.Order.ProductTotalPrice" }, ...],
+			OrderTotalCostCalcResult: [{ Delta: 100, Type: "ProductTotalPrice" }, ...],
 			TransactionAmountMapping: { 交易Id: 金额, ...}
 		}
 	事件

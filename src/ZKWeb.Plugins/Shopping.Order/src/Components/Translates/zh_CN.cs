@@ -179,7 +179,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "View Delivery", "查看发货单" },
 			{ "To delete product please change the quantity to zero, and check transaction amount after modification",
 				"删除商品请把数量设为0，并且在修改价格后检查交易的金额" },
-			{ "Order total cost", "订单总价" }
+			{ "Order total cost", "订单总价" },
+			{ "Order product not exist", "订单商品不存在" },
+			{ "Can't delete all products in the order", "不能删除订单中的所有商品" },
+			{ "Amount changed by edit order cost, previous value is {0}", "修改订单价格导致金额改变，前值是{0}" },
+			{ "Order total cost changed, previous value is {0}", "订单总价已改变，前值是{0}" },
+			{ "ManuallyEditPrice", "手动改价" }
 		};
 
 		public bool CanTranslate(string code) {

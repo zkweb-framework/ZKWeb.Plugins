@@ -142,7 +142,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var records = orderManager.GetDetailRecords(info.Id);
 			foreach (var record in records) {
 				table.Rows.Add(new {
-					Time = record.CreateTime.ToClientTimeString(),
+					CreateTime = record.CreateTime.ToClientTimeString(),
 					Creator = record.Creator?.Username,
 					Contents = record.Content
 				});
