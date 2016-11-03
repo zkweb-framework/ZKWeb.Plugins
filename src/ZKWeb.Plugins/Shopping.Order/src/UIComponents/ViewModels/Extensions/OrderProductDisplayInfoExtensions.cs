@@ -55,7 +55,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var html = templateManager.RenderTemplate(
 				"common.base/tmpl.number_input_decimal.html",
-				new { extraClass = "order-product-price", value = info.UnitPrice });
+				new { extraClass = "price", value = info.UnitPrice });
 			return new HtmlString(html);
 		}
 

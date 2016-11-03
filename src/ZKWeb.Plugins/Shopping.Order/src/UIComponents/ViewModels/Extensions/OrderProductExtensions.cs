@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var info = new OrderProductDisplayInfo();
 			var product = orderProduct.Product;
 			info.ProductId = product.Id;
-			info.OrderProductId = null;
+			info.OrderProductId = orderProduct.Id;
 			info.Name = new T(product.Name);
 			info.ImageWebPath = productAlbumManager.GetAlbumImageWebPath(
 				product.Id, null, ProductAlbumImageType.Thumbnail);

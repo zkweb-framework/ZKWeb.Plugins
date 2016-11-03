@@ -1,8 +1,6 @@
 ﻿using System;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Enums;
@@ -13,7 +11,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 	/// <summary>
 	/// 编辑订单价格的表单
 	/// </summary>
-	[Form("OrderEditCostForm")]
 	public class OrderEditCostForm : EntityFormBuilder<SellerOrder, Guid, OrderEditCostForm> {
 		/// <summary>
 		/// 订单操作人的类型

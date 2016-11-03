@@ -210,11 +210,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		/// </summary>
 		public static HtmlString GetOrderCostEditHtml(this OrderDisplayInfo info) {
 			var table = new StaticTableBuilder();
+			table.TableClass += " order-cost-edit-table";
 			table.Columns.Add("OrderPricePart");
 			table.Columns.Add("Cost", "110");
 			foreach (var part in info.TotalCostCalcResult.Parts) {
 				table.Rows.Add(new {
-					OrderPricePart = part.GetTypeNameHtml(),
+					OrderPricePartType = part.Type,
+					OrderPricePart = new T(part.Type),
 					Cost = part.GetDeltaEditor()
 				});
 			}
@@ -226,12 +228,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		/// </summary>
 		public static HtmlString GetOrderTransactionEditHtml(this OrderDisplayInfo info) {
 			var table = new StaticTableBuilder();
+			table.TableClass += " transaction-amount-edit-table";
 			table.Columns.Add("PaymentTransaction");
 			table.Columns.Add("Amount", "110");
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var transactions = orderManager.GetReleatedTransactions(info.Id);
 			foreach (var transaction in transactions) {
 				table.Rows.Add(new {
+					PaymentTransactionId = transaction.Id,
 					PaymentTransaction = transaction.Serial,
 					Amount = transaction.GetAmountEditor()
 				});

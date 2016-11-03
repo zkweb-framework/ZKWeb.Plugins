@@ -1,6 +1,11 @@
-﻿<div class="order-edit-cost-form">
-	<div class="alert alert-info">
-		{{ "To delete product please change the quantity to zero, and check transaction amount after modification" | trans }}
+﻿<div>
+	{% include_css_here "/static/shopping.order.css/order-edit-cost.css" %}
+	<div class="order-edit-cost-form">
+		<div class="alert alert-info">
+			{{ "To delete product please change the quantity to zero, and check transaction amount after modification" | trans }}
+		</div>
+		{{ form }}
+		<p class="total-cost-container">{{ "Order total cost" | trans }}: <span class="total-cost">0</span></p>
 	</div>
-	{{ form }}
+	{% include_js_here "/static/shopping.order.js/order-edit-cost.min.js" %}
 </div>

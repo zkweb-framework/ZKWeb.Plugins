@@ -178,7 +178,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "View Transaction", "查看交易" },
 			{ "View Delivery", "查看发货单" },
 			{ "To delete product please change the quantity to zero, and check transaction amount after modification",
-				"删除商品请把数量设为0，并且在修改价格后检查交易的金额" }
+				"删除商品请把数量设为0，并且在修改价格后检查交易的金额" },
+			{ "Order total cost", "订单总价" }
 		};
 
 		public bool CanTranslate(string code) {

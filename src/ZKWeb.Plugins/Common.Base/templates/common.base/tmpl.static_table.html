@@ -14,7 +14,7 @@
 	</thead>
 	<tbody>
 		{% for row in rows %}
-		<tr role="row">
+		<tr role="row" data-row="{{ row | json }}">
 			{% for column in columns %}
 			<td>
 				{% if column.allowHtml %}
