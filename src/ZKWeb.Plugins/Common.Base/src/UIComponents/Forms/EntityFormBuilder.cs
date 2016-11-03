@@ -72,12 +72,14 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 			var uow = Application.Ioc.Resolve<IUnitOfWork>();
 			var service = Application.Ioc.Resolve<IDomainService<TEntity, TPrimaryKey>>();
 			using (uow.Scope()) {
+				// 获取实体
 				var entity = (id.EqualsSupportsNull(default(TPrimaryKey))) ?
 					new TEntity() : service.Get(id);
 				if (entity == null) {
 					throw new NotFoundException(
 						string.Format(new T("Data with id {0} cannot be found"), id));
 				}
+				// 绑定表单
 				OnBind(entity);
 				ExtraHandlers.ForEach(c => c.OnBind((TForm)(object)this, entity));
 			}
@@ -92,6 +94,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 			var uow = Application.Ioc.Resolve<IUnitOfWork>();
 			var service = Application.Ioc.Resolve<IDomainService<TEntity, TPrimaryKey>>();
 			using (uow.Scope()) {
+				// 获取实体
 				var data = (id.EqualsSupportsNull(default(TPrimaryKey))) ?
 					new TEntity() : service.Get(id);
 				if (data == null) {
