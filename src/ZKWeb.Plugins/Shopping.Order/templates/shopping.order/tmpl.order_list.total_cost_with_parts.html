@@ -6,4 +6,7 @@
 	<div class="parts-cost">{{ part.Type | trans }}: {{ part.Delta | currency: info.Currency.Type }}</div>
 	{% endif %}
 	{% endfor %}
+	{% if info.TotalCost != info.OriginalTotalCost %}
+	<div class="original-total-cost">{{ info.OriginalTotalCostString }}</div>
+	{% endif %}
 </div>
