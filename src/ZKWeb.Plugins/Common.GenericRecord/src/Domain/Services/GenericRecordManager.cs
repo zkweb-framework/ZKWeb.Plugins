@@ -61,7 +61,7 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services {
 		public IList<Entities.GenericRecord> FindRecords(string type, Guid? releatedId) {
 			return GetMany(query => query
 				.Where(r => r.Type == type && r.ReleatedId == releatedId)
-				.OrderByDescending(r => r.Id).ToList());
+				.OrderByDescending(r => r.CreateTime).ToList());
 		}
 	}
 }

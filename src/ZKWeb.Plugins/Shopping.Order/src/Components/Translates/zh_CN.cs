@@ -184,7 +184,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Can't delete all products in the order", "不能删除订单中的所有商品" },
 			{ "Amount changed by edit order cost, previous value is {0}", "修改订单价格导致金额改变，前值是{0}" },
 			{ "Order total cost changed, previous value is {0}", "订单总价已改变，前值是{0}" },
-			{ "ManuallyEditPrice", "手动改价" }
+			{ "ManuallyEditPrice", "手动改价" },
+			{ "Order shipping address changed, previous value is {0}", "订单收货地址已改变，前值是{0}" }
 		};
 
 		public bool CanTranslate(string code) {

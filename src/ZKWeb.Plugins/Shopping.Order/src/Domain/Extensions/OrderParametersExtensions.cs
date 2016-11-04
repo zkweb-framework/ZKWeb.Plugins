@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
@@ -28,6 +29,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		public static ShippingAddress GetShippingAddress(this OrderParameters parameters) {
 			return parameters.GetOrDefault<ShippingAddress>("ShippingAddress") ??
 				new ShippingAddress();
+		}
+
+		/// <summary>
+		/// 设置收货地址信息
+		/// </summary>
+		/// <param name="parameters">订单参数</param>
+		/// <param name="address">收货地址</param>
+		public static void SetShippingAddress(this OrderParameters parameters, ShippingAddress address) {
+			parameters["ShippingAddress"] = JsonConvert.SerializeObject(address);
 		}
 
 		/// <summary>

@@ -288,6 +288,25 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 编辑订单收货地址
+		/// </summary>
+		/// <param name="order">订单</param>
+		/// <param name="operatorId">操作人的Id</param>
+		/// <param name="address">收货地址</param>
+		public virtual void EditShippingAddress(
+			SellerOrder order, Guid? operatorId, ShippingAddress address) {
+			var previousAddress = order.OrderParameters.GetShippingAddress();
+			Repository.Save(ref order, o => {
+				o.OrderParameters.SetShippingAddress(address);
+				o.OrderParameters = order.OrderParameters; // 触发setter
+			});
+			// 添加订单记录
+			AddDetailRecord(order.Id, operatorId, string.Format(
+				new T("Order shipping address changed, previous value is {0}"),
+				previousAddress.GenerateSummary()));
+		}
+
+		/// <summary>
 		/// 订单明细记录类型
 		/// </summary>
 		public const string RecordType = "OrderDetail";

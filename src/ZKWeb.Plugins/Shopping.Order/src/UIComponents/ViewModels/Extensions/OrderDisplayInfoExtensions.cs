@@ -159,6 +159,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var table = new StaticTableBuilder();
+			table.Columns.Add("CreateTime", "150");
 			table.Columns.Add("Serial");
 			table.Columns.Add("PaymentApi", "150");
 			table.Columns.Add("ExternalSerial", "150");
@@ -175,6 +176,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 						new T("View"), viewUrl, "fa fa-edit",
 						new T("View Transaction"), "btn btn-xs btn-info");
 				table.Rows.Add(new {
+					CreateTime = transaction.CreateTime.ToClientTimeString(),
 					Serial = transaction.Serial,
 					PaymentApi = transaction.Api?.Name,
 					ExternalSerial = transaction.ExternalSerial,

@@ -77,7 +77,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			var form = new OrderEditShippingAddressForm();
 			if (Request.Method == HttpMethods.GET) {
 				form.Bind();
-				return new TemplateResult("shopping.order/order_edit_shipping_address", new { form });
+				return new TemplateResult("shopping.order/order_edit_shipping_address.html", new { form });
 			} else {
 				return new JsonResult(form.Submit());
 			}

@@ -68,22 +68,16 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities {
 				Nullable = false,
 				Index = "Idx_Type"
 			});
-			builder.Map(r => r.ReleatedId, new EntityMappingOptions() {
-				Index = "Idx_ReleatedId"
-			});
-			builder.References(r => r.Creator, new EntityMappingOptions() {
-				Nullable = true
-			});
-			builder.Map(r => r.CreateTime);
+			builder.Map(r => r.ReleatedId, new EntityMappingOptions() { Index = "Idx_ReleatedId" });
+			builder.References(r => r.Creator, new EntityMappingOptions() { Nullable = true });
+			builder.Map(r => r.CreateTime, new EntityMappingOptions() { Index = "Idx_CreateTime" });
 			builder.Map(r => r.UpdateTime);
 			builder.Map(r => r.KeepUntil, new EntityMappingOptions() {
 				Nullable = true,
 				Index = "Idx_KeepUntil"
 			});
 			builder.Map(r => r.Content);
-			builder.Map(r => r.ExtraData, new EntityMappingOptions() {
-				WithSerialization = true
-			});
+			builder.Map(r => r.ExtraData, new EntityMappingOptions() { WithSerialization = true });
 		}
 	}
 }
