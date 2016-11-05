@@ -185,7 +185,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Amount changed by edit order cost, previous value is {0}", "修改订单价格导致金额改变，前值是{0}" },
 			{ "Order total cost changed, previous value is {0}", "订单总价已改变，前值是{0}" },
 			{ "ManuallyEditPrice", "手动改价" },
-			{ "Order shipping address changed, previous value is {0}", "订单收货地址已改变，前值是{0}" }
+			{ "Order shipping address changed, previous value is {0}", "订单收货地址已改变，前值是{0}" },
+			{ "Child transactions amount changed by edit order cost, this merge transaction should be closed",
+				"修改订单金额导致子交易金额改变，这个合并交易应当被关闭" }
 		};
 
 		public bool CanTranslate(string code) {

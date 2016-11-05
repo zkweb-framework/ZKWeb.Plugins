@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
@@ -258,6 +259,26 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 				AddDetailRecord(transactionId, null, new T("Notify goods sent to payment api success"));
 				// 结束事务
 				UnitOfWork.Context.FinishTransaction();
+			}
+		}
+
+		/// <summary>
+		/// 确保终止关联了指定交易的交易
+		/// 一般用于子交易有变化时终止合并交易
+		/// 如果合并交易不存在或已终止，这个函数什么都不做
+		/// </summary>
+		/// <param name="transactionIds">子交易的Id列表</param>
+		/// <param name="operatorId">操作人Id</param>
+		/// <param name="reason">作废原因</param>
+		public virtual void EnsureParentTransactionAborted(
+			IList<Guid> transactionIds, Guid? operatorId, string reason) {
+			var parentTransactionIds = Repository.Query()
+				.Where(t => t.ReleatedTransactions.Any(rt => transactionIds.Contains(rt.Id)))
+				.Where(t => t.State != PaymentTransactionState.Aborted)
+				.Select(t => t.Id).ToList();
+			foreach (var id in parentTransactionIds) {
+				AddDetailRecord(id, operatorId, reason);
+				Process(id, null, PaymentTransactionState.Aborted);
 			}
 		}
 
