@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Enums;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
@@ -17,12 +18,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers {
 		/// <summary>
 		/// 判断订单是否可以付款
 		/// 前台使用
-		/// 允许条件: 订单状态是等待付款
+		/// 允许条件: 订单状态是等待付款，且有可支付的关联交易
 		/// </summary>
 		public void CanPay(SellerOrder order, ref Pair<bool, string> result) {
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			if (order.State != OrderState.WaitingBuyerPay) {
 				result = Pair.Create(false,
 					new T("Order not payable because it's not waiting buyer pay").ToString());
+			} else if (!orderManager.GetReleatedTransactions(order.Id).Any(t =>
+				t.Check(c => c.IsPayable).First)) {
+				result = Pair.Create(false,
+					new T("Order not payable because no payable releated transactions").ToString());
 			} else {
 				result = Pair.Create(true, (string)null);
 			}

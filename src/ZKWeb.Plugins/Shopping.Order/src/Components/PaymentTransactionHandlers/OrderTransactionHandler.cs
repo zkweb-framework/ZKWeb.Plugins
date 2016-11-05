@@ -51,12 +51,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// </summary>
 		public void OnSecuredPaid(PaymentTransaction transaction,
 			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
-			// TODO:记录到日志
+			// TODO: 记录到日志
 
 			// TODO: 记录到订单记录
 
 			// TODO: 处理订单已付款
-
+			throw new NotImplementedException();
 		}
 
 		/// <summary>
@@ -64,6 +64,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// </summary>
 		public void OnSuccess(
 			PaymentTransaction transaction, PaymentTransactionState previousState) {
+			// TODO: 处理订单已付款
 			throw new NotImplementedException();
 		}
 
@@ -72,6 +73,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// </summary>
 		public void OnAbort(
 			PaymentTransaction transaction, PaymentTransactionState previousState) {
+			// TODO: 待编写
 			throw new NotImplementedException();
 		}
 

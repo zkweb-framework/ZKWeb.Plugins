@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// 只在后台使用，需要卖家使用的订单管理请安装多商城插件
 	/// </summary>
 	[ExportMany]
-	public class OrderCrudController : CrudAdminAppControllerBase<SellerOrder, Guid> {
+	public class SellerOrderCrudController : CrudAdminAppControllerBase<SellerOrder, Guid> {
 		public override string Group { get { return "Shop Manage"; } }
 		public override string GroupIconClass { get { return "fa fa-building"; } }
 		public override string Name { get { return "OrderManage"; } }
@@ -49,7 +49,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		public OrderCrudController() {
+		public SellerOrderCrudController() {
 			IncludeCss.Add("/static/shopping.order.css/progress-wizard.css");
 			IncludeCss.Add("/static/shopping.order.css/order-list.css");
 			IncludeCss.Add("/static/shopping.order.css/order-view.css");
@@ -112,9 +112,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			/// </summary>
 			public override void BuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
-				table.StandardSetupFor<OrderCrudController>();
+				table.StandardSetupFor<SellerOrderCrudController>();
 				table.Template = "/static/shopping.order.tmpl/orderTable.tmpl";
-				searchBar.StandardSetupFor<OrderCrudController>("Serial/Remark");
+				searchBar.StandardSetupFor<SellerOrderCrudController>("Serial/Remark");
 				searchBar.BeforeItems.AddOrderFilterBar();
 				searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("Buyer")));
 				searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("Seller")));
@@ -184,7 +184,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			/// </summary>
 			public override void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupFor<OrderCrudController>(request);
+				response.Columns.AddIdColumn("Id").StandardSetupFor<SellerOrderCrudController>(request);
 				response.Columns.AddHtmlColumn("OrderProducts", "30%");
 				response.Columns.AddHtmlColumn("Price", "70");
 				response.Columns.AddHtmlColumn("Quantity", "70");
@@ -196,7 +196,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				var actionColumn = response.Columns.AddActionColumn("5%");
 				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
 				if (!deleted) {
-					actionColumn.AddEditActionFor<OrderCrudController>();
+					actionColumn.AddEditActionFor<SellerOrderCrudController>();
 				}
 				actionColumn.AddHtmlAction("OrderActions");
 			}

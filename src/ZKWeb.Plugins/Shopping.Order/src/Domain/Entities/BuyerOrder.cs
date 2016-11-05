@@ -20,7 +20,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 		/// 仅用于非会员下单
 		/// </summary>
 		public virtual Guid? BuyerSessionId { get; set; }
-		
+
 		/// <summary>
 		/// 显示名称
 		/// </summary>

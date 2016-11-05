@@ -135,6 +135,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "OrderLogistics", "物流配送" },
 			{ "Order not payable because it's not waiting buyer pay",
 				"因为订单状态不是等待付款，不支持付款" },
+			{ "Order not payable because no payable releated transactions",
+				"因为订单没有可支付的关联交易，不支持付款" },
 			{ "Order not cancellable because it's not waiting buyer pay",
 				"因为订单状态不是等待付款，不支持取消" },
 			{ "Order not cancellable because some releated transaction already paid",
