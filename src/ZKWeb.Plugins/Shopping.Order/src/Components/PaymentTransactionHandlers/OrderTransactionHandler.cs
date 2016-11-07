@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		public void OnCreated(PaymentTransaction transaction) {
 			// 记录到日志
 			var logManager = Application.Ioc.Resolve<LogManager>();
-			logManager.LogTransaction(string.Format("OrderTransaction created: {0}", transaction.Serial));
+			logManager.LogTransaction($"OrderTransaction created: {transaction.Serial}");
 		}
 
 		/// <summary>
@@ -43,7 +43,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 			PaymentTransaction transaction, PaymentTransactionState previousState) {
 			// 记录到日志
 			var logManager = Application.Ioc.Resolve<LogManager>();
-			logManager.LogTransaction(string.Format("OrderTransaction waiting paying: {0}", transaction.Serial));
+			logManager.LogTransaction($"OrderTransaction waiting paying, serial is {transaction.Serial}");
 		}
 
 		/// <summary>
@@ -51,12 +51,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// </summary>
 		public void OnSecuredPaid(PaymentTransaction transaction,
 			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
-			// TODO: 记录到日志
-
-			// TODO: 记录到订单记录
-
-			// TODO: 处理订单已付款
-			throw new NotImplementedException();
+			// 记录到日志
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(
+				$"OrderTransaction secured paid, serial is {transaction.Serial}");
+			// 记录到订单记录
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var orderId = transaction.ReleatedId.Value;
+			orderManager.AddDetailRecord(orderId, null,
+				string.Format(new T("Order secured paid from transaction, serial is {0}"), transaction.Serial));
+			// 处理订单已付款，不一定会成功（例如其他关联交易未付款时）
+			orderManager.ProcessOrderPaid(orderId);
 		}
 
 		/// <summary>
@@ -64,7 +69,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// </summary>
 		public void OnSuccess(
 			PaymentTransaction transaction, PaymentTransactionState previousState) {
-			// TODO: 处理订单已付款
+			// TODO: 记录到日志
+			// TODO: 如果之前的状态是等待付款，则处理订单已付款
+			// 如之前的状态是担保交易已付款，则处理订单确认收货
+			// 否则不处理
 			throw new NotImplementedException();
 		}
 
@@ -73,7 +81,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// </summary>
 		public void OnAbort(
 			PaymentTransaction transaction, PaymentTransactionState previousState) {
-			// TODO: 待编写
+			// TODO: 记录到日志
+			// 不会影响到订单的状态
 			throw new NotImplementedException();
 		}
 
@@ -91,7 +100,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 			// - Invalid: 订单已作废
 			// 订单编号: {编号} 订单金额: {金额} 账单金额: {金额}
 			// [[使用{接口}支付]]
-
+			// 
 			// 获取关联订单
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var sellerOrderManager = Application.Ioc.Resolve<SellerOrderManager>();

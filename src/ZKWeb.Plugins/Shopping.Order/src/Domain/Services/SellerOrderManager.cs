@@ -5,10 +5,6 @@ using ZKWeb.Cache;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
-using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
-using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
@@ -28,14 +24,12 @@ using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 using ZKWeb.Plugins.Shopping.Product.src.Components.ProductTypes.Interfaces;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Services;
-using ZKWebStandard.Collection;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
-	using Templating;
-	using UIComponents.OrderDisplayInfoProviders;
+	using Enums;
 	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>
@@ -363,6 +357,80 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			}
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			return transactionManager.GetResultUrl(transaction.Id);
+		}
+
+		/// <summary>
+		/// 处理订单已付款
+		/// 处理失败时记录到订单记录
+		/// </summary>
+		/// <param name="orderId">订单Id</param>
+		public virtual void ProcessOrderPaid(Guid orderId) {
+			// 获取订单
+			var order = Get(orderId);
+			if (order == null) {
+				throw new BadRequestException(new T("Order not exist"));
+			}
+			// 检查是否可以处理订单已付款
+			var canProcessOrderPaid = order.Check(c => c.CanProcessOrderPaid);
+			if (canProcessOrderPaid.First) {
+				// 设置订单状态为等待发货
+				Save(ref order, o => o.State = OrderState.WaitingSellerSendGoods);
+				// 添加成功的订单记录
+				AddDetailRecord(orderId, null, new T("Order is paid"));
+			} else {
+				// 添加失败的订单记录
+				AddDetailRecord(orderId, null, string.Format(
+					new T("Can't process order paid, reason is {0}"), canProcessOrderPaid.Second));
+			}
+		}
+
+		/// <summary>
+		/// 处理订单全部商品已发货
+		/// 这个函数调用成功并提交后应调用ProcessAllGoodsSentOnTransactionApi通知支付平台发货
+		/// 处理失败时抛出例外
+		/// </summary>
+		/// <param name="orderId">订单Id</param>
+		public virtual void ProcessAllGoodsSent(Guid orderId) {
+			// 获取订单
+			var order = Get(orderId);
+			if (order == null) {
+				throw new BadRequestException(new T("Order not exist"));
+			}
+			// 判断是否可以处理订单全部商品已发货
+			var canProcessAllGoodsSent = order.Check(c => c.CanProcessAllGoodsSent);
+			if (canProcessAllGoodsSent.First) {
+				// 修改订单状态
+				Save(ref order, o => o.State = OrderState.WaitingBuyerConfirm);
+				// 添加成功的订单记录
+				AddDetailRecord(orderId, null, new T("All goods under order is shipped"));
+			} else {
+				// 添加失败的订单记录
+				AddDetailRecord(orderId, null, string.Format(
+					new T("Can't process order shipped, reason is {0}"), canProcessAllGoodsSent.Second));
+			}
+		}
+
+		/// <summary>
+		/// 通知支付平台卖家已发货
+		/// 这个函数应该在ProcessAllGoodsSent调用成功并提交后调用
+		/// </summary>
+		/// <param name="orderId">订单Id</param>
+		/// <param name="logisticsName">物流名称</param>
+		/// <param name="invoiceNo">快递单编号</param>
+		public virtual void ProcessAllGoodsSentOnTransactionApi(
+			Guid orderId, string logisticsName, string invoiceNo) {
+			// TODO，这里不应该在事务中执行，会影响性能
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// 处理订单交易成功
+		/// 处理失败时抛出例外
+		/// </summary>
+		/// <param name="orderId">订单Id</param>
+		public virtual void ProcessSuccess(Guid orderId) {
+			// TODO
+			throw new NotImplementedException();
 		}
 	}
 }

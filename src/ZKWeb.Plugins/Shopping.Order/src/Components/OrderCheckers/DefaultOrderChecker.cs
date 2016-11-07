@@ -159,12 +159,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers {
 		public void CanProcessAllGoodsSent(SellerOrder order, ref Pair<bool, string> result) {
 			if (order.State != OrderState.WaitingSellerSendGoods) {
 				result = Pair.Create(false,
-					new T("Order can't be sent because not waiting seller send goods").ToString());
+					new T("Order can't be shipped because not waiting seller send goods").ToString());
 			} else {
 				var allSent = order.OrderProducts.All(p => p.Deliveries.Sum(d => d.Count) >= p.Count);
 				if (!allSent) {
 					result = Pair.Create(false,
-						new T("Order can't be sent because not all products sent").ToString());
+						new T("Order can't be shipped because not all products sent").ToString());
 				} else {
 					result = Pair.Create(true, (string)null);
 				}

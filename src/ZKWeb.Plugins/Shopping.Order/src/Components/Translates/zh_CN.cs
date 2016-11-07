@@ -156,9 +156,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 				"订单不是等待付款，不能设为已付款" },
 			{ "Order can't be paid because not all releated transaction paid",
 				"订单的关联交易中有未付款的交易，不能设为已付款"},
-			{ "Order can't be sent because not waiting seller send goods",
+			{ "Order can't be shipped because not waiting seller send goods",
 				"订单不是等待发货，不能设为已发货" },
-			{ "Order can't be sent because not all products sent",
+			{ "Order can't be shipped because not all products sent",
 				"订单中有未全部发货的商品，不能设为已发货" },
 			{ "Order can't be success because not waiting buyer confirm",
 				"订单不是已发货，不能设为交易成功" },
@@ -182,6 +182,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "To delete product please change the quantity to zero, and check transaction amount after modification",
 				"删除商品请把数量设为0，并且在修改价格后检查交易的金额" },
 			{ "Order total cost", "订单总价" },
+			{ "Order not exist", "订单不存在" },
 			{ "Order product not exist", "订单商品不存在" },
 			{ "Can't delete all products in the order", "不能删除订单中的所有商品" },
 			{ "Amount changed by edit order cost, previous value is {0}", "修改订单价格导致金额改变，前值是{0}" },
@@ -189,7 +190,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "ManuallyEditPrice", "手动改价" },
 			{ "Order shipping address changed, previous value is {0}", "订单收货地址已改变，前值是{0}" },
 			{ "Child transactions amount changed by edit order cost, this merge transaction should be closed",
-				"修改订单金额导致子交易金额改变，这个合并交易应当被关闭" }
+				"修改订单金额导致子交易金额改变，这个合并交易应当被关闭" },
+			{ "Order secured paid from transaction, serial is {0}", "订单通过担保交易支付完成，交易序列号: {0}" },
+			{ "Order is paid", "订单已付款" },
+			{ "Can't process order paid, reason is {0}", "不能处理订单已付款，原因是{0}" },
+			{ "All goods under order is shipped", "订单中的所有商品均已发货" },
+			{ "Can't process order shipped, reason is {0}", "不能处理订单已发货，原因是{0}" }
 		};
 
 		public bool CanTranslate(string code) {
