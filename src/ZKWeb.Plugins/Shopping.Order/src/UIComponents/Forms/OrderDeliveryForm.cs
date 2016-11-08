@@ -37,8 +37,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		/// 发货件数 { 订单商品Id, 发货数量 }
 		/// </summary>
 		[Required]
-		[JsonField("SendCounts", typeof(IDictionary<Guid, long>))]
-		public IDictionary<Guid, long> SendCounts { get; set; }
+		[JsonField("DeliveryCounts", typeof(IDictionary<Guid, long>))]
+		public IDictionary<Guid, long> DeliveryCountsJson { get; set; }
 		/// <summary>
 		/// 发货商品的表格
 		/// </summary>

@@ -207,7 +207,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 					}
 				});
 				// 使用处理器处理指定的交易状态
-				var parameters = new List<AutoSendGoodsParameters>();
+				var parameters = new List<AutoDeliveryGoodsParameters>();
 				if (state == PaymentTransactionState.WaitingPaying) {
 					handlers.ForEach(h => h.OnWaitingPaying(transaction, previousState));
 				} else if (state == PaymentTransactionState.SecuredPaid) {
@@ -224,7 +224,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 					new T("Change transaction state to {0}"), new T(transaction.State.GetDescription())));
 				// 需要自动发货时进行发货
 				foreach (var parameter in parameters) {
-					SendGoods(transaction.Id, parameter.LogisticsName, parameter.InvoiceNo);
+					DeliveryGoods(transaction.Id, parameter.LogisticsName, parameter.InvoiceNo);
 				}
 				// 结束事务
 				UnitOfWork.Context.FinishTransaction();
@@ -237,7 +237,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 		/// <param name="transactionId">交易Id</param>
 		/// <param name="logisticsName">快递或物流名称</param>
 		/// <param name="invoiceNo">快递单号</param>
-		public virtual void SendGoods(
+		public virtual void DeliveryGoods(
 			Guid transactionId, string logisticsName, string invoiceNo) {
 			using (UnitOfWork.Scope()) {
 				// 开始事务
@@ -248,15 +248,15 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 					throw new BadRequestException(new T("Payment transaction not found"));
 				}
 				// 判断是否可以发货
-				var result = transaction.Check(c => c.CanSendGoods);
+				var result = transaction.Check(c => c.CanDeliveryGoods);
 				if (!result.First) {
 					throw new BadRequestException(result.Second);
 				}
 				// 调用支付接口的处理器处理发货
 				var handlers = transaction.Api.GetHandlers();
-				handlers.ForEach(h => h.SendGoods(transaction, logisticsName, invoiceNo));
+				handlers.ForEach(h => h.DeliveryGoods(transaction, logisticsName, invoiceNo));
 				// 成功时添加详细记录
-				AddDetailRecord(transactionId, null, new T("Notify goods sent to payment api success"));
+				AddDetailRecord(transactionId, null, new T("Notify goods shipped to payment api success"));
 				// 结束事务
 				UnitOfWork.Context.FinishTransaction();
 			}

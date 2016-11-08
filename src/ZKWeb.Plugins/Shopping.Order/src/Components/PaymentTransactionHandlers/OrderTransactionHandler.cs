@@ -50,7 +50,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// 担保交易付款后
 		/// </summary>
 		public void OnSecuredPaid(PaymentTransaction transaction,
-			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
+			PaymentTransactionState previousState, IList<AutoDeliveryGoodsParameters> parameters) {
 			// 记录到日志
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(
@@ -69,11 +69,31 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// </summary>
 		public void OnSuccess(
 			PaymentTransaction transaction, PaymentTransactionState previousState) {
-			// TODO: 记录到日志
-			// TODO: 如果之前的状态是等待付款，则处理订单已付款
+			// 记录到日志
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(
+				$"OrderTransaction successed, serial is {transaction.Serial}");
+			// 如果之前的状态是等待付款，则处理订单已付款
 			// 如之前的状态是担保交易已付款，则处理订单确认收货
 			// 否则不处理
-			throw new NotImplementedException();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var orderId = transaction.ReleatedId.Value;
+			if (previousState == PaymentTransactionState.Initial ||
+				previousState == PaymentTransactionState.WaitingPaying) {
+				// 添加到订单记录
+				orderManager.AddDetailRecord(orderId, null,
+					string.Format(new T("Order paid from transaction, serial is {0}"), transaction.Serial));
+				// 处理订单已付款，不一定会成功（例如其他关联交易未付款时）
+				orderManager.ProcessOrderPaid(orderId);
+			} else if (previousState == PaymentTransactionState.SecuredPaid) {
+				// 添加到订单记录
+				orderManager.AddDetailRecord(orderId, null,
+					string.Format(
+						new T("Order confirmed from payment platform after secured paid, serial is {0}"),
+						transaction.Serial));
+				// 处理订单交易成功（确认收货），不一定会成功
+				orderManager.ProcessSuccess(orderId);
+			}
 		}
 
 		/// <summary>
@@ -81,9 +101,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// </summary>
 		public void OnAbort(
 			PaymentTransaction transaction, PaymentTransactionState previousState) {
-			// TODO: 记录到日志
+			// 记录到日志
 			// 不会影响到订单的状态
-			throw new NotImplementedException();
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(
+				$"Order transaction aborted, serial is {transaction.Serial}");
 		}
 
 		/// <summary>
@@ -93,7 +115,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 			// 显示内容
 			// 根据订单状态显示
 			// - WaitingBuyerPay: 订单创建成功，请付款
-			// - WaitingSellerSendGoods: 您已付款成功，请等待卖家发货
+			// - WaitingSellerDeliveryGoods: 您已付款成功，请等待卖家发货
 			// - WaitingBuyerConfirm: 卖家已发货，请在收到货物后确认收货
 			// - Success: 订单交易成功，感谢您的惠顾
 			// - Cancelled: 订单已取消

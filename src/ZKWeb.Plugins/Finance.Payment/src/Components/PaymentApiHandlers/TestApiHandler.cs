@@ -79,7 +79,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentApiHandlers {
 		/// 调用发货接口
 		/// 发货后自动确认收货
 		/// </summary>
-		public void SendGoods(
+		public void DeliveryGoods(
 			PaymentTransaction transaction, string logisticsName, string invoiceNo) {
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(string.Format(

@@ -123,15 +123,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 						canEditShippingAddress.Second, "fa fa-location-arrow"));
 				}
 				// 发货
-				var canSendGoods = order.Check(c => c.CanSendGoods);
-				if (canSendGoods.First) {
+				var canDeliveryGoods = order.Check(c => c.CanDeliveryGoods);
+				if (canDeliveryGoods.First) {
 					actions.Add(GetModalAction(templateManager,
-						new T("SendGoods"),
+						new T("DeliveryGoods"),
 						$"/admin/orders/send_goods?id={order.Id}", "fa fa-truck"));
 				} else {
 					actions.Add(GetDisabledAction(templateManager,
-						new T("SendGoods"),
-						canSendGoods.Second, "fa fa-truck"));
+						new T("DeliveryGoods"),
+						canDeliveryGoods.Second, "fa fa-truck"));
 				}
 				// 代确认收货
 				var canConfirm = order.Check(c => c.CanConfirm);

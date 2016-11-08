@@ -10,7 +10,7 @@
         <div class="row order-state">
             {% if orderState == "WaitingBuyerPay" %}
             {{ "Order successfully created, please continue to pay" | trans }}
-            {% elseif orderState == "WaitingSellerSendGoods" %}
+            {% elseif orderState == "WaitingSellerDeliveryGoods" %}
             {{ "You have paid successful, please wait for the seller shipped" | trans }}
             {% elseif orderState == "WaitingBuyerConfirm" %}
             {{ "The seller has shipped, please confirm after receipt of the goods" | trans }}

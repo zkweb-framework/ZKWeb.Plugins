@@ -66,7 +66,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "TransactionSuccess", "交易成功" },
 			{ "TransactionAborted", "交易中止" },
 			{ "Change transaction state to {0}", "切换交易状态到{0}" },
-			{ "Notify goods sent to payment api success", "通知支付接口已发货成功" },
+			{ "Notify goods shipped to payment api success", "通知支付接口已发货成功" },
 			{ "Create test transaction success, redirecting to payment page...", "创建测试交易成功，正在跳转到支付页……" },
 			{ "Pay", "支付" },
 			{ "Use test api to pay transaction created with other api type is not allowed", "不能使用测试接口支付选择了其他接口的交易" },

@@ -58,6 +58,6 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentApiHandlers.Interf
 		/// <param name="transaction">支付交易</param>
 		/// <param name="logisticsName">快递或物流名称</param>
 		/// <param name="invoiceNo">发货单号</param>
-		void SendGoods(PaymentTransaction transaction, string logisticsName, string invoiceNo);
+		void DeliveryGoods(PaymentTransaction transaction, string logisticsName, string invoiceNo);
 	}
 }

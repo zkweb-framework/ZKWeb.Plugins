@@ -52,7 +52,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers.Interfaces {
 		/// </summary>
 		/// <param name="order">订单</param>
 		/// <param name="result">判断结果</param>
-		void CanSendGoods(SellerOrder order, ref Pair<bool, string> result);
+		void CanDeliveryGoods(SellerOrder order, ref Pair<bool, string> result);
 
 		/// <summary>
 		/// 判断订单是否可以作废
@@ -76,7 +76,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers.Interfaces {
 		/// </summary>
 		/// <param name="order">订单</param>
 		/// <param name="result">判断结果</param>
-		void CanProcessAllGoodsSent(SellerOrder order, ref Pair<bool, string> result);
+		void CanProcessAllGoodsShipped(SellerOrder order, ref Pair<bool, string> result);
 
 		/// <summary>
 		/// 是否可处理交易成功

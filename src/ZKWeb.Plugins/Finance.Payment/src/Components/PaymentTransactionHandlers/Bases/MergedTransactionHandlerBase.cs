@@ -44,7 +44,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandler
 		/// 担保交易付款后
 		/// </summary>
 		public virtual void OnSecuredPaid(PaymentTransaction transaction,
-			PaymentTransactionState previousState, IList<AutoSendGoodsParameters> parameters) {
+			PaymentTransactionState previousState, IList<AutoDeliveryGoodsParameters> parameters) {
 			foreach (var childTransaction in transaction.ReleatedTransactions) {
 				var handlers = childTransaction.GetHandlers();
 				handlers.ForEach(h => h.OnSecuredPaid(childTransaction, previousState, parameters));

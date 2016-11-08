@@ -99,7 +99,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionChecker
 		/// <summary>
 		/// 判断交易是否可以调用发货接口
 		/// </summary>
-		public void CanSendGoods(PaymentTransaction transaction, ref Pair<bool, string> result) {
+		public void CanDeliveryGoods(PaymentTransaction transaction, ref Pair<bool, string> result) {
 			// 条件：状态是担保交易已付款
 			if (transaction.State == PaymentTransactionState.SecuredPaid) {
 				result = Pair.Create(true, (string)null);

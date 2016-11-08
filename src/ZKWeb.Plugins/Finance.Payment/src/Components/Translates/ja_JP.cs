@@ -67,7 +67,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "TransactionSuccess", "取引成功" },
 			{ "TransactionAborted", "取引中止" },
 			{ "Change transaction state to {0}", "取引状態は{0}に変更されました" },
-			{ "Notify goods sent to payment api success", "支払いプラットフォームに配達済みであることを知らせる" },
+			{ "Notify goods shipped to payment api success", "支払いプラットフォームに配達済みであることを知らせる" },
 			{ "Create test transaction success, redirecting to payment page...",
 				"テスト用の取引の作成に成功しました、支払いページへ移動します……" },
 			{ "Pay", "支払う" },

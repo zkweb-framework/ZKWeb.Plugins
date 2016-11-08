@@ -364,7 +364,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// 处理失败时记录到订单记录
 		/// </summary>
 		/// <param name="orderId">订单Id</param>
-		public virtual void ProcessOrderPaid(Guid orderId) {
+		/// <returns>是否处理成功</returns>
+		public virtual bool ProcessOrderPaid(Guid orderId) {
 			// 获取订单
 			var order = Get(orderId);
 			if (order == null) {
@@ -374,7 +375,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			var canProcessOrderPaid = order.Check(c => c.CanProcessOrderPaid);
 			if (canProcessOrderPaid.First) {
 				// 设置订单状态为等待发货
-				Save(ref order, o => o.State = OrderState.WaitingSellerSendGoods);
+				Save(ref order, o => o.State = OrderState.WaitingSellerDeliveryGoods);
 				// 添加成功的订单记录
 				AddDetailRecord(orderId, null, new T("Order is paid"));
 			} else {
@@ -382,23 +383,25 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				AddDetailRecord(orderId, null, string.Format(
 					new T("Can't process order paid, reason is {0}"), canProcessOrderPaid.Second));
 			}
+			return canProcessOrderPaid.First;
 		}
 
 		/// <summary>
 		/// 处理订单全部商品已发货
-		/// 这个函数调用成功并提交后应调用ProcessAllGoodsSentOnTransactionApi通知支付平台发货
-		/// 处理失败时抛出例外
+		/// 处理失败时记录到订单记录
+		/// 处理成功后应该通知调用OrderDeliveryManager.NotifyPaymentApiAllGoodsShipped支付Api发货
 		/// </summary>
 		/// <param name="orderId">订单Id</param>
-		public virtual void ProcessAllGoodsSent(Guid orderId) {
+		/// <returns>是否处理成功</returns>
+		public virtual bool ProcessAllGoodsShipped(Guid orderId) {
 			// 获取订单
 			var order = Get(orderId);
 			if (order == null) {
 				throw new BadRequestException(new T("Order not exist"));
 			}
 			// 判断是否可以处理订单全部商品已发货
-			var canProcessAllGoodsSent = order.Check(c => c.CanProcessAllGoodsSent);
-			if (canProcessAllGoodsSent.First) {
+			var canProcessAllGoodsShipped = order.Check(c => c.CanProcessAllGoodsShipped);
+			if (canProcessAllGoodsShipped.First) {
 				// 修改订单状态
 				Save(ref order, o => o.State = OrderState.WaitingBuyerConfirm);
 				// 添加成功的订单记录
@@ -406,31 +409,36 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			} else {
 				// 添加失败的订单记录
 				AddDetailRecord(orderId, null, string.Format(
-					new T("Can't process order shipped, reason is {0}"), canProcessAllGoodsSent.Second));
+					new T("Can't process order shipped, reason is {0}"), canProcessAllGoodsShipped.Second));
 			}
-		}
-
-		/// <summary>
-		/// 通知支付平台卖家已发货
-		/// 这个函数应该在ProcessAllGoodsSent调用成功并提交后调用
-		/// </summary>
-		/// <param name="orderId">订单Id</param>
-		/// <param name="logisticsName">物流名称</param>
-		/// <param name="invoiceNo">快递单编号</param>
-		public virtual void ProcessAllGoodsSentOnTransactionApi(
-			Guid orderId, string logisticsName, string invoiceNo) {
-			// TODO，这里不应该在事务中执行，会影响性能
-			throw new NotImplementedException();
+			return canProcessAllGoodsShipped.First;
 		}
 
 		/// <summary>
 		/// 处理订单交易成功
-		/// 处理失败时抛出例外
+		/// 处理失败时记录到订单记录
 		/// </summary>
 		/// <param name="orderId">订单Id</param>
-		public virtual void ProcessSuccess(Guid orderId) {
-			// TODO
-			throw new NotImplementedException();
+		/// <returns>是否处理成功</returns>
+		public virtual bool ProcessSuccess(Guid orderId) {
+			// 获取订单
+			var order = Get(orderId);
+			if (order == null) {
+				throw new BadRequestException(new T("Order not exist"));
+			}
+			// 判断是否可以处理订单交易成功
+			var canProcessSuccess = order.Check(c => c.CanProcessSuccess);
+			if (canProcessSuccess.First) {
+				// 修改订单状态
+				Save(ref order, o => o.State = OrderState.OrderSuccess);
+				// 添加成功的订单记录
+				AddDetailRecord(orderId, null, new T("Order is successed"));
+			} else {
+				// 添加失败的订单记录
+				AddDetailRecord(orderId, null, string.Format(
+					new T("不能处理订单交易成功，原因是{0}"), canProcessSuccess.Second));
+			}
+			return canProcessSuccess.First;
 		}
 	}
 }

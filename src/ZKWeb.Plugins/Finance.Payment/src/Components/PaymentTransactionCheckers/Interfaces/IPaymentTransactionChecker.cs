@@ -59,6 +59,6 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionChecker
 		/// </summary>
 		/// <param name="transaction">交易</param>
 		/// <param name="result">判断结果</param>
-		void CanSendGoods(PaymentTransaction transaction, ref Pair<bool, string> result);
+		void CanDeliveryGoods(PaymentTransaction transaction, ref Pair<bool, string> result);
 	}
 }

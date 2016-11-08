@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Enums {
 		/// 等待发货
 		/// </summary>
 		[LabelCssClass("label label-warning")]
-		WaitingSellerSendGoods = 1,
+		WaitingSellerDeliveryGoods = 1,
 		/// <summary>
 		/// 已发货
 		/// </summary>

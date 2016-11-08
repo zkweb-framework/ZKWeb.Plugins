@@ -70,7 +70,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "TransactionSuccess", "무역 성공" },
 			{ "TransactionAborted", "트랜잭션 종료" },
 			{ "Change transaction state to {0}", "에 트랜잭션 상태를 전환 {0}" },
-			{ "Notify goods sent to payment api success", "알림 결제 인터페이스 성공적 발송 한" },
+			{ "Notify goods shipped to payment api success", "알림 결제 인터페이스 성공적 발송 한" },
 			{ "Create test transaction success, redirecting to payment page...",
 				"테스트 트랜잭션이 성공적으로 작성하면 결제 페이지로 이동하는 것입니다……" },
 			{ "Pay", "지불" },

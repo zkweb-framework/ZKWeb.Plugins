@@ -113,7 +113,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "SellerOrder", "卖家订单" },
 			{ "BuyerOrder", "买家订单" },
 			{ "WaitingBuyerPay", "等待付款" },
-			{ "WaitingSellerSendGoods", "等待发货" },
+			{ "WaitingSellerDeliveryGoods", "等待发货" },
 			{ "WaitingBuyerConfirm", "已发货" },
 			{ "OrderSuccess", "交易成功" },
 			{ "OrderCancelled", "已取消" },
@@ -158,7 +158,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 				"订单的关联交易中有未付款的交易，不能设为已付款"},
 			{ "Order can't be shipped because not waiting seller send goods",
 				"订单不是等待发货，不能设为已发货" },
-			{ "Order can't be shipped because not all products sent",
+			{ "Order can't be shipped because not all goods shipped",
 				"订单中有未全部发货的商品，不能设为已发货" },
 			{ "Order can't be success because not waiting buyer confirm",
 				"订单不是已发货，不能设为交易成功" },
@@ -168,7 +168,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "ConfirmOrder", "确认收货" },
 			{ "EditCost", "编辑价格" },
 			{ "EditShippingAddress", "编辑地址" },
-			{ "SendGoods", "发货" },
+			{ "DeliveryGoods", "发货" },
 			{ "ConfirmInsteadOfBuyer", "代确认收货" },
 			{ "SetInvalid", "作废" },
 			{ "OrderState", "订单状态" },
@@ -191,11 +191,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Order shipping address changed, previous value is {0}", "订单收货地址已改变，前值是{0}" },
 			{ "Child transactions amount changed by edit order cost, this merge transaction should be closed",
 				"修改订单金额导致子交易金额改变，这个合并交易应当被关闭" },
-			{ "Order secured paid from transaction, serial is {0}", "订单通过担保交易支付完成，交易序列号: {0}" },
+			{ "Order secured paid from transaction, serial is {0}", "订单通过担保交易支付完成，交易序列号是{0}" },
 			{ "Order is paid", "订单已付款" },
 			{ "Can't process order paid, reason is {0}", "不能处理订单已付款，原因是{0}" },
 			{ "All goods under order is shipped", "订单中的所有商品均已发货" },
-			{ "Can't process order shipped, reason is {0}", "不能处理订单已发货，原因是{0}" }
+			{ "Can't process order shipped, reason is {0}", "不能处理订单已发货，原因是{0}" },
+			{ "Order is successed", "订单交易成功" },
+			{ "Can't process order successed, reason is {0}", "不能处理订单交易成功，原因是{0}" },
+			{ "Order paid from transaction, serial is {0}", "订单通过普通交易支付完成，交易序列号是{0}" },
+			{ "Order confirmed from payment platform after secured paid, serial is {0}",
+				"通过担保交易支付的订单在交易平台上已确认收货，交易序列号是{0}" }
 		};
 
 		public bool CanTranslate(string code) {

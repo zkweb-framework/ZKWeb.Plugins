@@ -43,7 +43,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandler
 		void OnSecuredPaid(
 			PaymentTransaction transaction,
 			PaymentTransactionState previousState,
-			IList<AutoSendGoodsParameters> parameters);
+			IList<AutoDeliveryGoodsParameters> parameters);
 
 		/// <summary>
 		/// 交易成功时的处理

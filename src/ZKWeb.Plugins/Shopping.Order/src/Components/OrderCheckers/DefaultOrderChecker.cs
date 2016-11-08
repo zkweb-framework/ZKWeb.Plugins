@@ -94,7 +94,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers {
 		/// </summary>
 		public void CanEditShippingAddress(SellerOrder order, ref Pair<bool, string> result) {
 			if (order.State != OrderState.WaitingBuyerPay &&
-				order.State != OrderState.WaitingSellerSendGoods) {
+				order.State != OrderState.WaitingSellerDeliveryGoods) {
 				result = Pair.Create(false,
 					new T("Order can't edit shipping address because it's not waiting buyer pay or waiting seller send goods").ToString());
 			} else {
@@ -107,8 +107,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers {
 		/// 后台使用
 		/// 允许条件: 订单状态是等待发货
 		/// </summary>
-		public void CanSendGoods(SellerOrder order, ref Pair<bool, string> result) {
-			if (order.State != OrderState.WaitingSellerSendGoods) {
+		public void CanDeliveryGoods(SellerOrder order, ref Pair<bool, string> result) {
+			if (order.State != OrderState.WaitingSellerDeliveryGoods) {
 				result = Pair.Create(false,
 					new T("Order can't send goods because it's not waiting seller send goods").ToString());
 			} else {
@@ -156,15 +156,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers {
 		/// 修改订单状态时使用
 		/// 允许条件: 订单状态是等待发货，且所有商品都已经发货
 		/// </summary>
-		public void CanProcessAllGoodsSent(SellerOrder order, ref Pair<bool, string> result) {
-			if (order.State != OrderState.WaitingSellerSendGoods) {
+		public void CanProcessAllGoodsShipped(SellerOrder order, ref Pair<bool, string> result) {
+			if (order.State != OrderState.WaitingSellerDeliveryGoods) {
 				result = Pair.Create(false,
 					new T("Order can't be shipped because not waiting seller send goods").ToString());
 			} else {
-				var allSent = order.OrderProducts.All(p => p.Deliveries.Sum(d => d.Count) >= p.Count);
-				if (!allSent) {
+				var allShipped = order.OrderProducts.All(p => p.Deliveries.Sum(d => d.Count) >= p.Count);
+				if (!allShipped) {
 					result = Pair.Create(false,
-						new T("Order can't be shipped because not all products sent").ToString());
+						new T("Order can't be shipped because not all goods shipped").ToString());
 				} else {
 					result = Pair.Create(true, (string)null);
 				}

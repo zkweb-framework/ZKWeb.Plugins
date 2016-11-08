@@ -2,7 +2,7 @@
 	/// <summary>
 	/// 担保交易付款后，自动发货使用的参数
 	/// </summary>
-	public class AutoSendGoodsParameters {
+	public class AutoDeliveryGoodsParameters {
 		/// <summary>
 		/// 快递或物流名称
 		/// </summary>

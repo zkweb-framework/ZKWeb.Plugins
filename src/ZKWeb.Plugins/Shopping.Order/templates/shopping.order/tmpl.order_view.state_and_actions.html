@@ -7,9 +7,9 @@
 					<span class="bubble"><span>{{ "WaitingBuyerPay" | trans }}</span></span>
 					<span class="time">{{ info.StateTimes.WaitingBuyerPay }}</span>
 				</li>
-				<li class="{{ info | order_state_progress_class: "WaitingSellerSendGoods" }}">
-					<span class="bubble"><span>{{ "WaitingSellerSendGoods" | trans }}</span></span>
-					<span class="time">{{ info.StateTimes.WaitingSellerSendGoods }}</span>
+				<li class="{{ info | order_state_progress_class: "WaitingSellerDeliveryGoods" }}">
+					<span class="bubble"><span>{{ "WaitingSellerDeliveryGoods" | trans }}</span></span>
+					<span class="time">{{ info.StateTimes.WaitingSellerDeliveryGoods }}</span>
 				</li>
 				<li class="{{ info | order_state_progress_class: "WaitingBuyerConfirm" }}">
 					<span class="bubble"><span>{{ "WaitingBuyerConfirm" | trans }}</span></span>
