@@ -4,6 +4,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandlers.In
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Enums;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 
@@ -34,9 +35,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandler
 		/// </summary>
 		public virtual void OnWaitingPaying(
 			PaymentTransaction transaction, PaymentTransactionState previousState) {
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			foreach (var childTransaction in transaction.ReleatedTransactions) {
-				var handlers = childTransaction.GetHandlers();
-				handlers.ForEach(h => h.OnWaitingPaying(childTransaction, previousState));
+				transactionManager.Process(
+					childTransaction.Id,
+					transaction.ExternalSerial,
+					PaymentTransactionState.WaitingPaying);
 			}
 		}
 

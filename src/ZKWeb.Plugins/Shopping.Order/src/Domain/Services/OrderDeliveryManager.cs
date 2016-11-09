@@ -12,9 +12,5 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		public virtual void DeliveryGoods() {
 			throw new NotImplementedException();
 		}
-
-		public virtual void NotifyPaymentApiAllGoodsShipped() {
-			throw new NotImplementedException();
-		}
 	}
 }

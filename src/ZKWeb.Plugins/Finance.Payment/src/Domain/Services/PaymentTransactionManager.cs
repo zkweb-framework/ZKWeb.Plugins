@@ -166,7 +166,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 		/// <param name="transactionId">交易Id</param>
 		/// <param name="externalSerial">外部交易流水号，等于空时不更新</param>
 		/// <param name="state">交易状态</param>
-		public virtual void Process(
+		protected virtual void ProcessInternal(
 			Guid transactionId, string externalSerial, PaymentTransactionState state) {
 			using (UnitOfWork.Scope()) {
 				// 开启事务
@@ -228,6 +228,28 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 				}
 				// 结束事务
 				UnitOfWork.Context.FinishTransaction();
+			}
+		}
+
+		/// <summary>
+		/// 尝试把交易切换到指定的交易状态
+		/// 失败时记录错误并抛出例外
+		/// </summary>
+		/// <param name="transactionId">交易Id</param>
+		/// <param name="externalSerial">外部交易流水号，等于空时不更新</param>
+		/// <param name="state">交易状态</param>
+		public virtual void Process(
+			Guid transactionId, string externalSerial, PaymentTransactionState state) {
+			try {
+				ProcessInternal(transactionId, externalSerial, state);
+			} catch (Exception e) {
+				var errorMessage = string.Format(
+					new T("Change transaction state to {0} failed: {1}"),
+					new T(state.GetDescription()),
+					new T(e.Message));
+				AddDetailRecord(transactionId, null, errorMessage);
+				SetLastError(transactionId, errorMessage);
+				throw;
 			}
 		}
 
