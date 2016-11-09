@@ -49,9 +49,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandler
 		/// </summary>
 		public virtual void OnSecuredPaid(PaymentTransaction transaction,
 			PaymentTransactionState previousState, IList<AutoDeliveryGoodsParameters> parameters) {
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			foreach (var childTransaction in transaction.ReleatedTransactions) {
-				var handlers = childTransaction.GetHandlers();
-				handlers.ForEach(h => h.OnSecuredPaid(childTransaction, previousState, parameters));
+				transactionManager.Process(
+					childTransaction.Id,
+					transaction.ExternalSerial,
+					PaymentTransactionState.SecuredPaid);
 			}
 		}
 
@@ -60,9 +63,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandler
 		/// </summary>
 		public virtual void OnSuccess(
 			PaymentTransaction transaction, PaymentTransactionState previousState) {
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			foreach (var childTransaction in transaction.ReleatedTransactions) {
-				var handlers = childTransaction.GetHandlers();
-				handlers.ForEach(h => h.OnSuccess(childTransaction, previousState));
+				transactionManager.Process(
+					childTransaction.Id,
+					transaction.ExternalSerial,
+					PaymentTransactionState.Success);
 			}
 		}
 
@@ -78,11 +84,6 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandler
 		/// <summary>
 		/// 获取显示交易结果的Html
 		/// </summary>
-		public virtual void GetResultHtml(PaymentTransaction transaction, IList<HtmlString> html) {
-			foreach (var childTransaction in transaction.ReleatedTransactions) {
-				var handlers = childTransaction.GetHandlers();
-				handlers.ForEach(h => h.GetResultHtml(childTransaction, html));
-			}
-		}
+		public abstract void GetResultHtml(PaymentTransaction transaction, IList<HtmlString> html);
 	}
 }

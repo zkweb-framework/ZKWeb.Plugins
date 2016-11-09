@@ -11,11 +11,11 @@
             {% if orderState == "WaitingBuyerPay" %}
             {{ "Order successfully created, please continue to pay" | trans }}
             {% elseif orderState == "WaitingSellerDeliveryGoods" %}
-            {{ "You have paid successful, please wait for the seller shipped" | trans }}
+            {{ "You have paid successful, please wait for seller delivery" | trans }}
             {% elseif orderState == "WaitingBuyerConfirm" %}
-            {{ "The seller has shipped, please confirm after receipt of the goods" | trans }}
+            {{ "All goods shipped, please confirm order after receipt all goods" | trans }}
             {% elseif orderState == "Success" %}
-            {{ "Order is successful, thank you for your patronage" | trans }}
+            {{ "Order is successed, thank you for your patronage" | trans }}
             {% elseif orderState == "Cancelled" %}
             {{ "Order is canceled" | trans }}
             {% elseif orderState == "Invalid" %}

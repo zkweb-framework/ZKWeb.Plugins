@@ -63,10 +63,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.TemplateFilters {
 		/// </summary>
 		/// <param name="info">订单商品的信息</param>
 		/// <returns></returns>
-		public static HtmlString OrderProductCountEditor(object info) {
+		public static HtmlString OrderProductCountEditor(Hash info) {
+			var count = info.Get<long>(nameof(OrderProductDisplayInfo.Count));
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var html = templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_product_count_editor.html", new { info });
+				"common.base/tmpl.number_input_integer.html",
+				new { extraClass = "order-count", value = count });
 			return new HtmlString(html);
 		}
 

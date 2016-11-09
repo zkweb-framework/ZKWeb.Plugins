@@ -1,4 +1,8 @@
-﻿using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandlers.Bases;
+﻿using System;
+using System.Collections.Generic;
+using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandlers.Bases;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
+using ZKWebStandard.Collection;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers {
@@ -31,5 +35,21 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// </summary>
 		public override string Type { get { return ConstType; } }
 		public const string ConstType = "MergedOrderTransaction";
+
+		/// <summary>
+		/// 获取显示交易结果的Html
+		/// </summary>
+		public override void GetResultHtml(PaymentTransaction transaction, IList<HtmlString> html) {
+			// 获取所有关联订单
+
+			// TODO
+
+			// 如果交易本身不可支付，根据交易状态显示信息
+			// 否则
+			// - 如果所有订单可支付，则显示支付按钮跳转到支付页面
+			// - 否则显示错误信息（例如部分订单已支付，部分未支付）
+
+			// TODO
+		}
 	}
 }
