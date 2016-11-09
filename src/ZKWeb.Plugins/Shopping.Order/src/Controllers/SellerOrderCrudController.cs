@@ -170,7 +170,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 					pair.Row["Quantity"] = displayInfo.OrderProducts.GetOrderCountListHtml().ToString();
 					pair.Row["ShippedQuantity"] = displayInfo.OrderProducts.GetShippedCountListHtml().ToString();
 					pair.Row["TotalCost"] = displayInfo.GetTotalCostWithPartsHtml().ToString();
-					pair.Row["State"] = displayInfo.State;
+					pair.Row["State"] = pair.Entity.State;
 					pair.Row["Buyer"] = displayInfo.Buyer;
 					pair.Row["BuyerId"] = displayInfo.BuyerId;
 					pair.Row["Seller"] = displayInfo.Seller;

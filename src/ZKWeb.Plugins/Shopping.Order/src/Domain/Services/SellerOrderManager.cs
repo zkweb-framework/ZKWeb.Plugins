@@ -375,7 +375,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			var canProcessOrderPaid = order.Check(c => c.CanProcessOrderPaid);
 			if (canProcessOrderPaid.First) {
 				// 设置订单状态为等待发货
-				Save(ref order, o => o.State = OrderState.WaitingSellerDeliveryGoods);
+				Save(ref order, o => o.SetState(OrderState.WaitingSellerDeliveryGoods));
 				// 添加成功的订单记录
 				AddDetailRecord(orderId, null, new T("Order is paid"));
 			} else {
@@ -403,7 +403,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			var canProcessAllGoodsShipped = order.Check(c => c.CanProcessAllGoodsShipped);
 			if (canProcessAllGoodsShipped.First) {
 				// 修改订单状态
-				Save(ref order, o => o.State = OrderState.WaitingBuyerConfirm);
+				Save(ref order, o => o.SetState(OrderState.WaitingBuyerConfirm));
 				// 添加成功的订单记录
 				AddDetailRecord(orderId, null, new T("All goods under order is shipped"));
 			} else {
@@ -430,7 +430,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			var canProcessSuccess = order.Check(c => c.CanProcessSuccess);
 			if (canProcessSuccess.First) {
 				// 修改订单状态
-				Save(ref order, o => o.State = OrderState.OrderSuccess);
+				Save(ref order, o => o.SetState(OrderState.OrderSuccess));
 				// 添加成功的订单记录
 				AddDetailRecord(orderId, null, new T("Order is successed"));
 			} else {

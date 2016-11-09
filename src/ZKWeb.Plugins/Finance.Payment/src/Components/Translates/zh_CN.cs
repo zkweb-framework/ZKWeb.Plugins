@@ -87,7 +87,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "Test", "测试" },
 			{ "PaymentFee", "支付手续费" },
 			{ "Selected payment api does not exist", "您选择的支付接口不存在" },
-			{ "Finance Manage", "财务管理" }
+			{ "Finance Manage", "财务管理" },
+			// TODO: 翻译到其他语言
+			{ "ReleatedTransactions", "关联交易" }
 		};
 
 		public bool CanTranslate(string code) {

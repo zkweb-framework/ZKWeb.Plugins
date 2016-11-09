@@ -189,6 +189,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 			[LabelField("Description")]
 			public string Description { get; set; }
 			/// <summary>
+			/// 关联交易
+			/// </summary>
+			[LabelField("ReleatedTransactions")]
+			public string ReleatedTransactions { get; set; }
+			/// <summary>
 			/// 最后发生的错误
 			/// </summary>
 			[LabelField("LastError")]
@@ -222,6 +227,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 				Payer = bindFrom.Payer == null ? null : bindFrom.Payer.Username;
 				Payee = bindFrom.Payee == null ? null : bindFrom.Payee.Username;
 				Description = bindFrom.Description;
+				ReleatedTransactions = string.Join(", ",
+					bindFrom.ReleatedTransactions.Select(t => t.Serial));
 				LastError = bindFrom.LastError;
 				DetailRecords = transactionHtmlProvider.GetDetailRecordsHtml(bindFrom.Id);
 				Remark = bindFrom.Remark;

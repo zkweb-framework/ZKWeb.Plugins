@@ -1,6 +1,7 @@
 ﻿using System;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 
@@ -29,6 +30,18 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 			var checkers = Application.Ioc.ResolveMany<IOrderChecker>();
 			checkers.ForEach(c => getCheckFunc(c)(order, ref result));
 			return result;
+		}
+
+		/// <summary>
+		/// 设置订单的状态和状态时间
+		/// </summary>
+		/// <param name="order">订单</param>
+		/// <param name="state">状态</param>
+		public static void SetState(
+			this SellerOrder order, OrderState state) {
+			order.State = state;
+			order.StateTimes[state] = DateTime.UtcNow;
+			order.StateTimes = order.StateTimes; // 触发setter
 		}
 	}
 }
