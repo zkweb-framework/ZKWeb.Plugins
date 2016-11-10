@@ -7,6 +7,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Enums;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
@@ -132,6 +133,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 					pair.Row["State"] = pair.Entity.SellerOrder.State;
 					pair.Row["Seller"] = displayInfo.Seller;
 					pair.Row["SellerId"] = displayInfo.SellerId;
+					pair.Row["Deleted"] = pair.Entity.Deleted ? EnumDeleted.Deleted : EnumDeleted.None;
 					pair.Row["OrderActions"] = displayInfo.GetOrderActionsTableCellHtml().ToString();
 				}
 			}
@@ -149,6 +151,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 				response.Columns.AddHtmlColumn("TotalCost", "70");
 				response.Columns.AddEnumLabelColumn("State", typeof(OrderState), "50");
 				response.Columns.AddMemberColumn("Seller", "70");
+				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
 				var actionColumn = response.Columns.AddActionColumn("5%");
 				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
 				if (!deleted) {

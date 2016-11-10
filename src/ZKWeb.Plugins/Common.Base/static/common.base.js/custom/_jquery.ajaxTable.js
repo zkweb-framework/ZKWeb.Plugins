@@ -184,6 +184,19 @@ $(function () {
 		var $item = $(this);
 		$item.closestAjaxTable().updatePageSize($item.data("size"));
 	});
+	// 导出到表格
+	$body.on("click", ".ajax-table-menu .export-to-excel", function (e) {
+		var table = $(this).closestAjaxTable();
+		var $form = $("<form>", { action: "/api/base/export_ajax_table", target: "_top", method: "POST" });
+		$form.append($("<input>", { name: "json", value: JSON.stringify(table.searchRequest), type: "hidden" }));
+		$form.append($("<input>", { name: "target", value: table.options.target, type: "hidden" }));
+		$form.appendTo("body");
+		$form.submit();
+	});
+	// 打印
+	$body.on("click", ".ajax-table-menu .print-table", function (e) {
+		alert("print");
+	});
 	// ajax表格搜索栏功能
 	$body.on("keydown", ".ajax-table-search-bar .keyword", function (e) {
 		e.keyCode == 13 && $(this).parent().find('.search-button').click();

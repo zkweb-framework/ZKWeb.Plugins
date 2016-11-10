@@ -38,6 +38,20 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable {
 		}
 
 		/// <summary>
+		/// 获取转换成Hash对象的数据列表
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Hash> GetHashRows() {
+			foreach (var row in Rows) {
+				var dict = row as IDictionary<string, object>;
+				if (dict != null)
+					yield return Hash.FromDictionary(dict);
+				else
+					yield return Hash.FromAnonymousObject(dict);
+			}
+		}
+
+		/// <summary>
 		/// 允许描画到模板
 		/// </summary>
 		/// <returns></returns>
@@ -48,7 +62,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable {
 					tableClass = TableClass,
 					tableHeadRowClass = TableHeadRowClass,
 					columns = Columns,
-					rows = Rows.Select(r => Hash.FromAnonymousObject(r))
+					rows = GetHashRows()
 				});
 			return new HtmlString(result);
 		}

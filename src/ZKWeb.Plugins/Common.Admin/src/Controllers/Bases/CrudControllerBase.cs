@@ -209,9 +209,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 			// 表格处理器，内置+使用Ioc注册的扩展回调
 			var handlers = GetTableHandler().WithExtraHandlers();
 			// 构建搜索回应
-			var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
 			var response = request.BuildResponse(handlers);
-
 			return new JsonResult(response);
 		}
 
