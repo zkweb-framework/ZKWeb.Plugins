@@ -224,7 +224,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 				if (deleted && app.AllowDeleteRecover) {
 					column.AddRecoverActionFor<TCrudController>();
 				}
-				if (deleted && app.AllowDeleteForever) {
+				if ((deleted && app.AllowDeleteForever) || (!app.AllowDeleteRecover)) {
 					column.AddDeleteForeverActionFor<TCrudController>();
 				}
 			}
