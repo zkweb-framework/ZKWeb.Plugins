@@ -85,7 +85,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Unknow order state: [0]", "未知的订单状态: [0]" },
 			{ "Order Checkout", "订单结算" },
 			{ "Order successfully created, please continue to pay", "订单创建成功，请付款" },
+			{ "Merged transaction successfully created, please continue to pay", "合并交易创建成功，请付款" },
 			{ "You have paid successful, please wait for seller delivery", "您已付款成功，请等待卖家发货" },
+			{ "You have paid successful, please check following orders", "您已付款成功，请查看以下订单" },
 			{ "All goods shipped, please confirm order after receipt all goods", "卖家已发货，请在收到货物后确认收货" },
 			{ "Order is successed, thank you for your patronage", "订单交易成功，感谢您的惠顾" },
 			{ "Order is canceled", "订单已取消" },
@@ -95,6 +97,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "PaymentAmount", "支付金额" },
 			{ "Pay with [0]", "使用[0]支付" },
 			{ "Redirecting to order details page......", "正在跳转到订单详情页……" },
+			{ "Redirecting to order list page......", "正在跳转到订单列表页……" },
 			{ "RemarkFlags", "备注旗帜" },
 			{ "Serial/Remark", "流水号/备注" },
 			{ "Buyer", "买家" },
@@ -200,7 +203,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Can't process order successed, reason is {0}", "不能处理订单交易成功，原因是{0}" },
 			{ "Order paid from transaction, serial is {0}", "订单通过普通交易支付完成，交易序列号是{0}" },
 			{ "Order confirmed from payment platform after secured paid, serial is {0}",
-				"通过担保交易支付的订单在交易平台上已确认收货，交易序列号是{0}" }
+				"通过担保交易支付的订单在交易平台上已确认收货，交易序列号是{0}" },
+			{ "Merged Order Checkout", "订单合并结算" },
+			{ "Back to order list", "返回订单列表" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -1,7 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
+using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
 using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandlers.Bases;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
+using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Ioc;
 
@@ -40,16 +48,40 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 		/// 获取显示交易结果的Html
 		/// </summary>
 		public override void GetResultHtml(PaymentTransaction transaction, IList<HtmlString> html) {
-			// 获取所有关联订单
-
-			// TODO
-
-			// 如果交易本身不可支付，根据交易状态显示信息
-			// 否则
-			// - 如果所有订单可支付，则显示支付按钮跳转到支付页面
-			// - 否则显示错误信息（例如部分订单已支付，部分未支付）
-
-			// TODO
+			// 显示内容
+			// 如果交易本身不可支付
+			// - 如果交易已支付，延迟跳转到订单列表
+			// - 否则显示交易状态信息
+			// 如果交易本身可支付
+			// - 如果所有订单可支付，则显示支付按钮
+			// - 否则显示交易状态信息
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var orderIds = transaction.ReleatedTransactions.Select(t => t.ReleatedId);
+			var orders = orderManager
+				.GetMany(o => orderIds.Contains(o.Id))
+				.Select(o => new {
+					id = o.Id,
+					serial = o.Serial,
+					state = o.State,
+					amount = currencyManager.GetCurrency(o.Currency).Format(o.TotalCost),
+					payable = o.Check(c => c.CanPay).First
+				})
+				.ToList();
+			html.Add(new HtmlString(templateManager.RenderTemplate(
+				"shopping.order/order_checkout_merged.html", new {
+					transactionSerial = transaction.Serial,
+					transactionState = transaction.State.ToString(),
+					transactionAmount = currencyManager
+						.GetCurrency(transaction.CurrencyType).Format(transaction.Amount),
+					orders = orders,
+					isPayable = transaction.Check(x => x.IsPayable).First,
+					isAllOrderPayable = orders.Any() && orders.All(o => o.payable),
+					apiName = new T(transaction.Api.Name),
+					paymentUrl = transactionManager.GetPaymentUrl(transaction.Id)
+				})));
 		}
 	}
 }
