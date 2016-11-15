@@ -265,3 +265,91 @@ Common.UserPanel
 		增删查改页面
 
 Finance.Payment
+	提供数据库实体
+		支付接口
+		支付交易
+	支付接口管理
+		添加支付接口
+		编辑支付接口
+		删除支付接口
+	支付交易管理
+		查看支付交易
+		删除支付交易
+	提供支付接口处理器的接口
+	提供支付交易处理器的接口
+	提供支付接口
+		测试支付
+	提供支付交易
+		测试交易
+		合并交易的基类
+	支付接口管理
+		计算支付手续费
+	支付交易管理
+		创建交易
+		处理等待付款
+		处理担保付款
+		处理交易成功
+		处理交易中止
+		添加交易明细记录
+		获取交易明细记录
+		调用发货接口通知支付平台
+
+Finance.Payment.Alipay
+	提供支付交易
+		TODO: 支付宝
+	TODO: 支持支付宝即时到账
+	TODO: 支持支付宝担保交易
+	TODO: 支持支付宝发货通知
+	TODO: 支持支付宝确认收货通知
+
+Finance.Payment.Cash
+	提供支付交易
+		TODO: 现金支付
+
+Finance.Payment.OnArrive
+	提供支付交易
+		TODO: 货到付款
+
+Finance.Payment.Tenpay
+	提供支付交易
+		TODO: 财付通
+	TODO: 支持财付通即时到账
+
+Finance.Payment.WeChat
+	提供支付交易
+		TODO: 微信扫码支付
+		TODO: 微信公众号支付
+
+Multishop.AfterSales
+	TODO: 定义这里的功能列表
+
+Multishop.Base
+	TODO: 定义这里的功能列表
+
+Multishop.Order
+	TODO: 定义这里的功能列表
+
+Multishop.Product
+	TODO: 定义这里的功能列表
+
+Shopping.AfterSales
+	TODO: 定义这里的功能列表
+
+Shopping.Logistics
+	提供数据库实体
+		物流
+	物流管理
+		添加物流
+		编辑物流
+		删除物流
+		编辑运费规则
+		计算运费
+
+Shopping.Order
+	TODO: 定义这里的功能列表
+
+Shopping.Product
+	TODO: 定义这里的功能列表
+
+Testing.WebTester
+	TODO: 定义这里的功能列表
