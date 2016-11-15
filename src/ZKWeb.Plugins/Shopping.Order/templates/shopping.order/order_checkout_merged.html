@@ -30,6 +30,7 @@
         <div class="row order-summary">
             <span>{{ "OrderSerial" | trans }}:&nbsp;<a href="{{ "/user/orders/view?id=[0]" | format: order.id | url }}">{{ order.serial }}</a></span>
             <span>{{ "OrderAmount" | trans }}:&nbsp;<em>{{ order.amount }}</em></span>
+            <span>{{ "OrderState" | trans }}:&nbsp;<b>{{ order.state | trans }}</b></span>
         </div>
         {% endfor %}
         {% if isPayable and isAllOrderPayable %}

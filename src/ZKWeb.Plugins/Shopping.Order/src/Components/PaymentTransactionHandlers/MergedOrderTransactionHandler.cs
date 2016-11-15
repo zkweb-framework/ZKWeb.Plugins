@@ -65,7 +65,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 				.Select(o => new {
 					id = o.Id,
 					serial = o.Serial,
-					state = o.State,
+					state = o.State.ToString(),
 					amount = currencyManager.GetCurrency(o.Currency).Format(o.TotalCost),
 					payable = o.Check(c => c.CanPay).First
 				})
