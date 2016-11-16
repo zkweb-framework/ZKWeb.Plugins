@@ -1,0 +1,35 @@
+﻿这里保存不在功能列表中的TODO列表
+
+====================================================================
+
+优化查询性能，添加更多的索引
+逐步补充插件的单元测试
+StreamResult需要支持分割下载(Range头)
+	http://stackoverflow.com/questions/3303029/http-range-header
+检查完整的订单流程
+确认合并支付时的处理，并写到文档
+
+前台样式整理
+	首页
+	用户中心首页
+	底部栏
+	登陆页
+	注册页
+
+商城网站完成后
+	固定abi，提供向后兼容性
+	提供用户手册
+	添加更多模块
+
+添加更多模块
+	预存款模块 (Finance.Deposit)
+	财务记录模块 (Finance.Accounting)
+	结算模块 (Finance.Settlement)
+	多商场结算模块 (Multishop.Settlement)
+	库存警告模块 (Shopping.StockWarning)
+	站内消息模块 (Common.UserMessage)
+	通知模块 (Common.UserNotification)
+	登录记录模块 (Common.UserLoginRecord)
+	短信模块 (SMS.Base)
+	广信短信模块 (SMS.GuangXin)
+	代办事项模块 (Schedule.Todo)

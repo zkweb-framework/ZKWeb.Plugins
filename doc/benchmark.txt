@@ -1,0 +1,32 @@
+﻿这里保存性能测试的记录
+
+====================================================================
+
+2016-05-27 (i7 Q720 1.6Ghz x 4 core 4 threads, ab -n 2000 -c 8, vmware player 12)
+	- 首页 2.240ms, 2.165ms, 2.123ms
+	- 商品列表页 2.131ms, 2.013ms, 2.132ms
+	- 商品详情页 2.165ms, 2.136ms, 2.193ms
+2016-06-08 (i7 Q720 1.6Ghz x 4 core 8 threads, ab -n 4000 -c 8, vmware player 12)
+	- 首页 1.406ms, 1.441ms, 1.453ms
+	- 商品列表页 1.457ms, 1.297ms, 1.207ms
+	- 商品详情页 1.723ms, 1.695ms, 1.719ms
+2016-06-08 (i7 Q720 1.6Ghz x 4 core 8 threads, ab -n 4000 -c 16, real machine)
+	- 首页 0.793ms, 0.824ms, 0.809ms
+	- 商品列表页 0.708ms, 0.672ms, 0.694ms
+	- 商品详情页 0.853ms, 0.827ms, 0.827ms
+2016-06-17 (i7 Q720 1.6Ghz x 4 core 8 threads, ab -n 8000 -c 16, real machine, asp.net core)
+	- 首页 0.852ms, 0.799ms, 0.801ms
+	- 商品列表页 0.879ms, 0.740ms, 0.742ms
+	- 商品详情页 0.941ms, 0.877ms, 0.879ms
+2016-06-17 (i7 Q720 1.6Ghz x 4 core 8 threads, ab -n 8000 -c 16, real machine, asp.net)
+	- 首页 0.674ms, 0.688ms, 0.672ms
+	- 商品列表页 0.648ms, 0.770ms, 0.645ms
+	- 商品详情页 0.736ms, 0.756ms, 0.775ms
+2016-07-06 (i7 Q720 1.6Ghz x 4 core 8 threads, ab -n 8000 -c 16, real machine, asp.net)
+	- 首页 0.447ms, 0.430ms, 0.432ms
+	- 商品列表页 0.402ms, 0.408ms, 0.422ms
+	- 商品详情页 0.504ms, 0.506ms, 0.502ms
+2016-09-29 (i7 Q720 1.6Ghz x 4 core 8 threads, ab -n 8000 -c 16, real machine, asp.net core)
+	- 首页 0.986ms, 0.983ms, 0.998ms
+	- 商品列表页 1.006ms, 0.977ms, 0.996ms
+	- 商品详情页 1.111ms, 1.082ms, 1.080ms
