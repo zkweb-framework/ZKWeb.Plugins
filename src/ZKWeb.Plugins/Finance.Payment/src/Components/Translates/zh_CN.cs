@@ -92,7 +92,13 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "ReleatedTransactions", "关联交易" },
 			{ "TransactionSerial", "交易流水号" },
 			{ "Change transaction state to {0} failed: {1}", "切换交易状态到{0}失败: {1}" },
-			{ "Transaction is aborted", "交易已中止" }
+			{ "Transaction is aborted", "交易已中止" },
+			{ "Can't process waiting paying on child transaction {0}, reason is {1}",
+				"不能处理子交易({0})的等待付款，原因是{1}" },
+			{ "Can't process secured paid on child transaction {0}, reason is {1}",
+				"不能处理子交易({0})的担保交易已付款，原因是{1}" },
+			{ "Can't process success on child transaction {0}, reason is {1}",
+				"不能处理子交易({0})的交易成功，原因是{1}" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -155,7 +155,9 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Entities {
 			builder.Map(t => t.ReleatedId, new EntityMappingOptions() {
 				Index = "Idx_ReleatedId"
 			});
-			builder.HasMany(t => t.ReleatedTransactions);
+			builder.HasMany(t => t.ReleatedTransactions, new EntityMappingOptions() {
+				CascadeDelete = false
+			});
 			builder.Map(t => t.Description);
 			builder.Map(t => t.State, new EntityMappingOptions() {
 				Index = "Idx_State"

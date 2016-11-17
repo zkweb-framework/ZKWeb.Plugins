@@ -278,7 +278,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			}
 			// 终止合并交易
 			transactionManager.EnsureParentTransactionAborted(releatedTransactionIds, operatorId,
-				new T("Child transactions amount changed by edit order cost, this merge transaction should be closed"));
+				new T("Child transactions amount changed by edit order cost, this merge transaction should be aborted"));
 			// 添加订单记录
 			AddDetailRecord(order.Id, operatorId, string.Format(
 				new T("Order total cost changed, previous value is {0}"), previousTotalCost));

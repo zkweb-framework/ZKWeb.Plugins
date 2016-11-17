@@ -21,20 +21,21 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 	/// - 创建订单A和订单B
 	/// - 打开合并交易支付页面
 	/// - 打开订单A交易支付页面
-	/// - 支付合并交易
-	/// - 支付订单A交易（这时会重复OnSuccess）
+	/// - 支付合并交易 (处理成功)
+	/// - 支付订单A交易 (重复处理，这时外部序列号会改变但交易状态不会被改变，可以人工确认)
 	///
 	/// 重复支付 情况b
 	/// - 创建订单A和订单B
 	/// - 打开合并交易支付页面
 	/// - 打开订单A交易支付页面
-	/// - 支付订单A交易
-	/// - 支付合并交易（这时会重复OnSuccess）
+	/// - 支付订单A交易 (处理成功, 合并交易被终止)
+	/// - 支付合并交易 (处理支付失败，可以看到记录，可以人工确认)
 	/// 
 	/// 对于重复支付合并交易和普通交易的处理
 	/// - 修改价格时自动终止合并交易, 使用EnsureParentTransactionAborted
-	/// - TODO: 普通交易支付完成时自动终止合并交易，适用于普通交易支付在先
-	/// - TODO: 普通交易支付完成时如果查到合并交易同样支付完成则记录错误，适用于合并交易支付在先
+	/// - 普通交易支付后终止合并交易，使用EnsureParentTransactionAbortedIfProcessNotFromParent
+	/// 
+	/// 对于非同时支付的冲突，不需要人工处理可以事先防止，但同时支付的冲突仍需要人工确认
 	/// </summary>
 	[ExportMany]
 	public class MergedOrderTransactionHandler : MergedTransactionHandlerBase {

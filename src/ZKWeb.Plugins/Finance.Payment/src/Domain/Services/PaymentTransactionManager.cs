@@ -10,6 +10,7 @@ using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services;
 using ZKWeb.Plugins.Common.SerialGenerate.src.Components.SerialGenerate;
 using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandlers;
+using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandlers.Bases;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Enums;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
@@ -301,6 +302,22 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 			foreach (var id in parentTransactionIds) {
 				AddDetailRecord(id, operatorId, reason);
 				Process(id, null, PaymentTransactionState.Aborted);
+			}
+		}
+
+		/// <summary>
+		/// 如果处理交易的来源不是合并交易，则确保合并交易中止
+		/// 一般用于子交易单独支付后自动终止合并交易
+		/// 如果处理交易的来源是合并交易，或合并交易不存在或已终止，这个函数什么都不做
+		/// </summary>
+		/// <param name="transaction">子交易</param>
+		/// <param name="operatorId">操作人Id</param>
+		/// <param name="reason">作废原因</param>
+		public virtual void EnsureParentTransactionAbortedIfProcessNotFromParent(
+			PaymentTransaction transaction, Guid? operatorId, string reason) {
+			if (transaction.ExternalSerial == null ||
+				!transaction.ExternalSerial.StartsWith(MergedTransactionHandlerBase.ExternalSerialPrefix)) {
+				EnsureParentTransactionAborted(new[] { transaction.Id }, operatorId, reason);
 			}
 		}
 

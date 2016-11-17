@@ -44,6 +44,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 			// 记录到日志
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction($"OrderTransaction waiting paying, serial is {transaction.Serial}");
+			// 单独处理时确保合并交易终止
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			transactionManager.EnsureParentTransactionAbortedIfProcessNotFromParent(
+				transaction, null, string.Format(new T(
+					"Child transaction {0} process waiting paying standalone, " +
+					"this merge transaction should be aborted"), transaction.Serial));
 		}
 
 		/// <summary>
@@ -62,6 +68,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 				string.Format(new T("Order secured paid from transaction, serial is {0}"), transaction.Serial));
 			// 处理订单已付款，不一定会成功（例如其他关联交易未付款时）
 			orderManager.ProcessOrderPaid(orderId);
+			// 单独处理时确保合并交易终止
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			transactionManager.EnsureParentTransactionAbortedIfProcessNotFromParent(
+				transaction, null, string.Format(new T(
+					"Child transaction {0} process secured paid standalone, " +
+					"this merge transaction should be aborted"), transaction.Serial));
 		}
 
 		/// <summary>
@@ -94,6 +106,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 				// 处理订单交易成功（确认收货），不一定会成功
 				orderManager.ProcessSuccess(orderId);
 			}
+			// 单独处理时确保合并交易终止
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			transactionManager.EnsureParentTransactionAbortedIfProcessNotFromParent(
+				transaction, null, string.Format(new T(
+					"Child transaction {0} process success standalone, " +
+					"this merge transaction should be aborted"), transaction.Serial));
 		}
 
 		/// <summary>
@@ -106,6 +124,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(
 				$"Order transaction aborted, serial is {transaction.Serial}");
+			// 确保合并交易终止
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			transactionManager.EnsureParentTransactionAborted(
+				new[] { transaction.Id }, null, string.Format(new T(
+					"Child transaction {0} aborted, " +
+					"this merge transaction should be aborted too"), transaction.Serial));
 		}
 
 		/// <summary>

@@ -232,7 +232,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 					sellerOrder.Buyer?.Id,
 					null,
 					sellerOrder.Id,
-					$"Order: {sellerOrder.Serial}");
+					string.Format(new T("Order Serial: {0}"), sellerOrder.Serial));
 				Result.CreatedTransactions.Add(transaction);
 			}
 		}
