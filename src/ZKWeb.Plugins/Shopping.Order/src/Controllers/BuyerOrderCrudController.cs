@@ -121,7 +121,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			public override void OnSelect(
 				AjaxTableSearchRequest request, IList<EntityToTableRow<BuyerOrder>> pairs) {
 				foreach (var pair in pairs) {
-					var displayInfo = pair.Entity.SellerOrder.ToDisplayInfo(OrderOperatorType.Buyer);
+					var displayInfo = pair.Entity.ToDisplayInfo();
 					pair.Row["Id"] = pair.Entity.Id;
 					pair.Row["Serial"] = pair.Entity.SellerOrder.Serial;
 					pair.Row["HeadingHtml"] = displayInfo.GetTableHeadingHtml().ToString();
@@ -206,7 +206,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			/// </summary>
 			protected override void OnBind(BuyerOrder bindFrom) {
 				var orderManager = Application.Ioc.Resolve<BuyerOrderManager>();
-				var displayInfo = bindFrom.SellerOrder.ToDisplayInfo(OrderOperatorType.Buyer);
+				var displayInfo = bindFrom.ToDisplayInfo();
 				BaseInformationHtml = displayInfo.GetBaseInformationHtml();
 				DeliveryRecordsHtml = displayInfo.GetDeliveryRecordsHtml(bindFrom.SellerOrder.OrderDeliveries);
 				OrderRecordsHtml = displayInfo.GetOrderRecordsHtml();

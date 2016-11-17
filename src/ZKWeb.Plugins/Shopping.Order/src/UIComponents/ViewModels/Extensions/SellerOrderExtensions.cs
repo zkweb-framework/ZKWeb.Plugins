@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		/// <summary>
 		/// 转换订单到显示信息
 		/// </summary>
-		/// <param name="order">订单</param>
+		/// <param name="order">卖家订单</param>
 		/// <param name="operatorType">操作人类型</param>
 		/// <returns></returns>
 		public static OrderDisplayInfo ToDisplayInfo(this SellerOrder order, OrderOperatorType operatorType) {
