@@ -47,7 +47,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable {
 				if (dict != null)
 					yield return Hash.FromDictionary(dict);
 				else
-					yield return Hash.FromAnonymousObject(dict);
+					yield return Hash.FromAnonymousObject(row);
 			}
 		}
 
