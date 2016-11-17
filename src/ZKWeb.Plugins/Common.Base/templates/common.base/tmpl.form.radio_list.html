@@ -1,6 +1,6 @@
-﻿<div class="radio-list">
+﻿<div class="radio-list" child-name="{{ name }}">
 	{% for option in options %}
-	<label class="radio-inline">
+	<label class="radio-inline" child-name="{{ name }}" child-value="{{ option.value }}">
 		{% if option.selected %}
 		<input name="{{ name }}" type="radio" value="{{ option.value }}" checked="checked" {{ attributes | html_attributes }} />
 		{% else %}

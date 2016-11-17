@@ -11,7 +11,7 @@
 		</label>
 		<div class="checkbox-list">
 			{% for item in group.items %}
-			<label class="checkbox-inline">
+			<label class="checkbox-inline" child-merge-to="{{ fieldName }}" child-value="{{ item.value }}">
 				<input type="checkbox" merge-to="input[name='{{ fieldName }}']" value="{{ item.value }}" />
 				{{ item.name | trans }}
 			</label>

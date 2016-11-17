@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
-using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 using ZKWebStandard.Collection;
 
@@ -91,11 +90,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// <summary>
 		/// 备注旗帜
 		/// </summary>
-		public OrderRemarkFlags RemarkFlags { get; set; }
+		public string RemarkFlags { get; set; }
 		/// <summary>
 		/// 创建时间
 		/// </summary>
 		public string CreateTime { get; set; }
+		/// <summary>
+		/// 最后一条留言
+		/// </summary>
+		public string LastComment { get; set; }
 		/// <summary>
 		/// 查看交易的Url格式
 		/// </summary>

@@ -1,5 +1,6 @@
 ﻿using DotLiquid;
 using System.Collections.Generic;
+using ZKWeb.Plugins.Common.Base.src.Components.Mscorlib.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
@@ -110,6 +111,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.TemplateFilters {
 				return "completed";
 			}
 			return "";
+		}
+
+		/// <summary>
+		/// 返回最后一条留言的摘要
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <returns></returns>
+		public static string OrderLastCommentSummary(Hash info) {
+			var lastComment = info.Get<string>(nameof(OrderDisplayInfo.LastComment));
+			return lastComment?.Trim().TruncateWithSuffix(15);
 		}
 	}
 }

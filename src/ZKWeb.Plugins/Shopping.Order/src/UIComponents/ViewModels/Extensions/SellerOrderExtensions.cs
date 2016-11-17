@@ -44,8 +44,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			info.OriginalTotalCostDescription = order.OriginalTotalCostCalcResult.Parts.GetDescription();
 			info.OriginalTotalCostResult = order.OriginalTotalCostCalcResult;
 			info.Currency = currencyManager.GetCurrency(order.Currency);
-			info.RemarkFlags = order.RemarkFlags;
+			info.RemarkFlags = order.RemarkFlags.ToString();
 			info.CreateTime = order.CreateTime.ToClientTimeString();
+			info.LastComment = order.OrderComments
+				.OrderByDescending(c => c.CreateTime).FirstOrDefault()?.Contents;
 			if (operatorType == OrderOperatorType.Admin) {
 				info.ViewTransactionUrlFormat = "/admin/payment_transactions/edit?id={0}";
 			} else {

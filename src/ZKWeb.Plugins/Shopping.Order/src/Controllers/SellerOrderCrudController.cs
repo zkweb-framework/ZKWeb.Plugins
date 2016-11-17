@@ -235,6 +235,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			[HtmlField("OrderCommentsHtml", Group = "OrderComments")]
 			public HtmlString OrderCommentsHtml { get; set; }
 			/// <summary>
+			/// 备注旗帜
+			/// </summary>
+			[RadioButtonsField("RemarkFlags", typeof(ListItemFromEnum<OrderRemarkFlags>), Group = "Remark")]
+			public OrderRemarkFlags RemarkFlags { get; set; }
+			/// <summary>
 			/// 备注
 			/// </summary>
 			[RichTextEditor("Remark", Group = "Remark")]
@@ -251,6 +256,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				OrderRecordsHtml = displayInfo.GetOrderRecordsHtml();
 				ReleatedTransactionsHtml = displayInfo.GetReleatedTransactionsHtml();
 				OrderCommentsHtml = displayInfo.GetOrderCommentsHtml();
+				RemarkFlags = bindFrom.RemarkFlags;
 				Remark = bindFrom.Remark;
 			}
 
@@ -258,6 +264,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			/// 提交表单
 			/// </summary>
 			protected override object OnSubmit(SellerOrder saveTo) {
+				saveTo.RemarkFlags = RemarkFlags;
 				saveTo.Remark = Remark;
 				return this.SaveSuccessAndCloseModal();
 			}

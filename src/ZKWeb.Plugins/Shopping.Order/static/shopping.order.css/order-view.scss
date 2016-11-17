@@ -133,3 +133,42 @@
 		}
 	}
 }
+
+/* 备注旗帜 */
+.form-horizontal {
+	.radio-inline[child-name="RemarkFlags"] {
+		&:after {
+			display: inline-block;
+			font: normal normal normal 14px/1 FontAwesome;
+			font-size: inherit;
+			text-rendering: auto;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			content: "\f024";
+		}
+
+		&[child-value="0"]:after {
+			color: gray;
+		}
+
+		&[child-value="1"]:after {
+			color: red;
+		}
+
+		&[child-value="2"]:after {
+			color: yellow;
+		}
+
+		&[child-value="3"]:after {
+			color: green;
+		}
+
+		&[child-value="4"]:after {
+			color: blue;
+		}
+
+		&[child-value="5"]:after {
+			color: purple;
+		}
+	}
+}

@@ -1,7 +1,7 @@
 ﻿<div class="form-control-scrollable">
 	<div class="checkbox-list">
 		{% for item in items %}
-		<label style="padding-left: {{ item.level | times: 20 }}px">
+		<label style="padding-left: {{ item.level | times: 20 }}px" child-merge-to="{{ fieldName }}" child-value="{{ item.value }}">
 			<input type="checkbox" merge-to="input[name='{{ fieldName }}']" value="{{ item.value }}" />
 			{{ item.name | trans }}
 		</label>
