@@ -2,7 +2,7 @@
 	<span>{{ "Serial" | trans }}: {{ info.Serial }}</span>
 	<span>{{ "CreateTime" | trans }}: {{ info.CreateTime }}</span>
 	<span class="pull-right">
-		<span class="last-comment">{{ info | order_last_comment_summary }}</span>
-		<i class="fa fa-flag remark-flags" color="{{ info.RemarkFlags | downcase }}"></i>
+		<span class="order-last-comment">{{ info | order_last_comment_summary }}</span>
+		<span class="order-remark-flags" color="{{ info.RemarkFlags | downcase }}"><i class="fa fa-flag"></i></span>
 	</span>
 </div>

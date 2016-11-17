@@ -19,32 +19,6 @@
 		&.selected > td {
 			background-color: #4B8DF8;
 		}
-		/* 备注旗帜 */
-		.remark-flags {
-			&[color="gray"] {
-				color: gray;
-			}
-
-			&[color="red"] {
-				color: red;
-			}
-
-			&[color="yellow"] {
-				color: yellow;
-			}
-
-			&[color="green"] {
-				color: green;
-			}
-
-			&[color="blue"] {
-				color: blue;
-			}
-
-			&[color="purple"] {
-				color: purple;
-			}
-		}
 	}
 	/* 订单内容行的样式 */
 	.order-row-body {
@@ -105,5 +79,32 @@
 			color: #999;
 			text-decoration: line-through;
 		}
+	}
+}
+
+/* 备注旗帜 */
+.order-remark-flags {
+	&[color="gray"] {
+		color: gray;
+	}
+
+	&[color="red"] {
+		color: red;
+	}
+
+	&[color="yellow"] {
+		color: yellow;
+	}
+
+	&[color="green"] {
+		color: green;
+	}
+
+	&[color="blue"] {
+		color: blue;
+	}
+
+	&[color="purple"] {
+		color: purple;
 	}
 }

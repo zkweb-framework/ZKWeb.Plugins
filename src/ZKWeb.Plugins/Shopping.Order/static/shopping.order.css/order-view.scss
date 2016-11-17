@@ -5,6 +5,11 @@
 	.panel-heading {
 		.tool-buttons {
 			float: right;
+
+			a {
+				margin-left: 5px;
+				color: #fff;
+			}
 		}
 	}
 }
