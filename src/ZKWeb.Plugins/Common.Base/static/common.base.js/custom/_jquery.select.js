@@ -16,6 +16,7 @@ $(function () {
 			($option.text().toLowerCase().indexOf(keyword) >= 0) ? $option.show() : $option.hide();
 		})
 	});
+
 	// 选择项改变后应用到按钮或文本框
 	var advanceSelectFieldSelector = advanceSelectSelector + " select";
 	$(document).on("change", advanceSelectFieldSelector, function () {
@@ -25,13 +26,14 @@ $(function () {
 		$advanceSelect.find(".option-text").text(selectedText);
 		$advanceSelect.find(".option-text-editable").val(selectedText).change();
 	});
+
 	// 页面载入时初始化高级下拉框
 	var setup = function ($elements) {
 		$elements.each(function () {
 			var $this = $(this);
 			var size = $this.closest(advanceSelectSelector).data("select-size") || 5;
 			$this.attr("size", "5");
-			setTimeout(function () { $this.change() }, 0);
+			$this.change();
 		});
 	};
 	setup($(advanceSelectFieldSelector));
