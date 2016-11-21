@@ -272,7 +272,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				address.RegionId = newAddress.RegionId;
 				address.ZipCode = newAddress.ZipCode;
 				address.DetailedAddress = newAddress.DetailedAddress;
-				address.GenerateSummary();
+				address.Summary = address.GenerateSummary();
 			});
 		}
 
