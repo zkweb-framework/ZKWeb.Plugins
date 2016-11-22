@@ -42,6 +42,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		public override string TileClass { get { return "tile bg-aqua"; } }
 		public override string IconClass { get { return "fa fa-cart-arrow-down"; } }
 		public override string AddUrl { get { return null; } }
+		public override bool AllowDeleteForever { get { return false; } }
 		protected override bool UseTransaction { get { return true; } }
 		protected override IAjaxTableHandler<SellerOrder, Guid> GetTableHandler() { return new TableHandler(); }
 		protected override IModelFormBuilder GetAddForm() { throw new NotImplementedException(); }

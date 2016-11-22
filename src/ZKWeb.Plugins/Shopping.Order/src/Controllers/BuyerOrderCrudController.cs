@@ -22,6 +22,7 @@ using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
+using ZKWeb.Web;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
@@ -38,6 +39,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 		public override string Url { get { return "/user/orders"; } }
 		public override string IconClass { get { return "fa fa-cart-arrow-down"; } }
 		public override string AddUrl { get { return null; } }
+		public override bool AllowDeleteForever { get { return false; } }
 		public override string EditTemplatePath { get { return "common.user_panel/generic_edit_standalone.html"; } }
 		protected override IAjaxTableHandler<BuyerOrder, Guid> GetTableHandler() { return new TableHandler(); }
 		protected override IModelFormBuilder GetAddForm() { throw new NotImplementedException(); }

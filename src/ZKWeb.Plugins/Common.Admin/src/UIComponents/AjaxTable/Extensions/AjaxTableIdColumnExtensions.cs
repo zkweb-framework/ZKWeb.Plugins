@@ -25,20 +25,23 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 		/// <param name="typeName">类型名称</param>
 		/// <param name="batchUrl">批量操作使用的Url</param>
 		/// <param name="primaryKey">主键名称，不传入时使用默认</param>
+		/// <param name="allowDeleteRecover">是否允许删除恢复，不传入时使用默认</param>
+		/// <param name="allowDeleteForever">是否允许永久删除，不传入时使用默认</param>
 		public static void AddDeleteActions(
 			this AjaxTableIdColumn column, AjaxTableSearchRequest request,
-			Type dataType, string typeName, string batchUrl, string primaryKey = null) {
+			Type dataType, string typeName, string batchUrl, string primaryKey = null,
+			bool? allowDeleteRecover = null, bool? allowDeleteForever = null) {
 			// 判断需要添加哪些操作
 			bool addBatchDelete = false;
 			bool addBatchRecover = false;
 			bool addBatchDeleteForever = false;
 			if (typeof(IHaveDeleted).GetTypeInfo().IsAssignableFrom(dataType)) {
 				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
-				addBatchDelete = !deleted;
-				addBatchRecover = deleted;
-				addBatchDeleteForever = deleted;
+				addBatchDelete = (allowDeleteRecover == false) ? false : !deleted;
+				addBatchRecover = (allowDeleteRecover == false) ? false : deleted;
+				addBatchDeleteForever = (allowDeleteForever == false) ? false : deleted;
 			} else {
-				addBatchDeleteForever = true;
+				addBatchDeleteForever = allowDeleteForever ?? true;
 			}
 			// 添加批量删除
 			typeName = new T(typeName);
@@ -95,7 +98,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 			this AjaxTableIdColumn column, AjaxTableSearchRequest request)
 			where TCrudController : class, ICrudController, new() {
 			var app = new TCrudController();
-			column.AddDeleteActions(request, app.EntityType, app.EntityTypeName, app.BatchUrl);
+			column.AddDeleteActions(request,
+				app.EntityType, app.EntityTypeName, app.BatchUrl,
+				null, app.AllowDeleteRecover, app.AllowDeleteForever);
 		}
 
 		/// <summary>
