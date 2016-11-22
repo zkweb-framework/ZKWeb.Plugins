@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
@@ -19,7 +21,6 @@ using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions;
-using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
@@ -33,11 +34,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 	public class BuyerOrderCrudController : CrudUserPanelControllerBase<BuyerOrder, Guid> {
 		public override string Group { get { return "OrderManage"; } }
 		public override string GroupIconClass { get { return "fa fa-cart-arrow-down"; } }
-		public override string Name { get { return "OrderList"; } }
+		public override string Name { get { return "OrderManage"; } }
 		public override string Url { get { return "/user/orders"; } }
 		public override string IconClass { get { return "fa fa-cart-arrow-down"; } }
 		public override string AddUrl { get { return null; } }
-		// public override string EditUrl { get { return null; } } TODO: 改成独立页面
+		public override string EditTemplatePath { get { return "common.user_panel/generic_edit_standalone.html"; } }
 		protected override IAjaxTableHandler<BuyerOrder, Guid> GetTableHandler() { return new TableHandler(); }
 		protected override IModelFormBuilder GetAddForm() { throw new NotImplementedException(); }
 		protected override IModelFormBuilder GetEditForm() { return new Form(); }
@@ -155,7 +156,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 				var actionColumn = response.Columns.AddActionColumn("5%");
 				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
 				if (!deleted) {
-					actionColumn.AddEditActionFor<BuyerOrderCrudController>();
+					actionColumn.AddButtonForOpenLink(
+						new T("View"), "btn btn-xs btn-info", "fa fa-edit",
+						"/user/orders/edit?serial=<%-row.Serial%>");
 				}
 				actionColumn.AddHtmlAction("OrderActions");
 			}
@@ -200,6 +203,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			/// </summary>
 			[RichTextEditor("Remark", Group = "Remark")]
 			public string Remark { get; set; }
+
+			/// <summary>
+			/// 获取请求的Id
+			/// </summary>
+			protected override Guid GetRequestId() {
+				var serial = Request.Get<string>("serial");
+				var orderManager = Application.Ioc.Resolve<BuyerOrderManager>();
+				var orderId = orderManager.GetBuyerOrderIdFromSerial(serial);
+				if (!orderId.HasValue) {
+					throw new NotFoundException(new T("Order not exist"));
+				}
+				return orderId.Value;
+			}
 
 			/// <summary>
 			/// 绑定表单

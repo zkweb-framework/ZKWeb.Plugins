@@ -48,7 +48,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Cart is empty", "カートは空です、商品を入れてください。" },
 			{ "Recently add to cart", "最近カートに追加した商品" },
 			{ "Delete Successfully", "削除に成功しました" },
-			{ "OrderList", "注文リスト" },
 			{ "ShippingAddress", "お届け先の住所" },
 			{ "Address/Name/Tel", "アドレス/名前/電話" },
 			{ "ZipCode", "郵便番号" },

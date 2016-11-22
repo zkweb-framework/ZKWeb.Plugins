@@ -47,7 +47,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Cart is empty", "빨리 쇼핑 카트 아직 상품 및 구입！" },
 			{ "Recently add to cart", "최근 장바구니에 담기" },
 			{ "Delete Successfully", "성공적으로 삭제" },
-			{ "OrderList", "주문 목록" },
 			{ "ShippingAddress", "배송 주소" },
 			{ "Address/Name/Tel", "주소/이름/전화" },
 			{ "ZipCode", "우편 번호" },

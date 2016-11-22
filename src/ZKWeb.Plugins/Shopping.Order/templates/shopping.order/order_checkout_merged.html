@@ -1,42 +1,42 @@
 ﻿{% include_css_here "/static/shopping.order.css/order-checkout.css" %}
 <div class="panel panel-themed order-transaction-result">
-    <div class="panel-heading">
-        <i class="fa fa-money">&nbsp;{{ "Merged Order Checkout" | trans }}</i>
-    </div>
-    <div class="page-content">
-        <div class="row order-state">
-            {% if transactionState == "Initial" %}
-            {{ "Merged transaction successfully created, please continue to pay" | trans }}
-            {% elseif transactionState == "WaitingPaying" %}
-            {{ "Merged transaction successfully created, please continue to pay" | trans }}
-            {% elseif transactionState == "SecuredPaid" %}
-            {{ "You have paid successful, please check following orders" | trans }}
-            {% elseif transactionState == "Success" %}
-            {{ "You have paid successful, please check following orders" | trans }}
-            {% elseif transactionState == "Aborted" %}
-            {{ "Transaction is aborted" | trans }}
-            {% else %}
-            {{ "Unknow transaction state: [0]" | trans | format: transactionState }}
-            {% endif %}
-        </div>
-        <div class="row order-summary">
-            <span>{{ "TransactionSerial" | trans }}:&nbsp;<b>{{ transactionSerial }}</b></span>
-            <span>{{ "PaymentAmount" | trans }}:&nbsp;<em>{{ transactionAmount }}</em></span>
-        </div>
-        <div class="row order-summary">
-            <a href="/user/orders">{{ "Back to order list" | trans }}</a>
-        </div>
-        {% for order in orders %}
-        <div class="row order-summary">
-            <span>{{ "OrderSerial" | trans }}:&nbsp;<a href="{{ "/user/orders/view?id=[0]" | format: order.id | url }}">{{ order.serial }}</a></span>
-            <span>{{ "OrderAmount" | trans }}:&nbsp;<em>{{ order.amount }}</em></span>
-            <span>{{ "OrderState" | trans }}:&nbsp;<b>{{ order.state | trans }}</b></span>
-        </div>
-        {% endfor %}
-        {% if isPayable and isAllOrderPayable %}
-        <div class="row order-payment">
-            <a class="btn btn-themed btn-pay" href="{{ paymentUrl }}">{{ "Pay with [0]" | trans | format: apiName }}</a>
-        </div>
-        {% endif %}
-    </div>
+	<div class="panel-heading">
+		<i class="fa fa-money">&nbsp;{{ "Merged Order Checkout" | trans }}</i>
+	</div>
+	<div class="page-content">
+		<div class="row order-state">
+			{% if transactionState == "Initial" %}
+			{{ "Merged transaction successfully created, please continue to pay" | trans }}
+			{% elseif transactionState == "WaitingPaying" %}
+			{{ "Merged transaction successfully created, please continue to pay" | trans }}
+			{% elseif transactionState == "SecuredPaid" %}
+			{{ "You have paid successful, please check following orders" | trans }}
+			{% elseif transactionState == "Success" %}
+			{{ "You have paid successful, please check following orders" | trans }}
+			{% elseif transactionState == "Aborted" %}
+			{{ "Transaction is aborted" | trans }}
+			{% else %}
+			{{ "Unknow transaction state: [0]" | trans | format: transactionState }}
+			{% endif %}
+		</div>
+		<div class="row order-summary">
+			<span>{{ "TransactionSerial" | trans }}:&nbsp;<b>{{ transactionSerial }}</b></span>
+			<span>{{ "PaymentAmount" | trans }}:&nbsp;<em>{{ transactionAmount }}</em></span>
+		</div>
+		<div class="row order-summary">
+			<a href="/user/orders">{{ "Back to order list" | trans }}</a>
+		</div>
+		{% for order in orders %}
+		<div class="row order-summary">
+			<span>{{ "OrderSerial" | trans }}:&nbsp;<a href="{{ "/user/orders/edit?serial=[0]" | format: order.serial | url }}">{{ order.serial }}</a></span>
+			<span>{{ "OrderAmount" | trans }}:&nbsp;<em>{{ order.amount }}</em></span>
+			<span>{{ "OrderState" | trans }}:&nbsp;<b>{{ order.state | trans }}</b></span>
+		</div>
+		{% endfor %}
+		{% if isPayable and isAllOrderPayable %}
+		<div class="row order-payment">
+			<a class="btn btn-themed btn-pay" href="{{ paymentUrl }}">{{ "Pay with [0]" | trans | format: apiName }}</a>
+		</div>
+		{% endif %}
+	</div>
 </div>

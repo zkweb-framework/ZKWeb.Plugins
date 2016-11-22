@@ -3,44 +3,44 @@
 {% else %}
 {% include_css_here "/static/shopping.order.css/order-checkout.css" %}
 <div class="panel panel-themed order-transaction-result">
-    <div class="panel-heading">
-        <i class="fa fa-money">&nbsp;{{ "Order Checkout" | trans }}</i>
-    </div>
-    <div class="page-content">
-        <div class="row order-state">
-            {% if orderState == "WaitingBuyerPay" %}
-            {{ "Order successfully created, please continue to pay" | trans }}
-            {% elseif orderState == "WaitingSellerDeliveryGoods" %}
-            {{ "You have paid successful, please wait for seller delivery" | trans }}
-            {% elseif orderState == "WaitingBuyerConfirm" %}
-            {{ "All goods shipped, please confirm order after receipt all goods" | trans }}
-            {% elseif orderState == "Success" %}
-            {{ "Order is successed, thank you for your patronage" | trans }}
-            {% elseif orderState == "Cancelled" %}
-            {{ "Order is canceled" | trans }}
-            {% elseif orderState == "Invalid" %}
-            {{ "Order is obsoleted" | trans }}
-            {% else %}
-            {{ "Unknow order state: [0]" | trans | format: orderState }}
-            {% endif %}
-        </div>
-        <div class="row order-summary">
-            <span>{{ "OrderSerial" | trans }}:&nbsp;<a>{{ orderSerial }}</a></span>
-            <span>{{ "OrderAmount" | trans }}:&nbsp;<em>{{ orderAmount }}</em></span>
-            <span>{{ "PaymentAmount" | trans }}:&nbsp;<em>{{ transactionAmount }}</em></span>
-        </div>
-        {% if isPayable %}
-        <div class="row order-payment">
-            <a class="btn btn-themed btn-pay" href="{{ paymentUrl }}">{{ "Pay with [0]" | trans | format: apiName }}</a>
-        </div>
-        {% else %}
-        <div class="row order-redirect">
-            <script type="text/javascript">
-                setTimeout(function () { location.href = "/order/view?serial={{ orderSerial }}"; }, 3000);
-            </script>
-            <span>{{ "Redirecting to order details page......" | trans }}</span>
-        </div>
-        {% endif %}
-    </div>
+	<div class="panel-heading">
+		<i class="fa fa-money">&nbsp;{{ "Order Checkout" | trans }}</i>
+	</div>
+	<div class="page-content">
+		<div class="row order-state">
+			{% if orderState == "WaitingBuyerPay" %}
+			{{ "Order successfully created, please continue to pay" | trans }}
+			{% elseif orderState == "WaitingSellerDeliveryGoods" %}
+			{{ "You have paid successful, please wait for seller delivery" | trans }}
+			{% elseif orderState == "WaitingBuyerConfirm" %}
+			{{ "All goods shipped, please confirm order after receipt all goods" | trans }}
+			{% elseif orderState == "Success" %}
+			{{ "Order is successed, thank you for your patronage" | trans }}
+			{% elseif orderState == "Cancelled" %}
+			{{ "Order is canceled" | trans }}
+			{% elseif orderState == "Invalid" %}
+			{{ "Order is obsoleted" | trans }}
+			{% else %}
+			{{ "Unknow order state: [0]" | trans | format: orderState }}
+			{% endif %}
+		</div>
+		<div class="row order-summary">
+			<span>{{ "OrderSerial" | trans }}:&nbsp;<a>{{ orderSerial }}</a></span>
+			<span>{{ "OrderAmount" | trans }}:&nbsp;<em>{{ orderAmount }}</em></span>
+			<span>{{ "PaymentAmount" | trans }}:&nbsp;<em>{{ transactionAmount }}</em></span>
+		</div>
+		{% if isPayable %}
+		<div class="row order-payment">
+			<a class="btn btn-themed btn-pay" href="{{ paymentUrl }}">{{ "Pay with [0]" | trans | format: apiName }}</a>
+		</div>
+		{% else %}
+		<div class="row order-redirect">
+			<script type="text/javascript">
+				setTimeout(function () { location.href = "/user/orders/edit?serial={{ orderSerial }}"; }, 3000);
+			</script>
+			<span>{{ "Redirecting to order details page......" | trans }}</span>
+		</div>
+		{% endif %}
+	</div>
 </div>
 {% endunless %}

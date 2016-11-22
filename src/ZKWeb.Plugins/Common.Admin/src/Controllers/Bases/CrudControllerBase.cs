@@ -223,8 +223,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
-				return new TemplateResult(AddTemplatePath,
-					new { form, extra = ExtraTemplateArguments });
+				return new TemplateResult(AddTemplatePath, new {
+					title = new T(Name),
+					includeCss = IncludeCss,
+					includeJs = IncludeJs,
+					extra = ExtraTemplateArguments,
+					form
+				});
 			}
 		}
 
@@ -238,8 +243,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 				return new JsonResult(form.Submit());
 			} else {
 				form.Bind();
-				return new TemplateResult(EditTemplatePath,
-					new { form, extra = ExtraTemplateArguments });
+				return new TemplateResult(EditTemplatePath, new {
+					title = new T(Name),
+					includeCss = IncludeCss,
+					includeJs = IncludeJs,
+					extra = ExtraTemplateArguments,
+					form
+				});
 			}
 		}
 

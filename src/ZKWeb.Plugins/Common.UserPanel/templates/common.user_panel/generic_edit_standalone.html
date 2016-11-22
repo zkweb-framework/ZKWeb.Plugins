@@ -1,0 +1,21 @@
+﻿{% use_title title -%}
+{% for css in includeCss -%}
+{% include_css_later css -%}
+{% endfor -%}
+{% for js in includeJs -%}
+{% include_js_later js -%}
+{% endfor -%}
+{% include common.user_panel/header.html %}
+<div class="portlet">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="{{ extra.iconClass }}"></i>
+			<span class="caption-subject">{{ title | trans }}</span>
+			<span class="caption-helper"></span>
+		</div>
+	</div>
+	<div class="portlet-body">
+		{{ form }}
+	</div>
+</div>
+{% include common.user_panel/footer.html %}
