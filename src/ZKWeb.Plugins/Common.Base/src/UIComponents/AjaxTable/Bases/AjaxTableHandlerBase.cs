@@ -55,9 +55,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases {
 		/// </summary>
 		public virtual void OnSort(
 			AjaxTableSearchRequest request, ref IQueryable<TEntity> query) {
-			if (UpdateTimeTypeTrait<TEntity>.HaveUpdateTime) {
-				query = query.OrderByDescending(e => ((IHaveUpdateTime)e).UpdateTime);
-			} else if (CreateTimeTypeTrait<TEntity>.HaveCreateTime) {
+			if (CreateTimeTypeTrait<TEntity>.HaveCreateTime) {
 				query = query.OrderByDescending(e => ((IHaveCreateTime)e).CreateTime);
 			} else {
 				query = query.OrderByDescending(e => e.Id);
