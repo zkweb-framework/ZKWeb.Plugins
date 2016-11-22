@@ -54,6 +54,16 @@ html, body {
 			text-transform: uppercase !important;
 			font-weight: bold !important;
 		}
+
+		> .caption-helper {
+			font-size: 14px;
+			color: #999;
+			text-decoration: underline;
+
+			> a {
+				color: #999;
+			}
+		}
 	}
 
 	> .portlet-title > .btn {

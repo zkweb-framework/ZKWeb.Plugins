@@ -192,6 +192,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 				title = new T(Name),
 				includeCss = IncludeCss,
 				includeJs = IncludeJs,
+				url = Url,
 				extra = ExtraTemplateArguments,
 				table,
 				searchBar
@@ -227,6 +228,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 					title = new T(Name),
 					includeCss = IncludeCss,
 					includeJs = IncludeJs,
+					url = Url,
 					extra = ExtraTemplateArguments,
 					form
 				});
@@ -247,6 +249,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 					title = new T(Name),
 					includeCss = IncludeCss,
 					includeJs = IncludeJs,
+					url = Url,
 					extra = ExtraTemplateArguments,
 					form
 				});

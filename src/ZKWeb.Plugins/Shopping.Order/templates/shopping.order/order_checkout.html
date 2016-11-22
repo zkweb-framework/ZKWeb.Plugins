@@ -25,7 +25,7 @@
 			{% endif %}
 		</div>
 		<div class="row order-summary">
-			<span>{{ "OrderSerial" | trans }}:&nbsp;<a>{{ orderSerial }}</a></span>
+			<span>{{ "OrderSerial" | trans }}:&nbsp;<a href="/user/orders/edit?serial={{ orderSerial }}" target="_blank">{{ orderSerial }}</a></span>
 			<span>{{ "OrderAmount" | trans }}:&nbsp;<em>{{ orderAmount }}</em></span>
 			<span>{{ "PaymentAmount" | trans }}:&nbsp;<em>{{ transactionAmount }}</em></span>
 		</div>
