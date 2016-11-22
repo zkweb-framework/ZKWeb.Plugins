@@ -39,6 +39,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		public override string TileClass { get { return "tile bg-yellow"; } }
 		public override string IconClass { get { return "fa fa-download"; } }
 		public override string AddUrl { get { return null; } }
+		public override bool AllowDeleteForever { get { return false; } }
 		protected override bool UseTransaction { get { return true; } }
 		protected override IAjaxTableHandler<PaymentTransaction, Guid> GetTableHandler() { return new TableHandler(); }
 		protected override IModelFormBuilder GetAddForm() {
