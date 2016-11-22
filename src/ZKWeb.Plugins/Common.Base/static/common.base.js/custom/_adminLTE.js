@@ -111,16 +111,23 @@ $(function () {
 	$.AdminLTE.init();
 
 	//Fix sidebar height
-	//Delay 1s to make this work faster
+	//Delay 1ms to make this work faster
+	var $mainSidebar = $(".main-sidebar");
 	var fixSidebarTimeout = null;
 	var fixSidebarHeight = function () {
 		clearTimeout(fixSidebarTimeout);
 		fixSidebarTimeout = setTimeout(function () {
-			$(".main-sidebar").height($(".page-body").outerHeight() + $(".page-footer").outerHeight());
+			var height = $(".page-body").outerHeight() + $(".page-footer").outerHeight();
+			if ($mainSidebar.height() != height) {
+				$mainSidebar.height(height);
+			}
 		}, 1);
 	}
-	fixSidebarHeight();
-	$(window).resize(fixSidebarHeight);
+	if ($mainSidebar.length) {
+		$(window).resize(fixSidebarHeight);
+		// there no event for document height changed
+		setInterval(fixSidebarHeight, 100);
+	}
 
 	//Enable sidebar tree view controls
 	$.AdminLTE.tree('.sidebar');
