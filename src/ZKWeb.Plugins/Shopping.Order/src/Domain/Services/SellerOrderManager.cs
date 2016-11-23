@@ -19,6 +19,7 @@ using ZKWeb.Plugins.Shopping.Order.src.Components.OrderProductUnitPriceCalaculat
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderShippingAddressProviders.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 using ZKWeb.Plugins.Shopping.Product.src.Components.ProductTypes.Interfaces;
@@ -29,7 +30,6 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
-	using Enums;
 	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>

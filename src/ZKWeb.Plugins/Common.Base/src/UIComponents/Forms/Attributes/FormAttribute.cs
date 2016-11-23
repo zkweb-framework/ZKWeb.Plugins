@@ -6,7 +6,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes {
 	/// 表单属性
 	/// 用于指定表单名称，可省略
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Class)]
+	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
 	public class FormAttribute : Attribute {
 		/// <summary>
 		/// 表单名称

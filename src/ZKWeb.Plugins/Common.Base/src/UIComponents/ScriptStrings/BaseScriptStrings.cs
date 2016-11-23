@@ -23,9 +23,18 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings {
 		public const string CloseModal = (
 			"$(this).closest('.bootstrap-dialog').modal('hide');");
 		/// <summary>
+		/// 刷新模态框
+		/// </summary>
+		public const string RefreshModal = (
+			"$(this).closest('.bootstrap-dialog').find('.remote-contents').trigger('reload');");
+		/// <summary>
 		/// 通知Ajax表格数据已更新，并关闭模态框
 		/// </summary>
 		public const string AjaxtableUpdatedAndCloseModal = AjaxtableUpdatedFromModal + CloseModal;
+		/// <summary>
+		/// 通知Ajax表格数据已更新，并刷新模态框
+		/// </summary>
+		public const string AjaxtableUpdatedAndRefreshModal = AjaxtableUpdatedFromModal + RefreshModal;
 
 		/// <summary>
 		/// 批量操作的确认消息模板

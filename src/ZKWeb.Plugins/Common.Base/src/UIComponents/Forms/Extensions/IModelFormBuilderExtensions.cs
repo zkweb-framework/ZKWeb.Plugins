@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions {
 		}
 
 		/// <summary>
-		/// 返回保存成功，关掉模态框并且通知Ajax表格更新数据
+		/// 返回保存成功，关闭模态框并且通知Ajax表格更新数据
 		/// </summary>
 		/// <param name="form">表单</param>
 		/// <returns></returns>
@@ -25,6 +25,18 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions {
 			return new {
 				message = new T("Saved Successfully"),
 				script = BaseScriptStrings.AjaxtableUpdatedAndCloseModal
+			};
+		}
+
+		/// <summary>
+		/// 返回保存成功，刷新模态框并通知Ajax表格更新数据
+		/// </summary>
+		/// <param name="form">表单</param>
+		/// <returns></returns>
+		public static object SaveSuccessAndRefreshModal(this IModelFormBuilder form) {
+			return new {
+				message = new T("Saved Successfully"),
+				script = BaseScriptStrings.AjaxtableUpdatedAndRefreshModal
 			};
 		}
 

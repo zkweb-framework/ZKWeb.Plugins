@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
 using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
@@ -63,17 +64,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			return new HtmlString(templateManager.RenderTemplate(
 				"shopping.order/tmpl.order_view.tab_base_information.html", new { info }));
-		}
-
-		/// <summary>
-		/// 获取订单留言的Html
-		/// </summary>
-		/// <param name="info">订单显示信息</param>
-		/// <returns></returns>
-		public static HtmlString GetOrderCommentsHtml(this OrderDisplayInfo info) {
-			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_view.tab_comments.html", new { info }));
 		}
 
 		/// <summary>
@@ -186,6 +176,33 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 				});
 			}
 			return (HtmlString)table.ToLiquid();
+		}
+
+		/// <summary>
+		/// 获取订单留言的Html
+		/// </summary>
+		/// <param name="info">订单显示信息</param>
+		/// <returns></returns>
+		public static HtmlString GetOrderCommentsHtml(
+			this OrderDisplayInfo info,
+			IEnumerable<OrderComment> comments) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var table = new StaticTableBuilder();
+			table.Columns.Add("Type", "150");
+			table.Columns.Add("Creator", "150");
+			table.Columns.Add("Contents");
+			table.Columns.Add("CreateTime", "150");
+			comments = comments.OrderByDescending(d => d.CreateTime);
+			foreach (var comment in comments) {
+				table.Rows.Add(new {
+					Type = new T(comment.Side.GetDescription()),
+					Creator = comment.Owner?.Username,
+					Contents = comment.Contents,
+					CreateTime = comment.CreateTime.ToClientTimeString()
+				});
+			}
+			return new HtmlString(templateManager.RenderTemplate(
+				"shopping.order/tmpl.order_view.tab_comments.html", new { table }));
 		}
 
 		/// <summary>

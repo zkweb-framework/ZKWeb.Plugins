@@ -7,7 +7,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 	/// </summary>
 	public class CreateOrderCommenForm : FieldsOnlyModelFormBuilder {
 		/// <summary>
-		/// 订单浏览
+		/// 订单留言
 		/// </summary>
 		[TextAreaField("OrderComment", 5, "OrderComment")]
 		public string OrderComment { get; set; }

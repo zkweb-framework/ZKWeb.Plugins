@@ -62,7 +62,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <summary>
 		/// 编辑价格
 		/// </summary>
-		public IActionResult EditCost() {
+		protected IActionResult EditCost() {
 			var form = new OrderEditCostForm(OrderOperatorType.Admin);
 			if (Request.Method == HttpMethods.GET) {
 				form.Bind();
@@ -75,7 +75,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <summary>
 		/// 编辑地址
 		/// </summary>
-		public IActionResult EditShippingAddress() {
+		protected IActionResult EditShippingAddress() {
 			var form = new OrderEditShippingAddressForm();
 			if (Request.Method == HttpMethods.GET) {
 				form.Bind();
@@ -231,6 +231,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			[HtmlField("ReleatedTransactionsHtml", Group = "ReleatedTransactions")]
 			public HtmlString ReleatedTransactionsHtml { get; set; }
 			/// <summary>
+			/// 添加订单留言
+			/// </summary>
+			[TextAreaField("OrderComment", 5, "Add comment here then click submit", Group = "OrderComments")]
+			public string OrderComment { get; set; }
+			/// <summary>
 			/// 订单留言的Html
 			/// </summary>
 			[HtmlField("OrderCommentsHtml", Group = "OrderComments")]
@@ -256,7 +261,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				DeliveryRecordsHtml = displayInfo.GetDeliveryRecordsHtml(bindFrom.OrderDeliveries);
 				OrderRecordsHtml = displayInfo.GetOrderRecordsHtml();
 				ReleatedTransactionsHtml = displayInfo.GetReleatedTransactionsHtml();
-				OrderCommentsHtml = displayInfo.GetOrderCommentsHtml();
+				OrderCommentsHtml = displayInfo.GetOrderCommentsHtml(bindFrom.OrderComments);
 				RemarkFlags = bindFrom.RemarkFlags;
 				Remark = bindFrom.Remark;
 			}
@@ -267,6 +272,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			protected override object OnSubmit(SellerOrder saveTo) {
 				saveTo.RemarkFlags = RemarkFlags;
 				saveTo.Remark = Remark;
+				if (!string.IsNullOrEmpty(OrderComment)) {
+					var orderCommentManager = Application.Ioc.Resolve<OrderCommentManager>();
+					orderCommentManager.AddComment(saveTo, OrderCommentSide.SellerComment, OrderComment);
+					return this.SaveSuccessAndRefreshModal();
+				}
 				return this.SaveSuccessAndCloseModal();
 			}
 		}

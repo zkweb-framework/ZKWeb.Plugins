@@ -213,7 +213,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 				"通过担保交易支付的订单在交易平台上已确认收货，交易序列号是{0}" },
 			{ "Merged Order Checkout", "订单合并结算" },
 			{ "Back to order list", "返回订单列表" },
-			{ "Order Serial: {0}", "订单编号: {0}" }
+			{ "Order Serial: {0}", "订单编号: {0}" },
+			{ "Add comment here then click submit", "添加留言到这里并点击提交按钮" }
 		};
 
 		public bool CanTranslate(string code) {

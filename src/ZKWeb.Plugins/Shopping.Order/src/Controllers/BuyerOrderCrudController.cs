@@ -20,12 +20,15 @@ using ZKWeb.Plugins.Common.UserPanel.src.Controllers.Bases;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
 using ZKWeb.Web;
+using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 	/// <summary>
@@ -191,6 +194,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			[HtmlField("ReleatedTransactionsHtml", Group = "ReleatedTransactions")]
 			public HtmlString ReleatedTransactionsHtml { get; set; }
 			/// <summary>
+			/// 添加订单留言
+			/// </summary>
+			[TextAreaField("OrderComment", 5, "Add comment here then click submit", Group = "OrderComments")]
+			public string OrderComment { get; set; }
+			/// <summary>
 			/// 订单留言的Html
 			/// </summary>
 			[HtmlField("OrderCommentsHtml", Group = "OrderComments")]
@@ -229,7 +237,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 				DeliveryRecordsHtml = displayInfo.GetDeliveryRecordsHtml(bindFrom.SellerOrder.OrderDeliveries);
 				OrderRecordsHtml = displayInfo.GetOrderRecordsHtml();
 				ReleatedTransactionsHtml = displayInfo.GetReleatedTransactionsHtml();
-				OrderCommentsHtml = displayInfo.GetOrderCommentsHtml();
+				OrderComment = null;
+				OrderCommentsHtml = displayInfo.GetOrderCommentsHtml(bindFrom.SellerOrder.OrderComments);
 				RemarkFlags = bindFrom.RemarkFlags;
 				Remark = bindFrom.Remark;
 			}
@@ -240,7 +249,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			protected override object OnSubmit(BuyerOrder saveTo) {
 				saveTo.RemarkFlags = RemarkFlags;
 				saveTo.Remark = Remark;
-				return this.SaveSuccessAndCloseModal();
+				if (!string.IsNullOrEmpty(OrderComment)) {
+					var orderCommentManager = Application.Ioc.Resolve<OrderCommentManager>();
+					orderCommentManager.AddComment(
+						saveTo.SellerOrder, OrderCommentSide.BuyerComment, OrderComment);
+				}
+				return this.SaveSuccessAndRefreshPage(1500);
 			}
 		}
 	}

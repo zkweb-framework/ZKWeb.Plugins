@@ -3,6 +3,16 @@
 */
 
 $.ajaxTableType = function () { };
+$.ajaxTableOptions = {
+	pageNo: 1,
+	pageSize: 50,
+	keyword: null,
+	conditions: {},
+	target: null,
+	loadingClass: "loading",
+	hidePagination: false,
+	template: "/static/common.base.tmpl/ajaxTable.tmpl"
+};
 $.fn.ajaxTable = function (options) {
 	// 已生成过时返回之前生成的对象
 	var table = this.data("ajaxTable");
@@ -14,16 +24,7 @@ $.fn.ajaxTable = function (options) {
 		return;
 	}
 	// 设置默认选项
-	options = $.extend({
-		pageNo: 1,
-		pageSize: 50,
-		keyword: null,
-		conditions: {},
-		target: null,
-		loadingClass: "loading",
-		hidePagination: false,
-		template: "/static/common.base.tmpl/ajaxTable.tmpl"
-	}, options || {});
+	options = $.extend({}, $.ajaxTableOptions, options || {});
 	// 创建新的Ajax表格对象
 	table = new $.ajaxTableType();
 	table.options = options;

@@ -196,15 +196,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				// 添加关联的订单留言
 				var comment = Parameters.OrderParameters.GetOrderComment();
 				if (!string.IsNullOrEmpty(comment)) {
-					sellerOrder.OrderComments.Add(new OrderComment() {
-						Id = GuidUtils.SequentialGuid(now),
-						Order = sellerOrder,
-						Owner = sellerOrder.Buyer,
-						Side = OrderCommentSide.BuyerComment,
-						Contents = comment,
-						CreateTime = now,
-						UpdateTime = now
-					});
+					var orderCommentManager = Application.Ioc.Resolve<OrderCommentManager>();
+					orderCommentManager.AddComment(sellerOrder, OrderCommentSide.BuyerComment, comment);
 				}
 				// 生成订单编号
 				sellerOrder.Serial = SerialGenerator.GenerateFor(sellerOrder);
