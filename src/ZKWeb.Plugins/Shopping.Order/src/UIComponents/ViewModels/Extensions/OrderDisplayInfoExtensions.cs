@@ -201,8 +201,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 					CreateTime = comment.CreateTime.ToClientTimeString()
 				});
 			}
-			return new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_view.tab_comments.html", new { table }));
+			return (HtmlString)table.ToLiquid();
 		}
 
 		/// <summary>
