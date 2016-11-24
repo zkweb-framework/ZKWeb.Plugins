@@ -214,7 +214,20 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Merged Order Checkout", "订单合并结算" },
 			{ "Back to order list", "返回订单列表" },
 			{ "Order Serial: {0}", "订单编号: {0}" },
-			{ "Add comment here then click submit", "添加留言到这里并点击提交按钮" }
+			{ "Add comment here then click submit", "添加留言到这里并点击提交按钮" },
+			{ "Reason can't be empty", "原因不能为空" },
+			{ "Order become invalid, reason is {0}", "订单已作废，原因是{0}" },
+			{ "Can't set order invalid, reason is {0}", "不能作废订单，原因是{0}" },
+			{ "SetInvalidReason", "作废原因" },
+			{ "The reason of set order invalid, must provide", "作废订单的原因，必填" },
+			{ "Set order invalid failed, please check order records", "作废订单失败，请检查订单记录" },
+			{ "Set order invalid success", "作废订单成功" },
+			{ "Order cancelled, reason is {0}", "订单已取消，原因是{0}" },
+			{ "Can't cancel order, reason is {0}", "不能取消订单，原因是{0}" },
+			{ "CancelReason", "取消原因" },
+			{ "The reason of cancel order, must provide", "取消订单的原因，必填" },
+			{ "Cancel order failed, please check order records", "取消订单失败，请检查订单记录" },
+			{ "Cancel order success", "取消订单成功" }
 		};
 
 		public bool CanTranslate(string code) {

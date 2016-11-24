@@ -197,7 +197,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				var comment = Parameters.OrderParameters.GetOrderComment();
 				if (!string.IsNullOrEmpty(comment)) {
 					var orderCommentManager = Application.Ioc.Resolve<OrderCommentManager>();
-					orderCommentManager.AddComment(sellerOrder, OrderCommentSide.BuyerComment, comment);
+					orderCommentManager.AddComment(sellerOrder,
+						sellerOrder.Buyer?.Id, OrderCommentSide.BuyerComment, comment);
 				}
 				// 生成订单编号
 				sellerOrder.Serial = SerialGenerator.GenerateFor(sellerOrder);

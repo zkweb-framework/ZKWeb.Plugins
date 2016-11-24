@@ -9,6 +9,7 @@ StreamResult需要支持分割下载(Range头)
 检查完整的订单流程
 确认合并支付时的处理，并写到文档
 对各领域服务添加单例标记
+修改string.Format(new T到new T
 
 前台样式整理
 	首页

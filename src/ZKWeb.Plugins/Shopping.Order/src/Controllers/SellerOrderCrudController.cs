@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Plugins.Common.Admin.src.Controllers;
 using ZKWeb.Plugins.Common.Admin.src.Controllers.Bases;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
@@ -86,6 +88,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		}
 
 		/// <summary>
+		/// 作废订单
+		/// </summary>
+		protected IActionResult SetInvalid() {
+			var form = new OrderSetInvalidForm();
+			if (Request.Method == HttpMethods.GET) {
+				form.Bind();
+				return new TemplateResult("shopping.order/order_set_invalid.html", new { form });
+			} else {
+				return new JsonResult(form.Submit());
+			}
+		}
+
+		/// <summary>
 		/// 网站启动时添加处理函数
 		/// </summary>
 		public override void OnWebsiteStart() {
@@ -103,6 +118,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				editShippingAddressUrl, HttpMethods.GET, WrapAction(EditShippingAddress, EditPrivileges));
 			controllerManager.RegisterAction(
 				editShippingAddressUrl, HttpMethods.POST, WrapAction(EditShippingAddress, EditPrivileges));
+			// 作废订单
+			var setInvalidUrl = Url + "/set_invalid";
+			controllerManager.RegisterAction(
+				setInvalidUrl, HttpMethods.GET, WrapAction(SetInvalid, EditPrivileges));
+			controllerManager.RegisterAction(
+				setInvalidUrl, HttpMethods.POST, WrapAction(SetInvalid, EditPrivileges));
 		}
 
 		/// <summary>
@@ -273,8 +294,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				saveTo.RemarkFlags = RemarkFlags;
 				saveTo.Remark = Remark;
 				if (!string.IsNullOrEmpty(OrderComment)) {
+					var sessionManager = Application.Ioc.Resolve<SessionManager>();
+					var user = sessionManager.GetSession().GetUser();
 					var orderCommentManager = Application.Ioc.Resolve<OrderCommentManager>();
-					orderCommentManager.AddComment(saveTo, OrderCommentSide.SellerComment, OrderComment);
+					orderCommentManager.AddComment(saveTo,
+						user.Id, OrderCommentSide.SellerComment, OrderComment);
 					return this.SaveSuccessAndRefreshModal();
 				}
 				return this.SaveSuccessAndCloseModal();

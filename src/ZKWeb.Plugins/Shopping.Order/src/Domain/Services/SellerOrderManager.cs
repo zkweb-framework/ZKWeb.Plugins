@@ -436,9 +436,75 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			} else {
 				// 添加失败的订单记录
 				AddDetailRecord(orderId, null, string.Format(
-					new T("不能处理订单交易成功，原因是{0}"), canProcessSuccess.Second));
+					new T("Can't process order successed, reason is {0}"), canProcessSuccess.Second));
 			}
 			return canProcessSuccess.First;
+		}
+
+		/// <summary>
+		/// 取消订单
+		/// </summary>
+		/// <param name="orderId">订单Id</param>
+		/// <param name="operatorId">操作人Id</param>
+		/// <param name="reason">作废理由，必填</param>
+		/// <returns>是否处理成功</returns>
+		public virtual bool CancelOrder(Guid orderId, Guid? operatorId, string reason) {
+			// 检查原因不能为空
+			if (string.IsNullOrEmpty(reason)) {
+				throw new BadRequestException(new T("Reason can't be empty"));
+			}
+			// 获取订单
+			var order = Get(orderId);
+			if (order == null) {
+				throw new BadRequestException(new T("Order not exist"));
+			}
+			// 检查是否可以取消
+			var canSetCancelled = order.Check(c => c.CanSetCancelled);
+			if (canSetCancelled.First) {
+				// 修改订单状态
+				Save(ref order, o => o.SetState(OrderState.OrderCancelled));
+				// 添加成功的订单记录
+				AddDetailRecord(orderId, operatorId, string.Format(
+					new T("Order cancelled, reason is {0}"), reason));
+			} else {
+				// 添加失败的订单记录
+				AddDetailRecord(orderId, operatorId, string.Format(
+					new T("Can't cancel order, reason is {0}"), canSetCancelled.Second));
+			}
+			return canSetCancelled.First;
+		}
+
+		/// <summary>
+		/// 作废订单
+		/// </summary>
+		/// <param name="orderId">订单Id</param>
+		/// <param name="operatorId">操作人Id</param>
+		/// <param name="reason">作废理由，必填</param>
+		/// <returns>是否处理成功</returns>
+		public virtual bool SetOrderInvalid(Guid orderId, Guid? operatorId, string reason) {
+			// 检查原因不能为空
+			if (string.IsNullOrEmpty(reason)) {
+				throw new BadRequestException(new T("Reason can't be empty"));
+			}
+			// 获取订单
+			var order = Get(orderId);
+			if (order == null) {
+				throw new BadRequestException(new T("Order not exist"));
+			}
+			// 检查是否可以作废
+			var canSetInvalid = order.Check(c => c.CanSetInvalid);
+			if (canSetInvalid.First) {
+				// 修改订单状态
+				Save(ref order, o => o.SetState(OrderState.OrderInvalid));
+				// 添加成功的订单记录
+				AddDetailRecord(orderId, operatorId, string.Format(
+					new T("Order become invalid, reason is {0}"), reason));
+			} else {
+				// 添加失败的订单记录
+				AddDetailRecord(orderId, operatorId, string.Format(
+					new T("Can't set order invalid, reason is {0}"), canSetInvalid.Second));
+			}
+			return canSetInvalid.First;
 		}
 	}
 }

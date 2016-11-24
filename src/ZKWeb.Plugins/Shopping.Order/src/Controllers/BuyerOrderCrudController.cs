@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
@@ -28,7 +30,6 @@ using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 	/// <summary>
@@ -73,6 +74,33 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			var item = group.Items[itemIndex];
 			group.Items.RemoveAt(itemIndex);
 			group.Items.Insert(0, item); // 订单列表在订单管理中排第一
+		}
+
+		/// <summary>
+		/// 取消订单
+		/// </summary>
+		protected IActionResult CancelOrder() {
+			var form = new OrderCancelForm();
+			if (Request.Method == HttpMethods.GET) {
+				form.Bind();
+				return new TemplateResult("shopping.order/order_set_cancelled.html", new { form });
+			} else {
+				return new JsonResult(form.Submit());
+			}
+		}
+
+		/// <summary>
+		/// 网站启动时添加处理函数
+		/// </summary>
+		public override void OnWebsiteStart() {
+			base.OnWebsiteStart();
+			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
+			// 取消订单
+			var cancelOrderUrl = Url + "/cancel_order";
+			controllerManager.RegisterAction(
+				cancelOrderUrl, HttpMethods.GET, WrapAction(CancelOrder, EditPrivileges));
+			controllerManager.RegisterAction(
+				cancelOrderUrl, HttpMethods.POST, WrapAction(CancelOrder, EditPrivileges));
 		}
 
 		/// <summary>
@@ -250,9 +278,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 				saveTo.RemarkFlags = RemarkFlags;
 				saveTo.Remark = Remark;
 				if (!string.IsNullOrEmpty(OrderComment)) {
+					var sessionManager = Application.Ioc.Resolve<SessionManager>();
+					var user = sessionManager.GetSession().GetUser();
 					var orderCommentManager = Application.Ioc.Resolve<OrderCommentManager>();
-					orderCommentManager.AddComment(
-						saveTo.SellerOrder, OrderCommentSide.BuyerComment, OrderComment);
+					orderCommentManager.AddComment(saveTo.SellerOrder,
+						user?.Id, OrderCommentSide.BuyerComment, OrderComment);
 				}
 				return this.SaveSuccessAndRefreshPage(1500);
 			}

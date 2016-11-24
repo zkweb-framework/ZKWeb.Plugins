@@ -17,8 +17,28 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// </summary>
 		/// <param name="serial">订单编号</param>
 		/// <returns></returns>
-		public Guid? GetBuyerOrderIdFromSerial(string serial) {
-			return Repository.Query().FirstOrDefault(o => o.SellerOrder.Serial == serial)?.Id;
+		public virtual Guid? GetBuyerOrderIdFromSerial(string serial) {
+			var orderId = Repository.Query()
+				.Where(o => o.SellerOrder.Serial == serial)
+				.Select(o => o.Id)
+				.FirstOrDefault();
+			return orderId == Guid.Empty ? null : (Guid?)orderId;
+		}
+
+		/// <summary>
+		/// 取消订单
+		/// </summary>
+		/// <param name="orderId">买家订单Id</param>
+		/// <param name="operatorId">操作人Id</param>
+		/// <param name="reason">作废理由，必填</param>
+		/// <returns></returns>
+		public virtual bool CancelOrder(Guid orderId, Guid? operatorId, string reason) {
+			var sellerOrderId = Repository.Query()
+				.Where(o => o.Id == orderId)
+				.Select(o => o.SellerOrder.Id)
+				.FirstOrDefault();
+			var sellerOrderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			return sellerOrderManager.CancelOrder(sellerOrderId, operatorId, reason);
 		}
 	}
 }

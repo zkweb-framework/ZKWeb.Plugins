@@ -15,18 +15,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 	public class OrderCommentManager : DomainServiceBase<OrderComment, Guid> {
 		/// <summary>
 		/// 添加订单留言
-		/// 留言人使用当前登录用户
 		/// </summary>
 		/// <param name="order">订单</param>
+		/// <param name="userId">用户Id</param>
 		/// <param name="side">买家或卖家留言</param>
 		/// <param name="contents">留言内容</param>
-		public void AddComment(SellerOrder order, OrderCommentSide side, string contents) {
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var user = sessionManager.GetSession().GetUser();
+		public void AddComment(SellerOrder order, Guid? userId, OrderCommentSide side, string contents) {
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			var comment = new OrderComment() {
 				Order = order,
-				Owner = user == null ? null : userManager.Get(user.Id),
+				Owner = userId.HasValue ? userManager.Get(userId.Value) : null,
 				Side = side,
 				Contents = contents
 			};
