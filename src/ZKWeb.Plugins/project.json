@@ -1,8 +1,6 @@
 {
 	"version": "1.0.0-*",
 	"dependencies": {
-		"System.ComponentModel.Annotations": "4.1.0",
-		"System.Threading.Thread": "4.0.0",
 		"ZKWeb": "1.2.0-final"
 	},
 	"frameworks": {
@@ -16,6 +14,11 @@
 			}
 		},
 		"netstandard1.6": {
+			"dependencies": {
+				"System.ComponentModel.Annotations": "4.1.0",
+				"System.Threading.Thread": "4.3.0",
+				"System.Threading.ThreadPool": "4.3.0"
+			},
 			"buildOptions": { "define": [ "NETCORE" ] }
 		}
 	},

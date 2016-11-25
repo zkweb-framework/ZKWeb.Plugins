@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using ZKWeb.Localize;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
+using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services;
 using ZKWeb.Plugins.Common.SerialGenerate.src.Components.SerialGenerate;
@@ -225,7 +227,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 					new T("Change transaction state to {0}"), new T(transaction.State.GetDescription())));
 				// 需要自动发货时进行发货
 				foreach (var parameter in parameters) {
-					DeliveryGoods(transaction.Id, parameter.LogisticsName, parameter.InvoiceNo);
+					NotifyAllGoodsShippedBackground(
+						transaction.Id, parameter.LogisticsName, parameter.InvoiceNo);
 				}
 				// 结束事务
 				UnitOfWork.Context.FinishTransaction();
@@ -255,34 +258,41 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 		}
 
 		/// <summary>
-		/// 担保交易时调用发货接口通知支付平台
+		/// 通知支付平台已发货
+		/// 仅在状态是担保交易已付款时通知，否则不做处理
+		/// 通知会在后台进行，出错时会记录到日志
 		/// </summary>
 		/// <param name="transactionId">交易Id</param>
 		/// <param name="logisticsName">快递或物流名称</param>
 		/// <param name="invoiceNo">快递单号</param>
-		public virtual void DeliveryGoods(
+		public virtual void NotifyAllGoodsShippedBackground(
 			Guid transactionId, string logisticsName, string invoiceNo) {
-			using (UnitOfWork.Scope()) {
-				// 开始事务
-				UnitOfWork.Context.BeginTransaction();
-				// 获取交易
-				var transaction = Get(transactionId);
-				if (transaction == null) {
-					throw new BadRequestException(new T("Payment transaction not found"));
-				}
-				// 判断是否可以发货
-				var result = transaction.Check(c => c.CanDeliveryGoods);
-				if (!result.First) {
-					throw new BadRequestException(result.Second);
-				}
-				// 调用支付接口的处理器处理发货
-				var handlers = transaction.Api.GetHandlers();
-				handlers.ForEach(h => h.DeliveryGoods(transaction, logisticsName, invoiceNo));
-				// 成功时添加详细记录
-				AddDetailRecord(transactionId, null, new T("Notify goods shipped to payment api success"));
-				// 结束事务
-				UnitOfWork.Context.FinishTransaction();
+			// 获取交易
+			var transaction = Get(transactionId);
+			if (transaction == null) {
+				throw new BadRequestException(new T("Payment transaction not found"));
 			}
+			// 判断是否需要通知发货
+			var result = transaction.Check(c => c.CanDeliveryGoods);
+			if (!result.First) {
+				return;
+			}
+			// 后台调用支付接口的处理器处理发货，并记录到记录
+			var handlers = transaction.Api.GetHandlers();
+			ThreadPool.QueueUserWorkItem(_ => {
+				try {
+					try {
+						handlers.ForEach(h => h.DeliveryGoods(transaction, logisticsName, invoiceNo));
+						AddDetailRecord(transactionId, null,
+							new T("Notify goods shipped to payment api success"));
+					} catch (Exception e) {
+						AddDetailRecord(transactionId, null, string.Format(
+							new T("Notify goods shipped to payment api failed: {0}"), e.Message));
+					}
+				} catch {
+					// 进程池中的任务不能抛出例外
+				}
+			});
 		}
 
 		/// <summary>
