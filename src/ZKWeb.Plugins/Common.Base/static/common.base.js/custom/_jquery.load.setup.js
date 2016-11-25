@@ -15,7 +15,7 @@ $(function () {
 	};
 	$.fn.loadOrig = $.fn.load;
 	$.fn.load = function (url, params, callback) {
-		if (typeof url !== "string" && _load) {
+		if (typeof url !== "string") {
 			return jQuery.fn.loadOrig.apply(this, arguments);
 		}
 		var selector, type, response, self = this, off = url.indexOf(" ");

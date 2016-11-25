@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
-using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
@@ -15,7 +12,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 	/// <summary>
 	/// 订单发货表单
 	/// </summary>
-	public class OrderDeliveryForm : EntityFormBuilder<SellerOrder, Guid, OrderDeliveryForm> {
+	public class OrderDeliveryForm : ModelFormBuilder {
+		/// <summary>
+		/// 提示Html
+		/// </summary>
+		[HtmlField("AlertHtml")]
+		public HtmlString AlertHtml { get; set; }
 		/// <summary>
 		/// 物流配送
 		/// </summary>
@@ -48,14 +50,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		/// <summary>
 		/// 绑定表单
 		/// </summary>
-		protected override void OnBind(SellerOrder bindFrom) {
+		protected override void OnBind() {
+			AlertHtml = new HtmlString("sadasdsa");
 			DeliveryProductTable = new HtmlString("asdasdas");
 		}
 
 		/// <summary>
 		/// 提交表单
 		/// </summary>
-		protected override object OnSubmit(SellerOrder saveTo) {
+		protected override object OnSubmit() {
 			throw new NotImplementedException();
 		}
 	}

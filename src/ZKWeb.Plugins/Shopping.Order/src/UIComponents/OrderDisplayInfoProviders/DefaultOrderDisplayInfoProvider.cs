@@ -127,7 +127,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 				if (canDeliveryGoods.First) {
 					actions.Add(GetModalAction(templateManager,
 						new T("DeliveryGoods"),
-						$"/admin/orders/send_goods?id={order.Id}", "fa fa-truck"));
+						$"/admin/orders/delivery_goods?id={order.Id}", "fa fa-truck"));
 				} else {
 					actions.Add(GetDisabledAction(templateManager,
 						new T("DeliveryGoods"),

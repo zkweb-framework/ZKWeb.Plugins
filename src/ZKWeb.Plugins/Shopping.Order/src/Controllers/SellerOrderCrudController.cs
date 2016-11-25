@@ -88,6 +88,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		}
 
 		/// <summary>
+		/// 发货
+		/// </summary>
+		protected IActionResult DeliveryGoods() {
+			var form = new OrderDeliveryForm();
+			if (Request.Method == HttpMethods.GET) {
+				form.Bind();
+				return new TemplateResult("shopping.order/order_delivery_goods.html", new { form });
+			} else {
+				return new JsonResult(form.Submit());
+			}
+		}
+
+		/// <summary>
 		/// 作废订单
 		/// </summary>
 		protected IActionResult SetInvalid() {
@@ -118,6 +131,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				editShippingAddressUrl, HttpMethods.GET, WrapAction(EditShippingAddress, EditPrivileges));
 			controllerManager.RegisterAction(
 				editShippingAddressUrl, HttpMethods.POST, WrapAction(EditShippingAddress, EditPrivileges));
+			// 发货
+			var deliveryGoodsUrl = Url + "/delivery_goods";
+			controllerManager.RegisterAction(
+				deliveryGoodsUrl, HttpMethods.GET, WrapAction(DeliveryGoods, EditPrivileges));
+			controllerManager.RegisterAction(
+				deliveryGoodsUrl, HttpMethods.POST, WrapAction(DeliveryGoods, EditPrivileges));
 			// 作废订单
 			var setInvalidUrl = Url + "/set_invalid";
 			controllerManager.RegisterAction(

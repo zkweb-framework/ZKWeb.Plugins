@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
@@ -17,6 +18,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		/// <summary>
 		/// 取消原因
 		/// </summary>
+		[Required]
 		[TextAreaField("CancelReason", 5, "The reason of cancel order, must provide")]
 		public string CancelReason { get; set; }
 
