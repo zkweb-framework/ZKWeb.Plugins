@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.EntityOperationHandlers {
 	[ExportMany, SingletonReuse]
 	public class CheckUsernameDuplicate : IEntityOperationHandler<User> {
 		public void BeforeSave(IDatabaseContext context, User data) {
-			if (data.Id == Guid.Empty && context.Count<User>(u => u.Username == data.Username) > 0) {
+			if (context.Count<User>(u => u.Id != data.Id && u.Username == data.Username) > 0) {
 				throw new BadRequestException(new T("Username is already taken, please choose other username"));
 			}
 		}

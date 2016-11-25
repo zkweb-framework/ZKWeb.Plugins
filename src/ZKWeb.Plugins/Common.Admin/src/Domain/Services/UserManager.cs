@@ -71,12 +71,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 		/// </summary>
 		public virtual void Reg(
 			string username, string password, Action<User> update = null) {
-			var user = new User();
-			Save(ref user, u => {
-				u.Type = NormalUserType.ConstType;
-				u.Username = username;
-				u.SetPassword(password);
-			});
+			var user = new User() {
+				Type = NormalUserType.ConstType,
+				Username = username
+			};
+			user.SetPassword(password);
+			Save(ref user);
 		}
 
 		/// <summary>
