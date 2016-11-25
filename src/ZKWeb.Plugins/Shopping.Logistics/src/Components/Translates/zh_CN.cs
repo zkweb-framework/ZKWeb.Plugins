@@ -27,7 +27,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Components.Translates {
 			{ "ContinuedHeavyCost", "续重费用" },
 			{ "Disabled", "已禁用" },
 			{ "Selected logistics does not exist", "选择的物流不存在" },
-			{ "Selected logistics is not available for this region", "选择的物流不支持您的地区，请选择其他物流" }
+			{ "Selected logistics is not available for this region", "选择的物流不支持您的地区，请选择其他物流" },
 		};
 
 		public bool CanTranslate(string code) {

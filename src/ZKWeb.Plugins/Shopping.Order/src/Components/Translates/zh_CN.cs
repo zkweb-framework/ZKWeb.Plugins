@@ -227,7 +227,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "CancelReason", "取消原因" },
 			{ "The reason of cancel order, must provide", "取消订单的原因，必填" },
 			{ "Cancel order failed, please check order records", "取消订单失败，请检查订单记录" },
-			{ "Cancel order success", "取消订单成功" }
+			{ "Cancel order success", "取消订单成功" },
+			{ "Can't delivery product that not exists in order", "不能对不在订单中的商品进行发货" },
+			{ "Invalid delivery count", "发货数量不正确" },
+			{ "Delivery count can't be larger than unshipped count", "发货数量大于未发货数量" },
+			{ "No products to be delivery", "没有要发货的商品" }
 		};
 
 		public bool CanTranslate(string code) {

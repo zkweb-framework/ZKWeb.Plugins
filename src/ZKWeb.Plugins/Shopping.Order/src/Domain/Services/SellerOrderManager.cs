@@ -389,7 +389,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <summary>
 		/// 处理订单全部商品已发货
 		/// 处理失败时记录到订单记录
-		/// 处理成功后应该调用PaymentTransactionManager.DeliveryGoods通知支付平台已发货
+		/// TODO: 处理成功后应该调用PaymentTransactionManager.DeliveryGoods通知支付平台已发货
+		/// TODO: 考虑异步通知
 		/// </summary>
 		/// <param name="orderId">订单Id</param>
 		/// <returns>是否处理成功</returns>
