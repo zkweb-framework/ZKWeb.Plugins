@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Linq;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Domain.Services;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings;
-using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
-using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
-using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
-using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
+using ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
-using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
@@ -28,16 +21,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		[Action("api/order/create", HttpMethods.POST)]
 		public IActionResult Create() {
 			this.RequireAjaxRequest();
-			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
-			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
-			var sessionManager = Application.Ioc.Resolve<SessionManager>();
-			var createOrderParameters = Request
-				.Get<CreateOrderParameters>("CreateOrderParameters") ?? new CreateOrderParameters();
-			createOrderParameters.SetLoginInfo();
-			var result = orderManager.CreateOrder(createOrderParameters);
-			var transaction = result.CreatedTransactions.Last();
-			var resultUrl = transactionManager.GetResultUrl(transaction.Id);
-			return new JsonResult(new { script = BaseScriptStrings.Redirect(resultUrl) });
+			var form = new CreateOrderForm();
+			return new JsonResult(form.Submit());
 		}
 	}
 }

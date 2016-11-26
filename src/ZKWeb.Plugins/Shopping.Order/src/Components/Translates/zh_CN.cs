@@ -242,7 +242,24 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 				"买家已确认收货，订单交易成功" },
 			{ "Seller confirm order insetead of buyer, order should be success",
 				"卖家在后台代替买家确认收货，订单交易成功" },
-			{ "Can't confirm order, reason is {0}", "不能确认收货，原因是{0}" }
+			{ "Can't confirm order, reason is {0}", "不能确认收货，原因是{0}" },
+			{ "Thank you! Before you confirm receipt", "谢谢惠顾！在确认收货之前请先" },
+			{ "Make sure you have received all the goods", "确认您已收到所有的商品" },
+			{ "Confirm receipt of the goods in good condition and meet your requirements",
+				"确认收到的商品完好无损并满足您的要求" },
+			{ "If you are using a secured transaction payment, you will also need to go to the payment platform (such as Alipay) to confirm receipt",
+				"如果您使用的是担保交易支付，您还需要到支付平台(如支付宝)上确认收货" },
+			{ "Thank you for your presence, welcome to buy our products again!",
+				"感谢您的光临，欢迎再次购买我们的商品！" },
+			{ "You are trying to confirm the goods receipt instead of the buyer, please confirm before submitting",
+				"您正在尝试代替买家确认收货，请在提交前先确认" },
+			{ "Does the buyer not acknowledge receipt within the specified time?",
+				"买家是否在规定的时间内没有确认收货？" },
+			{ "You can also enable automatically confirm receipt feature form the order settings",
+				"您还可以在订单设置中启用自动确认收货的功能" },
+			{ "Confirm order failed, please check order records",
+				"确认收货失败，请检查订单记录" },
+			{ "Confirm order success", "确认收货成功" }
 		};
 
 		public bool CanTranslate(string code) {

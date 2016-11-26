@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
@@ -36,13 +35,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
-			if (!orderManager.SetOrderInvalid(orderId, user?.Id, SetInvalidReason)) {
-				throw new BadRequestException(new T("Set order invalid failed, please check order records"));
-			}
-			return new {
-				message = new T("Set order invalid success"),
-				script = BaseScriptStrings.AjaxtableUpdatedAndCloseModal
-			};
+			var message = orderManager.SetOrderInvalid(orderId, user?.Id, SetInvalidReason) ?
+				new T("Set order invalid success") :
+				new T("Set order invalid failed, please check order records");
+			return new { message = message, script = BaseScriptStrings.AjaxtableUpdatedAndCloseModal };
 		}
 	}
 }

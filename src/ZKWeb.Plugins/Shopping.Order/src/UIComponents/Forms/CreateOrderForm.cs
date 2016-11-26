@@ -1,7 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 	/// <summary>
@@ -26,9 +33,17 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		/// </summary>
 		/// <returns></returns>
 		protected override object OnSubmit() {
-			// 反序列化参数
-			// 调用订单管理器创建订单
-			throw new NotImplementedException();
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var createOrderParameters = string.IsNullOrEmpty(CreateOrderParameters) ?
+				new CreateOrderParameters() :
+				JsonConvert.DeserializeObject<CreateOrderParameters>(CreateOrderParameters);
+			createOrderParameters.SetLoginInfo();
+			var result = orderManager.CreateOrder(createOrderParameters);
+			var transaction = result.CreatedTransactions.Last();
+			var resultUrl = transactionManager.GetResultUrl(transaction.Id);
+			return new { script = BaseScriptStrings.Redirect(resultUrl) };
 		}
 	}
 }
