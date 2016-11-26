@@ -379,11 +379,6 @@ Shopping.AfterSales
 		TODO: 查看评价
 		TODO: 删除评价
 
-Shopping.OrderRating
-	商品评价
-		TODO: 确认收货后可以评价商品
-		TODO: 商品详情页可以查看评价记录
-
 Shopping.Logistics
 	提供数据库实体
 		物流
@@ -478,6 +473,11 @@ Shopping.Order
 		获取订单商品数量的Html
 		获取订单商品已发货数量的Html
 		获取指定的订单状态在进度条中的css类
+
+Shopping.OrderRating
+	商品评价
+		TODO: 确认收货后可以评价商品
+		TODO: 商品详情页可以查看评价记录
 
 Shopping.Product
 	提供数据库实体

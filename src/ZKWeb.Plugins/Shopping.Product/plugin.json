@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "Product",
-	"Version": "1.0.0 beta 1",
+	"Version": "1.0.0 beta 3",
 	"Description": "Product management for ec site",
 	"Dependencies": [
 		"Common.Base",

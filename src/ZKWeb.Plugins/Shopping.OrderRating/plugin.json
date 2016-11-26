@@ -1,0 +1,10 @@
+﻿{
+	"Name": "OrderRating",
+	"Version": "0.0",
+	"Description": "Order product rating feature for ec site",
+	"Dependencies": [
+		"Common.Admin",
+		"Shopping.Product",
+		"Shopping.Order"
+	]
+}

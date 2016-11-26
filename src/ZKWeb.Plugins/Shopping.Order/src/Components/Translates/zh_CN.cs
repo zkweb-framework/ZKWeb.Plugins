@@ -248,7 +248,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Confirm receipt of the goods in good condition and meet your requirements",
 				"确认收到的商品完好无损并满足您的要求" },
 			{ "If you are using a secured transaction payment, you will also need to go to the payment platform (such as Alipay) to confirm receipt",
-				"如果您使用的是担保交易支付，您还需要到支付平台(如支付宝)上确认收货" },
+				"如果您使用的是担保交易支付，您还需要到支付平台(例如支付宝)上确认收货" },
 			{ "Thank you for your presence, welcome to buy our products again!",
 				"感谢您的光临，欢迎再次购买我们的商品！" },
 			{ "You are trying to confirm the goods receipt instead of the buyer, please confirm before submitting",

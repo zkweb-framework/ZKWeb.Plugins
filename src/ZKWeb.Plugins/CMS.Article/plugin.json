@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "Article",
-	"Version": "1.0.0 beta 1",
+	"Version": "1.0.0 beta 3",
 	"Description": "Article management and display",
 	"Dependencies": [
 		"Common.Base",
