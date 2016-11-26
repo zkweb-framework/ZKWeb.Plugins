@@ -109,6 +109,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "OrderProducts", "订单商品" },
 			{ "Quantity", "数量" },
 			{ "ShippedQuantity", "已发货数量" },
+			{ "ThisDeliveryQuantity", "本次发货数量" },
 			{ "Cost", "金额" },
 			{ "TotalCost", "总金额" },
 			{ "OrderPricePart", "订单价格组成部分" },
@@ -231,7 +232,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Can't delivery product that not exists in order", "不能对不在订单中的商品进行发货" },
 			{ "Invalid delivery count", "发货数量不正确" },
 			{ "Delivery count can't be larger than unshipped count", "发货数量大于未发货数量" },
-			{ "No products to be delivery", "没有要发货的商品" }
+			{ "No products to be delivery", "没有要发货的商品" },
+			{ "The shipping address is \"{0}\", and buyer want to use logistics \"{1}\"",
+				"收货地址是\"{0}\"，且买家希望使用物流\"{1}\"" },
+			{ "Order only contains virtual products, if you have something to buyer please use comment",
+				"订单仅包含虚拟商品，如果您有什么需要给买家请使用留言" }
 		};
 
 		public bool CanTranslate(string code) {

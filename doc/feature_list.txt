@@ -339,7 +339,9 @@ Multishop.Order
 		TODO: 作废订单
 		TODO: 编辑订单价格
 		TODO: 编辑订单收货地址
-		TODO: 发货及部分发货
+		TODO: 实体商品发货
+		TODO: 虚拟商品发货
+		TODO: 部分发货
 		TODO: 显示备注旗帜
 		TODO: 编辑备注旗帜
 		TODO: 回复订单留言
@@ -424,7 +426,9 @@ Shopping.Order
 		作废订单
 		编辑订单价格
 		编辑订单收货地址
-		TODO: 发货及部分发货
+		TODO: 实体商品发货
+		TODO: 虚拟商品发货
+		TODO: 部分发货
 		TODO: 代确认收货
 		编辑备注旗帜
 		回复订单留言

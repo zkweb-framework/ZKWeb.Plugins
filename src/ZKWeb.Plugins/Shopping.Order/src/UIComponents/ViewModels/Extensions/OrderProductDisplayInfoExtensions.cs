@@ -45,7 +45,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 				"shopping.order/tmpl.order_product_price.html", new { info });
 			return new HtmlString(html);
 		}
-		
+
 		/// <summary>
 		/// 获取编辑订单商品价格的Html
 		/// </summary>
@@ -93,6 +93,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var html = templateManager.RenderTemplate(
 				"shopping.order/tmpl.order_product_shipped_count.html", new { info });
+			return new HtmlString(html);
+		}
+
+		/// <summary>
+		/// 获取编辑订单商品发货数量的Html
+		/// </summary>
+		/// <param name="info">订单商品的信息</param>
+		/// <returns></returns>
+		public static HtmlString GetDeliveryCountEditor(this OrderProductDisplayInfo info) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var html = templateManager.RenderTemplate(
+				"common.base/tmpl.number_input_integer.html",
+				new { extraClass = "delivery-count", value = info.Count - info.ShippedCount });
 			return new HtmlString(html);
 		}
 

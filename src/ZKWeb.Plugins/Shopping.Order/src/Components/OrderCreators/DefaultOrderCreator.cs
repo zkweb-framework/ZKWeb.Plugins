@@ -193,6 +193,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 					}
 					sellerOrder.OrderProducts.Add(orderProduct);
 				}
+				// 生成订单编号
+				sellerOrder.Serial = SerialGenerator.GenerateFor(sellerOrder);
+				// 保存卖家订单
+				orderManager.Save(ref sellerOrder);
+				Result.CreatedSellerOrders.Add(sellerOrder);
 				// 添加关联的订单留言
 				var comment = Parameters.OrderParameters.GetOrderComment();
 				if (!string.IsNullOrEmpty(comment)) {
@@ -200,11 +205,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 					orderCommentManager.AddComment(sellerOrder,
 						sellerOrder.Buyer?.Id, OrderCommentSide.BuyerComment, comment);
 				}
-				// 生成订单编号
-				sellerOrder.Serial = SerialGenerator.GenerateFor(sellerOrder);
-				// 保存卖家订单
-				orderManager.Save(ref sellerOrder);
-				Result.CreatedSellerOrders.Add(sellerOrder);
 				// 生成买家订单
 				var buyerOrder = new BuyerOrder() {
 					Owner = sellerOrder.Buyer,

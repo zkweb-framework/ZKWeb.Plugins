@@ -48,8 +48,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		/// <returns></returns>
 		public static Guid? GetSaveShipppingAddressId(this OrderParameters parameters) {
 			var shippingAddress = parameters.GetOrDefault<IDictionary<string, object>>("ShippingAddress");
-			var selectedAddressId = shippingAddress.GetOrDefault<Guid>("SelectedAddressId");
-			var saveAddress = shippingAddress.GetOrDefault<bool>("SaveAddress");
+			var selectedAddressId = shippingAddress?.GetOrDefault<Guid>("SelectedAddressId");
+			var saveAddress = shippingAddress?.GetOrDefault<bool>("SaveAddress") ?? false;
 			return saveAddress ? (Guid?)selectedAddressId : null;
 		}
 

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
+using ZKWeb.Plugins.Shopping.Product.src.Components.ProductTypes.Interfaces;
+using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 
@@ -42,6 +45,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 			order.State = state;
 			order.StateTimes[state] = DateTime.UtcNow;
 			order.StateTimes = order.StateTimes; // 触发setter
+		}
+
+		/// <summary>
+		/// 判断订单是否包含实体商品
+		/// </summary>
+		/// <param name="order">订单</param>
+		/// <returns></returns>
+		public static bool ContainsRealProduct(this SellerOrder order) {
+			return order.OrderProducts.Any(p => p.Product.GetProductType() is IAmRealProduct);
 		}
 	}
 }
