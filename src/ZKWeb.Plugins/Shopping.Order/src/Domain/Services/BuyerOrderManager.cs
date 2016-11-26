@@ -40,5 +40,20 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			var sellerOrderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			return sellerOrderManager.CancelOrder(sellerOrderId, operatorId, reason);
 		}
+
+		/// <summary>
+		/// 确认收货
+		/// </summary>
+		/// <param name="orderId">买家订单Id</param>
+		/// <param name="operatorId">操作人Id</param>
+		/// <returns></returns>
+		public virtual bool ConfirmOrder(Guid orderId, Guid? operatorId) {
+			var sellerOrderId = Repository.Query()
+				.Where(o => o.Id == orderId)
+				.Select(o => o.SellerOrder.Id)
+				.FirstOrDefault();
+			var sellerOrderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			return sellerOrderManager.ConfirmOrder(sellerOrderId, operatorId, true);
+		}
 	}
 }

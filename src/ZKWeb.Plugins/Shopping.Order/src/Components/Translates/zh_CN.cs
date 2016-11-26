@@ -237,7 +237,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 				"收货地址是\"{0}\"，且买家希望使用物流\"{1}\"" },
 			{ "Order only contains virtual products, if you have something to buyer please use comment",
 				"订单仅包含虚拟商品，如果您有什么需要给买家请使用留言" },
-			{ "Please provide logistics serial (invoice no)", "请提供物流编号(快递单编号)" }
+			{ "Please provide logistics serial (invoice no)", "请提供物流编号(快递单编号)" },
+			{ "Buyer confirm all goods shipped, order should be success",
+				"买家已确认收货，订单交易成功" },
+			{ "Seller confirm order insetead of buyer, order should be success",
+				"卖家在后台代替买家确认收货，订单交易成功" },
+			{ "Can't confirm order, reason is {0}", "不能确认收货，原因是{0}" }
 		};
 
 		public bool CanTranslate(string code) {

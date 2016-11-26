@@ -101,6 +101,20 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		}
 
 		/// <summary>
+		/// 代确认收货
+		/// </summary>
+		/// <returns></returns>
+		protected IActionResult ConfirmOrderInsteadOfBuyer() {
+			var form = new OrderConfirmInsteadOfBuyerForm();
+			if (Request.Method == HttpMethods.GET) {
+				form.Bind();
+				return new TemplateResult("shopping.order/order_confirm_instead_of_buyer.html", new { form });
+			} else {
+				return new JsonResult(form.Submit());
+			}
+		}
+
+		/// <summary>
 		/// 作废订单
 		/// </summary>
 		protected IActionResult SetInvalid() {
@@ -137,6 +151,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				deliveryGoodsUrl, HttpMethods.GET, WrapAction(DeliveryGoods, EditPrivileges));
 			controllerManager.RegisterAction(
 				deliveryGoodsUrl, HttpMethods.POST, WrapAction(DeliveryGoods, EditPrivileges));
+			// 代确认收货
+			var confirmOrderInsteadOfBuyerUrl = Url + "/confirm_instead_of_buyer";
+			controllerManager.RegisterAction(
+				confirmOrderInsteadOfBuyerUrl, HttpMethods.GET,
+				WrapAction(ConfirmOrderInsteadOfBuyer, EditPrivileges));
+			controllerManager.RegisterAction(
+				confirmOrderInsteadOfBuyerUrl, HttpMethods.POST,
+				WrapAction(ConfirmOrderInsteadOfBuyer, EditPrivileges));
 			// 作废订单
 			var setInvalidUrl = Url + "/set_invalid";
 			controllerManager.RegisterAction(

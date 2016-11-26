@@ -514,5 +514,39 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			}
 			return canSetInvalid.First;
 		}
+
+		/// <summary>
+		/// 确认收货
+		/// </summary>
+		/// <param name="orderId">订单Id</param>
+		/// <param name="operatorId">操作人Id</param>
+		/// <param name="fromBuyer">是否从买家确认</param>
+		/// <returns></returns>
+		public virtual bool ConfirmOrder(Guid orderId, Guid? operatorId, bool fromBuyer) {
+			// 获取订单
+			var order = Get(orderId);
+			if (order == null) {
+				throw new BadRequestException(new T("Order not exist"));
+			}
+			// 检查是否可以确认
+			var canConfirm = order.Check(c => c.CanConfirm);
+			if (canConfirm.First) {
+				// 添加确认的订单记录
+				if (fromBuyer) {
+					AddDetailRecord(orderId, operatorId,
+						new T("Buyer confirm all goods shipped, order should be success"));
+				} else {
+					AddDetailRecord(orderId, operatorId,
+						new T("Seller confirm order insetead of buyer, order should be success"));
+				}
+				// 处理交易成功
+				ProcessSuccess(orderId);
+			} else {
+				// 添加失败的订单记录
+				AddDetailRecord(orderId, operatorId, string.Format(
+					new T("Can't confirm order, reason is {0}"), canConfirm.Second));
+			}
+			return canConfirm.First;
+		}
 	}
 }

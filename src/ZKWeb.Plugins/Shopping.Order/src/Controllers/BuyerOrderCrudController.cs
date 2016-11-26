@@ -90,6 +90,19 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 		}
 
 		/// <summary>
+		/// 确认收货
+		/// </summary>
+		protected IActionResult ConfirmOrder() {
+			var form = new OrderConfirmForm();
+			if (Request.Method == HttpMethods.GET) {
+				form.Bind();
+				return new TemplateResult("shopping.order/order_confirm.html", new { form });
+			} else {
+				return new JsonResult(form.Submit());
+			}
+		}
+
+		/// <summary>
 		/// 网站启动时添加处理函数
 		/// </summary>
 		public override void OnWebsiteStart() {
@@ -101,6 +114,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 				cancelOrderUrl, HttpMethods.GET, WrapAction(CancelOrder, EditPrivileges));
 			controllerManager.RegisterAction(
 				cancelOrderUrl, HttpMethods.POST, WrapAction(CancelOrder, EditPrivileges));
+			// 确认收货
+			var confirmOrderUrl = Url + "/confirm_order";
+			controllerManager.RegisterAction(
+				confirmOrderUrl, HttpMethods.GET, WrapAction(ConfirmOrder, EditPrivileges));
+			controllerManager.RegisterAction(
+				confirmOrderUrl, HttpMethods.POST, WrapAction(ConfirmOrder, EditPrivileges));
 		}
 
 		/// <summary>

@@ -367,9 +367,7 @@ Shopping.AfterSales
 	提供数据库实体
 		TODO: 商品评价
 		TODO: 订单退款
-	商品评价
-		TODO: 确认收货后可以评价商品
-		TODO: 商品详情页可以查看评价记录
+	
 	前台申请退款
 		TODO: 仅退款 (退款 => 审核)
 		TODO: 退款和退货 (退款 => 审核 => 退货 => 确认)
@@ -380,6 +378,11 @@ Shopping.AfterSales
 		TODO: 添加评价 (刷评价)
 		TODO: 查看评价
 		TODO: 删除评价
+
+Shopping.OrderRating
+	商品评价
+		TODO: 确认收货后可以评价商品
+		TODO: 商品详情页可以查看评价记录
 
 Shopping.Logistics
 	提供数据库实体

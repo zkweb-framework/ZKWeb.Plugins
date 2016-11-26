@@ -92,10 +92,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 				// 确认收货
 				var canConfirm = order.Check(c => c.CanConfirm);
 				if (canConfirm.First) {
-					actions.Add(GetLinkAction(templateManager,
+					actions.Add(GetModalAction(templateManager,
 						new T("ConfirmOrder"),
 						$"/user/orders/confirm_order?serial={order.Serial}",
-						"fa fa-check", buttonClass: "btn btn-warning"));
+						"fa fa-check",
+						buttonClass: "btn btn-success",
+						dialogParameters: new { type = "type-success", size = "size-normal" }));
 				}
 			}
 			// 管理员
@@ -139,7 +141,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 					actions.Add(GetModalAction(templateManager,
 						new T("ConfirmInsteadOfBuyer"),
 						$"/admin/orders/confirm_instead_of_buyer?id={order.Id}",
-						"fa fa-check", buttonClass: "btn btn-success"));
+						"fa fa-check",
+						buttonClass: "btn btn-success",
+						dialogParameters: new { type = "type-success", size = "size-normal" }));
 				} else {
 					actions.Add(GetDisabledAction(templateManager,
 						new T("ConfirmInsteadOfBuyer"),
