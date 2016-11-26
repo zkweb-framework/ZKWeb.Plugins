@@ -14,7 +14,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 	/// <summary>
 	/// 商品相册管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class ProductPropertyManager :
 		DomainServiceBase<ProductProperty, Guid>, ICacheCleaner {
 		/// <summary>

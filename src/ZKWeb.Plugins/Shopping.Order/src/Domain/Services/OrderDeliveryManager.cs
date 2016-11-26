@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 	/// <summary>
 	/// 订单发货管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class OrderDeliveryManager : DomainServiceBase<OrderDelivery, Guid> {
 		/// <summary>
 		/// 对订单进行发货

@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Common.UserContact.src.Domain.Services {
 	/// <summary>
 	/// 用户联系信息管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class UserContactManager : DomainServiceBase<Entities.UserContact, Guid> {
 		/// <summary>
 		/// 获取用户的联系信息，没有时新建返回

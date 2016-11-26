@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 	/// 买家订单管理器
 	/// 包含买家使用的订单操作
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class BuyerOrderManager : DomainServiceBase<BuyerOrder, Guid> {
 		/// <summary>
 		/// 根据订单编号获取买家订单Id

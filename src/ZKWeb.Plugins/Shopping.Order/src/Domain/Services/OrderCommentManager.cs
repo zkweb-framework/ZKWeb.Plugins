@@ -11,7 +11,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 	/// <summary>
 	/// 订单留言管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class OrderCommentManager : DomainServiceBase<OrderComment, Guid> {
 		/// <summary>
 		/// 添加订单留言

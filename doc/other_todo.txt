@@ -4,11 +4,8 @@
 
 优化查询性能，添加更多的索引
 逐步补充插件的单元测试
-StreamResult需要支持分割下载(Range头)
-	http://stackoverflow.com/questions/3303029/http-range-header
 检查完整的订单流程
 确认合并支付时的处理，并写到文档
-对各领域服务添加单例标记
 修改string.Format(new T到new T
 
 前台样式整理

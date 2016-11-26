@@ -25,7 +25,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 	/// <summary>
 	/// 支付交易管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class PaymentTransactionManager : DomainServiceBase<PaymentTransaction, Guid> {
 		/// <summary>
 		/// 创建交易

@@ -9,7 +9,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 	/// <summary>
 	/// Logo管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class LogoManager : DomainServiceBase {
 		/// <summary>
 		/// 前台Logo的路径

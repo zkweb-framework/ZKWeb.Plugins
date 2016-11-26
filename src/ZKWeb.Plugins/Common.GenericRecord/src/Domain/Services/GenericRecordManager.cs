@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services {
 	/// <summary>
 	/// 通用记录管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class GenericRecordManager : DomainServiceBase<Entities.GenericRecord, Guid> {
 		/// <summary>
 		/// 添加纪录

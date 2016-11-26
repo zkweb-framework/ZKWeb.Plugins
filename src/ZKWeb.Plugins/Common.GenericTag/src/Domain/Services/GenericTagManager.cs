@@ -13,7 +13,7 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Domain.Services {
 	/// <summary>
 	/// 通用标签管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class GenericTagManager :
 		DomainServiceBase<Entities.GenericTag, Guid>, ICacheCleaner {
 		/// <summary>

@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 	/// <summary>
 	/// 支付接口管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class PaymentApiManager : DomainServiceBase<PaymentApi, Guid> {
 		/// <summary>
 		/// 支付接口的缓存时间
