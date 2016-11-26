@@ -74,6 +74,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 				Nullable = false, Unique = true, Length = 255
 			});
 			builder.References(d => d.Order);
+			builder.References(d => d.Logistics);
+			builder.Map(d => d.LogisticsSerial);
 			builder.References(d => d.Operator);
 			builder.Map(d => d.CreateTime);
 			builder.Map(d => d.UpdateTime);

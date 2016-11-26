@@ -236,7 +236,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "The shipping address is \"{0}\", and buyer want to use logistics \"{1}\"",
 				"收货地址是\"{0}\"，且买家希望使用物流\"{1}\"" },
 			{ "Order only contains virtual products, if you have something to buyer please use comment",
-				"订单仅包含虚拟商品，如果您有什么需要给买家请使用留言" }
+				"订单仅包含虚拟商品，如果您有什么需要给买家请使用留言" },
+			{ "Please provide logistics serial (invoice no)", "请提供物流编号(快递单编号)" }
 		};
 
 		public bool CanTranslate(string code) {

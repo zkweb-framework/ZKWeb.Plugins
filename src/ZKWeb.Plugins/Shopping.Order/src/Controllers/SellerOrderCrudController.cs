@@ -94,7 +94,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			var form = new OrderDeliveryForm();
 			if (Request.Method == HttpMethods.GET) {
 				form.Bind();
-				return new TemplateResult("shopping.order/order_delivery_goods.html", new { form });
+				return new TemplateResult("shopping.order/order_delivery.html", new { form });
 			} else {
 				return new JsonResult(form.Submit());
 			}

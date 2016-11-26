@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
@@ -22,6 +25,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 	/// <summary>
 	/// 订单发货表单
 	/// </summary>
+	[Form("OrderDeliveryForm")]
 	public class OrderDeliveryForm : ModelFormBuilder {
 		/// <summary>
 		/// 提示Html
@@ -47,7 +51,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		/// 发货件数 { 订单商品Id, 发货数量 }
 		/// </summary>
 		[Required]
-		[JsonField("DeliveryCounts", typeof(IDictionary<Guid, long>))]
+		[JsonField("DeliveryCountsJson", typeof(IDictionary<Guid, long>))]
 		public IDictionary<Guid, long> DeliveryCountsJson { get; set; }
 		/// <summary>
 		/// 发货商品的表格
@@ -79,14 +83,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 					"The shipping address is \"{0}\", and buyer want to use logistics \"{1}\""),
 					shippingAddress?.GenerateSummary(), logistics?.Name);
 				AlertHtml = new HtmlString(templateManager.RenderTemplate(
-					"shopping.order/order_delivery_goods.alert.html", new { message }));
+					"shopping.order/order_delivery.alert.html", new { message }));
 				Logistics = logistics?.Id ?? Guid.Empty;
 			} else {
 				var message = new T(
 					"Order only contains virtual products, " +
 					"if you have something to buyer please use comment");
 				AlertHtml = new HtmlString(templateManager.RenderTemplate(
-					"shopping.order/order_delivery_goods.alert.html", new { message }));
+					"shopping.order/order_delivery.alert.html", new { message }));
 				Form.Fields.RemoveAll(a =>
 					a.Attribute.Name == "Logistics" ||
 					a.Attribute.Name == "LogisticsSerial");
@@ -101,7 +105,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 				tableBuilder.Rows.Add(new {
 					Product = info.GetSummaryHtml(),
 					ShippedQuantity = info.GetShippedCountHtml(),
-					ThisDeliveryQuantity = info.GetCountEditor()
+					ThisDeliveryQuantity = info.GetDeliveryCountEditor()
 				});
 			}
 			DeliveryCountsJson = new Dictionary<Guid, long>();
@@ -112,7 +116,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		/// 提交表单
 		/// </summary>
 		protected override object OnSubmit() {
-			throw new NotImplementedException();
+			var id = Request.Get<Guid>("id");
+			var deliveryManager = Application.Ioc.Resolve<OrderDeliveryManager>();
+			var sessionManager = Application.Ioc.Resolve<SessionManager>();
+			var user = sessionManager.GetSession().GetUser();
+			deliveryManager.DeliveryGoods(
+				id, user?.Id, Logistics, LogisticsSerial, Remark, DeliveryCountsJson);
+			return this.SaveSuccessAndCloseModal();
 		}
 	}
 }

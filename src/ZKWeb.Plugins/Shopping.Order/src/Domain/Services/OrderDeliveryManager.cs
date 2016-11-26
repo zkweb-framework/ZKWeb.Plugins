@@ -9,6 +9,7 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWeb.Plugins.Common.SerialGenerate.src.Components.SerialGenerate;
 using ZKWeb.Plugins.Shopping.Logistics.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
@@ -42,20 +43,25 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 					throw new BadRequestException(new T("Order not exist"));
 				}
 				// 获取物流
+				var containsRealProduct = order.ContainsRealProduct();
 				var logisticsManager = Application.Ioc.Resolve<LogisticsManager>();
-				var logistics = logisticsManager.Get(logisticsId);
-				if (logistics == null) {
+				var logistics = containsRealProduct ? logisticsManager.Get(logisticsId) : null;
+				if (!containsRealProduct) {
+					// 虚拟商品不需要物流和快递单编号
+				} else if (logistics == null) {
 					throw new BadRequestException(new T("Selected logistics does not exist"));
+				} else if (string.IsNullOrEmpty(invoiceNo)) {
+					throw new BadRequestException(new T("Please provide logistics serial (invoice no)"));
 				}
 				// 检查发货数量
-				if (!deliveryCounts.Any()) {
+				if (deliveryCounts.Sum(c => c.Value) <= 0) {
 					throw new BadRequestException(new T("No products to be delivery"));
 				}
 				var unshippedMapping = GetUnshippedProductMapping(order);
 				foreach (var count in deliveryCounts) {
 					if (!unshippedMapping.ContainsKey(count.Key)) {
 						throw new BadRequestException(new T("Can't delivery product that not exists in order"));
-					} else if (count.Value <= 0) {
+					} else if (count.Value < 0) {
 						throw new BadRequestException(new T("Invalid delivery count"));
 					} else if (count.Value > unshippedMapping[count.Key]) {
 						throw new BadRequestException(new T("Delivery count can't be larger than unshipped count"));
@@ -71,7 +77,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 					Remark = remark
 				};
 				delivery.Serial = SerialGenerator.GenerateFor(delivery);
-				foreach (var count in deliveryCounts) {
+				foreach (var count in deliveryCounts.Where(p => p.Value > 0)) {
 					delivery.OrderProducts.Add(new OrderDeliveryToOrderProduct() {
 						OrderDelivery = delivery,
 						OrderProduct = order.OrderProducts.First(p => p.Id == count.Key),
