@@ -4,6 +4,7 @@ using System.Linq;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWeb.Plugins.Common.SerialGenerate.src.Components.SerialGenerate;
@@ -77,16 +78,24 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 					Remark = remark
 				};
 				delivery.Serial = SerialGenerator.GenerateFor(delivery);
-				foreach (var count in deliveryCounts.Where(p => p.Value > 0)) {
-					delivery.OrderProducts.Add(new OrderDeliveryToOrderProduct() {
-						OrderDelivery = delivery,
-						OrderProduct = order.OrderProducts.First(p => p.Id == count.Key),
-						Count = count.Value
-					});
-				}
 				Save(ref delivery);
+				foreach (var count in deliveryCounts.Where(p => p.Value > 0)) {
+					var orderProduct = order.OrderProducts.First(p => p.Id == count.Key);
+					var orderDeliveryToOrderProduct = new OrderDeliveryToOrderProduct() {
+						OrderDelivery = delivery,
+						OrderProduct = orderProduct,
+						Count = count.Value
+					};
+					orderProduct.Deliveries.Add(orderDeliveryToOrderProduct);
+				}
+				var orderRepository = Application.Ioc.Resolve<IRepository<SellerOrder, Guid>>();
+				orderRepository.Save(ref order, null);
 				// 当所有商品已发货时，设置订单为已发货
 				if (deliveryCounts.Sum(c => c.Value) == unshippedMapping.Sum(c => c.Value)) {
+					var canProcessAllGoodsShipped = order.Check(c => c.CanProcessAllGoodsShipped);
+					if (!canProcessAllGoodsShipped.First) {
+						throw new BadRequestException(canProcessAllGoodsShipped.Second);
+					}
 					orderManager.ProcessAllGoodsShipped(orderId);
 				}
 				// 结束事务
