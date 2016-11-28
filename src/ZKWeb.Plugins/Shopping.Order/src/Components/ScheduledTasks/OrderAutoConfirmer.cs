@@ -1,5 +1,7 @@
 ﻿using System;
+using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Components.ScheduledTasks.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Components.ScheduledTasks {
@@ -24,7 +26,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.ScheduledTasks {
 		/// 自动确认订单
 		/// </summary>
 		public void Execute() {
-			// TODO: 完成这里的功能
+			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var count = orderManager.AutoConfirmOrder();
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogInfo(string.Format(
+				"OrderAutoConfirmer executed, {0} order confirmed", count));
 		}
 	}
 }

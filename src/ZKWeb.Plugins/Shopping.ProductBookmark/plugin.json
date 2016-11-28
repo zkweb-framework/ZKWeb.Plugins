@@ -1,0 +1,10 @@
+﻿{
+	"Name": "ProductBookmark",
+	"Version": "0.0",
+	"Description": "Product bookmark feature for ec site",
+	"Dependencies": [
+		"Common.Admin",
+		"Shopping.Product",
+		"Shopping.Order"
+	]
+}

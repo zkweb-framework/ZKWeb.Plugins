@@ -259,7 +259,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 				"您还可以在订单设置中启用自动确认收货的功能" },
 			{ "Confirm order failed, please check order records",
 				"确认收货失败，请检查订单记录" },
-			{ "Confirm order success", "确认收货成功" }
+			{ "Confirm order success", "确认收货成功" },
+			{ "Auto confirm order after {0} days", "在经过了{0}天后自动确认了收货" }
 		};
 
 		public bool CanTranslate(string code) {
