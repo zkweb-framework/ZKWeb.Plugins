@@ -265,7 +265,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Confirm order failed, please check order records",
 				"确认收货失败，请检查订单记录" },
 			{ "Confirm order success", "确认收货成功" },
-			{ "Auto confirm order after {0} days", "在经过了{0}天后自动确认了收货" }
+			{ "Auto confirm order after {0} days", "在经过{0}天后仍未确认收货，自动确认收货" },
+			{ "Auto cancel order after {0} days unpaid", "在经过{0}天后仍未付款，自动取消订单" }
 		};
 
 		public bool CanTranslate(string code) {

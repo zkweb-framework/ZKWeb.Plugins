@@ -552,6 +552,37 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 自动取消未付款的订单
+		/// </summary>
+		/// <returns></returns>
+		public virtual long AutoCancelOrder() {
+			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
+			var orderSettings = configManager.GetData<OrderSettings>();
+			if (orderSettings.AutoCancelOrderAfterDays <= 0) {
+				// 没有设置自动取消订单的天数
+				return 0;
+			}
+			// 获取可能需要自动取消的订单
+			using (UnitOfWork.Scope()) {
+				var before = DateTime.UtcNow.AddDays(-orderSettings.AutoCancelOrderAfterDays);
+				var orders = GetMany(o => o.State == OrderState.WaitingBuyerPay && o.CreateTime < before);
+				var count = 0L;
+				foreach (var order in orders) {
+					// 判断是否可以取消
+					if (!order.Check(c => c.CanSetCancelled).First) {
+						continue;
+					}
+					// 取消订单
+					CancelOrder(order.Id, null, string.Format(
+						new T("Auto cancel order after {0} days unpaid"),
+						orderSettings.AutoCancelOrderAfterDays));
+					count += 1;
+				}
+				return count;
+			}
+		}
+
+		/// <summary>
 		/// 自动确认收货
 		/// </summary>
 		/// <returns></returns>

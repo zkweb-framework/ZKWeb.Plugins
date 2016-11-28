@@ -33,7 +33,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.HttpRequestHandlers {
 				var fileEntry = fileStorage.GetResourceFile("static", path.Substring(Prefix.Length));
 				if (fileEntry.Exists) {
 					var ifModifiedSince = context.Request.GetIfModifiedSince();
-					new FileEntryResult(fileEntry, ifModifiedSince).WriteResponse(context.Response);
+					var bytesRange = context.Request.GetBytesRange();
+					var result = new FileEntryResult(fileEntry, ifModifiedSince, bytesRange);
+					result.WriteResponse(context.Response);
 					context.Response.End();
 				}
 			}
