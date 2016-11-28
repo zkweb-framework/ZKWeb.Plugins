@@ -79,8 +79,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 					.Where(d => d.Stock != null)
 					.WhereMatched(productParameters.MatchParameters).FirstOrDefault();
 				if (data == null || data.Stock < orderCount) {
-					throw new BadRequestException(string.Format(
-						new T("Insufficient stock of product [{0}]"), new T(product.Name)));
+					throw new BadRequestException(
+						new T("Insufficient stock of product [{0}]", new T(product.Name)));
 				}
 				// 是否有数量等于或小于0的商品
 				if (orderCount <= 0) {
@@ -226,7 +226,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 					sellerOrder.Buyer?.Id,
 					null,
 					sellerOrder.Id,
-					string.Format(new T("Order Serial: {0}"), sellerOrder.Serial));
+					new T("Order Serial: {0}", sellerOrder.Serial));
 				Result.CreatedTransactions.Add(transaction);
 			}
 		}

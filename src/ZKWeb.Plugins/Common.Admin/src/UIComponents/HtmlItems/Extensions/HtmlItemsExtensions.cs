@@ -26,7 +26,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.HtmlItems.Extensions {
 			this List<HtmlItem> items, string typeName, string addUrl,
 			string name = null, string iconClass = null, string btnClass = null,
 			string title = null, string url = null, object dialogParameters = null) {
-			var defaultName = string.Format(new T("Add {0}"), new T(typeName));
+			var defaultName = new T("Add {0}", new T(typeName));
 			items.AddRemoteModalForAjaxTable(
 				name ?? defaultName,
 				iconClass ?? "fa fa-plus",

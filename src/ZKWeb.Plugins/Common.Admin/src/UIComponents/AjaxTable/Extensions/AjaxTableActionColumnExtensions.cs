@@ -33,7 +33,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 				name ?? new T("View"),
 				buttonClass ?? "btn btn-xs btn-info",
 				iconClass ?? "fa fa-edit",
-				titleTemplate ?? string.Format(new T("Edit {0}"), new T(typeName)),
+				titleTemplate ?? new T("Edit {0}", new T(typeName)),
 				urlTemplate ?? (editUrl + "?id=<%-row.Id%>"),
 				dialogParameters);
 		}
@@ -78,9 +78,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 				name ?? new T("Delete"),
 				buttonClass ?? "btn btn-xs btn-danger",
 				iconClass ?? "fa fa-remove",
-				titleTemplate ?? string.Format(new T("Delete {0}"), new T(typeName)),
+				titleTemplate ?? new T("Delete {0}", new T(typeName)),
 				BaseScriptStrings.ConfirmMessageTemplateForMultiSelected(
-					string.Format(new T("Sure to delete following {0}?"), new T(typeName)), "ToString"),
+					new T("Sure to delete following {0}?", new T(typeName)), "ToString"),
 				BaseScriptStrings.PostConfirmedActionForMultiSelected(primaryKey, deleteUrl),
 				dialogParameters ?? new { type = "type-danger" });
 		}
@@ -126,9 +126,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 				name ?? new T("Recover"),
 				buttonClass ?? "btn btn-xs btn-info",
 				iconClass ?? "fa fa-history",
-				titleTemplate ?? string.Format(new T("Recover {0}"), new T(typeName)),
+				titleTemplate ?? new T("Recover {0}", new T(typeName)),
 				BaseScriptStrings.ConfirmMessageTemplateForMultiSelected(
-					string.Format(new T("Sure to recover following {0}?"), new T(typeName)), "ToString"),
+					new T("Sure to recover following {0}?", new T(typeName)), "ToString"),
 				BaseScriptStrings.PostConfirmedActionForMultiSelected(primaryKey, recoverUrl),
 				dialogParameters);
 		}
@@ -174,9 +174,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 				name ?? new T("Delete Forever"),
 				buttonClass ?? "btn btn-xs btn-danger",
 				iconClass ?? "fa fa-remove",
-				titleTemplate ?? string.Format(new T("Delete {0} Forever"), new T(typeName)),
+				titleTemplate ?? new T("Delete {0} Forever", new T(typeName)),
 				BaseScriptStrings.ConfirmMessageTemplateForMultiSelected(
-					string.Format(new T("Sure to delete following {0} forever?"), new T(typeName)), "ToString"),
+					new T("Sure to delete following {0} forever?", new T(typeName)), "ToString"),
 				BaseScriptStrings.PostConfirmedActionForMultiSelected(primaryKey, deleteForeverUrl),
 				dialogParameters ?? new { type = "type-danger" });
 		}

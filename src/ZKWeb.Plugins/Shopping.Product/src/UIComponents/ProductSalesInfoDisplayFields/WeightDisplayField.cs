@@ -28,9 +28,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductSalesInfoDispla
 			if (min == max && min == 0) {
 				return null;
 			} else if (min == max) {
-				return string.Format(new T("{0:F2} gram"), min);
+				return new T("{0:F2} gram", min);
 			}
-			return string.Format(new T("{0:F2}~{1:F2} gram"), min, max);
+			return new T("{0:F2}~{1:F2} gram", min, max);
 		}
 	}
 }

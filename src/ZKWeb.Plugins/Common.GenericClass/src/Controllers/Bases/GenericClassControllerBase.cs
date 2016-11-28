@@ -84,11 +84,11 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Controllers.Bases {
 					name: new T("Add Top Level Class"), dialogParameters: dialogParameters);
 				table.MenuItems.AddRemoteModalForSelectedRow(
 					new T("Add Same Level Class"), "fa fa-plus",
-					string.Format(new T("Add {0}"), new T(app.Type)),
+					new T("Add {0}", new T(app.Type)),
 					app.AddUrl + "?parentId=<%-row.ParentId%>", dialogParameters);
 				table.MenuItems.AddRemoteModalForSelectedRow(
 					new T("Add Child Class"), "fa fa-plus",
-					string.Format(new T("Add {0}"), new T(app.Type)),
+					new T("Add {0}", new T(app.Type)),
 					app.AddUrl + "?parentId=<%-row.Id%>", dialogParameters);
 				searchBar.KeywordPlaceHolder = "Name/Remark";
 				searchBar.MenuItems.AddDivider();

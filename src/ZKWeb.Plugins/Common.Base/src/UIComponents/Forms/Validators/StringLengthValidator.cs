@@ -16,10 +16,10 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Validators {
 		/// </summary>
 		private string ErrorMessage(FormField field, StringLengthAttribute attribute) {
 			if (attribute.MaximumLength == attribute.MinimumLength) {
-				return string.Format(new T("Length of {0} must be {1}"),
+				return new T("Length of {0} must be {1}",
 					new T(field.Attribute.Name), attribute.MinimumLength);
 			}
-			return string.Format(new T("Length of {0} must between {1} and {2}"),
+			return new T("Length of {0} must between {1} and {2}",
 				new T(field.Attribute.Name), attribute.MinimumLength, attribute.MaximumLength);
 		}
 

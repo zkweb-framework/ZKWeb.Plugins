@@ -153,8 +153,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 				Save(ref transaction, t => t.LastError = lastError);
 				// 记录错误到日志
 				var logManager = Application.Ioc.Resolve<LogManager>();
-				var message = string.Format(
-					new T("Payment transaction {0} error: {1}"), transaction.Serial, lastError);
+				var message = 
+					new T("Payment transaction {0} error: {1}", transaction.Serial, lastError);
 				logManager.LogTransaction(message);
 				// 记录错误到数据库
 				AddDetailRecord(transactionId, null, message, null);
@@ -193,7 +193,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 				} else if (state == PaymentTransactionState.Aborted) {
 					result = transaction.Check(c => c.CanProcessAborted);
 				} else {
-					throw new BadRequestException(string.Format(new T("Unsupported transaction state: {0}"), state));
+					throw new BadRequestException(new T("Unsupported transaction state: {0}", state));
 				}
 				if (!result.First) {
 					throw new BadRequestException(result.Second);
@@ -220,11 +220,11 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 				} else if (state == PaymentTransactionState.Aborted) {
 					handlers.ForEach(h => h.OnAbort(transaction, previousState));
 				} else {
-					throw new BadRequestException(string.Format(new T("Unsupported transaction state: {0}"), state));
+					throw new BadRequestException(new T("Unsupported transaction state: {0}", state));
 				}
 				// 成功时添加详细记录
-				AddDetailRecord(transaction.Id, null, string.Format(
-					new T("Change transaction state to {0}"), new T(transaction.State.GetDescription())));
+				AddDetailRecord(transaction.Id, null, 
+					new T("Change transaction state to {0}", new T(transaction.State.GetDescription())));
 				// 需要自动发货时进行发货
 				foreach (var parameter in parameters) {
 					NotifyAllGoodsShippedBackground(
@@ -247,8 +247,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 			try {
 				ProcessInternal(transactionId, externalSerial, state);
 			} catch (Exception e) {
-				var errorMessage = string.Format(
-					new T("Change transaction state to {0} failed: {1}"),
+				var errorMessage = 
+					new T("Change transaction state to {0} failed: {1}",
 					new T(state.GetDescription()),
 					new T(e.Message));
 				AddDetailRecord(transactionId, null, errorMessage);
@@ -286,8 +286,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 						AddDetailRecord(transactionId, null,
 							new T("Notify goods shipped to payment api success"));
 					} catch (Exception e) {
-						AddDetailRecord(transactionId, null, string.Format(
-							new T("Notify goods shipped to payment api failed: {0}"), e.Message));
+						AddDetailRecord(transactionId, null, 
+							new T("Notify goods shipped to payment api failed: {0}", e.Message));
 					}
 				} catch {
 					// 进程池中的任务不能抛出例外

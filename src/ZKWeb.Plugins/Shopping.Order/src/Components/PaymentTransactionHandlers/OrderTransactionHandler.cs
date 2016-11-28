@@ -47,9 +47,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 			// 单独处理时确保合并交易终止
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			transactionManager.EnsureParentTransactionAbortedIfProcessNotFromParent(
-				transaction, null, string.Format(new T(
+				transaction, null, new T(
 					"Child transaction {0} process waiting paying standalone, " +
-					"this merge transaction should be aborted"), transaction.Serial));
+					"this merge transaction should be aborted", transaction.Serial));
 		}
 
 		/// <summary>
@@ -65,15 +65,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
 			var orderId = transaction.ReleatedId.Value;
 			orderManager.AddDetailRecord(orderId, null,
-				string.Format(new T("Order secured paid from transaction, serial is {0}"), transaction.Serial));
+				new T("Order secured paid from transaction, serial is {0}", transaction.Serial));
 			// 处理订单已付款，不一定会成功（例如其他关联交易未付款时）
 			orderManager.ProcessOrderPaid(orderId);
 			// 单独处理时确保合并交易终止
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			transactionManager.EnsureParentTransactionAbortedIfProcessNotFromParent(
-				transaction, null, string.Format(new T(
+				transaction, null, new T(
 					"Child transaction {0} process secured paid standalone, " +
-					"this merge transaction should be aborted"), transaction.Serial));
+					"this merge transaction should be aborted", transaction.Serial));
 		}
 
 		/// <summary>
@@ -94,24 +94,23 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 				previousState == PaymentTransactionState.WaitingPaying) {
 				// 添加到订单记录
 				orderManager.AddDetailRecord(orderId, null,
-					string.Format(new T("Order paid from transaction, serial is {0}"), transaction.Serial));
+					new T("Order paid from transaction, serial is {0}", transaction.Serial));
 				// 处理订单已付款，不一定会成功（例如其他关联交易未付款时）
 				orderManager.ProcessOrderPaid(orderId);
 			} else if (previousState == PaymentTransactionState.SecuredPaid) {
 				// 添加到订单记录
 				orderManager.AddDetailRecord(orderId, null,
-					string.Format(
-						new T("Order confirmed from payment platform after secured paid, serial is {0}"),
-						transaction.Serial));
+					new T("Order confirmed from payment platform after secured paid, serial is {0}",
+					transaction.Serial));
 				// 处理订单交易成功（确认收货），不一定会成功
 				orderManager.ProcessSuccess(orderId);
 			}
 			// 单独处理时确保合并交易终止
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			transactionManager.EnsureParentTransactionAbortedIfProcessNotFromParent(
-				transaction, null, string.Format(new T(
+				transaction, null, new T(
 					"Child transaction {0} process success standalone, " +
-					"this merge transaction should be aborted"), transaction.Serial));
+					"this merge transaction should be aborted", transaction.Serial));
 		}
 
 		/// <summary>
@@ -127,9 +126,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.PaymentTransactionHandlers
 			// 确保合并交易终止
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			transactionManager.EnsureParentTransactionAborted(
-				new[] { transaction.Id }, null, string.Format(new T(
+				new[] { transaction.Id }, null, new T(
 					"Child transaction {0} aborted, " +
-					"this merge transaction should be aborted too"), transaction.Serial));
+					"this merge transaction should be aborted too", transaction.Serial));
 		}
 
 		/// <summary>

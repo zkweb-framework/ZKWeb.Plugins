@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Validators {
 		/// 获取错误消息
 		/// </summary>
 		private string ErrorMessage(FormField field) {
-			return string.Format(new T("{0} format is incorrect"), new T(field.Attribute.Name));
+			return new T("{0} format is incorrect", new T(field.Attribute.Name));
 		}
 
 		/// <summary>

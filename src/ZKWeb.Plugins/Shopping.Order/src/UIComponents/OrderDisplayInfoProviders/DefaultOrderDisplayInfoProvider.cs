@@ -257,7 +257,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 			var lastErrors = transactions.Select(t => t.LastError).Where(e => !string.IsNullOrEmpty(e));
 			foreach (var lastError in lastErrors) {
 				warnings.Add(HtmlString.Encode(
-					string.Format(new T("Releated transaction contains error: {0}"), new T(lastError))));
+					new T("Releated transaction contains error: {0}", new T(lastError))));
 			}
 		}
 	}

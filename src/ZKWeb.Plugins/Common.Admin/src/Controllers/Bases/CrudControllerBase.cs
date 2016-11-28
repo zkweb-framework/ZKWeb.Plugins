@@ -267,7 +267,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 			var action = BatchActions.GetOrDefault(actionName);
 			if (action == null) {
 				// 找不到对应的操作
-				throw new NotFoundException(string.Format(new T("Action {0} not exist"), actionName));
+				throw new NotFoundException(new T("Action {0} not exist", actionName));
 			}
 			// 检查权限
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();

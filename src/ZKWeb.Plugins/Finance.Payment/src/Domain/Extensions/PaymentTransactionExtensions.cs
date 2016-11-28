@@ -46,8 +46,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions {
 			var handlers = Application.Ioc.ResolveMany<IPaymentTransactionHandler>()
 				.Where(h => h.Type == transaction.Type).ToList();
 			if (!handlers.Any()) {
-				throw new BadRequestException(string.Format(
-					new T("Unknown payment transaction type {0}"), transaction.Type));
+				throw new BadRequestException(
+					new T("Unknown payment transaction type {0}", transaction.Type));
 			}
 			return handlers;
 		}

@@ -66,7 +66,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandler
 					transactionManager.AddDetailRecord(
 						transaction.Id,
 						null,
-						string.Format(new T("Can't process waiting paying on child transaction {0}, reason is {1}"),
+						new T("Can't process waiting paying on child transaction {0}, reason is {1}",
 							childTransaction.Serial, canProcessWaitingPaying.Second));
 				}
 			}
@@ -99,7 +99,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandler
 					transactionManager.AddDetailRecord(
 						transaction.Id,
 						null,
-						string.Format(new T("Can't process secured paid on child transaction {0}, reason is {1}"),
+						new T("Can't process secured paid on child transaction {0}, reason is {1}",
 							childTransaction.Serial, canProcessSecuredPaid.Second));
 				}
 			}
@@ -132,7 +132,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.PaymentTransactionHandler
 					transactionManager.AddDetailRecord(
 						transaction.Id,
 						null,
-						string.Format(new T("Can't process success on child transaction {0}, reason is {1}"),
+						new T("Can't process success on child transaction {0}, reason is {1}",
 							childTransaction.Serial, canProcessSuccess.Second));
 				}
 			}

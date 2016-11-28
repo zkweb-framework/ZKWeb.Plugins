@@ -56,14 +56,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Services {
 			} else if (privileges != null && privileges.Length > 0) {
 				// 无权限403
 				var translator = Application.Ioc.Resolve<IPrivilegeTranslator>();
-				throw new ForbiddenException(string.Format(
-					new T("Action require {0}, and {1} privileges"),
+				throw new ForbiddenException(
+					new T("Action require {0}, and {1} privileges",
 					new T(userType.Name),
 					string.Join(",", privileges.Select(p => translator.Translate(p)))));
 			} else {
 				// 用户类型不符合，或未登录
-				throw new ForbiddenException(string.Format(
-					new T("Action require {0}"), new T(userType.Name)));
+				throw new ForbiddenException(
+					new T("Action require {0}", new T(userType.Name)));
 			}
 		}
 

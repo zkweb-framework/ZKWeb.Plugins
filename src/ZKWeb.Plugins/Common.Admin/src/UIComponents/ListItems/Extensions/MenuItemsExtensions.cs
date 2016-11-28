@@ -42,7 +42,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.MenuItems.Extensions {
 			items.AddRemoteModalForSelectedRow(
 				name ?? new T("View"),
 				iconClass ?? "fa fa-edit",
-				titleTemplate ?? string.Format(new T("Edit {0}"), new T(typeName)),
+				titleTemplate ?? new T("Edit {0}", new T(typeName)),
 				urlTemplate ?? (editUrl + "?id=<%-row.Id%>"),
 				dialogParameters);
 		}
@@ -78,7 +78,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.MenuItems.Extensions {
 			this List<MenuItem> items, string typeName, string addUrl,
 			string name = null, string iconClass = null,
 			string title = null, string url = null, object dialogParameters = null) {
-			var defaultName = string.Format(new T("Add {0}"), new T(typeName));
+			var defaultName = new T("Add {0}", new T(typeName));
 			items.AddRemoteModalForAjaxTable(
 				name ?? defaultName,
 				iconClass ?? "fa fa-plus",

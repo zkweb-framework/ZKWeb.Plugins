@@ -19,7 +19,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions {
 		public static IList<IPaymentApiHandler> GetHandlers(this PaymentApi api) {
 			var handlers = Application.Ioc.ResolveMany<IPaymentApiHandler>().Where(h => h.Type == api.Type).ToList();
 			if (!handlers.Any()) {
-				throw new BadRequestException(string.Format(new T("Unknown payment api type {0}"), api.Type));
+				throw new BadRequestException(new T("Unknown payment api type {0}", api.Type));
 			}
 			return handlers;
 		}

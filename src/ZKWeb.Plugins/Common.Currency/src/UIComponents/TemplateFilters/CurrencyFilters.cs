@@ -35,8 +35,8 @@ namespace ZKWeb.Plugins.Common.Currency.src.UIComponents.TemplateFilters {
 			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
 			var currency = currencyManager.GetCurrency(currencyType);
 			if (currency == null) {
-				throw new ArgumentException(string.Format(
-					new T("Currency {0} not found"), currencyType));
+				throw new ArgumentException(
+					new T("Currency {0} not found", currencyType));
 			}
 			return currency.Format(amount.ConvertOrDefault<decimal>());
 		}

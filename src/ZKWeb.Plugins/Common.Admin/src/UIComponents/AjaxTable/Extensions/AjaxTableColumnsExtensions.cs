@@ -28,7 +28,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 			string titleTemplate = null, string urlTemplate = null, object dialogParameters = null, string width = null) {
 			return columns.AddRemoteModalColumn(
 				nameMember,
-				titleTemplate ?? string.Format(new T("Edit {0}"), new T(typeName)),
+				titleTemplate ?? new T("Edit {0}", new T(typeName)),
 				urlTemplate ?? (editUrl + string.Format("?id=<%-row.{0}%>", idMember)),
 				dialogParameters,
 				width);

@@ -50,10 +50,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 				column.AddConfirmActionForMultiChecked(
 					new T("Batch Delete"),
 					"fa fa-recycle",
-					string.Format(new T("Please select {0} to delete"), typeName),
+					new T("Please select {0} to delete", typeName),
 					new T("Batch Delete"),
 					BaseScriptStrings.ConfirmMessageTemplateForMultiSelected(
-						string.Format(new T("Sure to delete following {0}?"), typeName), "ToString"),
+						new T("Sure to delete following {0}?", typeName), "ToString"),
 					BaseScriptStrings.PostConfirmedActionForMultiSelected(
 						primaryKey, batchUrl + "?action=delete"),
 					new { type = "type-danger" });
@@ -63,10 +63,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 				column.AddConfirmActionForMultiChecked(
 					new T("Batch Recover"),
 					"fa fa-history",
-					string.Format(new T("Please select {0} to recover"), typeName),
+					new T("Please select {0} to recover", typeName),
 					new T("Batch Recover"),
 					BaseScriptStrings.ConfirmMessageTemplateForMultiSelected(
-						string.Format(new T("Sure to recover following {0}?"), typeName), "ToString"),
+						new T("Sure to recover following {0}?", typeName), "ToString"),
 					BaseScriptStrings.PostConfirmedActionForMultiSelected(
 						primaryKey, batchUrl + "?action=recover"));
 			}
@@ -75,10 +75,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 				column.AddConfirmActionForMultiChecked(
 					new T("Batch Delete Forever"),
 					"fa fa-remove",
-					string.Format(new T("Please select {0} to delete"), typeName),
+					new T("Please select {0} to delete", typeName),
 					new T("Batch Delete Forever"),
 					BaseScriptStrings.ConfirmMessageTemplateForMultiSelected(
-						string.Format(new T("Sure to delete following {0} forever?"), typeName), "ToString"),
+						new T("Sure to delete following {0} forever?", typeName), "ToString"),
 					BaseScriptStrings.PostConfirmedActionForMultiSelected(
 						primaryKey, batchUrl + "?action=delete_forever"),
 					new { type = "type-danger" });

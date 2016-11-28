@@ -21,13 +21,13 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions {
 			} else if (!attribute.Extensions.Contains(
 				Path.GetExtension(file.FileName).Substring(1))) {
 				// 检查后缀
-				throw new Exception(string.Format(
-					new T("Only {0} files are allowed"),
+				throw new Exception(
+					new T("Only {0} files are allowed",
 					string.Join(",", attribute.Extensions)));
 			} else if (file.Length > attribute.MaxContentsLength) {
 				// 检查大小
-				throw new Exception(string.Format(
-					new T("Please upload file size not greater than {0}"),
+				throw new Exception(
+					new T("Please upload file size not greater than {0}",
 					FileUtils.GetSizeDisplayName((int)attribute.MaxContentsLength)));
 			}
 		}

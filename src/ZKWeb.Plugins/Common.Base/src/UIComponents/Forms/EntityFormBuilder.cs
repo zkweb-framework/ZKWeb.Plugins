@@ -77,7 +77,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 					new TEntity() : service.Get(id);
 				if (entity == null) {
 					throw new NotFoundException(
-						string.Format(new T("Data with id {0} cannot be found"), id));
+						new T("Data with id {0} cannot be found", id));
 				}
 				// 绑定表单
 				OnBind(entity);
@@ -99,7 +99,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 					new TEntity() : service.Get(id);
 				if (data == null) {
 					throw new NotFoundException(
-						string.Format(new T("Data with id {0} cannot be found"), id));
+						new T("Data with id {0} cannot be found", id));
 				}
 				// 保存时的处理
 				object formResult = null;

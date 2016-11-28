@@ -27,7 +27,8 @@
 		"Shopping.Product",
 		"Shopping.Logistics",
 		"Shopping.Order",
-		"Shopping.OrderRating",
+		"Shopping.ProductBookmark",
+		"Shopping.ProductRating",
 		"Shopping.AfterSales",
 		"Testing.WebTester"
 	],

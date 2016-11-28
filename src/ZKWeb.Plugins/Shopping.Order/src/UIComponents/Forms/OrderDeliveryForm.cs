@@ -79,8 +79,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 				var logisticsId = order.OrderParameters.GetSellerToLogistics()
 					.GetOrDefault(order.Owner?.Id ?? Guid.Empty);
 				var logistics = logisticsManager.GetWithCache(logisticsId);
-				var message = string.Format(new T(
-					"The shipping address is \"{0}\", and buyer want to use logistics \"{1}\""),
+				var message = new T(
+					"The shipping address is \"{0}\", and buyer want to use logistics \"{1}\"",
 					shippingAddress?.GenerateSummary(), logistics?.Name);
 				AlertHtml = new HtmlString(templateManager.RenderTemplate(
 					"shopping.order/order_delivery.alert.html", new { message }));

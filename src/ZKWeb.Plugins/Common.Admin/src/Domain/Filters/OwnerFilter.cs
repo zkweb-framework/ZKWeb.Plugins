@@ -88,8 +88,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Filters {
 				e.Owner = user;
 			} else if (e.Owner != null && e.Owner.Id != ExceptedOwnerId) {
 				// 已登陆用户保存数据，但数据不属于这个用户
-				throw new ForbiddenException(string.Format(
-					new T("Action require the ownership of {0}: {1}"),
+				throw new ForbiddenException(
+					new T("Action require the ownership of {0}: {1}",
 					new T(typeof(TEntity).Name), entity.Id));
 			}
 		}
@@ -106,8 +106,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Filters {
 				// 删除没有所属用户的数据，不需要拦截
 			} else if (e.Owner != null && e.Owner.Id != ExceptedOwnerId) {
 				// 已登陆用户删除数据，但数据不属于这个用户
-				throw new ForbiddenException(string.Format(
-					new T("Action require the ownership of {0}: {1}"),
+				throw new ForbiddenException(
+					new T("Action require the ownership of {0}: {1}",
 					new T(typeof(TEntity).Name), entity.Id));
 			}
 		}
