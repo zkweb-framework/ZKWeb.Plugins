@@ -16,6 +16,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.GenericConfigs {
 		/// </summary>
 		public int NormalCartProductExpiresDays { get; set; }
 		/// <summary>
+		/// 自动取消未付款订单天数，默认3天
+		/// </summary>
+		public int AutoCancelOrderAfterDays { get; set; }
+		/// <summary>
 		/// 自动确认收货天数，默认14天
 		/// </summary>
 		public int AutoConfirmOrderAfterDays { get; set; }
@@ -34,6 +38,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.GenericConfigs {
 		public OrderSettings() {
 			BuynowCartProductExpiresDays = 1;
 			NormalCartProductExpiresDays = 90;
+			AutoCancelOrderAfterDays = 3;
 			AutoConfirmOrderAfterDays = 14;
 			AllowAnonymousVisitorCreateOrder = true;
 			StockReductionMode = StockReductionMode.NoReduction;

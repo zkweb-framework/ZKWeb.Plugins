@@ -70,6 +70,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Please select logistics", "请选择物流" },
 			{ "Please select payment api", "请选择支付接口" },
 			// TODO: 添加翻译
+			{ "AutoCancelOrderAfterDays", "自动取消未付款订单天数" },
+			{ "StockReductionMode", "库存减少模式" },
+			{ "NoReduction", "不减少" },
+			{ "AfterCreateOrder", "创建订单后" },
+			{ "AfterOrderPaid", "支付成功后" },
 			{ "Order contains product that not exist or deleted", "订单包含不存在或已删除的商品" },
 			{ "Insufficient stock of product [{0}]", "商品[{0}]的库存不足" },
 			{ "Order contains real products, please select a logistics", "订单包含实体商品，请选择一个物流" },

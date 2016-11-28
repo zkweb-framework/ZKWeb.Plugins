@@ -5,7 +5,9 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Shopping.Order.src.Components.GenericConfigs;
+using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
@@ -39,6 +41,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			[TextBoxField("NormalCartProductExpiresDays", "NormalCartProductExpiresDays")]
 			public int NormalCartProductExpiresDays { get; set; }
 			/// <summary>
+			/// 自动取消未付款订单天数
+			/// </summary>
+			[Required]
+			[TextBoxField("AutoCancelOrderAfterDays", "AutoCancelOrderAfterDays")]
+			public int AutoCancelOrderAfterDays { get; set; }
+			/// <summary>
 			/// 自动确认收货天数
 			/// </summary>
 			[Required]
@@ -49,6 +57,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			/// </summary>
 			[CheckBoxField("AllowAnonymousVisitorCreateOrder")]
 			public bool AllowAnonymousVisitorCreateOrder { get; set; }
+			/// <summary>
+			/// 库存减少模式
+			/// </summary>
+			[Required]
+			[DropdownListField("StockReductionMode", typeof(ListItemFromEnum<StockReductionMode>))]
+			public StockReductionMode StockReductionMode { get; set; }
 
 			/// <summary>
 			/// 绑定表单
@@ -58,8 +72,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				var settings = configManager.GetData<OrderSettings>();
 				BuynowCartProductExpiresDays = settings.BuynowCartProductExpiresDays;
 				NormalCartProductExpiresDays = settings.NormalCartProductExpiresDays;
+				AutoCancelOrderAfterDays = settings.AutoCancelOrderAfterDays;
 				AutoConfirmOrderAfterDays = settings.AutoConfirmOrderAfterDays;
 				AllowAnonymousVisitorCreateOrder = settings.AllowAnonymousVisitorCreateOrder;
+				StockReductionMode = settings.StockReductionMode;
 			}
 
 			/// <summary>
@@ -71,8 +87,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				var settings = configManager.GetData<OrderSettings>();
 				settings.BuynowCartProductExpiresDays = BuynowCartProductExpiresDays;
 				settings.NormalCartProductExpiresDays = NormalCartProductExpiresDays;
+				settings.AutoCancelOrderAfterDays = AutoCancelOrderAfterDays;
 				settings.AutoConfirmOrderAfterDays = AutoConfirmOrderAfterDays;
 				settings.AllowAnonymousVisitorCreateOrder = AllowAnonymousVisitorCreateOrder;
+				settings.StockReductionMode = StockReductionMode;
 				configManager.PutData(settings);
 				return new { message = new T("Saved Successfully") };
 			}

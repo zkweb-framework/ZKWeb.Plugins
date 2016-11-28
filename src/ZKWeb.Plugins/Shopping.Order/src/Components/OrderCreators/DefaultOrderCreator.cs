@@ -277,7 +277,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 			// 检查库存减少的模式
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var orderSettings = configManager.GetData<OrderSettings>();
-			if (orderSettings.StockReductionMode != StockReductionMode.AfterCreate) {
+			if (orderSettings.StockReductionMode != StockReductionMode.AfterCreateOrder) {
 				return;
 			}
 			// 获取匹配数据并减少数据中的库存数量
