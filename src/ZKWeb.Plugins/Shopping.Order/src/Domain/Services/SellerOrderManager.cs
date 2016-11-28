@@ -563,25 +563,27 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				return 0;
 			}
 			// 获取可能需要自动确认收货的订单
-			var before = DateTime.UtcNow.AddDays(-orderSettings.AutoConfirmOrderAfterDays);
-			var orders = GetMany(o => o.State == OrderState.WaitingBuyerConfirm && o.CreateTime < before);
-			var count = 0L;
-			foreach (var order in orders) {
-				// 判断发货时间是否在(当前-天数)之前
-				if (order.StateTimes.GetOrDefault(OrderState.WaitingBuyerConfirm) >= before) {
-					continue;
+			using (UnitOfWork.Scope()) {
+				var before = DateTime.UtcNow.AddDays(-orderSettings.AutoConfirmOrderAfterDays);
+				var orders = GetMany(o => o.State == OrderState.WaitingBuyerConfirm && o.CreateTime < before);
+				var count = 0L;
+				foreach (var order in orders) {
+					// 判断发货时间是否在(当前-天数)之前
+					if (order.StateTimes.GetOrDefault(OrderState.WaitingBuyerConfirm) >= before) {
+						continue;
+					}
+					// 判断是否可以确认
+					if (!order.Check(c => c.CanConfirm).First) {
+						continue;
+					}
+					// 添加纪录并确认订单
+					AddDetailRecord(order.Id, null, string.Format(
+						new T("Auto confirm order after {0} days"), orderSettings.AutoConfirmOrderAfterDays));
+					ConfirmOrder(order.Id, null, false);
+					count += 1;
 				}
-				// 判断是否可以确认
-				if (!order.Check(c => c.CanConfirm).First) {
-					continue;
-				}
-				// 添加纪录并确认订单
-				AddDetailRecord(order.Id, null, string.Format(
-					new T("Auto confirm order after {0} days"), orderSettings.AutoConfirmOrderAfterDays));
-				ConfirmOrder(order.Id, null, false);
-				count += 1;
+				return count;
 			}
-			return count;
 		}
 	}
 }

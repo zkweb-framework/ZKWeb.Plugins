@@ -1,19 +1,19 @@
 ﻿using System;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Components.ScheduledTasks.Interfaces;
-using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
+using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services;
 using ZKWebStandard.Ioc;
 
-namespace ZKWeb.Plugins.Shopping.Order.src.Components.ScheduledTasks {
+namespace ZKWeb.Plugins.Common.GenericRecord.src.Components.ScheduledTasks {
 	/// <summary>
-	/// 订单自动确认收货
+	/// 清理过期的通用记录
 	/// </summary>
-	[ExportMany, SingletonReuse]
-	public class OrderAutoConfirmer : IScheduledTaskExecutor {
+	[ExportMany]
+	public class GenericRecordCleaner : IScheduledTaskExecutor {
 		/// <summary>
 		/// 任务键名
 		/// </summary>
-		public string Key { get { return "Shopping.Order.OrderAutoConfirmer"; } }
+		public string Key { get { return "Common.GenericRecord.GenericRecordCleaner"; } }
 
 		/// <summary>
 		/// 每小时执行一次
@@ -23,14 +23,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.ScheduledTasks {
 		}
 
 		/// <summary>
-		/// 订单自动确认收货
+		/// 清理过期的通用记录
 		/// </summary>
 		public void Execute() {
-			var orderManager = Application.Ioc.Resolve<SellerOrderManager>();
-			var count = orderManager.AutoConfirmOrder();
+			var recordManager = Application.Ioc.Resolve<GenericRecordManager>();
+			var count = recordManager.ClearExpiredRecords();
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogInfo(string.Format(
-				"OrderAutoConfirmer executed, {0} order confirmed", count));
+				"GenericRecordCleaner executed, {0} records removed", count));
 		}
 	}
 }

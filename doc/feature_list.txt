@@ -210,7 +210,7 @@ Common.GenericRecord
 	通用记录管理
 		添加通用记录
 		获取通用记录 (TODO: 获取时过滤过期记录)
-	TODO: 自动清理过期的记录
+	自动清理过期的记录
 
 Common.GenericTag
 	提供数据库实体

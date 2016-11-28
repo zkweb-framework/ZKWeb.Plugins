@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services {
 		/// <param name="content">记录内容</param>
 		/// <param name="keepTime">保留时间，等于null时永久保留</param>
 		/// <param name="extraData">附加数据</param>
-		public void AddRecord(
+		public virtual void AddRecord(
 			string type, Guid? releatedId, Guid? creatorId,
 			string content, TimeSpan? keepTime = null, object extraData = null) {
 			var userService = Application.Ioc.Resolve<IDomainService<User, Guid>>();
@@ -45,7 +45,7 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services {
 		/// </summary>
 		/// <param name="type">记录类型</param>
 		/// <returns></returns>
-		public IList<Entities.GenericRecord> FindRecords(string type) {
+		public virtual IList<Entities.GenericRecord> FindRecords(string type) {
 			return GetMany(query => query
 				.Where(r => r.Type == type)
 				.OrderByDescending(r => r.Id).ToList());
@@ -58,10 +58,21 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services {
 		/// <param name="type">记录类型</param>
 		/// <param name="releatedId">关联数据Id</param>
 		/// <returns></returns>
-		public IList<Entities.GenericRecord> FindRecords(string type, Guid? releatedId) {
+		public virtual IList<Entities.GenericRecord> FindRecords(string type, Guid? releatedId) {
 			return GetMany(query => query
 				.Where(r => r.Type == type && r.ReleatedId == releatedId)
 				.OrderByDescending(r => r.CreateTime).ToList());
+		}
+
+		/// <summary>
+		/// 清理过期的记录
+		/// </summary>
+		/// <returns></returns>
+		public virtual long ClearExpiredRecords() {
+			var now = DateTime.UtcNow;
+			using (UnitOfWork.Scope()) {
+				return Repository.BatchDelete(p => p.KeepUntil != null && p.KeepUntil < now);
+			}
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.ScheduledTasks {
 		}
 
 		/// <summary>
-		/// 自动确认订单
+		/// 清理过期的购物车商品
 		/// </summary>
 		public void Execute() {
 			var cartProductManager = Application.Ioc.Resolve<CartProductManager>();
