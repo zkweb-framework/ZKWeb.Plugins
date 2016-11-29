@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ZKWeb.Localize;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
 using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
@@ -112,7 +110,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 					LogisticsSerial = delivery.LogisticsSerial,
 					DeliveryOperator = delivery.Operator?.Username,
 					DeliveryTime = delivery.CreateTime.ToClientTimeString(),
-					Action = action
+					Actions = action
 				});
 			}
 			return (HtmlString)table.ToLiquid();

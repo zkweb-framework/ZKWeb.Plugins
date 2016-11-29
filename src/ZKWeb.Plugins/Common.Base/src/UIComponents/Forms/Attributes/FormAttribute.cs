@@ -25,6 +25,10 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes {
 		/// </summary>
 		public string SubmitButtonText { get; set; }
 		/// <summary>
+		/// 提交按钮的css类，默认是btn btn-submit
+		/// </summary>
+		public string SubmitButtonCssClass { get; set; }
+		/// <summary>
 		/// 启用Ajax提交，默认等于true
 		/// </summary>
 		public bool EnableAjaxSubmit { get; set; }
@@ -48,6 +52,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes {
 			Action = action;
 			Method = method;
 			SubmitButtonText = "Submit";
+			SubmitButtonCssClass = "btn btn-submit";
 			EnableAjaxSubmit = true;
 			EnableCsrfToken = true;
 			CssClass = "form-horizontal";

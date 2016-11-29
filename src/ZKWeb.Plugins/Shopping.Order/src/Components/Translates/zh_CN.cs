@@ -182,6 +182,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "OrderState", "订单状态" },
 			{ "OrderActions", "订单操作" },
 			{ "OriginalTotalCost", "原始总金额" },
+			{ "DeliverySerial", "发货单编号" },
 			{ "LogisticsSerial", "快递单编号" },
 			{ "DeliveryOperator", "发货人" },
 			{ "DeliveryTime", "发货时间" },
@@ -266,7 +267,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 				"确认收货失败，请检查订单记录" },
 			{ "Confirm order success", "确认收货成功" },
 			{ "Auto confirm order after {0} days", "在经过{0}天后仍未确认收货，自动确认收货" },
-			{ "Auto cancel order after {0} days unpaid", "在经过{0}天后仍未付款，自动取消订单" }
+			{ "Auto cancel order after {0} days unpaid", "在经过{0}天后仍未付款，自动取消订单" },
 		};
 
 		public bool CanTranslate(string code) {

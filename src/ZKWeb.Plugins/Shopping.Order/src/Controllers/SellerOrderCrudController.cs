@@ -101,6 +101,20 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		}
 
 		/// <summary>
+		/// 查看发货单
+		/// </summary>
+		/// <returns></returns>
+		protected IActionResult DeliveryView() {
+			var form = new OrderDeliverySellerDisplayForm();
+			if (Request.Method == HttpMethods.GET) {
+				form.Bind();
+				return new TemplateResult("shopping.order/order_delivery_view.html", new { form });
+			} else {
+				return new JsonResult(form.Submit());
+			}
+		}
+
+		/// <summary>
 		/// 代确认收货
 		/// </summary>
 		/// <returns></returns>
@@ -151,6 +165,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				deliveryGoodsUrl, HttpMethods.GET, WrapAction(DeliveryGoods, EditPrivileges));
 			controllerManager.RegisterAction(
 				deliveryGoodsUrl, HttpMethods.POST, WrapAction(DeliveryGoods, EditPrivileges));
+			// 查看发货单
+			var deliveryViewUrl = Url + "/delivery_view";
+			controllerManager.RegisterAction(
+				deliveryViewUrl, HttpMethods.GET, WrapAction(DeliveryView, EditPrivileges));
+			controllerManager.RegisterAction(
+				deliveryViewUrl, HttpMethods.POST, WrapAction(DeliveryView, EditPrivileges));
 			// 代确认收货
 			var confirmOrderInsteadOfBuyerUrl = Url + "/confirm_instead_of_buyer";
 			controllerManager.RegisterAction(

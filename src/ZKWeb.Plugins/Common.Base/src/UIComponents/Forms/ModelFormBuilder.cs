@@ -1,5 +1,6 @@
 ﻿using DotLiquid;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.FastReflection;
@@ -80,14 +81,24 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 		/// </summary>
 		/// <param name="obj">对象</param>
 		public void AddFieldsFrom(object obj) {
+			// 先添加基类的字段，再添加子类的字段
+			var types = new List<Type>();
 			var type = obj.GetType();
-			foreach (var property in type.FastGetProperties()) {
-				var fieldAttribute = property.GetAttribute<FormFieldAttribute>();
-				if (fieldAttribute != null) {
-					var field = new FormField(fieldAttribute);
-					field.ValidationAttributes.AddRange(property.GetAttributes<ValidationAttribute>());
-					Form.Fields.Add(field);
-					FieldToProperty[field] = Pair.Create(obj, property);
+			while (type != null) {
+				types.Add(type);
+				type = type.GetTypeInfo().BaseType;
+			}
+			types.Reverse();
+			foreach (var fromType in types) {
+				foreach (var property in fromType.FastGetProperties(
+					BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)) {
+					var fieldAttribute = property.GetAttribute<FormFieldAttribute>();
+					if (fieldAttribute != null) {
+						var field = new FormField(fieldAttribute);
+						field.ValidationAttributes.AddRange(property.GetAttributes<ValidationAttribute>());
+						Form.Fields.Add(field);
+						FieldToProperty[field] = Pair.Create(obj, property);
+					}
 				}
 			}
 		}

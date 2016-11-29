@@ -106,13 +106,13 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			/// 密码
 			/// </summary>
 			[StringLength(100, MinimumLength = 5)]
-			[PasswordField("Password", "Keep empty if you don't want to change", Group = "Change Password")]
+			[PasswordField("Password", "Keep empty if you don't want to change")]
 			public string Password { get; set; }
 			/// <summary>
 			/// 确认密码
 			/// </summary>
 			[StringLength(100, MinimumLength = 5)]
-			[PasswordField("ConfirmPassword", "Keep empty if you don't want to change", Group = "Change Password")]
+			[PasswordField("ConfirmPassword", "Keep empty if you don't want to change")]
 			public string ConfirmPassword { get; set; }
 			/// <summary>
 			/// 头像

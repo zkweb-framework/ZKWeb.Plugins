@@ -53,7 +53,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			} else {
 				info.ViewTransactionUrlFormat = "";
 			}
-			info.ViewDeliveryUrlFormat = ""; // TODO: 补充这个地址
+			if (operatorType == OrderOperatorType.Admin) {
+				info.ViewDeliveryUrlFormat = "/admin/orders/delivery_view?id={0}";
+			} else if (operatorType == OrderOperatorType.Buyer) {
+				info.ViewDeliveryUrlFormat = "/user/orders/delivery_view?id={0}";
+			} else if (operatorType == OrderOperatorType.Seller) {
+				info.ViewDeliveryUrlFormat = "/seller/orders/delivery_view?id={0}";
+			} else {
+				info.ViewDeliveryUrlFormat = "";
+			}
 			foreach (var provider in displayInfoProviders) {
 				provider.AddWarnings(order, info.WarningHtmls, operatorType);
 				provider.AddToolButtons(order, info.ToolButtonHtmls, operatorType);

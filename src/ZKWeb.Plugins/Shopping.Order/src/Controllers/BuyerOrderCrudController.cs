@@ -90,6 +90,16 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 		}
 
 		/// <summary>
+		/// 查看发货单
+		/// </summary>
+		/// <returns></returns>
+		protected IActionResult DeliveryView() {
+			var form = new OrderDeliveryBuyerDisplayForm();
+			form.Bind();
+			return new TemplateResult("shopping.order/order_delivery_view.html", new { form });
+		}
+
+		/// <summary>
 		/// 确认收货
 		/// </summary>
 		protected IActionResult ConfirmOrder() {
@@ -114,6 +124,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 				cancelOrderUrl, HttpMethods.GET, WrapAction(CancelOrder, EditPrivileges));
 			controllerManager.RegisterAction(
 				cancelOrderUrl, HttpMethods.POST, WrapAction(CancelOrder, EditPrivileges));
+			// 查看发货单
+			var deliveryViewUrl = Url + "/delivery_view";
+			controllerManager.RegisterAction(
+				deliveryViewUrl, HttpMethods.GET, WrapAction(DeliveryView, EditPrivileges));
 			// 确认收货
 			var confirmOrderUrl = Url + "/confirm_order";
 			controllerManager.RegisterAction(

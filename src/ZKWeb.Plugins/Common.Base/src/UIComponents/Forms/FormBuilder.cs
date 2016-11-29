@@ -123,6 +123,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			html.AppendLine(
 				templateManager.RenderTemplate("common.base/tmpl.form.submit_button.html", new {
+					buttonClass = Attribute.SubmitButtonCssClass,
 					buttonText = new T(Attribute.SubmitButtonText)
 				}));
 		}
