@@ -4,6 +4,7 @@ using System.Linq;
 using ZKWeb.Cache;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services;
@@ -11,6 +12,7 @@ using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Logistics.src.Domain.Services;
+using ZKWeb.Plugins.Shopping.Order.src.Components.GenericConfigs;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderLogisticsProviders.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderPaymentApiProviders.Interfaces;
@@ -30,8 +32,6 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
-	using Common.Base.src.Domain.Services;
-	using Components.GenericConfigs;
 	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>
@@ -275,14 +275,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				var previousAmount = transaction.Amount;
 				transactionManager.Save(ref transaction, t => t.Amount = entry.Value);
 				// 添加交易记录
-				transactionManager.AddDetailRecord(transaction.Id, operatorId, 
+				transactionManager.AddDetailRecord(transaction.Id, operatorId,
 					new T("Amount changed by edit order cost, previous value is {0}", previousAmount));
 			}
 			// 终止合并交易
 			transactionManager.EnsureParentTransactionAborted(releatedTransactionIds, operatorId,
 				new T("Child transactions amount changed by edit order cost, this merge transaction should be aborted"));
 			// 添加订单记录
-			AddDetailRecord(order.Id, operatorId, 
+			AddDetailRecord(order.Id, operatorId,
 				new T("Order total cost changed, previous value is {0}", previousTotalCost));
 		}
 
@@ -300,7 +300,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				o.OrderParameters = order.OrderParameters; // 触发setter
 			});
 			// 添加订单记录
-			AddDetailRecord(order.Id, operatorId, 
+			AddDetailRecord(order.Id, operatorId,
 				new T("Order shipping address changed, previous value is {0}",
 				previousAddress.GenerateSummary()));
 		}
@@ -362,6 +362,23 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 根据订单中订购的商品减少库存
+		/// </summary>
+		/// <param name="order">订单</param>
+		public virtual void ReduceStock(SellerOrder order) {
+			var productManager = Application.Ioc.Resolve<ProductManager>();
+			foreach (var orderProduct in order.OrderProducts) {
+				var product = orderProduct.Product;
+				var data = product.MatchedDatas
+					.Where(d => d.Stock != null)
+					.WhereMatched(orderProduct.MatchParameters).FirstOrDefault();
+				if (data != null) {
+					productManager.Save(ref product, _ => data.ReduceStock(orderProduct.Count));
+				}
+			}
+		}
+
+		/// <summary>
 		/// 处理订单已付款
 		/// 处理失败时记录到订单记录
 		/// </summary>
@@ -382,7 +399,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				AddDetailRecord(orderId, null, new T("Order is paid"));
 			} else {
 				// 添加失败的订单记录
-				AddDetailRecord(orderId, null, 
+				AddDetailRecord(orderId, null,
 					new T("Can't process order paid, reason is {0}", canProcessOrderPaid.Second));
 			}
 			return canProcessOrderPaid.First;
@@ -391,7 +408,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <summary>
 		/// 处理订单全部商品已发货
 		/// 处理失败时记录到订单记录
-		/// 处理成功时后台通知支付平台已发货
 		/// </summary>
 		/// <param name="orderId">订单Id</param>
 		/// <returns>是否处理成功</returns>
@@ -408,17 +424,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				Save(ref order, o => o.SetState(OrderState.WaitingBuyerConfirm));
 				// 添加成功的订单记录
 				AddDetailRecord(orderId, null, new T("All goods under order is shipped"));
-				// 后台通知支付平台已发货
-				var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
-				var lastDelivery = order.OrderDeliveries.OrderByDescending(d => d.CreateTime).FirstOrDefault();
-				var logisticsName = lastDelivery?.Logistics?.Name;
-				var invoiceNo = lastDelivery?.LogisticsSerial;
-				foreach (var transaction in GetReleatedTransactions(orderId)) {
-					transactionManager.NotifyAllGoodsShippedBackground(transaction.Id, logisticsName, invoiceNo);
-				}
 			} else {
 				// 添加失败的订单记录
-				AddDetailRecord(orderId, null, 
+				AddDetailRecord(orderId, null,
 					new T("Can't process order shipped, reason is {0}", canProcessAllGoodsShipped.Second));
 			}
 			return canProcessAllGoodsShipped.First;
@@ -445,7 +453,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				AddDetailRecord(orderId, null, new T("Order is successed"));
 			} else {
 				// 添加失败的订单记录
-				AddDetailRecord(orderId, null, 
+				AddDetailRecord(orderId, null,
 					new T("Can't process order successed, reason is {0}", canProcessSuccess.Second));
 			}
 			return canProcessSuccess.First;
@@ -474,11 +482,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				// 修改订单状态
 				Save(ref order, o => o.SetState(OrderState.OrderCancelled));
 				// 添加成功的订单记录
-				AddDetailRecord(orderId, operatorId, 
+				AddDetailRecord(orderId, operatorId,
 					new T("Order cancelled, reason is {0}", reason));
 			} else {
 				// 添加失败的订单记录
-				AddDetailRecord(orderId, operatorId, 
+				AddDetailRecord(orderId, operatorId,
 					new T("Can't cancel order, reason is {0}", canSetCancelled.Second));
 			}
 			return canSetCancelled.First;
@@ -507,11 +515,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				// 修改订单状态
 				Save(ref order, o => o.SetState(OrderState.OrderInvalid));
 				// 添加成功的订单记录
-				AddDetailRecord(orderId, operatorId, 
+				AddDetailRecord(orderId, operatorId,
 					new T("Order become invalid, reason is {0}", reason));
 			} else {
 				// 添加失败的订单记录
-				AddDetailRecord(orderId, operatorId, 
+				AddDetailRecord(orderId, operatorId,
 					new T("Can't set order invalid, reason is {0}", canSetInvalid.Second));
 			}
 			return canSetInvalid.First;
@@ -545,7 +553,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				ProcessSuccess(orderId);
 			} else {
 				// 添加失败的订单记录
-				AddDetailRecord(orderId, operatorId, 
+				AddDetailRecord(orderId, operatorId,
 					new T("Can't confirm order, reason is {0}", canConfirm.Second));
 			}
 			return canConfirm.First;
@@ -573,7 +581,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 						continue;
 					}
 					// 取消订单
-					CancelOrder(order.Id, null, 
+					CancelOrder(order.Id, null,
 						new T("Auto cancel order after {0} days unpaid",
 						orderSettings.AutoCancelOrderAfterDays));
 					count += 1;
@@ -608,7 +616,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 						continue;
 					}
 					// 添加纪录并确认订单
-					AddDetailRecord(order.Id, null, 
+					AddDetailRecord(order.Id, null,
 						new T("Auto confirm order after {0} days", orderSettings.AutoConfirmOrderAfterDays));
 					ConfirmOrder(order.Id, null, false);
 					count += 1;

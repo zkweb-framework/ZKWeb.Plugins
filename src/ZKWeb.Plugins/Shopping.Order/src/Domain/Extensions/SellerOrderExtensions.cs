@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ZKWeb.Plugins.Shopping.Order.src.Components.OrderCheckers.Interfaces;
+using ZKWeb.Plugins.Shopping.Order.src.Components.OrderHandlers.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Product.src.Components.ProductTypes.Interfaces;
@@ -42,9 +43,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Extensions {
 		/// <param name="state">状态</param>
 		public static void SetState(
 			this SellerOrder order, OrderState state) {
+			// 设置状态和时间
 			order.State = state;
 			order.StateTimes[state] = DateTime.UtcNow;
-			order.StateTimes = order.StateTimes; // 触发setter
+			// 触发setter
+			order.StateTimes = order.StateTimes;
+			// 通知状态改变
+			foreach (var handler in Application.Ioc.ResolveMany<IOrderHandler>()) {
+				handler.OnStateChanged(order, state);
+			}
 		}
 
 		/// <summary>

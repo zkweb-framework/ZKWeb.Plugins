@@ -37,7 +37,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 	///   - 创建订单交易
 	/// - 删除相应的购物车商品 (RemoveCartProducts)
 	/// - 保存收货地址的修改 (SaveShippingAddress)
-	/// - 如果设置了下单时扣减库存，减少对应商品的库存 (ReduceProductsStock)
 	/// - 有一个以上的订单时创建合并订单交易 (CreateMergedTransaction)
 	/// </summary>
 	[ExportMany]
@@ -151,13 +150,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				var sellerOrder = new SellerOrder() {
 					Buyer = Parameters.UserId == null ? null : userManager.Get(Parameters.UserId.Value),
 					Owner = (group.Key == null) ? null : userManager.Get(group.Key.Value),
-					State = OrderState.WaitingBuyerPay,
 					OrderParameters = Parameters.OrderParameters,
 					TotalCost = orderPrice.Parts.Sum(),
 					Currency = orderPrice.Currency,
 					TotalCostCalcResult = orderPrice,
-					OriginalTotalCostCalcResult = orderPrice,
-					StateTimes = new OrderStateTimes() { { OrderState.WaitingBuyerPay, now } }
+					OriginalTotalCostCalcResult = orderPrice
 				};
 				// 添加关联的订单商品
 				// 这里会重新计算单价，但应该和之前的计算结果一样
@@ -195,6 +192,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 				}
 				// 生成订单编号
 				sellerOrder.Serial = SerialGenerator.GenerateFor(sellerOrder);
+				// 设置初始状态，这里会触发注册的处理器
+				sellerOrder.SetState(OrderState.WaitingBuyerPay);
 				// 保存卖家订单
 				orderManager.Save(ref sellerOrder);
 				Result.CreatedSellerOrders.Add(sellerOrder);
@@ -271,28 +270,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 		}
 
 		/// <summary>
-		/// 如果设置了下单时扣减库存，减少对应商品的库存
-		/// </summary>
-		protected virtual void ReduceProductsStock() {
-			// 检查库存减少的模式
-			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
-			var orderSettings = configManager.GetData<OrderSettings>();
-			if (orderSettings.StockReductionMode != StockReductionMode.AfterCreateOrder) {
-				return;
-			}
-			// 获取匹配数据并减少数据中的库存数量
-			var productManager = Application.Ioc.Resolve<ProductManager>();
-			foreach (var order in Result.CreatedBuyerOrders) {
-				foreach (var orderProduct in order.SellerOrder.OrderProducts) {
-					var data = orderProduct.Product.MatchedDatas
-						.Where(d => d.Stock != null)
-						.WhereMatched(orderProduct.MatchParameters).FirstOrDefault();
-					data?.ReduceStock(orderProduct.Count);
-				}
-			}
-		}
-
-		/// <summary>
 		/// 有一个以上的订单时创建合并订单交易
 		/// </summary>
 		protected virtual void CreateMergedTransaction() {
@@ -331,7 +308,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 			CreateOrdersBySellers();
 			RemoveCartProducts();
 			SaveShippingAddress();
-			ReduceProductsStock();
 			CreateMergedTransaction();
 			return Result;
 		}
