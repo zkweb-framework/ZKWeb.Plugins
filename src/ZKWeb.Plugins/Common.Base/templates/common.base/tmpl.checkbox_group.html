@@ -6,7 +6,7 @@
 	<div class="checkbox-list">
 		{% for item in items %}
 		<label class="checkbox-inline" child-merge-to="{{ fieldName }}" child-value="{{ item.value }}">
-			<input type="checkbox" merge-to="input[name='{{ fieldName }}']" value="{{ item.value }}" />
+			<input type="checkbox" merge-to="input[name='{{ fieldName }}']" value="{{ item.value }}" data-extra="{{ item.extra | json }}" />
 			{{ item.name | trans }}
 		</label>
 		{% endfor %}

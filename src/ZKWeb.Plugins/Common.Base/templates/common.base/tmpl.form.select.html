@@ -1,9 +1,9 @@
 ﻿<select name="{{ name }}" class="form-control" {{ attributes | html_attributes }}>
 	{% for option in options %}
 	{% if option.selected %}
-	<option value="{{ option.value }}" selected="selected">{{ option.name }}</option>
+	<option value="{{ option.value }}" selected="selected" data-extra="{{ option.extra | json }}">{{ option.name }}</option>
 	{% else %}
-	<option value="{{ option.value }}">{{ option.name }}</option>
+	<option value="{{ option.value }}" data-extra="{{ option.extra | json }}">{{ option.name }}</option>
 	{% endif %}
 	{% endfor %}
 </select>

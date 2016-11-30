@@ -1,5 +1,8 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Templating;
 
 namespace ZKWeb.Plugins.Common.Base.src.UIComponents.HtmlItems.Extensions {
@@ -63,6 +66,20 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.HtmlItems.Extensions {
 				JsonConvert.SerializeObject(title),
 				JsonConvert.SerializeObject(url),
 				JsonConvert.SerializeObject(dialogParameters)));
+		}
+
+		/// <summary>
+		/// 添加Ajax表格使用的过滤栏
+		/// </summary>
+		/// <param name="items">html项列表</param>
+		/// <param name="key">过滤键</param>
+		/// <param name="tabItems">标签项列表，附加属性中可以设置displayCount显示数量</param>
+		public static void AddAjaxTableFilterBar(
+			this List<HtmlItem> items, string key, IList<ListItem> tabItems) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var html = templateManager.RenderTemplate(
+				"common.base/tmpl.ajax_table.filter_bar.html", new { key, tabItems });
+			items.Add(new HtmlItem(html));
 		}
 	}
 }

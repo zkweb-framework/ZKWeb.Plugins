@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.HtmlItems;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.HtmlItems.Extensions;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
-using ZKWeb.Templating;
 using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions {
@@ -19,12 +19,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions {
 		/// </summary>
 		/// <param name="items">html项列表</param>
 		public static void AddOrderFilterBar(this List<HtmlItem> items) {
-			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var states = Enum.GetValues(typeof(OrderState)).OfType<OrderState>()
-				.Select(s => new { name = new T(s.GetDescription()), value = (int)s });
-			var html = templateManager.RenderTemplate(
-				"shopping.order/tmpl.order_list.status_filter.html", new { states });
-			items.Add(new HtmlItem(html));
+			var tabItems = new List<ListItem>();
+			tabItems.Add(new ListItem(new T("All"), ""));
+			foreach (var state in Enum.GetValues(typeof(OrderState)).OfType<OrderState>()) {
+				tabItems.Add(new ListItem(new T(state.GetDescription()), ((int)state).ToString()));
+			}
+			items.AddAjaxTableFilterBar("State", tabItems);
 		}
 	}
 }

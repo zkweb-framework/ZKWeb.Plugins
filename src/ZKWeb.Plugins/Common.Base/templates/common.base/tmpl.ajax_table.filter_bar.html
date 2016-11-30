@@ -1,0 +1,9 @@
+﻿<div class="ajax-table-filter-bar btn-group pull-left">
+	{% for item in tabItems %}
+	{% if forloop.index == 1 %}
+	<div class="btn btn-default btn-filter active" data-key="{{ key }}" data-value="{{ item.value }}" data-extra="{{ item.extra | json }}">{{ item.name }}</div>
+	{% else %}
+	<div class="btn btn-default btn-filter" data-key="{{ key }}" data-value="{{ item.value }}" data-extra="{{ item.extra | json }}">{{ item.name }}</div>
+	{% endif %}
+	{% endfor %}
+</div>
