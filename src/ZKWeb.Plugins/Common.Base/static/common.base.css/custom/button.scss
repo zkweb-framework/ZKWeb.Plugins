@@ -16,3 +16,21 @@
 		margin-top: 5px;
 	}
 }
+
+/* 过滤按钮中的总数量 */
+.btn-filter > .total-count {
+	display: inline;
+	padding: .2em .6em .3em;
+	font-weight: bold;
+	background-color: #00a65a;
+	color: #fff;
+	font-size: 75%;
+	border-radius: .25em;
+	position: relative;
+	top: -1px;
+	margin: 0px 0px 0px 3px;
+
+	&.more-than-zero {
+		background-color: #f39c12;
+	}
+}

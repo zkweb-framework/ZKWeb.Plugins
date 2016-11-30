@@ -22,7 +22,13 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.HtmlItems.Extensions {
 			var tabItems = new List<ListItem>();
 			tabItems.Add(new ListItem(new T("All"), ""));
 			foreach (var state in Enum.GetValues(typeof(OrderState)).OfType<OrderState>()) {
-				tabItems.Add(new ListItem(new T(state.GetDescription()), ((int)state).ToString()));
+				object extra = null;
+				if (state == OrderState.WaitingBuyerPay ||
+					state == OrderState.WaitingSellerDeliveryGoods ||
+					state == OrderState.WaitingBuyerConfirm) {
+					extra = new { displayCount = true };
+				}
+				tabItems.Add(new ListItem(new T(state.GetDescription()), ((int)state).ToString(), extra));
 			}
 			items.AddAjaxTableFilterBar("State", tabItems);
 		}

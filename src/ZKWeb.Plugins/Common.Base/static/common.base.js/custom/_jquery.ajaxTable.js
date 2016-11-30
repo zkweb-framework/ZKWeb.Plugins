@@ -208,14 +208,4 @@ $(function () {
 	$body.on("click", ".ajax-table-search-bar .advance-search-button", function (e) {
 		$(this).closestAjaxTable().applySearch(this);
 	});
-	// ajax表格过滤按钮功能
-	// 点击时设置条件 data-key的值 等于 data-value的值
-	$body.on("click", ".ajax-table-search-bar .btn-filter", function (e) {
-		var $this = $(this);
-		var table = $(this).closestAjaxTable();
-		$this.closest(".btn-group").find(".btn-filter").removeClass("active");
-		$this.addClass("active");
-		table.searchRequest.Conditions[$this.data("key")] = $this.data("value");
-		table.applySearch(this);
-	});
 });
