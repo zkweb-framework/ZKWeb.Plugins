@@ -18,7 +18,9 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings;
 using ZKWeb.Plugins.Common.UserPanel.src.Controllers.Bases;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
@@ -113,6 +115,25 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 		}
 
 		/// <summary>
+		/// 合并支付
+		/// </summary>
+		/// <returns></returns>
+		protected IActionResult MergePayment() {
+			var serials = Request.Get<IList<string>>("json");
+			var orderManager = Application.Ioc.Resolve<BuyerOrderManager>();
+			var orderIds = orderManager.GetBuyerOrderIdsFromSerials(serials);
+			if (orderIds.Count != serials.Count) {
+				throw new BadRequestException(new T("Some order not exists"));
+			} else if (orderIds.Count <= 1) {
+				throw new BadRequestException(new T("Merge payment required atleast 2 orders"));
+			}
+			var transactionId = orderManager.MergePayment(orderIds);
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var checkoutUrl = transactionManager.GetResultUrl(transactionId);
+			return new JsonResult(new { script = BaseScriptStrings.Redirect(checkoutUrl) });
+		}
+
+		/// <summary>
 		/// 网站启动时添加处理函数
 		/// </summary>
 		public override void OnWebsiteStart() {
@@ -134,6 +155,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 				confirmOrderUrl, HttpMethods.GET, WrapAction(ConfirmOrder, EditPrivileges));
 			controllerManager.RegisterAction(
 				confirmOrderUrl, HttpMethods.POST, WrapAction(ConfirmOrder, EditPrivileges));
+			// 合并支付
+			var mergePaymentUrl = Url + "/merge_payment";
+			controllerManager.RegisterAction(
+				mergePaymentUrl, HttpMethods.POST, WrapAction(MergePayment, EditPrivileges));
 		}
 
 		/// <summary>
@@ -210,7 +235,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			/// </summary>
 			public override void OnResponse(
 				AjaxTableSearchRequest request, AjaxTableSearchResponse response) {
-				response.Columns.AddIdColumn("Id").StandardSetupFor<BuyerOrderCrudController>(request);
+				var idColumn = response.Columns.AddIdColumn("Id");
+				idColumn.StandardSetupFor<BuyerOrderCrudController>(request);
 				response.Columns.AddHtmlColumn("OrderProducts", "30%");
 				response.Columns.AddHtmlColumn("Price", "70");
 				response.Columns.AddHtmlColumn("Quantity", "70");
@@ -222,6 +248,15 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 				var actionColumn = response.Columns.AddActionColumn("5%");
 				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
 				if (!deleted) {
+					idColumn.AddConfirmActionForMultiChecked(
+						new T("MergePayment"),
+						"fa fa-credit-card",
+						new T("Please select orders to merge payment"),
+						new T("MergePayment"),
+						BaseScriptStrings.ConfirmMessageTemplateForMultiSelected(
+							new T("Sure to merge following order's payment?"), "ToString"),
+						BaseScriptStrings.PostConfirmedActionForMultiSelected(
+							"Serial", "/user/orders/merge_payment"));
 					actionColumn.AddButtonForOpenLink(
 						new T("View"), "btn btn-xs btn-info", "fa fa-edit",
 						"/user/orders/edit?serial=<%-row.Serial%>");

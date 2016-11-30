@@ -268,6 +268,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Confirm order success", "确认收货成功" },
 			{ "Auto confirm order after {0} days", "在经过{0}天后仍未确认收货，自动确认收货" },
 			{ "Auto cancel order after {0} days unpaid", "在经过{0}天后仍未付款，自动取消订单" },
+			{ "MergePayment", "合并支付" },
+			{ "Please select orders to merge payment", "请选择需要合并支付的订单" },
+			{ "Sure to merge following order's payment?", "确认合并以下订单的支付？" },
+			{ "Some order not exists", "部分订单不存在" },
+			{ "Merge payment required atleast 2 orders", "合并支付需要至少两个订单" },
+			{ "Some order is not payable", "部分订单不可支付" },
+			{ "New merged transaction has created, this merge transaction should be aborted",
+				"已创建新的合并交易，旧的合并交易应该被终止" }
 		};
 
 		public bool CanTranslate(string code) {

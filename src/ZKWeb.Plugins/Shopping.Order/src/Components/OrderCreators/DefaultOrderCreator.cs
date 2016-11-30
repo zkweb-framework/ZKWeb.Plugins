@@ -276,24 +276,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.OrderCreators {
 			if (Result.CreatedTransactions.Count <= 1) {
 				return;
 			}
-			// 创建合并订单交易
-			// 因为目前只能使用后台的支付接口，所以收款人应该是null
-			// 手续费会在这里按合并后的金额重新计算
-			var apiManager = Application.Ioc.Resolve<PaymentApiManager>();
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
-			var firstTransaction = Result.CreatedTransactions.First();
-			var amount = Result.CreatedTransactions.Sum(t => t.Amount);
-			var paymentFee = apiManager.CalculatePaymentFee(firstTransaction.Api.Id, amount);
-			var transaction = transactionManager.CreateTransaction(
+			var transaction = transactionManager.CreateMergedTransaction(
 				MergedOrderTransactionHandler.ConstType,
-				firstTransaction.Api.Id,
-				amount,
-				paymentFee,
-				firstTransaction.CurrencyType,
-				firstTransaction.Payer?.Id,
-				null, null, // 无收款人Id，无关联Id
-				string.Join("; ", Result.CreatedTransactions.Select(t => t.Description)),
-				null, // 无附加数据
 				Result.CreatedTransactions);
 			Result.CreatedTransactions.Add(transaction);
 		}

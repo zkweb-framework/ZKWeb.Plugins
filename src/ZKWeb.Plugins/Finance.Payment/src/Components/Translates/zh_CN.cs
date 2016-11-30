@@ -98,7 +98,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "Can't process secured paid on child transaction {0}, reason is {1}",
 				"不能处理子交易({0})的担保交易已付款，原因是{1}" },
 			{ "Can't process success on child transaction {0}, reason is {1}",
-				"不能处理子交易({0})的交易成功，原因是{1}" }
+				"不能处理子交易({0})的交易成功，原因是{1}" },
+			{ "Some child transaction have different currency type", "部分子交易的货币不一致" },
+			{ "Some child transaction have different payment api", "部分子交易的支付接口不一致" },
+			{ "Some child transaction have different payer", "部分子交易的付款人不一致" },
+			{ "Some child transaction have different payee", "部分子交易的收款人不一致" },
+			{ "Some child transaction is not payable", "部分子交易不可支付" }
 		};
 
 		public bool CanTranslate(string code) {

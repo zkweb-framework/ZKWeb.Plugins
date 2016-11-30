@@ -7,7 +7,6 @@ using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
-using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services;
 using ZKWeb.Plugins.Common.SerialGenerate.src.Components.SerialGenerate;
@@ -153,7 +152,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 				Save(ref transaction, t => t.LastError = lastError);
 				// 记录错误到日志
 				var logManager = Application.Ioc.Resolve<LogManager>();
-				var message = 
+				var message =
 					new T("Payment transaction {0} error: {1}", transaction.Serial, lastError);
 				logManager.LogTransaction(message);
 				// 记录错误到数据库
@@ -223,7 +222,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 					throw new BadRequestException(new T("Unsupported transaction state: {0}", state));
 				}
 				// 成功时添加详细记录
-				AddDetailRecord(transaction.Id, null, 
+				AddDetailRecord(transaction.Id, null,
 					new T("Change transaction state to {0}", new T(transaction.State.GetDescription())));
 				// 需要自动发货时进行发货
 				foreach (var parameter in parameters) {
@@ -247,7 +246,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 			try {
 				ProcessInternal(transactionId, externalSerial, state);
 			} catch (Exception e) {
-				var errorMessage = 
+				var errorMessage =
 					new T("Change transaction state to {0} failed: {1}",
 					new T(state.GetDescription()),
 					new T(e.Message));
@@ -286,7 +285,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 						AddDetailRecord(transactionId, null,
 							new T("Notify goods shipped to payment api success"));
 					} catch (Exception e) {
-						AddDetailRecord(transactionId, null, 
+						AddDetailRecord(transactionId, null,
 							new T("Notify goods shipped to payment api failed: {0}", e.Message));
 					}
 				} catch {
@@ -329,6 +328,52 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 				!transaction.ExternalSerial.StartsWith(MergedTransactionHandlerBase.ExternalSerialPrefix)) {
 				EnsureParentTransactionAborted(new[] { transaction.Id }, operatorId, reason);
 			}
+		}
+
+		/// <summary>
+		/// 创建合并交易，合并金额和重新计算手续费
+		/// 要求所有交易可支付，并且所有交易的货币，支付接口，收款人，付款人等一致
+		/// </summary>
+		/// <param name="transactionType">交易类型</param>
+		/// <param name="childTransactions">子交易列表</param>
+		/// <returns></returns>
+		public virtual PaymentTransaction CreateMergedTransaction(
+			string transactionType,
+			IList<PaymentTransaction> childTransactions) {
+			// 检查各个子交易
+			var firstTransaction = childTransactions.First();
+			if (childTransactions.Any(t => t.CurrencyType != firstTransaction.CurrencyType)) {
+				throw new BadRequestException(new T("Some child transaction have different currency type"));
+			} else if (childTransactions.Any(t => t.Api?.Id != firstTransaction.Api?.Id)) {
+				throw new BadRequestException(new T("Some child transaction have different payment api"));
+			} else if (childTransactions.Any(t => t.Payer?.Id != firstTransaction.Payer?.Id)) {
+				throw new BadRequestException(new T("Some child transaction have different payer"));
+			} else if (childTransactions.Any(t => t.Payee?.Id != firstTransaction.Payee?.Id)) {
+				throw new BadRequestException(new T("Some child transaction have different payee"));
+			} else if (childTransactions.Any(t => !t.Check(c => c.IsPayable).First)) {
+				throw new BadRequestException(new T("Some child transaction is not payable"));
+			}
+			// 作废原有的合并交易
+			EnsureParentTransactionAborted(
+				childTransactions.Select(t => t.Id).ToList(), null,
+				new T("New merged transaction has created, this merge transaction should be aborted"));
+			// 创建新的合并交易
+			var apiManager = Application.Ioc.Resolve<PaymentApiManager>();
+			var amount = childTransactions.Sum(t => t.Amount);
+			var paymentFee = apiManager.CalculatePaymentFee(firstTransaction.Api.Id, amount);
+			var transaction = CreateTransaction(
+				transactionType,
+				firstTransaction.Api.Id,
+				amount,
+				paymentFee,
+				firstTransaction.CurrencyType,
+				firstTransaction.Payer?.Id,
+				firstTransaction.Payee?.Id,
+				null, // 无关联Id
+				string.Join("; ", childTransactions.Select(t => t.Description)),
+				null, // 无附加数据
+				childTransactions);
+			return transaction;
 		}
 
 		/// <summary>
