@@ -123,6 +123,10 @@ body {
 		min-height: initial;
 		background: #fff;
 	}
+
+	&.page-portlet-fullscreen {
+		overflow: hidden;
+	}
 }
 
 /* 首页内容的边距 */
