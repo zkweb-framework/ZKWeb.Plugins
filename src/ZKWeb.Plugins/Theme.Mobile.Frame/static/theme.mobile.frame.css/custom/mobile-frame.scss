@@ -55,7 +55,7 @@
 		border-left: 1px solid #0c60ee;
 	}
 	/* 底部栏 */
-	.bottom-nav-bar {
+	.bottom-navbar {
 		background-color: #387ef5;
 		border-top: 1px solid #0c60ee;
 		border-bottom: none;
@@ -65,6 +65,32 @@
 		position: fixed;
 		z-index: 1011;
 		bottom: 0px;
+		/* 底部导航链接 */
+		ul.nav {
+			text-align: center;
+			display: flex;
+
+			> li {
+				flex-basis: 0;
+				flex-grow: 1;
+				flex-shrink: 1;
+
+				> a {
+					color: #fff;
+					padding: 0px;
+
+					> i {
+						font-size: 26px;
+						padding: 3px 0px;
+						width: 100%;
+					}
+
+					&:active, &:hover, &:focus {
+						background: initial;
+					}
+				}
+			}
+		}
 	}
 	/* 底部栏占位 */
 	.bottom-nav-bar-placeholder {
