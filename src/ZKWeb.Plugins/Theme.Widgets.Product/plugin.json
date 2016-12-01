@@ -1,0 +1,9 @@
+﻿{
+	"Name": "ProductWidgets",
+	"Version": "0.0",
+	"Description": "Product template widgets",
+	"Dependencies": [
+		"Common.Base",
+		"Shopping.Product"
+	]
+}

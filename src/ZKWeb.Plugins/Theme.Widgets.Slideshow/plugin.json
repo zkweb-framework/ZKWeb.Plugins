@@ -1,0 +1,8 @@
+﻿{
+	"Name": "SlideshowWidgets",
+	"Version": "0.0",
+	"Description": "Slideshow template widgets",
+	"Dependencies": [
+		"Common.Base"
+	]
+}
