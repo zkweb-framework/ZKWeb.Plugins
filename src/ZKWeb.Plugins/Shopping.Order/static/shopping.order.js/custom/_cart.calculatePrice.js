@@ -94,6 +94,7 @@ $(function () {
 	var calculatingHtml = $orderPriceDescription.html();
 	var calcPriceEventName = "calcPrice.cartView";
 	var calcPriceSuccessEventName = "calcPriceSuccess.cartView";
+	var calcPriceFailedEventName = "calcPriceFailed.cartView";
 	var timeStampKey = "lastCalcPriceTimeStamp";
 	var timeoutHandler = null;
 	$cartContainer.data("calculatingHtml", calculatingHtml);
@@ -125,9 +126,10 @@ $(function () {
 						priceInfo.orderPriceDescription + " = " + priceInfo.orderPriceString);
 					// 触发计算价格成功时的事件
 					$cartContainer.data("priceInfo", priceInfo);
-					$cartContainer.trigger(calcPriceSuccessEventName);
+					$cartContainer.trigger(calcPriceSuccessEventName, [priceInfo]);
 				} else {
 					$orderPriceDescription.text(data.error);
+					$cartContainer.trigger(calcPriceFailedEventName, [data.error]);
 				}
 			});
 		}, 1000);

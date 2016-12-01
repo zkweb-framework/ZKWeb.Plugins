@@ -111,8 +111,7 @@ $(function () {
 		// 显示计算中
 		$cartProductTotalPrice.html($cartContainer.data("calculatingHtml"));
 	});
-	$cartContainer.on("calcPriceSuccess.cartView", function () {
-		var priceInfo = $cartContainer.data("priceInfo");
+	$cartContainer.on("calcPriceSuccess.cartView", function (priceInfo) {
 		// 商品总价
 		$cartProductTotalPrice.text(priceInfo.orderProductTotalPriceString);
 		// 商品单价
@@ -124,5 +123,10 @@ $(function () {
 			var $price = $cartProduct.find(".unit-price .price");
 			$price.attr("title", info.description).text(info.priceString);
 		});
+	});
+	$cartContainer.on("calcPriceFailed.cartView", function (e, error) {
+		// 滚动到最底部
+		$cartProductTotalPrice.text("-");
+		$("html, body").animate({ scrollTop: $(".page-body").height() }, 100);
 	});
 });
