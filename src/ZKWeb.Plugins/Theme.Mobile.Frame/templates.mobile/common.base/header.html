@@ -8,8 +8,10 @@
 	{% render_meta_description %}
 	{%- render_extra_metadata -%}
 	{% render_title %}
+	{% include_css_here "/static/theme.mobile.frame.css/pace.css" %}
+	{% include_js_here "/static/theme.mobile.frame.js/pace.min.js" %}
 	{% include_css_here "/static/common.base.css/components.css" %}
-	{% include_css_here "/static/theme.mobile.frame.css/mobile-frame.css" %}
+	{% include_css_here "/static/theme.mobile.frame.css/components.css" %}
 	{% render_included_css -%}
 </head>
 <body class="mobile-body">
@@ -17,6 +19,7 @@
 		<div class="top-navbar">
 			<div class="screen-center-block">
 				<div class="pull-left">
+
 				</div>
 				<div class="title">
 				</div>
