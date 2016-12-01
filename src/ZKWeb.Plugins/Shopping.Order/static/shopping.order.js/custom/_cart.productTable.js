@@ -111,7 +111,7 @@ $(function () {
 		// 显示计算中
 		$cartProductTotalPrice.html($cartContainer.data("calculatingHtml"));
 	});
-	$cartContainer.on("calcPriceSuccess.cartView", function (priceInfo) {
+	$cartContainer.on("calcPriceSuccess.cartView", function (e, priceInfo) {
 		// 商品总价
 		$cartProductTotalPrice.text(priceInfo.orderProductTotalPriceString);
 		// 商品单价
