@@ -17,16 +17,24 @@
 <body class="mobile-body">
 	<div class="page-header">
 		<div class="top-navbar">
-			<div class="screen-center-block">
-				<div class="pull-left">
-
-				</div>
-				<div class="title">
-				</div>
-				<div class="nav pull-right">
-				</div>
-				<div class="clearfix"></div>
+			<div class="left-part">
+				<a class="go-back" onclick="history.back()"><i class="fa fa-angle-left"></i></a>
+			</div>
+			<div class="title">
+			</div>
+			<div class="right-part">
+				<a class="sidebar-menu"><i class="fa fa-navicon"></i></a>
 			</div>
 		</div>
+		<div class="top-navbar-placeholder">
+		</div>
+		<aside class="control-sidebar control-sidebar-dark top-sidebar">
+			<div class="navbar-left">
+				{% area header_navbar_left %}
+			</div>
+			<div class="navbar-right">
+				{% area header_navbar_right %}
+			</div>
+		</aside>
 	</div>
 	<div class="page-body">
