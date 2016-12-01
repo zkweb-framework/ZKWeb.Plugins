@@ -127,7 +127,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "Recover", "恢復" },
 			{ "Delete Forever", "永久刪除" },
 			{ "Recover {0}", "恢復{0}" },
-			{ "Delete {0} Forever", "永久刪除{0}" }
+			{ "Delete {0} Forever", "永久刪除{0}" },
+			{ "Add", "添加" },
+			{ "Return To List", "返回列表" }
 		};
 
 		public bool CanTranslate(string code) {

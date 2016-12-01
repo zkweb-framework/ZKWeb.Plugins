@@ -128,7 +128,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "Delete Forever", "永久删除" },
 			{ "Recover {0}", "恢复{0}" },
 			{ "Delete {0} Forever", "永久删除{0}" },
-			// TODO: 翻译到其他语言
 			{ "Add", "添加" },
 			{ "Return To List", "返回列表" }
 		};
