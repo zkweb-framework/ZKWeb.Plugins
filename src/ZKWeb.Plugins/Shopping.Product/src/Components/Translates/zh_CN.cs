@@ -91,7 +91,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "Product is OnSale", "商品正常销售中" },
 			{ "Product is StopSelling", "商品已下架" },
 			{ "Product is WaitForSales", "商品尚未开始销售" },
-			// TODO: 添加翻译
 			{ "Seller username not exist", "卖家用户名不存在" },
 			{ "Shop Manage", "商城管理" }
 		};

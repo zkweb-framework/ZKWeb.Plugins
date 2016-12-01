@@ -90,7 +90,24 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "Test", "テスト" },
 			{ "PaymentFee", "支払い手数料" },
 			{ "Selected payment api does not exist", "選択した支払方法は存在しません" },
-			{ "Finance Manage", "財務管理" }
+			{ "Finance Manage", "財務管理" },
+			{ "ReleatedTransactions", "関連取引" },
+			{ "TransactionSerial", "取引通番" },
+			{ "Change transaction state to {0} failed: {1}", "取引の状態を{0}に変更できません: {1}" },
+			{ "Transaction is aborted", "取引が中止されました" },
+			{ "Can't process waiting paying on child transaction {0}, reason is {1}",
+				"サブ取引({0})の支払い待ちを処理できません、原因は{1}" },
+			{ "Can't process secured paid on child transaction {0}, reason is {1}",
+				"サブ取引({0})の担保付き支払い済みを処理できません、原因は{1}" },
+			{ "Can't process success on child transaction {0}, reason is {1}",
+				"サブ取引({0})の取引成功を処理できません、原因は{1}" },
+			{ "Some child transaction have different currency type",
+				"一部のサブ取引の貨幣が異なります" },
+			{ "Some child transaction have different payment api",
+				"一部のサブ取引の支払い方法が異なります" },
+			{ "Some child transaction have different payer", "一部のサブ取引の支払人が異なります" },
+			{ "Some child transaction have different payee", "一部のサブ取引の受取人が異なります" },
+			{ "Some child transaction is not payable", "一部のサブ取引が支払いできません" }
 		};
 
 		public bool CanTranslate(string code) {
