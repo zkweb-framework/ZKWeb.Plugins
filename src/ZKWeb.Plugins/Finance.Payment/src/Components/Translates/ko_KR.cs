@@ -93,7 +93,24 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "Test", "테스트" },
 			{ "PaymentFee", "결제 수수료" },
 			{ "Selected payment api does not exist", "선택한 결제 인터페이스가 존재하지 않습니다" },
-			{ "Finance Manage", "재무 관리" }
+			{ "Finance Manage", "재무 관리" },
+			{ "ReleatedTransactions", "특수 관계자 거래" },
+			{ "TransactionSerial", "交易流水号" },
+			{ "Change transaction state to {0} failed: {1}", "切换交易状态到{0}失败: {1}" },
+			{ "Transaction is aborted", "거래 일련 번호" },
+			{ "Can't process waiting paying on child transaction {0}, reason is {1}",
+				"하위 거래 {0}에 대한 지불 대기를 처리 할 수 없습니다. 이유는 {1}입니다" },
+			{ "Can't process secured paid on child transaction {0}, reason is {1}",
+				"보안 트랜잭션 서브 트랜잭션을 처리 할 수없는 ({0}) 지불 된, 그 이유는 {1} 인" },
+			{ "Can't process success on child transaction {0}, reason is {1}",
+				"서브 트랜잭션을 처리 할 수없는 ({0})은 트랜잭션이 성공적이며, 그 이유는 {1}" },
+			{ "Some child transaction have different currency type",
+				"일부 하위 트랜잭션의 통화 유형이 다릅니다" },
+			{ "Some child transaction have different payment api",
+				"결제 인터페이스는 파튼 전시회를 불일치" },
+			{ "Some child transaction have different payer", "지불 파튼 트랜잭션 일관성을" },
+			{ "Some child transaction have different payee", "수취인 파튼 트랜잭션 일관성을" },
+			{ "Some child transaction is not payable", "파튼 거래는 지불 할 수" }
 		};
 
 		public bool CanTranslate(string code) {

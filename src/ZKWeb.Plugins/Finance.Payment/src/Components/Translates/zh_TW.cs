@@ -87,7 +87,22 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "Test", "測試" },
 			{ "PaymentFee", "支付手續費" },
 			{ "Selected payment api does not exist", "您選擇的支付接口不存在" },
-			{ "Finance Manage", "財務管理" }
+			{ "Finance Manage", "財務管理" },
+			{ "ReleatedTransactions", "關聯交易" },
+			{ "TransactionSerial", "交易流水號" },
+			{ "Change transaction state to {0} failed: {1}", "切換交易狀態到{0}失敗: {1}" },
+			{ "Transaction is aborted", "交易已中止" },
+			{ "Can't process waiting paying on child transaction {0}, reason is {1}",
+				"不能處理子交易({0})的等待付款，原因是{1}" },
+			{ "Can't process secured paid on child transaction {0}, reason is {1}",
+				"不能處理子交易({0})的擔保交易已付款，原因是{1}" },
+			{ "Can't process success on child transaction {0}, reason is {1}",
+				"不能處理子交易({0})的交易成功，原因是{1}" },
+			{ "Some child transaction have different currency type", "部分子交易的貨幣不壹致" },
+			{ "Some child transaction have different payment api", "部分子交易的支付接口不壹致" },
+			{ "Some child transaction have different payer", "部分子交易的付款人不壹致" },
+			{ "Some child transaction have different payee", "部分子交易的收款人不壹致" },
+			{ "Some child transaction is not payable", "部分子交易不可支付" }
 		};
 
 		public bool CanTranslate(string code) {

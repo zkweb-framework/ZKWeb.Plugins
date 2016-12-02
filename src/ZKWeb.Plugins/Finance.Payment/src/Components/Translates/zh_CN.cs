@@ -88,7 +88,6 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "PaymentFee", "支付手续费" },
 			{ "Selected payment api does not exist", "您选择的支付接口不存在" },
 			{ "Finance Manage", "财务管理" },
-			// TODO: 翻译到其他语言
 			{ "ReleatedTransactions", "关联交易" },
 			{ "TransactionSerial", "交易流水号" },
 			{ "Change transaction state to {0} failed: {1}", "切换交易状态到{0}失败: {1}" },

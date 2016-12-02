@@ -128,7 +128,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "Recover", "戻す" },
 			{ "Delete Forever", "完全削除" },
 			{ "Recover {0}", "{0}を戻す" },
-			{ "Delete {0} Forever", "{0}を完全削除する" }
+			{ "Delete {0} Forever", "{0}を完全削除する" },
+			{ "Add", "追加" },
+			{ "Return To List", "一覧に戻る" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -90,7 +90,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "OrderCount", "注文数" },
 			{ "Product is OnSale", "この商品は販売中です" },
 			{ "Product is StopSelling", "この商品の販売は終了しました" },
-			{ "Product is WaitForSales", "この商品の販売はまだ始まっていません" }
+			{ "Product is WaitForSales", "この商品の販売はまだ始まっていません" },
+			{ "Seller username not exist", "出品者のユーザー名は存在しません" },
+			{ "Shop Manage", "ショップ管理" }
 		};
 
 		public bool CanTranslate(string code) {
