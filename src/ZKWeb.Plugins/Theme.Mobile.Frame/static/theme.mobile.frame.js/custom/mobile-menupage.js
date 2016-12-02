@@ -8,4 +8,11 @@ $(function () {
 	if (uri.getQueryParamValue("menu-opened") == "true") {
 		$("body").addClass("menu-page-menu-opened");
 	}
+
+	// 为标记了menupage-index的链接自动添加menu-opened
+	$("a.menupage-index").each(function () {
+		var $a = $(this);
+		var uri = new Uri($a.attr("href"));
+		$a.attr("href", uri.replaceQueryParam("menu-opened", "true").toString());
+	});
 });

@@ -1,4 +1,4 @@
 ﻿{% fetch /api/user/login_info > login_info %}
 {% if login_info.userId %}
-<a class="nav-link" href="{{ "/home" | url }}">{{ "User Panel" | trans }}</a>
+<a class="nav-link menupage-index" href="{{ "/home" | url }}">{{ "User Panel" | trans }}</a>
 {% endif %}

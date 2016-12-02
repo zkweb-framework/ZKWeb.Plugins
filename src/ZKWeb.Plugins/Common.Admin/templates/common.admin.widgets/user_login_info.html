@@ -3,7 +3,7 @@
 	{% if login_info.userId %}
 	<div>
 		<span class="welcome-to">{{ "Welcome to " | trans }}{% website_name %}</span>
-		<a class="nav-link username" href="{{ "/home" | url }}">{{ login_info.username }}</a>
+		<a class="nav-link menupage-index username" href="{{ "/home" | url }}">{{ login_info.username }}</a>
 		<span class="divider"> | </span>
 		<a class="nav-link logout" post-href="/user/logout">{{ "Logout" | trans }}</a>
 	</div>
