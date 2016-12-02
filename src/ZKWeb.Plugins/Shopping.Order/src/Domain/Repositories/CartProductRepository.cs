@@ -42,6 +42,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Repositories {
 			if (type != null) {
 				query = query.Where(q => q.Type == type);
 			}
+			query = query.Where(q => !q.Product.Deleted);
 			return query;
 		}
 
