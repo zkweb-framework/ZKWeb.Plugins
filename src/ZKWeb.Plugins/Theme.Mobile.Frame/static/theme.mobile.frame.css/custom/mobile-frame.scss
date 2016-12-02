@@ -1,5 +1,5 @@
-.mobile-body {
-	/* ¶¥²¿À¸ */
+ï»¿.mobile-body {
+	/* é¡¶éƒ¨æ  */
 	.top-navbar {
 		background-color: #387ef5;
 		border-top: none;
@@ -15,7 +15,7 @@
 		z-index: 1011;
 		display: flex;
 		flex-direction: row;
-		/* ºóÍË°´Å¥ */
+		/* åé€€æŒ‰é’® */
 		.go-back {
 			line-height: 48px;
 			color: #fff;
@@ -24,7 +24,7 @@
 			height: 50px;
 			display: block;
 		}
-		/* ±êÌâ */
+		/* æ ‡é¢˜ */
 		.title {
 			text-align: center;
 			line-height: 50px;
@@ -33,7 +33,7 @@
 			flex: 1 0 auto;
 			overflow: hidden;
 		}
-		/* ²Ëµ¥°´Å¥ */
+		/* èœå•æŒ‰é’® */
 		.sidebar-menu {
 			line-height: 50px;
 			color: #fff;
@@ -43,18 +43,56 @@
 			display: block;
 		}
 	}
-	/* ¶¥²¿À¸Õ¼Î» */
+	/* é¡¶éƒ¨æ å ä½ */
 	.top-navbar-placeholder {
 		height: 50px;
 	}
-	/* ²à±ßÀ¸ */
+	/* ä¾§è¾¹æ  */
 	.top-sidebar {
 		margin-top: 50px;
 		padding: 0px;
-		background-color: #387ef5;
-		border-left: 1px solid #0c60ee;
+		background-color: #fff;
+		border-left: 1px solid #ddd;
+		color: #666;
+
+		.left-part, .right-part {
+			li {
+				list-style: none;
+			}
+
+			a {
+				color: #666;
+			}
+
+			a.nav-link {
+				display: block;
+				text-align: center;
+				width: 100%;
+				font-size: 16px;
+				line-height: 38px;
+				border-bottom: 1px solid #ddd;
+			}
+		}
+		/* ç”¨æˆ·ç™»å½•ä¿¡æ¯ */
+		.user-login-info {
+			font-size: 16px;
+			line-height: 30px;
+
+			.welcome-to {
+				display: block;
+				text-align: center;
+				line-height: 38px;
+				border-bottom: 1px solid #0c60ee;
+				background-color: #387ef5;
+				color: #fff;
+			}
+
+			.divider {
+				display: none;
+			}
+		}
 	}
-	/* µ×²¿À¸ */
+	/* åº•éƒ¨æ  */
 	.bottom-navbar {
 		background-color: #387ef5;
 		border-top: 1px solid #0c60ee;
@@ -65,7 +103,7 @@
 		position: fixed;
 		z-index: 1011;
 		bottom: 0px;
-		/* µ×²¿µ¼º½Á´½Ó */
+		/* åº•éƒ¨å¯¼èˆªé“¾æ¥ */
 		ul.nav {
 			text-align: center;
 			display: flex;
@@ -92,11 +130,11 @@
 			}
 		}
 	}
-	/* µ×²¿À¸Õ¼Î» */
+	/* åº•éƒ¨æ å ä½ */
 	.bottom-nav-bar-placeholder {
 		height: 50px;
 	}
-	/* Ò³ÃæÔØÈëÖĞĞ§¹û */
+	/* é¡µé¢è½½å…¥ä¸­æ•ˆæœ */
 	&.pace-running .page-body {
 		display: none;
 	}

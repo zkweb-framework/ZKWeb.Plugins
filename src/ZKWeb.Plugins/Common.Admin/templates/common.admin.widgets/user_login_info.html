@@ -2,15 +2,17 @@
 <div class="user-login-info">
 	{% if login_info.userId %}
 	<div>
-		{{ "Welcome to " | trans }}{% website_name %}
-		<a class="nav-link" href="{{ "/home" | url }}">{{ login_info.username }}</a> |
-		<a class="nav-link" post-href="/user/logout">{{ "Logout" | trans }}</a>
+		<span class="welcome-to">{{ "Welcome to " | trans }}{% website_name %}</span>
+		<a class="nav-link username" href="{{ "/home" | url }}">{{ login_info.username }}</a>
+		<span class="divider"> | </span>
+		<a class="nav-link logout" post-href="/user/logout">{{ "Logout" | trans }}</a>
 	</div>
 	{% else %}
 	<div>
-		{{ "Welcome to " | trans }}{% website_name %} |
-		<a class="nav-link" href="{{ "/user/login" | url }}">{{ "Login" | trans }}</a>
-		<a class="nav-link" href="{{ "/user/reg" | url }}">{{ "Register for free" | trans }}</a>
+		<span class="welcome-to">{{ "Welcome to " | trans }}{% website_name %}</span>
+		<span class="divider"> | </span>
+		<a class="nav-link login" href="{{ "/user/login" | url }}">{{ "Login" | trans }}</a>
+		<a class="nav-link logout" href="{{ "/user/reg" | url }}">{{ "Register for free" | trans }}</a>
 	</div>
 	{% endif %}
 </div>

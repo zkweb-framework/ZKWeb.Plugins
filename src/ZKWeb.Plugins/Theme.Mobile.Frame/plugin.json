@@ -3,6 +3,8 @@
 	"Version": "0.0",
 	"Description": "Mobile optimized page frame theme",
 	"Dependencies": [
-		"Common.Base"
+		"Common.Base",
+		"Common.Admin",
+		"Common.UserPanel"
 	]
 }
