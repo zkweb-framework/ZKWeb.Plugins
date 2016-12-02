@@ -110,9 +110,17 @@
 	}
 }
 
-/* 低分辨率时减少边距 */
+/* 低分辨率时下的商品购买按钮 */
 @media (max-width: 768px) {
 	.product-purchase-buttons, .product-unpurchasable-message {
-		padding: 12px 0px 0px 12px;
+		padding: 0px;
+
+		.product-purchase-form .btn {
+			width: 47%;
+
+			&:last-child {
+				margin-right: 0px;
+			}
+		}
 	}
 }
