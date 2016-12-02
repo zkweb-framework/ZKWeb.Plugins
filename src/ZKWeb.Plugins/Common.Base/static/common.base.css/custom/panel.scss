@@ -4,7 +4,7 @@
 
 .panel-sidebar {
 	/* 面板的左边栏 */
-	border: 1px solid #eee;
+	border: 1px solid #ddd;
 	border-radius: 4px;
 	float: left;
 	width: 200px;
@@ -24,15 +24,14 @@
 	.profile-portlet {
 		/* 头像和文本的外框 */
 		padding: 10px;
-		border-bottom: 1px solid #eee;
+		border-bottom: 1px solid #ddd;
 		overflow: hidden;
 	}
 
 	.profile-image img {
 		/* 头像 */
 		float: left;
-		width: 30%;
-		max-width: 100px;
+		max-width: 40px;
 		margin: 0px 0px 0px 10px;
 		-webkit-border-radius: 6px !important;
 		-moz-border-radius: 6px !important;
@@ -83,7 +82,7 @@
 			color: #485a6a;
 			font-size: 14px;
 			font-weight: 400;
-			border-bottom: 1px solid #f0f4f7;
+			border-bottom: 1px solid #ddd;
 		}
 
 		> li > a i {
@@ -106,7 +105,7 @@
 		/* 子菜单 */
 		padding-left: 20px;
 		list-style: none outside none;
-		border-bottom: 1px solid #f0f4f7;
+		border-bottom: 1px solid #ddd;
 
 		> li > a {
 			font-size: 12px;

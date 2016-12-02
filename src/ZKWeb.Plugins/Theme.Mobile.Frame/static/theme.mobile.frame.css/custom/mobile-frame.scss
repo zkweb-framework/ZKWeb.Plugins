@@ -149,4 +149,10 @@
 		background: #fff;
 		color: #2299dd;
 	}
+	/* 页面无边框 */
+	.page-container {
+		> .portlet {
+			padding: 0px;
+		}
+	}
 }

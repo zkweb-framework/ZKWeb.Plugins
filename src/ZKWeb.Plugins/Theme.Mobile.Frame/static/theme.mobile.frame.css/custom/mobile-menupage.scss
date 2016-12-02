@@ -1,0 +1,48 @@
+﻿/* 不显示菜单栏，显示内容 */
+.mobile-body {
+	.panel-sidebar {
+		display: none;
+		margin-bottom: 0px;
+
+		.portlet {
+			padding: 0px;
+			margin-bottom: -1px;
+
+			.portlet-title {
+				padding: 0px;
+
+				.caption {
+					float: none;
+					width: 100%;
+					padding: 0px;
+
+					> a {
+						padding: 10px 15px;
+						width: 100%;
+						display: block;
+					}
+				}
+			}
+		}
+		/* 禁止折叠子菜单 */
+		[data-toggle='collapse'] {
+			pointer-events: none;
+		}
+		/* 显示子菜单 */
+		ul.nav.childs {
+			display: block;
+			visibility: inherit;
+		}
+	}
+}
+
+/* 显示菜单栏，不现实内容 */
+.mobile-body.menu-page-menu-opened {
+	.panel-sidebar {
+		display: block;
+	}
+
+	.panel-content {
+		display: none;
+	}
+}
