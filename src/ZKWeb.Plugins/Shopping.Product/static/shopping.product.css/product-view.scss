@@ -174,11 +174,16 @@
 				margin: -1px 0px 0px -1px;
 			}
 		}
-		/* 低分辨率时缩小内容 */
-		@media (max-width: 768px) {
-			.product-details .contents {
-				transform: scale(0.75);
-				transform-origin: left top 0px;
+	}
+}
+
+/* 手机版限制图片宽度 */
+.mobile-body {
+	.product-view {
+		.product-details .contents {
+			img {
+				max-width: 100% !important;
+				height: auto !important;
 			}
 		}
 	}
