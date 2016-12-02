@@ -134,8 +134,7 @@
 			}
 
 			.main-album img {
-				width: 286px;
-				height: 286px;
+				width: 100%;
 				border-top-right-radius: 4px;
 				border-top-left-radius: 4px;
 			}
@@ -174,6 +173,17 @@
 
 		.pagination {
 			float: right;
+		}
+	}
+}
+
+/* 低分辨率下商品列表页显示2列，290*2+10 */
+@media (max-width: 590px) {
+	.product-list-table-row {
+		.product-list-table {
+			.product-cell {
+				width: 47%;
+			}
 		}
 	}
 }
