@@ -62,6 +62,10 @@
 			.order-state-progress {
 				font-size: 100%;
 				margin-top: 1em;
+
+				> li {
+					min-width: 115px;
+				}
 			}
 		}
 		/* 操作按钮列表 */
