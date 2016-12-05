@@ -262,3 +262,15 @@ input[type="text"], input[type="password"], select, textarea {
 	width: auto;
 	vertical-align: middle;
 }
+
+/* 单选按钮和多选框 */
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+	position: relative;
+	margin-top: 1px;
+	margin-left: -20px;
+	float: left;
+	display: block;
+}
