@@ -31,6 +31,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		/// </summary>
 		public AjaxTableIdColumn() {
 			ActionTemplates = new List<MenuItem>();
+			CssClass = "id";
 		}
 	}
 }

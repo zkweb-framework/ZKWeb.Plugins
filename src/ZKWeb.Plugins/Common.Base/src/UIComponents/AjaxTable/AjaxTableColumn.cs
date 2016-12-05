@@ -21,5 +21,9 @@
 		/// 格式是underscore.js的默认格式
 		/// </summary>
 		public virtual string CellTemplate { get; set; }
+		/// <summary>
+		/// 添加到th或者td的css类名
+		/// </summary>
+		public virtual string CssClass { get; set; }
 	}
 }

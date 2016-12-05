@@ -6,7 +6,7 @@
 					<% _.each(result.Columns, function(column, index) { %>
 						<% column.compiledCellTemplate = _.template(column.CellTemplate); %>
 						<% var scope = { column: column, result: result, index: index }; %>
-						<th width="<%-column.Width%>"><%=_.template(column.HeadTemplate)(scope)%></th>
+						<th width="<%-column.Width%>" class="<%-column.CssClass%>"><%=_.template(column.HeadTemplate)(scope)%></th>
 					<% }); %>
 				</tr>
 			</thead>
@@ -15,7 +15,7 @@
 					<% var scope = { row: row, result: result, index: index }; %>
 					<tr role="row" data-row="<%-JSON.stringify(row)%>">
 						<% _.each(result.Columns, function(column) { %>
-							<td><%=column.compiledCellTemplate(scope)%></td>
+							<td class="<%-column.CssClass%>"><%=column.compiledCellTemplate(scope)%></td>
 						<% }); %>
 					</tr>
 				<% }); %>

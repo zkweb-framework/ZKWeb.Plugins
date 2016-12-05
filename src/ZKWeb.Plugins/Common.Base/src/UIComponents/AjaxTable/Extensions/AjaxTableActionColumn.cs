@@ -14,8 +14,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		/// <summary>
 		/// 单元格模板字符串
 		/// </summary>
-		public override string CellTemplate
-		{
+		public override string CellTemplate {
 			get { return string.Join("", ActionTemplates); }
 			set { }
 		}
@@ -27,6 +26,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 			Key = "Actions";
 			HeadTemplate = new T("Actions");
 			ActionTemplates = new List<HtmlString>();
+			CssClass = "actions";
 		}
 	}
 }

@@ -194,10 +194,6 @@ $(function () {
 		$form.appendTo("body");
 		$form.submit();
 	});
-	// 打印
-	$body.on("click", ".ajax-table-menu .print-table", function (e) {
-		alert("print");
-	});
 	// ajax表格搜索栏功能
 	$body.on("keydown", ".ajax-table-search-bar .keyword", function (e) {
 		e.keyCode == 13 && $(this).parent().find('.search-button').click();
