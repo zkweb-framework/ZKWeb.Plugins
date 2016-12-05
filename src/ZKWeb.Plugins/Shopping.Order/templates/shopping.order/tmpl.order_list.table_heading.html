@@ -1,5 +1,5 @@
 ﻿<div class="order-row-heading-text">
-	<span>{{ "Serial" | trans }}: <a href="{{ "/user/orders/edit?serial=[0]" | format: info.Serial | url }}">{{ info.Serial }}</a></span>
+	<span>{{ "OrderSerial" | trans }}: <a class="serial">{{ info.Serial }}</a></span>
 	<span>{{ "CreateTime" | trans }}: {{ info.CreateTime }}</span>
 	<span class="pull-right">
 		<span class="order-last-comment">{{ info | order_last_comment_summary }}</span>

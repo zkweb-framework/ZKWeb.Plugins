@@ -41,3 +41,13 @@ $(function () {
 		}, dialogParameters || {}));
 	});
 });
+
+/* 点击订单编号查看订单 */
+$(function () {
+	$(document).on("click", ".order-table-container .order-row-heading-text .serial", function () {
+		var $row = $(this).closest("tr").next();
+		var $viewBtn = $row.find(".actions .fa.fa-edit").closest(".btn");
+		var href = $viewBtn.attr("href");
+		href ? (location.href = href) : $viewBtn.click();
+	});
+});

@@ -20,6 +20,7 @@
 	/* 详细信息 */
 	.order-details {
 		float: left;
+		min-width: 290px;
 		width: 290px;
 		/* 内容 */
 		.panel-body {
@@ -39,8 +40,8 @@
 				}
 
 				> dd {
-					float: left;
 					padding: 4px 0px;
+					margin: 0px 8px 0px 80px;
 
 					.more {
 						float: right;
@@ -56,10 +57,9 @@
 		padding: 0px 0px 0px 20px;
 		/* 订单状态长度不够时允许滚动 */
 		.order-state-progress-container {
-			overflow-x: scroll;
+			overflow-x: auto;
 
 			.order-state-progress {
-				min-width: 768px;
 				font-size: 100%;
 				margin-top: 1em;
 			}
@@ -84,6 +84,7 @@
 		.order-details, .order-state-and-actions {
 			padding-left: 0px;
 			width: 100%;
+			min-width: initial;
 		}
 	}
 }
