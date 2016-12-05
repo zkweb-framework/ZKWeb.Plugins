@@ -15,6 +15,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchParameters
 	[ExportMany]
 	public class PropertiesDescriptionProvider : IProductMatchParametersDescriptionProvider {
 		/// <summary>
+		/// 显示顺序
+		/// </summary>
+		public int DisplayOrder { get { return 100; } }
+
+		/// <summary>
 		/// 获取描述，没有时返回null
 		/// </summary>
 		public string GetDescription(Product product, ProductMatchParameters parameters) {

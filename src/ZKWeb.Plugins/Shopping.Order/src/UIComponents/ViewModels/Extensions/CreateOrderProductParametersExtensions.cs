@@ -11,7 +11,7 @@ using ZKWeb.Plugins.Shopping.Product.src.Components.ProductTypes.Interfaces;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Services;
-using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchParametersDescriptionProviders.Interfaces;
+using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchParametersDescriptionProviders.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 	/// <summary>
@@ -30,7 +30,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			var productManager = Application.Ioc.Resolve<ProductManager>();
 			var productAlbumManager = Application.Ioc.Resolve<ProductAlbumManager>();
 			var currencyManager = Application.Ioc.Resolve<CurrencyManager>();
-			var descriptionProviders = Application.Ioc.ResolveMany<IProductMatchParametersDescriptionProvider>();
 			var unitPrice = orderManager.CalculateOrderProductUnitPrice(userId, parameters);
 			var info = new OrderProductDisplayInfo();
 			var product = productManager.GetWithCache(parameters.ProductId);
@@ -43,9 +42,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			info.ImageWebPath = productAlbumManager.GetAlbumImageWebPath(
 				product.Id, null, ProductAlbumImageType.Thumbnail);
 			info.MatchedParameters = parameters.MatchParameters;
-			info.MatchedParametersDescription = string.Join(" ", descriptionProviders
-				.Select(p => p.GetDescription(product, parameters.MatchParameters))
-				.Where(d => !string.IsNullOrEmpty(d)));
+			info.MatchedParametersDescription = product
+				.GetMatchParametersDescription(parameters.MatchParameters);
 			info.UnitPrice = unitPrice.Parts.Sum();
 			info.OriginalUnitPrice = info.UnitPrice;
 			info.Currency = currencyManager.GetCurrency(unitPrice.Currency);

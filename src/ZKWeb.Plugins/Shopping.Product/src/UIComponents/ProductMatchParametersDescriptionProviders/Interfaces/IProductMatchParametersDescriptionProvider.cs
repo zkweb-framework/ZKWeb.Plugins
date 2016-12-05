@@ -9,6 +9,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchParameters
 	/// </summary>
 	public interface IProductMatchParametersDescriptionProvider {
 		/// <summary>
+		/// 显示顺序，从小到大
+		/// </summary>
+		int DisplayOrder { get; }
+
+		/// <summary>
 		/// 获取描述，没有时返回null
 		/// </summary>
 		/// <param name="product">商品Id</param>

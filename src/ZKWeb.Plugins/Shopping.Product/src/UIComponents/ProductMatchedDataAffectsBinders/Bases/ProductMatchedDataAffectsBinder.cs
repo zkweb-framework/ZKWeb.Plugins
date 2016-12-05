@@ -25,7 +25,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataAffe
 		/// </summary>
 		public string Collect { get; set; }
 		/// <summary>
-		/// 显示顺序
+		/// 显示顺序，从小到大
 		/// </summary>
 		public int DisplayOrder { get; set; }
 

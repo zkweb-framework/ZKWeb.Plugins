@@ -95,7 +95,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "Shop Manage", "商城管理" },
 			// TODO: 翻译到其他语言
 			{ "BarCode", "条形码" },
-			{ "ItemNo", "货号" }
+			{ "ItemNo", "货号" },
+			{ "ItemNo: {0}", "货号: {0}" }
 		};
 
 		public bool CanTranslate(string code) {
