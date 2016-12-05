@@ -4,7 +4,7 @@
 			<thead>
 				<tr role="row" class="heading">
 					{% for column in columns %}
-					<th width="{{ column.width }}">
+					<th width="{{ column.width }}" class="{{ column.cssClass }}">
 						{% if column.allowHtml %}
 						{% raw_html column.caption %}
 						{% else %}
@@ -18,7 +18,7 @@
 				{% for row in rows %}
 				<tr role="row" data-row="{{ row | json }}">
 					{% for column in columns %}
-					<td>
+					<td class="{{ column.cssClass }}">
 						{% if column.allowHtml %}
 						{% raw_html row[column.member] %}
 						{% else %}

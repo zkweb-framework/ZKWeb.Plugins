@@ -87,6 +87,10 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable {
 			/// 标题，默认使用成员名称
 			/// </summary>
 			public string Caption { get; set; }
+			/// <summary>
+			/// 添加到th和td的css类名
+			/// </summary>
+			public string CssClass { get; set; }
 
 			/// <summary>
 			/// 初始化
@@ -95,12 +99,14 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable {
 			/// <param name="width">宽度</param>
 			/// <param name="allowHtml">是否允许标题和成员使用Html，默认不允许</param>
 			/// <param name="caption">标题，默认使用成员名称</param>
+			/// <param name="cssClass">添加到th和td的css类名</param>
 			public Column(string member, string width = null,
-				bool allowHtml = false, string caption = null) {
+				bool allowHtml = false, string caption = null, string cssClass = null) {
 				Member = member;
 				Width = width;
 				AllowHtml = allowHtml;
 				Caption = caption ?? new T(member);
+				CssClass = cssClass;
 			}
 
 			/// <summary>
@@ -112,7 +118,8 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable {
 					member = Member,
 					width = Width,
 					allowHtml = AllowHtml,
-					caption = Caption
+					caption = Caption,
+					cssClass = CssClass
 				};
 			}
 		}

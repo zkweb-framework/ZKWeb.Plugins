@@ -17,8 +17,8 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions {
 		public static StaticTableBuilder.Column Add(
 			this IList<StaticTableBuilder.Column> columns,
 			string member, string width = null,
-			bool allowHtml = false, string caption = null) {
-			var column = new StaticTableBuilder.Column(member, width, allowHtml, caption);
+			bool allowHtml = false, string caption = null, string cssClass = null) {
+			var column = new StaticTableBuilder.Column(member, width, allowHtml, caption, cssClass);
 			columns.Add(column);
 			return column;
 		}

@@ -95,7 +95,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			table.Columns.Add("LogisticsSerial", "150");
 			table.Columns.Add("DeliveryOperator", "150");
 			table.Columns.Add("DeliveryTime", "150");
-			table.Columns.Add("Actions", "150");
+			table.Columns.Add("Actions", "150", cssClass: "actions");
 			deliveries = deliveries.OrderByDescending(d => d.CreateTime);
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			foreach (var delivery in deliveries) {
@@ -153,7 +153,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 			table.Columns.Add("ExternalSerial", "150");
 			table.Columns.Add("Amount", "150");
 			table.Columns.Add("State", "150");
-			table.Columns.Add("Actions", "150");
+			table.Columns.Add("Actions", cssClass: "actions");
 			var transactions = orderManager.GetReleatedTransactions(info.Id);
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			foreach (var transaction in transactions) {
