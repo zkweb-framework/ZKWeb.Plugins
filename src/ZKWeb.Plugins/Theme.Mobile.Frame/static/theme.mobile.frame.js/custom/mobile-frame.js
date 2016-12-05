@@ -7,7 +7,7 @@ $(function () {
 	$(".top-navbar .title").text($("title").text());
 
 	// 侧边栏展开和收缩
-	var bottomPadding = 20;
+	var bottomPadding = 0;
 	$(document).on("click", ".top-navbar .sidebar-menu", function () {
 		var $sidebar = $(".top-sidebar");
 		$("html, body").animate({ scrollTop: 0 }, 100);

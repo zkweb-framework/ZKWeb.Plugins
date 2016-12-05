@@ -60,10 +60,6 @@
 				list-style: none;
 			}
 
-			a {
-				color: #666;
-			}
-
 			a.nav-link {
 				display: block;
 				text-align: center;
@@ -71,6 +67,7 @@
 				font-size: 16px;
 				line-height: 38px;
 				border-bottom: 1px solid #ddd;
+				color: #666;
 			}
 		}
 		/* 用户登录信息 */
@@ -91,6 +88,10 @@
 				display: none;
 			}
 		}
+	}
+	/* 底部栏无上边距 */
+	.page-footer {
+		padding: 0px;
 	}
 	/* 底部栏 */
 	.bottom-navbar {
@@ -154,5 +155,9 @@
 		> .portlet {
 			padding: 0px;
 		}
+	}
+	/* 面板无边距 */
+	.panel.panel-themed {
+		margin: 0px;
 	}
 }
