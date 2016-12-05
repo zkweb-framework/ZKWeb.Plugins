@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Structs;
 using ZKWebStandard.Ioc;
@@ -9,7 +10,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Entities {
 	/// </summary>
 	[ExportMany]
 	public class ProductMatchedData :
-		IEntity<Guid>, IEntityMappingProvider<ProductMatchedData> {
+		IEntity<Guid>,
+		IEntityMappingProvider<ProductMatchedData> {
 		/// <summary>
 		/// 数据Id
 		/// 因为数据在编辑时会删除重建，其他表不能关联这里的Id
@@ -44,12 +46,21 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Entities {
 		/// </summary>
 		public virtual long? Stock { get; set; }
 		/// <summary>
+		/// 货号，等于null时继续匹配下一项
+		/// </summary>
+		public virtual string ItemNo { get; set; }
+		/// <summary>
+		/// 条形码，等于null时继续匹配下一项
+		/// </summary>
+		public virtual string BarCode { get; set; }
+		/// <summary>
 		/// 匹配顺序，从小到大
 		/// </summary>
 		public virtual long MatchOrder { get; set; }
 		/// <summary>
 		/// 备注，纯文本
 		/// </summary>
+		[JsonIgnore]
 		public virtual string Remark { get; set; }
 
 		/// <summary>
@@ -68,10 +79,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Entities {
 			builder.References(d => d.Product);
 			builder.Map(d => d.Conditions, new EntityMappingOptions() { WithSerialization = true });
 			builder.Map(d => d.Affects, new EntityMappingOptions() { WithSerialization = true });
-			builder.Map(d => d.Price);
+			builder.Map(d => d.Price, new EntityMappingOptions() { Index = "Idx_Price" });
 			builder.Map(d => d.PriceCurrency);
 			builder.Map(d => d.Weight);
 			builder.Map(d => d.Stock);
+			builder.Map(d => d.ItemNo, new EntityMappingOptions() { Index = "Idx_ItemNo" });
+			builder.Map(d => d.BarCode, new EntityMappingOptions() { Index = "Idx_BarCode" });
 			builder.Map(d => d.MatchOrder);
 			builder.Map(d => d.Remark);
 		}

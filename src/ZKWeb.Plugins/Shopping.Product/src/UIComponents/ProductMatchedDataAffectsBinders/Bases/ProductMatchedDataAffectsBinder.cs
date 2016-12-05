@@ -24,6 +24,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataAffe
 		/// 例 function($binder, affects) { affects.Example = $binder.find("input").val(); }
 		/// </summary>
 		public string Collect { get; set; }
+		/// <summary>
+		/// 显示顺序
+		/// </summary>
+		public int DisplayOrder { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public ProductMatchedDataAffectsBinder() {
+			DisplayOrder = int.MaxValue;
+		}
 
 		/// <summary>
 		/// 初始化绑定器，返回是否成功

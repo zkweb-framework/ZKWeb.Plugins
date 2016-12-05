@@ -98,6 +98,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions {
 				data.Affects["PriceCurrency"] = v.PriceCurrency;
 				data.Affects["Weight"] = v.Weight;
 				data.Affects["Stock"] = v.Stock;
+				data.Affects["ItemNo"] = v.ItemNo;
+				data.Affects["BarCode"] = v.BarCode;
 				data.Affects["Remark"] = v.Remark;
 				return data;
 			}).ToList();
@@ -125,6 +127,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Extensions {
 					PriceCurrency = v.Affects.GetOrDefault<string>("PriceCurrency"),
 					Weight = v.Affects.GetOrDefault<decimal?>("Weight"),
 					Stock = v.Affects.GetOrDefault<long?>("Stock"),
+					ItemNo = v.Affects.GetOrDefault<string>("ItemNo"),
+					BarCode = v.Affects.GetOrDefault<string>("BarCode"),
 					MatchOrder = matchOrder++,
 					Remark = v.Affects.GetOrDefault<string>("Remark")
 				};

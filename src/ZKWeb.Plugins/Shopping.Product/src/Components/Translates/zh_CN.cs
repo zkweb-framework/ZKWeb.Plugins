@@ -92,7 +92,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "Product is StopSelling", "商品已下架" },
 			{ "Product is WaitForSales", "商品尚未开始销售" },
 			{ "Seller username not exist", "卖家用户名不存在" },
-			{ "Shop Manage", "商城管理" }
+			{ "Shop Manage", "商城管理" },
+			// TODO: 翻译到其他语言
+			{ "BarCode", "条形码" },
+			{ "ItemNo", "货号" }
 		};
 
 		public bool CanTranslate(string code) {

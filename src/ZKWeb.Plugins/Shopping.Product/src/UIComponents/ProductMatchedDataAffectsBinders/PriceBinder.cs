@@ -28,6 +28,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataAffe
 				"static", "shopping.product.js", "affects_binders", "price.bind.js").ReadAllText();
 			Collect = fileStorage.GetResourceFile(
 				"static", "shopping.product.js", "affects_binders", "price.collect.js").ReadAllText();
+			DisplayOrder = 100;
 			return true;
 		}
 	}

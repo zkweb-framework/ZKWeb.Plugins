@@ -55,7 +55,7 @@ $.fn.productMatchedDataEditor = function () {
 		// 添加表格列
 		// 条件列, 根据影响数据绑定器生成的列..., 操作列
 		var translations = $editor.data("translations") || {};
-		$tableHead.append($("<th width='30%'>").append(translations["Condition"] || "Condition"));
+		$tableHead.append($("<th width='25%'>").append(translations["Condition"] || "Condition"));
 		_.each(binders.AffectsBinders, function (affectsBinder) {
 			$tableHead.append($("<th>").addClass("heading").append(affectsBinder.Header));
 		});

@@ -25,6 +25,17 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataCond
 		/// 例 function(conditions) { return "Example: " + conditions.Example; }
 		/// </summary>
 		public string Display { get; set; }
+		/// <summary>
+		/// 显示顺序
+		/// </summary>
+		public int DisplayOrder { get; set; }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		public ProductMatchedDataConditionBinder() {
+			DisplayOrder = int.MaxValue;
+		}
 
 		/// <summary>
 		/// 初始化绑定器，返回是否成功

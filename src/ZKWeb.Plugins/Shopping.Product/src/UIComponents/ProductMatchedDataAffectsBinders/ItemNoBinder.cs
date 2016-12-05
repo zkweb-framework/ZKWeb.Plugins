@@ -1,34 +1,32 @@
 ﻿using System;
-using System.IO;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataAffectsBinders.Bases;
-using ZKWeb.Server;
 using ZKWeb.Storage;
 using ZKWeb.Templating;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataAffectsBinders {
 	/// <summary>
-	/// 重量
-	/// 值名 Weight
-	/// 格式 小数
+	/// 货号
+	/// 值名 ItemNo
+	/// 格式 字符串
 	/// </summary>
 	[ExportMany]
-	public class WeightBinder : ProductMatchedDataAffectsBinder {
+	public class ItemNoBinder : ProductMatchedDataAffectsBinder {
 		/// <summary>
 		/// 初始化绑定器
 		/// </summary>
 		public override bool Init(Guid? categoryId) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
-			Header = new T("Weight(g)");
+			Header = new T("ItemNo");
 			Contents = templateManager.RenderTemplate(
-				 "shopping.product/affects_binder.weight.html", null);
+				 "shopping.product/affects_binder.item_no.html", null);
 			Bind = fileStorage.GetResourceFile(
-				"static", "shopping.product.js", "affects_binders", "weight.bind.js").ReadAllText();
+				"static", "shopping.product.js", "affects_binders", "item_no.bind.js").ReadAllText();
 			Collect = fileStorage.GetResourceFile(
-				"static", "shopping.product.js", "affects_binders", "weight.collect.js").ReadAllText();
-			DisplayOrder = 300;
+				"static", "shopping.product.js", "affects_binders", "item_no.collect.js").ReadAllText();
+			DisplayOrder = 500;
 			return true;
 		}
 	}

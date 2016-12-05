@@ -43,6 +43,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataCond
 				"static", "shopping.product.js", "condition_binders", "property.collect.js").ReadAllText();
 			Display = fileStorage.GetResourceFile(
 				"static", "shopping.product.js", "condition_binders", "property.display.js").ReadAllText();
+			DisplayOrder = 200;
 			return true;
 		}
 	}

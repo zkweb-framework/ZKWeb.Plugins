@@ -32,6 +32,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchedDataCond
 				.GetResourceFile("static", "shopping.product.js", "condition_binders", "order_count_ge.display.js")
 				.ReadAllText()
 				.Replace("T_OrderCountGE", JsonConvert.SerializeObject(new T("OrderCountGE")));
+			DisplayOrder = 100;
 			return true;
 		}
 	}

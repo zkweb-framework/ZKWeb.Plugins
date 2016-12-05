@@ -59,10 +59,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 			var categoryId = Request.Get<Guid?>("categoryId");
 			var conditionBinders = Application.Ioc
 				.ResolveMany<ProductMatchedDataConditionBinder>()
-				.Where(b => b.Init(categoryId)).ToList();
+				.Where(b => b.Init(categoryId))
+				.OrderBy(b => b.DisplayOrder).ToList();
 			var affectsBinders = Application.Ioc
 				.ResolveMany<ProductMatchedDataAffectsBinder>()
-				.Where(b => b.Init(categoryId)).ToList();
+				.Where(b => b.Init(categoryId))
+				.OrderBy(b => b.DisplayOrder).ToList();
 			return new JsonResult(new {
 				ConditionBinders = conditionBinders,
 				AffectsBinders = affectsBinders
