@@ -147,6 +147,12 @@
 				width: 100%;
 				min-width: 100%;
 				margin: 20px 0px 0px 0px;
+
+				.product-estimation {
+					dl dt, dl dd {
+						float: none;
+					}
+				}
 			}
 		}
 		/* 订购数量 */
@@ -192,4 +198,17 @@
 /* 放大镜的样式 */
 .zoomContainer {
 	overflow: hidden;
+}
+
+/* 手机版无边距 */
+.mobile-body {
+	.product-view {
+		.product-summary-row {
+			margin: 0px;
+		}
+
+		.product-details-row {
+			margin: -1px 0px 0px 0px;
+		}
+	}
 }

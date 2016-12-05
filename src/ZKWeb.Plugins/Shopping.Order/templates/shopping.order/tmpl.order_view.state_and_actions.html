@@ -2,36 +2,38 @@
 	<div class="panel panel-primary order-view-panel">
 		<div class="panel-heading">{{ "OrderState" | trans }}</div>
 		<div class="panel-body">
-			<ul class="progress-indicator order-state-progress">
-				<li class="{{ info | order_state_progress_class: "WaitingBuyerPay" }}">
-					<span class="bubble"><span>{{ "WaitingBuyerPay" | trans }}</span></span>
-					<span class="time">{{ info.StateTimes.WaitingBuyerPay }}</span>
-				</li>
-				<li class="{{ info | order_state_progress_class: "WaitingSellerDeliveryGoods" }}">
-					<span class="bubble"><span>{{ "WaitingSellerDeliveryGoods" | trans }}</span></span>
-					<span class="time">{{ info.StateTimes.WaitingSellerDeliveryGoods }}</span>
-				</li>
-				<li class="{{ info | order_state_progress_class: "WaitingBuyerConfirm" }}">
-					<span class="bubble"><span>{{ "WaitingBuyerConfirm" | trans }}</span></span>
-					<span class="time">{{ info.StateTimes.WaitingBuyerConfirm }}</span>
-				</li>
-				<li class="{{ info | order_state_progress_class: "OrderSuccess" }}">
-					<span class="bubble"><span>{{ "OrderSuccess" | trans }}</span></span>
-					<span class="time">{{ info.StateTimes.OrderSuccess }}</span>
-				</li>
-				{% if info.StateTimes.OrderCancelled %}
-				<li class="danger">
-					<span class="bubble"><span>{{ "OrderCancelled" | trans }}</span></span>
-					<span class="time">{{ info.StateTimes.OrderCancelled }}</span>
-				</li>
-				{% endif %}
-				{% if info.StateTimes.OrderInvalid %}
-				<li class="danger">
-					<span class="bubble"><span>{{ "OrderInvalid" | trans }}</span></span>
-					<span class="time">{{ info.StateTimes.OrderInvalid }}</span>
-				</li>
-				{% endif %}
-			</ul>
+			<div class="order-state-progress-container">
+				<ul class="progress-indicator order-state-progress">
+					<li class="{{ info | order_state_progress_class: "WaitingBuyerPay" }}">
+						<span class="bubble"><span>{{ "WaitingBuyerPay" | trans }}</span></span>
+						<span class="time">{{ info.StateTimes.WaitingBuyerPay }}</span>
+					</li>
+					<li class="{{ info | order_state_progress_class: "WaitingSellerDeliveryGoods" }}">
+						<span class="bubble"><span>{{ "WaitingSellerDeliveryGoods" | trans }}</span></span>
+						<span class="time">{{ info.StateTimes.WaitingSellerDeliveryGoods }}</span>
+					</li>
+					<li class="{{ info | order_state_progress_class: "WaitingBuyerConfirm" }}">
+						<span class="bubble"><span>{{ "WaitingBuyerConfirm" | trans }}</span></span>
+						<span class="time">{{ info.StateTimes.WaitingBuyerConfirm }}</span>
+					</li>
+					<li class="{{ info | order_state_progress_class: "OrderSuccess" }}">
+						<span class="bubble"><span>{{ "OrderSuccess" | trans }}</span></span>
+						<span class="time">{{ info.StateTimes.OrderSuccess }}</span>
+					</li>
+					{% if info.StateTimes.OrderCancelled %}
+					<li class="danger">
+						<span class="bubble"><span>{{ "OrderCancelled" | trans }}</span></span>
+						<span class="time">{{ info.StateTimes.OrderCancelled }}</span>
+					</li>
+					{% endif %}
+					{% if info.StateTimes.OrderInvalid %}
+					<li class="danger">
+						<span class="bubble"><span>{{ "OrderInvalid" | trans }}</span></span>
+						<span class="time">{{ info.StateTimes.OrderInvalid }}</span>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
 		</div>
 	</div>
 	<div class="panel panel-primary order-view-panel">

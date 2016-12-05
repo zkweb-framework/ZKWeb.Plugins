@@ -40,7 +40,6 @@
 
 				> dd {
 					float: left;
-					width: 190px;
 					padding: 4px 0px;
 
 					.more {
@@ -55,6 +54,16 @@
 		flex: 1 0 auto;
 		float: left;
 		padding: 0px 0px 0px 20px;
+		/* 订单状态长度不够时允许滚动 */
+		.order-state-progress-container {
+			overflow-x: scroll;
+
+			.order-state-progress {
+				min-width: 768px;
+				font-size: 100%;
+				margin-top: 1em;
+			}
+		}
 		/* 操作按钮列表 */
 		.order-actions {
 			margin: 0px 8px 0px 8px;
@@ -68,7 +77,7 @@
 }
 
 /* 低分辨率时的样式 */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 	.order-overview {
 		display: block;
 
