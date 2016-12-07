@@ -19,6 +19,7 @@
 		"Finance.Payment.Alipay",
 		"Finance.Payment.Cash",
 		"Finance.Payment.OnArrive",
+		"Finance.Payment.Pingpp",
 		"Finance.Payment.Tenpay",
 		"Finance.Payment.WeChat",
 		"CMS.CKEditor",
