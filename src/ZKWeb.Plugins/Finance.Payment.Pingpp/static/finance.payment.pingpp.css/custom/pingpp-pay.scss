@@ -1,0 +1,29 @@
+﻿.pingpp-pay {
+	.payment-channels {
+		.payment-channel {
+			padding: 5px;
+			overflow: hidden;
+
+			.title {
+				border: 1px solid #aaa;
+				height: 50px;
+				line-height: 50px;
+				padding: 0px 0px 0px 5px;
+
+				> img {
+					margin-top: -3px;
+				}
+			}
+		}
+	}
+
+	.form-actions {
+		width: 100%;
+		text-align: center;
+		margin-top: 15px;
+
+		.btn {
+			padding: 15px 100px;
+		}
+	}
+}

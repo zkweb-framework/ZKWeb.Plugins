@@ -42,7 +42,9 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.Translates {
 			{ "QuantGroupPayWapChannel", "量化派支付" },
 			{ "CMBWalletChannel", "招行一网通" },
 			{ "ApplePayChannel", "Apple Pay" },
-			{ "QQPayChannel", "QQ钱包支付" }
+			{ "QQPayChannel", "QQ钱包支付" },
+			{ "Ping++ Pay", "Ping++支付" },
+			{ "Please select payment channel and click pay", "请选择支付渠道并点击支付" }
 		};
 
 		public bool CanTranslate(string code) {

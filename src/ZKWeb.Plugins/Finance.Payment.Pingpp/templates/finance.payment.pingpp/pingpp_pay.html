@@ -1,0 +1,27 @@
+﻿<div>
+	{% include_css_here "/static/finance.payment.pingpp.css/components.css" %}
+	<div class="portlet pingpp-pay"
+		 require-script="/static/finance.payment.pingpp.js/components.min.js">
+		<div class="portlet-title">
+			<div class="caption">
+				<i class="fa fa-credit-card"></i>
+				<span class="caption-subject">{{ "Ping++ Pay" | trans }}</span>
+				<span class="caption-helper">{{ "Please select payment channel and click pay" | trans }}</span>
+			</div>
+		</div>
+		<div class="portlet-body">
+			<div class="payment-channels row">
+				{% for channel in paymentChannels %}
+				<div class="payment-channel col-md-2 col-sm-4 col-xs-6" data-value="{{ channel.value }}">
+					<div class="title">
+						<img src="/static/finance.payment.pingpp.images/{{ channel.value }}.jpg" alt="{{ channel.name }}" />
+						{{ channel.name }}
+					</div>
+				</div>
+				{% endfor %}
+				<div class="clearfix"></div>
+			</div>
+			{{ form }}
+		</div>
+	</div>
+</div>

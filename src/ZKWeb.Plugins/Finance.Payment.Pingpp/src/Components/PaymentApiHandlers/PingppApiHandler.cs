@@ -2,12 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using ZKWeb.Database;
+using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Finance.Payment.Pingpp.src.UIComponents.Forms;
 using ZKWeb.Plugins.Finance.Payment.Pingpp.src.UIComponents.ListItemProviders;
 using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentApiHandlers.Interfaces;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
 using ZKWeb.Plugins.Finance.Payment.src.UIComponents.Forms;
+using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
@@ -63,7 +67,18 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers
 		/// 获取支付Html
 		/// </summary>
 		public void GetPaymentHtml(PaymentTransaction transaction, ref HtmlString html) {
-			throw new NotImplementedException();
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var apiData = transaction.Api.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
+			var paymentChannels = new PaymentChannelListItemProvider().GetItems()
+				.Where(c => apiData.PaymentChannels.Contains(c.Value))
+				.ToList();
+			var form = new PingppPayForm();
+			html = new HtmlString(templateManager.RenderTemplate(
+				"finance.payment.pingpp/pingpp_pay.html", new {
+					transactionId = transaction.Id,
+					paymentChannels,
+					form
+				}));
 		}
 
 		/// <summary>
@@ -71,7 +86,10 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers
 		/// </summary>
 		public void DeliveryGoods(
 			PaymentTransaction transaction, string logisticsName, string invoiceNo) {
-			throw new NotImplementedException();
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(string.Format(
+				"PaymentApi send goods: transaction {0} logisticsName {1} invoiceNo {2}",
+				transaction.Serial, logisticsName, invoiceNo));
 		}
 
 		/// <summary>
