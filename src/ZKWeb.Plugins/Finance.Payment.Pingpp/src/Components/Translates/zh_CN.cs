@@ -16,6 +16,8 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.Translates {
 			{ "Support pay transactions by pingpp", "支持通过财付通支付交易" },
 			{ "Pingpp", "Ping++" },
 			{ "TradeSecretKey", "交易密钥" },
+			{ "PingppAppId", "App Id" },
+			{ "Starts with app_", "以app_开始" },
 			{ "You can provide test key or live key", "您可以填写测试密钥或者Live密钥" },
 			{ "PingppRsaPublicKey", "Ping++RSA公钥" },
 			{ "Starts with -----BEGIN PUBLIC KEY----", "以-----BEGIN PUBLIC KEY----开始" },
@@ -44,7 +46,8 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.Translates {
 			{ "ApplePayChannel", "Apple Pay" },
 			{ "QQPayChannel", "QQ钱包支付" },
 			{ "Ping++ Pay", "Ping++支付" },
-			{ "Please select payment channel and click pay", "请选择支付渠道并点击支付" }
+			{ "Please select payment channel and click pay", "请选择支付渠道并点击支付" },
+			{ "Ping++ only support cny payment", "Ping++只支持人民币支付" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -44,6 +44,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers
 		public void OnFormBind(PaymentApiEditForm form, PaymentApi bindFrom) {
 			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
 			ApiDataEditing.TradeSecretKey = apiData.TradeSecretKey;
+			ApiDataEditing.PingppAppId = apiData.PingppAppId;
 			ApiDataEditing.PingppRsaPublicKey = apiData.PingppRsaPublicKey;
 			ApiDataEditing.PartnerRsaPrivateKey = apiData.PartnerRsaPrivateKey;
 			ApiDataEditing.PaymentChannels = apiData.PaymentChannels;
@@ -73,6 +74,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers
 				.Where(c => apiData.PaymentChannels.Contains(c.Value))
 				.ToList();
 			var form = new PingppPayForm();
+			form.Bind();
 			html = new HtmlString(templateManager.RenderTemplate(
 				"finance.payment.pingpp/pingpp_pay.html", new {
 					transactionId = transaction.Id,
@@ -102,6 +104,12 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers
 			[Required]
 			[TextBoxField("TradeSecretKey", "You can provide test key or live key")]
 			public string TradeSecretKey { get; set; }
+			/// <summary>
+			/// App Id
+			/// </summary>
+			[Required]
+			[TextBoxField("PingppAppId", "Starts with app_")]
+			public string PingppAppId { get; set; }
 			/// <summary>
 			/// Ping++RSA公钥
 			/// </summary>
