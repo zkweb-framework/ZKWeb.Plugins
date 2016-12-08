@@ -47,7 +47,12 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers
 			ApiDataEditing.PingppAppId = apiData.PingppAppId;
 			ApiDataEditing.PingppRsaPublicKey = apiData.PingppRsaPublicKey;
 			ApiDataEditing.PartnerRsaPrivateKey = apiData.PartnerRsaPrivateKey;
-			ApiDataEditing.PaymentChannels = apiData.PaymentChannels;
+			ApiDataEditing.ReturnDomain = apiData.ReturnDomain;
+			ApiDataEditing.PaymentChannels = apiData.PaymentChannels.ToList();
+			ApiDataEditing.WeChatOpenId = apiData.WeChatOpenId;
+			ApiDataEditing.WeChatNoCredit = apiData.WeChatNoCredit;
+			ApiDataEditing.FqlChildMerchantId = apiData.FqlChildMerchantId;
+			ApiDataEditing.BfbRequireLogin = apiData.BfbRequireLogin;
 		}
 
 		/// <summary>
@@ -123,10 +128,35 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers
 			[TextAreaField("PartnerRsaPrivateKey", 5, "Starts with -----BEGIN RSA PRIVATE KEY-----")]
 			public string PartnerRsaPrivateKey { get; set; }
 			/// <summary>
+			/// 返回域名
+			/// </summary>
+			[TextBoxField("ReturnDomain", "keep empty will use the default domain")]
+			public string ReturnDomain { get; set; }
+			/// <summary>
 			/// 支付渠道
 			/// </summary>
 			[CheckBoxGroupField("PaymentChannels", typeof(PaymentChannelListItemProvider))]
 			public IList<string> PaymentChannels { get; set; }
+			/// <summary>
+			/// 微信Open Id
+			/// </summary>
+			[TextBoxField("WeChatOpenId", "WeChatOpenId", Group = "ExtraPaymentArguments")]
+			public string WeChatOpenId { get; set; }
+			/// <summary>
+			/// 微信限制使用信用卡
+			/// </summary>
+			[CheckBoxField("WeChatNoCredit", Group = "ExtraPaymentArguments")]
+			public bool WeChatNoCredit { get; set; }
+			/// <summary>
+			/// 分期乐子商户编号
+			/// </summary>
+			[TextBoxField("FqlChildMerchantId", "FqlChildMerchantId", Group = "ExtraPaymentArguments")]
+			public string FqlChildMerchantId { get; set; }
+			/// <summary>
+			/// 百度钱包需要登陆
+			/// </summary>
+			[CheckBoxField("BfbRequireLogin", Group = "ExtraPaymentArguments")]
+			public bool BfbRequireLogin { get; set; }
 
 			/// <summary>
 			/// 初始化

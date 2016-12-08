@@ -20,7 +20,9 @@ $(function () {
 // 根据服务器返回的支付凭据发起支付
 $(function () {
 	var $form = $(".pingpp-pay [name='PingppPayForm']");
-	$form.on("success", function (e, charge) {
+	$form.on("success", function (e, result) {
+		var charge = result.charge;
+		var resultUrl = result.resultUrl;
 		// 隐藏提交按钮
 		$form.find(".form-actions").hide();
 		// 发起支付
@@ -33,9 +35,7 @@ $(function () {
 			var backToResultPage = false;
 			if (result == "success") {
 				// 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL
-				if (charge.channel == "wx_pub") {
-					backToResultPage = true;
-				}
+				backToResultPage = true;
 			} else if (result == "fail") {
 				// charge 不正确或者微信公众账号支付失败时会在此处返回
 				alert(err.msg);
@@ -47,8 +47,9 @@ $(function () {
 			}
 			// 返回结果Url
 			if (backToResultPage) {
-				var resultUrl = location.href.replace("transaction/pay", "transaction/pay_result");
-				location.href = resultUrl;
+				setTimeout(function () {
+					location.href = resultUrl;
+				}, 1500);
 			}
 		});
 	});

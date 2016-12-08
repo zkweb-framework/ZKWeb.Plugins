@@ -23,7 +23,14 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.Translates {
 			{ "Starts with -----BEGIN PUBLIC KEY----", "以-----BEGIN PUBLIC KEY----开始" },
 			{ "PartnerRsaPrivateKey", "商户RSA私钥" },
 			{ "Starts with -----BEGIN RSA PRIVATE KEY-----", "以-----BEGIN RSA PRIVATE KEY-----开始" },
+			{ "ReturnDomain", "返回域名" },
+			{ "keep empty will use the default domain", "留空时使用默认域名" },
 			{ "PaymentChannels", "支付渠道" },
+			{ "WeChatOpenId", "微信Open Id" },
+			{ "WeChatNoCredit", "微信限制使用信用卡" },
+			{ "FqlChildMerchantId", "分期乐子商户编号" },
+			{ "BfbRequireLogin", "百度钱包需要登陆" },
+			{ "ExtraPaymentArguments", "扩展支付参数" },
 			{ "AlipayAppChannel", "支付宝App支付" },
 			{ "AlipayWapChannel", "支付宝手机网页支付" },
 			{ "AlipayPcDirectChannel", "支付宝电脑网页支付" },
@@ -47,7 +54,10 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.Translates {
 			{ "QQPayChannel", "QQ钱包支付" },
 			{ "Ping++ Pay", "Ping++支付" },
 			{ "Please select payment channel and click pay", "请选择支付渠道并点击支付" },
-			{ "Ping++ only support cny payment", "Ping++只支持人民币支付" }
+			{ "Ping++ only support cny payment", "Ping++只支持人民币支付" },
+			{ "Transaction amount not matched, excepted amount is {0}, actual amount is {1}",
+				"交易金额不匹配，预想值是{0}，实际值是{1}" },
+			{ "Verify Ping++ rsa sign failed", "验证Ping++的RSA签名失败" }
 		};
 
 		public bool CanTranslate(string code) {
