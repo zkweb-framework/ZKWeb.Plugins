@@ -152,8 +152,8 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Controllers {
 			/// <summary>
 			/// 运费规则的提示信息
 			/// </summary>
-			[HtmlField("PriceRulesAlert", Group = "LogisticsPriceRules")]
-			public HtmlString PriceRulesAlert { get; set; }
+			[AlertHtmlField("PriceRulesAlert", "info", Group = "LogisticsPriceRules")]
+			public string PriceRulesAlert { get; set; }
 			/// <summary>
 			/// 运费规则
 			/// </summary>
@@ -171,10 +171,8 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Controllers {
 				DisplayOrder = bindFrom.DisplayOrder;
 				Remark = bindFrom.Remark;
 				var templateManager = Application.Ioc.Resolve<TemplateManager>();
-				PriceRulesAlert = new HtmlString(templateManager.RenderTemplate(
-					"common.base/tmpl.alert.info.html", new {
-						message = new T("Logistics cost is determined by the following settings, match order is from top to bottom")
-					}));
+				PriceRulesAlert = new T(
+					"Logistics cost is determined by the following settings, match order is from top to bottom");
 				PriceRules = bindFrom.PriceRules;
 			}
 

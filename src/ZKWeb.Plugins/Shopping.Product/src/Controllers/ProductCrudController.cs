@@ -229,8 +229,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 			/// <summary>
 			/// 商品相册的提示信息
 			/// </summary>
-			[HtmlField("ProductAlbumAlert", Group = "ProductAlbum")]
-			public HtmlString ProductAlbumAlert { get; set; }
+			[AlertHtmlField("ProductAlbumAlert", "info", Group = "ProductAlbum")]
+			public string ProductAlbumAlert { get; set; }
 			/// <summary>
 			/// 商品相册
 			/// </summary>
@@ -279,12 +279,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 				var templateManager = Application.Ioc.Resolve<TemplateManager>();
 				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 				var albumSettings = configManager.GetData<ProductAlbumSettings>();
-				ProductAlbumAlert = new HtmlString(templateManager.RenderTemplate(
-					"common.base/tmpl.alert.info.html", new {
-						message = new T("Uploaded pictures will be scaled to {0}x{1}, " +
-							"upload pictures of this size can achieve the best display effect",
-							albumSettings.OriginalImageWidth, albumSettings.OriginalImageHeight)
-					}));
+				ProductAlbumAlert = new T("Uploaded pictures will be scaled to {0}x{1}, " +
+					"upload pictures of this size can achieve the best display effect",
+					albumSettings.OriginalImageWidth, albumSettings.OriginalImageHeight);
 				ProductAlbum = new ProductAlbumUploadData(bindFrom.Id);
 				// 属性规格
 				Category = bindFrom.Category?.Id;

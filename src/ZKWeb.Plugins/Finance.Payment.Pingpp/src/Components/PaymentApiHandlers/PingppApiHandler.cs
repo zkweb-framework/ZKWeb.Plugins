@@ -47,11 +47,9 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers
 		public void OnFormBind(PaymentApiEditForm form, PaymentApi bindFrom) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var webhookUrl = HttpManager.CurrentContext.Request.Host + "/payment/pingpp/webhook";
-			var alertHtml = new HtmlString(templateManager.RenderTemplate(
-				"common.base/tmpl.alert.warning.html", new {
-					message = new T("Please sure you set the webhook url [{0}] on Ping++", webhookUrl)
-				}));
-			form.Form.Fields.Insert(0, new FormField(new HtmlFieldAttribute("Alert")) { Value = alertHtml });
+			form.Form.Fields.Insert(0, new FormField(new AlertHtmlFieldAttribute("Alert", "danger")) {
+				Value = new T("Please sure you set the webhook url [{0}] on Ping++", webhookUrl)
+			});
 			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
 			ApiDataEditing.TradeSecretKey = apiData.TradeSecretKey;
 			ApiDataEditing.PingppAppId = apiData.PingppAppId;

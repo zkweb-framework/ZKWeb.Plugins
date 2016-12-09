@@ -318,7 +318,7 @@ Finance.Payment.Pingpp
 	支持发起多种支付渠道的支付
 	支持处理支付成功的webhook
 	支持验证webhook的rsa签名
-	TODO: 支付成功后的页面会等待webhook处理
+	支付成功后的页面会等待webhook处理
 
 Finance.Payment.Tenpay
 	提供支付接口

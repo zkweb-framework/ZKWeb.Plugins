@@ -30,8 +30,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		/// <summary>
 		/// 提示Html
 		/// </summary>
-		[HtmlField("AlertHtml")]
-		public HtmlString AlertHtml { get; set; }
+		[AlertHtmlField("AlertHtml", "info")]
+		public string AlertHtml { get; set; }
 		/// <summary>
 		/// 物流配送，虚拟发货时不使用
 		/// </summary>
@@ -79,18 +79,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 				var logisticsId = order.OrderParameters.GetSellerToLogistics()
 					.GetOrDefault(order.Owner?.Id ?? Guid.Empty);
 				var logistics = logisticsManager.GetWithCache(logisticsId);
-				var message = new T(
+				AlertHtml = new T(
 					"The shipping address is \"{0}\", and buyer want to use logistics \"{1}\"",
 					shippingAddress?.GenerateSummary(), logistics?.Name);
-				AlertHtml = new HtmlString(templateManager.RenderTemplate(
-					"common.base/tmpl.alert.warning.html", new { message }));
 				Logistics = logistics?.Id ?? Guid.Empty;
 			} else {
-				var message = new T(
+				AlertHtml = new T(
 					"Order only contains virtual products, " +
 					"if you have something to buyer please use comment");
-				AlertHtml = new HtmlString(templateManager.RenderTemplate(
-					"common.base/tmpl.alert.warning.html", new { message }));
 				Form.Fields.RemoveAll(a =>
 					a.Attribute.Name == "Logistics" ||
 					a.Attribute.Name == "LogisticsSerial");
