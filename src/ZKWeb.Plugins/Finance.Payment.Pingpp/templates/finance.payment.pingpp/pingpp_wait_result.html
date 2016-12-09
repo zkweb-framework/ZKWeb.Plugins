@@ -1,0 +1,17 @@
+﻿{% use_title "Waiting Payment Result" -%}
+{% include common.base/header.html %}
+<div class="screen-center-block">
+	<div class="portlet pingpp-wait-result"
+		 require-script="/static/finance.payment.pingpp.js/components.min.js">
+		<div class="portlet-title">
+			<div class="caption">
+				<i class="fa fa-credit-card"></i>
+				<span class="caption-subject">{{ "Waiting Payment Result" | trans }}</span>
+			</div>
+		</div>
+		<div class="portlet-body">
+			<div class="text-center-row">{{ "Please wait while the platform returns payment results..." | trans  }}</div>
+		</div>
+	</div>
+</div>
+{% include common.base/footer.html %}

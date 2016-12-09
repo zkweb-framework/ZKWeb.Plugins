@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ZKWeb.Database;
+using ZKWeb.Localize;
 using ZKWeb.Logging;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Finance.Payment.Pingpp.src.UIComponents.Forms;
 using ZKWeb.Plugins.Finance.Payment.Pingpp.src.UIComponents.ListItemProviders;
@@ -15,6 +17,7 @@ using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers {
 	/// <summary>
@@ -42,6 +45,13 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers
 		/// 后台编辑表单绑定时的处理
 		/// </summary>
 		public void OnFormBind(PaymentApiEditForm form, PaymentApi bindFrom) {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var webhookUrl = HttpManager.CurrentContext.Request.Host + "/payment/pingpp/webhook";
+			var alertHtml = new HtmlString(templateManager.RenderTemplate(
+				"common.base/tmpl.alert.warning.html", new {
+					message = new T("Please sure you set the webhook url [{0}] on Ping++", webhookUrl)
+				}));
+			form.Form.Fields.Insert(0, new FormField(new HtmlFieldAttribute("Alert")) { Value = alertHtml });
 			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
 			ApiDataEditing.TradeSecretKey = apiData.TradeSecretKey;
 			ApiDataEditing.PingppAppId = apiData.PingppAppId;

@@ -57,7 +57,12 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.Translates {
 			{ "Ping++ only support cny payment", "Ping++只支持人民币支付" },
 			{ "Transaction amount not matched, excepted amount is {0}, actual amount is {1}",
 				"交易金额不匹配，预想值是{0}，实际值是{1}" },
-			{ "Verify Ping++ rsa sign failed", "验证Ping++的RSA签名失败" }
+			{ "Verify Ping++ rsa sign failed", "验证Ping++的RSA签名失败" },
+			{ "Waiting Payment Result", "等待支付结果" },
+			{ "Please wait while the platform returns payment results...",
+				"请稍候，正在等待平台返回支付结果……" },
+			{ "Please sure you set the webhook url [{0}] on Ping++",
+				"请确保您已在Ping++上设置webhook通知到url [{0}]"}
 		};
 
 		public bool CanTranslate(string code) {

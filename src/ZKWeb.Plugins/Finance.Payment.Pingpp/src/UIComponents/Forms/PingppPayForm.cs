@@ -46,14 +46,16 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.UIComponents.Forms {
 #else
 			var pingppManager = Application.Ioc.Resolve<PingppManager>();
 			Charge charge;
-			string resultUrl;
+			string realResultUrl;
+			string waitResultUrl;
 			pingppManager.GetCharge(
 				TransactionId, PaymentChannel,
 				Request.GetUserAgent(),
 				Request.RemoteIpAddress.MapToIPv4().ToString(),
 				out charge,
-				out resultUrl);
-			return new { charge, resultUrl };
+				out realResultUrl,
+				out waitResultUrl);
+			return new { charge, realResultUrl, waitResultUrl };
 #endif
 		}
 	}

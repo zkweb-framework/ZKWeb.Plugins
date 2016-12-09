@@ -22,7 +22,8 @@ $(function () {
 	var $form = $(".pingpp-pay [name='PingppPayForm']");
 	$form.on("success", function (e, result) {
 		var charge = result.charge;
-		var resultUrl = result.resultUrl;
+		var realResultUrl = result.realResultUrl;
+		var waitResultUrl = result.waitResultUrl;
 		// 隐藏提交按钮
 		$form.find(".form-actions").hide();
 		// 发起支付
@@ -32,25 +33,33 @@ $(function () {
 			console.log(err.msg);
 			console.log(err.extra);
 			// 显示提示并判断是否需要返回结果Url
-			var backToResultPage = false;
+			var redirectTo = null;
 			if (result == "success") {
 				// 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的支付结果都会跳转到 extra 中对应的 URL
-				backToResultPage = true;
+				// 支付成功后需要等待异步通知，所以跳转到等待结果的页面
+				redirectTo = waitResultUrl;
 			} else if (result == "fail") {
 				// charge 不正确或者微信公众账号支付失败时会在此处返回
 				alert(err.msg);
-				backToResultPage = true;
+				redirectTo = realResultUrl;
 			} else if (result == "cancel") {
 				// 微信公众账号支付取消支付
 				alert(err.msg);
-				backToResultPage = true;
+				redirectTo = realResultUrl;
 			}
 			// 返回结果Url
-			if (backToResultPage) {
-				setTimeout(function () {
-					location.href = resultUrl;
-				}, 1500);
+			if (redirectTo) {
+				setTimeout(function () { location.href = redirectTo; }, 1500);
 			}
 		});
 	});
+});
+
+/* 等待支付结果的页面自动刷新 */
+$(function () {
+	if ($(".pingpp-wait-result").length) {
+		setTimeout(function () {
+			location.href = location.href;
+		}, 3000);
+	}
 });

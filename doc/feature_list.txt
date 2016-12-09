@@ -297,7 +297,7 @@ Finance.Payment
 		调用发货接口通知支付平台
 
 Finance.Payment.Alipay
-	提供支付交易
+	提供支付接口
 		TODO: 支付宝
 	TODO: 支持支付宝即时到账
 	TODO: 支持支付宝担保交易
@@ -305,20 +305,28 @@ Finance.Payment.Alipay
 	TODO: 支持支付宝确认收货通知
 
 Finance.Payment.Cash
-	提供支付交易
+	提供支付接口
 		TODO: 现金支付
 
 Finance.Payment.OnArrive
-	提供支付交易
+	提供支付接口
 		TODO: 货到付款
 
+Finance.Payment.Pingpp
+	提供支付接口
+		Ping++
+	支持发起多种支付渠道的支付
+	支持处理支付成功的webhook
+	支持验证webhook的rsa签名
+	TODO: 支付成功后的页面会等待webhook处理
+
 Finance.Payment.Tenpay
-	提供支付交易
+	提供支付接口
 		TODO: 财付通
 	TODO: 支持财付通即时到账
 
 Finance.Payment.WeChat
-	提供支付交易
+	提供支付接口
 		TODO: 微信扫码支付
 		TODO: 微信公众号支付
 

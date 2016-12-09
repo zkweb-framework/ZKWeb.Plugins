@@ -280,9 +280,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 				var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 				var albumSettings = configManager.GetData<ProductAlbumSettings>();
 				ProductAlbumAlert = new HtmlString(templateManager.RenderTemplate(
-					"shopping.product/tmpl.album_alert.html", new {
-						width = albumSettings.OriginalImageWidth,
-						height = albumSettings.OriginalImageHeight
+					"common.base/tmpl.alert.info.html", new {
+						message = new T("Uploaded pictures will be scaled to {0}x{1}, " +
+							"upload pictures of this size can achieve the best display effect",
+							albumSettings.OriginalImageWidth, albumSettings.OriginalImageHeight)
 					}));
 				ProductAlbum = new ProductAlbumUploadData(bindFrom.Id);
 				// 属性规格

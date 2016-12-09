@@ -172,7 +172,9 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Controllers {
 				Remark = bindFrom.Remark;
 				var templateManager = Application.Ioc.Resolve<TemplateManager>();
 				PriceRulesAlert = new HtmlString(templateManager.RenderTemplate(
-					"shopping.logistics/tmpl.price_rules_alert.html", null));
+					"common.base/tmpl.alert.info.html", new {
+						message = new T("Logistics cost is determined by the following settings, match order is from top to bottom")
+					}));
 				PriceRules = bindFrom.PriceRules;
 			}
 

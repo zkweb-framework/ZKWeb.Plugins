@@ -39,7 +39,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "ProductIntroduction", "제품 소개" },
 			{ "As Main Image", "도 주로 위치" },
 			{ "Clear", "제거" },
-			{ "Uploaded pictures will be scaled to [0]x[1], " +
+			{ "Uploaded pictures will be scaled to {0}x{1}, " +
 				"upload pictures of this size can achieve the best display effect",
 				"현재 업로드 된 이미지는 [0]×[1], 가장 좋은 결과를 얻을 수 있습니다이 크기의 사진을 업로드를 확장 할 것" },
 			{ "Category", "범주" },

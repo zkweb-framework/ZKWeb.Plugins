@@ -10,6 +10,7 @@ using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 
 namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Controllers {
 	/// <summary>
@@ -21,18 +22,38 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Controllers {
 		/// 获取Ping++支付凭据并返回给客户端
 		/// </summary>
 		/// <returns></returns>
-		[Action("/payment/pingpp/pay", HttpMethods.POST)]
+		[Action("payment/pingpp/pay", HttpMethods.POST)]
 		public IActionResult Pay() {
 			var form = new PingppPayForm();
 			return new JsonResult(form.Submit());
 		}
 
 		/// <summary>
+		/// 等待支付结果
+		/// </summary>
+		/// <returns></returns>
+		[Action("payment/pingpp/wait_result")]
+		public IActionResult WaitResult() {
+			var id = Request.Get<Guid>("id");
+#if NETCORE
+			throw new BadRequestException("Ping++ on .Net Core is unsupported yet");
+#else
+			var pingppManager = Application.Ioc.Resolve<PingppManager>();
+			if (pingppManager.ShouldWaitResult(id)) {
+				return new TemplateResult("finance.payment.pingpp/pingpp_wait_result.html");
+			}
+#endif
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			var resultUrl = transactionManager.GetResultUrl(id);
+			return new RedirectResult(resultUrl);
+		}
+
+		/// <summary>
 		/// Ping++的后台通知
 		/// </summary>
 		/// <returns></returns>
-		[Action("/payment/pingpp/webhook")]
-		[Action("/payment/pingpp/webhook", HttpMethods.POST)]
+		[Action("payment/pingpp/webhook")]
+		[Action("payment/pingpp/webhook", HttpMethods.POST)]
 		public IActionResult WebHook() {
 			// 用于给Ping++校验页面存在
 			if (Request.Method == HttpMethods.GET) {

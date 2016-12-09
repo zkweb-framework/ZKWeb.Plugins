@@ -39,9 +39,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "ProductIntroduction", "商品紹介" },
 			{ "As Main Image", "メイン画像にする" },
 			{ "Clear", "クリア" },
-			{ "Uploaded pictures will be scaled to [0]x[1], " +
+			{ "Uploaded pictures will be scaled to {0}x{1}, " +
 				"upload pictures of this size can achieve the best display effect",
-				"アップロードされた画像は[0]x[1]にスケールされます、このサイズの画像をアップロードすると最良な効果が得られます" },
+				"アップロードされた画像は{0}x{1}にスケールされます、このサイズの画像をアップロードすると最良な効果が得られます" },
 			{ "Category", "カテゴリ" },
 			{ "Category not exists", "カテゴリが存在しない" },
 			{ "NonSalesProperties", "属性" },

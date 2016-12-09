@@ -83,14 +83,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 					"The shipping address is \"{0}\", and buyer want to use logistics \"{1}\"",
 					shippingAddress?.GenerateSummary(), logistics?.Name);
 				AlertHtml = new HtmlString(templateManager.RenderTemplate(
-					"shopping.order/order_delivery.alert.html", new { message }));
+					"common.base/tmpl.alert.warning.html", new { message }));
 				Logistics = logistics?.Id ?? Guid.Empty;
 			} else {
 				var message = new T(
 					"Order only contains virtual products, " +
 					"if you have something to buyer please use comment");
 				AlertHtml = new HtmlString(templateManager.RenderTemplate(
-					"shopping.order/order_delivery.alert.html", new { message }));
+					"common.base/tmpl.alert.warning.html", new { message }));
 				Form.Fields.RemoveAll(a =>
 					a.Attribute.Name == "Logistics" ||
 					a.Attribute.Name == "LogisticsSerial");

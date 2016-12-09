@@ -1,16 +1,23 @@
 ﻿#if !NETCORE
+using Newtonsoft.Json;
 using Pingpp.Models;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using ZKWeb.Localize;
+using ZKWeb.Logging;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Components.GenericConfigs;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
+using ZKWeb.Plugins.Finance.Payment.Pingpp.src.Domain.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Components.Utils;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Enums;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWebStandard.Extensions;
@@ -18,13 +25,6 @@ using ZKWebStandard.Ioc;
 using static ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.PaymentApiHandlers.PingppApiHandler;
 
 namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Domain.Services {
-	using Common.Admin.src.Domain.Services;
-	using Extensions;
-	using Logging;
-	using Newtonsoft.Json;
-	using Payment.src.Domain.Enums;
-	using System.Security.Cryptography;
-	using System.Text;
 	using Pingpp = global::Pingpp.Pingpp;
 
 	/// <summary>
@@ -40,10 +40,11 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Domain.Services {
 		/// <param name="userAgent">客户端的UserAgent</param>
 		/// <param name="ipAddress">客户端的Ip地址</param>
 		/// <param name="charge">返回的支付凭据</param>
-		/// <param name="resultUrl">返回的结果Url</param>
+		/// <param name="realResultUrl">返回的结果Url</param
+		/// <param name="waitResultUrl">等待返回的结果Url</param>>
 		public virtual void GetCharge(
 			Guid transactionId, string paymentChannel, string userAgent, string ipAddress,
-			out Charge charge, out string resultUrl) {
+			out Charge charge, out string realResultUrl, out string waitResultUrl) {
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			PaymentTransaction transaction;
 			PaymentApi api;
@@ -80,21 +81,24 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Domain.Services {
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var websiteSettings = configManager.GetData<WebsiteSettings>();
 			var extra = new Dictionary<string, object>();
-			resultUrl = PaymentUtils.GetReturnOrNotifyUrl(
+			realResultUrl = PaymentUtils.GetReturnOrNotifyUrl(
 				apiData.ReturnDomain,
 				transactionManager.GetResultUrl(transactionId));
+			waitResultUrl = PaymentUtils.GetReturnOrNotifyUrl(
+				apiData.ReturnDomain,
+				GetWaitResultUrl(transactionId));
 			if (paymentChannel == "alipay_wap" ||
 				paymentChannel == "alipay_pc_direct") {
 				// 支付宝支付
-				extra["success_url"] = resultUrl;
+				extra["success_url"] = waitResultUrl;
 			} else if (paymentChannel == "bfb_wap") {
 				// 百度钱包支付
-				extra["result_url"] = resultUrl;
+				extra["result_url"] = waitResultUrl;
 				extra["bfb_login"] = apiData.BfbRequireLogin;
 			} else if (paymentChannel == "upacp_wap" ||
 				paymentChannel == "upacp_pc") {
 				// 银联支付
-				extra["result_url"] = resultUrl;
+				extra["result_url"] = waitResultUrl;
 			} else if (paymentChannel == "wx" ||
 				paymentChannel == "wx_pub" ||
 				paymentChannel == "wx_pub_qr" ||
@@ -109,21 +113,21 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Domain.Services {
 					extra["product_id"] = transaction.ExtraData
 						.GetOrDefault<string>("WeChatProductId") ?? "0";
 				} else if (paymentChannel == "wx_wap") {
-					extra["result_url"] = resultUrl;
+					extra["result_url"] = waitResultUrl;
 				}
 			} else if (paymentChannel == "jdpay_wap") {
 				// 京东支付
-				extra["success_url"] = resultUrl;
-				extra["fail_url"] = resultUrl;
+				extra["success_url"] = waitResultUrl;
+				extra["fail_url"] = realResultUrl;
 			} else if (paymentChannel == "fqlpay_wap") {
 				// 分期乐支付
 				extra["c_merch_id"] = apiData.FqlChildMerchantId;
-				extra["return_url"] = resultUrl;
+				extra["return_url"] = waitResultUrl;
 			} else if (paymentChannel == "qgbc_wap") {
 				// 量化派支付
 				extra["phone"] = transaction.ExtraData
 					.GetOrDefault<string>("QgbcBuyerMobile") ?? "0";
-				extra["return_url"] = resultUrl;
+				extra["return_url"] = waitResultUrl;
 			} else if (paymentChannel == "qpay") {
 				// QQ钱包
 				var isIOS = userAgent.Contains("iphone") || userAgent.Contains("ipad");
@@ -214,6 +218,30 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Domain.Services {
 			if (!rsa.VerifyData(dataToVerify, "SHA256", signedData)) {
 				throw new BadRequestException("Verify Ping++ rsa sign failed");
 			}
+		}
+
+		/// <summary>
+		/// 是否应该继续等待交易结果
+		/// </summary>
+		/// <param name="transactionId">交易Id</param>
+		public virtual bool ShouldWaitResult(Guid transactionId) {
+			using (UnitOfWork.Scope()) {
+				var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+				var transaction = transactionManager.Get(transactionId);
+				if (transaction == null) {
+					throw new BadRequestException(new T("Payment transaction not found"));
+				}
+				return transaction.Check(c => c.IsPayable).First;
+			}
+		}
+
+		/// <summary>
+		/// 获取等待支付结果的Url
+		/// </summary>
+		/// <param name="transactionId"></param>
+		/// <returns></returns>
+		public virtual string GetWaitResultUrl(Guid transactionId) {
+			return string.Format("/payment/pingpp/wait_result?id={0}", transactionId);
 		}
 	}
 }

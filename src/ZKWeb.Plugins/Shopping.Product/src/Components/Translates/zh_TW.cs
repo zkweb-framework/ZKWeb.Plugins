@@ -39,9 +39,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "ProductIntroduction", "商品介紹" },
 			{ "As Main Image", "設為主圖" },
 			{ "Clear", "清除" },
-			{ "Uploaded pictures will be scaled to [0]x[1], " +
+			{ "Uploaded pictures will be scaled to {0}x{1}, " +
 				"upload pictures of this size can achieve the best display effect",
-				"當前上傳的圖片會被縮放到[0]x[1]，上傳此大小的圖片可以達到最佳的顯示效果" },
+				"當前上傳的圖片會被縮放到{0}x{1}，上傳此大小的圖片可以達到最佳的顯示效果" },
 			{ "Category", "類目" },
 			{ "Category not exists", "類目不存在" },
 			{ "NonSalesProperties", "屬性" },
