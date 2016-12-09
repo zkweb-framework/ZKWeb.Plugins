@@ -4,8 +4,6 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Region.src.Components.Regions;
 using ZKWeb.Plugins.Common.Region.src.UIComponents.FormFieldAttributes;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ListItemProviders;
-using ZKWeb.Templating;
-using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 	/// <summary>
@@ -20,8 +18,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		/// <summary>
 		/// 管理收货地址, 保存收货地址
 		/// </summary>
-		[HtmlField("ShippingAddressAddin")]
-		public HtmlString ShippingAddressAddin { get; set; }
+		[TemplateHtmlField("ShippingAddressAddin", "shopping.order/tmpl.cart_shipping_address_addin.html")]
+		public object ShippingAddressAddin { get; set; }
 		/// <summary>
 		/// 最终填写的收货地址的Json
 		/// </summary>
@@ -57,14 +55,5 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.Forms {
 		[Required]
 		[TextBoxField("DetailedAddress", "DetailedAddress")]
 		public string DetailedAddress { get; set; }
-
-		/// <summary>
-		/// 绑定表单
-		/// </summary>
-		protected override void OnBind() {
-			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			ShippingAddressAddin = new HtmlString(templateManager.RenderTemplate(
-				"shopping.order/tmpl.cart_shipping_address_addin.html", null));
-		}
 	}
 }
