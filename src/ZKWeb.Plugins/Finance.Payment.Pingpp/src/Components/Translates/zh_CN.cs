@@ -13,7 +13,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.Translates {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			{ "PingppPaymentApi", "Ping++支付" },
-			{ "Support pay transactions by pingpp", "支持通过财付通支付交易" },
+			{ "Support pay transactions by pingpp", "支持通过Ping++支付交易" },
 			{ "Pingpp", "Ping++" },
 			{ "TradeSecretKey", "交易密钥" },
 			{ "PingppAppId", "App Id" },
