@@ -165,13 +165,13 @@
 			}
 		}
 	}
-	/* 商品介绍行的样式 */
+	/* 商品介绍的样式 */
 	.product-details-row {
-		border: 1px solid #DDD;
-		margin: 20px 4px 0px 4px;
-		overflow-x: auto;
-		/* 商品介绍的样式 */
 		.product-details {
+			border: 1px solid #DDD;
+			margin: 20px 4px 0px 4px;
+			overflow-x: auto;
+
 			.contents {
 				padding: 20px;
 			}

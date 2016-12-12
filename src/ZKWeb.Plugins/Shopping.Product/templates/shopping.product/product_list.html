@@ -3,6 +3,9 @@
 {% include_js_later "/static/shopping.product.js/product-list.min.js" -%}
 {% include common.base/header.html %}
 <div class="screen-center-block">
+	<div class="product-list-left pull-left">
+		{% area product_list_left %}
+	</div>
 	<div class="product-list">
 		<div class="product-list-filter-row">
 			{% area product_list_filter %}
@@ -10,6 +13,9 @@
 		<div class="product-list-table-row">
 			{% area product_list_table %}
 		</div>
+	</div>
+	<div class="product-list-right pull-right">
+		{% area product_list_right %}
 	</div>
 </div>
 {% include common.base/footer.html %}

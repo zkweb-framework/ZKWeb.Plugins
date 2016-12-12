@@ -18,7 +18,17 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="product-details-row">
-			{% area product_details %}
+			<div class="product-details-left pull-left">
+				{% area product_details_left %}
+			</div>
+			<div class="product-details">
+				{% area product_details_header %}
+				{% area product_details %}
+				{% area product_details_footer %}
+			</div>
+			<div class="product-details-right pull-right">
+				{% area product_details_right %}
+			</div>
 			<div class="clearfix"></div>
 		</div>
 	</div>
