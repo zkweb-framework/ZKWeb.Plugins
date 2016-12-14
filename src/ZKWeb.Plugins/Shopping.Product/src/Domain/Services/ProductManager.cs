@@ -159,19 +159,19 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 						propertyValues = g,
 					}).OrderBy(g => g.property.DisplayOrder);
 					foreach (var group in groups) {
-						var obj = new {
-							property = new {
-								id = group.property.Id,
-								name = new T(group.property.Name)
-							},
-							values = group.propertyValues
-								.OrderBy(value =>
-									value.PropertyValue == null ? 0 : value.PropertyValue.DisplayOrder)
-								.Select(value => new {
-									id = value.PropertyValue?.Id,
-									name = new T(value.PropertyValueName)
-								}).ToList()
+						var property = new {
+							id = group.property.Id,
+							name = new T(group.property.Name)
 						};
+						var values = group.propertyValues
+							.OrderBy(value =>
+								value.PropertyValue == null ? 0 : value.PropertyValue.DisplayOrder)
+							.Select(value => new {
+								id = value.PropertyValue?.Id,
+								name = new T(value.PropertyValueName)
+							}).ToList();
+						var allValuesName = string.Join(" ", values.Select(v => v.name));
+						var obj = new { property, values, allValuesName };
 						(group.property.IsSalesProperty ? saleProperties : nonSaleProperties).Add(obj);
 					}
 					return new {

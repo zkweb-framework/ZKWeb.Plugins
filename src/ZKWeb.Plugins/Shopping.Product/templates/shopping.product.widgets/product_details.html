@@ -3,16 +3,22 @@
 		<li class="active">
 			<a href="#tab_product_introduction" data-toggle="tab" aria-expanded="true">{{ "ProductIntroduction" | trans }}</a>
 		</li>
-		<li>
-			<a href="#tab_product_properties" data-toggle="tab">{{ "ProductProperties" | trans }}</a>
-		</li>
 	</ul>
 	<div class="tab-content">
 		<div id="tab_product_introduction" class="tab-pane active">
-			<div class="contents">{% raw_html product_info.introduction %}</div>
-		</div>
-		<div id="tab_product_properties" class="tab-pane">
-			<div class="contents">properties</div>
+			<div class="contents">
+				<div class="product-properties">
+					<p>{{ "ProductProperties" | trans }}: </p>
+					<div class="row">
+						{% for property in product_info.nonSaleProperties %}
+						<div class="product-property col-md-4 col-sm-6" title="{{ property.allValuesName }}">
+							{{ property.property.name }}: {{ property.allValuesName }}
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				{% raw_html product_info.introduction %}
+			</div>
 		</div>
 	</div>
 </div>
