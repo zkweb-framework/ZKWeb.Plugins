@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using ZKWeb.Database;
 using ZKWeb.Localize;
@@ -132,6 +133,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 		/// 是否在增删查改操作中使用事务
 		/// </summary>
 		protected virtual bool UseTransaction { get { return false; } }
+		/// <summary>
+		/// 使用事务时的隔离等级
+		/// </summary>
+		protected virtual IsolationLevel? UseIsolationLevel { get { return IsolationLevel.ReadCommitted; } }
 		/// <summary>
 		/// 是否关心实体的所属用户
 		/// 等于true时会启用所属用户使用的查询和保存过滤器，并且在批量操作时进行检查
@@ -380,7 +385,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 				using (uow.Scope()) {
 					if (useTransaction) {
 						// 开始事务
-						uow.Context.BeginTransaction();
+						uow.Context.BeginTransaction(UseIsolationLevel);
 					}
 					if (ConcernEntityOwnership) {
 						// 启用所属用户使用的查询和操作过滤器
