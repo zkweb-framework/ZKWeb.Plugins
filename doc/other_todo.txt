@@ -4,6 +4,9 @@
 
 优化查询性能，添加更多的索引
 逐步补充插件的单元测试
+修复zkweb.org上的订单列表页
+
+调查错误日志中的 Transaction (Process ID 207) was deadlocked on lock resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
 
 补充插件文档
 
