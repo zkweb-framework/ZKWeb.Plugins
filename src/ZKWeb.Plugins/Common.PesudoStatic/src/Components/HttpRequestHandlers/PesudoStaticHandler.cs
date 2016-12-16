@@ -13,7 +13,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Components.HttpRequestHandlers {
 	/// 伪静态使用的Http请求处理器
 	/// 完整规则请查看"PesudoStaticUrlFilter"的说明
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class PesudoStaticHandler : IHttpRequestHandler {
 		/// <summary>
 		/// 处理请求

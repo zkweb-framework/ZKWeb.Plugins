@@ -21,13 +21,15 @@ using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
+using ZKWeb.Plugins.Common.Admin.src.Controllers.Bases;
+using ZKWeb.Plugins.Common.Admin.src.Components.ScaffoldAttributes;
 
 namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 	/// <summary>
 	/// 图片浏览器的控制器基础类
 	/// </summary>
 	public abstract class ImageBrowserControllerBase :
-		ControllerBase,
+		ScaffoldControllerBase,
 		IPrivilegesProvider, IWebsiteStartHandler {
 		/// <summary>
 		/// 图片类别
@@ -85,6 +87,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 		/// 浏览图片
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(Url), HttpMethods.GET)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(RequiredPrivileges))]
 		public virtual IActionResult Action() {
 			var form = GetForm();
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
@@ -102,6 +106,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 		/// 搜索图片
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(SearchUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(RequiredPrivileges))]
 		public virtual IActionResult SearchAction() {
 			// 获取搜索请求
 			var json = Request.Get<string>("json");
@@ -142,6 +148,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 		/// 上传图片
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(UploadUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(RequiredPrivileges))]
 		public virtual IActionResult UploadAction() {
 			this.RequireAjaxRequest();
 			var form = GetForm();
@@ -152,6 +160,8 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 		/// 删除图片
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(RemoveUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(RequiredPrivileges))]
 		public virtual IActionResult RemoveAction() {
 			this.RequireAjaxRequest();
 			var imageManager = Application.Ioc.Resolve<ImageManager>();
@@ -168,31 +178,6 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 			foreach (var privilege in RequiredPrivileges) {
 				yield return privilege;
 			}
-		}
-
-		/// <summary>
-		/// 对处理函数进行包装
-		/// </summary>
-		/// <param name="action">处理函数</param>
-		/// <returns></returns>
-		protected virtual Func<IActionResult> WrapAction(Func<IActionResult> action) {
-			return () => {
-				// 检查权限
-				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-				privilegeManager.Check(RequiredUserType, RequiredPrivileges);
-				return action();
-			};
-		}
-
-		/// <summary>
-		/// 网站启动时的处理
-		/// </summary>
-		public virtual void OnWebsiteStart() {
-			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			controllerManager.RegisterAction(Url, HttpMethods.GET, WrapAction(Action));
-			controllerManager.RegisterAction(SearchUrl, HttpMethods.POST, WrapAction(SearchAction));
-			controllerManager.RegisterAction(UploadUrl, HttpMethods.POST, WrapAction(UploadAction));
-			controllerManager.RegisterAction(RemoveUrl, HttpMethods.POST, WrapAction(RemoveAction));
 		}
 
 		/// <summary>

@@ -26,6 +26,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Server;
 using ZKWeb.Storage;
+using ZKWeb.Plugins.Common.Admin.src.Components.ScaffoldAttributes;
 
 namespace ZKWeb.Plugins.Common.CustomTranslate.src.Controllers.Bases {
 	/// <summary>
@@ -111,6 +112,10 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Controllers.Bases {
 		/// 删除翻译内容
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(DeleteUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(DeletePrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected virtual IActionResult DeleteAction() {
 			this.RequireAjaxRequest();
 			var json = Request.Get<string>("json");
@@ -120,15 +125,6 @@ namespace ZKWeb.Plugins.Common.CustomTranslate.src.Controllers.Bases {
 			}
 			Translates = Translates;
 			return new JsonResult(new { message = new T("Delete Successful") });
-		}
-
-		/// <summary>
-		/// 网站启动时添加处理函数
-		/// </summary>
-		public override void OnWebsiteStart() {
-			base.OnWebsiteStart();
-			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			controllerManager.RegisterAction(DeleteUrl, HttpMethods.POST, DeleteAction);
 		}
 
 		/// <summary>

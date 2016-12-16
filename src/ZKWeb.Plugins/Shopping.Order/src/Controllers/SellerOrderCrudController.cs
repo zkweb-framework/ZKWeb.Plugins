@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZKWeb.Plugins.Common.Admin.src.Components.ScaffoldAttributes;
 using ZKWeb.Plugins.Common.Admin.src.Controllers;
 using ZKWeb.Plugins.Common.Admin.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
@@ -41,6 +42,12 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		public override string GroupIconClass { get { return "fa fa-building"; } }
 		public override string Name { get { return "OrderManage"; } }
 		public override string Url { get { return "/admin/orders"; } }
+		public virtual string EditCostUrl { get { return Url + "/edit_cost"; } }
+		public virtual string EditShippingAddressUrl { get { return Url + "/edit_shipping_address"; } }
+		public virtual string DeliveryGoodsUrl { get { return Url + "/delivery_goods"; } }
+		public virtual string DeliveryViewUrl { get { return Url + "/delivery_view"; } }
+		public virtual string ConfirmInsteadOfBuyerUrl { get { return Url + "/confirm_instead_of_buyer"; } }
+		public virtual string SetInvalidUrl { get { return Url + "/set_invalid"; } }
 		public override string TileClass { get { return "tile bg-aqua"; } }
 		public override string IconClass { get { return "fa fa-cart-arrow-down"; } }
 		public override string AddUrl { get { return null; } }
@@ -64,6 +71,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <summary>
 		/// 编辑价格
 		/// </summary>
+		[ScaffoldAction(nameof(EditCostUrl), HttpMethods.GET)]
+		[ScaffoldAction(nameof(EditCostUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected IActionResult EditCost() {
 			var form = new OrderEditCostForm(OrderOperatorType.Admin);
 			if (Request.Method == HttpMethods.GET) {
@@ -77,6 +89,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <summary>
 		/// 编辑地址
 		/// </summary>
+		[ScaffoldAction(nameof(EditShippingAddressUrl), HttpMethods.GET)]
+		[ScaffoldAction(nameof(EditShippingAddressUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected IActionResult EditShippingAddress() {
 			var form = new OrderEditShippingAddressForm();
 			if (Request.Method == HttpMethods.GET) {
@@ -90,6 +107,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <summary>
 		/// 发货
 		/// </summary>
+		[ScaffoldAction(nameof(DeliveryGoodsUrl), HttpMethods.GET)]
+		[ScaffoldAction(nameof(DeliveryGoodsUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected IActionResult DeliveryGoods() {
 			var form = new OrderDeliveryForm();
 			if (Request.Method == HttpMethods.GET) {
@@ -104,6 +126,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// 查看发货单
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(DeliveryViewUrl), HttpMethods.GET)]
+		[ScaffoldAction(nameof(DeliveryViewUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected IActionResult DeliveryView() {
 			var form = new OrderDeliverySellerDisplayForm();
 			if (Request.Method == HttpMethods.GET) {
@@ -118,6 +145,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// 代确认收货
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(ConfirmInsteadOfBuyerUrl), HttpMethods.GET)]
+		[ScaffoldAction(nameof(ConfirmInsteadOfBuyerUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected IActionResult ConfirmOrderInsteadOfBuyer() {
 			var form = new OrderConfirmInsteadOfBuyerForm();
 			if (Request.Method == HttpMethods.GET) {
@@ -131,6 +163,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// <summary>
 		/// 作废订单
 		/// </summary>
+		[ScaffoldAction(nameof(SetInvalidUrl), HttpMethods.GET)]
+		[ScaffoldAction(nameof(SetInvalidUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected IActionResult SetInvalid() {
 			var form = new OrderSetInvalidForm();
 			if (Request.Method == HttpMethods.GET) {
@@ -139,52 +176,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 			} else {
 				return new JsonResult(form.Submit());
 			}
-		}
-
-		/// <summary>
-		/// 网站启动时添加处理函数
-		/// </summary>
-		public override void OnWebsiteStart() {
-			base.OnWebsiteStart();
-			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			// 编辑价格
-			var editCostUrl = Url + "/edit_cost";
-			controllerManager.RegisterAction(
-				editCostUrl, HttpMethods.GET, WrapAction(EditCost, EditPrivileges));
-			controllerManager.RegisterAction(
-				editCostUrl, HttpMethods.POST, WrapAction(EditCost, EditPrivileges));
-			// 编辑地址
-			var editShippingAddressUrl = Url + "/edit_shipping_address";
-			controllerManager.RegisterAction(
-				editShippingAddressUrl, HttpMethods.GET, WrapAction(EditShippingAddress, EditPrivileges));
-			controllerManager.RegisterAction(
-				editShippingAddressUrl, HttpMethods.POST, WrapAction(EditShippingAddress, EditPrivileges));
-			// 发货
-			var deliveryGoodsUrl = Url + "/delivery_goods";
-			controllerManager.RegisterAction(
-				deliveryGoodsUrl, HttpMethods.GET, WrapAction(DeliveryGoods, EditPrivileges));
-			controllerManager.RegisterAction(
-				deliveryGoodsUrl, HttpMethods.POST, WrapAction(DeliveryGoods, EditPrivileges));
-			// 查看发货单
-			var deliveryViewUrl = Url + "/delivery_view";
-			controllerManager.RegisterAction(
-				deliveryViewUrl, HttpMethods.GET, WrapAction(DeliveryView, EditPrivileges));
-			controllerManager.RegisterAction(
-				deliveryViewUrl, HttpMethods.POST, WrapAction(DeliveryView, EditPrivileges));
-			// 代确认收货
-			var confirmOrderInsteadOfBuyerUrl = Url + "/confirm_instead_of_buyer";
-			controllerManager.RegisterAction(
-				confirmOrderInsteadOfBuyerUrl, HttpMethods.GET,
-				WrapAction(ConfirmOrderInsteadOfBuyer, EditPrivileges));
-			controllerManager.RegisterAction(
-				confirmOrderInsteadOfBuyerUrl, HttpMethods.POST,
-				WrapAction(ConfirmOrderInsteadOfBuyer, EditPrivileges));
-			// 作废订单
-			var setInvalidUrl = Url + "/set_invalid";
-			controllerManager.RegisterAction(
-				setInvalidUrl, HttpMethods.GET, WrapAction(SetInvalid, EditPrivileges));
-			controllerManager.RegisterAction(
-				setInvalidUrl, HttpMethods.POST, WrapAction(SetInvalid, EditPrivileges));
 		}
 
 		/// <summary>

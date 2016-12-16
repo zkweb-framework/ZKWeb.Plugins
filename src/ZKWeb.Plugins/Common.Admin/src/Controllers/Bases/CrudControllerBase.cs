@@ -7,16 +7,13 @@ using System.Linq;
 using ZKWeb.Database;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Components.PrivilegeProviders;
+using ZKWeb.Plugins.Common.Admin.src.Components.ScaffoldAttributes;
 using ZKWeb.Plugins.Common.Admin.src.Controllers.Interfaces;
-using ZKWeb.Plugins.Common.Admin.src.Domain.Filters;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
-using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.TypeTraits;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces;
-using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Extensions;
-using ZKWeb.Plugins.Common.Base.src.Domain.Uow.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Interfaces;
@@ -30,8 +27,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 	/// 用于增删查改数据的控制器的基础类
 	/// </summary>
 	public abstract class CrudControllerBase<TEntity, TPrimaryKey> :
-		ControllerBase,
-		ICrudController, IPrivilegesProvider, IWebsiteStartHandler
+		ScaffoldControllerBase,
+		ICrudController, IPrivilegesProvider
 		where TEntity : class, IEntity<TPrimaryKey> {
 		/// <summary>
 		/// 名称
@@ -136,7 +133,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 		/// <summary>
 		/// 使用事务时的隔离等级
 		/// </summary>
-		protected virtual IsolationLevel? UseIsolationLevel { get { return IsolationLevel.ReadCommitted; } }
+		protected virtual IsolationLevel? UseIsolationLevel { get { return null; } }
 		/// <summary>
 		/// 是否关心实体的所属用户
 		/// 等于true时会启用所属用户使用的查询和保存过滤器，并且在批量操作时进行检查
@@ -180,8 +177,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 
 		/// <summary>
 		/// 列表页的处理函数
+		/// 默认即使设置了UseTransaction也不启用事务
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(Url), HttpMethods.GET)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(ViewPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
 		protected virtual IActionResult Action() {
 			// 表格构建器
 			var table = Application.Ioc.Resolve<AjaxTableBuilder>();
@@ -206,8 +207,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 
 		/// <summary>
 		/// 搜索请求的处理函数
+		/// 默认即使设置了UseTransaction也不启用事务
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(SearchUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(ViewPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
 		protected virtual IActionResult SearchAction() {
 			// 获取参数并转换到搜索请求
 			var json = Request.Get<string>("json");
@@ -221,8 +226,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 
 		/// <summary>
 		/// 添加页和添加请求的处理函数
+		/// 提交时额外需要编辑权限
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(AddUrl), HttpMethods.GET)]
+		[ScaffoldAction(nameof(AddUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(ViewPrivileges))]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges), HttpMethod = HttpMethods.POST)]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected virtual IActionResult AddAction() {
 			var form = GetAddForm();
 			if (Request.Method == HttpMethods.POST) {
@@ -242,8 +254,15 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 
 		/// <summary>
 		/// 编辑页和编辑请求的处理函数
+		/// 提交时额外需要编辑权限
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(EditUrl), HttpMethods.GET)]
+		[ScaffoldAction(nameof(EditUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(ViewPrivileges))]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges), HttpMethod = HttpMethods.POST)]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected virtual IActionResult EditAction() {
 			var form = GetEditForm();
 			if (Request.Method == HttpMethods.POST) {
@@ -263,8 +282,12 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 
 		/// <summary>
 		/// 批量操作请求的处理函数
+		/// 具体权限在里面检查
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(BatchUrl), HttpMethods.POST)]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected virtual IActionResult BatchAction() {
 			// 防跨站攻击
 			this.RequireAjaxRequest();
@@ -305,6 +328,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 
 		/// <summary>
 		/// 批量删除
+		/// 在这里标记过滤器属性不会起作用
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchActionForDelete() {
@@ -315,6 +339,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 
 		/// <summary>
 		/// 批量恢复
+		/// 在这里标记过滤器属性不会起作用
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchActionForRecover() {
@@ -325,6 +350,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 
 		/// <summary>
 		/// 批量永久删除
+		/// 在这里标记过滤器属性不会起作用
 		/// </summary>
 		/// <returns></returns>
 		protected virtual IActionResult BatchActionForDeleteForever() {
@@ -362,78 +388,6 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 						yield return privilege;
 					}
 				}
-			}
-		}
-
-		/// <summary>
-		/// 对处理函数进行包装
-		/// </summary>
-		/// <param name="action">处理函数</param>
-		/// <param name="privilege">要求的权限列表</param>
-		/// <returns></returns>
-		protected virtual Func<IActionResult> WrapAction(
-			Func<IActionResult> action, params string[] privileges) {
-			return () => {
-				// 检查权限
-				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-				privilegeManager.Check(RequiredUserType, privileges);
-				// 使用工作单元包装处理函数
-				// 指定使用事务时开启事务
-				var uow = Application.Ioc.Resolve<IUnitOfWork>();
-				var useTransaction = UseTransaction;
-				IActionResult result;
-				using (uow.Scope()) {
-					if (useTransaction) {
-						// 开始事务
-						uow.Context.BeginTransaction(UseIsolationLevel);
-					}
-					if (ConcernEntityOwnership) {
-						// 启用所属用户使用的查询和操作过滤器
-						var filter = new OwnerFilter();
-						using (uow.EnableQueryFilter(filter))
-						using (uow.EnableOperationFilter(filter)) {
-							result = action();
-						}
-					} else {
-						result = action();
-					}
-					if (useTransaction) {
-						// 结束事务
-						uow.Context.FinishTransaction();
-					}
-				}
-				return result;
-			};
-		}
-
-		/// <summary>
-		/// 网站启动时添加处理函数
-		/// </summary>
-		public virtual void OnWebsiteStart() {
-			// 注册列表页和搜索接口
-			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			controllerManager.RegisterAction(
-				Url, HttpMethods.GET, WrapAction(Action, ViewPrivileges));
-			controllerManager.RegisterAction(
-				SearchUrl, HttpMethods.POST, WrapAction(SearchAction, ViewPrivileges));
-			if (!string.IsNullOrEmpty(AddUrl)) {
-				// 注册添加页和添加接口
-				controllerManager.RegisterAction(
-					AddUrl, HttpMethods.GET, WrapAction(AddAction, ViewPrivileges));
-				controllerManager.RegisterAction(
-					AddUrl, HttpMethods.POST, WrapAction(AddAction, EditPrivileges));
-			}
-			if (!string.IsNullOrEmpty(EditUrl)) {
-				// 注册编辑页和编辑接口
-				controllerManager.RegisterAction(
-					EditUrl, HttpMethods.GET, WrapAction(EditAction, ViewPrivileges));
-				controllerManager.RegisterAction(
-					EditUrl, HttpMethods.POST, WrapAction(EditAction, EditPrivileges));
-			}
-			if (!string.IsNullOrEmpty(BatchUrl)) {
-				// 注册批量操作接口，具体权限需要在里面检查
-				controllerManager.RegisterAction(
-					BatchUrl, HttpMethods.POST, WrapAction(BatchAction));
 			}
 		}
 	}

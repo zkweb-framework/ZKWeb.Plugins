@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Localize;
+using ZKWeb.Plugins.Common.Admin.src.Components.ScaffoldAttributes;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
@@ -43,6 +44,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 		public override string GroupIconClass { get { return "fa fa-cart-arrow-down"; } }
 		public override string Name { get { return "OrderManage"; } }
 		public override string Url { get { return "/user/orders"; } }
+		public virtual string CancelOrderUrl { get { return Url + "/cancel_order"; } }
+		public virtual string DeliveryViewUrl { get { return Url + "/delivery_view"; } }
+		public virtual string ConfirmOrderUrl { get { return Url + "/confirm_order"; } }
+		public virtual string MergePaymentUrl { get { return Url + "/merge_payment"; } }
 		public override string IconClass { get { return "fa fa-cart-arrow-down"; } }
 		public override string AddUrl { get { return null; } }
 		public override bool AllowDeleteForever { get { return false; } }
@@ -81,6 +86,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 		/// <summary>
 		/// 取消订单
 		/// </summary>
+		[ScaffoldAction(nameof(CancelOrderUrl), HttpMethods.GET)]
+		[ScaffoldAction(nameof(CancelOrderUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected IActionResult CancelOrder() {
 			var form = new OrderCancelForm();
 			if (Request.Method == HttpMethods.GET) {
@@ -95,6 +105,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 		/// 查看发货单
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(DeliveryViewUrl), HttpMethods.GET)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected IActionResult DeliveryView() {
 			var form = new OrderDeliveryBuyerDisplayForm();
 			form.Bind();
@@ -104,6 +118,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 		/// <summary>
 		/// 确认收货
 		/// </summary>
+		[ScaffoldAction(nameof(ConfirmOrderUrl), HttpMethods.GET)]
+		[ScaffoldAction(nameof(ConfirmOrderUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected IActionResult ConfirmOrder() {
 			var form = new OrderConfirmForm();
 			if (Request.Method == HttpMethods.GET) {
@@ -118,6 +137,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 		/// 合并支付
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(MergePaymentUrl), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(EditPrivileges))]
+		[ScaffoldCheckOwner(nameof(ConcernEntityOwnership))]
+		[ScaffoldTransactional(nameof(UseTransaction), nameof(UseIsolationLevel))]
 		protected IActionResult MergePayment() {
 			var serials = Request.Get<IList<string>>("json");
 			var orderManager = Application.Ioc.Resolve<BuyerOrderManager>();
@@ -131,34 +154,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UserPanelPages {
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			var checkoutUrl = transactionManager.GetResultUrl(transactionId);
 			return new JsonResult(new { script = BaseScriptStrings.Redirect(checkoutUrl) });
-		}
-
-		/// <summary>
-		/// 网站启动时添加处理函数
-		/// </summary>
-		public override void OnWebsiteStart() {
-			base.OnWebsiteStart();
-			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			// 取消订单
-			var cancelOrderUrl = Url + "/cancel_order";
-			controllerManager.RegisterAction(
-				cancelOrderUrl, HttpMethods.GET, WrapAction(CancelOrder, EditPrivileges));
-			controllerManager.RegisterAction(
-				cancelOrderUrl, HttpMethods.POST, WrapAction(CancelOrder, EditPrivileges));
-			// 查看发货单
-			var deliveryViewUrl = Url + "/delivery_view";
-			controllerManager.RegisterAction(
-				deliveryViewUrl, HttpMethods.GET, WrapAction(DeliveryView, EditPrivileges));
-			// 确认收货
-			var confirmOrderUrl = Url + "/confirm_order";
-			controllerManager.RegisterAction(
-				confirmOrderUrl, HttpMethods.GET, WrapAction(ConfirmOrder, EditPrivileges));
-			controllerManager.RegisterAction(
-				confirmOrderUrl, HttpMethods.POST, WrapAction(ConfirmOrder, EditPrivileges));
-			// 合并支付
-			var mergePaymentUrl = Url + "/merge_payment";
-			controllerManager.RegisterAction(
-				mergePaymentUrl, HttpMethods.POST, WrapAction(MergePayment, EditPrivileges));
 		}
 
 		/// <summary>

@@ -17,6 +17,7 @@ using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Utils;
+using ZKWeb.Plugins.Common.Admin.src.Components.ActionFilters;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -30,9 +31,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("admin")]
+		[CheckPrivilege(typeof(ICanUseAdminPanel))]
 		public IActionResult Admin() {
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(typeof(ICanUseAdminPanel));
 			return new TemplateResult("common.admin/admin_index.html");
 		}
 
@@ -77,6 +77,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("admin/workspace")]
+		[CheckPrivilege(typeof(ICanUseAdminPanel))]
 		public IActionResult Workspace() {
 			return new TemplateResult("common.admin/workspace.html");
 		}
@@ -87,9 +88,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		[Action("admin/about_me")]
 		[Action("admin/about_me", HttpMethods.POST)]
+		[CheckPrivilege(typeof(ICanUseAdminPanel))]
 		public IActionResult AboutMe() {
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(typeof(ICanUseAdminPanel));
 			var form = new AdminAboutMeForm();
 			if (Request.Method == HttpMethods.POST) {
 				return new JsonResult(form.Submit());
@@ -104,9 +104,8 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("admin/about_website")]
+		[CheckPrivilege(typeof(ICanUseAdminPanel))]
 		public IActionResult AboutWebsite() {
-			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-			privilegeManager.Check(typeof(ICanUseAdminPanel));
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var pluginManager = Application.Ioc.Resolve<PluginManager>();
 			var websiteSettings = configManager.GetData<WebsiteSettings>();

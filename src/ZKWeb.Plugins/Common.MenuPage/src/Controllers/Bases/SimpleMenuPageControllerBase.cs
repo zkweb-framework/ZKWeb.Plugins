@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Admin.src.Components.PrivilegeProviders;
-using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
-using ZKWeb.Plugins.Common.Base.src.Controllers;
-using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
+using ZKWeb.Plugins.Common.Admin.src.Components.ScaffoldAttributes;
+using ZKWeb.Plugins.Common.Admin.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.MenuItems;
 using ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuItems.Extensions;
 using ZKWeb.Plugins.Common.MenuPage.src.UIComponents.MenuPages.Interfaces;
@@ -15,8 +14,8 @@ namespace ZKWeb.Plugins.Common.MenuPage.src.Controllers.Bases {
 	/// 需要再次经过包装，请勿直接使用
 	/// </summary>
 	public abstract class SimpleMenuPageControllerBase :
-		ControllerBase,
-		IMenuPage, IPrivilegesProvider, IWebsiteStartHandler {
+		ScaffoldControllerBase,
+		IMenuPage, IPrivilegesProvider {
 		/// <summary>
 		/// 所属的菜单分组
 		/// </summary>
@@ -49,6 +48,9 @@ namespace ZKWeb.Plugins.Common.MenuPage.src.Controllers.Bases {
 		/// 对应的处理函数，会自动进行权限检查
 		/// </summary>
 		/// <returns></returns>
+		[ScaffoldAction(nameof(Url), HttpMethods.GET)]
+		[ScaffoldAction(nameof(Url), HttpMethods.POST)]
+		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(RequiredPrivileges))]
 		protected abstract IActionResult Action();
 
 		/// <summary>
@@ -67,20 +69,6 @@ namespace ZKWeb.Plugins.Common.MenuPage.src.Controllers.Bases {
 			foreach (var privilege in RequiredPrivileges) {
 				yield return privilege;
 			}
-		}
-
-		/// <summary>
-		/// 网站启动时注册处理函数
-		/// </summary>
-		public virtual void OnWebsiteStart() {
-			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-			var privilegesCheckedAction = new Func<IActionResult>(() => {
-				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
-				privilegeManager.Check(RequiredUserType, RequiredPrivileges);
-				return Action();
-			});
-			controllerManager.RegisterAction(Url, HttpMethods.GET, privilegesCheckedAction);
-			controllerManager.RegisterAction(Url, HttpMethods.POST, privilegesCheckedAction);
 		}
 	}
 }
