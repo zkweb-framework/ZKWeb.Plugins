@@ -55,6 +55,14 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 		}
 
 		/// <summary>
+		/// TODO: 更新到zkweb 1.5以后可以使用GetAttributes(true)
+		/// </summary>
+		private IEnumerable<T> GetAttributesFix<T>(MemberInfo info)
+			where T : Attribute {
+			return info.GetCustomAttributes(true).OfType<T>();
+		}
+
+		/// <summary>
 		/// 网站启动时注册这个类中带ScaffoldAction属性的函数
 		/// </summary>
 		public virtual void OnWebsiteStart() {
@@ -62,15 +70,19 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers.Bases {
 			var controllerManager = Application.Ioc.Resolve<ControllerManager>();
 			var bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 			foreach (var method in type.FastGetMethods(bindingFlags)) {
+				// 忽略getter和setter函数
+				if (method.IsSpecialName) {
+					continue;
+				}
 				// 获取Action属性和ScaffoldAction属性
-				var actionAttributes = method.GetAttributes<ActionAttribute>();
-				var scaffoldActionAttributes = method.GetAttributes<ScaffoldActionAttribute>();
+				var actionAttributes = GetAttributesFix<ActionAttribute>(method);
+				var scaffoldActionAttributes = GetAttributesFix<ScaffoldActionAttribute>(method);
 				if (!actionAttributes.Any() && !scaffoldActionAttributes.Any()) {
 					continue;
 				}
 				// 获取ActionFilter属性和ScaffoldActionFilter属性
-				var actionFilterAttributes = method.GetAttributes<ActionFilterAttribute>();
-				var scaffoldActionFilterAttributes = method.GetAttributes<ScaffoldActionFilterAttribute>();
+				var actionFilterAttributes = GetAttributesFix<ActionFilterAttribute>(method);
+				var scaffoldActionFilterAttributes = GetAttributesFix<ScaffoldActionFilterAttribute>(method);
 				// 检查是否同时使用了Action属性和ScaffoldActionFilter属性
 				// 如果同时使用了则抛出错误，因为ScaffoldActionFilter属性不会起作用
 				if (actionAttributes.Any() && scaffoldActionFilterAttributes.Any()) {
