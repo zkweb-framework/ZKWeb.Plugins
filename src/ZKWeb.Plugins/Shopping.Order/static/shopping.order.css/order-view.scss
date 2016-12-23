@@ -55,6 +55,7 @@
 		flex: 1 0 auto;
 		float: left;
 		padding: 0px 0px 0px 20px;
+		width: 523px; // 因为有flex这个属性会被忽略，但是可以防止过长
 		/* 订单状态长度不够时允许滚动 */
 		.order-state-progress-container {
 			overflow-x: auto;

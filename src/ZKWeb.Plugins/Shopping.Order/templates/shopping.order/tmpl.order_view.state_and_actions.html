@@ -36,6 +36,7 @@
 			</div>
 		</div>
 	</div>
+	{% if info.ActionHtmls.size > 0 %}
 	<div class="panel panel-primary order-view-panel">
 		<div class="panel-heading">{{ "OrderActions" | trans }}</div>
 		<div class="panel-body">
@@ -47,4 +48,5 @@
 			</div>
 		</div>
 	</div>
+	{% endif %}
 </div>
