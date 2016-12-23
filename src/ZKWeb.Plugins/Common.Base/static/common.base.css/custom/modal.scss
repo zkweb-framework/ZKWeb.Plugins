@@ -74,3 +74,14 @@
 		color: #666;
 	}
 }
+
+/* 低分辨率下全屏的模态框内容无边框 */
+@media (max-width: 767px) {
+	.bootstrap-dialog.size-fullscreen {
+		.modal-dialog {
+			.modal-body {
+				padding: 15px 0px 0px 0px;
+			}
+		}
+	}
+}

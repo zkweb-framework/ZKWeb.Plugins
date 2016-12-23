@@ -150,18 +150,10 @@
 		background: #fff;
 		color: #2299dd;
 	}
-	/* 页面无边框 */
-	.page-container {
-		> .portlet {
-			padding: 0px;
-		}
-	}
-	/* 表单无边距 */
-	.form-horizontal {
-		margin: 0px;
-	}
 	/* 面板无边距 */
-	.panel.panel-themed {
-		margin: 0px;
+	.screen-center-block {
+		.panel.panel-themed {
+			margin: 0px;
+		}
 	}
 }

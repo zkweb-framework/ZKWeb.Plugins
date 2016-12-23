@@ -17,13 +17,6 @@ html, body {
 	position: relative;
 }
 
-@media (max-width: 767px) {
-	.page-container {
-		margin: 0;
-		padding: 0;
-	}
-}
-
 /* 重新实现portlet */
 .portlet {
 	padding: 12px 20px 15px 20px;
@@ -85,6 +78,20 @@ html, body {
 	background: #fff;
 	overflow: auto;
 }
+
+/* 低分辨率时无边距 */
+@media (max-width: 767px) {
+	.page-container {
+		margin: 0;
+		padding: 0;
+
+		> .portlet {
+			margin: 0;
+			padding: 0;
+		}
+	}
+}
+
 
 /* 模态框 */
 .modal {

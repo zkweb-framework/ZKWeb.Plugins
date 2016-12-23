@@ -129,26 +129,13 @@
 	.tabbable-line {
 		padding: 0px 0px 15px;
 	}
-}
+	/* 调整面板内容下的边距 */
+	> .portlet {
+		padding: 15px;
 
-@media (max-width: 991px) {
-	/* 手机支持 */
-	.panel-sidebar {
-		float: none;
-		width: 100%;
-		margin-bottom: 15px;
-	}
-
-	.panel-sidebar > .portlet {
-		margin-bottom: 20px;
-	}
-
-	.panel-sidebar > .portlet .portlet-title .tools {
-		margin-left: 5px;
-	}
-
-	.panel-content {
-		overflow: visible;
+		> .portlet-body > .form-horizontal {
+			margin: 0px;
+		}
 	}
 }
 
@@ -168,5 +155,55 @@
 		border: none;
 		border-radius: 0px;
 		text-align: left;
+	}
+}
+
+/* 低分辨率下的样式 */
+@media (max-width: 991px) {
+	.panel-sidebar {
+		float: none;
+		width: 100%;
+		margin-bottom: 0px;
+
+		.portlet {
+			padding: 0px;
+			margin-bottom: 0px;
+
+			> .portlet-title {
+				padding: 0px;
+
+				.tools {
+					margin-left: 5px;
+				}
+
+				.caption {
+					float: none;
+					width: 100%;
+					padding: 0px;
+
+					> a {
+						padding: 10px 15px;
+						width: 100%;
+						display: block;
+					}
+				}
+			}
+
+			> ul.nav {
+				> li:last-child {
+					margin-bottom: -1px;
+
+					> ul.nav {
+						> li:last-child {
+							margin-bottom: 1px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.panel-content {
+		overflow: visible;
 	}
 }
