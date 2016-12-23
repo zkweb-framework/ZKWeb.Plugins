@@ -32,6 +32,7 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
+	using Finance.Payment.src.Domain.Enums;
 	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>
@@ -514,6 +515,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			if (canSetInvalid.First) {
 				// 修改订单状态
 				Save(ref order, o => o.SetState(OrderState.OrderInvalid));
+				// 同时作废所有关联交易
+				var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+				foreach (var transaction in GetReleatedTransactions(order.Id)) {
+					transactionManager.Process(transaction.Id, null, PaymentTransactionState.Aborted);
+				}
 				// 添加成功的订单记录
 				AddDetailRecord(orderId, operatorId,
 					new T("Order become invalid, reason is {0}", reason));
