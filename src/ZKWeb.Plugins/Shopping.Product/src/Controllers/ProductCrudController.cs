@@ -74,7 +74,8 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 			public override void BuildTable(
 				AjaxTableBuilder table, AjaxTableSearchBarBuilder searchBar) {
 				table.StandardSetupFor<ProductCrudController>();
-				searchBar.StandardSetupFor<ProductCrudController>("Name/Remark");
+				searchBar.StandardSetupFor<ProductCrudController>("Name/Seller/Remark");
+				searchBar.Conditions.Add(new FormField(new TextBoxFieldAttribute("Seller")));
 				searchBar.Conditions.Add(new FormField(new DropdownListFieldAttribute(
 					"ProductType", typeof(ListItemsWithOptional<ProductTypeListItemProvider>))));
 				searchBar.Conditions.Add(new FormField(new DropdownListFieldAttribute(
@@ -94,7 +95,13 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 				if (!string.IsNullOrEmpty(request.Keyword)) {
 					query = query.Where(q =>
 						q.Name.Contains(request.Keyword) ||
-						q.Remark.Contains(request.Keyword));
+						q.Remark.Contains(request.Keyword) ||
+						q.Seller.Username.Contains(request.Keyword));
+				}
+				// 按卖家
+				var seller = request.Conditions.GetOrDefault<string>("Seller");
+				if (!string.IsNullOrEmpty(seller)) {
+					query = query.Where(q => q.Seller.Username == seller);
 				}
 				// 按类型
 				var productType = request.Conditions.GetOrDefault<string>("ProductType");

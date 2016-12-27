@@ -52,5 +52,13 @@ namespace ZKWeb.Plugins.Shopping.ProductBookmark.src.Domain.Entities {
 			builder.Map(b => b.UpdateTime);
 			builder.Map(b => b.Deleted);
 		}
+
+		/// <summary>
+		/// 返回收藏的商品名称
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() {
+			return Product?.Name;
+		}
 	}
 }

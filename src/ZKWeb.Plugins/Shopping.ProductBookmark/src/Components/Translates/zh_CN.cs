@@ -18,7 +18,8 @@ namespace ZKWeb.Plugins.Shopping.ProductBookmark.src.Components.Translates {
 			{ "Product bookmarked", "商品已收藏" },
 			{ "Bookmark product require login, redirecting to login page...", "收藏商品需要登陆，正在跳转到登录页……" },
 			{ "Product already bookmarked", "商品已收藏" },
-			{ "Bookmark product success", "收藏商品成功" }
+			{ "Bookmark product success", "收藏商品成功" },
+			{ "BookmarkTime", "收藏时间" }
 		};
 
 		public bool CanTranslate(string code) {

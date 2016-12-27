@@ -525,10 +525,9 @@ Shopping.Product
 
 Shopping.ProductBookmark
 	收藏商品
-		TODO: 添加收藏商品
-		TODO: 查看收藏商品
-		TODO: 删除收藏商品
-		TODO: 购买收藏商品
+		添加收藏商品
+		查看收藏商品
+		删除收藏商品
 
 Shopping.ProductRating
 	商品评价

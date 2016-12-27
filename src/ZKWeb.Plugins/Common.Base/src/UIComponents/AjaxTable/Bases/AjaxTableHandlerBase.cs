@@ -51,7 +51,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases {
 
 		/// <summary>
 		/// 排序数据
-		/// 默认更新时间或创建时间或Id倒序排列
+		/// 默认创建时间或Id倒序排列
 		/// </summary>
 		public virtual void OnSort(
 			AjaxTableSearchRequest request, ref IQueryable<TEntity> query) {

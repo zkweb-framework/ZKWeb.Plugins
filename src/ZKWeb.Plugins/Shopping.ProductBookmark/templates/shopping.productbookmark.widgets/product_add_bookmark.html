@@ -1,6 +1,6 @@
 ﻿<div class="product-add-bookmark" require-script="/static/shopping.productbookmark.js/product-add-bookmark.min.js">
 	{% include_css_here "/static/shopping.productbookmark.css/product-add-bookmark.css" %}
 	{% fetch /api/product_bookmarks/is_bookmarked?productId={product_info.id} > product_is_bookmarked %}
-	<a class="bookmarked {% unless product_is_bookmarked.bookmarked %}hide{% endunless %}"><i class="fa fa-star"></i>{{ "Product bookmarked" | trans }}</a>
+	<a class="bookmarked {% unless product_is_bookmarked.bookmarked %}hide{% endunless %}" href="{{ "/user/product_bookmarks" | url }}"><i class="fa fa-star"></i>{{ "Product bookmarked" | trans }}</a>
 	<a class="add-bookmark {% if product_is_bookmarked.bookmarked %}hide{% endif %}" data-product-id="{{ product_info.id }}"><i class="fa fa-star"></i>{{ "Bookmark this product" | trans }}</a>
 </div>
