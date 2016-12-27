@@ -4,7 +4,6 @@
 	"Description": "Product bookmark feature for ec site",
 	"Dependencies": [
 		"Common.Admin",
-		"Shopping.Product",
-		"Shopping.Order"
+		"Shopping.Product"
 	]
 }

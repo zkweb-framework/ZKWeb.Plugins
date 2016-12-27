@@ -4,7 +4,7 @@
 
 $(function () {
 	// 修改默认选项
-	$.toast.options.showHideTransition = "slide";
+	$.toast.options.showHideTransition = "fade";
 	$.toast.options.position = "bottom-center";
 	$.toast.options.icon = "info";
 	// 替换换行到html换行

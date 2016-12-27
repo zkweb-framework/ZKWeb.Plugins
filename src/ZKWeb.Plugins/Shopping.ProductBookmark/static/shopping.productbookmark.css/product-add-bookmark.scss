@@ -1,0 +1,20 @@
+﻿.product-view {
+	.product-add-bookmark {
+		text-align: center;
+
+		.add-bookmark {
+			color: #c40000;
+			border: 1px solid #c40000;
+			border-radius: 3px;
+			padding: 6px;
+		}
+
+		.bookmarked {
+			color: #fff;
+			background-color: #c40000;
+			border: 1px solid #c40000;
+			border-radius: 3px;
+			padding: 6px;
+		}
+	}
+}

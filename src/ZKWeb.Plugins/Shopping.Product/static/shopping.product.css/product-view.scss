@@ -58,6 +58,8 @@
 				font-weight: bold;
 				color: red;
 				margin-bottom: 18px;
+				max-width: 700px;
+				word-wrap: break-word;
 			}
 			/* 价格 */
 			.product-price {
@@ -148,10 +150,22 @@
 				min-width: 100%;
 				margin: 20px 0px 0px 0px;
 
+				.product-name {
+					width: 700px;
+				}
+
 				.product-estimation {
 					dl dt, dl dd {
 						float: none;
 					}
+				}
+			}
+		}
+
+		@media (max-width: 480px) {
+			.product-sales-info {
+				.product-name {
+					width: 300px;
 				}
 			}
 		}
