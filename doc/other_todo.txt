@@ -5,6 +5,8 @@
 优化查询性能，添加更多的索引
 逐步补充插件的单元测试
 
+订单详情页尝试改panel到adminlte的box
+
 仿界面
 http://www.cailanwang.cn
 http://www.673573.com
