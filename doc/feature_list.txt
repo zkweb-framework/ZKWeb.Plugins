@@ -197,6 +197,10 @@ Common.CustomTranslate
 	自定义翻译设置的控制器基类
 	自定义翻译设置
 
+Common.Datepicker
+	提供选择时间的表单控件
+	提供选择时间范围的表单控件
+
 Common.GenericClass
 	提供数据库实体
 		通用分类

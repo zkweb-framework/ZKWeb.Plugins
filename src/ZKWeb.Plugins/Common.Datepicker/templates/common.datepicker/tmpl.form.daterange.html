@@ -1,0 +1,12 @@
+﻿<div require-script="/static/common.datepicker.js/bootstrap-datepicker-all.min.js"
+	 require-style="/static/common.datepicker.css/bootstrap-datepicker.min.css"
+	 class="date-range-picker"
+	 data-trigger="date-range-picker"
+	 data-date-format="{{ dateFormat }}">
+	<input name="{{ name }}" type="hidden" value="{{ value }}" />
+	<div class="input-group input-daterange">
+		<input type="text" class="form-control begin" value="" placeholder="{{ beginPlaceHolder }}" {{ attributes | html_attributes }} />
+		<div class="input-group-addon">~</div>
+		<input type="text" class="form-control finish" value="" placeholder="{{ finishPlaceHolder }}" {{ attributes | html_attributes }} />
+	</div>
+</div>

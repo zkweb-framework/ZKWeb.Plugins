@@ -1,0 +1,7 @@
+﻿<div require-script="/static/common.datepicker.js/bootstrap-datepicker-all.min.js"
+	 require-style="/static/common.datepicker.css/bootstrap-datepicker.min.css"
+	 class="date-picker"
+	 data-trigger="date-picker"
+	 data-date-format="{{ dateFormat }}">
+	<input name="{{ name }}" type="text" class="form-control" value="{{ value }}" placeholder="{{ placeholder }}" {{ attributes | html_attributes }} />
+</div>

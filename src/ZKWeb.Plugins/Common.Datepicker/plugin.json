@@ -1,0 +1,6 @@
+﻿{
+	"Name": "Datepicker form field",
+	"Version": "1.0.0 beta 3",
+	"Description": "Provide form field for choose date or date range",
+	"Dependencies": [ "Common.Base" ]
+}
