@@ -11,10 +11,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.OrderDisplayInfoProvider
 		/// <summary>
 		/// 添加订单操作的Html
 		/// </summary>
-		/// <param name="order"></param>
-		/// <param name="action"></param>
-		/// <param name="operatorType"></param>
-		void AddActions(SellerOrder order, IList<HtmlString> action, OrderOperatorType operatorType);
+		/// <param name="order">卖家订单</param>
+		/// <param name="actions">订单操作列表</param>
+		/// <param name="operatorType">操作人类型</param>
+		void AddActions(SellerOrder order, IList<HtmlString> actions, OrderOperatorType operatorType);
 
 		/// <summary>
 		/// 添加工具按钮

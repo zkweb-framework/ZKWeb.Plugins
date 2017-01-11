@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		/// <param name="member">成员名称</param>
 		/// <param name="width">宽度</param>
 		public static AjaxTableIdColumn AddIdColumn(
-			this List<AjaxTableColumn> columns, string member, string width = "2%") {
+			this IList<AjaxTableColumn> columns, string member, string width = "2%") {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var column = new AjaxTableIdColumn() {
 				Key = member,
@@ -37,12 +37,22 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		}
 
 		/// <summary>
+		/// 获取Id列
+		/// </summary>
+		/// <param name="columns">列列表</param>
+		/// <returns></returns>
+		public static AjaxTableIdColumn GetIdColumn(
+			this IList<AjaxTableColumn> columns) {
+			return columns.OfType<AjaxTableIdColumn>().FirstOrDefault();
+		}
+
+		/// <summary>
 		/// 添加序号列（从1开始递增，不涉及到数据）
 		/// </summary>
 		/// <param name="columns">列列表</param>
 		/// <param name="width">宽度</param>
 		public static AjaxTableColumn AddNoColumn(
-			this List<AjaxTableColumn> columns, string width = "2%") {
+			this IList<AjaxTableColumn> columns, string width = "2%") {
 			var column = new AjaxTableColumn() {
 				Key = "No",
 				Width = width,
@@ -60,7 +70,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		/// <param name="member">成员</param>
 		/// <param name="width">宽度</param>
 		public static AjaxTableColumn AddMemberColumn(
-			this List<AjaxTableColumn> columns, string member, string width = null) {
+			this IList<AjaxTableColumn> columns, string member, string width = null) {
 			var column = new AjaxTableColumn() {
 				Key = member,
 				Width = width,
@@ -79,7 +89,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		/// <param name="member">成员</param>
 		/// <param name="width">宽度</param>
 		public static AjaxTableColumn AddHtmlColumn(
-			this List<AjaxTableColumn> columns, string member, string width = null) {
+			this IList<AjaxTableColumn> columns, string member, string width = null) {
 			var column = new AjaxTableColumn() {
 				Key = member,
 				Width = width,
@@ -180,7 +190,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		/// <param name="width">宽度</param>
 		/// <returns></returns>
 		public static AjaxTableColumn AddOnClickColumn(
-			this List<AjaxTableColumn> columns, string member, string onClick, string width = null) {
+			this IList<AjaxTableColumn> columns, string member, string onClick, string width = null) {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var column = new AjaxTableColumn() {
 				Key = member,
@@ -205,7 +215,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		/// <param name="width">宽度</param>
 		/// <returns></returns>
 		public static AjaxTableColumn AddRemoteModalColumn(
-			this List<AjaxTableColumn> columns, string nameMember,
+			this IList<AjaxTableColumn> columns, string nameMember,
 			string titleTemplate, string urlTemplate,
 			object dialogParameters = null, string width = null) {
 			var onclick = string.Format(@"
@@ -231,13 +241,23 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		}
 
 		/// <summary>
+		/// 获取操作列
+		/// </summary>
+		/// <param name="columns">列列表</param>
+		/// <returns></returns>
+		public static AjaxTableActionColumn GetActionColumn(
+			this IList<AjaxTableColumn> columns) {
+			return columns.OfType<AjaxTableActionColumn>().FirstOrDefault();
+		}
+
+		/// <summary>
 		/// 移动列到指定的列后面
 		/// </summary>
 		/// <param name="columns">列列表</param>
 		/// <param name="column">需要移动的列</param>
 		/// <param name="key">指定的列的识别键</param>
 		public static void MoveAfter(
-			this List<AjaxTableColumn> columns, AjaxTableColumn column, string key) {
+			this IList<AjaxTableColumn> columns, AjaxTableColumn column, string key) {
 			columns.Remove(column);
 			columns.AddAfter(c => c.Key == key, column);
 		}
@@ -249,7 +269,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions {
 		/// <param name="column">需要移动的列</param>
 		/// <param name="key">指定的列的识别键</param>
 		public static void MoveBefore(
-			this List<AjaxTableColumn> columns, AjaxTableColumn column, string key) {
+			this IList<AjaxTableColumn> columns, AjaxTableColumn column, string key) {
 			columns.Remove(column);
 			columns.AddBefore(c => c.Key == key, column);
 		}
