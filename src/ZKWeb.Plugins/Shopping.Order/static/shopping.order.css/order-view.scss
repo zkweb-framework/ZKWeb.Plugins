@@ -1,14 +1,14 @@
 ﻿/* 订单详情页的样式 */
 
 /* 订单详情页的面板 */
-.order-view-panel {
-	.panel-heading {
+.order-view-box {
+	.box-header {
 		.tool-buttons {
 			float: right;
 
 			a {
 				margin-left: 5px;
-				color: #fff;
+				// color: #fff;
 			}
 		}
 	}
@@ -23,7 +23,7 @@
 		min-width: 290px;
 		width: 290px;
 		/* 内容 */
-		.panel-body {
+		.box-body {
 			padding: 5px 0px;
 
 			> dl {

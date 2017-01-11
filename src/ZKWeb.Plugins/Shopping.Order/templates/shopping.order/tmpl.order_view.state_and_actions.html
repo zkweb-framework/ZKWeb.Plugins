@@ -1,7 +1,7 @@
 ﻿<div class="order-state-and-actions">
-	<div class="panel panel-primary order-view-panel">
-		<div class="panel-heading">{{ "OrderState" | trans }}</div>
-		<div class="panel-body">
+	<div class="box box-primary order-view-box">
+		<div class="box-header with-border">{{ "OrderState" | trans }}</div>
+		<div class="box-body">
 			<div class="order-state-progress-container">
 				<ul class="progress-indicator order-state-progress">
 					<li class="{{ info | order_state_progress_class: "WaitingBuyerPay" }}">
@@ -37,9 +37,9 @@
 		</div>
 	</div>
 	{% if info.ActionHtmls.size > 0 %}
-	<div class="panel panel-primary order-view-panel">
-		<div class="panel-heading">{{ "OrderActions" | trans }}</div>
-		<div class="panel-body">
+	<div class="box box-primary order-view-box">
+		<div class="box-header with-border">{{ "OrderActions" | trans }}</div>
+		<div class="box-body">
 			<div class="btn-toolbar order-actions">
 				{% for action in info.ActionHtmls %}
 				<div class="action">{{ action }}</div>
