@@ -24,25 +24,39 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <param name="serial">订单编号</param>
 		/// <returns></returns>
 		public virtual Guid? GetBuyerOrderIdFromSerial(string serial) {
-			var orderId = Repository.Query()
-				.Where(o => o.SellerOrder.Serial == serial)
-				.Select(o => o.Id)
-				.FirstOrDefault();
-			return orderId == Guid.Empty ? null : (Guid?)orderId;
+			using (UnitOfWork.Scope()) {
+				var orderId = Repository.Query()
+					.Where(o => o.SellerOrder.Serial == serial)
+					.Select(o => o.Id)
+					.FirstOrDefault();
+				return orderId == Guid.Empty ? null : (Guid?)orderId;
+			}
 		}
 
 		/// <summary>
-		/// 根据订单编号列表获取订单Id列表
+		/// 根据订单编号列表获取买家订单Id列表
 		/// 返回的数量不一定一致
 		/// </summary>
 		/// <param name="serials">订单编号</param>
 		/// <returns></returns>
 		public virtual IList<Guid> GetBuyerOrderIdsFromSerials(IList<string> serials) {
-			var orderIds = Repository.Query()
-				.Where(o => serials.Contains(o.SellerOrder.Serial))
-				.Select(o => o.Id)
-				.ToList();
-			return orderIds;
+			using (UnitOfWork.Scope()) {
+				var orderIds = Repository.Query()
+					.Where(o => serials.Contains(o.SellerOrder.Serial))
+					.Select(o => o.Id)
+					.ToList();
+				return orderIds;
+			}
+		}
+
+		public virtual Guid GetSellerOrderIdFromBuyerOrderId(Guid orderId) {
+			using (UnitOfWork.Scope()) {
+				var sellerOrderId = Repository.Query()
+					.Where(o => o.Id == orderId)
+					.Select(o => o.SellerOrder.Id)
+					.FirstOrDefault();
+				return sellerOrderId;
+			}
 		}
 
 		/// <summary>
@@ -53,12 +67,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <param name="reason">作废理由，必填</param>
 		/// <returns></returns>
 		public virtual bool CancelOrder(Guid orderId, Guid? operatorId, string reason) {
-			var sellerOrderId = Repository.Query()
-				.Where(o => o.Id == orderId)
-				.Select(o => o.SellerOrder.Id)
-				.FirstOrDefault();
-			var sellerOrderManager = Application.Ioc.Resolve<SellerOrderManager>();
-			return sellerOrderManager.CancelOrder(sellerOrderId, operatorId, reason);
+			using (UnitOfWork.Scope()) {
+				var sellerOrderId = GetSellerOrderIdFromBuyerOrderId(orderId);
+				var sellerOrderManager = Application.Ioc.Resolve<SellerOrderManager>();
+				return sellerOrderManager.CancelOrder(sellerOrderId, operatorId, reason);
+			}
 		}
 
 		/// <summary>
@@ -68,12 +81,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		/// <param name="operatorId">操作人Id</param>
 		/// <returns></returns>
 		public virtual bool ConfirmOrder(Guid orderId, Guid? operatorId) {
-			var sellerOrderId = Repository.Query()
-				.Where(o => o.Id == orderId)
-				.Select(o => o.SellerOrder.Id)
-				.FirstOrDefault();
-			var sellerOrderManager = Application.Ioc.Resolve<SellerOrderManager>();
-			return sellerOrderManager.ConfirmOrder(sellerOrderId, operatorId, true);
+			using (UnitOfWork.Scope()) {
+				var sellerOrderId = GetSellerOrderIdFromBuyerOrderId(orderId);
+				var sellerOrderManager = Application.Ioc.Resolve<SellerOrderManager>();
+				return sellerOrderManager.ConfirmOrder(sellerOrderId, operatorId, true);
+			}
 		}
 
 		/// <summary>

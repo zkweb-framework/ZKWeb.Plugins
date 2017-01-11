@@ -9,6 +9,7 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities;
 using ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Enums;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Logistics.src.Domain.Services;
@@ -32,7 +33,6 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
-	using Finance.Payment.src.Domain.Enums;
 	using Logistics = Logistics.src.Domain.Entities.Logistics;
 
 	/// <summary>
@@ -199,6 +199,38 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 				var result = orderCreator.CreateOrder(parameters);
 				uow.Context.FinishTransaction();
 				return result;
+			}
+		}
+
+		/// <summary>
+		/// 根据订单编号获取卖家订单Id
+		/// 失败时返回null
+		/// </summary>
+		/// <param name="serial">订单编号</param>
+		/// <returns></returns>
+		public virtual Guid? GetSellerOrderIdFromSerial(string serial) {
+			using (UnitOfWork.Scope()) {
+				var orderId = Repository.Query()
+					.Where(o => o.Serial == serial)
+					.Select(o => o.Id)
+					.FirstOrDefault();
+				return orderId == Guid.Empty ? null : (Guid?)orderId;
+			}
+		}
+
+		/// <summary>
+		/// 根据订单编号列表获取卖家订单Id列表
+		/// 返回的数量不一定一致
+		/// </summary>
+		/// <param name="serials">订单编号</param>
+		/// <returns></returns>
+		public virtual IList<Guid> GetSellerOrderIdsFromSerials(IList<string> serials) {
+			using (UnitOfWork.Scope()) {
+				var orderIds = Repository.Query()
+					.Where(o => serials.Contains(o.Serial))
+					.Select(o => o.Id)
+					.ToList();
+				return orderIds;
 			}
 		}
 
