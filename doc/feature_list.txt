@@ -64,7 +64,6 @@ Common.Admin
 		增删查改页面
 	提供后台相关的Html帮助函数
 	支持从后台增删查改页面导出表格
-	TODO: 支持从后台增删查改页面打印表格 (http://stackoverflow.com/questions/468881/print-div-id-printarea-div-only)
 
 Common.AdminSettings
 	提供构建后台设置页面的控制器基类
