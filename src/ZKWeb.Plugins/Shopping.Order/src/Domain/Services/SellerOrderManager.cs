@@ -203,38 +203,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 		}
 
 		/// <summary>
-		/// 根据订单编号获取卖家订单Id
-		/// 失败时返回null
-		/// </summary>
-		/// <param name="serial">订单编号</param>
-		/// <returns></returns>
-		public virtual Guid? GetSellerOrderIdFromSerial(string serial) {
-			using (UnitOfWork.Scope()) {
-				var orderId = Repository.Query()
-					.Where(o => o.Serial == serial)
-					.Select(o => o.Id)
-					.FirstOrDefault();
-				return orderId == Guid.Empty ? null : (Guid?)orderId;
-			}
-		}
-
-		/// <summary>
-		/// 根据订单编号列表获取卖家订单Id列表
-		/// 返回的数量不一定一致
-		/// </summary>
-		/// <param name="serials">订单编号</param>
-		/// <returns></returns>
-		public virtual IList<Guid> GetSellerOrderIdsFromSerials(IList<string> serials) {
-			using (UnitOfWork.Scope()) {
-				var orderIds = Repository.Query()
-					.Where(o => serials.Contains(o.Serial))
-					.Select(o => o.Id)
-					.ToList();
-				return orderIds;
-			}
-		}
-
-		/// <summary>
 		/// 修改订单，订单商品和订单交易的金额
 		/// </summary>
 		/// <param name="order">订单</param>

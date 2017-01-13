@@ -1,1 +1,11 @@
-﻿sdsadsa
+﻿{% use_title "OrderRating" -%}
+{% include_css_later "/static/shopping.productrating.css/order-rate.css" %}
+{% include common.base/header.html %}
+<div class="page-container user-center-page-container screen-center-block">
+	{% if displayInfos.size > 0 %}
+	{% area order_rate_contents %}
+	{% else %}
+	<div class="text-center-row">{{ "No products available for rating, Please return to order list" | trans }}</div>
+	{% endif %}
+</div>
+{% include common.base/footer.html %}

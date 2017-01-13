@@ -1,6 +1,7 @@
 ﻿using System;
 using ZKWeb.Database;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
@@ -10,7 +11,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities.Bases {
 	/// 订单的基础类
 	/// </summary>
 	public abstract class OrderBase<TOrder> :
-		IHaveCreateTime, IHaveUpdateTime, IHaveDeleted,
+		IHaveCreateTime, IHaveUpdateTime, IHaveDeleted, IHaveOwner,
 		IEntity<Guid>, IEntityMappingProvider<TOrder>
 		where TOrder : OrderBase<TOrder> {
 		/// <summary>

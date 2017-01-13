@@ -38,7 +38,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 		/// <summary>
 		/// 获取订单中未评价的订单商品列表
 		/// </summary>
-		/// <param name="orderId">卖家订单Id</param>
+		/// <param name="orderId">买家订单Id</param>
 		/// <returns></returns>
 		public virtual IList<OrderProduct> GetUnratedOrderProducts(Guid orderId) {
 			using (UnitOfWork.Scope()) {
@@ -46,10 +46,10 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 					.Where(r => r.OrderProduct.Order.Id == orderId)
 					.Select(r => r.OrderProduct.Id)
 					.ToList();
-				var orderRepository = Application.Ioc.Resolve<IRepository<SellerOrder, Guid>>();
+				var orderRepository = Application.Ioc.Resolve<IRepository<BuyerOrder, Guid>>();
 				var orderProducts = orderRepository.Query()
 					.Where(o => o.Id == orderId)
-					.SelectMany(o => o.OrderProducts)
+					.SelectMany(o => o.SellerOrder.OrderProducts)
 					.Where(p => !ratedOrderProductIds.Contains(p.Id))
 					.ToList();
 				return orderProducts;
@@ -59,7 +59,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 		/// <summary>
 		/// 获取订单中未评价的订单商品的显示信息列表
 		/// </summary>
-		/// <param name="orderId">卖家订单Id</param>
+		/// <param name="orderId">买家订单Id</param>
 		/// <returns></returns>
 		public virtual IList<OrderProductDisplayInfo> GetUnratedOrderProductDisplayInfos(Guid orderId) {
 			using (UnitOfWork.Scope()) {

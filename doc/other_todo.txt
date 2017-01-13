@@ -45,3 +45,4 @@ http://www.673573.com
 	短信模块 (SMS.Base)
 	广信短信模块 (SMS.GuangXin)
 	代办事项模块 (Schedule.Todo)
+	DIY模块 (Theme.DIY)

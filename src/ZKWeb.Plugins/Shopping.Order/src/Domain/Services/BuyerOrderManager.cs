@@ -49,6 +49,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Services {
 			}
 		}
 
+		/// <summary>
+		/// 根据买家订单Id获取卖家订单Id
+		/// </summary>
+		/// <param name="orderId">买家订单Id</param>
+		/// <returns></returns>
 		public virtual Guid GetSellerOrderIdFromBuyerOrderId(Guid orderId) {
 			using (UnitOfWork.Scope()) {
 				var sellerOrderId = Repository.Query()

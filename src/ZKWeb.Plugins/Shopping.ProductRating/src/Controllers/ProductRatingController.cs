@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZKWeb.Plugins.Common.Admin.src.Components.ActionFilters;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels;
@@ -21,14 +22,15 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Controllers {
 		/// <returns></returns>
 		[Action("user/orders/rate")]
 		[Action("user/orders/rate", HttpMethods.POST)]
+		[CheckOwner]
 		public IActionResult Rate(string serial) {
-			var sellerOrderManager = Application.Ioc.Resolve<SellerOrderManager>();
+			var buyerOrderManager = Application.Ioc.Resolve<BuyerOrderManager>();
 			var productRatingManager = Application.Ioc.Resolve<ProductRatingManager>();
-			var orderId = sellerOrderManager.GetSellerOrderIdFromSerial(serial);
+			var buyerOrderId = buyerOrderManager.GetBuyerOrderIdFromSerial(serial);
 			if (Request.Method == HttpMethods.GET) {
-				var displayInfos = orderId == null ?
+				var displayInfos = buyerOrderId == null ?
 					new List<OrderProductDisplayInfo>() :
-					productRatingManager.GetUnratedOrderProductDisplayInfos(orderId.Value);
+					productRatingManager.GetUnratedOrderProductDisplayInfos(buyerOrderId.Value);
 				return new TemplateResult("shopping.productrating/order-rate.html", new { displayInfos });
 			}
 			return new JsonResult(new { message = "Success" });

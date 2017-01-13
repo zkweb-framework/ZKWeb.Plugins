@@ -1,0 +1,85 @@
+﻿<div class="order-rate-form portlet">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-cart-arrow-down"></i>
+			<span class="caption-subject">{{ "OrderRating" | trans }}</span>
+			<span class="caption-helper"><a href="{{ "/user/orders" | url }}">{{ "Return To List" | trans }}</a></span>
+		</div>
+	</div>
+	<div class="portlet-body">
+		<form name="OrderRateForm" action="/admin/orders/rate?serial={{ "" | url_get_param: "serial" }}" method="POST" role="form" ajax="true" class="form-horizontal">
+			<div class="order-product-rate-container">
+				{% for info in displayInfos %}
+				<div class="box box-primary order-product-rate-box">
+					<div class="box-header with-border">
+						<span class="product-name">{{ info.Name }}</span>
+						<span class="matched-parameters-description">{{ info.MatchedParametersDescription }}</span>
+					</div>
+					<div class="box-body row">
+						<div class="order-product-image col-md-2">
+							<a title="{{ info.Name }}" href="{{ "/product/view?id=[0]" | format: info.ProductId | url }}" target="_blank">
+								<img src="{{ info.ImageWebPath }}" alt="{{ info.Name }}">
+							</a>
+						</div>
+						<div class="order-product-rate-controls col-md-10">
+							{% assign rateFieldName = "Rate_[0]" | format: info.OrderProductId %}
+							<div class="rate radio-list" child-name="{{ rateFieldName }}">
+								<label class="radio-inline" child-name="{{ rateFieldName }}" child-value="0">
+									<input name="{{ rateFieldName }}" value="GoodRate" checked="checked" type="radio">
+									<i class="fa fa-star"></i>{{ "GoodRate" | trans  }}
+								</label>
+								<label class="radio-inline" child-name="{{ rateFieldName }}" child-value="0">
+									<input name="{{ rateFieldName }}" value="MediumRate" type="radio">
+									<i class="fa fa-star-half-o"></i>{{ "MediumRate" | trans  }}
+								</label>
+								<label class="radio-inline" child-name="{{ rateFieldName }}" child-value="0">
+									<input name="{{ rateFieldName }}" value="BadRate" type="radio">
+									<i class="fa fa-bomb"></i>{{ "BadRate" | trans  }}
+								</label>
+								<label class="radio-inline" child-name="{{ rateFieldName }}" child-value="0">
+									<input name="{{ rateFieldName }}" value="" type="radio">
+									<i class="fa fa-sun-o"></i>{{ "RateNextTime" | trans }}
+								</label>
+							</div>
+							<div class="comment">
+								<textarea class="form-control" rows="5"
+										  name="{{ "Comment_[0]" | format: info.OrderProductId }}"
+										  placeholder="{{ "Please fill in your evaluation of this product" | trans }}"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="order-product-score-container">
+				<div class="form-group">
+					<label class="control-label">
+						{{ "DescriptionMatchScore" | trans }}
+					</label>
+					<div class="form-controls">
+
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">
+						{{ "ServiceQualityScore" | trans }}
+					</label>
+					<div class="form-controls">
+
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">
+						{{ "DeliverySpeedScore" | trans }}
+					</label>
+					<div class="form-controls">
+
+					</div>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-submit" type="submit">{{ "Submit" | trans }}</button>
+			</div>
+		</form>
+	</div>
+</div>
