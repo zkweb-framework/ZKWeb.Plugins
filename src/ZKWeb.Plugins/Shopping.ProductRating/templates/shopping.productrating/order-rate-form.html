@@ -57,7 +57,13 @@
 						{{ "DescriptionMatchScore" | trans }}
 					</label>
 					<div class="form-controls">
-
+						<fieldset class="rating">
+							{% for x in (1..5) %}
+							{% assign value = 6 | minus: x %}
+							<input type="radio" id="DescriptionMatchScore_{{ value }}" name="DescriptionMatchScore" value="{{ value }}" />
+							<label for="DescriptionMatchScore_{{ value }}" title="{{ value }}"></label>
+							{% endfor %}
+						</fieldset>
 					</div>
 				</div>
 				<div class="form-group">
@@ -65,7 +71,13 @@
 						{{ "ServiceQualityScore" | trans }}
 					</label>
 					<div class="form-controls">
-
+						<fieldset class="rating">
+							{% for x in (1..5) %}
+							{% assign value = 6 | minus: x %}
+							<input type="radio" id="ServiceQualityScore_{{ value }}" name="ServiceQualityScore" value="{{ value }}" />
+							<label for="ServiceQualityScore_{{ value }}" title="{{ value }}"></label>
+							{% endfor %}
+						</fieldset>
 					</div>
 				</div>
 				<div class="form-group">
@@ -73,7 +85,13 @@
 						{{ "DeliverySpeedScore" | trans }}
 					</label>
 					<div class="form-controls">
-
+						<fieldset class="rating">
+							{% for x in (1..5) %}
+							{% assign value = 6 | minus: x %}
+							<input type="radio" id="DeliverySpeedScore_{{ value }}" name="DeliverySpeedScore" value="{{ value }}" />
+							<label for="DeliverySpeedScore_{{ value }}" title="{{ value }}"></label>
+							{% endfor %}
+						</fieldset>
 					</div>
 				</div>
 			</div>

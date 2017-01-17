@@ -3,7 +3,13 @@
 {% include common.base/header.html %}
 <div class="page-container user-center-page-container screen-center-block">
 	{% if displayInfos.size > 0 %}
-	{% area order_rate_contents %}
+	<div class="order-rate-contents-before">
+		{% area order_rate_contents_before %}
+	</div>
+	{% include shopping.productrating/order-rate-form.html %}
+	<div class="order-rate-contents-after">
+		{% area order_rate_contents_after %}
+	</div>
 	{% else %}
 	<div class="text-center-row">{{ "No products available for rating, Please return to order list" | trans }}</div>
 	{% endif %}
