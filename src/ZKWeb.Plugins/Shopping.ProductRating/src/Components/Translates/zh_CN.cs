@@ -24,7 +24,16 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Components.Translates {
 			{ "No products available for rating, Please return to order list", "没有可评价的商品，请返回订单列表" },
 			{ "DescriptionMatchScore", "描述相符评分" },
 			{ "ServiceQualityScore", "服务质量评分" },
-			{ "DeliverySpeedScore", "发货速度评分" }
+			{ "DeliverySpeedScore", "发货速度评分" },
+			{ "Please provide description match score", "请对描述相符进行评分" },
+			{ "Please provide service quality score", "请对服务质量进行评分" },
+			{ "Please provide delivery speed score", "请对发货速度进行评分" },
+			{ "Invalid description match score", "不正确的描述相符评分" },
+			{ "Invalid service quality score", "不正确的服务质量评分" },
+			{ "Invalid delivery speed score", "不正确的发货速度评分" },
+			{ "Invalid order state for rating", "不正确的订单状态，不能评价此订单" },
+			{ "Please provide rating for atleast one product", "请对至少一件商品进行评价" },
+			{ "Rating successful, Redirecting to order list...", "评价成功，正在跳转到订单列表页……" },
 		};
 
 		public bool CanTranslate(string code) {

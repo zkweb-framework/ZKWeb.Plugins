@@ -79,5 +79,19 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Entities {
 			builder.Map(r => r.UpdateTime);
 			builder.Map(r => r.Deleted);
 		}
+
+		/// <summary>
+		/// 最大分数值
+		/// </summary>
+		public static readonly int MaxScore = 5;
+
+		/// <summary>
+		/// 检查分数值是否有效
+		/// </summary>
+		/// <param name="score">分数值</param>
+		/// <returns></returns>
+		public static bool CheckScore(int score) {
+			return score >= 1 && score <= MaxScore;
+		}
 	}
 }

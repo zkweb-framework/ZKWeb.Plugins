@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Components.ActionFilters;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels;
 using ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
+using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.ProductRating.src.Controllers {
@@ -33,7 +36,13 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Controllers {
 					productRatingManager.GetUnratedOrderProductDisplayInfos(buyerOrderId.Value);
 				return new TemplateResult("shopping.productrating/order-rate.html", new { displayInfos });
 			}
-			return new JsonResult(new { message = "Success" });
+			// 提交评价
+			var arguments = Request.GetAllDictionary();
+			productRatingManager.AddRatingsFromRequestArguments(buyerOrderId.Value, arguments);
+			return new JsonResult(new {
+				message = new T("Rating successful, Redirecting to order list..."),
+				script = BaseScriptStrings.Redirect("/user/orders", 1500)
+			});
 		}
 	}
 }

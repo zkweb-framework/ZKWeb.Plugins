@@ -534,8 +534,10 @@ Shopping.ProductBookmark
 
 Shopping.ProductRating
 	商品评价
-		TODO: 确认收货后可以评价商品
+		确认收货后可以评价商品
 		TODO: 商品详情页可以查看评价记录
+		TODO: 用户中心可以查看历史评价
+		TODO: 后台可以查看和删除历史评价
 
 Testing.WebTester
 	TODO: 定义这里的功能列表

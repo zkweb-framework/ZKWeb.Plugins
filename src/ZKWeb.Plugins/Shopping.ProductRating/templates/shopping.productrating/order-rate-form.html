@@ -7,7 +7,7 @@
 		</div>
 	</div>
 	<div class="portlet-body">
-		<form name="OrderRateForm" action="/admin/orders/rate?serial={{ "" | url_get_param: "serial" }}" method="POST" role="form" ajax="true" class="form-horizontal">
+		<form name="OrderRateForm" action="/user/orders/rate?serial={{ "" | url_get_param: "serial" }}" method="POST" role="form" ajax="true" class="form-horizontal">
 			<div class="order-product-rate-container">
 				{% for info in displayInfos %}
 				<div class="box box-primary order-product-rate-box">
