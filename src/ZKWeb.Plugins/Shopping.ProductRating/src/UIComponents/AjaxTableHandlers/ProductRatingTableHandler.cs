@@ -6,6 +6,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
+using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchParametersDescriptionProviders.Extensions;
 using ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services;
 using ZKWebStandard.Extensions;
 
@@ -42,6 +43,8 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.UIComponents.AjaxTableHandler
 				pair.Row["RankDescription"] = rankDescription;
 				pair.Row["Comment"] = string.IsNullOrEmpty(pair.Entity.Comment) ?
 					rankDescription : pair.Entity.Comment;
+				pair.Row["MatchParametersDescription"] = pair.Entity.Product.GetMatchParametersDescription(
+					pair.Entity.OrderProduct.MatchParameters);
 				pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
 			}
 		}

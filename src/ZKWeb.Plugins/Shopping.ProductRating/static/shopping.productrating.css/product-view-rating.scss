@@ -1,0 +1,29 @@
+﻿.product-view {
+	.product-rating-table-container {
+		.box-header {
+			.rank {
+				font-weight: bold;
+
+				&.good-rank {
+					color: #00a65a;
+				}
+
+				&.middle-rank {
+					color: #0073b7;
+				}
+
+				&.bad-rank {
+					color: #dd4b39;
+				}
+			}
+
+			.description {
+				color: #999;
+			}
+
+			.username {
+				margin-right: 5px;
+			}
+		}
+	}
+}

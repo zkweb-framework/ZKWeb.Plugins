@@ -1,0 +1,36 @@
+﻿<div class="table-container ajax-table-container product-rating-table-container">
+	<div class="boxes">
+		<% _.each(result.Rows, function(row, index) { %>
+			<div class="box box-primary product-rate-box">
+				<div class="box-header with-border">
+					<% if (row.Rank == 0) { %>
+						<span class="rank good-rank">[<%-row.RankDescription%>]</span>
+					<% } else if (row.Rank == 1) { %>
+						<span class="rank middle-rank">[<%-row.RankDescription%>]</span>
+					<% } else if (row.Rank == 2) { %>
+						<span class="rank bad-rank">[<%-row.RankDescription%>]</span>
+					<% } %>
+					<span class="description"><%-row.MatchParametersDescription%></span>
+					<span class="createtime pull-right"><%-row.CreateTime%></span>
+					<span class="username pull-right"><%-row.Username%></span>
+				</div>
+				<div class="box-body">
+					<span class="comment"><%-row.Comment%></span>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<ul class="pagination pull-right">
+				<% _.each(result.Pagination.Links, function(link) { %>
+					<% if (link.State == "active") { %>
+						<li><input type="text" class="pagination-input form-control" value="<%-link.Name%>" /></li>
+					<% } else { %>
+						<li><a class="<%-link.State%>" data-page="<%-link.PageNo%>" title="<%-link.Name%>"><%-link.Name%></a></li>
+					<% } %>
+				<% }); %>
+			</ul>
+		</div>
+	</div>
+</div>

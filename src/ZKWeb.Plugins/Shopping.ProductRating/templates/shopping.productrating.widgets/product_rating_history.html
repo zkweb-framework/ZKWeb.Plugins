@@ -1,4 +1,8 @@
-﻿<div class="product-rating-history" data-toggle="append-tabs" data-target=".product-details-tabs">
+﻿<div class="product-rating-history"
+	 data-toggle="append-tabs"
+	 data-target=".product-details-tabs"
+	 require-script="/static/shopping.productrating.js/product-view-rating.min.js"
+	 require-style="/static/shopping.productrating.css/product-view-rating.css">
 	<ul class="nav nav-tabs">
 		<li>
 			<a href="#tab_product_rating" data-toggle="tab">{{ "ProductRating" | trans }}</a>
@@ -9,7 +13,7 @@
 			<div class="contents">
 				<div class="ajax-table"
 					 ajax-table-target="/api/product_rating/search"
-					 ajax-table-template=""
+					 ajax-table-template="/static/shopping.productrating.tmpl/productRatingTable.tmpl"
 					 ajax-table-extra-options='{ "delayRefresh": true, "conditions": { "id": "{{ "" | url_get_param: "id" }}" } }'>
 				</div>
 			</div>
