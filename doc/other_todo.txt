@@ -16,6 +16,8 @@ http://www.673573.com
 支持删除评价？
 
 添加Common.DatePicker的文档
+添加Shopping.ProductBookmark的文档
+添加Shopping.ProductRating的文档
 
 库存
 库存流水

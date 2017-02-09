@@ -21,6 +21,7 @@
 // @koala-append "custom/_jquery.ajaxTable.js"
 // @koala-append "custom/_jquery.ajaxTableExtensions.js"
 // @koala-append "custom/_jquery.ajaxTableFilterBar.js"
+// @koala-append "custom/_jquery.appendTabs.js"
 // @koala-append "custom/_jquery.checkbox.js"
 // @koala-append "custom/_jquery.commonAjaxForm.js"
 // @koala-append "custom/_jquery.editableTable.js"

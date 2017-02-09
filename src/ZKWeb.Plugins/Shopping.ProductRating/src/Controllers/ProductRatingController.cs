@@ -34,7 +34,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Controllers {
 				var displayInfos = buyerOrderId == null ?
 					new List<OrderProductDisplayInfo>() :
 					productRatingManager.GetUnratedOrderProductDisplayInfos(buyerOrderId.Value);
-				return new TemplateResult("shopping.productrating/order-rate.html", new { displayInfos });
+				return new TemplateResult("shopping.productrating/order_rate.html", new { displayInfos });
 			}
 			// 提交评价
 			var arguments = Request.GetAllDictionary();
