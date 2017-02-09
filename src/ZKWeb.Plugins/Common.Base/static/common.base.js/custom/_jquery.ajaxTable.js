@@ -4,14 +4,15 @@
 
 $.ajaxTableType = function () { };
 $.ajaxTableOptions = {
-	pageNo: 1,
-	pageSize: 50,
-	keyword: null,
-	conditions: {},
-	target: null,
-	loadingClass: "loading",
-	hidePagination: false,
-	template: "/static/common.base.tmpl/ajaxTable.tmpl"
+	pageNo: 1, // 页号, 0开始
+	pageSize: 50, // 一页的数量
+	keyword: null, // 抓取数据使用的关键字
+	conditions: {}, // 抓取数据使用的参数
+	target: null, // 抓取数据的url
+	loadingClass: "loading", // 载入中的css类
+	hidePagination: false, // 隐藏分页栏
+	template: "/static/common.base.tmpl/ajaxTable.tmpl", // 绑定内容的模板
+	delayRefresh: false // 是否延迟刷新, 仅适用于自动初始化
 };
 $.fn.ajaxTable = function (options) {
 	// 已生成过时返回之前生成的对象
@@ -165,8 +166,10 @@ $(function () {
 			};
 			options = $.extend(options,
 				JSON.parse($table.attr("ajax-table-extra-options") || "{}") || {});
-			var table = $table.ajaxTable(options)
-			options.target && table.refresh();
+			var table = $table.ajaxTable(options);
+			if (options.target && !options.delayRefresh) {
+				table.refresh();
+			}
 		});
 	};
 	var rule = ".ajax-table";

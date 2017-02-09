@@ -11,7 +11,7 @@
 		{{ "The product you are visiting does not exist." | trans }}
 	</div>
 	{% else %}
-	<div class="product-view">
+	<div class="product-view" data-id="{{ product_info.id }}">
 		<div class="product-summary-row">
 			{% area product_gallery %}
 			{% area product_sales_info %}

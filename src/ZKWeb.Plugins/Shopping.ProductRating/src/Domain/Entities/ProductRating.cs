@@ -39,6 +39,10 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Entities {
 		/// </summary>
 		public virtual ProductRatingRank Rank { get; set; }
 		/// <summary>
+		/// 评价内容
+		/// </summary>
+		public virtual string Comment { get; set; }
+		/// <summary>
 		/// 描述相符的分数，范围是1~5
 		/// </summary>
 		public virtual int DescriptionMatchScore { get; set; }
@@ -72,6 +76,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Entities {
 			builder.References(r => r.Product, new EntityMappingOptions() { Nullable = false });
 			builder.References(r => r.Owner, new EntityMappingOptions() { Nullable = false });
 			builder.Map(r => r.Rank);
+			builder.Map(r => r.Comment);
 			builder.Map(r => r.DescriptionMatchScore);
 			builder.Map(r => r.ServiceQualityScore);
 			builder.Map(r => r.DeliverySpeedScore);

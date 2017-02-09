@@ -7,7 +7,11 @@
 	<div class="tab-content">
 		<div id="tab_product_rating" class="tab-pane">
 			<div class="contents">
-				asdasdasdasdsa
+				<div class="ajax-table"
+					 ajax-table-target="/api/product_rating/search"
+					 ajax-table-template=""
+					 ajax-table-extra-options='{ "delayRefresh": true, "conditions": { "id": "{{ "" | url_get_param: "id" }}" } }'>
+				</div>
 			</div>
 		</div>
 	</div>

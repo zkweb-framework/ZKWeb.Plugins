@@ -42,10 +42,10 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Controllers {
 			if (pingppManager.ShouldWaitResult(id)) {
 				return new TemplateResult("finance.payment.pingpp/pingpp_wait_result.html");
 			}
-#endif
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			var resultUrl = transactionManager.GetResultUrl(id);
 			return new RedirectResult(resultUrl);
+#endif
 		}
 
 		/// <summary>

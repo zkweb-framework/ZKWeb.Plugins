@@ -122,6 +122,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 						Product = orderProduct.Product,
 						Owner = orderProduct.Order.Buyer,
 						Rank = rate,
+						Comment = comment,
 						DescriptionMatchScore = descriptionMatchScore.Value,
 						ServiceQualityScore = serviceQualityScore.Value,
 						DeliverySpeedScore = deliverySpeedScore.Value
@@ -133,6 +134,21 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 			if (rateCount == 0) {
 				throw new BadRequestException(new T("Please provide rating for atleast one product"));
 			}
+		}
+
+		/// <summary>
+		/// 处理评价人的用户名
+		/// 例如 qwert => q***t
+		/// </summary>
+		/// <param name="username"></param>
+		/// <returns></returns>
+		public virtual string StripUsername(string username) {
+			if (username.Length < 3) {
+				return new string('*', username.Length);
+			}
+			return username[0] +
+				new string('*', username.Length - 2) +
+				username[username.Length - 1];
 		}
 	}
 }
