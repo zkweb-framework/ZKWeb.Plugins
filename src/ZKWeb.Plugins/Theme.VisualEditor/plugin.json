@@ -1,0 +1,10 @@
+﻿{
+	"Name": "VisualThemeEditor",
+	"Version": "0.0",
+	"Description": "Allow edit website theme visually",
+	"Dependencies": [
+		"Common.Base",
+		"Common.Admin",
+		"Common.AdminSettings"
+	]
+}
