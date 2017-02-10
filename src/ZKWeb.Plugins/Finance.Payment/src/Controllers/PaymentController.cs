@@ -3,14 +3,13 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
-using ZKWebStandard.Web;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Finance.Payment.src.UIComponents.Forms;
-using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentApiHandlers;
 using ZKWeb.Plugins.Finance.Payment.src.UIComponents.HtmlProviders;
+using System.ComponentModel;
 
 namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 	/// <summary>
@@ -68,6 +67,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("payment/transaction/pay_result")]
+		[Description("PaymentResultPage")]
 		public IActionResult PayResult() {
 			var transactionHtmlProvider = Application.Ioc.Resolve<PaymentTransactionHtmlProvider>();
 			var id = Request.Get<Guid>("id");

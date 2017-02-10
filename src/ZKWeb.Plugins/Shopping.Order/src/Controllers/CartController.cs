@@ -3,6 +3,7 @@ using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
+using System.ComponentModel;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 	/// <summary>
@@ -15,6 +16,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("cart")]
+		[Description("CartPage")]
 		public IActionResult Index() {
 			return new TemplateResult("shopping.order/cart.html");
 		}

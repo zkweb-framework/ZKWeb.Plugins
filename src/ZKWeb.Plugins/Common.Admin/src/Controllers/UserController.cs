@@ -9,6 +9,7 @@ using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
+using System.ComponentModel;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -22,6 +23,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		[Action("user/reg")]
 		[Action("user/reg", HttpMethods.POST)]
+		[Description("UserRegPage")]
 		public IActionResult Reg() {
 			// 已登录时跳转到用户中心
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
@@ -45,6 +47,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		[Action("user/login")]
 		[Action("user/login", HttpMethods.POST)]
+		[Description("UserLoginPage")]
 		public IActionResult Login() {
 			// 已登录时跳转到用户中心
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
@@ -67,6 +70,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("user/logout", HttpMethods.POST)]
+		[Description("UserLogoutPage")]
 		public IActionResult Logout() {
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			userManager.Logout();
@@ -78,6 +82,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("home")]
+		[Description("UserIndexPage")]
 		public IActionResult Home() {
 			var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
 			privilegeManager.Check(typeof(IAmUser)); // 只要求登陆

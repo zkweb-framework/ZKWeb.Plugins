@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
@@ -15,6 +16,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("/")]
+		[Description("WebsiteIndexPage")]
 		public IActionResult Index() {
 			return new TemplateResult("common.base/index.html");
 		}

@@ -18,6 +18,7 @@ using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Utils;
 using ZKWeb.Plugins.Common.Admin.src.Components.ActionFilters;
+using System.ComponentModel;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -32,6 +33,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		[Action("admin")]
 		[CheckPrivilege(typeof(ICanUseAdminPanel))]
+		[Description("AdminIndexPage")]
 		public IActionResult Admin() {
 			return new TemplateResult("common.admin/admin_index.html");
 		}
@@ -42,6 +44,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		[Action("admin/login")]
 		[Action("admin/login", HttpMethods.POST)]
+		[Description("AdminLoginPage")]
 		public IActionResult Login() {
 			// 已登录时跳转到后台首页
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
@@ -66,6 +69,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("admin/logout", HttpMethods.POST)]
+		[Description("AdminLogoutPage")]
 		public IActionResult Logout() {
 			var userManager = Application.Ioc.Resolve<UserManager>();
 			userManager.Logout();
@@ -89,6 +93,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		[Action("admin/about_me")]
 		[Action("admin/about_me", HttpMethods.POST)]
 		[CheckPrivilege(typeof(ICanUseAdminPanel))]
+		[Description("AdminAboutMePage")]
 		public IActionResult AboutMe() {
 			var form = new AdminAboutMeForm();
 			if (Request.Method == HttpMethods.POST) {
@@ -105,6 +110,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		/// <returns></returns>
 		[Action("admin/about_website")]
 		[CheckPrivilege(typeof(ICanUseAdminPanel))]
+		[Description("AdminAboutWebsitePage")]
 		public IActionResult AboutWebsite() {
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var pluginManager = Application.Ioc.Resolve<PluginManager>();

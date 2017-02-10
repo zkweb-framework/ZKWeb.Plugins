@@ -557,8 +557,6 @@ Theme.VisualEditor
 	TODO: 从区域删除模板模块
 	TODO: 拖动排序区域中的模板模块
 	TODO: 拖动一个区域的模块模块到另一个区域
-	TODO: 给指定url的页面添加自定义脚本
-	TODO: 给指定url的页面添加自定义样式
 	TODO: 如果url是可编辑页面且登陆人有可视化编辑权限则显示悬浮编辑按钮
 	TODO: 列出主题包(App_Data\theme_packs)
 	TODO: 生成主题包(保存当前的所有编辑)
@@ -567,6 +565,8 @@ Theme.VisualEditor
 
 Theme.Widgets.Base
 	TODO: 定义这里的功能列表
+	TODO: 自定义样式模块
+	TODO: 自定义脚本模块
 
 Theme.Widgets.Product
 	TODO: 定义这里的功能列表

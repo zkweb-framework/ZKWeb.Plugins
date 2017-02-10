@@ -2,6 +2,7 @@
 using ZKWebStandard.Ioc;
 using ZKWeb.Web.ActionResults;
 using ZKWeb.Web;
+using System.ComponentModel;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 	/// <summary>
@@ -14,6 +15,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("product/view")]
+		[Description("ProductViewPage")]
 		public IActionResult View() {
 			return new TemplateResult("shopping.product/product_view.html");
 		}
@@ -23,6 +25,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// </summary>
 		/// <returns></returns>
 		[Action("product/list")]
+		[Description("ProductListPage")]
 		public IActionResult List() {
 			return new TemplateResult("shopping.product/product_list.html");
 		}

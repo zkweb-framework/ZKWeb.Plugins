@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Components.ActionFilters;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
@@ -26,6 +27,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Controllers {
 		[Action("user/orders/rate")]
 		[Action("user/orders/rate", HttpMethods.POST)]
 		[CheckOwner]
+		[Description("OrderRatePage")]
 		public IActionResult Rate(string serial) {
 			var buyerOrderManager = Application.Ioc.Resolve<BuyerOrderManager>();
 			var productRatingManager = Application.Ioc.Resolve<ProductRatingManager>();
