@@ -15,6 +15,7 @@
 		"Common.PesudoStatic",
 		"Common.Region",
 		"Common.SerialGenerate",
+		"Common.Datepicker",
 		"Finance.Payment",
 		"Finance.Payment.Alipay",
 		"Finance.Payment.Cash",
@@ -31,7 +32,11 @@
 		"Shopping.ProductBookmark",
 		"Shopping.ProductRating",
 		"Shopping.AfterSales",
-		"Testing.WebTester"
+		"Testing.WebTester",
+		"Theme.Mobile.Frame",
+		"Theme.VisualEditor",
+		"Theme.Widgets.Product",
+		"Theme.Widgets.Slideshow"
 	],
 	"AppendPlugins": [
 		"Common.CustomTranslate"
