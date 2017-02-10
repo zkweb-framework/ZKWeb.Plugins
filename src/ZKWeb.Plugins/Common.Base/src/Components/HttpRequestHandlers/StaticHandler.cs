@@ -28,17 +28,23 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.HttpRequestHandlers {
 		public void OnRequest() {
 			var context = HttpManager.CurrentContext;
 			var path = context.Request.Path;
-			if (path.StartsWith(Prefix)) {
-				var fileStorage = Application.Ioc.Resolve<IFileStorage>();
-				var fileEntry = fileStorage.GetResourceFile("static", path.Substring(Prefix.Length));
-				if (fileEntry.Exists) {
-					var ifModifiedSince = context.Request.GetIfModifiedSince();
-					var bytesRange = context.Request.GetBytesRange();
-					var result = new FileEntryResult(fileEntry, ifModifiedSince, bytesRange);
-					result.WriteResponse(context.Response);
-					context.Response.End();
-				}
+			if (!path.StartsWith(Prefix)) {
+				return;
 			}
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+			var subPath = path.Substring(Prefix.Length);
+			if (string.IsNullOrEmpty(subPath)) {
+				return;
+			}
+			var fileEntry = fileStorage.GetResourceFile("static", subPath);
+			if (!fileEntry.Exists) {
+				return;
+			}
+			var ifModifiedSince = context.Request.GetIfModifiedSince();
+			var bytesRange = context.Request.GetBytesRange();
+			var result = new FileEntryResult(fileEntry, ifModifiedSince, bytesRange);
+			result.WriteResponse(context.Response);
+			context.Response.End();
 		}
 	}
 }
