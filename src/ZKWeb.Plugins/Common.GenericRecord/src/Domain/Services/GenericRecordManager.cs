@@ -46,8 +46,10 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services {
 		/// <param name="type">记录类型</param>
 		/// <returns></returns>
 		public virtual IList<Entities.GenericRecord> FindRecords(string type) {
+			var now = DateTime.UtcNow;
 			return GetMany(query => query
 				.Where(r => r.Type == type)
+				.Where(r => r.KeepUntil == null || r.KeepUntil < now)
 				.OrderByDescending(r => r.Id).ToList());
 		}
 
@@ -59,8 +61,10 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Services {
 		/// <param name="releatedId">关联数据Id</param>
 		/// <returns></returns>
 		public virtual IList<Entities.GenericRecord> FindRecords(string type, Guid? releatedId) {
+			var now = DateTime.UtcNow;
 			return GetMany(query => query
 				.Where(r => r.Type == type && r.ReleatedId == releatedId)
+				.Where(r => r.KeepUntil == null || r.KeepUntil < now)
 				.OrderByDescending(r => r.CreateTime).ToList());
 		}
 

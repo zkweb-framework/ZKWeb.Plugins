@@ -1,0 +1,8 @@
+﻿{
+	"Name": "BaseWidgets",
+	"Version": "0.0",
+	"Description": "Base template widgets",
+	"Dependencies": [
+		"Common.Base"
+	]
+}

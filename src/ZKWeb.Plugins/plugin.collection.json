@@ -35,6 +35,7 @@
 		"Testing.WebTester",
 		"Theme.Mobile.Frame",
 		"Theme.VisualEditor",
+		"Theme.Widgets.Base",
 		"Theme.Widgets.Product",
 		"Theme.Widgets.Slideshow"
 	],
