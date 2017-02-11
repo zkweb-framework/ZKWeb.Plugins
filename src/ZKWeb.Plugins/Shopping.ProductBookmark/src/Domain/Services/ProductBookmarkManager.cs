@@ -12,7 +12,7 @@ namespace ZKWeb.Plugins.Shopping.ProductBookmark.src.Domain.Services {
 	/// <summary>
 	/// 商品收藏的管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class ProductBookmarkManager : DomainServiceBase<ProductBookmark, Guid> {
 		/// <summary>
 		/// 添加收藏的商品

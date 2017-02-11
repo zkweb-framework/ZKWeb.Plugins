@@ -6,7 +6,7 @@ Framework: http://github.com/zkweb-framework/ZKWeb<br/>
 Document: http://zkweb-framework.github.io (Chinese)<br/>
 
 MIT License<br />
-Copyright © 2016 303248153@github<br />
+Copyright © 2016~2017 303248153@github<br />
 If you have any license issue please contact 303248153@qq.com.
 
 # Plugins informations:<br/>

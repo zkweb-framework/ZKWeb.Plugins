@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 	/// <summary>
 	/// 商品评价管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class ProductRatingManager : DomainServiceBase<Entities.ProductRating, Guid> {
 		/// <summary>
 		/// 判断是否可以评价这个订单
