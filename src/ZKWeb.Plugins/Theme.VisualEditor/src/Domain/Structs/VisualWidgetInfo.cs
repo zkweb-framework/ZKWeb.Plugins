@@ -6,6 +6,10 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs {
 	/// </summary>
 	public class VisualWidgetInfo {
 		/// <summary>
+		/// 分组名称，可以是翻译前的文本
+		/// </summary>
+		public string Group { get; set; }
+		/// <summary>
 		/// 模板模块信息
 		/// </summary>
 		public TemplateWidgetInfo WidgetInfo { get; set; }
@@ -18,8 +22,10 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs {
 		/// <summary>
 		/// 初始化
 		/// </summary>
+		/// <param name="group">分组名称，可以是翻译前的文本</param>
 		/// <param name="widgetInfo">模板模块信息</param>
-		public VisualWidgetInfo(TemplateWidgetInfo widgetInfo) {
+		public VisualWidgetInfo(string group, TemplateWidgetInfo widgetInfo) {
+			Group = group;
 			WidgetInfo = widgetInfo;
 		}
 	}

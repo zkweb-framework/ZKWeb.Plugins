@@ -2,11 +2,11 @@
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Templating.DynamicContents;
 
-namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.VisualWidgetEditFormBuilders.Interfaces {
+namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.VisualWidgetFormBuilders.Interfaces {
 	/// <summary>
 	/// 可视化编辑器中编辑模块的表单的构建器接口
 	/// </summary>
-	public interface IVisualWidgetEditFormBuilder {
+	public interface IVisualWidgetFormBuilder {
 		/// <summary>
 		/// 根据单个模块参数添加表单字段
 		/// </summary>

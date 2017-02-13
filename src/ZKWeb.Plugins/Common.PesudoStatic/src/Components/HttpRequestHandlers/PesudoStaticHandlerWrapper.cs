@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Components.GenericConfigs;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Components.PesudoStatic.Wrappers;
@@ -14,23 +15,25 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Components.HttpRequestHandlers {
 	/// 完整规则请查看"PesudoStaticUrlFilter"的说明
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class PesudoStaticHandler : IHttpRequestHandler {
+	public class PesudoStaticHandlerWrapper : IHttpRequestHandlerWrapper {
 		/// <summary>
-		/// 处理请求
+		/// 包装请求
 		/// </summary>
-		public void OnRequest() {
+		/// <param name="action">请求函数</param>
+		/// <returns></returns>
+		public Action WrapHandlerAction(Action action) {
 			// 关闭伪静态时不处理
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var settings = configManager.GetData<PesudoStaticSettings>();
 			if (!settings.EnablePesudoStatic) {
-				return;
+				return action;
 			}
 			// 判断路径是否以伪静态后缀结尾
 			var context = HttpManager.CurrentContext;
 			var request = context.Request;
 			var path = request.Path;
 			if (!path.EndsWith(settings.PesudoStaticExtension)) {
-				return;
+				return action;
 			}
 			var query = request.GetQueryValues().ToDictionary(p => p.First, p => p.Second);
 			// 解析伪静态路径
@@ -40,7 +43,7 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Components.HttpRequestHandlers {
 			path = path.Substring(0, path.Length - settings.PesudoStaticExtension.Length);
 			var lastPartIndex = path.LastIndexOf('/');
 			if (lastPartIndex < 0) {
-				return; // 实际不会出现路径中没有"/"的情况
+				return action; // 实际不会出现路径中没有"/"的情况
 			}
 			var lastPart = path.Substring(lastPartIndex + 1);
 			var parts = lastPart.Split(settings.PesudoStaticParamDelimiter);
@@ -64,22 +67,28 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Components.HttpRequestHandlers {
 					}
 				} else {
 					// 参数数量不正确时不处理
-					return;
+					return action;
 				}
 			}
-			// 重载当前的http上下文，然后调用其它处理器处理
+			// 包装处理函数
 			var queryString = (query.Count > 0) ? "?" + HttpUtils.BuildQueryString(query) : "";
-			var overrideContext = new PesudoStaticHttpContext(context, path, queryString);
-			using (HttpManager.OverrideContext(overrideContext)) {
-				var handlers = Application.Ioc.ResolveMany<IHttpRequestHandler>().Reverse();
-				foreach (var handler in handlers) {
-					if (handler is PesudoStaticHandler) {
-						continue;
+			return () => {
+				try {
+					// 重载当前的http上下文，尝试进行处理
+					using (HttpManager.OverrideContext(
+						new PesudoStaticHttpContext(context, path, queryString))) {
+						action();
+					};
+					// 处理解析后的url成功
+					return;
+				} catch (HttpException e) {
+					if (e.StatusCode != 404) {
+						throw;
 					}
-					handler.OnRequest();
 				}
-			}
-			// 没有处理器成功处理解析后的url，把解析前的url交给其他处理器处理
+				// 没有处理器成功处理解析后的url，使用原来的Url进行处理
+				action();
+			};
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 		/// true: 查询已删除的对象
 		/// false: 查询未删除的对象
 		/// </summary>
-		public bool Deleted { get; protected set; }
+		public bool Deleted { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -25,14 +25,6 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Filters {
 		/// </summary>
 		public DeletedFilter() {
 			Deleted = false;
-		}
-
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		/// <param name="deleted">查询已删除或未删除对象</param>
-		public DeletedFilter(bool deleted) {
-			Deleted = deleted;
 		}
 
 		/// <summary>

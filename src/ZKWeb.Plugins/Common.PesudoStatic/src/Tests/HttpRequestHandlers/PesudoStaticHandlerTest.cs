@@ -1,11 +1,9 @@
 ﻿using NSubstitute;
 using System;
-using System.Linq;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Components.GenericConfigs;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Components.HttpRequestHandlers;
 using ZKWeb.Web;
-using ZKWebStandard.Ioc;
 using ZKWebStandard.Testing;
 using ZKWebStandard.Web;
 
@@ -21,21 +19,12 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.HttpRequestHandlers {
 				Application.Ioc.RegisterInstance(configManagerMock);
 				var testUrl = new Func<string, string>(url => {
 					string parsedUrl = null;
-					var handlerMock = Substitute.For<IHttpRequestHandler>();
-					handlerMock.When(h => h.OnRequest()).Do(callInfo => {
-						if (parsedUrl == null) {
+					var wrapper = new PesudoStaticHandlerWrapper();
+					using (HttpManager.OverrideContext(url, HttpMethods.GET)) {
+						wrapper.WrapHandlerAction(() => {
 							var request = HttpManager.CurrentContext.Request;
 							parsedUrl = request.Path + request.QueryString;
-						}
-					});
-					Application.Ioc.Unregister<IHttpRequestHandler>();
-					Application.Ioc.RegisterInstance(handlerMock);
-					Application.Ioc.RegisterMany<PesudoStaticHandler>(ReuseType.Singleton);
-					using (var context = HttpManager.OverrideContext(url, "GET")) {
-						var handlers = Application.Ioc.ResolveMany<IHttpRequestHandler>().Reverse();
-						foreach (var handler in handlers) {
-							handler.OnRequest();
-						}
+						})();
 					}
 					return parsedUrl;
 				});
