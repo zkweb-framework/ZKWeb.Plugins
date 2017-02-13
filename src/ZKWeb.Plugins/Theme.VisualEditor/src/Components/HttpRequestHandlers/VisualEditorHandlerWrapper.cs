@@ -1,4 +1,6 @@
-﻿using ZKWeb.Web;
+﻿using System;
+using ZKWeb.Plugins.Theme.VisualEditor.src.Components.HttpContextWrappers;
+using ZKWeb.Web;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Web;
 
@@ -10,7 +12,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.HttpRequestHandlers {
 	/// 显示原页面并注入可视化编辑器的脚本和样式文件
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class VisualEditorPreHandler : IHttpRequestPreHandler {
+	public class VisualEditorHandlerWrapper : IHttpRequestHandlerWrapper {
 		/// <summary>
 		/// 路径前缀
 		/// </summary>
@@ -21,15 +23,22 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.HttpRequestHandlers {
 		public const string OverridedContextKey = "VisualEditor.OverridedContext";
 
 		/// <summary>
-		/// 处理请求
+		/// 包装请求函数
 		/// </summary>
-		public void OnRequest() {
-			var context = HttpManager.CurrentContext;
-			var path = context.Request.Path;
-			if (!path.StartsWith(Prefix)) {
-				return;
-			}
-			var realPath = "/" + path.Substring(Prefix.Length);
+		public Action WrapHandlerAction(Action action) {
+			return () => {
+				var context = HttpManager.CurrentContext;
+				var path = context.Request.Path;
+				if (!path.StartsWith(Prefix)) {
+					action();
+					return;
+				}
+				var realPath = "/" + path.Substring(Prefix.Length);
+				using (HttpManager.OverrideContext(
+					new VisualEditorHttpContext(context, realPath))) {
+					action();
+				}
+			};
 		}
 	}
 }
