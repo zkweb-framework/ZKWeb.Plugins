@@ -1,1 +1,1 @@
-﻿// @koala-append "custom/visual-editor.js"
+﻿// @koala-append "custom/visual-editor-init.js"
