@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 			{ "VisualEditor", "可视化编辑" },
 			{ "Allow edit website theme visually", "允许可视化编辑网站主题" },
 			{ "AddElement", "添加元素" },
-			{ "ManageTheme", "修改主题" },
+			{ "ManageTheme", "管理主题" },
 			{ "SwitchPage", "切换页面" },
 			{ "SaveChanges", "保存修改" }
 		};

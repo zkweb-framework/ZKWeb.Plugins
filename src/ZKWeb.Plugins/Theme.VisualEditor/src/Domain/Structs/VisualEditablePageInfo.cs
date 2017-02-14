@@ -1,8 +1,11 @@
-﻿namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs {
+﻿using System;
+using DotLiquid;
+
+namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs {
 	/// <summary>
 	/// 可以在可视化编辑中编辑的页面信息
 	/// </summary>
-	public class VisualEditablePageInfo {
+	public class VisualEditablePageInfo : ILiquidizable {
 		/// <summary>
 		/// 分组，可以是翻译前的文本
 		/// </summary>
@@ -31,6 +34,14 @@
 			Group = group;
 			Name = name;
 			Url = url;
+		}
+
+		/// <summary>
+		/// 允许描画到模板
+		/// </summary>
+		/// <returns></returns>
+		public object ToLiquid() {
+			return new { Group, Name, Url };
 		}
 	}
 }
