@@ -16,6 +16,7 @@ http://www.673573.com
 支持删除评价？
 
 考虑在可视化编辑时对无id的文章详情和商品详情的处理
+可视化编辑退出页面时弹出警告框
 
 添加Common.DatePicker的文档
 添加Shopping.ProductBookmark的文档

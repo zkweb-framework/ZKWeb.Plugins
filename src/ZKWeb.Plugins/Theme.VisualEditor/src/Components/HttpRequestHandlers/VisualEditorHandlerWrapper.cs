@@ -1,4 +1,6 @@
 ﻿using System;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Components.HttpContextWrappers;
 using ZKWeb.Web;
@@ -34,6 +36,9 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.HttpRequestHandlers {
 					action();
 					return;
 				}
+				// 检查是否有可视化编辑权限
+				var privilegeManager = Application.Ioc.Resolve<PrivilegeManager>();
+				privilegeManager.Check(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor");
 				// 描画原路径的内容同时嵌入可视化编辑的css和js
 				var realPath = "/" + path.Substring(Prefix.Length);
 				context.IncludeCssLater("/static/template.visualeditor.css/components.css");

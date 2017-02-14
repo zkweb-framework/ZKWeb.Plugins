@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ZKWeb.Cache;
+using ZKWeb.Plugin;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Components.VisualEditablePagesProviders.Interfaces;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs;
 using ZKWebStandard.Ioc;
@@ -27,6 +28,11 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.VisualEditablePagesPro
 		/// 获取可编辑的页面列表
 		/// </summary>
 		public IEnumerable<VisualEditablePageInfo> GetEditablePages() {
+			var pluginManager = Application.Ioc.Resolve<PluginManager>();
+			var editablePageSet = new HashSet<string>();
+			foreach (var plugin in pluginManager.Plugins) {
+
+			}
 			throw new NotImplementedException();
 		}
 

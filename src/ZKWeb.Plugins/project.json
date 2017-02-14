@@ -1,7 +1,7 @@
 {
 	"version": "1.0.0-*",
 	"dependencies": {
-		"ZKWeb": "1.5.0-beta-2",
+		"ZKWeb": "1.5.0-final",
 		"System.ComponentModel.Annotations": "4.3.0"
 	},
 	"frameworks": {
