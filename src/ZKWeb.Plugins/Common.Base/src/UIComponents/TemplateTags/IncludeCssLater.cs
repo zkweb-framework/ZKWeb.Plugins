@@ -15,6 +15,11 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateTags {
 	/// </example>
 	public class IncludeCssLater : Tag {
 		/// <summary>
+		/// 引用Css的Html格式
+		/// </summary>
+		public const string CssHtmlFormat = IncludeCssHere.CssHtmlFormat + "\r\n";
+
+		/// <summary>
 		/// 添加html到变量中，不重复添加
 		/// </summary>
 		public override void Render(Context context, TextWriter result) {
@@ -23,9 +28,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateTags {
 			if (string.IsNullOrEmpty(path)) {
 				throw new NullReferenceException("css path can't be empty");
 			}
-			var html = string.Format(
-				"<link href='{0}' rel='stylesheet' type='text/css' />\r\n",
-				HttpUtils.HtmlEncode(path));
+			var html = string.Format(CssHtmlFormat, HttpUtils.HtmlEncode(path));
 			if (!css.Contains(html)) {
 				css += html;
 				context.Environments[0][RenderIncludedCss.Key] = css; // 设置到顶级空间

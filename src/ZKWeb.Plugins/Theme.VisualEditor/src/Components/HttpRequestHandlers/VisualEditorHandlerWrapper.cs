@@ -1,4 +1,5 @@
 ﻿using System;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Components.HttpContextWrappers;
 using ZKWeb.Web;
 using ZKWebStandard.Ioc;
@@ -33,7 +34,10 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.HttpRequestHandlers {
 					action();
 					return;
 				}
+				// 描画原路径的内容同时嵌入可视化编辑的css和js
 				var realPath = "/" + path.Substring(Prefix.Length);
+				context.IncludeCssLater("/static/template.visualeditor.css/components.css");
+				context.IncludeJsLater("/static/template.visualeditor.js/components.min.js");
 				using (HttpManager.OverrideContext(
 					new VisualEditorHttpContext(context, realPath))) {
 					action();

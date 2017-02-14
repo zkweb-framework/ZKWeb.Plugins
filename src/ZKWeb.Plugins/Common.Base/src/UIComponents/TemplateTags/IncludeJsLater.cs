@@ -15,6 +15,11 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateTags {
 	/// </example>
 	public class IncludeJsLater : Tag {
 		/// <summary>
+		/// 引用Js的Html格式
+		/// </summary>
+		public const string JsHtmlFormat = IncludeJsHere.JsHtmlFormat + "\r\n";
+
+		/// <summary>
 		/// 添加html到变量中，不重复添加
 		/// </summary>
 		public override void Render(Context context, TextWriter result) {
@@ -23,9 +28,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateTags {
 			if (string.IsNullOrEmpty(path)) {
 				throw new NullReferenceException("js path can't be empty");
 			}
-			var html = string.Format(
-				"<script src='{0}' type='text/javascript'></script>\r\n",
-				HttpUtils.HtmlEncode(path));
+			var html = string.Format(JsHtmlFormat, HttpUtils.HtmlEncode(path));
 			if (!js.Contains(html)) {
 				js += html;
 				context.Environments[0][RenderIncludedJs.Key] = js; // 设置到顶级空间

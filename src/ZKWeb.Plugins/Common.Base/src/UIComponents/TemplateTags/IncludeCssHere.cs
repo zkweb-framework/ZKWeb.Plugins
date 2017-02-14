@@ -13,6 +13,11 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateTags {
 	/// </example>
 	public class IncludeCssHere : Tag {
 		/// <summary>
+		/// 引用Css的Html格式
+		/// </summary>
+		public const string CssHtmlFormat = "<link href='{0}' rel='stylesheet' type='text/css' />";
+
+		/// <summary>
 		/// 描画引用标签
 		/// </summary>
 		public override void Render(Context context, TextWriter result) {
@@ -20,9 +25,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateTags {
 			if (string.IsNullOrEmpty(path)) {
 				throw new NullReferenceException("css path can't be empty");
 			}
-			result.Write(string.Format(
-				"<link href='{0}' rel='stylesheet' type='text/css' />",
-				HttpUtils.HtmlEncode(path)));
+			result.Write(string.Format(CssHtmlFormat, HttpUtils.HtmlEncode(path)));
 		}
 	}
 }
