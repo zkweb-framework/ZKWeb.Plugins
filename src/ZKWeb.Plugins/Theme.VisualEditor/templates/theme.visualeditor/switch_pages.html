@@ -1,0 +1,17 @@
+﻿<div class="visual-editor-switch-pages">
+	<ul>
+		{{ "Please click the page link you want to switch to" | trans }}
+	</ul>
+	{% for group in groups %}
+	<ul>
+		<li>
+			<span>{{ group.Group | trans }}</span>
+			<ul>
+				{% for page in group.Pages %}
+				<li><a href="/visual_editor{{ page.Url | url }}">{{ page.Name | trans }}</a></li>
+				{% endfor %}
+			</ul>
+		</li>
+	</ul>
+	{% endfor %}
+</div>

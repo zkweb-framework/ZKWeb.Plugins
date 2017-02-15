@@ -98,7 +98,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "ItemNo", "货号" },
 			{ "ItemNo: {0}", "货号: {0}" },
 			{ "Name/Seller/Remark", "名称/卖家/备注" },
-			{ "Name/Seller", "名称/卖家" }
+			{ "Name/Seller", "名称/卖家" },
+			{ "ProductViewPage", "商品详情页" },
+			{ "ProductListPage", "商品列表页" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -34,6 +34,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Components.Translates {
 			{ "Invalid order state for rating", "不正确的订单状态，不能评价此订单" },
 			{ "Please provide rating for atleast one product", "请对至少一件商品进行评价" },
 			{ "Rating successful, Redirecting to order list...", "评价成功，正在跳转到订单列表页……" },
+			{ "OrderRatePage", "订单评价页" }
 		};
 
 		public bool CanTranslate(string code) {

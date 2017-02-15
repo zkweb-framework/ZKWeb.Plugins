@@ -69,7 +69,6 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Selected logistics is not available for this seller", "该卖家不可使用选择的物流" },
 			{ "Please select logistics", "请选择物流" },
 			{ "Please select payment api", "请选择支付接口" },
-			// TODO: 添加翻译
 			{ "AutoCancelOrderAfterDays", "自动取消未付款订单天数" },
 			{ "StockReductionMode", "库存减少模式" },
 			{ "NoReduction", "不减少" },
@@ -275,7 +274,9 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Merge payment required atleast 2 orders", "合并支付需要至少两个订单" },
 			{ "Some order is not payable", "部分订单不可支付" },
 			{ "New merged transaction has created, this merge transaction should be aborted",
-				"已创建新的合并交易，旧的合并交易应该被终止" }
+				"已创建新的合并交易，旧的合并交易应该被终止" },
+			// TODO: 添加翻译
+			{ "CartPage", "购物车页" }
 		};
 
 		public bool CanTranslate(string code) {
