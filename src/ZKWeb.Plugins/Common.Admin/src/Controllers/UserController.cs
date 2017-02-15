@@ -10,6 +10,7 @@ using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using System.ComponentModel;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -25,10 +26,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 		[Action("user/reg", HttpMethods.POST)]
 		[Description("UserRegPage")]
 		public IActionResult Reg() {
-			// 已登录时跳转到用户中心
+			// 已登录时跳转到用户中心，除非正在编辑页面
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
-			if (user != null) {
+			if (user != null && !Context.GetIsEditingPage()) {
 				return new RedirectResult(BaseFilters.Url("/home"));
 			}
 			// 否则显示注册表单
@@ -52,7 +53,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			// 已登录时跳转到用户中心
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
-			if (user != null) {
+			if (user != null && !Context.GetIsEditingPage()) {
 				return new RedirectResult(BaseFilters.Url("/home"));
 			}
 			// 否则显示登陆表单

@@ -19,6 +19,7 @@ using ZKWebStandard.Ioc;
 using ZKWebStandard.Utils;
 using ZKWeb.Plugins.Common.Admin.src.Components.ActionFilters;
 using System.ComponentModel;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 
 namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 	/// <summary>
@@ -49,7 +50,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Controllers {
 			// 已登录时跳转到后台首页
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var user = sessionManager.GetSession().GetUser();
-			if (user != null && user.GetUserType() is ICanUseAdminPanel) {
+			if (user != null &&
+				user.GetUserType() is ICanUseAdminPanel &&
+				!Context.GetIsEditingPage()) {
 				return new RedirectResult(BaseFilters.Url("/admin"));
 			}
 			// 否则显示登陆表单

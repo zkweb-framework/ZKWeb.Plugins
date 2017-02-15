@@ -43,6 +43,8 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.HttpRequestHandlers {
 				var realPath = "/" + path.Substring(Prefix.Length);
 				context.IncludeCssLater("/static/template.visualeditor.css/components.css");
 				context.IncludeJsLater("/static/template.visualeditor.js/components.min.js");
+				// 设置页面正在编辑
+				context.SetIsEditingPage(true);
 				using (HttpManager.OverrideContext(
 					new VisualEditorHttpContext(context, realPath))) {
 					action();

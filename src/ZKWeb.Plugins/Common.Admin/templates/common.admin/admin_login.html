@@ -8,6 +8,7 @@
 	{% include_css_here "/static/common.base.css/components.css" %}
 	{% include_css_here "/static/common.admin.css/components.css" %}
 	{% include_css_here "/static/common.admin.css/admin-login.css" %}
+	{% render_included_css %}
 </head>
 <body class="hold-transition login-page">
 	<div class="login-box">
@@ -26,6 +27,7 @@
 		{% include_js_here "/static/common.base.js/components.min.js" %}
 		{% include_js_here "/static/common.admin.js/components.min.js" %}
 		{% include_js_here "/static/common.admin.js/admin-login.min.js" %}
+		{% render_included_js %}
 	</footer>
 </body>
 </html>
