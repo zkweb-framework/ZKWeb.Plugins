@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Components.ActionFilters;
+using ZKWeb.Plugins.Common.Admin.src.Domain.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
+using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels;
@@ -33,6 +36,12 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Controllers {
 			var productRatingManager = Application.Ioc.Resolve<ProductRatingManager>();
 			var buyerOrderId = buyerOrderManager.GetBuyerOrderIdFromSerial(serial);
 			if (Request.Method == HttpMethods.GET) {
+				// 显示可评价的商品
+				if (buyerOrderId == null && Context.GetIsEditingPage()) {
+					var sessionManager = Application.Ioc.Resolve<SessionManager>();
+					var userId = sessionManager.GetSession().GetUser().Id;
+					buyerOrderId = productRatingManager.SelectOneRatableBuyerOrder(userId);
+				}
 				var displayInfos = buyerOrderId == null ?
 					new List<OrderProductDisplayInfo>() :
 					productRatingManager.GetUnratedOrderProductDisplayInfos(buyerOrderId.Value);

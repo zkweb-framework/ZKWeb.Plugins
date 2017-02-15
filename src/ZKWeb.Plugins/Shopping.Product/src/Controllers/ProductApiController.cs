@@ -17,6 +17,7 @@ using ZKWeb.Plugins.Common.GenericClass.src.Domain.Services;
 using ZKWeb.Plugins.Common.GenericClass.src.Domain.Entities;
 using ZKWeb.Plugins.Common.GenericTag.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 	/// <summary>
@@ -80,6 +81,9 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		public IActionResult ProductInfo() {
 			var id = Request.Get<Guid>("id");
 			var productManager = Application.Ioc.Resolve<ProductManager>();
+			if (id == Guid.Empty && Context.GetIsEditingPage()) {
+				id = productManager.SelectOneVisibleProductId();
+			}
 			var info = productManager.GetProductApiInfo(id);
 			return new JsonResult(info);
 		}

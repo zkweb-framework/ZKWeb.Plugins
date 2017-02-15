@@ -377,6 +377,23 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 获取一个指定用户可见的交易Id
+		/// 返回的Id不固定，也可能返回Guid.Empty
+		/// </summary>
+		/// <param name="userId">用户Id</param>
+		/// <returns></returns>
+		public virtual Guid SelectOneVisibleTransactionId(Guid userId) {
+			using (UnitOfWork.Scope()) {
+				return Repository.Query()
+					.Where(t => t.Payer != null && t.Payer.Id == userId &&
+						(t.State == PaymentTransactionState.Initial ||
+						t.State == PaymentTransactionState.WaitingPaying))
+					.Select(t => t.Id)
+					.FirstOrDefault();
+			}
+		}
+
+		/// <summary>
 		/// 获取支付Url，创建交易后可以跳转到这个Url进行支付
 		/// </summary>
 		public virtual string GetPaymentUrl(Guid transactionId) {

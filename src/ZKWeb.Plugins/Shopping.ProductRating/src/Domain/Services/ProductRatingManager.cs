@@ -137,6 +137,28 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 选择一个可评价的买家订单Id
+		/// 返回的Id不固定，也可能返回Guid.Empty
+		/// </summary>
+		/// <param name="userId">用户Id</param>
+		/// <returns></returns>
+		public virtual Guid SelectOneRatableBuyerOrder(Guid userId) {
+			using (UnitOfWork.Scope()) {
+				// 按创建时间倒序遍历，返回第一个可评价的买家订单Id
+				var orderRepository = Application.Ioc.Resolve<IRepository<BuyerOrder, Guid>>();
+				var buyerOrders = orderRepository.Query()
+					.Where(o => o.Owner.Id == userId)
+					.OrderByDescending(o => o.CreateTime);
+				foreach (var buyerOrder in buyerOrders) {
+					if (CanRateOrder(buyerOrder.SellerOrder)) {
+						return buyerOrder.Id;
+					}
+				}
+			}
+			return Guid.Empty;
+		}
+
+		/// <summary>
 		/// 处理评价人的用户名
 		/// 例如 qwert => q***t
 		/// </summary>

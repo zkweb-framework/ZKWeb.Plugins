@@ -107,6 +107,17 @@ namespace ZKWeb.Plugins.CMS.Article.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 选择一个可见的文章Id
+		/// 返回的Id不固定，也可能返回Guid.Empty
+		/// </summary>
+		/// <returns></returns>
+		public virtual Guid SelectOneVisibleArticleId() {
+			using (UnitOfWork.Scope()) {
+				return Repository.Query().Select(a => a.Id).FirstOrDefault();
+			}
+		}
+
+		/// <summary>
 		/// 清理缓存
 		/// </summary>
 		public void ClearCache() {

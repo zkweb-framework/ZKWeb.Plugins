@@ -7,6 +7,7 @@ using ZKWeb.Web;
 using ZKWeb.Plugins.Common.GenericClass.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.CMS.Article.src.Domain.Services;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 
 namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 	/// <summary>
@@ -47,8 +48,11 @@ namespace ZKWeb.Plugins.CMS.Article.src.Controllers {
 		/// <returns></returns>
 		[Action("api/article/info", HttpMethods.POST)]
 		public IActionResult ArticleInfo() {
-			var articleId = Request.Get<Guid>("id");
 			var articleManager = Application.Ioc.Resolve<ArticleManager>();
+			var articleId = Request.Get<Guid>("id");
+			if (articleId == Guid.Empty && Context.GetIsEditingPage()) {
+				articleId = articleManager.SelectOneVisibleArticleId();
+			}
 			var info = articleManager.GetArticleApiInfo(articleId);
 			return new JsonResult(info);
 		}

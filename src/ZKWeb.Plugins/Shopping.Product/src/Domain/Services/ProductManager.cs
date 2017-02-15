@@ -220,6 +220,23 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 选择一个可见的商品Id
+		/// 返回的Id不固定，也可能返回Guid.Empty
+		/// </summary>
+		/// <returns></returns>
+		public virtual Guid SelectOneVisibleProductId() {
+			var visibleStates = Application.Ioc.ResolveMany<IProductState>()
+				.Where(s => s is IAmVisibleToThePublic)
+				.Select(s => s.State).ToList();
+			using (UnitOfWork.Scope()) {
+				return Repository.Query()
+					.Where(p => visibleStates.Contains(p.State))
+					.Select(p => p.Id)
+					.FirstOrDefault();
+			}
+		}
+
+		/// <summary>
 		/// 清理缓存
 		/// </summary>
 		public virtual void ClearCache() {
