@@ -2,6 +2,15 @@
 
 ====================================================================
 
+添加Common.DatePicker的文档
+添加Shopping.ProductBookmark的文档
+添加Shopping.ProductRating的文档
+
+支持从页面获取区域和元素的结构
+支持元素的拖动和保存，无修改的区域不保存
+
+====================================================================
+
 优化查询性能，添加更多的索引
 逐步补充插件的单元测试
 
@@ -9,22 +18,9 @@
 http://www.cailanwang.cn
 http://www.673573.com
 
-可视化编辑退出页面时弹出警告框
-
-添加Common.DatePicker的文档
-添加Shopping.ProductBookmark的文档
-添加Shopping.ProductRating的文档
-
 库存
 库存流水
 库存警告
-
-前台样式整理
-	首页
-	用户中心首页
-	底部栏
-	登陆页
-	注册页
 
 商城网站完成后
 	固定abi，提供向后兼容性
@@ -40,10 +36,9 @@ http://www.673573.com
 	站内消息模块 (Common.UserMessage)
 	通知模块 (Common.UserNotification)
 	登录记录模块 (Common.UserLoginRecord)
-	短信模块 (SMS.Base)
+	短信模块 (SMS.Base) 要考虑阿里云这种提供了模板的短信接口
 	广信短信模块 (SMS.GuangXin)
 	代办事项模块 (Schedule.Todo)
-	DIY模块 (Theme.DIY)
 	第三方登录模块 (ThirdPartyLogin.Base)
 	第三方QQ登录模块 (ThirdPartyLogin.QQ)
 	第三方微信登录模块 (ThirdPartyLogin.WeChat)
