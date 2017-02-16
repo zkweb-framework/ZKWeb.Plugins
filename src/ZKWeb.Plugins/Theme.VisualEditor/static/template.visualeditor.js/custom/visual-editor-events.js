@@ -1,7 +1,7 @@
 ﻿/*
 	可视化编辑的事件处理
 	- 绑定顶部栏中的按钮点击事件
-	- TODO
+	- 绑定窗口关闭时的事件
 */
 
 $(function () {
@@ -28,6 +28,12 @@ $(function () {
 		$.toast("TODO");
 	};
 
+	// 窗口关闭时的事件
+	// 浏览器会提示是否确认离开, ie会显示返回的信息, ff和chrome不会显示
+	var onWindowClose = function () {
+		return $(".visual-editor-messages .confirm-close").text();
+	};
+
 	$(document).on("visual-editor-loaded", function () {
 		// 绑定顶部栏中的按钮点击事件
 		var $topBar = $(".visual-editor-top-bar");
@@ -35,5 +41,7 @@ $(function () {
 		$topBar.find(".manage-theme").on("click", onManageTheme);
 		$topBar.find(".switch-page").on("click", onSwitchPage);
 		$topBar.find(".save-changes").on("click", onSaveChanges);
+		// 绑定窗口关闭时的事件
+		$(window).on("beforeunload", onWindowClose);
 	});
 });
