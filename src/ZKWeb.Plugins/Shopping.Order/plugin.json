@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "Order",
-	"Version": "1.0.0 beta 3",
+	"Version": "1.0.0",
 	"Description": "Order management for ec site",
 	"Dependencies": [
 		"Common.Base",

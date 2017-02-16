@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "WebTester",
-	"Version": "1.0.0 beta 3",
+	"Version": "1.0.0",
 	"Description": "Support running tests from admin panel",
 	"Dependencies": [ "Common.Base", "Common.Admin" ]
 }

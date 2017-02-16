@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "ProductBookmark",
-	"Version": "1.0.0 beta 3",
+	"Version": "1.0.0",
 	"Description": "Product bookmark feature for ec site",
 	"Dependencies": [
 		"Common.Admin",
