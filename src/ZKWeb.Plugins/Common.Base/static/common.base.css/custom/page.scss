@@ -146,3 +146,11 @@ body {
 		padding: 0px 4px;
 	}
 }
+
+/* 动态内容区域的clearfix */
+/* http://stackoverflow.com/questions/211383/what-methods-of-clearfix-can-i-use */
+.template_area::after {
+	content: "";
+	display: block;
+	clear: both;
+}
