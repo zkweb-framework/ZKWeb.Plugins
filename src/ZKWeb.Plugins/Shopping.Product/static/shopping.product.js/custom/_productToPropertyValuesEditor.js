@@ -8,8 +8,6 @@
 // 元素需要有以下属性
 //	data-category-id-name 储存类目Id的字段名称
 //	data-property-values-name 储存属性值列表的Json的字段名称
-// 元素可以有以下属性
-//	data-translations 翻译文本
 $.fn.productToPropertyValuesEditor = function () {
 	var $editor = $(this);
 	// 避免重复初始化
@@ -128,14 +126,13 @@ $.fn.productToPropertyValuesEditor = function () {
 		$propertyValuesJson.val(JSON.stringify(values));
 	});
 	// 类目改变时的处理，初始化时也执行这里的处理
-	var translations = $editor.data("translations") || {};
 	var onCategoryIdChanged = function () {
 		// 确认类目是否有改变，有改变时弹出确认框
 		var categoryId = $categoryId.val();
 		var previousCategoryId = $editor.data("categoryId");
 		var confirmMessage = "Sure to change category? The properties you selected will lost!";
 		if (previousCategoryId && previousCategoryId != categoryId &&
-			!confirm(translations[confirmMessage] || confirmMessage)) {
+			!confirm($.translate(confirmMessage))) {
 			$categoryId.val(previousCategoryId);
 			return false;
 		}

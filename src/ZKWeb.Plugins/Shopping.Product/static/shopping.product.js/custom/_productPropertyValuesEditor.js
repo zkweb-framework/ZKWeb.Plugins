@@ -10,7 +10,6 @@
 // 元素可以有以下属性
 //	data-table-class 表格使用的css类
 //	data-table-header-class 表格头使用的css类
-//	data-translations 翻译文本
 $.fn.productPropertyValuesEditor = function () {
 	var $editor = $(this);
 	// 避免重复初始化
@@ -22,16 +21,14 @@ $.fn.productPropertyValuesEditor = function () {
 	var propertyValuesName = $editor.data("property-values-name");
 	var tableClass = $editor.data("table-class");
 	var tableHeaderClass = $editor.data("data-table-header-class");
-	var translations = $editor.data("translations") || {};
 	var $propertyValuesJson = $editor.closest("form").find("[name='" + propertyValuesName + "']");
 	if ($propertyValuesJson.length <= 0) {
 		console.warn("init product property values editor failed", $propertyValuesJson);
 		return;
 	}
 	// 获取翻译
-	var T = function (text) { return translations[text] || text; };
-	var T_Name = T("Name");
-	var T_Remark = T("Remark");
+	var T_Name = $.translate("Name");
+	var T_Remark = $.translate("Remark");
 	// 添加表格元素
 	var $table = $editor.editableTable({
 		tableClass: tableClass,

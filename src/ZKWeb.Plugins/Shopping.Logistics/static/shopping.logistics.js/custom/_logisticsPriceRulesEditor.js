@@ -7,8 +7,7 @@
 		data-table-header-class='表格头使用的css类，可选'
 		data-display-country-dropdown='是否显示国家下拉框'
 		data-currency-list-items='货币的选项列表'
-		data-default-price-rule='默认运费规则'
-		data-translations='翻译内容'>
+		data-default-price-rule='默认运费规则'>
 	</div>
 */
 
@@ -26,22 +25,20 @@ $.fn.logisticsPriceRulesEditor = function () {
 	var displayCountryDropdown = $editor.data("display-country-dropdown");
 	var currencyListItems = $editor.data("currency-list-items");
 	var defaultPriceRule = $editor.data("default-price-rule");
-	var translations = $editor.data("translations") || {};
 	var $priceRulesJson = $editor.closest("form").find("[name='" + priceRulesName + "']");
 	if ($priceRulesJson.length <= 0) {
 		console.warn("init logistics price rule editor failed", $priceRulesJson);
 		return;
 	}
 	// 获取翻译
-	var T = function (text) { return translations[text] || text; };
-	var T_Default = T("Default");
-	var T_Region = T("Region");
-	var T_FirstHeavyUnit = T("FirstHeavyUnit(g)");
-	var T_FirstHeavyCost = T("FirstHeavyCost");
-	var T_ContinuedHeavyUnit = T("ContinuedHeavyUnit(g)");
-	var T_ContinuedHeavyCost = T("ContinuedHeavyCost");
-	var T_Currency = T("Currency");
-	var T_Disabled = T("Disabled");
+	var T_Default = $.translate("Default");
+	var T_Region = $.translate("Region");
+	var T_FirstHeavyUnit = $.translate("FirstHeavyUnit(g)");
+	var T_FirstHeavyCost = $.translate("FirstHeavyCost");
+	var T_ContinuedHeavyUnit = $.translate("ContinuedHeavyUnit(g)");
+	var T_ContinuedHeavyCost = $.translate("ContinuedHeavyCost");
+	var T_Currency = $.translate("Currency");
+	var T_Disabled = $.translate("Disabled");
 	// 添加表格元素
 	var $table = $editor.editableTable({
 		tableClass: tableClass,

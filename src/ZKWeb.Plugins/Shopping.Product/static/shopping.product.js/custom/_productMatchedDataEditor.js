@@ -11,7 +11,6 @@
 // 元素可以有以下属性
 //	data-table-class 表格的Css类
 //	data-table-header-class 表格头部的Css类
-//	data-translations 翻译文本
 $.fn.productMatchedDataEditor = function () {
 	var $editor = $(this);
 	// 避免重复初始化
@@ -54,8 +53,7 @@ $.fn.productMatchedDataEditor = function () {
 		var $tableBody = $table.find("tbody").empty();
 		// 添加表格列
 		// 条件列, 根据影响数据绑定器生成的列..., 操作列
-		var translations = $editor.data("translations") || {};
-		$tableHead.append($("<th width='25%'>").append(translations["Condition"] || "Condition"));
+		$tableHead.append($("<th width='25%'>").append($.translate("Condition")));
 		_.each(binders.AffectsBinders, function (affectsBinder) {
 			$tableHead.append($("<th>").addClass("heading").append(affectsBinder.Header));
 		});
@@ -95,7 +93,7 @@ $.fn.productMatchedDataEditor = function () {
 					conditionString += " ";
 				});
 				$conditionCell.find(".condition-string").text(
-					conditionString.trim() || translations["Default"] || "Default");
+					conditionString.trim() || $.translate("Default"));
 			});
 			$conditionCell.trigger(conditionCellUpdateEventName);
 			$row.append($conditionCell);

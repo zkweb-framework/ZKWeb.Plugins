@@ -2,9 +2,7 @@
 
 ====================================================================
 
-添加Common.DatePicker的文档
-添加Shopping.ProductBookmark的文档
-添加Shopping.ProductRating的文档
+添加$.translate的文档
 
 支持从页面获取区域和元素的结构
 支持元素的拖动和保存，无修改的区域不保存
