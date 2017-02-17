@@ -31,5 +31,15 @@
 	.template_widget {
 		border: 1px dashed #27ae60;
 		margin: 1px;
+		/* 标题栏的样式 */
+		.template-widget-title-bar {
+			height: 20px;
+			line-height: 20px;
+			background-color: #27ae60;
+
+			.name {
+				color: #fff;
+			}
+		}
 	}
 }

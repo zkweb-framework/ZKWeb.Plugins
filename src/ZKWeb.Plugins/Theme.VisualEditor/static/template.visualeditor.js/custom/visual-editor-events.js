@@ -1,7 +1,5 @@
 ﻿/*
 	可视化编辑的事件处理
-	- 绑定顶部栏中的按钮点击事件
-	- 绑定窗口关闭时的事件
 */
 
 $(function () {
@@ -40,6 +38,24 @@ $(function () {
 		return $(".visual-editor-messages .confirm-close").text();
 	};
 
+	// 模板模块鼠标进入时的处理
+	var onTemplateWidgetMouseEnter = function () {
+		var $this = $(this);
+		// 获取模块信息
+		var info = VisualEditor.parseWidgetElement($this);
+		// 添加标题栏
+		var $titleBar = $("<div>").addClass("template-widget-title-bar");
+		$titleBar.append($("<span>").addClass("name").text(info.path));
+		$titleBar.prependTo($this);
+	};
+
+	// 模板模块鼠标离开时的处理
+	var onTemplateWidgetMouseLeave = function () {
+		var $this = $(this);
+		// 移除标题栏
+		$this.find(".template-widget-title-bar").remove();
+	};
+
 	$(document).on("visual-editor-loaded", function () {
 		// 阻止点击原有页面的元素
 		var $allElements = $("body *:not(.visual-editor-top-bar):not(.modal) *");
@@ -53,5 +69,8 @@ $(function () {
 		$topBar.find(".save-changes").on("click", onSaveChanges);
 		// 绑定窗口关闭时的事件, 开发时可注释以下行
 		// $(window).on("beforeunload", onWindowClose);
+		// 绑定模板模块的鼠标进入和离开事件
+		$(document).on("mouseenter", ".template_widget", onTemplateWidgetMouseEnter);
+		$(document).on("mouseleave", ".template_widget", onTemplateWidgetMouseLeave);
 	});
 });
