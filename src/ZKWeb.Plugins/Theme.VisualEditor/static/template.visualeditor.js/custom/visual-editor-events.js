@@ -5,6 +5,12 @@
 */
 
 $(function () {
+	// 阻止原有事件发生
+	var preventEvent = function (e) {
+		e.preventDefault && e.preventDefault();
+		return false;
+	}
+
 	// 点击"添加元素"时的事件
 	var onAddElement = function () {
 		$.toast("TODO");
@@ -35,6 +41,10 @@ $(function () {
 	};
 
 	$(document).on("visual-editor-loaded", function () {
+		// 阻止点击原有页面的元素
+		var $allElements = $("body *:not(.visual-editor-top-bar):not(.modal) *");
+		$allElements.unbind("click").unbind("mouseenter").unbind("mouseleave");
+		$allElements.bind("click", preventEvent);
 		// 绑定顶部栏中的按钮点击事件
 		var $topBar = $(".visual-editor-top-bar");
 		$topBar.find(".add-element").on("click", onAddElement);

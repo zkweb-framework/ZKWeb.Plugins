@@ -154,3 +154,10 @@ body {
 	display: block;
 	clear: both;
 }
+
+/* 动态内容模块的clearfix */
+.template_widget::after {
+	content: "";
+	display: block;
+	clear: both;
+}
