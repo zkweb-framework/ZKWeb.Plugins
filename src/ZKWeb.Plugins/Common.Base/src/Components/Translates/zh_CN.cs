@@ -61,7 +61,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.Translates {
 			{ "LastPage", "末页" },
 			{ "Saved Successfully", "保存成功" },
 			// TODO: 翻译到其他语言
-			{ "WebsiteIndexPage", "网站首页" }
+			{ "WebsiteIndexPage", "网站首页" },
+			{ "Copyright", "版权信息" },
+			{ "IndexHelp", "首页帮助" }
 		};
 
 		public bool CanTranslate(string code) {

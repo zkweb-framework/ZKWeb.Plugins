@@ -14,7 +14,8 @@ namespace ZKWeb.Plugins.Theme.Mobile.Frame.src.Components.Translates {
 		{
 			// TODO: 翻译到其他语言
 			{ "MobileFrame", "手机版页面" },
-			{ "Mobile optimized page frame theme", "手机版专用的页面主题" }
+			{ "Mobile optimized page frame theme", "手机版专用的页面主题" },
+			{ "MobileFooterNavbar", "手机底部导航栏" }
 		};
 
 		public bool CanTranslate(string code) {

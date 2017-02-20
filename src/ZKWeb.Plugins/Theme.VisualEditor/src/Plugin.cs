@@ -16,7 +16,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src {
 			// 注册默认模块
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			var adminNavBar = areaManager.GetArea("admin_navbar_right");
-			adminNavBar.DefaultWidgets.Add("theme.visualeditor.widgets/visual_editor_menu");
+			adminNavBar.DefaultWidgets.Add("theme.visualeditor.widgets/enter_visual_editor");
 		}
 	}
 }

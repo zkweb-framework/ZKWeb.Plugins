@@ -100,7 +100,16 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "Name/Seller/Remark", "名称/卖家/备注" },
 			{ "Name/Seller", "名称/卖家" },
 			{ "ProductViewPage", "商品详情页" },
-			{ "ProductListPage", "商品列表页" }
+			{ "ProductListPage", "商品列表页" },
+			{ "ProductDetails", "商品详情" },
+			{ "ProductFilterByClass", "商品分类过滤栏" },
+			{ "ProductFilterByPriceAndOrder", "商品价格过滤与排序栏" },
+			{ "ProductFilterByTag", "商品标签过滤栏" },
+			{ "ProductGallery", "商品相册" },
+			{ "ProductListTable", "商品列表页表格" },
+			{ "ProductNavMenu", "商品导航菜单" },
+			{ "ProductSalesInfo", "商品销售信息" },
+			{ "ProductSearchBar", "商品搜索栏" }
 		};
 
 		public bool CanTranslate(string code) {

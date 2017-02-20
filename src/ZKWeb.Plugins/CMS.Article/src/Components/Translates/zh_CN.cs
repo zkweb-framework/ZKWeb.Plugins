@@ -35,7 +35,11 @@ namespace ZKWeb.Plugins.CMS.Article.src.Components.Translates {
 			{ "CMS", "内容管理" },
 			// TODO: 翻译到其他语言
 			{ "ArticleViewPage", "文章详情页" },
-			{ "ArticleListPage", "文章列表页" }
+			{ "ArticleListPage", "文章列表页" },
+			{ "ArticleContents", "文章内容" },
+			{ "ArticleListNav", "文章列表页导航" },
+			{ "ArticleListTable", "文章列表页表格" },
+			{ "ArticleNavMenu", "文章导航菜单" }
 		};
 
 		public bool CanTranslate(string code) {

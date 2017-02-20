@@ -276,7 +276,10 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "New merged transaction has created, this merge transaction should be aborted",
 				"已创建新的合并交易，旧的合并交易应该被终止" },
 			// TODO: 添加翻译
-			{ "CartPage", "购物车页" }
+			{ "CartPage", "购物车页" },
+			{ "CartContents", "购物车内容" },
+			{ "MiniCartMenu", "迷你购物车菜单" },
+			{ "ProductPurchaseButtons", "商品购买按钮" }
 		};
 
 		public bool CanTranslate(string code) {

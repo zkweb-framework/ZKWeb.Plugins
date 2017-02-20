@@ -137,7 +137,10 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "AdminAboutWebsitePage", "后台关于网站页" },
 			{ "UserRegPage", "用户注册页" },
 			{ "UserLoginPage", "用户登录页" },
-			{ "UserIndexPage", "用户中心页" }
+			{ "UserIndexPage", "用户中心页" },
+			{ "AdminSidebarAppMenu", "后台侧边栏程序菜单" },
+			{ "EnterAdminPanel", "进入后台" },
+			{ "UserLoginInfo", "登录信息" }
 		};
 
 		public bool CanTranslate(string code) {
