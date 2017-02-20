@@ -45,6 +45,7 @@ $(function () {
 		var data = VisualEditor.parseWidgetElement($this);
 		var info = VisualEditor.getWidgetInfo(data.path);
 		// 添加标题栏
+		$this.find(".template-widget-title-bar").remove();
 		var $titleBar = $("<div>").addClass("template-widget-title-bar");
 		$titleBar.append($("<span>").addClass("name").text($.translate(info.Name)));
 		$titleBar.prependTo($this);
@@ -73,5 +74,16 @@ $(function () {
 		// 绑定模板模块的鼠标进入和离开事件
 		$(document).on("mouseenter", ".template_widget", onTemplateWidgetMouseEnter);
 		$(document).on("mouseleave", ".template_widget", onTemplateWidgetMouseLeave);
+		// 支持拖动模块
+		// TODO: 修复拖动后标题栏残留的问题
+		$(".template_area").sortable({
+			connectWith: ".template_area",
+			cursor: "move",
+			forceHelperSize: true,
+			forcePlaceholderSize: true,
+			handle: ".template-widget-title-bar",
+			tolerance: "pointer",
+			zIndex: 10050
+		}).disableSelection();
 	});
 });

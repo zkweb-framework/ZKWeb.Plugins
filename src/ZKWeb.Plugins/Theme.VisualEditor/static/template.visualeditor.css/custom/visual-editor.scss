@@ -29,6 +29,8 @@
 	margin: 1px;
 	/* 可视化编辑模块的样式 */
 	.template_widget {
+		min-width: 20px;
+		min-height: 20px;
 		border: 1px dashed #27ae60;
 		margin: 1px;
 		/* 标题栏的样式 */
@@ -36,6 +38,7 @@
 			height: 20px;
 			line-height: 20px;
 			background-color: #27ae60;
+			cursor: move;
 
 			.name {
 				color: #fff;
