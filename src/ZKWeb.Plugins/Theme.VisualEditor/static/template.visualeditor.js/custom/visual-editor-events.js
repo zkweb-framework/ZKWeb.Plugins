@@ -35,7 +35,7 @@ $(function () {
 	// 窗口关闭时的事件
 	// 浏览器会提示是否确认离开, ie会显示返回的信息, ff和chrome不会显示
 	var onWindowClose = function () {
-		return $(".visual-editor-messages .confirm-close").text();
+		return $.translate("Make sure you have saved all the changes, otherwise they will be lost.");
 	};
 
 	// 模板模块鼠标进入时的处理

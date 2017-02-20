@@ -13,7 +13,7 @@ $(function () {
 			var $topBar = $(html).prependTo("body");
 			setTimeout(function () {
 				$(document).trigger("visual-editor-loaded");
-				// $(document).trigger("dynamicLoaded", $topBar);
+				$(document).trigger("dynamicLoaded", $topBar);
 				setTimeout(function () {
 					// 隐藏载入中处理
 					$(".visual-editor-loading").remove();

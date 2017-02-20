@@ -23,15 +23,19 @@ $(function () {
 		$(element).find(".translation").each(function () {
 			var $translation = $(this);
 			// 添加data-original和data-translated
+			// 没有时不添加
 			var original = $translation.attr("data-original");
 			if (original) {
-				$.translations["data-original"] = $translation.attr("data-translated");
+				$.translations[original] = $translation.attr("data-translated");
 			}
 			// 添加data-translations
+			// 没有时不添加
 			var translations = $translation.data("translations");
-			$.each(translations, function (key, value) {
-				$.translations[key] = value;
-			})
+			if (translations) {
+				$.each(translations, function (key, value) {
+					$.translations[key] = value;
+				});
+			}
 		});
 	};
 	setup(document);
