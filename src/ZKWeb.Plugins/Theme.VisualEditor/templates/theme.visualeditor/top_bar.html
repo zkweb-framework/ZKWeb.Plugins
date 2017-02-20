@@ -7,10 +7,25 @@
 		<a class="btn btn-flat btn-warning switch-page">{{ "SwitchPage" | trans }}</a>
 		<a class="btn btn-flat btn-success save-changes disabled">{{ "SaveChanges" | trans }}</a>
 	</div>
-	<div class="translations hide">
+	<div class="metadata hide">
 		<span class="translation"
 			  data-original="Make sure you have saved all the changes, otherwise they will be lost."
-			  data-translated="{{ "Make sure you have saved all the changes, otherwise they will be lost." | trans }}">
-		</span>
+			  data-translated="{{ "Make sure you have saved all the changes, otherwise they will be lost." | trans }}"></span>
+		{% for group in widgetGroups %}
+		<span class="translation"
+			  data-original="{{ group.Group }}"
+			  data-translated="{{ group.Group | trans }}"></span>
+		{% for widget in group.Widgets %}
+		<span class="translation"
+			  data-original="{{ widget.WidgetInfo.Name }}"
+			  data-translated="{{ widget.WidgetInfo.Name | trans }}"></span>
+		{% if widget.WidgetInfo.Description %}
+		<span class="translation"
+			  data-original="{{ widget.WidgetInfo.Description }}"
+			  data-translated="{{ widget.WidgetInfo.Description | trans }}"></span>
+		{% endif %}
+		{% endfor %}
+		{% endfor %}
+		<span class="widget-groups" data-widget-groups="{{ widgetGroups | json }}"></span>
 	</div>
 </div>

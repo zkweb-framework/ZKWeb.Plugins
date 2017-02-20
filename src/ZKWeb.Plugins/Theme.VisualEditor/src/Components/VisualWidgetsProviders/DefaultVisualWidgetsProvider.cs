@@ -25,7 +25,11 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.VisualWidgetsProviders
 		/// 替换\到/并去除.widget后缀名
 		/// </summary>
 		private static string GetWidgetPath(string dir, string fullPath) {
-			var path = fullPath.Substring(dir.Length);
+			var subLength = dir.Length;
+			if (!dir.EndsWith("\\") && !dir.EndsWith("/")) {
+				subLength += 1;
+			}
+			var path = fullPath.Substring(subLength);
 			path = path.Replace('\\', '/');
 			return Path.ChangeExtension(path, null);
 		}

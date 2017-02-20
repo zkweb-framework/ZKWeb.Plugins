@@ -42,10 +42,11 @@ $(function () {
 	var onTemplateWidgetMouseEnter = function () {
 		var $this = $(this);
 		// 获取模块信息
-		var info = VisualEditor.parseWidgetElement($this);
+		var data = VisualEditor.parseWidgetElement($this);
+		var info = VisualEditor.getWidgetInfo(data.path);
 		// 添加标题栏
 		var $titleBar = $("<div>").addClass("template-widget-title-bar");
-		$titleBar.append($("<span>").addClass("name").text(info.path));
+		$titleBar.append($("<span>").addClass("name").text($.translate(info.Name)));
 		$titleBar.prependTo($this);
 	};
 

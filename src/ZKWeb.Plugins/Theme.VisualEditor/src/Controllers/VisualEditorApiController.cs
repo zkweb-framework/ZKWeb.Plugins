@@ -19,7 +19,9 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 		[Action("api/visual_editor/get_top_bar")]
 		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
 		public IActionResult GetTopBar() {
-			return new TemplateResult("theme.visualeditor/top_bar.html");
+			var widgetManager = Application.Ioc.Resolve<VisualWidgetManager>();
+			var widgetGroups = widgetManager.GetWidgets();
+			return new TemplateResult("theme.visualeditor/top_bar.html", new { widgetGroups });
 		}
 
 		/// <summary>
@@ -30,8 +32,8 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
 		public IActionResult GetSwitchPages() {
 			var pageManager = Application.Ioc.Resolve<VisualPageManager>();
-			var groups = pageManager.GetEditablePages();
-			return new TemplateResult("theme.visualeditor/switch_pages.html", new { groups });
+			var pageGroups = pageManager.GetEditablePages();
+			return new TemplateResult("theme.visualeditor/switch_pages.html", new { pageGroups });
 		}
 	}
 }
