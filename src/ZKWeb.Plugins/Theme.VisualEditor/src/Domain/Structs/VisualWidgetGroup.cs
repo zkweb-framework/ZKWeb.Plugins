@@ -3,33 +3,33 @@ using System.Collections.Generic;
 
 namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs {
 	/// <summary>
-	/// 可编辑的页面分组
+	/// 可以在可视化编辑中使用的模块分组
 	/// </summary>
-	public class VisualEditablePageGroup : ILiquidizable {
+	public class VisualWidgetGroup : ILiquidizable {
 		/// <summary>
 		/// 分组
 		/// </summary>
 		public string Group { get; set; }
 		/// <summary>
-		/// 页面列表
+		/// 模块列表
 		/// </summary>
-		public IList<VisualEditablePageInfo> Pages { get; set; }
+		public IList<VisualWidgetInfo> Widgets { get; set; }
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		public VisualEditablePageGroup() {
-			Pages = new List<VisualEditablePageInfo>();
+		public VisualWidgetGroup() {
+			Widgets = new List<VisualWidgetInfo>();
 		}
 
 		/// <summary>
 		/// 初始化
 		/// </summary>
 		/// <param name="group">分组</param>
-		/// <param name="pages">页面列表</param>
-		public VisualEditablePageGroup(string group, IList<VisualEditablePageInfo> pages) {
+		/// <param name="widgets">模块列表</param>
+		public VisualWidgetGroup(string group, IList<VisualWidgetInfo> widgets) {
 			Group = group;
-			Pages = pages;
+			Widgets = widgets;
 		}
 
 		/// <summary>
@@ -37,7 +37,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs {
 		/// </summary>
 		/// <returns></returns>
 		public object ToLiquid() {
-			return new { Group, Pages };
+			return new { Group, Widgets };
 		}
 	}
 }

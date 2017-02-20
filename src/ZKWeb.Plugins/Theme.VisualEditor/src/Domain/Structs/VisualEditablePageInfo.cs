@@ -1,5 +1,4 @@
-﻿using System;
-using DotLiquid;
+﻿using DotLiquid;
 
 namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs {
 	/// <summary>
@@ -22,7 +21,9 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs {
 		/// <summary>
 		/// 初始化
 		/// </summary>
-		public VisualEditablePageInfo() { }
+		public VisualEditablePageInfo() {
+
+		}
 
 		/// <summary>
 		/// 初始化

@@ -52,6 +52,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 					.SelectMany(p => p.GetEditablePages())
 					.GroupBy(p => p.Group)
 					.Select(p => new VisualEditablePageGroup(p.Key, p.ToList()))
+					.OrderBy(p => p.Group)
 					.ToList();
 				return pages;
 			}, EditablePagesCacheTime);

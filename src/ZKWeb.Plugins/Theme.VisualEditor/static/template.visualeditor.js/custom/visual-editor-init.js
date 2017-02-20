@@ -10,9 +10,10 @@ $(function () {
 		url: "/api/visual_editor/get_top_bar",
 		cache: false,
 		success: function (html) {
-			$("body").prepend(html);
+			var $topBar = $(html).prependTo("body");
 			setTimeout(function () {
 				$(document).trigger("visual-editor-loaded");
+				// $(document).trigger("dynamicLoaded", $topBar);
 				setTimeout(function () {
 					// 隐藏载入中处理
 					$(".visual-editor-loading").remove();
