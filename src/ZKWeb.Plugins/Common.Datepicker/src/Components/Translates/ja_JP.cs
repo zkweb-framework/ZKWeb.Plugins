@@ -5,14 +5,14 @@ using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Datepicker.src.Components.Translates {
 	/// <summary>
-	/// 中文翻译
+	/// 日本语翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class zh_CN : ITranslateProvider {
-		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
+	public class ja_JP : ITranslateProvider {
+		private static HashSet<string> Codes = new HashSet<string>() { "ja-JP" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>() {
-			{ "Datepicker form field", "日期选择表单控件" },
-			{ "Provide form field for choose date or date range", "提供选择日期或日期范围的表单控件" }
+			{ "Datepicker form field", "日付選択フォームフィールド" },
+			{ "Provide form field for choose date or date range", "日付または日付範囲を選択するためのフォームフィールドを提供する" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -129,7 +129,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "Recover {0}", "恢復{0}" },
 			{ "Delete {0} Forever", "永久刪除{0}" },
 			{ "Add", "添加" },
-			{ "Return To List", "返回列表" }
+			{ "Return To List", "返回列表" },
+			{ "AdminIndexPage", "後臺首頁" },
+			{ "AdminLoginPage", "後臺登陸頁" },
+			{ "AdminAboutMePage", "後臺關於我頁" },
+			{ "AdminAboutWebsitePage", "後臺關於網站頁" },
+			{ "UserRegPage", "用戶註冊頁" },
+			{ "UserLoginPage", "用戶登錄頁" },
+			{ "UserIndexPage", "用戶中心頁" },
+			{ "AdminSidebarAppMenu", "後臺側邊欄程序菜單" },
+			{ "EnterAdminPanel", "進入後臺" },
+			{ "UserLoginInfo", "登錄信息" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -33,7 +33,6 @@ namespace ZKWeb.Plugins.CMS.Article.src.Components.Translates {
 			{ "ArticleListSettings", "文章列表设置" },
 			{ "ArticlesPerPage", "每页显示的文章数量" },
 			{ "CMS", "内容管理" },
-			// TODO: 翻译到其他语言
 			{ "ArticleViewPage", "文章详情页" },
 			{ "ArticleListPage", "文章列表页" },
 			{ "ArticleContents", "文章内容" },

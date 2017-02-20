@@ -59,7 +59,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.Translates {
 			{ "PrevPage", "이전" },
 			{ "NextPage", "다음" },
 			{ "LastPage", "마지막" },
-			{ "Saved Successfully", "성공적으로 저장" }
+			{ "Saved Successfully", "성공적으로 저장" },
+			{ "WebsiteIndexPage", "웹 사이트 색인 페이지" },
+			{ "Copyright", "저작권" },
+			{ "IndexHelp", "색인 도움말" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -130,7 +130,17 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "Recover {0}", "회복 {0}" },
 			{ "Delete {0} Forever", "영구적으로 삭제 {0}" },
 			{ "Add", "추가" },
-			{ "Return To List", "위로 목록" }
+			{ "Return To List", "위로 목록" },
+			{ "AdminIndexPage", "배경 홈" },
+			{ "AdminLoginPage", "배경 방문 페이지" },
+			{ "AdminAboutMePage", "내 페이지에 대해 배경" },
+			{ "AdminAboutWebsitePage", "웹 사이트 페이지의 배경" },
+			{ "UserRegPage", "사용자 등록 페이지" },
+			{ "UserLoginPage", "사용자 로그인 페이지" },
+			{ "UserIndexPage", "사용자 센터 페이지" },
+			{ "AdminSidebarAppMenu", "배경 사이드 바 프로그램 메뉴" },
+			{ "EnterAdminPanel", "배경에" },
+			{ "UserLoginInfo", "로그인 정보" }
 		};
 
 		public bool CanTranslate(string code) {

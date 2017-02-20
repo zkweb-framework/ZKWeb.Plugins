@@ -60,6 +60,9 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.Translates {
 			{ "NextPage", "下一頁" },
 			{ "LastPage", "末頁" },
 			{ "Saved Successfully", "保存成功" },
+			{ "WebsiteIndexPage", "網站首頁" },
+			{ "Copyright", "版權信息" },
+			{ "IndexHelp", "首頁幫助" }
 		};
 
 		public bool CanTranslate(string code) {
