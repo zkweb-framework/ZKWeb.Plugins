@@ -3,6 +3,7 @@
 ====================================================================
 
 添加$.translate的文档
+添加Common.DynamicForm的文档
 
 添加Common.DynamicForm插件
 var builder = new DynamicFormBuilder();

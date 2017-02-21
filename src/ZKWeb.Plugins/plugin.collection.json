@@ -16,6 +16,7 @@
 		"Common.Region",
 		"Common.SerialGenerate",
 		"Common.Datepicker",
+		"Common.DynamicForm",
 		"Finance.Payment",
 		"Finance.Payment.Alipay",
 		"Finance.Payment.Cash",
