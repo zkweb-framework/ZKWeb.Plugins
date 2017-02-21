@@ -11,6 +11,7 @@
 
 $.translations = {};
 $.translate = function (text) {
+	text = text || "";
 	var translated = $.translations[text];
 	if (translated == undefined || translated == null) {
 		return text; // 允许翻译到""

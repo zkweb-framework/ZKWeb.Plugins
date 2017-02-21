@@ -23,7 +23,8 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 			{ "Please click the page link you want to switch to", "请点击您想切换到的页面的链接" },
 			{ "Make sure you have saved all the changes, otherwise they will be lost.",
 				"请确认您已保存所有更改, 否则这些更改将会丢失." },
-			{ "EnterVisualEditor", "进入可视化编辑" }
+			{ "EnterVisualEditor", "进入可视化编辑" },
+			{ "NoDescription", "无描述" }
 		};
 
 		public bool CanTranslate(string code) {

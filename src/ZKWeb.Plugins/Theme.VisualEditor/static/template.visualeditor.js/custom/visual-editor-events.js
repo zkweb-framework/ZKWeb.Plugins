@@ -9,9 +9,52 @@ $(function () {
 		return false;
 	}
 
+	// 添加元素弹出框中对指定元素点击"添加"时的事件
+	var onAddElementBtnClicked = function () {
+		$.toast("TODO");
+	};
+
 	// 点击"添加元素"时的事件
 	var onAddElement = function () {
-		$.toast("TODO");
+		var $content = $("<div>", { "class": "visual-editor-add-element" });
+		var $tabContainer = $("<div>", { "class": "tabbable-line" }).appendTo($content);
+		var $tabs = $("<ul>", { "class": "nav nav-stacked" }).appendTo($tabContainer);
+		var $tabContents = $("<div>", { "class": "tab-content" }).appendTo($tabContainer);
+		var $clearfix = $("<div>", { "class": "clearfix" }).appendTo($tabContainer);
+		$.each(VisualEditorData.widgetGroups, function (index, group) {
+			var tabId = "tabWidgetGroup-" + group.Group.replace(/\s/g, "");
+			var $tab = $("<li>").appendTo($tabs);
+			var $tabLink = $("<a>", { "href": "#" + tabId, "data-toggle": "tab" })
+				.text($.translate(group.Group)).appendTo($tab);
+			var $tabPane = $("<div>", { "id": tabId, "class": "tab-pane" }).appendTo($tabContents);
+			if (index == 0) {
+				$tab.addClass("active");
+				$tabPane.addClass("active");
+			}
+			$.each(group.Widgets, function (index, widget) {
+				var info = widget.WidgetInfo;
+				var preview = widget.WidgetInfo.Extra.Preview ||
+					"/static/template.visualeditor.images/default-preview.jpg";
+				var $box = $("<div>", { "class": "widget-box", "data-path": info.WidgetPath }).appendTo($tabPane);
+				var $image = $("<img>", { "src": preview, "alt": "preview" }).appendTo($box);
+				var $left = $("<div>", { "class": "pull-left" }).appendTo($box);
+				var $right = $("<div>", { "class": "pull-right" }).appendTo($box);
+				var nameText = $.translate(info.Name);
+				var descriptionText = $.translate(info.Description || "NoDescription");
+				var $name = $("<div>", { "class": "name", "title": nameText })
+					.text(nameText).appendTo($left);
+				var $description = $("<div>", { "class": "description", "title": descriptionText })
+					.text(descriptionText).appendTo($left);
+				var $btn = $("<div>", { "class": "btn btn-xs btn-primary" })
+					.text($.translate("Add")).on("click", onAddElementBtnClicked).appendTo($right);
+			});
+		});
+		BootstrapDialog.show({
+			type: "type-primary",
+			size: "size-wide",
+			title: $.translate("AddElement"),
+			message: $content
+		});
 	};
 
 	// 点击"管理主题"时的事件
@@ -38,6 +81,16 @@ $(function () {
 		return $.translate("Make sure you have saved all the changes, otherwise they will be lost.");
 	};
 
+	// 点击模块标题栏中的"编辑"时的事件
+	var onTemplateWidgetEditClicked = function () {
+		$.toast("TODO");
+	};
+
+	// 点击模块标题栏中的"删除"时的事件
+	var onTemplateWidgetRemoveClicked = function () {
+		$.toast("TODO");
+	};
+
 	// 模板模块鼠标进入时的处理
 	var onTemplateWidgetMouseEnter = function () {
 		var $this = $(this);
@@ -48,8 +101,12 @@ $(function () {
 		$this.find(".template-widget-title-bar").remove();
 		var $titleBar = $("<div>").addClass("template-widget-title-bar");
 		$titleBar.append($("<span>").addClass("name").text($.translate(info.Name)));
-		$titleBar.append($("<span>").addClass("remove").text("[" + $.translate("Remove") + "]"));
-		$titleBar.append($("<span>").addClass("edit").text("[" + $.translate("Edit") + "]"));
+		$titleBar.append($("<span>").addClass("remove")
+			.text("[" + $.translate("Remove") + "]")
+			.on("click", onTemplateWidgetRemoveClicked));
+		$titleBar.append($("<span>").addClass("edit")
+			.text("[" + $.translate("Edit") + "]")
+			.on("click", onTemplateWidgetEditClicked));
 		$titleBar.prependTo($this);
 	};
 

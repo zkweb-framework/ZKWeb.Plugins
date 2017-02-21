@@ -53,3 +53,45 @@
 		}
 	}
 }
+
+/* 添加元素弹出框的样式 */
+.visual-editor-add-element {
+	.tabbable-line {
+		> .nav {
+			float: left;
+			width: 200px;
+		}
+
+		> .tab-content {
+			margin-left: 200px;
+			padding: 0px;
+
+			.widget-box {
+				float: left;
+				margin: 0px 15px 15px 0px;
+				width: 202px;
+				height: 130px;
+
+				img {
+					border: 1px solid #000;
+				}
+
+				.name, .description {
+					color: #666;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					width: 150px;
+					white-space: nowrap;
+				}
+
+				.description {
+					color: #999;
+				}
+
+				.btn {
+					margin: 5px 0px 0px 0px;
+				}
+			}
+		}
+	}
+}
