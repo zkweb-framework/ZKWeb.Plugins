@@ -48,6 +48,8 @@ $(function () {
 		$this.find(".template-widget-title-bar").remove();
 		var $titleBar = $("<div>").addClass("template-widget-title-bar");
 		$titleBar.append($("<span>").addClass("name").text($.translate(info.Name)));
+		$titleBar.append($("<span>").addClass("remove").text("[" + $.translate("Remove") + "]"));
+		$titleBar.append($("<span>").addClass("edit").text("[" + $.translate("Edit") + "]"));
 		$titleBar.prependTo($this);
 	};
 
@@ -56,6 +58,16 @@ $(function () {
 		var $this = $(this);
 		// 移除标题栏
 		$this.find(".template-widget-title-bar").remove();
+	};
+
+	// 拖动停止后的处理
+	var onSortStopped = function (e, data) {
+		onTemplateWidgetMouseLeave.call($(data.item));
+	};
+
+	// 拖动停止后且DOM更新后的处理
+	var onSortUpdated = function () {
+
 	};
 
 	$(document).on("visual-editor-loaded", function () {
@@ -83,7 +95,9 @@ $(function () {
 			forcePlaceholderSize: true,
 			handle: ".template-widget-title-bar",
 			tolerance: "pointer",
-			zIndex: 10050
+			zIndex: 10050,
+			stop: onSortStopped,
+			update: onSortUpdated
 		}).disableSelection();
 	});
 });

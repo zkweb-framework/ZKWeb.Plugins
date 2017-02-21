@@ -39,9 +39,16 @@
 			line-height: 20px;
 			background-color: #27ae60;
 			cursor: move;
+			color: #fff;
 
 			.name {
-				color: #fff;
+				margin: 0px 3px 0px 0px;
+			}
+
+			.edit, .remove {
+				float: right;
+				cursor: pointer;
+				margin: 0px 3px 0px 0px;
 			}
 		}
 	}

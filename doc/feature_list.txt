@@ -549,9 +549,9 @@ Theme.Mobile.Frame
 	针对手机版的调整样式
 
 Theme.VisualEditor
-	TODO: 编辑指定url的页面
-	TODO: 获取所有可编辑页面的url
-	TODO: 获取所有模板模块
+	编辑指定url的页面
+	获取所有可编辑页面的url
+	获取所有模板模块
 	TODO: 添加模板模块到区域
 	TODO: 编辑在区域中的模板模块
 	TODO: 从区域删除模板模块
