@@ -1,5 +1,5 @@
 ﻿{
-	"Name": "BaseWidgets",
+	"Name": "BaseTemplateWidgets",
 	"Version": "0.0",
 	"Description": "Base template widgets",
 	"Dependencies": [

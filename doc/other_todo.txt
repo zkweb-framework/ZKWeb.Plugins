@@ -10,6 +10,8 @@ builder.AddField(...);
 builder.AddFields(...);
 builder.ToForm();
 
+定时按天自动备份自定义模块文件，最多保留30天
+
 支持从页面获取区域和元素的结构
 支持元素的拖动和保存，无修改的区域不保存
 

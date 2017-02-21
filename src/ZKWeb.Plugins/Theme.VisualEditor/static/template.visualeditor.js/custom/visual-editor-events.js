@@ -9,6 +9,13 @@ $(function () {
 		return false;
 	}
 
+	// 布局更新时的事件
+	var onLayoutChange = function () {
+		// TODO: 更新数据
+		// TODO: 启用保存按钮
+		$.toast("layout change");
+	};
+
 	// 添加元素弹出框中对指定元素点击"添加"时的事件
 	var onAddElementBtnClicked = function () {
 		// 获取模块信息
@@ -27,8 +34,9 @@ $(function () {
 			$("<div>", { "class": "template_widget", "data-widget": path })
 				.text("TODO").appendTo($area);
 			$areas.off("click").removeClass("select-area");
+			$.toast({ icon: "success", text: $.translate("Add Element Success") });
 			// 通知布局更新
-			VisualEditor.onLayoutChange();
+			onLayoutChange();
 		});
 	};
 
@@ -101,12 +109,35 @@ $(function () {
 
 	// 点击模块标题栏中的"编辑"时的事件
 	var onTemplateWidgetEditClicked = function () {
-		$.toast("TODO");
+		// TODO: 弹出编辑框
+		$.toast({ icon: "success", text: $.translate("Edit Element Success") });
+		// 通知布局更新
+		onLayoutChange();
 	};
 
 	// 点击模块标题栏中的"删除"时的事件
 	var onTemplateWidgetRemoveClicked = function () {
-		$.toast("TODO");
+		// 获取模块信息
+		var $widget = $(this).closest(".template_widget");
+		var data = VisualEditor.parseWidgetElement($widget);
+		var info = VisualEditor.getWidgetInfo(data.path);
+		// 确认是否删除
+		BootstrapDialog.confirm({
+			title: $.translate("RemoveElement"),
+			message: $.translate("Are you sure to remove $element?").replace("$element", $.translate(info.Name)),
+			type: BootstrapDialog.TYPE_WARNING,
+			btnCancelLabel: $.translate("Cancel"),
+			btnOKLabel: $.translate("Ok"),
+			callback: function (result) {
+				if (result) {
+					// 从DOM删除
+					$widget.remove();
+					$.toast({ icon: "success", text: $.translate("Remove Element Success") });
+					// 通知布局更新
+					onLayoutChange();
+				}
+			}
+		});
 	};
 
 	// 模板模块鼠标进入时的处理
@@ -144,7 +175,7 @@ $(function () {
 	// 拖动停止后且DOM更新后的处理
 	var onSortUpdated = function () {
 		// 通知布局更新
-		VisualEditor.onLayoutChange();
+		onLayoutChange();
 	};
 
 	$(document).on("visual-editor-loaded", function () {

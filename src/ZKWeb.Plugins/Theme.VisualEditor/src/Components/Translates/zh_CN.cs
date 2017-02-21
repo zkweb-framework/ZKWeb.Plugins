@@ -13,7 +13,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			// TODO: 翻译到其他语言
-			{ "VisualThemeEditor", "可视化主题编辑器" },
+			{ "VisualThemeEditor", "可视化编辑器" },
 			{ "VisualEditor", "可视化编辑" },
 			{ "Allow edit website theme visually", "允许可视化编辑网站主题" },
 			{ "AddElement", "添加元素" },
@@ -24,7 +24,12 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 			{ "Make sure you have saved all the changes, otherwise they will be lost.",
 				"请确认您已保存所有更改, 否则这些更改将会丢失." },
 			{ "EnterVisualEditor", "进入可视化编辑" },
-			{ "NoDescription", "无描述" }
+			{ "NoDescription", "无描述" },
+			{ "RemoveElement", "删除元素" },
+			{ "Are you sure to remove $element?", "确认删除$element?" },
+			{ "Add Element Success", "添加元素成功" },
+			{ "Remove Element Success", "删除元素成功" },
+			{ "Edit Element Success", "编辑元素成功" }
 		};
 
 		public bool CanTranslate(string code) {
