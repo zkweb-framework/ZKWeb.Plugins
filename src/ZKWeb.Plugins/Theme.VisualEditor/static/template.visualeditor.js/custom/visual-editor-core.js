@@ -40,7 +40,14 @@ $(function () {
 		// 根据模块路径获取模块信息
 		getWidgetInfo: function (widgetPath) {
 			return VisualEditorData.widgetPathToWidgetInfo[widgetPath] || {};
-		}
+		},
+
+		// 布局发生变化时的处理
+		onLayoutChange: function () {
+			// TODO: 更新区域和模块信息
+			// TODO: 启用保存按钮
+			$.toast("layout change");
+		},
 	};
 
 	$(document).on("visual-editor-loaded", function () {

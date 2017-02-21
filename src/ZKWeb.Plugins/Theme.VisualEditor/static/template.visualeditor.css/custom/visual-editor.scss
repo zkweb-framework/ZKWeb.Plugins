@@ -52,6 +52,19 @@
 			}
 		}
 	}
+	/* 选择区域时的样式 */
+	&.select-area {
+		background-color: #DADFE1;
+		cursor: pointer;
+
+		> * {
+			visibility: hidden;
+		}
+
+		&:hover {
+			background-color: #BFBFBF;
+		}
+	}
 }
 
 /* 添加元素弹出框的样式 */

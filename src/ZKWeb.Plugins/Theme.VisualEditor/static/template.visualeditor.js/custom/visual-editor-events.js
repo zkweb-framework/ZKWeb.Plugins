@@ -11,7 +11,25 @@ $(function () {
 
 	// 添加元素弹出框中对指定元素点击"添加"时的事件
 	var onAddElementBtnClicked = function () {
-		$.toast("TODO");
+		// 获取模块信息
+		var $this = $(this);
+		var path = $this.closest(".widget-box").attr("data-path");
+		var info = VisualEditor.getWidgetInfo(path);
+		// 关闭模态框
+		$this.closest(".bootstrap-dialog").modal("hide");
+		// 让用户选择区域
+		var $areas = $(".template_area");
+		$areas.addClass("select-area").on("click", function () {
+			var $area = $(this);
+			// TODO: 弹出编辑框
+			// 添加到区域中
+			console.log("add widget");
+			$("<div>", { "class": "template_widget", "data-widget": path })
+				.text("TODO").appendTo($area);
+			$areas.off("click").removeClass("select-area");
+			// 通知布局更新
+			VisualEditor.onLayoutChange();
+		});
 	};
 
 	// 点击"添加元素"时的事件
@@ -119,12 +137,14 @@ $(function () {
 
 	// 拖动停止后的处理
 	var onSortStopped = function (e, data) {
+		// 移除标题栏
 		onTemplateWidgetMouseLeave.call($(data.item));
 	};
 
 	// 拖动停止后且DOM更新后的处理
 	var onSortUpdated = function () {
-
+		// 通知布局更新
+		VisualEditor.onLayoutChange();
 	};
 
 	$(document).on("visual-editor-loaded", function () {
