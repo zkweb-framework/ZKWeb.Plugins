@@ -5,21 +5,21 @@ using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.ProductBookmark.src.Components.Translates {
 	/// <summary>
-	/// 中文翻译
+	/// 繁体中文翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class zh_CN : ITranslateProvider {
-		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
+	public class zh_TW : ITranslateProvider {
+		private static HashSet<string> Codes = new HashSet<string>() { "zh-TW" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>() {
 			{ "ProductBookmark", "商品收藏" },
-			{ "Product bookmark feature for ec site", "商城网站使用的商品收藏功能" },
+			{ "Product bookmark feature for ec site", "商城網站使用的商品收藏功能" },
 			{ "Bookmark this product", "收藏本商品" },
 			{ "Product bookmarked", "商品已收藏" },
-			{ "Bookmark product require login, redirecting to login page...", "收藏商品需要登陆，正在跳转到登录页……" },
+			{ "Bookmark product require login, redirecting to login page...", "收藏商品需要登陸，正在跳轉到登錄頁……" },
 			{ "Product already bookmarked", "商品已收藏" },
 			{ "Bookmark product success", "收藏商品成功" },
-			{ "BookmarkTime", "收藏时间" },
-			{ "ProductAddBookmark", "收藏商品按钮" }
+			{ "BookmarkTime", "收藏時間" },
+			{ "ProductAddBookmark", "收藏商品按鈕" }
 		};
 
 		public bool CanTranslate(string code) {

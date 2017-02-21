@@ -19,7 +19,9 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.Components.Translates {
 			{ "SwitchableLanguages", "전환 언어" },
 			{ "Switch Language", "스위치 언어" },
 			{ "DisplayLanguageSwitcherOnFrontPages", "첫 페이지에서 언어 전환" },
-			{ "DisplayLanguageSwitcherOnAdminPanel", "배경 페이지에서 언어 전환" }
+			{ "DisplayLanguageSwitcherOnAdminPanel", "배경 페이지에서 언어 전환" },
+			{ "LanguageSwitchMenu", "언어 변경" },
+			{ "LanguageSwitchMenuForAdminPanel", "근원 전환 선택" }
 		};
 
 		public bool CanTranslate(string code) {

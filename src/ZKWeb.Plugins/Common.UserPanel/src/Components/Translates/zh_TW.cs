@@ -13,7 +13,8 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Components.Translates {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			{ "Account Manage", "賬號管理" },
-			{ "Pages for user panel", "用戶中心的頁面" }
+			{ "Pages for user panel", "用戶中心的頁面" },
+			{ "EnterUserPanel", "進入用戶中心" }
 		};
 
 		public bool CanTranslate(string code) {

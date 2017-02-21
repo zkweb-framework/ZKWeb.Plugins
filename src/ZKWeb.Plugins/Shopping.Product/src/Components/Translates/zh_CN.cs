@@ -93,7 +93,6 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "Product is WaitForSales", "商品尚未开始销售" },
 			{ "Seller username not exist", "卖家用户名不存在" },
 			{ "Shop Manage", "商城管理" },
-			// TODO: 翻译到其他语言
 			{ "BarCode", "条形码" },
 			{ "ItemNo", "货号" },
 			{ "ItemNo: {0}", "货号: {0}" },
@@ -109,7 +108,7 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "ProductListTable", "商品列表页表格" },
 			{ "ProductNavMenu", "商品导航菜单" },
 			{ "ProductSalesInfo", "商品销售信息" },
-			{ "ProductSearchBar", "商品搜索栏" }
+			{ "ProductSearchBar", "商品搜索栏" },
 		};
 
 		public bool CanTranslate(string code) {

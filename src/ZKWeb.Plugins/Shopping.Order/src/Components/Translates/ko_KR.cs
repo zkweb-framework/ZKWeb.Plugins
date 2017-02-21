@@ -284,7 +284,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Merge payment required atleast 2 orders", "결합 지급은 적어도 두 개의 주문을 요구" },
 			{ "Some order is not payable", "일부 주문은 지불 할 수" },
 			{ "New merged transaction has created, this merge transaction should be aborted",
-				"새로운 합병을 만든, 기존의 합병이 종료되어야한다" }
+				"새로운 합병을 만든, 기존의 합병이 종료되어야한다" },
+			{ "CartPage", "쇼핑 카트 페이지" },
+			{ "CartContents", "카트보기" },
+			{ "MiniCartMenu", "미니 카트 메뉴" },
+			{ "ProductPurchaseButtons", "상품 구매 버튼" }
 		};
 
 		public bool CanTranslate(string code) {

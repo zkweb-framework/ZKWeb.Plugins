@@ -14,7 +14,6 @@ namespace ZKWeb.Plugins.Common.UserPanel.src.Components.Translates {
 		{
 			{ "Account Manage", "账号管理" },
 			{ "Pages for user panel", "用户中心的页面" },
-			// TODO: 翻译到其他语言
 			{ "EnterUserPanel", "进入用户中心" }
 		};
 

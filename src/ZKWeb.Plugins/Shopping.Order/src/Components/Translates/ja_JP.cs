@@ -280,7 +280,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Merge payment required atleast 2 orders", "一度に支払う注文は少なくとも二つが必要です" },
 			{ "Some order is not payable", "一部の注文が支払可能ではありません" },
 			{ "New merged transaction has created, this merge transaction should be aborted",
-				"新しい合併取引を作成したため、この古いほうの取引は中止されました" }
+				"新しい合併取引を作成したため、この古いほうの取引は中止されました" },
+			{ "CartPage", "ショッピングカートページ" },
+			{ "CartContents", "カート内容" },
+			{ "MiniCartMenu", "ミニカートメニュー" },
+			{ "ProductPurchaseButtons", "商品購入ボタン" }
 		};
 
 		public bool CanTranslate(string code) {

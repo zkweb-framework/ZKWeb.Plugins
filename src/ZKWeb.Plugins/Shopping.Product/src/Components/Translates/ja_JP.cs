@@ -92,7 +92,23 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "Product is StopSelling", "この商品の販売は終了しました" },
 			{ "Product is WaitForSales", "この商品の販売はまだ始まっていません" },
 			{ "Seller username not exist", "出品者のユーザー名は存在しません" },
-			{ "Shop Manage", "ショップ管理" }
+			{ "Shop Manage", "ショップ管理" },
+			{ "BarCode", "バーコード" },
+			{ "ItemNo", "商品番号" },
+			{ "ItemNo: {0}", "商品番号: {0}" },
+			{ "Name/Seller/Remark", "タイトル/販売者/備考" },
+			{ "Name/Seller", "タイトル/販売者" },
+			{ "ProductViewPage", "商品詳細ページ" },
+			{ "ProductListPage", "商品リストページ" },
+			{ "ProductDetails", "商品の詳細" },
+			{ "ProductFilterByClass", "カテゴリフィルタバー" },
+			{ "ProductFilterByPriceAndOrder", "商品価格のフィルタとソート列" },
+			{ "ProductFilterByTag", "商品のタグフィルターバー" },
+			{ "ProductGallery", "商品のアルバム" },
+			{ "ProductListTable", "商品一覧表" },
+			{ "ProductNavMenu", "商品ナビメニュー" },
+			{ "ProductSalesInfo", "商品販売情報" },
+			{ "ProductSearchBar", "商品検索バー" },
 		};
 
 		public bool CanTranslate(string code) {

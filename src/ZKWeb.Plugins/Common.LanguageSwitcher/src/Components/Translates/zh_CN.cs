@@ -20,7 +20,6 @@ namespace ZKWeb.Plugins.Common.LanguageSwitcher.src.Components.Translates {
 			{ "Switch Language", "切换语言" },
 			{ "DisplayLanguageSwitcherOnFrontPages", "在前台页面显示语言切换器" },
 			{ "DisplayLanguageSwitcherOnAdminPanel", "在后台页面显示语言切换器" },
-			// TODO: 翻译到其他语言
 			{ "LanguageSwitchMenu", "语言切换菜单" },
 			{ "LanguageSwitchMenuForAdminPanel", "后台语言切换菜单" }
 		};

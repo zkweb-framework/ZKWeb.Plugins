@@ -92,7 +92,23 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "Product is StopSelling", "제품 중지 판매" },
 			{ "Product is WaitForSales", "제품 판매를 기다릴 것입니다" },
 			{ "Seller username not exist", "판매자 이름이 존재하지 않습니다" },
-			{ "Shop Manage", "쇼핑몰 관리" }
+			{ "Shop Manage", "쇼핑몰 관리" },
+			{ "BarCode", "바코드" },
+			{ "ItemNo", "민" },
+			{ "ItemNo: {0}", "민: {0}" },
+			{ "Name/Seller/Remark", "제목/판매자/비고" },
+			{ "Name/Seller", "제목/판매자" },
+			{ "ProductViewPage", "제품 상세 페이지" },
+			{ "ProductListPage", "제품 목록으로 다음 제품" },
+			{ "ProductDetails", "제품 상세 정보" },
+			{ "ProductFilterByClass", "카테고리 필터 바" },
+			{ "ProductFilterByPriceAndOrder", "상품 가격 필터 및 정렬 열" },
+			{ "ProductFilterByTag", "제품 태그 필터 바" },
+			{ "ProductGallery", "제품 앨범" },
+			{ "ProductListTable", "제품 목록 다음 표" },
+			{ "ProductNavMenu", "제품 탐색 메뉴" },
+			{ "ProductSalesInfo", "상품 판매 정보" },
+			{ "ProductSearchBar", "제품 검색 창" }
 		};
 
 		public bool CanTranslate(string code) {

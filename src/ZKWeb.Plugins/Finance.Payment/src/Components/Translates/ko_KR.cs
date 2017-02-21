@@ -110,7 +110,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 				"결제 인터페이스는 파튼 전시회를 불일치" },
 			{ "Some child transaction have different payer", "지불 파튼 트랜잭션 일관성을" },
 			{ "Some child transaction have different payee", "수취인 파튼 트랜잭션 일관성을" },
-			{ "Some child transaction is not payable", "파튼 거래는 지불 할 수" }
+			{ "Some child transaction is not payable", "파튼 거래는 지불 할 수" },
+			{ "PaymentResultPage", "결제 결과 페이지" }
 		};
 
 		public bool CanTranslate(string code) {

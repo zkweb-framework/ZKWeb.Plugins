@@ -107,7 +107,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 				"一部のサブ取引の支払い方法が異なります" },
 			{ "Some child transaction have different payer", "一部のサブ取引の支払人が異なります" },
 			{ "Some child transaction have different payee", "一部のサブ取引の受取人が異なります" },
-			{ "Some child transaction is not payable", "一部のサブ取引が支払いできません" }
+			{ "Some child transaction is not payable", "一部のサブ取引が支払いできません" },
+			{ "PaymentResultPage", "支払結果ページ" }
 		};
 
 		public bool CanTranslate(string code) {

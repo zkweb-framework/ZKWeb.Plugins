@@ -102,7 +102,8 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "Some child transaction have different payment api", "部分子交易的支付接口不壹致" },
 			{ "Some child transaction have different payer", "部分子交易的付款人不壹致" },
 			{ "Some child transaction have different payee", "部分子交易的收款人不壹致" },
-			{ "Some child transaction is not payable", "部分子交易不可支付" }
+			{ "Some child transaction is not payable", "部分子交易不可支付" },
+			{ "PaymentResultPage", "支付結果頁" }
 		};
 
 		public bool CanTranslate(string code) {

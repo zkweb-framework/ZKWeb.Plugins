@@ -92,7 +92,23 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Components.Translates {
 			{ "Product is StopSelling", "商品已下架" },
 			{ "Product is WaitForSales", "商品尚未開始銷售" },
 			{ "Seller username not exist", "賣家用戶名不存在" },
-			{ "Shop Manage", "商城管理" }
+			{ "Shop Manage", "商城管理" },
+			{ "BarCode", "條形碼" },
+			{ "ItemNo", "貨號" },
+			{ "ItemNo: {0}", "貨號: {0}" },
+			{ "Name/Seller/Remark", "名稱/賣家/備註" },
+			{ "Name/Seller", "名稱/賣家" },
+			{ "ProductViewPage", "商品詳情頁" },
+			{ "ProductListPage", "商品列表頁" },
+			{ "ProductDetails", "商品詳情" },
+			{ "ProductFilterByClass", "商品分類過濾欄" },
+			{ "ProductFilterByPriceAndOrder", "商品價格過濾與排序欄" },
+			{ "ProductFilterByTag", "商品標簽過濾欄" },
+			{ "ProductGallery", "商品相冊" },
+			{ "ProductListTable", "商品列表頁表格" },
+			{ "ProductNavMenu", "商品導航菜單" },
+			{ "ProductSalesInfo", "商品銷售信息" },
+			{ "ProductSearchBar", "商品搜索欄" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -274,7 +274,11 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Components.Translates {
 			{ "Merge payment required atleast 2 orders", "合並支付需要至少兩個訂單" },
 			{ "Some order is not payable", "部分訂單不可支付" },
 			{ "New merged transaction has created, this merge transaction should be aborted",
-				"已創建新的合並交易，舊的合並交易應該被終止" }
+				"已創建新的合並交易，舊的合並交易應該被終止" },
+			{ "CartPage", "購物車頁" },
+			{ "CartContents", "購物車內容" },
+			{ "MiniCartMenu", "迷妳購物車菜單" },
+			{ "ProductPurchaseButtons", "商品購買按鈕" }
 		};
 
 		public bool CanTranslate(string code) {
