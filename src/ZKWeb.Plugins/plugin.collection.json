@@ -42,5 +42,9 @@
 	],
 	"AppendPlugins": [
 		"Common.CustomTranslate"
+	],
+	"SupportedORM": [
+		"NHibernate",
+		"InMemory"
 	]
 }

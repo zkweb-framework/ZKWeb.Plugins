@@ -1,12 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
+using ZKWeb.Plugins.Common.DynamicForm.src.UIComponents.DynamicForm.Interfaces;
+using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.DynamicForm.src.UIComponents.DynamicForm {
 	/// <summary>
 	/// 动态表单构建器
 	/// 这个类可以通过Ioc替换，使用时注意要通过Ioc获取
+	/// 构建后的表单不带值，需要手动绑定
 	/// </summary>
+	/// <example>
+	/// 字段数据示例
+	/// {
+	///		"Type": "TextBox",
+	///		"Name": "ExampleField",
+	///		"Validators": [
+	///			{ "Type": "Required" }
+	///		]
+	/// }
+	/// </example>
 	[ExportMany]
 	public class DynamicFormBuilder {
 		/// <summary>
@@ -47,7 +61,33 @@ namespace ZKWeb.Plugins.Common.DynamicForm.src.UIComponents.DynamicForm {
 		public virtual T ToForm<T>()
 			where T : FormBuilder, new() {
 			var result = new T();
-			// TODO: 动态添加字段
+			foreach (var fieldData in FieldDatas) {
+				// 根据类型创建字段属性
+				var fieldType = fieldData.GetOrDefault<string>("Type");
+				var fieldFactory = Application.Ioc.Resolve<IDynamicFormFieldFactory>(serviceKey: fieldType);
+				if (fieldFactory == null) {
+					throw new ArgumentException($"No factory registered for dynamic form field type: '{fieldType}'");
+				}
+				var fieldAttribute = fieldFactory.Create(fieldData);
+				var formField = new FormField(fieldAttribute);
+				// 根据类型创建验证字段属性
+				var validatorDatas = fieldData.GetOrDefault<IList<IDictionary<string, object>>>("Validators");
+				if (validatorDatas != null) {
+					foreach (var validatorData in validatorDatas) {
+						var validatorType = validatorData.GetOrDefault<string>("Type");
+						var validatorFactory = Application.Ioc
+							.Resolve<IDynamicFormFieldValidatorFactory>(serviceKey: validatorType);
+						if (validatorFactory == null) {
+							throw new ArgumentException(
+								$"No factory registered for dynamic form field validator type: '{validatorType}'");
+						}
+						var validatorAttribute = validatorFactory.Create(validatorData);
+						formField.ValidationAttributes.Add(validatorAttribute);
+					}
+				}
+				// 添加字段到表单
+				result.Fields.Add(formField);
+			}
 			return result;
 		}
 
