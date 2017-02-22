@@ -13,7 +13,7 @@ namespace ZKWeb.Plugins.Testing.WebTester.src.Components.Translates {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			{ "WebTester", "ウェブユニットテスター" },
-			{ "Support running unit test from admin panel", "管理者パネルからユニットテストを実行する機能" },
+			{ "Support running tests from admin panel", "管理者パネルからテストを実行する機能" },
 			{ "UnitTest", "ユニットテスト" },
 			{ "Run", "実行" },
 			{ "Assembly", "アセンブリ" },

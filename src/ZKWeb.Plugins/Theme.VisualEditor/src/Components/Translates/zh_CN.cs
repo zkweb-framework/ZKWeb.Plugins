@@ -12,7 +12,6 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			// TODO: 翻译到其他语言
 			{ "VisualThemeEditor", "可视化编辑器" },
 			{ "VisualEditor", "可视化编辑" },
 			{ "Allow edit website theme visually", "允许可视化编辑网站主题" },
