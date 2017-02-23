@@ -5,16 +5,10 @@
 添加$.translate的文档
 添加Common.DynamicForm的文档
 
-添加Common.DynamicForm插件
-var builder = new DynamicFormBuilder();
-builder.AddField(...);
-builder.AddFields(...);
-builder.ToForm();
-
 定时按天自动备份自定义模块文件，最多保留30天
 
-支持从页面获取区域和元素的结构
-支持元素的拖动和保存，无修改的区域不保存
+支持构建模块编辑表单，用LOGO做测试
+支持根据模块路径和参数获取模块内容，需要获取到TemplateResult对象(使用IActionFilter?)
 
 ====================================================================
 
