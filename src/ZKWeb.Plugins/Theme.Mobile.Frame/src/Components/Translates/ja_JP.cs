@@ -5,16 +5,16 @@ using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Theme.Mobile.Frame.src.Components.Translates {
 	/// <summary>
-	/// 中文翻译
+	/// 日本语翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class zh_CN : ITranslateProvider {
-		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
+	public class ja_JP : ITranslateProvider {
+		private static HashSet<string> Codes = new HashSet<string>() { "ja-JP" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
-			{ "MobileFrame", "手机版页面" },
-			{ "Mobile optimized page frame theme", "手机版专用的页面主题" },
-			{ "MobileFooterNavbar", "手机底部导航栏" }
+			{ "MobileFrame", "モバイル版" },
+			{ "Mobile optimized page frame theme", "モバイルの専用ページテーマ" },
+			{ "MobileFooterNavbar", "モバイルフッターナビゲーションバー" }
 		};
 
 		public bool CanTranslate(string code) {

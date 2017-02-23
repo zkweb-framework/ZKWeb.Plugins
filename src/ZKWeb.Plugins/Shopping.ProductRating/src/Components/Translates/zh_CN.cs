@@ -11,7 +11,6 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Components.Translates {
 	public class zh_CN : ITranslateProvider {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>() {
-			// TODO: 添加翻译
 			{ "ProductRating", "商品评价" },
 			{ "Order product rating feature for ec site", "商城网站使用的商品评价功能" },
 			{ "Rate", "评价" },
