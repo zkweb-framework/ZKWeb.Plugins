@@ -10,6 +10,9 @@
 支持构建模块编辑表单，用LOGO做测试
 支持根据模块路径和参数获取模块内容，需要获取到TemplateResult对象(使用IActionFilter?)
 
+替换日期时间插件
+https://tarruda.github.io/bootstrap-datetimepicker/
+
 ====================================================================
 
 优化查询性能，添加更多的索引
