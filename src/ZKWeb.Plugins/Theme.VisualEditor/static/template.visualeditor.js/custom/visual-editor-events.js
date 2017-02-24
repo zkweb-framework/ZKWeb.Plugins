@@ -9,78 +9,40 @@ $(function () {
 		return false;
 	}
 
-	// 布局更新时的事件
-	var onLayoutChange = function () {
-		// TODO: 更新数据
-		// TODO: 启用保存按钮
-		$.toast("layout change");
-	};
-
 	// 添加元素弹出框中对指定元素点击"添加"时的事件
 	var onAddElementBtnClicked = function () {
 		// 获取模块信息
 		var $this = $(this);
 		var path = $this.closest(".widget-box").attr("data-path");
-		var info = VisualEditor.getWidgetInfo(path);
 		// 关闭模态框
 		$this.closest(".bootstrap-dialog").modal("hide");
 		// 让用户选择区域
 		var $areas = $(".template_area");
 		$areas.addClass("select-area").on("click", function () {
 			var $area = $(this);
-			// TODO: 弹出编辑框
-			// 添加到区域中
-			console.log("add widget");
-			$("<div>", { "class": "template_widget", "data-widget": path })
-				.text("TODO").appendTo($area);
-			$areas.off("click").removeClass("select-area");
-			$.toast({ icon: "success", text: $.translate("Add Element Success") });
-			// 通知布局更新
-			onLayoutChange();
+			// 完成后清除选择样式
+			var cleanup = function () {
+				$areas.off("click").removeClass("select-area");
+			};
+			// 弹出编辑窗口
+			VisualEditor.showEditWidgetWindow(path, {}, function (html) {
+				// 添加到区域中
+				$(html).appendTo($area);
+				$.toast({ icon: "success", text: $.translate("Add Element Success") });
+				// 执行清理工作
+				cleanup();
+				// 通知布局更新
+				VisualEditor.layoutChanged();
+			}, function () {
+				// 执行清理工作
+				cleanup();
+			});
 		});
 	};
 
 	// 点击"添加元素"时的事件
 	var onAddElement = function () {
-		var $content = $("<div>", { "class": "visual-editor-add-element" });
-		var $tabContainer = $("<div>", { "class": "tabbable-line" }).appendTo($content);
-		var $tabs = $("<ul>", { "class": "nav nav-stacked" }).appendTo($tabContainer);
-		var $tabContents = $("<div>", { "class": "tab-content" }).appendTo($tabContainer);
-		var $clearfix = $("<div>", { "class": "clearfix" }).appendTo($tabContainer);
-		$.each(VisualEditorData.widgetGroups, function (index, group) {
-			var tabId = "tabWidgetGroup-" + group.Group.replace(/\s/g, "");
-			var $tab = $("<li>").appendTo($tabs);
-			var $tabLink = $("<a>", { "href": "#" + tabId, "data-toggle": "tab" })
-				.text($.translate(group.Group)).appendTo($tab);
-			var $tabPane = $("<div>", { "id": tabId, "class": "tab-pane" }).appendTo($tabContents);
-			if (index == 0) {
-				$tab.addClass("active");
-				$tabPane.addClass("active");
-			}
-			$.each(group.Widgets, function (index, widget) {
-				var info = widget.WidgetInfo;
-				var preview = widget.WidgetInfo.Extra.Preview ||
-					"/static/template.visualeditor.images/default-preview.jpg";
-				var $box = $("<div>", { "class": "widget-box", "data-path": info.WidgetPath }).appendTo($tabPane);
-				var $image = $("<img>", { "src": preview, "alt": "preview" }).appendTo($box);
-				var $left = $("<div>", { "class": "pull-left" }).appendTo($box);
-				var $right = $("<div>", { "class": "pull-right" }).appendTo($box);
-				var nameText = $.translate(info.Name);
-				var descriptionText = $.translate(info.Description || "NoDescription");
-				var $name = $("<div>", { "class": "name", "title": nameText })
-					.text(nameText).appendTo($left);
-				var $description = $("<div>", { "class": "description", "title": descriptionText })
-					.text(descriptionText).appendTo($left);
-				var $btn = $("<div>", { "class": "btn btn-xs btn-primary" })
-					.text($.translate("Add")).on("click", onAddElementBtnClicked).appendTo($right);
-			});
-		});
-		BootstrapDialog.show({
-			type: "type-primary",
-			size: "size-wide",
-			title: $.translate("AddElement"),
-			message: $content
-		});
+		VisualEditor.showAddElementWindow(onAddElementBtnClicked);
 	};
 
 	// 点击"管理主题"时的事件
@@ -90,10 +52,7 @@ $(function () {
 
 	// 点击"切换页面"时的事件
 	var onSwitchPage = function () {
-		BootstrapDialog.showRemote(
-			$(this).text().trim(),
-			"/api/visual_editor/get_switch_pages",
-			{ type: "type-warning", size: "size-normal" });
+		VisualEditor.showSwitchPageWindow();
 	};
 
 	// 点击"保存修改"时的事件
@@ -112,7 +71,7 @@ $(function () {
 		// TODO: 弹出编辑框
 		$.toast({ icon: "success", text: $.translate("Edit Element Success") });
 		// 通知布局更新
-		onLayoutChange();
+		VisualEditor.layoutChanged();
 	};
 
 	// 点击模块标题栏中的"删除"时的事件
@@ -120,23 +79,13 @@ $(function () {
 		// 获取模块信息
 		var $widget = $(this).closest(".template_widget");
 		var data = VisualEditor.parseWidgetElement($widget);
-		var info = VisualEditor.getWidgetInfo(data.path);
 		// 确认是否删除
-		BootstrapDialog.confirm({
-			title: $.translate("RemoveElement"),
-			message: $.translate("Are you sure to remove $element?").replace("$element", $.translate(info.Name)),
-			type: BootstrapDialog.TYPE_WARNING,
-			btnCancelLabel: $.translate("Cancel"),
-			btnOKLabel: $.translate("Ok"),
-			callback: function (result) {
-				if (result) {
-					// 从DOM删除
-					$widget.remove();
-					$.toast({ icon: "success", text: $.translate("Remove Element Success") });
-					// 通知布局更新
-					onLayoutChange();
-				}
-			}
+		VisualEditor.showRemoveWidgetWindow(data.path, function () {
+			// 从DOM删除
+			$widget.remove();
+			$.toast({ icon: "success", text: $.translate("Remove Element Success") });
+			// 通知布局更新
+			VisualEditor.layoutChanged();
 		});
 	};
 
@@ -175,7 +124,7 @@ $(function () {
 	// 拖动停止后且DOM更新后的处理
 	var onSortUpdated = function () {
 		// 通知布局更新
-		onLayoutChange();
+		VisualEditor.layoutChanged();
 	};
 
 	$(document).on("visual-editor-loaded", function () {
@@ -199,7 +148,7 @@ $(function () {
 		$(".template_area").sortable({
 			connectWith: ".template_area",
 			cursor: "move",
-			forceHelperSize: true,
+			forceHelperSinameze: true,
 			forcePlaceholderSize: true,
 			handle: ".template-widget-title-bar",
 			tolerance: "pointer",

@@ -4,7 +4,7 @@
 
 $(function () {
 	// 显示载入中处理
-	$("body").append($("<div>").addClass("visual-editor-loading"));
+	VisualEditor.showLoadingLayer();
 	// Ajax获取顶部栏的Html并添加到顶部
 	$.ajax({
 		url: "/api/visual_editor/get_top_bar",
@@ -16,7 +16,7 @@ $(function () {
 				$(document).trigger("dynamicLoaded", $topBar);
 				setTimeout(function () {
 					// 隐藏载入中处理
-					$(".visual-editor-loading").remove();
+					VisualEditor.hideLoadingLayer();
 				}, 250);
 			}, 100);
 		}

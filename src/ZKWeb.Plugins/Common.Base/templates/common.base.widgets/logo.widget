@@ -1,5 +1,29 @@
 ﻿{
 	"Name": "Logo",
 	"CacheTime": 15,
-	"CacheBy": "Locale"
+	"CacheBy": "Locale",
+	"Arguments": [
+		{
+			"Type": "TextBox",
+			"Name": "Width",
+			"PlaceHolder": "Example: 100px",
+			"Validators": [
+				{
+					"Type": "RegularExpression",
+					"Pattern": "^(\\d+px)?$"
+				}
+			]
+		},
+		{
+			"Type": "TextBox",
+			"Name": "Height",
+			"PlaceHolder": "Example: 100px",
+			"Validators": [
+				{
+					"Type": "RegularExpression",
+					"Pattern": "^(\\d+px)?$"
+				}
+			]
+		}
+	]
 }

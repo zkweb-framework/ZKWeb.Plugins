@@ -62,7 +62,10 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.Translates {
 			{ "Saved Successfully", "保存成功" },
 			{ "WebsiteIndexPage", "网站首页" },
 			{ "Copyright", "版权信息" },
-			{ "IndexHelp", "首页帮助" }
+			{ "IndexHelp", "首页帮助" },
+			{ "Width", "宽度" },
+			{ "Height", "高度" },
+			{ "Example: 100px", "例如: 100px" }
 		};
 
 		public bool CanTranslate(string code) {
