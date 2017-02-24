@@ -1,0 +1,9 @@
+{
+	"PrependPlugins": [
+	],
+	"AppendPlugins": [
+	],
+	"SupportedORM": [
+		"EFCore"
+	]
+}

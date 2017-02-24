@@ -1,0 +1,10 @@
+{
+	"PrependPlugins": [
+		"Common.Base"
+	],
+	"AppendPlugins": [
+	],
+	"SupportedORM": [
+		"Dapper"
+	]
+}
