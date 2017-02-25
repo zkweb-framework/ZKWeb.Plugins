@@ -4,6 +4,7 @@
 
 添加$.translate的文档
 添加Common.DynamicForm的文档
+更新默认插件集的文档
 
 定时按天自动备份自定义模块文件，最多保留30天
 
