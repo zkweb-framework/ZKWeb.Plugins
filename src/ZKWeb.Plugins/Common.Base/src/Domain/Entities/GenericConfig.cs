@@ -21,6 +21,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Entities {
 		public virtual string Value { get; set; }
 		/// <summary>
 		/// 创建时间
+		/// 20170225: 之前忘记添加这个字段，会导致旧记录显示创建时间是初始值
 		/// </summary>
 		public virtual DateTime CreateTime { get; set; }
 		/// <summary>
@@ -34,6 +35,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Entities {
 		public virtual void Configure(IEntityMappingBuilder<GenericConfig> builder) {
 			builder.Id(c => c.Id);
 			builder.Map(c => c.Value);
+			builder.Map(c => c.CreateTime);
 			builder.Map(c => c.UpdateTime);
 		}
 	}

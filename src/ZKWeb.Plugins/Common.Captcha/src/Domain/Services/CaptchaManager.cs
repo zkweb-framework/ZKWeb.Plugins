@@ -99,6 +99,16 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 		}
 
 		/// <summary>
+		/// 获取保存在会话数据中的键
+		/// </summary>
+		/// <param name="key">原始键</param>
+		/// <returns></returns>
+		protected virtual string GetSessionItemKey(string key) {
+			// MongoDB不支持名称中有点
+			return (SessionItemKeyPrefix + key).Replace('.', '_');
+		}
+
+		/// <summary>
 		/// 生成验证码并储存验证码到会话中
 		/// </summary>
 		/// <param name="key">使用的键名</param>
@@ -153,7 +163,7 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 			// 储存到会话，会话的过期时间最少是30分钟
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
-			session.Items[SessionItemKeyPrefix + key] = captchaCode;
+			session.Items[GetSessionItemKey(key)] = captchaCode;
 			session.SetExpiresAtLeast(TimeSpan.FromMinutes(MakeSessionAliveAtLeast));
 			sessionManager.SaveSession();
 			// 返回图片对象
@@ -169,7 +179,7 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 		public virtual string GetWithoutRemove(string key) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
-			return session.Items.GetOrDefault<string>(SessionItemKeyPrefix + key);
+			return session.Items.GetOrDefault<string>(GetSessionItemKey(key));
 		}
 
 		/// <summary>
@@ -181,7 +191,7 @@ namespace ZKWeb.Plugins.Common.Captcha.src.Managers {
 		public virtual bool Check(string key, string actualCode) {
 			var sessionManager = Application.Ioc.Resolve<SessionManager>();
 			var session = sessionManager.GetSession();
-			var itemKey = SessionItemKeyPrefix + key;
+			var itemKey = GetSessionItemKey(key);
 			var exceptedCode = session.Items.GetOrDefault<string>(itemKey);
 			session.Items.Remove(itemKey);
 			sessionManager.SaveSession();
