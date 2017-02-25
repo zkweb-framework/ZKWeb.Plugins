@@ -1,6 +1,8 @@
 {
 	"PrependPlugins": [
-		"Common.Base"
+		"Common.Base",
+		"Common.Captcha",
+		"Common.Admin"
 	],
 	"AppendPlugins": [
 	],
