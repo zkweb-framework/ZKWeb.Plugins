@@ -32,7 +32,7 @@ $(function () {
 			var data = $element.attr("data-widget") || "";
 			var index = data.indexOf("{");
 			if (index >= 0) {
-				return { path: data.substr(0, index), args: data.substr(index) };
+				return { path: data.substr(0, index), args: JSON.parse(data.substr(index)) };
 			}
 			return { path: data, args: null };
 		},
@@ -108,6 +108,7 @@ $(function () {
 			// 显示载入中
 			VisualEditor.showLoadingLayer();
 			// 获取编辑表单, 这里需要使用post因为参数有可能很长
+			fail = fail || function () { };
 			$.post("/api/visual_editor/get_widget_edit_form",
 				{ path: path, args: JSON.stringify(args) })
 				.always(VisualEditor.hideLoadingLayer)

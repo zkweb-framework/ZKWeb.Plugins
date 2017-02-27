@@ -26,8 +26,9 @@ $(function () {
 			};
 			// 弹出编辑窗口
 			VisualEditor.showEditWidgetWindow(path, {}, function (html) {
-				// 添加到区域中
-				$(html).appendTo($area);
+				// 添加到区域中并触发动态加载事件
+				var $widget = $(html).appendTo($area);
+				$(document).trigger("dynamicLoaded", $widget);
 				$.toast({ icon: "success", text: $.translate("Add Element Success") });
 				// 执行清理工作
 				cleanup();
@@ -68,10 +69,19 @@ $(function () {
 
 	// 点击模块标题栏中的"编辑"时的事件
 	var onTemplateWidgetEditClicked = function () {
-		// TODO: 弹出编辑框
-		$.toast({ icon: "success", text: $.translate("Edit Element Success") });
-		// 通知布局更新
-		VisualEditor.layoutChanged();
+		// 获取模块信息
+		var $widget = $(this).closest(".template_widget");
+		var data = VisualEditor.parseWidgetElement($widget);
+		// 弹出编辑窗口
+		VisualEditor.showEditWidgetWindow(data.path, data.args, function (html) {
+			// 替换原有的模块并触发动态加载事件
+			var $newWidget = $(html);
+			$widget.replaceWith($newWidget);
+			$(document).trigger("dynamicLoaded", $newWidget);
+			$.toast({ icon: "success", text: $.translate("Edit Element Success") });
+			// 通知布局更新
+			VisualEditor.layoutChanged();
+		});
 	};
 
 	// 点击模块标题栏中的"删除"时的事件
