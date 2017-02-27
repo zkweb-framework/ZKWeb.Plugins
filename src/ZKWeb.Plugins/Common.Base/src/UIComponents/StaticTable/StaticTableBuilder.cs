@@ -42,12 +42,9 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable {
 		/// </summary>
 		/// <returns></returns>
 		public IEnumerable<Hash> GetHashRows() {
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			foreach (var row in Rows) {
-				var dict = row as IDictionary<string, object>;
-				if (dict != null)
-					yield return Hash.FromDictionary(dict);
-				else
-					yield return Hash.FromAnonymousObject(row);
+				yield return templateManager.CreateHash(row);
 			}
 		}
 

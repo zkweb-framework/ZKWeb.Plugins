@@ -4,6 +4,7 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Components.CsrfTokenStore.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
+using ZKWeb.Templating;
 using ZKWebStandard.Extensions;
 
 namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions {
@@ -32,7 +33,8 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions {
 		/// <param name="builder">表单构建器</param>
 		/// <param name="obj">对象</param>
 		public static void BindValuesFromAnonymousObject(this FormBuilder builder, object obj) {
-			builder.BindValues(Hash.FromAnonymousObject(obj));
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			builder.BindValues(templateManager.CreateHash(obj));
 		}
 
 		/// <summary>

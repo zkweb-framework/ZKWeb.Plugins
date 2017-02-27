@@ -34,12 +34,11 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateTags {
 			if (pagination == null) {
 				throw new ArgumentNullException("pagination is null");
 			}
-			var scope = Hash.FromAnonymousObject(new {
-				pagination,
-				urlParam = UrlParam,
-				lastPageNo = LastPageNo,
-				lastPageAlias = LastPageAlias
-			});
+			var scope = new Hash();
+			scope["pagination"] = pagination;
+			scope["urlParam"] = UrlParam;
+			scope["lastPageNo"] = LastPageNo;
+			scope["lastPageAlias"] = LastPageAlias;
 			context.Stack(scope, () => {
 				var includeTag = new Include();
 				includeTag.Initialize("include", "common.base/tmpl.url_pagination.html", null);

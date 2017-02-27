@@ -95,37 +95,8 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 		/// </summary>
 		[Action("api/visual_editor/get_widget_html", HttpMethods.POST)]
 		public IActionResult GetWidgetHtml(string url, string path, IDictionary<string, object> args) {
-			// 获取模块的Html之前首先要获取到当前Url的TemplateResult
-			// 模块有可能需要用到返回的变量
-			var uri = new Uri(url);
-			TemplateResult templateResult = null;
-			using (HttpManager.OverrideContext(uri.PathAndQuery, HttpMethods.GET)) {
-				var controllerManager = Application.Ioc.Resolve<ControllerManager>();
-				var wrappers = Application.Ioc.ResolveMany<IHttpRequestHandlerWrapper>();
-				var getTemplateResult = new Action(() => {
-					HttpManager.CurrentContext.SetIsEditingPage(true);
-					var requestPath = HttpManager.CurrentContext.Request.Path;
-					var action = controllerManager.GetAction(requestPath, HttpMethods.GET);
-					templateResult = action() as TemplateResult;
-				});
-				foreach (var wrapper in wrappers) {
-					getTemplateResult = wrapper.WrapHandlerAction(getTemplateResult);
-				}
-				getTemplateResult();
-			}
-			// 获取模块的Html
-			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
-			var context = new Context();
-			var widget = new TemplateWidget(path, args);
-			if (templateResult?.TemplateArgument != null) {
-				var arguments = templateResult.TemplateArgument;
-				if (arguments is IDictionary<string, object>) {
-					context.Push(Hash.FromDictionary((IDictionary<string, object>)arguments));
-				} else {
-					context.Push(Hash.FromAnonymousObject(arguments));
-				}
-			}
-			var widgetHtml = areaManager.RenderWidget(context, widget);
+			var widgetManager = Application.Ioc.Resolve<VisualWidgetManager>();
+			var widgetHtml = widgetManager.GetWidgetHtml(url, path, args);
 			return new PlainResult(widgetHtml) { ContentType = "text/html" };
 		}
 	}

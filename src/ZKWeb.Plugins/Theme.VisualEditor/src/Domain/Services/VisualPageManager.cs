@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Cache;
+using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Components.ExtraConfigKeys;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Components.VisualEditablePagesProviders.Interfaces;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs;
 using ZKWeb.Server;
+using ZKWeb.Web;
+using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 	/// <summary>
@@ -55,6 +59,31 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 					.ToList();
 				return pages;
 			}, EditablePagesCacheTime);
+		}
+
+		/// <summary>
+		/// 获取页面返回的模板结果对象
+		/// 如果页面不存在则返回null
+		/// </summary>
+		/// <param name="url">页面的Url</param>
+		/// <returns></returns>
+		public virtual IActionResult GetPageResult(string pathAndQuery) {
+			IActionResult result = null;
+			using (HttpManager.OverrideContext(pathAndQuery, HttpMethods.GET)) {
+				var controllerManager = Application.Ioc.Resolve<ControllerManager>();
+				var wrappers = Application.Ioc.ResolveMany<IHttpRequestHandlerWrapper>();
+				var getTemplateResult = new Action(() => {
+					HttpManager.CurrentContext.SetIsEditingPage(true);
+					var requestPath = HttpManager.CurrentContext.Request.Path;
+					var action = controllerManager.GetAction(requestPath, HttpMethods.GET);
+					result = action?.Invoke();
+				});
+				foreach (var wrapper in wrappers) {
+					getTemplateResult = wrapper.WrapHandlerAction(getTemplateResult);
+				}
+				getTemplateResult();
+			}
+			return result;
 		}
 	}
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Structs;
+using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
@@ -145,7 +146,8 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels {
 		/// </summary>
 		/// <returns></returns>
 		object ILiquidizable.ToLiquid() {
-			return Hash.FromAnonymousObject(this);
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			return templateManager.CreateHash(this);
 		}
 	}
 }

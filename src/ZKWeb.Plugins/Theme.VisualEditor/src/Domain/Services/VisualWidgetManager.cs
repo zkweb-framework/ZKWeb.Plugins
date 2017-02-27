@@ -7,6 +7,9 @@ using ZKWeb.Plugins.Theme.VisualEditor.src.Components.ExtraConfigKeys;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Components.VisualWidgetsProviders.Interfaces;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs;
 using ZKWeb.Server;
+using ZKWeb.Templating;
+using ZKWeb.Templating.DynamicContents;
+using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
@@ -56,6 +59,31 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 					.ToList();
 				return widgets;
 			}, WidgetsCacheTime);
+		}
+
+		/// <summary>
+		/// 获取模块的Html
+		/// </summary>
+		/// <param name="url">模块所在的Url地址</param>
+		/// <param name="path">模块的路径</param>
+		/// <param name="args">模块的参数</param>
+		/// <returns></returns>
+		public virtual string GetWidgetHtml(string url, string path, IDictionary<string, object> args) {
+			// 获取模块的Html之前首先要获取到所在Url的TemplateResult, 模块有可能需要用到返回的变量
+			var uri = new Uri(url);
+			var pageManager = Application.Ioc.Resolve<VisualPageManager>();
+			var templateResult = pageManager.GetPageResult(uri.PathAndQuery) as TemplateResult;
+			// 获取模块的Html
+			var templateManager = Application.Ioc.Resolve<TemplateManager>();
+			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
+			var context = new DotLiquid.Context();
+			var widget = new TemplateWidget(path, args);
+			if (templateResult?.TemplateArgument != null) {
+				var arguments = templateResult.TemplateArgument;
+				context.Push(templateManager.CreateHash(arguments));
+			}
+			var widgetHtml = areaManager.RenderWidget(context, widget);
+			return widgetHtml;
 		}
 	}
 }
