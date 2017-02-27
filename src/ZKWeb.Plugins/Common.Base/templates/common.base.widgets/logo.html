@@ -1,5 +1,6 @@
 ﻿<div class="logo">
 	<a href="{{ "/" | url }}" title="logo">
-		<img alt="logo" src="/static/common.base.images/logo.png" height="{{ h }}" width="{{ w }}" />
+		<img alt="logo" src="/static/common.base.images/logo.png"
+			 style="{{ Height | css_rule: 'height' }} {{ Width | css_rule: 'width' }}" />
 	</a>
 </div>

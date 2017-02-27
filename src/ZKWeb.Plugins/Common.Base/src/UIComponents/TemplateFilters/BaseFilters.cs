@@ -155,5 +155,25 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateFilters {
 		public static string Json(object obj) {
 			return JsonConvert.SerializeObject(obj);
 		}
+
+		/// <summary>
+		/// Css规则
+		/// 如果内容不存在则跳过描画
+		/// </summary>
+		/// <example>
+		/// {{ "100px" | css_rule: "width" }}
+		/// 返回 "width: 100px;"
+		/// </example>
+		/// <param name="content"></param>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public static HtmlString CssRule(string content, string key) {
+			if (string.IsNullOrEmpty(content)) {
+				return null;
+			}
+			key = HttpUtils.HtmlEncode(key);
+			content = HttpUtils.HtmlEncode(content);
+			return new HtmlString($"{key}: {content};");
+		}
 	}
 }
