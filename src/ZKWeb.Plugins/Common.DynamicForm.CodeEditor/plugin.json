@@ -1,0 +1,6 @@
+﻿{
+	"Name": "DynamicCodeEditor",
+	"Version": "0.0",
+	"Description": "Dynamic form field for code editor",
+	"Dependencies": [ "Common.Base", "Common.CodeEditor", "Common.DynamicForm" ]
+}
