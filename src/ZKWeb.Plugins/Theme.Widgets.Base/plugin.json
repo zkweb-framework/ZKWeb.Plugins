@@ -1,8 +1,12 @@
 ﻿{
 	"Name": "BaseTemplateWidgets",
-	"Version": "0.0",
+	"Version": "1.0.0",
 	"Description": "Base template widgets",
 	"Dependencies": [
-		"Common.Base"
+		"Common.Base",
+		"Common.CodeEditor",
+		"Common.DynamicForm.CodeEditor",
+		"CMS.ImageBrowser",
+		"Theme.VisualEditor"
 	]
 }

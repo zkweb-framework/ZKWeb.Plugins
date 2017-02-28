@@ -1,5 +1,4 @@
 ﻿using DotLiquid;
-using System.Linq;
 using ZKWeb.Templating.DynamicContents;
 using ZKWebStandard.Ioc;
 using ZKWebStandard.Utils;
@@ -11,6 +10,10 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.TemplateWidgetRenderer
 	/// </summary>
 	[ExportMany(ClearExists = true)]
 	public class VisualWidgetRenderer : TemplateWidgetRenderer {
+		/// <summary>
+		/// Css类的参数名
+		/// </summary>
+		public const string CssClassKey = "__CssClass";
 		/// <summary>
 		/// 内嵌Css的参数名
 		/// </summary>
@@ -28,11 +31,12 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.TemplateWidgetRenderer
 		/// 获取前Html
 		/// </summary>
 		protected override string GetBeforeHtml(Context context, TemplateWidget widget) {
-			var newestScope = context.Scopes[0];
+			var firstScope = context.Scopes[0];
 			var cacheKey = widget.GetCacheKey();
-			var style = HttpUtils.HtmlEncode(newestScope[InlineCssKey]);
-			var html = $"<div class='template_widget' data-widget='{cacheKey}' style='{style}'>";
-			var beforeHtml = newestScope[BeforeHtmlKey] as string;
+			var cssClass = HttpUtils.HtmlEncode(firstScope[CssClassKey]);
+			var style = HttpUtils.HtmlEncode(firstScope[InlineCssKey]);
+			var html = $"<div class='template_widget {cssClass}' data-widget='{cacheKey}' style='{style}'>";
+			var beforeHtml = firstScope[BeforeHtmlKey] as string;
 			if (!string.IsNullOrEmpty(beforeHtml)) {
 				html += beforeHtml;
 			}
@@ -43,9 +47,9 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.TemplateWidgetRenderer
 		/// 获取后Html
 		/// </summary>
 		protected override string GetAfterHtml(Context context, TemplateWidget widget) {
-			var newestScope = context.Scopes[0];
+			var firstScope = context.Scopes[0];
 			var html = "</div>";
-			var afterHtml = newestScope[AfterHtmlKey] as string;
+			var afterHtml = firstScope[AfterHtmlKey] as string;
 			if (!string.IsNullOrEmpty(afterHtml)) {
 				html += afterHtml;
 			}

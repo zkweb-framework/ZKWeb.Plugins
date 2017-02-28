@@ -1,0 +1,13 @@
+﻿{
+	"Name": "CustomHtml",
+	"CacheTime": 15,
+	"CacheBy": "Locale",
+	"Arguments": [
+		{
+			"Type": "CodeEditor",
+			"Rows": 15,
+			"Language": "html",
+			"Name": "CustomHtml"
+		}
+	]
+}

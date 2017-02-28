@@ -15,6 +15,8 @@ namespace ZKWeb.Plugins.Theme.Widgets.Base.src.Components.Translates {
 			// TODO: 翻译到其他语言
 			{ "BaseTemplateWidgets", "基础模板模块" },
 			{ "Base template widgets", "基础的模板模块" },
+			{ "CustomHtml", "自定义Html" },
+			{ "CustomContents", "自定义内容" }
 		};
 
 		public bool CanTranslate(string code) {

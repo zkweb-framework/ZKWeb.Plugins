@@ -62,7 +62,6 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 					.GroupBy(p => p.Group)
 					.Select(p => new VisualWidgetGroup(
 						p.Key, p.OrderBy(w => w.WidgetInfo.WidgetPath).ToList()))
-					.OrderBy(p => p.Group)
 					.ToList();
 				return widgets;
 			}, WidgetsCacheTime);
@@ -81,6 +80,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 			var pageManager = Application.Ioc.Resolve<VisualPageManager>();
 			var templateResult = pageManager.GetPageResult(uri.PathAndQuery) as TemplateResult;
 			// 获取模块的Html
+			// 通过渲染器获取避免读取和写入区域管理器的缓存
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var renderer = Application.Ioc.Resolve<ITemplateWidgetRenderer>();
 			var context = new DotLiquid.Context();
@@ -115,6 +115,8 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 			}
 			// 添加内嵌css, 前置html, 后置html
 			var noLint = JsonConvert.SerializeObject(new { lint = false });
+			form.Fields.Add(new FormField(new TextBoxFieldAttribute(
+				VisualWidgetRenderer.CssClassKey, "example: col-md-3 my-class") { Group = "AdditionalStyle" }));
 			form.Fields.Add(new FormField(new CodeEditorAttribute(
 				VisualWidgetRenderer.InlineCssKey, 5, "css", noLint) { Group = "AdditionalStyle" }));
 			form.Fields.Add(new FormField(new CodeEditorAttribute(

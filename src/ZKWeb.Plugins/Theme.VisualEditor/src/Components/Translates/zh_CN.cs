@@ -33,9 +33,11 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 			{ "This widget didn't have any arguments, you can click directly to submit",
 				"这个模块无参数, 你可以直接点击提交" },
 			{ "AdditionalStyle", "附加样式" },
-			{ "__InlineCss", "内嵌CSS" },
-			{ "__BeforeHtml", "前置HTML" },
-			{ "__AfterHtml", "后置HTML" }
+			{ "__CssClass", "Css类名" },
+			{ "__InlineCss", "内嵌Css" },
+			{ "__BeforeHtml", "前置Html" },
+			{ "__AfterHtml", "后置Html" },
+			{ "example: col-md-3 my-class", "例如: col-md-3 my-class" }
 		};
 
 		public bool CanTranslate(string code) {

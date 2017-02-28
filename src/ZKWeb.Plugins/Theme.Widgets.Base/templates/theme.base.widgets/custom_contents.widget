@@ -1,0 +1,12 @@
+﻿{
+	"Name": "CustomContents",
+	"CacheTime": 15,
+	"CacheBy": "Locale",
+	"Arguments": [
+		{
+			"Type": "RichTextEditor",
+			"ImageBrowserUrl": "/image_browser/templatewidget",
+			"Name": "CustomContents"
+		}
+	]
+}

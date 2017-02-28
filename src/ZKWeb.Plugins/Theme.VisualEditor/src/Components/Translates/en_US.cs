@@ -12,6 +12,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "en-US", "en" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
+			{ "__CssClass", "Css Class" },
 			{ "__InlineCss", "Inline Css" },
 			{ "__BeforeHtml", "Before Html" },
 			{ "__AfterHtml", "After Html" }
