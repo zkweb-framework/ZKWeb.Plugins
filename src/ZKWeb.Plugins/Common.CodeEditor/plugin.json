@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "CodeEditor",
-	"Version": "0.0",
+	"Version": "1.0.0",
 	"Description": "Provide code editor form field",
 	"Dependencies": [ "Common.Base" ]
 }

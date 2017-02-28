@@ -1,0 +1,13 @@
+﻿.form-controls {
+	> .CodeMirror {
+		border: 1px solid #d2d6de;
+	}
+}
+
+.CodeMirror-lint-tooltip {
+	z-index: 13000;
+}
+
+.CodeMirror-hints {
+	z-index: 13000;
+}

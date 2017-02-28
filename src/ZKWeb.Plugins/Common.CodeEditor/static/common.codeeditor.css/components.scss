@@ -1,1 +1,6 @@
 ﻿@import 'components/codemirror';
+@import 'components/addon/fold/foldgutter';
+@import 'components/addon/hints/show-hint';
+@import 'components/addon/lint/lint';
+@import 'components/addon/search/matchesonscrollbar';
+@import 'custom/codeeditor';
