@@ -5,6 +5,7 @@
 	"Dependencies": [
 		"Common.Base",
 		"Common.Admin",
+		"Common.CodeEditor",
 		"Common.DynamicForm"
 	]
 }

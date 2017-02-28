@@ -28,7 +28,7 @@ $(function () {
 			VisualEditor.showEditWidgetWindow(path, {}, function (html) {
 				// 添加到区域中并触发动态加载事件
 				var $widget = $(html).appendTo($area);
-				$(document).trigger("dynamicLoaded", $widget);
+				$.dynamicLoaded($widget);
 				$.toast({ icon: "success", text: $.translate("Add Element Success") });
 				// 执行清理工作
 				cleanup();
@@ -77,7 +77,7 @@ $(function () {
 			// 替换原有的模块并触发动态加载事件
 			var $newWidget = $(html);
 			$widget.replaceWith($newWidget);
-			$(document).trigger("dynamicLoaded", $newWidget);
+			$.dynamicLoaded($newWidget);
 			$.toast({ icon: "success", text: $.translate("Edit Element Success") });
 			// 通知布局更新
 			VisualEditor.layoutChanged();

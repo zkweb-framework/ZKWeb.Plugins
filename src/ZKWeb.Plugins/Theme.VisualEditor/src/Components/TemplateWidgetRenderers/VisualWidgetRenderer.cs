@@ -12,14 +12,27 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.TemplateWidgetRenderer
 	[ExportMany(ClearExists = true)]
 	public class VisualWidgetRenderer : TemplateWidgetRenderer {
 		/// <summary>
+		/// 内嵌Css的参数名
+		/// </summary>
+		public const string InlineCssKey = "__InlineCss";
+		/// <summary>
+		/// 前置Html的参数名
+		/// </summary>
+		public const string BeforeHtmlKey = "__BeforeHtml";
+		/// <summary>
+		/// 后置Html的参数名
+		/// </summary>
+		public const string AfterHtmlKey = "__AfterHtml";
+
+		/// <summary>
 		/// 获取前Html
 		/// </summary>
 		protected override string GetBeforeHtml(Context context, TemplateWidget widget) {
-			var lastScope = context.Scopes.Last();
+			var newestScope = context.Scopes[0];
 			var cacheKey = widget.GetCacheKey();
-			var style = HttpUtils.HtmlEncode(lastScope["__Style"]);
+			var style = HttpUtils.HtmlEncode(newestScope[InlineCssKey]);
 			var html = $"<div class='template_widget' data-widget='{cacheKey}' style='{style}'>";
-			var beforeHtml = lastScope["__BeforeHtml"] as string;
+			var beforeHtml = newestScope[BeforeHtmlKey] as string;
 			if (!string.IsNullOrEmpty(beforeHtml)) {
 				html += beforeHtml;
 			}
@@ -30,9 +43,9 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.TemplateWidgetRenderer
 		/// 获取后Html
 		/// </summary>
 		protected override string GetAfterHtml(Context context, TemplateWidget widget) {
-			var lastScope = context.Scopes.Last();
+			var newestScope = context.Scopes[0];
 			var html = "</div>";
-			var afterHtml = lastScope["__AfterHtml"] as string;
+			var afterHtml = newestScope[AfterHtmlKey] as string;
 			if (!string.IsNullOrEmpty(afterHtml)) {
 				html += afterHtml;
 			}

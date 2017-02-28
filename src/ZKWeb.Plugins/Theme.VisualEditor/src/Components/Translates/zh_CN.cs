@@ -31,7 +31,11 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 			{ "Edit Element Success", "编辑元素成功" },
 			// TODO: 翻译到其他语言
 			{ "This widget didn't have any arguments, you can click directly to submit",
-				"这个模块无参数, 你可以直接点击提交" }
+				"这个模块无参数, 你可以直接点击提交" },
+			{ "AdditionalStyle", "附加样式" },
+			{ "__InlineCss", "内嵌CSS" },
+			{ "__BeforeHtml", "前置HTML" },
+			{ "__AfterHtml", "后置HTML" }
 		};
 
 		public bool CanTranslate(string code) {

@@ -58,18 +58,10 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			var widgetInfo = areaManager.GetWidgetInfo(path);
 			// 构建编辑表单
-			var dynamicFormBuilder = new DynamicFormBuilder();
-			dynamicFormBuilder.AddFields(widgetInfo.Arguments);
-			var form = dynamicFormBuilder.ToForm<TabFormBuilder>();
-			form.Attribute = new FormAttribute(
-				"WidgetEditForm",
-				"/api/visual_editor/submit_widget_edit_form?path=" + HttpUtils.UrlEncode(path));
+			var widgetManager = Application.Ioc.Resolve<VisualWidgetManager>();
+			var form = widgetManager.GetWidgetEditForm(widgetInfo);
+			// 绑定表单
 			form.BindValues(args);
-			// 添加无参数的提醒
-			if (!widgetInfo.Arguments.Any()) {
-				form.Fields.Add(new FormField(new TemplateHtmlFieldAttribute(
-					"NoArguments", "theme.visualeditor/no_arguments_alert.html")));
-			}
 			return new TemplateResult("theme.visualeditor/widget_edit_form.html", new { form });
 		}
 
@@ -82,9 +74,8 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
 			var widgetInfo = areaManager.GetWidgetInfo(path);
 			// 构建编辑表单
-			var dynamicFormBuilder = new DynamicFormBuilder();
-			dynamicFormBuilder.AddFields(widgetInfo.Arguments);
-			var form = dynamicFormBuilder.ToForm<TabFormBuilder>();
+			var widgetManager = Application.Ioc.Resolve<VisualWidgetManager>();
+			var form = widgetManager.GetWidgetEditForm(widgetInfo);
 			// 获取提交的参数
 			var result = form.ParseValues(Request.GetAllDictionary());
 			return new JsonResult(new { result });

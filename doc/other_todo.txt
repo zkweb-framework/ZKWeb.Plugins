@@ -5,6 +5,7 @@
 更新Dapper的文档
 添加ITemplateWidgetRenderer的文档
 添加$.translate的文档
+添加$.dynamicLoaded的文档
 添加Common.CodeEditor的文档
 添加Common.DynamicForm的文档
 添加Common.DynamicForm.CodeEditor的文档

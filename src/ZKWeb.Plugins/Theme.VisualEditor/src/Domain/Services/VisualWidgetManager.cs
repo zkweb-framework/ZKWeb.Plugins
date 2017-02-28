@@ -1,9 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Cache;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.CodeEditor.src.UIComponents.FormFieldAttributes;
+using ZKWeb.Plugins.Common.DynamicForm.src.UIComponents.DynamicForm;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Components.ExtraConfigKeys;
+using ZKWeb.Plugins.Theme.VisualEditor.src.Components.TemplateWidgetRenderers;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Components.VisualWidgetsProviders.Interfaces;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs;
 using ZKWeb.Server;
@@ -13,6 +19,7 @@ using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 	/// <summary>
@@ -75,15 +82,46 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 			var templateResult = pageManager.GetPageResult(uri.PathAndQuery) as TemplateResult;
 			// 获取模块的Html
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
-			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
+			var renderer = Application.Ioc.Resolve<ITemplateWidgetRenderer>();
 			var context = new DotLiquid.Context();
 			var widget = new TemplateWidget(path, args);
 			if (templateResult?.TemplateArgument != null) {
 				var arguments = templateResult.TemplateArgument;
 				context.Push(templateManager.CreateHash(arguments));
 			}
-			var widgetHtml = areaManager.RenderWidget(context, widget);
+			var widgetHtml = renderer.Render(context, widget);
 			return widgetHtml;
+		}
+
+		/// <summary>
+		/// 获取模块的编辑表单
+		/// </summary>
+		/// <param name="widgetInfo">模块信息</param>
+		/// <returns></returns>
+		public virtual FormBuilder GetWidgetEditForm(TemplateWidgetInfo widgetInfo) {
+			var dynamicFormBuilder = new DynamicFormBuilder();
+			// 添加模块中的参数
+			dynamicFormBuilder.AddFields(widgetInfo.Arguments);
+			// 生成表单
+			var form = dynamicFormBuilder.ToForm<TabFormBuilder>();
+			form.Attribute = new FormAttribute(
+				"WidgetEditForm",
+				"/api/visual_editor/submit_widget_edit_form?path=" +
+				HttpUtils.UrlEncode(widgetInfo.WidgetPath));
+			// 添加无参数的提醒
+			if (!widgetInfo.Arguments.Any()) {
+				form.Fields.Add(new FormField(new TemplateHtmlFieldAttribute(
+					"NoArguments", "theme.visualeditor/no_arguments_alert.html")));
+			}
+			// 添加内嵌css, 前置html, 后置html
+			var noLint = JsonConvert.SerializeObject(new { lint = false });
+			form.Fields.Add(new FormField(new CodeEditorAttribute(
+				VisualWidgetRenderer.InlineCssKey, 5, "css", noLint) { Group = "AdditionalStyle" }));
+			form.Fields.Add(new FormField(new CodeEditorAttribute(
+				VisualWidgetRenderer.BeforeHtmlKey, 8, "html", noLint) { Group = "AdditionalStyle" }));
+			form.Fields.Add(new FormField(new CodeEditorAttribute(
+				VisualWidgetRenderer.AfterHtmlKey, 8, "html", noLint) { Group = "AdditionalStyle" }));
+			return form;
 		}
 	}
 }

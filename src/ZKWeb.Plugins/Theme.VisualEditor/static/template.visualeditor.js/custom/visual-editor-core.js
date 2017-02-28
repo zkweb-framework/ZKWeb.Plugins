@@ -125,9 +125,7 @@ $(function () {
 						message: $contents,
 						onshow: function (dialog) {
 							// 触发动态加载事件
-							setTimeout(function () {
-								$(document).trigger("dynamicLoaded", $contents);
-							}, 100);
+							$.dynamicLoaded($contents);
 							// 绑定表单提交后的事件
 							var $form = $contents.find("form").first();
 							$form.on("success", function (e, data) {
