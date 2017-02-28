@@ -3,7 +3,7 @@ using ZKWeb.Localize;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
-namespace ZKWeb.Plugins.Common.CodeEditor.src.Components.Translates {
+namespace ZKWeb.Plugins.Common.DynamicForm.CodeEditor.src.Components.Translates {
 	/// <summary>
 	/// 中文翻译
 	/// </summary>
@@ -12,8 +12,8 @@ namespace ZKWeb.Plugins.Common.CodeEditor.src.Components.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>() {
 			// TODO: 翻译到其他语言
-			{ "CodeEditor", "代码编辑器" },
-			{ "Provide code editor form field", "提供编辑代码的表单控件" }
+			{ "DynamicCodeEditor", "动态代码编辑器" },
+			{ "Dynamic form field for code editor", "代码编辑器的动态表单字段" }
 		};
 
 		public bool CanTranslate(string code) {

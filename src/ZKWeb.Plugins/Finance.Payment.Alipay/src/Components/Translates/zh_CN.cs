@@ -12,6 +12,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Components.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
+			// TODO: 翻译到其他语言
 			{ "AlipayPaymentApi", "支付宝支付" },
 			{ "Support pay transactions by alipay", "支持通过支付宝支付交易" },
 			{ "Alipay", "支付宝" },

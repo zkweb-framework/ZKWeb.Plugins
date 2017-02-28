@@ -3,17 +3,18 @@ using ZKWeb.Localize;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
-namespace ZKWeb.Plugins.Common.CodeEditor.src.Components.Translates {
+namespace ZKWeb.Plugins.Theme.Widgets.Slideshow.src.Components.Translates {
 	/// <summary>
 	/// 中文翻译
 	/// </summary>
 	[ExportMany, SingletonReuse]
 	public class zh_CN : ITranslateProvider {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
-		private static Dictionary<string, string> Translates = new Dictionary<string, string>() {
+		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
+		{
 			// TODO: 翻译到其他语言
-			{ "CodeEditor", "代码编辑器" },
-			{ "Provide code editor form field", "提供编辑代码的表单控件" }
+			{ "SlideshowTemplateWidgets", "轮播模板模块" },
+			{ "Slideshow template widgets", "轮播的模板模块" },
 		};
 
 		public bool CanTranslate(string code) {

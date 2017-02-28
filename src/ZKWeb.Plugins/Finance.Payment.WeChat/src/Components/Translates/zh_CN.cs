@@ -12,6 +12,7 @@ namespace ZKWeb.Plugins.Finance.Payment.WeChat.src.Components.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
+			// TODO: 翻译到其他语言
 			{ "WechatPaymentApi", "微信支付" },
 			{ "Support pay transactions by wechat", "支持通过微信支付交易" },
 			{ "WechatPay", "微信支付" },

@@ -12,6 +12,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Tenpay.src.Components.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
+			// TODO: 翻译到其他语言
 			{ "TenpayPaymentApi", "财付通支付" },
 			{ "Support pay transactions by tenpay", "支持通过财付通支付交易" },
 			{ "Tenpay", "财付通" },

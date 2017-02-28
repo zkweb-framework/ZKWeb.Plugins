@@ -12,6 +12,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Components.Translates {
 		private static HashSet<string> Codes = new HashSet<string>() { "zh-CN" };
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
+			// TODO: 翻译到其他语言
 			{ "PingppPaymentApi", "Ping++支付" },
 			{ "Support pay transactions by pingpp", "支持通过Ping++支付交易" },
 			{ "Pingpp", "Ping++" },

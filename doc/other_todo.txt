@@ -2,9 +2,16 @@
 
 ====================================================================
 
+更新Dapper的文档
+添加ITemplateWidgetRenderer的文档
 添加$.translate的文档
+添加Common.CodeEditor的文档
 添加Common.DynamicForm的文档
+添加Common.DynamicForm.CodeEditor的文档
+添加Common.DynamicForm.DatePicker的文档
 更新默认插件集的文档
+重新生成API文档
+让插件集和zkweb的版本同步发布到nuget
 
 定时按天自动备份自定义模块文件，最多保留30天
 
@@ -20,6 +27,10 @@
 }
 
 以上完成后发布到demo站点
+
+可视化编辑完成后
+	评价功能收尾
+	补充支付插件的功能
 
 ====================================================================
 
