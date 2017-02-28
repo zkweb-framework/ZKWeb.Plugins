@@ -35,7 +35,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.GenericConfigs {
 			DocumentTitleFormat = "{title} - {websiteName}";
 			PageKeywords = "";
 			PageDescription = "";
-			CopyrightText = "Copyright © 2016 ZKWeb All rights reserved";
+			CopyrightText = "Copyright © 2016~2017 ZKWeb All rights reserved";
 		}
 	}
 }
