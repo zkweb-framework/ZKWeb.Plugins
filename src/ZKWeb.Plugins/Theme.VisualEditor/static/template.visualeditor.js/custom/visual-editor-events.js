@@ -152,7 +152,7 @@ $(function () {
 		$topBar.find(".switch-page").on("click", onSwitchPage);
 		$topBar.find(".save-changes").on("click", onSaveChanges);
 		// 绑定窗口关闭时的事件, 开发时可注释以下行
-		// $(window).on("beforeunload", onWindowClose);
+		$(window).on("beforeunload", onWindowClose);
 		// 绑定模板模块的鼠标进入和离开事件
 		$(document).on("mouseenter", ".template_widget", onTemplateWidgetMouseEnter);
 		$(document).on("mouseleave", ".template_widget", onTemplateWidgetMouseLeave);

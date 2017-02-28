@@ -32,7 +32,8 @@
 		min-width: 20px;
 		min-height: 20px;
 		border: 1px dashed #27ae60;
-		margin: 1px;
+		/* 带margin会影响网格布置，目前需要禁用margin */
+		/* margin: 1px; */
 		/* 标题栏的样式 */
 		.template-widget-title-bar {
 			height: 20px;
