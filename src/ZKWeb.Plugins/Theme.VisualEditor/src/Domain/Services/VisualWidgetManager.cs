@@ -79,6 +79,12 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 			var uri = new Uri(url);
 			var pageManager = Application.Ioc.Resolve<VisualPageManager>();
 			var templateResult = pageManager.GetPageResult(uri.PathAndQuery) as TemplateResult;
+			// 过滤空参数, 无参数时应该等于null
+			args = args.Where(x => x.Value != null && x.Value as string != "")
+				.ToDictionary(x => x.Key, x => x.Value);
+			if (args.Count == 0) {
+				args = null;
+			}
 			// 获取模块的Html
 			// 通过渲染器获取避免读取和写入区域管理器的缓存
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();

@@ -164,11 +164,50 @@ $(function () {
 			});
 		},
 
+		// 启用或禁用"添加元素"按钮
+		switchAddElementBtn: function (enable) {
+			var $topBar = $(".visual-editor-top-bar");
+			var $addElement = $topBar.find(".add-element");
+			enable ? $addElement.removeClass("disabled") : $addElement.addClass("disabled");
+		},
+
+		// 启用或禁用"保存修改"按钮
+		switchSaveChangesBtn: function (enable) {
+			var $topBar = $(".visual-editor-top-bar");
+			var $saveChanges = $topBar.find(".save-changes");
+			enable ? $saveChanges.removeClass("disabled") : $saveChanges.addClass("disabled");
+		},
+
 		// 布局更新后的处理
 		layoutChanged: function () {
-			// TODO: 更新数据
-			// TODO: 启用保存按钮
-			$.toast("layout change");
+			// 启用保存按钮
+			VisualEditor.switchSaveChangesBtn(true);
+		},
+
+		// 获取可视化编辑的结果
+		getEditResult: function () {
+			var result = { Areas: [] };
+			$(".template_area").each(function () {
+				var $area = $(this);
+				var areaId = $area.attr("area_id");
+				var widgets = [];
+				$area.find("> .template_widget").each(function () {
+					var info = VisualEditor.parseWidgetElement($(this));
+					widgets.push({ Path: info.path, Args: info.args });
+				});
+				result.Areas.push({ AreaId: areaId, Widgets: widgets });
+			});
+			return result;
+		},
+
+		// 保存可视化编辑的结果
+		saveChanges: function () {
+			var result = VisualEditor.getEditResult();
+			$.post("/api/visual_editor/save_changes", { result: JSON.stringify(result) }, function (data) {
+				// 显示消息并禁用保存按钮
+				$.handleAjaxResult(data);
+				VisualEditor.switchSaveChangesBtn(false);
+			});
 		}
 	};
 

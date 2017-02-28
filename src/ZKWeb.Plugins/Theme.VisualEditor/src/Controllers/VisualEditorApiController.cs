@@ -1,23 +1,17 @@
-﻿using DotLiquid;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Admin.src.Components.ActionFilters;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
-using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
-using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
-using ZKWeb.Plugins.Common.DynamicForm.src.UIComponents.DynamicForm;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services;
+using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs;
 using ZKWeb.Templating.DynamicContents;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Utils;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 	/// <summary>
@@ -89,6 +83,16 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 			var widgetManager = Application.Ioc.Resolve<VisualWidgetManager>();
 			var widgetHtml = widgetManager.GetWidgetHtml(url, path, args);
 			return new PlainResult(widgetHtml) { ContentType = "text/html" };
+		}
+
+		/// <summary>
+		/// 保存可视化编辑的修改
+		/// </summary>
+		[Action("api/visual_editor/save_changes", HttpMethods.POST)]
+		public IActionResult SaveChanges(VisualEditResult result) {
+			var themeManager = Application.Ioc.Resolve<VisualThemeManager>();
+			themeManager.SaveEditResult(result);
+			return new JsonResult(new { message = new T("Saved Successfully") });
 		}
 	}
 }

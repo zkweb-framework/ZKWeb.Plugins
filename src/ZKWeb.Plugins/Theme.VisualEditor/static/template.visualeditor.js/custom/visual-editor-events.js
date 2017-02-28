@@ -16,13 +16,16 @@ $(function () {
 		var path = $this.closest(".widget-box").attr("data-path");
 		// 关闭模态框
 		$this.closest(".bootstrap-dialog").modal("hide");
+		// 禁用"添加元素"按钮
+		VisualEditor.switchAddElementBtn(false);
 		// 让用户选择区域
 		var $areas = $(".template_area");
 		$areas.addClass("select-area").on("click", function () {
 			var $area = $(this);
-			// 完成后清除选择样式
+			// 完成后清除选择样式并恢复"添加元素"按钮
 			var cleanup = function () {
 				$areas.off("click").removeClass("select-area");
+				VisualEditor.switchAddElementBtn(true);
 			};
 			// 弹出编辑窗口
 			VisualEditor.showEditWidgetWindow(path, {}, function (html) {
@@ -58,7 +61,7 @@ $(function () {
 
 	// 点击"保存修改"时的事件
 	var onSaveChanges = function () {
-		$.toast("TODO");
+		VisualEditor.saveChanges();
 	};
 
 	// 窗口关闭时的事件
@@ -154,7 +157,6 @@ $(function () {
 		$(document).on("mouseenter", ".template_widget", onTemplateWidgetMouseEnter);
 		$(document).on("mouseleave", ".template_widget", onTemplateWidgetMouseLeave);
 		// 支持拖动模块
-		// TODO: 修复拖动后标题栏残留的问题
 		$(".template_area").sortable({
 			connectWith: ".template_area",
 			cursor: "move",
