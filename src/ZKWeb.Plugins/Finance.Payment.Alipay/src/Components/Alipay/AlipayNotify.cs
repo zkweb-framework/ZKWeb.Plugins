@@ -30,7 +30,6 @@ namespace Com.Alipay {
 		private string Https_veryfy_url = "https://mapi.alipay.com/gateway.do?service=notify_verify&";
 		#endregion
 
-
 		/// <summary>
 		/// 构造函数
 		/// 从配置文件中初始化变量
