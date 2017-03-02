@@ -184,6 +184,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Domain.Services {
 			// 获取交易和接口，检查金额是否一致
 			PaymentTransaction transaction;
 			PaymentApi api;
+			ApiData apiData;
 			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
 			using (UnitOfWork.Scope()) {
 				transaction = transactionManager.Get(t => t.Serial == outTradeNo);
@@ -195,9 +196,9 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Domain.Services {
 						transaction.Amount, totalFee));
 				}
 				api = transaction.Api;
+				apiData = api.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
 			}
 			// 验证消息是否合法
-			var apiData = api.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
 			var notify = new Notify(apiData.PartnerId);
 			if (!notify.Verify(parameters, notifyId, sign)) {
 				throw new ArgumentException("check alipay sign failed");
