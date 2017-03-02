@@ -10,6 +10,7 @@
 添加Common.DynamicForm的文档
 添加Common.DynamicForm.CodeEditor的文档
 添加Common.DynamicForm.DatePicker的文档
+更新Finance.Payment.Alipay的文档
 更新默认插件集的文档
 重新生成API文档
 让插件集和zkweb的版本同步发布到nuget
