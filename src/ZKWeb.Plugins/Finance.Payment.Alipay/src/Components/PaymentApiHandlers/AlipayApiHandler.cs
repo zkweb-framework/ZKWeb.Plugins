@@ -1,7 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
+using ZKWeb.Plugins.Finance.Payment.Alipay.src.Domain.Services;
 using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentApiHandlers.Interfaces;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
 using ZKWeb.Plugins.Finance.Payment.src.UIComponents.Forms;
@@ -37,8 +38,8 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Components.PaymentApiHandlers
 		public void OnFormBind(PaymentApiEditForm form, PaymentApi bindFrom) {
 			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
 			ApiDataEditing.PartnerId = apiData.PartnerId;
+			ApiDataEditing.PayeePartnerId = apiData.PayeePartnerId;
 			ApiDataEditing.PartnerKey = apiData.PartnerKey;
-			ApiDataEditing.PartnerEmail = apiData.PartnerEmail;
 			ApiDataEditing.ServiceType = apiData.ServiceType;
 			ApiDataEditing.ReturnDomain = apiData.ReturnDomain;
 		}
@@ -61,7 +62,8 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Components.PaymentApiHandlers
 		/// 获取支付Html
 		/// </summary>
 		public void GetPaymentHtml(PaymentTransaction transaction, ref HtmlString html) {
-			throw new NotImplementedException();
+			var alipayManager = Application.Ioc.Resolve<AlipayManager>();
+			html = alipayManager.GetPaymentHtml(transaction);
 		}
 
 		/// <summary>
@@ -69,7 +71,12 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Components.PaymentApiHandlers
 		/// </summary>
 		public void DeliveryGoods(
 			PaymentTransaction transaction, string logisticsName, string invoiceNo) {
-			throw new NotImplementedException();
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(string.Format(
+				"PaymentApi send goods: transaction {0} logisticsName {1} invoiceNo {2}",
+				transaction.Serial, logisticsName, invoiceNo));
+			var alipayManager = Application.Ioc.Resolve<AlipayManager>();
+			alipayManager.DeliveryGoods(transaction, logisticsName, invoiceNo);
 		}
 
 		/// <summary>
@@ -80,19 +87,19 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Components.PaymentApiHandlers
 			/// 商户Id
 			/// </summary>
 			[Required]
-			[TextBoxField("PartnerId", "PartnerId")]
+			[TextBoxField("PartnerId", "PartnerId, usually starts with 2088")]
 			public string PartnerId { get; set; }
 			/// <summary>
-			/// 商户邮箱
+			/// 收款商户Id
 			/// </summary>
 			[Required]
-			[TextBoxField("PartnerEmail", "PartnerEmail")]
-			public string PartnerEmail { get; set; }
+			[TextBoxField("PayeePartnerId", "PayeePartnerId, usually same with PartnerId")]
+			public string PayeePartnerId { get; set; }
 			/// <summary>
 			/// 商户密钥
 			/// </summary>
 			[Required]
-			[TextBoxField("PartnerKey", "PartnerKey")]
+			[TextAreaField("PartnerKey", 5, "PartnerKey, usually starts with -----BEGIN RSA PRIVATE KEY-----")]
 			public string PartnerKey { get; set; }
 			/// <summary>
 			/// 服务类型
