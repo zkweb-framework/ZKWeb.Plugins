@@ -13,8 +13,10 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Components.Translates {
 		private static Dictionary<string, string> Translates = new Dictionary<string, string>()
 		{
 			// TODO: 翻译到其他语言
-			{ "AlipayMobilePaymentApi", "支付宝手机支付" },
+			{ "AlipayMobilePaymentApi", "支付宝移动端支付" },
 			{ "Support pay transactions by alipay mobile", "支持在移动端通过支付宝支付交易" },
+			{ "AlipayBarCodePay", "支付宝扫码支付" },
+			{ "AppId, usually starts with datetime such as 20170306", "AppId, 通常以日期开始例如20170306" }
 		};
 
 		public bool CanTranslate(string code) {
