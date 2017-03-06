@@ -27,6 +27,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Components.Translates {
 			{ "ImmediateArrival", "即时到账" },
 			{ "SecuredTransaction", "担保交易" },
 			{ "DualInterface", "双接口" },
+			{ "WapPay", "手机支付" },
 			{ "ReturnDomain", "返回域名" },
 			{ "keep empty will use the default domain", "留空时使用默认域名" },
 			{ "Alipay only support CNY", "支付宝只支持人民币支付" },

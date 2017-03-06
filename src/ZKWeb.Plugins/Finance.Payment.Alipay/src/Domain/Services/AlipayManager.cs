@@ -26,7 +26,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Domain.Services {
 	/// <summary>
 	/// 支付宝管理器
 	/// </summary>
-	[ExportMany]
+	[ExportMany, SingletonReuse]
 	public class AlipayManager : DomainServiceBase {
 		/// <summary>
 		/// 支付宝的返回Url
@@ -94,6 +94,10 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Domain.Services {
 				parameters["logistics_fee"] = "0"; // 物流费用，这套系统不支持单独传入物流费用
 				parameters["logistics_type"] = "EXPRESS"; // 快递（可选EXPRESS, POST, EMS）
 				parameters["logistics_payment"] = "SELLER_PAY"; // 因为物流费用不单独算，只能用卖家承担运费
+			} else if (apiData.ServiceType == (int)AlipayServiceTypes.WapPay) {
+				// 手机支付
+				parameters["service"] = "alipay.wap.create.direct.pay.by.user"; // 服务类型 手机支付
+				parameters["total_fee"] = transaction.Amount.ToString("0.00"); // 金额
 			}
 			// 创建并返回支付Html
 			var submit = new Submit(apiData.PartnerId, apiData.PartnerKey);

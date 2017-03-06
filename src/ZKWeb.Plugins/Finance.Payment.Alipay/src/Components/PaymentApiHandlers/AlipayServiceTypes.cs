@@ -15,5 +15,9 @@
 		/// 双接口
 		/// </summary>
 		DualInterface = 2,
+		/// <summary>
+		/// 手机支付
+		/// </summary>
+		WapPay = 3
 	}
 }
