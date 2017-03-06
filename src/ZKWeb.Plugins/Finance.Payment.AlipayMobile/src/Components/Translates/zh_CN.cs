@@ -15,8 +15,19 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Components.Translates {
 			// TODO: 翻译到其他语言
 			{ "AlipayMobilePaymentApi", "支付宝移动端支付" },
 			{ "Support pay transactions by alipay mobile", "支持在移动端通过支付宝支付交易" },
-			{ "AlipayBarCodePay", "支付宝扫码支付" },
-			{ "AppId, usually starts with datetime such as 20170306", "AppId, 通常以日期开始例如20170306" }
+			{ "AlipayQRCodePay", "支付宝扫码支付" },
+			{ "AppId, usually starts with datetime such as 20170306", "AppId, 通常以日期开始例如20170306" },
+			{ "Alipay barcode pay is unsupported on .net core yet", "支付宝扫码支付仍未支持.Net Core" },
+			{ "Alipay only support CNY", "支付宝只支持人民币支付" },
+			{ "PartnerId", "商户Id" },
+			{ "PartnerId, usually starts with 2088", "商品Id, 一般以2088开始" },
+			{ "PayeePartnerId", "收款商户Id" },
+			{ "PayeePartnerId, usually same with PartnerId", "收款商户Id, 一般和商户Id相同" },
+			{ "PartnerKey", "商户密钥" },
+			{ "PartnerKey (RSA with SHA1), usually starts with -----BEGIN RSA PRIVATE KEY-----",
+				"商户密钥 (RSA + SHA1), 一般以-----BEGIN RSA PRIVATE KEY-----开始" },
+			{ "Please use alipay scan the following qr code to complete the payment",
+				"请使用支付宝扫描以下的二维码完成支付" }
 		};
 
 		public bool CanTranslate(string code) {

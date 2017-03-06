@@ -1,0 +1,15 @@
+﻿<div class="panel panel-themed qrcode-pay-container">
+	<div class="panel-heading">
+		<i class="fa fa-qrcode">&nbsp;{{ "AlipayQRCodePay" | trans }}</i>
+	</div>
+	<div class="page-content">
+		<div class="text-center-row">
+			<div>
+				{{ "Please use alipay scan the following qr code to complete the payment" | trans }}
+			</div>
+			<div class="qrcode alipay-qrcode">
+				<img src="data:image/png;base64,{{ qrCodeBase64 }}" style="width: 300px;" alt="QRCode" />
+			</div>
+		</div>
+	</div>
+</div>

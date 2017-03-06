@@ -99,7 +99,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Components.PaymentApiHandlers
 			/// 商户密钥
 			/// </summary>
 			[Required]
-			[TextAreaField("PartnerKey", 5, "PartnerKey, usually starts with -----BEGIN RSA PRIVATE KEY-----")]
+			[TextAreaField("PartnerKey", 5, "PartnerKey (RSA with SHA1), usually starts with -----BEGIN RSA PRIVATE KEY-----")]
 			public string PartnerKey { get; set; }
 			/// <summary>
 			/// 服务类型

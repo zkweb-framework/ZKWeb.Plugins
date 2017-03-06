@@ -2,5 +2,6 @@
 	"Name": "AlipayMobilePaymentApi",
 	"Version": "0.0",
 	"Description": "Support pay transactions by alipay mobile",
+	"References": [ "AopSdk", "QRCoder" ],
 	"Dependencies": [ "Common.Admin", "Finance.Payment" ]
 }

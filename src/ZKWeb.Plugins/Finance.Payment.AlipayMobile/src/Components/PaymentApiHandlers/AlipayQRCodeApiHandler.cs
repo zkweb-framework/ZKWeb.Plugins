@@ -14,11 +14,11 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Components.PaymentApiHa
 	/// 支付宝扫码支付的处理器
 	/// </summary>
 	[ExportMany]
-	public class AlipayBarCodeApiHandler : IPaymentApiHandler {
+	public class AlipayQRCodeApiHandler : IPaymentApiHandler {
 		/// <summary>
 		/// 接口类型
 		/// </summary>
-		public string Type { get { return "AlipayBarCodePay"; } }
+		public string Type { get { return "AlipayQRCodePay"; } }
 		/// <summary>
 		/// 后台编辑表单使用的接口数据
 		/// </summary>
@@ -37,6 +37,7 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Components.PaymentApiHa
 		public void OnFormBind(PaymentApiEditForm form, PaymentApi bindFrom) {
 			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
 			ApiDataEditing.PartnerId = apiData.PartnerId;
+			ApiDataEditing.PayeePartnerId = apiData.PayeePartnerId;
 			ApiDataEditing.AppId = apiData.AppId;
 			ApiDataEditing.PartnerKey = apiData.PartnerKey;
 			ApiDataEditing.ReturnDomain = apiData.ReturnDomain;
@@ -61,7 +62,7 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Components.PaymentApiHa
 		/// </summary>
 		public void GetPaymentHtml(PaymentTransaction transaction, ref HtmlString html) {
 			var alipayMobileManager = Application.Ioc.Resolve<AlipayMobileManager>();
-			// html = alipayManager.GetPaymentHtml(transaction);
+			html = alipayMobileManager.GetQRCodePaymentHtml(transaction);
 		}
 
 		/// <summary>
@@ -87,6 +88,12 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Components.PaymentApiHa
 			[TextBoxField("PartnerId", "PartnerId, usually starts with 2088")]
 			public string PartnerId { get; set; }
 			/// <summary>
+			/// 收款商户Id
+			/// </summary>
+			[Required]
+			[TextBoxField("PayeePartnerId", "PayeePartnerId, usually same with PartnerId")]
+			public string PayeePartnerId { get; set; }
+			/// <summary>
 			/// AppId
 			/// </summary>
 			[Required]
@@ -96,7 +103,7 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Components.PaymentApiHa
 			/// 商户密钥
 			/// </summary>
 			[Required]
-			[TextAreaField("PartnerKey", 5, "PartnerKey, usually starts with -----BEGIN RSA PRIVATE KEY-----")]
+			[TextAreaField("PartnerKey", 5, "PartnerKey (RSA with SHA1), usually starts with -----BEGIN RSA PRIVATE KEY-----")]
 			public string PartnerKey { get; set; }
 			/// <summary>
 			/// 返回域名

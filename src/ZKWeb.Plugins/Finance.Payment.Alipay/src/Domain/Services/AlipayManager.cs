@@ -105,8 +105,8 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Domain.Services {
 			return new HtmlString(html);
 #else
 			return new HtmlString(templateManager.RenderTemplate(
-					"finance.payment/error_text.html",
-					new { error = new T("Alipay is unsupported on .net core yet") }));
+				"finance.payment/error_text.html",
+				new { error = new T("Alipay is unsupported on .net core yet") }));
 #endif
 		}
 
