@@ -42,7 +42,8 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Controller {
 		public IActionResult Notify() {
 			// 处理回应
 			var alipayMobileManager = Application.Ioc.Resolve<AlipayMobileManager>();
-			alipayMobileManager.ProcessNotify(GetRequestParameters());
+			Guid transactionId;
+			alipayMobileManager.ProcessNotify(GetRequestParameters(), out transactionId);
 			// 成功时返回success
 			return new PlainResult("success");
 		}
