@@ -1,1 +1,11 @@
-﻿<div class="text-center-row">{{ error }}</div>
+﻿<div class="panel panel-themed qrcode-pay-container">
+	<div class="panel-heading">
+		<i class="fa fa-warning">&nbsp;{{ "Payment Error" | trans }}</i>
+	</div>
+	<div class="page-content">
+		<div class="text-center-row">
+			<p>{{ "The following error occurred while paying, please go back to the previous page" | trans }}</p>
+			<p class="text-red">{{ error }}</p>
+		</div>
+	</div>
+</div>

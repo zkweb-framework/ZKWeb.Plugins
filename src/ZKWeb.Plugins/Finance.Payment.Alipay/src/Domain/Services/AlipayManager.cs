@@ -196,7 +196,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Domain.Services {
 					throw new ArgumentException(new T("transaction with serial {0} not exist", outTradeNo));
 				} else if (transaction.Amount != totalFee.ConvertOrDefault<decimal>()) {
 					throw new ArgumentException(new T(
-						"transaction amount not matched: excepted {0} but actual is {1}",
+						"Transaction amount not matched, excepted '{0}' but actual is '{1}'",
 						transaction.Amount, totalFee));
 				}
 				api = transaction.Api;
@@ -239,7 +239,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Domain.Services {
 				transactionManager.SetLastError(transaction.Id, new T("Buyer closed transaction on alipay"));
 			} else {
 				// 未知的交易状态
-				throw new ArgumentException(new T("Unsupported alipay trade status: {0}", tradeStatus));
+				throw new ArgumentException(new T("Unknown alipay trade status '{0}'", tradeStatus));
 			}
 			// 处理退款
 			if (refundStatus == "WAIT_SELLER_AGREE") {
@@ -266,7 +266,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Domain.Services {
 				// 没有退款消息
 			} else {
 				// 未知的退款状态
-				throw new ArgumentException(new T("Unsupported alipay refund status: {0}", tradeStatus));
+				throw new ArgumentException(new T("Unknown alipay refund status: '{0}'", tradeStatus));
 			}
 			// 设置返回的交易Id
 			transactionId = transaction.Id;

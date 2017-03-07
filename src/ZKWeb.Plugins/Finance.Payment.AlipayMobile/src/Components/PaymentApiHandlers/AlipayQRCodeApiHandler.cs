@@ -110,6 +110,17 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Components.PaymentApiHa
 			/// </summary>
 			[TextBoxField("ReturnDomain", "keep empty will use the default domain")]
 			public string ReturnDomain { get; set; }
+
+			/// <summary>
+			/// 获取商户密钥，除去头部和尾部
+			/// </summary>
+			/// <returns></returns>
+			public string GetPartnerKeyBody() {
+				return PartnerKey
+					.Replace("-----BEGIN RSA PRIVATE KEY-----", "")
+					.Replace("-----END RSA PRIVATE KEY-----", "")
+					.Trim();
+			}
 		}
 	}
 }

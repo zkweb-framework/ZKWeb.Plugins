@@ -35,11 +35,11 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Components.Translates {
 			{ "Call alipay send goods api success", "调用支付宝发货接口成功" },
 			{ "Call alipay send goods api failed: {0}", "调用支付宝发货接口失败: {1}" },
 			{ "transaction with serial {0} not exist", "序号为{0}的交易不存在" },
-			{ "transaction amount not matched: excepted {0} but actual is {1}",
-				"交易金额不匹配, 预计支付金额是{0}但是实际支付金额是{1}" },
+			{ "Transaction amount not matched, excepted '{0}' but actual is '{1}'",
+				"交易金额不匹配, 预计支付金额是'{0}'但是实际支付金额是'{1}'" },
 			{ "check alipay sign failed", "检查支付宝签名失败" },
-			{ "Unsupported alipay trade status: {0}", "不支持的支付宝交易状态: {0}" },
-			{ "Unsupported alipay refund status: {0}", "不支持的支付宝退款状态: {0}" },
+			{ "Unknown alipay trade status '{0}'", "不支持的支付宝交易状态: '{0}'" },
+			{ "Unknown alipay refund status: '{0}'", "不支持的支付宝退款状态: '{0}'" },
 			{ "Buyer closed transaction on alipay", "买家在支付宝上关闭了交易" },
 			{ "Buyer require refund on alipay", "买家在支付宝上申请了退款" }
 		};
