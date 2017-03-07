@@ -1,6 +1,13 @@
-﻿<div class="text-center-row">
-	<p>{{ "Serial" | trans }}: {{ serial }}</p>
-	<p>{{ "State" | trans }}: {{ state | trans }}</p>
-	<p>{{ "Redirecting to payment transaction records..." | trans }}</p>
+﻿<div class="panel panel-themed">
+	<div class="panel-heading">
+		<i class="fa fa-check">&nbsp;{{ "Payment Success" | trans }}</i>
+	</div>
+	<div class="page-content">
+		<div class="text-center-row">
+			<p>{{ "Serial" | trans }}: {{ serial }}</p>
+			<p>{{ "State" | trans }}: {{ state | trans }}</p>
+			<p>{{ "Redirecting to payment transaction records..." | trans }}</p>
+		</div>
+	</div>
 </div>
 <script>setTimeout(function () { location.href = "/admin/payment_transactions"; }, 3000);</script>

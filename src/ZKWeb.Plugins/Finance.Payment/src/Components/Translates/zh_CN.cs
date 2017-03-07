@@ -105,9 +105,12 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Components.Translates {
 			{ "Some child transaction is not payable", "部分子交易不可支付" },
 			{ "PaymentResultPage", "支付结果页" },
 			// TODO: 翻译以下文本
+			{ "Payment Success", "支付成功" },
 			{ "Payment Error", "支付错误" },
 			{ "The following error occurred while paying, please go back to the previous page",
-				"支付时发生了以下错误，请返回上一页" }
+				"支付时发生了以下错误，请返回上一页" },
+			{ "Transaction with serial '{0}' not exist", "序号为'{0}'的交易不存在" },
+			{ "Transaction with id '{0}' not exist", "Id为'{0}'的交易不存在" },
 		};
 
 		public bool CanTranslate(string code) {

@@ -34,7 +34,6 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Components.Translates {
 			{ "Alipay is unsupported on .net core yet", "支付宝目前不支持在.Net Core上使用" },
 			{ "Call alipay send goods api success", "调用支付宝发货接口成功" },
 			{ "Call alipay send goods api failed: {0}", "调用支付宝发货接口失败: {1}" },
-			{ "transaction with serial {0} not exist", "序号为{0}的交易不存在" },
 			{ "Transaction amount not matched, excepted '{0}' but actual is '{1}'",
 				"交易金额不匹配, 预计支付金额是'{0}'但是实际支付金额是'{1}'" },
 			{ "check alipay sign failed", "检查支付宝签名失败" },

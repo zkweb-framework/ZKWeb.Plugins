@@ -56,7 +56,7 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Domain.Services {
 		/// <summary>
 		/// 支付宝扫码支付的异步通知Url
 		/// </summary>
-		public const string AlipayBarcodePayNotifyUrl = "/payment/alipay_barcode_pay/notify";
+		public const string AlipayQRCodePayNotifyUrl = "/payment/alipay_qrcode_pay/notify";
 
 #if !NETCORE
 		/// <summary>
@@ -81,12 +81,13 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Domain.Services {
 		/// <returns></returns>
 		public virtual bool CheckSign(SortedDictionary<string, string> parameters) {
 			var publicKey = UseSandBox ? SandBoxAlipayPublicKey : AlipayPublicKey;
-			if (SignType == "RSA") {
-				return AlipaySignature.RSACheckV1(parameters, publicKey);
-			} else if (SignType == "RSA2") {
-				return AlipaySignature.RSACheckV2(parameters, publicKey);
-			}
-			return false;
+			var sign = parameters["sign"];
+			parameters.Remove("sign");
+			parameters.Remove("sign_type");
+			// RSACheckV1和RSACheckV2的key参数是文件路径
+			// 以下的函数只支持RSA + SHA1
+			return AlipaySignature.RSACheckContent(
+				AlipaySignature.GetSignContent(parameters), sign, publicKey, "utf-8", false);
 		}
 #endif
 
@@ -121,21 +122,13 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Domain.Services {
 				body = transaction.Description, // 交易描述
 			}, Formatting.Indented);
 			var notifyUrl = PaymentUtils.GetReturnOrNotifyUrl(
-				apiData.ReturnDomain, AlipayBarcodePayNotifyUrl);
+				apiData.ReturnDomain, AlipayQRCodePayNotifyUrl);
 			request.SetNotifyUrl(notifyUrl);
 			var response = client.Execute(request);
 			if (response.IsError) {
 				return new HtmlString(templateManager.RenderTemplate(
 					"finance.payment/error_text.html",
 					new { error = $"{response.Msg}: {response.SubMsg}" }));
-			}
-			// 更新二维码地址和外部序列号
-			using (UnitOfWork.Scope()) {
-				var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
-				transaction.ExtraData["QrCode"] = response.QrCode;
-				transactionManager.Save(ref transaction);
-				transactionManager.Process(
-					transaction.Id, response.OutTradeNo, PaymentTransactionState.WaitingPaying);
 			}
 			// 生成二维码图片
 			var generator = new QRCodeGenerator();
@@ -144,11 +137,12 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Domain.Services {
 			var qrCodeBase64 = qrCode.GetGraphic(20);
 			// 返回模板
 			return new HtmlString(templateManager.RenderTemplate(
-				"finance.payment.alipaymobile/qrcode_pay.html", new { qrCodeBase64 }));
+				"finance.payment.alipaymobile/qrcode_pay.html",
+				new { transactionId = transaction.Id, qrCodeBase64 }));
 #else
 			return new HtmlString(templateManager.RenderTemplate(
 				"finance.payment/error_text.html",
-				new { error = new T("Alipay barcode pay is unsupported on .net core yet") }));
+				new { error = new T("Alipay qrcode pay is unsupported on .net core yet") }));
 #endif
 		}
 
@@ -166,28 +160,35 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Domain.Services {
 			ApiData apiData;
 			using (UnitOfWork.Scope()) {
 				transaction = transactionManager.Get(transactionId);
-				apiData = transaction.Api.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
-				// 如果交易不是可支付状态则直接返回
-				if (!transaction.Check(t => t.IsPayable).First) {
+				// 如果交易不存在, 或不能支付则直接返回
+				if (transaction == null) {
+					throw new ArgumentException(new T("Transaction with id '{0}' not exist", transactionId));
+				} else if (!transaction.Check(t => t.IsPayable).First) {
 					return;
 				}
+				apiData = transaction.Api.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
 			}
 			// 调用支付宝Api查询交易状态
 			var client = GetAopClient(apiData);
 			var request = new AlipayTradeQueryRequest();
 			request.BizContent = JsonConvert.SerializeObject(new {
-				out_trade_no = transaction.Serial, // 交易流水号
+				out_trade_no = transaction.Serial
 			}, Formatting.Indented);
 			var response = client.Execute(request);
 			if (response.IsError) {
-				// 出错时设置交易错误
-				transactionManager.SetLastError(transactionId, new T(
-					"Call alipay trade query api failed, {0}",
-					$"{response.Msg}: {response.SubMsg}"));
+				// 出错时设置交易错误, 除非错误是交易不存在
+				// 如果错误是交易不存在代表买家可能尚未支付
+				if (response.SubCode != "ACQ.TRADE_NOT_EXIST") {
+					transactionManager.SetLastError(transactionId, new T(
+						"Call alipay trade query api failed, {0}",
+						$"{response.Msg}: {response.SubMsg}"));
+				}
 				return;
 			}
-			// 检查金额是否一致
+			// 检查金额是否一致, 不一致时中止交易
+			var tradeNo = response.TradeNo; // 支付宝上的订单编号
 			if (transaction.Amount != response.TotalAmount.ConvertOrDefault<decimal>()) {
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Aborted);
 				transactionManager.SetLastError(transactionId, new T(
 					"Transaction amount not matched, excepted '{0}' but actual '{1}'",
 					transaction.Amount, response.TotalAmount));
@@ -197,16 +198,17 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Domain.Services {
 			if (response.TradeStatus == "TRADE_SUCCESS" ||
 				response.TradeStatus == "TRADE_FINISHED") {
 				// 交易成功
-				transactionManager.Process(transactionId, null, PaymentTransactionState.Success);
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Success);
 			} else if (response.TradeStatus == "TRADE_CLOSED") {
 				// 交易中止
-				transactionManager.Process(transactionId, null, PaymentTransactionState.Aborted);
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Aborted);
 				transactionManager.SetLastError(transaction.Id, new T("Buyer closed transaction on alipay"));
 			} else if (response.TradeStatus == "WAIT_BUYER_PAY") {
-				// 什么都不做
+				// 等待付款, 买家已经扫了二维码但是还未支付
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.WaitingPaying);
 			} else {
 				// 交易中止, 未知的状态
-				transactionManager.Process(transactionId, null, PaymentTransactionState.Aborted);
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Aborted);
 				transactionManager.SetLastError(transactionId, new T(
 					"Unknown alipay trade status '{0}'", response.TradeStatus));
 			}
@@ -231,7 +233,7 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Domain.Services {
 			var outTradeNo = parameters.GetOrDefault("out_trade_no"); // 商户的交易流水号
 			var tradeNo = parameters.GetOrDefault("trade_no"); // 支付宝的交易流水号
 			var tradeStatus = parameters.GetOrDefault("trade_status"); // 交易状态
-			var totalFee = parameters.GetOrDefault("total_fee"); // 交易金额
+			var totalAmount = parameters.GetOrDefault("total_amount"); // 交易金额
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			logManager.LogTransaction(
 				$"Process alipay mobile notify " +
@@ -246,8 +248,8 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Domain.Services {
 				throw new ArgumentException("trade_no is empty");
 			} else if (string.IsNullOrEmpty(tradeStatus)) {
 				throw new ArgumentException("trade_status is empty");
-			} else if (string.IsNullOrEmpty(totalFee)) {
-				throw new ArgumentException("total_fee is empty");
+			} else if (string.IsNullOrEmpty(totalAmount)) {
+				throw new ArgumentException("total_amount is empty");
 			}
 			// 获取交易和接口，检查金额是否一致
 			PaymentTransaction transaction;
@@ -257,11 +259,11 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Domain.Services {
 			using (UnitOfWork.Scope()) {
 				transaction = transactionManager.Get(t => t.Serial == outTradeNo);
 				if (transaction == null) {
-					throw new ArgumentException(new T("transaction with serial {0} not exist", outTradeNo));
-				} else if (transaction.Amount != totalFee.ConvertOrDefault<decimal>()) {
+					throw new ArgumentException(new T("Transaction with serial '{0}' not exist", outTradeNo));
+				} else if (transaction.Amount != totalAmount.ConvertOrDefault<decimal>()) {
 					throw new ArgumentException(new T(
 						"Transaction amount not matched, excepted '{0}' but actual is '{1}'",
-						transaction.Amount, totalFee));
+						transaction.Amount, totalAmount));
 				}
 				api = transaction.Api;
 				apiData = api.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();

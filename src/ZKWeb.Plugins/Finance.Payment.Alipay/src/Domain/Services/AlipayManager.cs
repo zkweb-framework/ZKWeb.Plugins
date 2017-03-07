@@ -193,7 +193,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Alipay.src.Domain.Services {
 			using (UnitOfWork.Scope()) {
 				transaction = transactionManager.Get(t => t.Serial == outTradeNo);
 				if (transaction == null) {
-					throw new ArgumentException(new T("transaction with serial {0} not exist", outTradeNo));
+					throw new ArgumentException(new T("Transaction with serial '{0}' not exist", outTradeNo));
 				} else if (transaction.Amount != totalFee.ConvertOrDefault<decimal>()) {
 					throw new ArgumentException(new T(
 						"Transaction amount not matched, excepted '{0}' but actual is '{1}'",

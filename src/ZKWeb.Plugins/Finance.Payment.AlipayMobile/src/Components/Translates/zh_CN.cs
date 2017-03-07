@@ -17,7 +17,7 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Components.Translates {
 			{ "Support pay transactions by alipay mobile", "支持在移动端通过支付宝支付交易" },
 			{ "AlipayQRCodePay", "支付宝扫码支付" },
 			{ "AppId, usually starts with datetime such as 20170306", "AppId, 通常以日期开始例如20170306" },
-			{ "Alipay barcode pay is unsupported on .net core yet", "支付宝扫码支付仍未支持.Net Core" },
+			{ "Alipay qrcode pay is unsupported on .net core yet", "支付宝扫码支付仍未支持.Net Core" },
 			{ "Alipay mobile pay is unsupported on .net core yet", "支付宝移动端支付仍未支持.Net Core" },
 			{ "Alipay only support CNY", "支付宝只支持人民币支付" },
 			{ "PartnerId", "商户Id" },
@@ -33,6 +33,10 @@ namespace ZKWeb.Plugins.Finance.Payment.AlipayMobile.src.Components.Translates {
 			{ "Transaction amount not matched, excepted '{0}' but actual is '{1}'",
 				"支付金额不匹配，预期金额是'{0}'但实际金额是'{1}'" },
 			{ "Unknown alipay trade status '{0}'", "不支持的支付宝交易状态: '{0}'" },
+			{ "Alipay qrcode payment success, redirecting to result page...",
+				"支付宝扫码支付成功，正在跳转到结果页……" },
+			{ "Alipay qrcode payment failed, redirecting to result page...",
+				"支付宝扫码支付失败，正在跳转到结果页……" },
 		};
 
 		public bool CanTranslate(string code) {
