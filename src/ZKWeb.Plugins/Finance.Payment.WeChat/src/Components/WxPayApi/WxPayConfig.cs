@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Net;
+using System.Net.Sockets;
+using ZKWeb.Plugins.Common.Base.src.Components.Mscorlib.Utils;
+using ZKWeb.Plugins.Finance.Payment.src.Components.Utils;
 using ZKWeb.Plugins.Finance.Payment.Wechat.src.Components.PaymentApiHandlers;
+using ZKWebStandard.Web;
 
 namespace WxPayAPI {
 	/// <summary>
@@ -52,7 +57,16 @@ namespace WxPayAPI {
 		/// </summary>
 		/// <param name="apiData">接口数据</param>
 		public WxPayConfig(WechatApiHandler.ApiData apiData) {
-			throw new NotImplementedException();
+			APPID = apiData.AppId;
+			MCHID = apiData.PartnerId;
+			KEY = apiData.PartnerKey;
+			APPSECRET = null;
+			SSLCERT_PATH = null;
+			SSLCERT_PASSWORD = null;
+			NOTIFY_URL = PaymentUtils.GetReturnOrNotifyUrl(
+				apiData.ReturnDomain, "/payment/wechat/notify");
+			var ipAddress = NetworkUtils.GetClientIpAddress();
+
 		}
 	}
 }

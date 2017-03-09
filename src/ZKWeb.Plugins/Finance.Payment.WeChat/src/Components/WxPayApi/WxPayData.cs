@@ -25,7 +25,9 @@ namespace WxPayAPI {
 		/// <param name="key"></param>
 		/// <param name="value"></param>
 		public void SetValue(string key, object value) {
-			m_values[key] = value;
+			if (value != null) {
+				m_values[key] = value;
+			}
 		}
 
 		/// <summary>
@@ -199,6 +201,26 @@ namespace WxPayAPI {
 		/// <returns></returns>
 		public SortedDictionary<string, object> GetValues() {
 			return m_values;
+		}
+
+		/// <summary>
+		/// 是否错误
+		/// </summary>
+		public bool IsError {
+			get {
+				return (GetValue("return_code") as string != "SUCCESS" ||
+					GetValue("result_code") as string != "SUCCESS");
+			}
+		}
+
+		/// <summary>
+		/// 错误信息
+		/// </summary>
+		public string ErrMsg {
+			get {
+				return (GetValue("return_msg") as string ??
+					GetValue("err_code_des") as string);
+			}
 		}
 	}
 }

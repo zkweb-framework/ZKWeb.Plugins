@@ -1,0 +1,17 @@
+﻿<div class="panel panel-themed qrcode-pay-container"
+	 data-transaction-id="{{ transactionId }}"
+	 require-script="/static/finance.payment.wechat.js/qrcode_pay.min.js">
+	<div class="panel-heading">
+		<i class="fa fa-qrcode">&nbsp;{{ "WeChatQRCodePay" | trans }}</i>
+	</div>
+	<div class="page-content">
+		<div class="text-center-row">
+			<div>
+				{{ "Please use wechat scan the following qr code to complete the payment" | trans }}
+			</div>
+			<div class="qrcode wechat-qrcode">
+				<img src="data:image/png;base64,{{ qrCodeBase64 }}" style="width: 300px;" alt="QRCode" />
+			</div>
+		</div>
+	</div>
+</div>

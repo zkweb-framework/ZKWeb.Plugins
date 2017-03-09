@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Finance.Payment.src.Components.PaymentApiHandlers.Interfaces;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
 using ZKWeb.Plugins.Finance.Payment.src.UIComponents.Forms;
+using ZKWeb.Plugins.Finance.Payment.WeChat.src.Domain.Services;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
@@ -35,7 +37,7 @@ namespace ZKWeb.Plugins.Finance.Payment.Wechat.src.Components.PaymentApiHandlers
 		/// </summary>
 		public void OnFormBind(PaymentApiEditForm form, PaymentApi bindFrom) {
 			var apiData = bindFrom.ExtraData.GetOrDefault<ApiData>("ApiData") ?? new ApiData();
-			ApiDataEditing.PublicAccountId = apiData.PublicAccountId;
+			ApiDataEditing.AppId = apiData.AppId;
 			ApiDataEditing.PartnerId = apiData.PartnerId;
 			ApiDataEditing.PartnerKey = apiData.PartnerKey;
 			ApiDataEditing.ReturnDomain = apiData.ReturnDomain;
@@ -59,7 +61,8 @@ namespace ZKWeb.Plugins.Finance.Payment.Wechat.src.Components.PaymentApiHandlers
 		/// 获取支付Html
 		/// </summary>
 		public void GetPaymentHtml(PaymentTransaction transaction, ref HtmlString html) {
-			throw new NotImplementedException();
+			var wxPayManager = Application.Ioc.Resolve<WxPayManager>();
+			html = wxPayManager.GetQRCodePaymentHtml(transaction);
 		}
 
 		/// <summary>
@@ -67,7 +70,10 @@ namespace ZKWeb.Plugins.Finance.Payment.Wechat.src.Components.PaymentApiHandlers
 		/// </summary>
 		public void DeliveryGoods(
 			PaymentTransaction transaction, string logisticsName, string invoiceNo) {
-			throw new NotImplementedException();
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			logManager.LogTransaction(string.Format(
+				"PaymentApi send goods: transaction {0} logisticsName {1} invoiceNo {2}",
+				transaction.Serial, logisticsName, invoiceNo));
 		}
 
 		/// <summary>
@@ -75,19 +81,19 @@ namespace ZKWeb.Plugins.Finance.Payment.Wechat.src.Components.PaymentApiHandlers
 		/// </summary>
 		public class ApiData {
 			/// <summary>
-			/// 公众号Id
+			/// 绑定支付的APPID
 			/// </summary>
 			[Required]
-			[TextBoxField("PublicAccountId", "PublicAccountId")]
-			public string PublicAccountId { get; set; }
+			[TextBoxField("AppId", "AppId")]
+			public string AppId { get; set; }
 			/// <summary>
-			/// 商户Id
+			/// 商户号
 			/// </summary>
 			[Required]
 			[TextBoxField("PartnerId", "PartnerId")]
 			public string PartnerId { get; set; }
 			/// <summary>
-			/// 商户密钥
+			/// 商户支付密钥
 			/// </summary>
 			[Required]
 			[TextBoxField("PartnerKey", "PartnerKey")]
