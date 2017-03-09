@@ -1,16 +1,16 @@
-﻿using System;
-using System.Net;
-using System.Net.Sockets;
-using ZKWeb.Plugins.Common.Base.src.Components.Mscorlib.Utils;
+﻿using ZKWeb.Plugins.Common.Base.src.Components.Mscorlib.Utils;
 using ZKWeb.Plugins.Finance.Payment.src.Components.Utils;
 using ZKWeb.Plugins.Finance.Payment.Wechat.src.Components.PaymentApiHandlers;
-using ZKWebStandard.Web;
 
 namespace WxPayAPI {
 	/// <summary>
 	/// 微信支付设置
 	/// </summary>
 	public class WxPayConfig {
+		/// <summary>
+		/// 微信扫码支付的异步通知Url
+		/// </summary>
+		public const string WeChatQRCodePayNotifyUrl = "/payment/wechat_qrcode_pay/notify";
 		/// <summary>
 		/// 绑定支付的APPID（必须配置）
 		/// 例如 wx2428e34e0e7dc6ef
@@ -64,7 +64,7 @@ namespace WxPayAPI {
 			SSLCERT_PATH = null;
 			SSLCERT_PASSWORD = null;
 			NOTIFY_URL = PaymentUtils.GetReturnOrNotifyUrl(
-				apiData.ReturnDomain, "/payment/wechat/notify");
+				apiData.ReturnDomain, WeChatQRCodePayNotifyUrl);
 			var ipAddress = NetworkUtils.GetClientIpAddress();
 
 		}

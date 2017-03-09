@@ -2,15 +2,18 @@
 using System;
 using WxPayAPI;
 using ZKWeb.Localize;
+using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.Currency.src.Domain.Service;
 using ZKWeb.Plugins.Finance.Payment.src.Domain.Entities;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Enums;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Extensions;
+using ZKWeb.Plugins.Finance.Payment.src.Domain.Services;
 using ZKWeb.Plugins.Finance.Payment.Wechat.src.Components.PaymentApiHandlers;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
-using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Finance.Payment.WeChat.src.Domain.Services {
 	/// <summary>
@@ -70,16 +73,126 @@ namespace ZKWeb.Plugins.Finance.Payment.WeChat.src.Domain.Services {
 		/// <param name="transactionId">交易Id</param>
 		/// <returns></returns>
 		public virtual void UpdateTransactionState(Guid transactionId) {
-			throw new NotImplementedException();
+			// 获取商户Id等设置
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			PaymentTransaction transaction;
+			WechatApiHandler.ApiData apiData;
+			using (UnitOfWork.Scope()) {
+				transaction = transactionManager.Get(transactionId);
+				// 如果交易不存在, 或不能支付则直接返回
+				if (transaction == null) {
+					throw new ArgumentException(new T("Transaction with id '{0}' not exist", transactionId));
+				} else if (!transaction.Check(t => t.IsPayable).First) {
+					return;
+				}
+				apiData = transaction.Api.ExtraData
+					.GetOrDefault<WechatApiHandler.ApiData>("ApiData") ?? new WechatApiHandler.ApiData();
+			}
+			var config = new WxPayConfig(apiData);
+			// 调用支付宝Api查询交易状态
+			var request = new WxPayData();
+			request.SetValue("out_trade_no", transaction.Serial); // 交易流水号
+			var response = WxPayApi.OrderQuery(config, request);
+			if (response.IsError) {
+				// 出错时设置交易错误
+				transactionManager.SetLastError(transactionId, new T(
+					"Call wechat order query api failed, {0}", response.ErrMsg));
+				return;
+			}
+			// 如果交易状态是未支付则不进行处理
+			var tradeState = response.GetValue("trade_state") as string;
+			if (tradeState == "NOTPAY" || string.IsNullOrEmpty(tradeState)) {
+				return;
+			}
+			// 检查金额是否一致, 不一致时中止交易
+			var tradeNo = response.GetValue("transaction_id") as string; // 微信上的订单编号
+			var paidAmount = response.GetValue("total_fee"); // 支付的金额
+			if (transaction.Amount != paidAmount.ConvertOrDefault<decimal>() / 100.0M) {
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Aborted);
+				transactionManager.SetLastError(transactionId, new T(
+					"Transaction amount not matched, excepted '{0}' but actual '{1}'",
+					transaction.Amount, paidAmount));
+				return;
+			}
+			// 根据返回状态处理交易
+			if (tradeState == "SUCCESS") {
+				// 交易成功
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Success);
+			} else if (tradeState == "REFUND" || tradeState == "REVOKED" || tradeState == "PAYERROR") {
+				// 交易中止
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Aborted);
+				transactionManager.SetLastError(transaction.Id, new T("Buyer closed transaction on wechat"));
+			} else if (tradeState == "USERPAYING" || tradeState == "PAYERROR") {
+				// 支付中
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.WaitingPaying);
+			} else {
+				// 交易中止, 未知的状态
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Aborted);
+				transactionManager.SetLastError(transactionId, new T(
+					"Unknown wechat trade status '{0}'", tradeState));
+			}
 		}
 
 		/// <summary>
 		/// 处理微信返回的异步通知
 		/// </summary>
-		/// <param name="context">Http上下文</param>
+		/// <param name="xml">微信发来的xml内容</param>
 		/// <param name="transactionId">对应的交易Id</param>
-		public virtual void ProcessNotify(IHttpContext context, out Guid transactionId) {
-			throw new NotImplementedException();
+		public virtual void ProcessNotify(string xml, out Guid transactionId) {
+			// 解析xml判断是否错误
+			var logManager = Application.Ioc.Resolve<LogManager>();
+			var notifyData = new WxPayData();
+			notifyData.FromXmlWithoutCheckSign(xml);
+			if (notifyData.IsError) {
+				transactionId = Guid.Empty;
+				throw new WxPayException(notifyData.ErrMsg);
+			}
+			// 获取交易和接口，检查金额是否一致
+			PaymentTransaction transaction;
+			PaymentApi api;
+			WechatApiHandler.ApiData apiData;
+			var outTradeNo = notifyData.GetValue("out_trade_no") as string; // 交易流水号
+			var tradeNo = notifyData.GetValue("transaction_id") as string; // 微信上的订单编号
+			var paidAmount = notifyData.GetValue("total_fee"); // 支付的金额
+			var transactionManager = Application.Ioc.Resolve<PaymentTransactionManager>();
+			using (UnitOfWork.Scope()) {
+				transaction = transactionManager.Get(t => t.Serial == outTradeNo);
+				if (transaction == null) {
+					throw new ArgumentException(new T("Transaction with serial '{0}' not exist", outTradeNo));
+				} else if (transaction.Amount != paidAmount.ConvertOrDefault<decimal>() / 100.0M) {
+					throw new ArgumentException(new T(
+						"Transaction amount not matched, excepted '{0}' but actual is '{1}'",
+						transaction.Amount, paidAmount));
+				}
+				transactionId = transaction.Id;
+				api = transaction.Api;
+				apiData = transaction.Api.ExtraData
+					.GetOrDefault<WechatApiHandler.ApiData>("ApiData") ??
+					new WechatApiHandler.ApiData();
+			}
+			var config = new WxPayConfig(apiData);
+			// 检查签名是否合法
+			notifyData.CheckSign(config);
+			// 根据返回状态处理交易
+			var tradeState = notifyData.GetValue("trade_state") as string;
+			if (tradeState == "SUCCESS") {
+				// 交易成功
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Success);
+			} else if (tradeState == "REFUND" || tradeState == "REVOKED" || tradeState == "PAYERROR") {
+				// 交易中止
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Aborted);
+				transactionManager.SetLastError(transaction.Id, new T("Buyer closed transaction on wechat"));
+			} else if (tradeState == "NOTPAY" || string.IsNullOrEmpty(tradeState)) {
+				// 未支付
+			} else if (tradeState == "USERPAYING" || tradeState == "PAYERROR") {
+				// 支付中
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.WaitingPaying);
+			} else {
+				// 交易中止, 未知的状态
+				transactionManager.Process(transactionId, tradeNo, PaymentTransactionState.Aborted);
+				transactionManager.SetLastError(transactionId, new T(
+					"Unknown wechat trade status '{0}'", tradeState));
+			}
 		}
 	}
 }

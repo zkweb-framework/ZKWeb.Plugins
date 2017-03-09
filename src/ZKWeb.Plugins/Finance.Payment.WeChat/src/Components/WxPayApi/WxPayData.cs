@@ -85,11 +85,11 @@ namespace WxPayAPI {
 
 		/// <summary>
 		/// 将xml转为WxPayData对象并返回对象内部的数据
+		/// 不检查签名
 		/// </summary>
-		/// <param name="config"></param>
 		/// <param name="xml"></param>
 		/// <returns></returns>
-		public SortedDictionary<string, object> FromXml(WxPayConfig config, string xml) {
+		public SortedDictionary<string, object> FromXmlWithoutCheckSign(string xml) {
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			if (string.IsNullOrEmpty(xml)) {
 				throw new WxPayException("将空的xml串转换为WxPayData不合法!");
@@ -102,6 +102,17 @@ namespace WxPayAPI {
 				XmlElement xe = (XmlElement)xn;
 				m_values[xe.Name] = xe.InnerText; // 获取xml的键值对到WxPayData内部的数据中
 			}
+			return m_values;
+		}
+
+		/// <summary>
+		/// 将xml转为WxPayData对象并返回对象内部的数据
+		/// </summary>
+		/// <param name="config"></param>
+		/// <param name="xml"></param>
+		/// <returns></returns>
+		public SortedDictionary<string, object> FromXml(WxPayConfig config, string xml) {
+			FromXmlWithoutCheckSign(xml);
 			if (!string.Equals(m_values["return_code"], "SUCCESS")) {
 				return m_values; // 错误无签名
 			}
@@ -173,13 +184,12 @@ namespace WxPayAPI {
 
 		/// <summary>
 		/// 检测签名是否正确
-		/// 正确返回true，错误抛异常
 		/// </summary>
 		/// <returns></returns>
-		public bool CheckSign(WxPayConfig config) {
+		public void CheckSign(WxPayConfig config) {
 			// 如果没有设置签名，则跳过检测
 			if (!IsSet("sign")) {
-				throw new WxPayException("WxPayData签名存在但不合法!");
+				throw new WxPayException("WxPayData签名不存在!");
 			}
 			// 如果设置了签名但是签名为空，则抛异常
 			else if (GetValue("sign") == null || GetValue("sign").ToString() == "") {
@@ -189,10 +199,9 @@ namespace WxPayAPI {
 			string return_sign = GetValue("sign").ToString();
 			// 在本地计算新的签名
 			string cal_sign = MakeSign(config);
-			if (cal_sign == return_sign) {
-				return true;
+			if (cal_sign != return_sign) {
+				throw new WxPayException("WxPayData签名验证错误!");
 			}
-			throw new WxPayException("WxPayData签名验证错误!");
 		}
 
 		/// <summary>

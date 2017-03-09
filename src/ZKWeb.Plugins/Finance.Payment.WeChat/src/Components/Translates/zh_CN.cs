@@ -24,7 +24,14 @@ namespace ZKWeb.Plugins.Finance.Payment.WeChat.src.Components.Translates {
 			{ "WeChat pay only support CNY", "微信支付只支持人民币" },
 			{ "WeChatQRCodePay", "微信扫码支付" },
 			{ "Please use wechat scan the following qr code to complete the payment",
-				"请使用微信扫描以下的二维码完成支付" }
+				"请使用微信扫描以下的二维码完成支付" },
+			{ "Call wechat order query api failed, {0}", "调用微信订单查询Api失败, {0}" },
+			{ "Buyer closed transaction on wechat", "买家在微信上关闭了交易" },
+			{ "Unknown wechat trade status '{0}'", "未知的微信交易状态'{0}'" },
+			{ "Wechat qrcode payment success, redirecting to result page...",
+				"微信扫码支付成功，正在跳转到结果页……" },
+			{ "Wechat qrcode payment failed, redirecting to result page...",
+				"微信扫码支付失败，正在跳转到结果页……" },
 		};
 
 		public bool CanTranslate(string code) {
