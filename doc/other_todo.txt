@@ -4,7 +4,6 @@
 
 更新Finance.Payment.Alipay的文档
 更新Finance.Payment.AlipayMobile的文档
-支持Finance.Payment.WeChat的微信扫码支付
 考虑Finance.Payment.Cash的实现
 考虑Finance.Payment.OnArrive的实现
 添加DisableImplicitFrameworkReferences的文档
