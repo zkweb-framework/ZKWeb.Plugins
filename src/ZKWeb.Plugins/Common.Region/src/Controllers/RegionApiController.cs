@@ -10,6 +10,7 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Region.src.Components.GenericConfigs;
 using ZKWeb.Plugins.Common.Region.src.Domain.Services;
 using ZKWeb.Plugins.Common.Region.src.UIComponents.ListItemProviders;
+using System.Threading;
 
 namespace ZKWeb.Plugins.Common.Region.src.Controllers {
 	/// <summary>
@@ -24,6 +25,7 @@ namespace ZKWeb.Plugins.Common.Region.src.Controllers {
 		/// <returns></returns>
 		[Action("api/region/country_info", HttpMethods.POST)]
 		public IActionResult CountryInfo() {
+			Thread.Sleep(3000);
 			var configManager = Application.Ioc.Resolve<GenericConfigManager>();
 			var settings = configManager.GetData<RegionSettings>();
 			var defaultCountry = settings.DefaultCountry;
@@ -37,6 +39,7 @@ namespace ZKWeb.Plugins.Common.Region.src.Controllers {
 		/// <returns></returns>
 		[Action("api/region/region_tree_from_country", HttpMethods.POST)]
 		public IActionResult RegionTreeFromCountry() {
+			Thread.Sleep(3000);
 			var countryName = HttpManager.CurrentContext.Request.Get<string>("country");
 			var regionManager = Application.Ioc.Resolve<RegionManager>();
 			var country = regionManager.GetCountry(countryName);

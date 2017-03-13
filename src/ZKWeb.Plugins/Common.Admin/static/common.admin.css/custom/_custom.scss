@@ -47,3 +47,10 @@
 		}
 	}
 }
+
+/* 低分辨率时降低边距 */
+@media (max-width: 767px) {
+	.admin-page-container {
+		padding: 15px 15px 0px 15px;
+	}
+}

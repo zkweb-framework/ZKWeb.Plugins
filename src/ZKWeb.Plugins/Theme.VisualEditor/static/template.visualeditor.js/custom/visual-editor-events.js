@@ -151,6 +151,11 @@ $(function () {
 		$topBar.find(".manage-theme").on("click", onManageTheme);
 		$topBar.find(".switch-page").on("click", onSwitchPage);
 		$topBar.find(".save-changes").on("click", onSaveChanges);
+		// 设置转到页面的Url
+		$topBar.find(".goto-page")
+			.attr("href", location.href.replace("/visual_editor/", "/"))
+			.attr("target", "_blank")
+			.unbind("click");
 		// 绑定窗口关闭时的事件, 开发时可注释以下行
 		$(window).on("beforeunload", onWindowClose);
 		// 绑定模板模块的鼠标进入和离开事件

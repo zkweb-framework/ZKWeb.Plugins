@@ -37,7 +37,8 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 			{ "__InlineCss", "内嵌Css" },
 			{ "__BeforeHtml", "前置Html" },
 			{ "__AfterHtml", "后置Html" },
-			{ "example: col-md-3 my-class", "例如: col-md-3 my-class" }
+			{ "example: col-md-3 my-class", "例如: col-md-3 my-class" },
+			{ "GotoPage", "转到页面" }
 		};
 
 		public bool CanTranslate(string code) {

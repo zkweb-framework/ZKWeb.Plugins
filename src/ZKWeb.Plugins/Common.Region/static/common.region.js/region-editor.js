@@ -60,8 +60,10 @@
 			return;
 		}
 		$editor.data("initialized", true);
+		// 获取载入中元素
+		var $loading = $editor.find(".loading");
 		// 获取参数和生成子div
-		var $field = $(this).find("input[type=hidden]");
+		var $field = $editor.find("input[type=hidden]");
 		var displayCountryDropdown = $editor.data("display-country-dropdown");
 		var $countryDropdownContainer = $("<div>").attr("class", "country-dropdown").appendTo($editor);
 		var $regionsDropdownContainer = $("<div>").attr("class", "regions-dropdown").appendTo($editor);
@@ -117,8 +119,12 @@
 			// 保存到字段
 			var country = $(this).val();
 			setFieldValue({ Country: country, RegionId: null });
+			// 预先清除所有地区, 防止更新时间长时残留
+			$regionsDropdownContainer.empty();
 			// 更新地区信息
+			$loading.show();
 			updateRegionTrees(country, function () {
+				$loading.hide();
 				// 绑定地区下拉框
 				$editor.trigger(bindRegionEventName);
 			});
@@ -145,6 +151,7 @@
 		// 更新国家和地区信息，并绑定地区
 		var bindCountryAndRegionEventName = "bindCountryAndRegion.RegionEditor";
 		$editor.on(bindCountryAndRegionEventName, function () {
+			$loading.show();
 			updateCountryInfo(function () {
 				// 添加国家下拉框
 				$countryDropdownContainer.empty();
@@ -158,6 +165,7 @@
 				$editor.trigger(bindCountryEventName);
 				// 更新地区信息
 				updateRegionTrees($dropdown.val(), function () {
+					$loading.hide();
 					// 绑定地区下拉框
 					$editor.trigger(bindRegionEventName);
 				});
