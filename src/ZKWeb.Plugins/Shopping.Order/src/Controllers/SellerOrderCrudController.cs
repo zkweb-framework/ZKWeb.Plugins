@@ -269,7 +269,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Controllers {
 				response.Columns.AddEnumLabelColumn("State", typeof(OrderState), "50");
 				response.Columns.AddEditColumnFor<UserCrudController>("Buyer", "BuyerId", width: "70");
 				response.Columns.AddEditColumnFor<UserCrudController>("Seller", "SellerId", width: "70");
-				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted));
+				response.Columns.AddEnumLabelColumn("Deleted", typeof(EnumDeleted), "70");
 				var actionColumn = response.Columns.AddActionColumn("5%");
 				var deleted = request.Conditions.GetOrDefault<bool>("Deleted");
 				if (!deleted) {
