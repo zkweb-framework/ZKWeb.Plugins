@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
@@ -28,8 +28,10 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Handlers {
 		/// </summary>
 		public string Build(FormField field, IDictionary<string, string> htmlAttributes) {
 			var attribute = (CheckBoxTreeFieldAttribute)field.Attribute;
-			var listItemTreeProvider = (IListItemTreeProvider)Activator.CreateInstance(attribute.Source);
-			var listItemTree = listItemTreeProvider.GetTree();
+			var valueAndProvider = ListItemUtils.GetValueAndProvider<IListItemTreeProvider>(
+				attribute.Source, field.Value);
+			var value = valueAndProvider.First;
+			var listItemTree = valueAndProvider.Second.GetTree();
 			var items = listItemTree.EnumerateAllNodes().Where(n => n.Value != null).Select(n => new {
 				name = n.Value.Name,
 				value = n.Value.Value,
@@ -38,7 +40,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Handlers {
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var fieldHtml = templateManager.RenderTemplate("common.base/tmpl.form.hidden.html", new {
 				name = field.Attribute.Name,
-				value = JsonConvert.SerializeObject(field.Value ?? new string[0]),
+				value = JsonConvert.SerializeObject(value ?? new string[0]),
 				attributes = htmlAttributes
 			});
 			var checkboxTree = templateManager.RenderTemplate("common.base/tmpl.checkbox_tree.html", new {
@@ -53,7 +55,9 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Handlers {
 		/// 解析提交的字段的值
 		/// </summary>
 		public object Parse(FormField field, IList<string> values) {
-			return JsonConvert.DeserializeObject<IList<string>>(values[0]);
+			var attribute = (CheckBoxTreeFieldAttribute)field.Attribute;
+			var parsed = JsonConvert.DeserializeObject<IList<string>>(values[0]);
+			return ListItemUtils.WrapValueAndProvider(attribute.Source, parsed);
 		}
 	}
 }

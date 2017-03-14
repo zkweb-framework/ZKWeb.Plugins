@@ -9,6 +9,12 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes {
 		/// 初始化
 		/// </summary>
 		/// <param name="name">字段名称</param>
+		public SearchableDropdownListFieldAttribute(string name) : base(name) { }
+
+		/// <summary>
+		/// 初始化
+		/// </summary>
+		/// <param name="name">字段名称</param>
 		/// <param name="source">选项来源，必须继承IListItemProvider</param>
 		public SearchableDropdownListFieldAttribute(string name, Type source) : base(name, source) { }
 	}

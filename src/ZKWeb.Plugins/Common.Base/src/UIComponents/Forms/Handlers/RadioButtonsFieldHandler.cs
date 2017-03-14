@@ -4,6 +4,7 @@ using System.Linq;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
 using ZKWeb.Templating;
 using ZKWebStandard.Collection;
@@ -22,10 +23,12 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Handlers {
 		public static HtmlString BuildRadioButtonsHtml(
 			RadioButtonsFieldAttribute attribute,
 			IDictionary<string, string> htmlAttributes, object value) {
-			var listItemProvider = (IListItemProvider)Activator.CreateInstance(attribute.Source);
-			var listItems = listItemProvider.GetItems().ToList();
-			var valueString = (value is Enum) ?
-				((int)value).ToString() : value.ConvertOrDefault<string>();
+			var valueAndProvider = ListItemUtils.GetValueAndProvider<IListItemProvider>(
+				attribute.Source, value);
+			var listItems = valueAndProvider.Second.GetItems().ToList();
+			var valueString = (valueAndProvider.First is Enum) ?
+				((int)valueAndProvider.First).ToString() :
+				valueAndProvider.First.ConvertOrDefault<string>();
 			var templateManager = Application.Ioc.Resolve<TemplateManager>();
 			var radioList = templateManager.RenderTemplate("common.base/tmpl.form.radio_list.html", new {
 				name = attribute.Name,
@@ -52,7 +55,9 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Handlers {
 		/// 解析提交的字段的值
 		/// </summary>
 		public object Parse(FormField field, IList<string> values) {
-			return values[0];
+			var attribute = (RadioButtonsFieldAttribute)field.Attribute;
+			var parsed = values[0];
+			return ListItemUtils.WrapValueAndProvider(attribute.Source, parsed);
 		}
 	}
 }

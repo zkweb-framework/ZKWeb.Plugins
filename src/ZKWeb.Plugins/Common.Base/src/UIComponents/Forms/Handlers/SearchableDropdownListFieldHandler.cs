@@ -2,6 +2,7 @@
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Templating;
 using ZKWebStandard.Ioc;
 
@@ -28,7 +29,9 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Handlers {
 		/// 解析提交的字段的值
 		/// </summary>
 		public object Parse(FormField field, IList<string> values) {
-			return values[0];
+			var attribute = (SearchableDropdownListFieldAttribute)field.Attribute;
+			var parsed = values[0];
+			return ListItemUtils.WrapValueAndProvider(attribute.Source, parsed);
 		}
 	}
 }
