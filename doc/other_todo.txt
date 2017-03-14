@@ -2,6 +2,15 @@
 
 ====================================================================
 
+改进下拉框列表的绑定
+	ListItemProviderWithValue
+		Value
+		Provider
+	if (value is ListItemProviderWithValue) {
+		provider = value.Provider
+		value = value.value
+	}
+
 考虑Finance.Payment.Cash的实现
 考虑Finance.Payment.OnArrive的实现
 重新生成API文档
