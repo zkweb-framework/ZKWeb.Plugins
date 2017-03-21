@@ -50,6 +50,7 @@ http://www.673573.com
 	添加更多模块
 
 添加更多模块
+	包邮模块 (Shopping.OrderFreeShipping)
 	预存款模块 (Finance.Deposit)
 	财务记录模块 (Finance.Accounting)
 	结算模块 (Finance.Settlement)
