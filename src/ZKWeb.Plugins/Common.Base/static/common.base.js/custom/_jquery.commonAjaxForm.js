@@ -21,8 +21,14 @@ $.fn.commonAjaxForm = function (options) {
 	var beforeSubmitOrig = options.beforeSubmit;
 	options.beforeSubmit = function () {
 		$form.addClass("loading");
-		beforeSubmitOrig && beforeSubmitOrig.apply(this, arguments);
+		if (beforeSubmitOrig && beforeSubmitOrig.apply(this, arguments) === false) {
+			return false;
+		}
 		$form.trigger("beforeSubmit", arguments);
+		if ($form.data("cancelSubmit")) {
+			$form.data("cancelSubmit", null);
+			return false;
+		}
 	};
 	// 执行成功之后回调函数
 	var successOrig = options.success;
