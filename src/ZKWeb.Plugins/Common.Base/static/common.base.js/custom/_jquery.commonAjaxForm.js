@@ -22,11 +22,13 @@ $.fn.commonAjaxForm = function (options) {
 	options.beforeSubmit = function () {
 		$form.addClass("loading");
 		if (beforeSubmitOrig && beforeSubmitOrig.apply(this, arguments) === false) {
+			$form.removeClass("loading");
 			return false;
 		}
 		$form.trigger("beforeSubmit", arguments);
 		if ($form.data("cancelSubmit")) {
 			$form.data("cancelSubmit", null);
+			$form.removeClass("loading");
 			return false;
 		}
 	};
