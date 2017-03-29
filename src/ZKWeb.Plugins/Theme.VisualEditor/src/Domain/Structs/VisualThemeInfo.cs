@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotLiquid;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -7,7 +8,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs {
 	/// <summary>
 	/// 可视化主题信息
 	/// </summary>
-	public class VisualThemeInfo {
+	public class VisualThemeInfo : ILiquidizable {
 		/// <summary>
 		/// 主题名称
 		/// </summary>
@@ -25,9 +26,23 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs {
 		/// </summary>
 		public string Version { get; set; }
 		/// <summary>
+		/// 主题文件名
+		/// 读取时设置
+		/// </summary>
+		public string Filename { get; set; }
+		/// <summary>
 		/// 预览图的Base64
+		/// 读取时设置
 		/// </summary>
 		public string PreviewImageBase64 { get; set; }
+
+		/// <summary>
+		/// 允许描画到模板
+		/// </summary>
+		/// <returns></returns>
+		public object ToLiquid() {
+			return new { Name, Description, Author, Version, Filename, PreviewImageBase64 };
+		}
 
 		/// <summary>
 		/// 设置预览图

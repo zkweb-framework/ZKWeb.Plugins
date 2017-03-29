@@ -38,7 +38,13 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 			{ "__BeforeHtml", "前置Html" },
 			{ "__AfterHtml", "后置Html" },
 			{ "example: col-md-3 my-class", "例如: col-md-3 my-class" },
-			{ "GotoPage", "转到页面" }
+			{ "GotoPage", "转到页面" },
+			{ "ThemeList", "主题列表" },
+			{ "AutoBackupThemes", "自动备份主题" },
+			{ "UploadTheme", "上传主题" },
+			{ "CreateTheme", "创建主题" },
+			{ "DownloadTheme", "下载主题" },
+			{ "ApplyTheme", "应用主题" }
 		};
 
 		public bool CanTranslate(string code) {

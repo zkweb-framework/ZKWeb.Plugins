@@ -164,6 +164,14 @@ $(function () {
 			});
 		},
 
+		// 显示管理主题的窗口
+		showManageThemeWindow: function () {
+			BootstrapDialog.showRemote(
+				$.translate("ManageTheme"),
+				"/api/visual_editor/get_manage_theme_form",
+				{ type: "type-primary", size: "size-wide" });
+		},
+
 		// 启用或禁用"添加元素"按钮
 		switchAddElementBtn: function (enable) {
 			var $topBar = $(".visual-editor-top-bar");

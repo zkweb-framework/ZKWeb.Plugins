@@ -51,7 +51,7 @@ $(function () {
 
 	// 点击"管理主题"时的事件
 	var onManageTheme = function () {
-		$.toast("TODO");
+		VisualEditor.showManageThemeWindow();
 	};
 
 	// 点击"切换页面"时的事件

@@ -88,6 +88,8 @@
 
 				img {
 					border: 1px solid #000;
+					width: 200px;
+					height: 100px;
 				}
 
 				.name, .description {
@@ -104,6 +106,57 @@
 
 				.btn {
 					margin: 5px 0px 0px 0px;
+				}
+			}
+		}
+	}
+}
+
+/* 管理主题弹出框的样式 */
+.visual-editor-manage-theme {
+	.tabbable-line {
+		> .tab-content {
+			.theme-box {
+				float: left;
+				margin: 0px 15px 15px 0px;
+				width: 202px;
+				height: 190px;
+
+				img {
+					border: 1px solid #000;
+					width: 200px;
+					height: 100px;
+				}
+
+				.name, .description, .author, .version {
+					color: #666;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					width: 200px;
+					white-space: nowrap;
+				}
+
+				.description {
+					color: #999;
+				}
+
+				.btn {
+					margin: 5px 0px 0px 0px;
+				}
+			}
+
+			.backup-themes {
+				padding: 0px 5px;
+
+				.backup-theme {
+					list-style: none;
+					width: 100%;
+					border-bottom: 1px solid #eee;
+
+					.description, .actions {
+						margin: 5px 0px;
+						line-height: 20px;
+					}
 				}
 			}
 		}

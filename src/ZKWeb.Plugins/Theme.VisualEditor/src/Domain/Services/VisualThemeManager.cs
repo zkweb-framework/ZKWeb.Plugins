@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs;
 using ZKWeb.Storage;
@@ -28,6 +30,14 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		/// 备份主题文件夹的名称
 		/// </summary>
 		public static string BackupThemeDirectoryName = "theme_backups";
+		/// <summary>
+		/// 主题信息的文件名
+		/// </summary>
+		public static string ThemeInforFilename = "theme.json";
+		/// <summary>
+		/// 预览图片的文件名
+		/// </summary>
+		public static string PreviewFilename = "preview.png";
 
 		/// <summary>
 		/// 导出当前主题到数据流
@@ -46,7 +56,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 			var areasDir = fileStorage.GetStorageDirectory("areas");
 			using (var archive = new ZipArchive(stream, ZipArchiveMode.Create)) {
 				// 添加主题信息
-				var infoEntry = archive.CreateEntry("theme.json");
+				var infoEntry = archive.CreateEntry(ThemeInforFilename);
 				using (var writer = new StreamWriter(infoEntry.Open())) {
 					writer.Write(JsonConvert.SerializeObject(info));
 				}
@@ -82,6 +92,37 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 从数据流获取主题信息
+		/// </summary>
+		/// <param name="stream">数据流</param>
+		/// <returns></returns>
+		protected virtual VisualThemeInfo ReadThemeInfoFromStream(Stream stream) {
+			using (var archive = new ZipArchive(stream, ZipArchiveMode.Read)) {
+				// 读取json文件
+				var infoEntry = archive.GetEntry(ThemeInforFilename);
+				if (infoEntry == null) {
+					return new VisualThemeInfo() { Name = "No Information" };
+				}
+				string json;
+				using (var readStream = infoEntry.Open())
+				using (var streamReader = new StreamReader(readStream)) {
+					json = streamReader.ReadToEnd();
+				}
+				var info = JsonConvert.DeserializeObject<VisualThemeInfo>(json);
+				// 读取预览图文件
+				var previewEntry = archive.GetEntry(PreviewFilename);
+				if (previewEntry != null) {
+					using (var readSteam = previewEntry.Open())
+					using (var memoryStream = new MemoryStream()) {
+						readSteam.CopyTo(memoryStream);
+						info.PreviewImageBase64 = Convert.ToBase64String(memoryStream.ToArray());
+					}
+				}
+				return info;
+			}
+		}
+
+		/// <summary>
 		/// 备份当前主题
 		/// </summary>
 		public virtual void BackupUsingTheme() {
@@ -93,12 +134,13 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 				file.Delete();
 			}
 			// 生成主题信息
+			var timeString = DateTime.UtcNow.ToClientTime().ToString("yyyyMMdd_HHmmss");
 			var info = new VisualThemeInfo();
-			info.Name = "AutoBackup";
+			info.Name = $"AutoBackup {timeString}";
 			info.Author = "System";
 			info.Version = "1.0";
 			// 生成备份文件
-			var backupFileName = DateTime.UtcNow.ToClientTime().ToString("yyyyMMdd_HHmmss") + ".zip";
+			var backupFileName = $"{timeString}.zip";
 			var backupFile = fileStorage.GetStorageFile(BackupThemeDirectoryName, backupFileName);
 			using (var stream = backupFile.OpenWrite()) {
 				ExportThemeToStream(info, stream);
@@ -106,38 +148,44 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		}
 
 		/// <summary>
-		/// 导出当前主题
+		/// 从指定文件夹读取主题列表
 		/// </summary>
-		public virtual void ExportTheme() {
-
-		}
-
-		/// <summary>
-		/// 导入主题覆盖当前的主题
-		/// </summary>
-		public virtual void ImportTheme() {
-
-		}
-
-		/// <summary>
-		/// 添加主题, 用于上传主题
-		/// </summary>
-		public virtual void AddTheme() {
-
-		}
-
-		/// <summary>
-		/// 获取单个主题
-		/// </summary>
-		public virtual void GetTheme() {
-
+		/// <param name="directoryName">文件夹名称</param>
+		/// <returns></returns>
+		protected virtual IList<VisualThemeInfo> GetThemesFromDirectory(string directoryName) {
+			var result = new List<VisualThemeInfo>();
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+			var backupThemeDir = fileStorage.GetStorageDirectory(directoryName);
+			var files = backupThemeDir.EnumerateFiles().OrderByDescending(f => f.Filename).ToList();
+			foreach (var file in files) {
+				try {
+					using (var stream = file.OpenRead()) {
+						var info = ReadThemeInfoFromStream(stream);
+						info.Filename = file.Filename;
+						result.Add(info);
+					}
+				} catch (Exception e) {
+					var logManager = Application.Ioc.Resolve<LogManager>();
+					logManager.LogError($"Read theme '{file.Filename}' failed: '{e}'");
+				}
+			}
+			return result;
 		}
 
 		/// <summary>
 		/// 获取主题列表
 		/// </summary>
-		public virtual void GetThemes() {
+		/// <returns></returns>
+		public virtual IList<VisualThemeInfo> GetThemes() {
+			return GetThemesFromDirectory(ThemeDirectoryName);
+		}
 
+		/// <summary>
+		/// 获取备份的主题列表
+		/// </summary>
+		/// <returns></returns>
+		public virtual IList<VisualThemeInfo> GetBackupThemes() {
+			return GetThemesFromDirectory(BackupThemeDirectoryName);
 		}
 
 		/// <summary>

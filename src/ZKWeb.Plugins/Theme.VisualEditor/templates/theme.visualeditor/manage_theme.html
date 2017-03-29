@@ -1,0 +1,56 @@
+﻿<div class="visual-editor-manage-theme">
+	<div class="tabbable-line">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#tabManageTheme-ThemeList" data-toggle="tab">{{ "ThemeList" | trans }}</a></li>
+			<li><a href="#tabManageTheme-AutoBackupThemes" data-toggle="tab">{{ "AutoBackupThemes" | trans }}</a></li>
+			<li><a href="#tabManageTheme-UploadTheme" data-toggle="tab">{{ "UploadTheme" | trans }}</a></li>
+			<li><a href="#tabManageTheme-CreateTheme" data-toggle="tab">{{ "CreateTheme" | trans }}</a></li>
+		</ul>
+		<div class="tab-content">
+			<div id="tabManageTheme-ThemeList" class="tab-pane active">
+				{% for theme in themes %}
+				<div class="theme theme-box" data-filename="{{ theme.Filename }}">
+					{% if theme.PreviewImageBase64 %}
+					<img src="data:image/png;base64,{{ theme.PreviewImageBase64 }}" alt="preview">
+					{% else %}
+					<img src="/static/template.visualeditor.images/default-preview.jpg" alt="preview">
+					{% endif %}
+					<div class="informations">
+						<div class="name" title="{{ theme.Name }}">{{ theme.Name }}</div>
+						<div class="description" title="{{ theme.Description }}">{{ theme.Description }}</div>
+						<div class="author" title="{{ theme.Author }}">{{ "Author" | trans }}: {{ theme.Author }}</div>
+						<div class="version" title="{{ theme.Version }}">{{ "Version" | trans }}: {{ theme.Version }}</div>
+					</div>
+					<div class="actions">
+						<div class="btn btn-xs btn-primary download-theme">{{ "DownloadTheme" | trans }}</div>
+						<div class="btn btn-xs btn-danger apply-theme">{{ "ApplyTheme" | trans }}</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div id="tabManageTheme-AutoBackupThemes" class="tab-pane">
+				<ul class="backup-themes">
+					{% for theme in backupThemes %}
+					<li class="theme backup-theme" data-filename="{{ theme.Filename }}">
+						<div class="description pull-left">
+							<div class="name" title="{{ theme.Name }}">{{ theme.Name }}</div>
+						</div>
+						<div class="actions pull-right">
+							<div class="btn btn-xs btn-primary download-theme">{{ "DownloadTheme" | trans }}</div>
+							<div class="btn btn-xs btn-danger apply-theme">{{ "ApplyTheme" | trans }}</div>
+						</div>
+						<div class="clearfix"></div>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div id="tabManageTheme-UploadTheme" class="tab-pane">
+				tabManageTheme-UploadTheme
+			</div>
+			<div id="tabManageTheme-CreateTheme" class="tab-pane">
+				tabManageTheme-CreateTheme
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>

@@ -32,6 +32,20 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 		}
 
 		/// <summary>
+		/// 获取管理主题的表单
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/visual_editor/get_manage_theme_form")]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
+		public IActionResult GetManageThemeForm() {
+			var themeManager = Application.Ioc.Resolve<VisualThemeManager>();
+			var themes = themeManager.GetThemes();
+			var backupThemes = themeManager.GetBackupThemes();
+			return new TemplateResult("theme.visualeditor/manage_theme.html",
+				new { themes, backupThemes });
+		}
+
+		/// <summary>
 		/// 获取切换页面弹出框的Html
 		/// </summary>
 		/// <returns></returns>
