@@ -7,6 +7,7 @@ using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs;
+using ZKWeb.Plugins.Theme.VisualEditor.src.UIComponents.Forms;
 using ZKWeb.Templating.DynamicContents;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
@@ -41,8 +42,10 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 			var themeManager = Application.Ioc.Resolve<VisualThemeManager>();
 			var themes = themeManager.GetThemes();
 			var backupThemes = themeManager.GetBackupThemes();
+			var uploadThemeForm = new UploadThemeForm();
+			var createThemeForm = new CreateThemeForm();
 			return new TemplateResult("theme.visualeditor/manage_theme.html",
-				new { themes, backupThemes });
+				new { themes, backupThemes, uploadThemeForm, createThemeForm });
 		}
 
 		/// <summary>

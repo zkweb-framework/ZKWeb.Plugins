@@ -44,7 +44,14 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 			{ "UploadTheme", "上传主题" },
 			{ "CreateTheme", "创建主题" },
 			{ "DownloadTheme", "下载主题" },
-			{ "ApplyTheme", "应用主题" }
+			{ "ApplyTheme", "应用主题" },
+			{ "DeleteTheme", "删除主题" },
+			{ "ThemeFile", "主题文件" },
+			{ "ThemeName", "主题名称" },
+			{ "ThemeDescription", "主题描述" },
+			{ "ThemeAuthor", "主题作者" },
+			{ "ThemeVersion", "主题版本" },
+			{ "ThemePreviewImage", "主题预览图" }
 		};
 
 		public bool CanTranslate(string code) {

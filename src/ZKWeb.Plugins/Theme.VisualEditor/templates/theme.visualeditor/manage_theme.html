@@ -10,11 +10,13 @@
 			<div id="tabManageTheme-ThemeList" class="tab-pane active">
 				{% for theme in themes %}
 				<div class="theme theme-box" data-filename="{{ theme.Filename }}">
-					{% if theme.PreviewImageBase64 %}
-					<img src="data:image/png;base64,{{ theme.PreviewImageBase64 }}" alt="preview">
-					{% else %}
-					<img src="/static/template.visualeditor.images/default-preview.jpg" alt="preview">
-					{% endif %}
+					<div class="image" title="{{ theme.Filename }}">
+						{% if theme.PreviewImageBase64 %}
+						<img src="data:image/png;base64,{{ theme.PreviewImageBase64 }}" alt="preview">
+						{% else %}
+						<img src="/static/template.visualeditor.images/default-preview.jpg" alt="preview">
+						{% endif %}
+					</div>
 					<div class="informations">
 						<div class="name" title="{{ theme.Name }}">{{ theme.Name }}</div>
 						<div class="description" title="{{ theme.Description }}">{{ theme.Description }}</div>
@@ -23,7 +25,8 @@
 					</div>
 					<div class="actions">
 						<div class="btn btn-xs btn-primary download-theme">{{ "DownloadTheme" | trans }}</div>
-						<div class="btn btn-xs btn-danger apply-theme">{{ "ApplyTheme" | trans }}</div>
+						<div class="btn btn-xs btn-success apply-theme">{{ "ApplyTheme" | trans }}</div>
+						<div class="btn btn-xs btn-danger delete-theme">{{ "DeleteTheme" | trans }}</div>
 					</div>
 				</div>
 				{% endfor %}
@@ -33,11 +36,11 @@
 					{% for theme in backupThemes %}
 					<li class="theme backup-theme" data-filename="{{ theme.Filename }}">
 						<div class="description pull-left">
-							<div class="name" title="{{ theme.Name }}">{{ theme.Name }}</div>
+							<div class="name" title="{{ theme.Filename }}">{{ theme.Name }}</div>
 						</div>
 						<div class="actions pull-right">
 							<div class="btn btn-xs btn-primary download-theme">{{ "DownloadTheme" | trans }}</div>
-							<div class="btn btn-xs btn-danger apply-theme">{{ "ApplyTheme" | trans }}</div>
+							<div class="btn btn-xs btn-success apply-theme">{{ "ApplyTheme" | trans }}</div>
 						</div>
 						<div class="clearfix"></div>
 					</li>
@@ -45,10 +48,10 @@
 				</ul>
 			</div>
 			<div id="tabManageTheme-UploadTheme" class="tab-pane">
-				tabManageTheme-UploadTheme
+				{{ uploadThemeForm }}
 			</div>
 			<div id="tabManageTheme-CreateTheme" class="tab-pane">
-				tabManageTheme-CreateTheme
+				{{ createThemeForm }}
 			</div>
 		</div>
 		<div class="clearfix"></div>
