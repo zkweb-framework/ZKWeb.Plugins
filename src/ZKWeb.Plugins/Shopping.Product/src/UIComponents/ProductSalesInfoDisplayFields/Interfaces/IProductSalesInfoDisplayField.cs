@@ -12,7 +12,6 @@
 		/// 获取显示的Html
 		/// 不显示时可返回空或null
 		/// </summary>
-		/// <param name="context">数据库上下文</param>
 		/// <param name="product">商品</param>
 		/// <returns></returns>
 		string GetDisplayHtml(Domain.Entities.Product product);

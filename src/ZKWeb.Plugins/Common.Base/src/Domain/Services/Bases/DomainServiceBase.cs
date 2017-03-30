@@ -62,7 +62,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases {
 
 		/// <summary>
 		/// 根据条件获取实体列表
-		/// </summary
+		/// </summary>
 		public virtual IList<TEntity> GetMany(
 			Expression<Func<TEntity, bool>> predicate = null) {
 			using (UnitOfWork.Scope()) {

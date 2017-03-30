@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.ScaffoldAttributes {
 		/// 初始化
 		/// </summary>
 		/// <param name="pathProperty">保存了路径的成员名称</param>
-		/// <param name="methods">Http方法</param>
+		/// <param name="httpMethod">Http方法</param>
 		public ScaffoldActionAttribute(string pathProperty, string httpMethod) {
 			PathProperty = pathProperty;
 			HttpMethod = httpMethod;

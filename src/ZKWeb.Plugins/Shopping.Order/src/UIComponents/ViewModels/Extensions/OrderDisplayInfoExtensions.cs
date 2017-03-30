@@ -180,6 +180,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions {
 		/// 获取订单留言的Html
 		/// </summary>
 		/// <param name="info">订单显示信息</param>
+		/// <param name="comments">留言列表</param>
 		/// <returns></returns>
 		public static HtmlString GetOrderCommentsHtml(
 			this OrderDisplayInfo info,

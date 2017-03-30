@@ -78,6 +78,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services.Interfaces {
 		/// 返回标记的数量，不会实际删除
 		/// </summary>
 		/// <param name="ids">实体Id列表</param>
+		/// <param name="deleted">是否已删除</param>
 		/// <returns></returns>
 		long BatchSetDeleted(IEnumerable<TPrimaryKey> ids, bool deleted);
 

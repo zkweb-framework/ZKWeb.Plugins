@@ -12,7 +12,7 @@ namespace WxPayAPI {
 		/// 接收从微信支付后台发送过来的数据
 		/// </summary>
 		/// <param name="config">微信支付设置</param>
-		/// <param name="context">Http上下文</param>
+		/// <param name="xml">微信发来的xml内容</param>
 		/// <returns>微信支付后台返回的数据</returns>
 		public static WxPayData GetNotifyData(WxPayConfig config, string xml) {
 			// 接收从微信后台POST过来的数据

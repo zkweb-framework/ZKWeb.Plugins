@@ -15,7 +15,7 @@ namespace ZKWeb.Plugins.Common.Currency.src.UIComponents.TemplateFilters {
 		/// <summary>
 		/// 使用默认货币格式化
 		/// </summary>
-		/// <param name="text">金额</param>
+		/// <param name="amount">金额</param>
 		/// <returns></returns>
 		/// <example>{{ amount | default_currency }}</example>
 		public static string DefaultCurrency(object amount) {
@@ -27,8 +27,8 @@ namespace ZKWeb.Plugins.Common.Currency.src.UIComponents.TemplateFilters {
 		/// <summary>
 		/// 使用指定货币格式化
 		/// </summary>
-		/// <param name="text">金额</param>
-		/// <param name="currency">货币, ICurrency或string</param>
+		/// <param name="amount">金额</param>
+		/// <param name="currencyType">货币</param>
 		/// <returns></returns>
 		/// <example>{{ amount | currency: "CNY" }}</example>
 		public static string Currency(object amount, string currencyType) {

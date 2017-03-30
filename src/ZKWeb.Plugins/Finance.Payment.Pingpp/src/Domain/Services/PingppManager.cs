@@ -40,8 +40,8 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Domain.Services {
 		/// <param name="userAgent">客户端的UserAgent</param>
 		/// <param name="ipAddress">客户端的Ip地址</param>
 		/// <param name="charge">返回的支付凭据</param>
-		/// <param name="realResultUrl">返回的结果Url</param
-		/// <param name="waitResultUrl">等待返回的结果Url</param>>
+		/// <param name="realResultUrl">返回的结果Url</param>
+		/// <param name="waitResultUrl">等待返回的结果Url</param>
 		public virtual void GetCharge(
 			Guid transactionId, string paymentChannel, string userAgent, string ipAddress,
 			out Charge charge, out string realResultUrl, out string waitResultUrl) {
@@ -150,8 +150,8 @@ namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.Domain.Services {
 
 		/// <summary>
 		/// 处理webhook传入的消息
-		/// </summary
-		/// <param name="eventJson">消息的Json</param>>
+		/// </summary>
+		/// <param name="eventJson">消息的Json</param>
 		/// <param name="signature">消息的签名</param>
 		public virtual void ProcessWebHook(string eventJson, string signature) {
 			// 记录到日志

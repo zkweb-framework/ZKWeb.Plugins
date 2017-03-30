@@ -91,7 +91,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.AjaxTable.Extensions {
 		/// 如果数据类型不可以回收，则添加批量永久删除
 		/// 根据增删查改页面的控制器自动生成
 		/// </summary>
-		/// <typeparam name="TBuilder">控制器的类型</typeparam>
+		/// <typeparam name="TCrudController">控制器的类型</typeparam>
 		/// <param name="column">Id列</param>
 		/// <param name="request">搜索请求</param>
 		public static void AddDeleteActionsFor<TCrudController>(

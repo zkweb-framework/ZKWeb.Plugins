@@ -64,7 +64,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		/// 获取页面返回的模板结果对象
 		/// 如果页面不存在则返回null
 		/// </summary>
-		/// <param name="url">页面的Url</param>
+		/// <param name="pathAndQuery">页面的Url</param>
 		/// <returns></returns>
 		public virtual IActionResult GetPageResult(string pathAndQuery) {
 			IActionResult result = null;

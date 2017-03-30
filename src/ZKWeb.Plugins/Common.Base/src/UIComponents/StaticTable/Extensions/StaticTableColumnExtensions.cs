@@ -13,6 +13,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions {
 		/// <param name="width">宽度</param>
 		/// <param name="allowHtml">是否允许标题和成员使用Html，默认不允许</param>
 		/// <param name="caption">标题，默认使用成员名称</param>
+		/// <param name="cssClass">css类名</param>
 		/// <returns></returns>
 		public static StaticTableBuilder.Column Add(
 			this IList<StaticTableBuilder.Column> columns,

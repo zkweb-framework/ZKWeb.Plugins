@@ -26,7 +26,7 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.ScaffoldAttributes {
 		/// 初始化
 		/// </summary>
 		/// <param name="enableProperty">保存了是否启用Transactional的成员</param>
-		/// <param name="enableProperty">保存了隔离等级的成员</param>
+		/// <param name="isolationLevelProperty">保存了隔离等级的成员</param>
 		public ScaffoldTransactionalAttribute(
 			string enableProperty, string isolationLevelProperty) {
 			EnableProperty = enableProperty;

@@ -42,7 +42,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.Forms {
 
 		/// <summary>
 		/// 保存表单到实体，返回处理结果
-		/// </summary
+		/// </summary>
 		/// <param name="saveTo">保存到的实体</param>
 		/// <returns></returns>
 		protected abstract object OnSubmit(TEntity saveTo);

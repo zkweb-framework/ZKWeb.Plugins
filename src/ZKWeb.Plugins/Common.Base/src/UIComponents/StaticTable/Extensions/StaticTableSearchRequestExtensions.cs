@@ -17,9 +17,10 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions {
 		/// 从领域服务提供的数据构建搜索回应
 		/// 支持自动分页和配合表格处理器设置结果
 		/// </summary>
-		/// <typeparam name="TData">数据类型</typeparam>
+		/// <typeparam name="TEntity">数据类型</typeparam>
+		/// <typeparam name="TPrimaryKey">主键类型</typeparam>
 		/// <param name="request">搜索请求</param>
-		/// <param name="callbacks">表格处理器</param>
+		/// <param name="handlers">表格处理器</param>
 		/// <returns></returns>
 		public static StaticTableSearchResponse BuildResponse<TEntity, TPrimaryKey>(
 			this StaticTableSearchRequest request,

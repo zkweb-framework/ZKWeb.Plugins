@@ -84,7 +84,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Bases {
 		/// <summary>
 		/// 批量更新实体
 		/// 受这些过滤器的影响: 查询过滤器, 操作过滤器
-		/// </summary
+		/// </summary>
 		public virtual long BatchUpdate(
 			Expression<Func<TEntity, bool>> predicate, Action<TEntity> update) {
 			var uow = UnitOfWork;

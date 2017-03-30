@@ -12,7 +12,7 @@
 		/// 初始化
 		/// </summary>
 		/// <param name="name">属性名称</param>
-		/// <param name="type">模板路径</param>
+		/// <param name="path">模板路径</param>
 		public TemplateHtmlFieldAttribute(string name, string path) {
 			Name = name;
 			Path = path;

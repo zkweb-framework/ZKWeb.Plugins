@@ -30,9 +30,10 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTableExporters {
 		/// 转换到Csv单元格内容
 		/// - 如果对象是枚举类型，使用经过翻译的描述
 		/// - 否则使用对象ToString的值
-		/// - 进行Html解码，解析类似&nbsp;的字符
+		/// - 进行Html解码，解析类似＆nbsp;的字符
 		/// - 替换逗号，换行符，Html标签到空格
 		/// </summary>
+		/// <param name="obj"></param>
 		public static string CsvCell(object obj) {
 			var str = "";
 			if (obj is Enum) {

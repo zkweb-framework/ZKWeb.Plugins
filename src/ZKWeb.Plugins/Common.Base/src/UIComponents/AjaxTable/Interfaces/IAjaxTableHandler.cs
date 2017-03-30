@@ -34,7 +34,6 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Interfaces {
 		/// 过滤数据
 		/// </summary>
 		/// <param name="request">搜索请求</param>
-		/// <param name="context">数据库上下文</param>
 		/// <param name="query">查询对象</param>
 		void OnQuery(AjaxTableSearchRequest request, ref IQueryable<TEntity> query);
 
@@ -42,7 +41,6 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Interfaces {
 		/// 排序数据
 		/// </summary>
 		/// <param name="request">搜索请求</param>
-		/// <param name="context">数据库上下文</param>
 		/// <param name="query">查询对象</param>
 		void OnSort(AjaxTableSearchRequest request, ref IQueryable<TEntity> query);
 

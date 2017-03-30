@@ -12,8 +12,9 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions {
 		/// 根据指定的表格处理器获取它的所有扩展处理器
 		/// 并合并到一个列表返回，列表包含 [ 原始处理器, 扩展处理器... ]
 		/// </summary>
-		/// <typeparam name="TData">数据类型</typeparam>
-		/// <param name="callback">原始的表格处理器</param>
+		/// <typeparam name="TEntity">数据类型</typeparam>
+		/// <typeparam name="TPrimaryKey">主键类型</typeparam>
+		/// <param name="handler">原始的表格处理器</param>
 		/// <returns></returns>
 		public static IList<IStaticTableHandler<TEntity, TPrimaryKey>>
 			WithExtraHandlers<TEntity, TPrimaryKey>(

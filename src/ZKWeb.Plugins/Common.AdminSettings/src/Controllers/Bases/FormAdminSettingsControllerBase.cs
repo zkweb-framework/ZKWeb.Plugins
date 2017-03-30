@@ -6,7 +6,7 @@ using ZKWeb.Plugins.Common.MenuPage.src.Controllers.Bases;
 namespace ZKWeb.Plugins.Common.AdminSettings.src.Controllers.Bases {
 	/// <summary>
 	/// 带单个表单的后台设置页面控制器
-	/// </summary
+	/// </summary>
 	public abstract class FormAdminSettingsControllerBase :
 		FormMenuPageControllerBase, IAdminSettingsMenuProvider {
 		/// <summary>

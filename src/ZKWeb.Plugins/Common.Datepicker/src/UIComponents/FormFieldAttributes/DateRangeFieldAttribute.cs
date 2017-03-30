@@ -23,7 +23,8 @@ namespace ZKWeb.Plugins.Common.Datepicker.src.UIComponents.FormFieldAttributes {
 		/// 初始化
 		/// </summary>
 		/// <param name="name">字段名称</param>
-		/// <param name="placeHolder">预期文本</param>
+		/// <param name="beginPlaceHolder">开始时间的预置文本</param>>
+		/// <param name="finishPlaceHolder">结束时间的预置文本</param>
 		/// <param name="dateFormat">时间格式，默认是"yyyy/MM/dd"</param>
 		public DateRangeFieldAttribute(string name,
 			string beginPlaceHolder = null, string finishPlaceHolder = null, string dateFormat = null) {
