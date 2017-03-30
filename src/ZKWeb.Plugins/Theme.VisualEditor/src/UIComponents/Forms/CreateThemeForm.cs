@@ -17,6 +17,12 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.UIComponents.Forms {
 		[TextBoxField("ThemeName", "ThemeName")]
 		public string ThemeName { get; set; }
 		/// <summary>
+		/// 主题文件名
+		/// </summary>
+		[Required]
+		[TextBoxField("ThemeFilename", "ThemeFilename")]
+		public string ThemeFilename { get; set; }
+		/// <summary>
 		/// 主题描述
 		/// </summary>
 		[TextBoxField("ThemeDescription", "ThemeDescription")]

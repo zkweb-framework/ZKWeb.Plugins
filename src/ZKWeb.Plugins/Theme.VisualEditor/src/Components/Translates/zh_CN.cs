@@ -48,6 +48,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 			{ "DeleteTheme", "删除主题" },
 			{ "ThemeFile", "主题文件" },
 			{ "ThemeName", "主题名称" },
+			{ "ThemeFilename", "主题文件名" },
 			{ "ThemeDescription", "主题描述" },
 			{ "ThemeAuthor", "主题作者" },
 			{ "ThemeVersion", "主题版本" },

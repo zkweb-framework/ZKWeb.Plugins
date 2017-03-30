@@ -51,7 +51,35 @@ $(function () {
 
 	// 点击"管理主题"时的事件
 	var onManageTheme = function () {
-		VisualEditor.showManageThemeWindow();
+		VisualEditor.showManageThemeWindow(function () {
+			var $btn = $(this);
+			var $theme = $btn.closest(".theme");
+			var isBackupTheme = $theme.is(".backup-theme");
+			var filenameArgument = encodeURIComponent($theme.data("filename"));
+			if ($btn.is(".download-theme")) {
+				// 下载主题
+				var filename = $theme.data("filename");
+				var baseUrl = isBackupTheme ?
+					"/api/visual_editor/download_backup_theme" :
+					"/api/visual_editor/download_theme";
+				var url = baseUrl + "?filename=" + filenameArgument;
+				window.open(url);
+			} else if ($btn.is(".apply-theme")) {
+				// 应用主题
+				var filename = $theme.data("filename");
+				var baseUrl = isBackupTheme ?
+					"/api/visual_editor/apply_backup_theme" :
+					"/api/visual_editor/apply_theme";
+				var url = baseUrl + "?filename=" + filenameArgument;
+				$.toast("apply");
+			} else if ($btn.is(".delete-theme")) {
+				// 删除主题
+				var filename = $theme.data("filename");
+				var baseUrl = "/api/visual_editor/delete_theme";
+				var url = baseUrl + "?filename=" + filenameArgument;
+				$.toast("delete");
+			}
+		});
 	};
 
 	// 点击"切换页面"时的事件

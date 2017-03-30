@@ -51,7 +51,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		/// </summary>
 		/// <param name="info">主题信息</param>
 		/// <param name="stream">数据流</param>
-		protected virtual void ExportThemeToStream(VisualThemeInfo info, Stream stream) {
+		public virtual void ExportThemeToStream(VisualThemeInfo info, Stream stream) {
 			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
 			var areasDir = fileStorage.GetStorageDirectory("areas");
 			using (var archive = new ZipArchive(stream, ZipArchiveMode.Create)) {
@@ -74,7 +74,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		/// 从数据流导入主题覆盖当前的主题
 		/// </summary>
 		/// <param name="stream">数据流</param>
-		protected virtual void ImportThemeFromStream(Stream stream) {
+		public virtual void ImportThemeFromStream(Stream stream) {
 			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
 			// 删除areas文件夹
 			fileStorage.GetStorageDirectory("areas").Delete();
@@ -96,7 +96,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		/// </summary>
 		/// <param name="stream">数据流</param>
 		/// <returns></returns>
-		protected virtual VisualThemeInfo ReadThemeInfoFromStream(Stream stream) {
+		public virtual VisualThemeInfo ReadThemeInfoFromStream(Stream stream) {
 			using (var archive = new ZipArchive(stream, ZipArchiveMode.Read)) {
 				// 读取json文件
 				var infoEntry = archive.GetEntry(ThemeInforFilename);
@@ -186,6 +186,30 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		/// <returns></returns>
 		public virtual IList<VisualThemeInfo> GetBackupThemes() {
 			return GetThemesFromDirectory(BackupThemeDirectoryName);
+		}
+
+		/// <summary>
+		/// 获取主题的数据流
+		/// </summary>
+		/// <param name="filename">文件名</param>
+		/// <returns></returns>
+		public virtual Stream GetThemeStream(string filename) {
+			var result = new List<VisualThemeInfo>();
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+			var file = fileStorage.GetStorageFile(ThemeDirectoryName, filename);
+			return file.OpenRead();
+		}
+
+		/// <summary>
+		/// 获取备份主题的数据流
+		/// </summary>
+		/// <param name="filename">文件名</param>
+		/// <returns></returns>
+		public virtual Stream GetBackupThemeStream(string filename) {
+			var result = new List<VisualThemeInfo>();
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+			var file = fileStorage.GetStorageFile(BackupThemeDirectoryName, filename);
+			return file.OpenRead();
 		}
 
 		/// <summary>

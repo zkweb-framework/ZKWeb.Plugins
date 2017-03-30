@@ -165,11 +165,20 @@ $(function () {
 		},
 
 		// 显示管理主题的窗口
-		showManageThemeWindow: function () {
+		showManageThemeWindow: function (callback) {
 			BootstrapDialog.showRemote(
 				$.translate("ManageTheme"),
 				"/api/visual_editor/get_manage_theme_form",
-				{ type: "type-primary", size: "size-wide" });
+				{
+					type: "type-primary",
+					size: "size-wide",
+					onshow: function (dialog) {
+						dialog.$modal.on("click", ".btn", function () {
+							callback && callback.call(this);
+						});
+						console.log(dialog);
+					}
+				});
 		},
 
 		// 启用或禁用"添加元素"按钮

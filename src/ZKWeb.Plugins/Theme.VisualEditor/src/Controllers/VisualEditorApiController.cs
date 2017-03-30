@@ -13,6 +13,7 @@ using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Utils;
 
 namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 	/// <summary>
@@ -58,6 +59,34 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 			var pageManager = Application.Ioc.Resolve<VisualPageManager>();
 			var pageGroups = pageManager.GetEditablePages();
 			return new TemplateResult("theme.visualeditor/switch_pages.html", new { pageGroups });
+		}
+
+		/// <summary>
+		/// 下载主题
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/visual_editor/download_theme")]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
+		public IActionResult DownloadTheme(string filename) {
+			var themeManager = Application.Ioc.Resolve<VisualThemeManager>();
+			var stream = themeManager.GetThemeStream(filename);
+			Response.AddHeader("Content-Disposition",
+				$"attachment; filename={HttpUtils.UrlEncode(filename)}");
+			return new StreamResult(stream, "application/zip");
+		}
+
+		/// <summary>
+		/// 下载备份主题
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/visual_editor/download_backup_theme")]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
+		public IActionResult DownloadBackupTheme(string filename) {
+			var themeManager = Application.Ioc.Resolve<VisualThemeManager>();
+			var stream = themeManager.GetBackupThemeStream(filename);
+			Response.AddHeader("Content-Disposition",
+				$"attachment; filename={HttpUtils.UrlEncode(filename)}");
+			return new StreamResult(stream, "application/zip");
 		}
 
 		/// <summary>
