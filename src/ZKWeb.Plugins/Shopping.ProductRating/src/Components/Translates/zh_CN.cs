@@ -34,7 +34,9 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Components.Translates {
 			{ "Please provide rating for atleast one product", "请对至少一件商品进行评价" },
 			{ "Rating successful, Redirecting to order list...", "评价成功，正在跳转到订单列表页……" },
 			{ "OrderRatePage", "订单评价页" },
-			{ "ProductRatingHistory", "商品评价记录" }
+			{ "ProductRatingHistory", "商品评价记录" },
+			// TODO: 翻译到其他语言
+			{ "No Rating", "未评价" }
 		};
 
 		public bool CanTranslate(string code) {

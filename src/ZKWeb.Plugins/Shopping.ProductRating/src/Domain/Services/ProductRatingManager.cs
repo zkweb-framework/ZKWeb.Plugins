@@ -5,11 +5,14 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.Domain.Repositories.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.StaticTable.Extensions;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Entities;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
 using ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Enums;
+using ZKWebStandard.Collection;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
 
@@ -171,6 +174,27 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 			return username[0] +
 				new string('*', username.Length - 2) +
 				username[username.Length - 1];
+		}
+
+		/// <summary>
+		/// 获取商品评价的html
+		/// </summary>
+		/// <param name="order">卖家订单</param>
+		/// <returns></returns>
+		public virtual HtmlString GetProductRatingsHtml(SellerOrder order) {
+			var table = new StaticTableBuilder();
+			table.Columns.Add("Product");
+			table.Columns.Add("Rate", "150");
+			table.Columns.Add("ProductRating", "300");
+			foreach (var product in order.OrderProducts) {
+				var rating = Get(r => r.OrderProduct.Id == product.Id);
+				table.Rows.Add(new {
+					Product = product.ToDisplayInfo().GetSummaryHtml(),
+					Rate = new T(rating?.Rank.GetDescription() ?? "No Rating"),
+					ProductRating = rating?.Comment
+				});
+			}
+			return (HtmlString)table.ToLiquid();
 		}
 	}
 }

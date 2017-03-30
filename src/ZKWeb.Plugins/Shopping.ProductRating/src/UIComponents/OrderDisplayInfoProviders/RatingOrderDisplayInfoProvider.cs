@@ -27,9 +27,12 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.UIComponents.OrderDisplayInfo
 				// 评价
 				var canRate = productRatingManager.CanRateOrder(order);
 				if (canRate) {
-					actions.Add(DefaultOrderDisplayInfoProvider.GetLinkAction(templateManager,
+					actions.Add(DefaultOrderDisplayInfoProvider.GetLinkAction(
+						templateManager,
 						new T("Rate"),
-						productRatingManager.GetRatingUrl(order), "fa fa-star-o", "btn btn-primary"));
+						productRatingManager.GetRatingUrl(order),
+						"fa fa-star-o",
+						"btn btn-primary"));
 				}
 			}
 		}

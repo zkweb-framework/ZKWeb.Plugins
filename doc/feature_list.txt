@@ -546,9 +546,9 @@ Shopping.ProductRating
 	商品评价
 		确认收货后可以评价商品
 		商品详情页可以查看评价记录
-		TODO: 用户中心可以查看历史评价
-		TODO: 后台可以查看和删除历史评价
-		TODO: 支持评价时上传图片
+		订单详情页可以查看商品评价
+		TODO: 后台可以删除商品评价
+		TODO: 评价时可以上传图片
 
 Testing.WebTester
 	在网页上执行测试
