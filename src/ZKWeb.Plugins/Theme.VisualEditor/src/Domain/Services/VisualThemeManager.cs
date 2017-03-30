@@ -213,6 +213,28 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 应用主题
+		/// </summary>
+		/// <param name="filename">文件名</param>
+		public virtual void ApplyTheme(string filename) {
+			// 应用普通主题前应该备份当前的主题
+			BackupUsingTheme();
+			using (var stream = GetThemeStream(filename)) {
+				ImportThemeFromStream(stream);
+			}
+		}
+
+		/// <summary>
+		/// 应用备份主题
+		/// </summary>
+		/// <param name="filename">文件名</param>
+		public virtual void ApplyBackupTheme(string filename) {
+			using (var stream = GetBackupThemeStream(filename)) {
+				ImportThemeFromStream(stream);
+			}
+		}
+
+		/// <summary>
 		/// 保存可视化编辑的结果
 		/// </summary>
 		public virtual void SaveEditResult(VisualEditResult result) {

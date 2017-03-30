@@ -55,23 +55,14 @@ $(function () {
 			var $btn = $(this);
 			var $theme = $btn.closest(".theme");
 			var isBackupTheme = $theme.is(".backup-theme");
-			var filenameArgument = encodeURIComponent($theme.data("filename"));
+			var name = $theme.find(".name").text().trim();
+			var filename = $theme.data("filename");
 			if ($btn.is(".download-theme")) {
 				// 下载主题
-				var filename = $theme.data("filename");
-				var baseUrl = isBackupTheme ?
-					"/api/visual_editor/download_backup_theme" :
-					"/api/visual_editor/download_theme";
-				var url = baseUrl + "?filename=" + filenameArgument;
-				window.open(url);
+				VisualEditor.downloadTheme(filename, isBackupTheme);
 			} else if ($btn.is(".apply-theme")) {
 				// 应用主题
-				var filename = $theme.data("filename");
-				var baseUrl = isBackupTheme ?
-					"/api/visual_editor/apply_backup_theme" :
-					"/api/visual_editor/apply_theme";
-				var url = baseUrl + "?filename=" + filenameArgument;
-				$.toast("apply");
+				VisualEditor.applyTheme(name, filename, isBackupTheme);
 			} else if ($btn.is(".delete-theme")) {
 				// 删除主题
 				var filename = $theme.data("filename");

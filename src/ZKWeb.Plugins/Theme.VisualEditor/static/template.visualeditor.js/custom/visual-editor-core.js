@@ -181,6 +181,39 @@ $(function () {
 				});
 		},
 
+		// 下载主题
+		downloadTheme: function (filename, isBackupTheme) {
+			filename = encodeURIComponent(filename);
+			var baseUrl = isBackupTheme ?
+				"/api/visual_editor/download_backup_theme" :
+				"/api/visual_editor/download_theme";
+			var url = baseUrl + "?filename=" + filename;
+			window.open(url);
+		},
+
+		// 应用主题
+		applyTheme: function (name, filename, isBackupTheme) {
+			var baseUrl = isBackupTheme ?
+				"/api/visual_editor/apply_backup_theme" :
+				"/api/visual_editor/apply_theme";
+			BootstrapDialog.confirm({
+				title: $.translate("ApplyTheme"),
+				message: $.translate("Are you sure to apply theme $theme?").replace("$theme", name),
+				type: BootstrapDialog.TYPE_WARNING,
+				btnCancelLabel: $.translate("Cancel"),
+				btnOKLabel: $.translate("Ok"),
+				callback: function (result) {
+					if (!result) {
+						return;
+					}
+					$.post(baseUrl, { filename: filename }, function (data) {
+						$(window).off("beforeunload"); // 取消刷新前确认
+						$.handleAjaxResult(data);
+					});
+				}
+			});
+		},
+
 		// 启用或禁用"添加元素"按钮
 		switchAddElementBtn: function (enable) {
 			var $topBar = $(".visual-editor-top-bar");

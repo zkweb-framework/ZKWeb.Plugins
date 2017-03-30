@@ -52,7 +52,9 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Components.Translates {
 			{ "ThemeDescription", "主题描述" },
 			{ "ThemeAuthor", "主题作者" },
 			{ "ThemeVersion", "主题版本" },
-			{ "ThemePreviewImage", "主题预览图" }
+			{ "ThemePreviewImage", "主题预览图" },
+			{ "Are you sure to apply theme $theme?", "确认应用主题'$theme'?" },
+			{ "Apply theme success, reloading this page......", "应用主题成功，正在刷新当前页面……" }
 		};
 
 		public bool CanTranslate(string code) {

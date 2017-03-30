@@ -5,6 +5,7 @@ using ZKWeb.Plugins.Common.Admin.src.Components.ActionFilters;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.ScriptStrings;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services;
 using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Structs;
 using ZKWeb.Plugins.Theme.VisualEditor.src.UIComponents.Forms;
@@ -87,6 +88,36 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 			Response.AddHeader("Content-Disposition",
 				$"attachment; filename={HttpUtils.UrlEncode(filename)}");
 			return new StreamResult(stream, "application/zip");
+		}
+
+		/// <summary>
+		/// 应用主题
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/visual_editor/apply_theme", HttpMethods.POST)]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
+		public IActionResult ApplyTheme(string filename) {
+			var themeManager = Application.Ioc.Resolve<VisualThemeManager>();
+			themeManager.ApplyTheme(filename);
+			return new JsonResult(new {
+				message = new T("Apply theme success, reloading this page......"),
+				script = BaseScriptStrings.RefreshAfter(3000)
+			});
+		}
+
+		/// <summary>
+		/// 应用备份主题
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/visual_editor/apply_backup_theme", HttpMethods.POST)]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
+		public IActionResult ApplyBackupTheme(string filename) {
+			var themeManager = Application.Ioc.Resolve<VisualThemeManager>();
+			themeManager.ApplyBackupTheme(filename);
+			return new JsonResult(new {
+				message = new T("Apply theme success, reloading this page......"),
+				script = BaseScriptStrings.RefreshAfter(3000)
+			});
 		}
 
 		/// <summary>
