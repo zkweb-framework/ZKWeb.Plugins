@@ -214,6 +214,26 @@ $(function () {
 			});
 		},
 
+		// 删除主题
+		deleteTheme: function (name, filename, isBackupTheme) {
+			var baseUrl = "/api/visual_editor/delete_theme";
+			BootstrapDialog.confirm({
+				title: $.translate("DeleteTheme"),
+				message: $.translate("Are you sure to delete theme $theme?").replace("$theme", name),
+				type: BootstrapDialog.TYPE_WARNING,
+				btnCancelLabel: $.translate("Cancel"),
+				btnOKLabel: $.translate("Ok"),
+				callback: function (result) {
+					if (!result) {
+						return;
+					}
+					$.post(baseUrl, { filename: filename }, function (data) {
+						$.handleAjaxResult(data);
+					});
+				}
+			});
+		},
+
 		// 启用或禁用"添加元素"按钮
 		switchAddElementBtn: function (enable) {
 			var $topBar = $(".visual-editor-top-bar");

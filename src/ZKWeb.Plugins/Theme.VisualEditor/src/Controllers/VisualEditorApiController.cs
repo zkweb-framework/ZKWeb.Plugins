@@ -121,6 +121,28 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 		}
 
 		/// <summary>
+		/// 创建主题
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/visual_editor/create_theme", HttpMethods.POST)]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
+		public IActionResult CreateTheme() {
+			var form = new CreateThemeForm();
+			return new JsonResult(form.Submit());
+		}
+
+		/// <summary>
+		/// 上传主题
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/visual_editor/upload_theme", HttpMethods.POST)]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
+		public IActionResult UploadTheme() {
+			var form = new UploadThemeForm();
+			return new JsonResult(form.Submit());
+		}
+
+		/// <summary>
 		/// 获取编辑模块的表单
 		/// </summary>
 		[Action("api/visual_editor/get_widget_edit_form", HttpMethods.POST)]

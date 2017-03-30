@@ -235,6 +235,27 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 上传主题
+		/// </summary>
+		/// <param name="filename">文件名</param>
+		/// <param name="stream">数据流</param>
+		public virtual void UploadTheme(string filename, Stream stream) {
+			var filenameWithoutExtension = Path.GetFileNameWithoutExtension(filename);
+			var result = new List<VisualThemeInfo>();
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+			int index = 0;
+			var saveFilename = $"{filenameWithoutExtension}.zip";
+			IFileEntry file = fileStorage.GetStorageFile(ThemeDirectoryName, saveFilename);
+			while (file.Exists) {
+				saveFilename = $"{filenameWithoutExtension}({++index}).zip";
+				file = fileStorage.GetStorageFile(ThemeDirectoryName, saveFilename);
+			}
+			using (var fileStream = file.OpenWrite()) {
+				stream.CopyTo(fileStream);
+			}
+		}
+
+		/// <summary>
 		/// 保存可视化编辑的结果
 		/// </summary>
 		public virtual void SaveEditResult(VisualEditResult result) {

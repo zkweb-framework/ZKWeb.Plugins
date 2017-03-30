@@ -1,6 +1,8 @@
 ﻿using System;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Attributes;
+using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
+using ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services;
 using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Theme.VisualEditor.src.UIComponents.Forms {
@@ -12,7 +14,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.UIComponents.Forms {
 		/// <summary>
 		/// 主题文件
 		/// </summary>
-		[FileUploaderField("ThemeFile", ".zip", 100 * 1024 * 1024)]
+		[FileUploaderField("ThemeFile", "zip", 100 * 1024 * 1024)]
 		public IHttpPostedFile ThemeFile { get; set; }
 
 		/// <summary>
@@ -26,7 +28,9 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.UIComponents.Forms {
 		/// </summary>
 		/// <returns></returns>
 		protected override object OnSubmit() {
-			throw new NotImplementedException();
+			var themeManager = Application.Ioc.Resolve<VisualThemeManager>();
+			themeManager.UploadTheme(ThemeFile.FileName, ThemeFile.OpenReadStream());
+			return this.SaveSuccessAndRefreshModal();
 		}
 	}
 }

@@ -65,10 +65,7 @@ $(function () {
 				VisualEditor.applyTheme(name, filename, isBackupTheme);
 			} else if ($btn.is(".delete-theme")) {
 				// 删除主题
-				var filename = $theme.data("filename");
-				var baseUrl = "/api/visual_editor/delete_theme";
-				var url = baseUrl + "?filename=" + filenameArgument;
-				$.toast("delete");
+				VisualEditor.deleteTheme(name, filename, isBackupTheme);
 			}
 		});
 	};
