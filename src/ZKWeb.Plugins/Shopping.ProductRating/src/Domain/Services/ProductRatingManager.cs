@@ -86,7 +86,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 		public virtual void AddRatingsFromRequestArguments(
 			Guid orderId,
 			IDictionary<string, IList<string>> arguments,
-			IList<Pair<string, IHttpPostedFile>> files) {
+			IEnumerable<Pair<string, IHttpPostedFile>> files) {
 			// 获取三项评分
 			var descriptionMatchScore = arguments
 				.GetOrDefault("DescriptionMatchScore")?[0]
