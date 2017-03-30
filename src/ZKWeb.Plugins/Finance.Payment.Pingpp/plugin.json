@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "PingppPaymentApi",
-	"Version": "1.0.0",
+	"Version": "1.7.0",
 	"Description": "Support pay transactions by pingpp",
 	"Dependencies": [ "Common.Admin", "Finance.Payment" ]
 }

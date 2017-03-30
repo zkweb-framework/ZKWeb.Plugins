@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "Currency",
-	"Version": "1.0.0",
+	"Version": "1.7.0",
 	"Description": "Provide currency types and related functions",
 	"Dependencies": [ "Common.Base" ]
 }

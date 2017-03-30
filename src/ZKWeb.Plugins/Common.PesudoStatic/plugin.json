@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "PesudoStatic",
-	"Version": "1.0.0",
+	"Version": "1.7.0",
 	"Description": "Pesudo static support",
 	"Dependencies": [ "Common.Base" ]
 }

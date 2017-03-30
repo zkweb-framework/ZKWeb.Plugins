@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "DynamicForm",
-	"Version": "1.0.0",
+	"Version": "1.7.0",
 	"Description": "Support build dynamic form from json data",
 	"Dependencies": [ "Common.Base" ]
 }

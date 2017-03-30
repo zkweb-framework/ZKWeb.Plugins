@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "CustomTranslate",
-	"Version": "1.0.0",
+	"Version": "1.7.0",
 	"Description": "Support custom translate through admin panel",
 	"Dependencies": [ "Common.Base" ]
 }
