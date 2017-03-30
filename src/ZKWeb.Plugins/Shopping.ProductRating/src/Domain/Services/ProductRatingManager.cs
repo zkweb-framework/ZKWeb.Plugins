@@ -13,8 +13,10 @@ using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels;
 using ZKWeb.Plugins.Shopping.Order.src.UIComponents.ViewModels.Extensions;
 using ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Enums;
 using ZKWebStandard.Collection;
+using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 	/// <summary>
@@ -80,8 +82,11 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 		/// </summary>
 		/// <param name="orderId">买家订单Id</param> 
 		/// <param name="arguments">请求参数</param>
+		/// <param name="files">提交文件列表</param>
 		public virtual void AddRatingsFromRequestArguments(
-			Guid orderId, IDictionary<string, IList<string>> arguments) {
+			Guid orderId,
+			IDictionary<string, IList<string>> arguments,
+			IList<Pair<string, IHttpPostedFile>> files) {
 			// 获取三项评分
 			var descriptionMatchScore = arguments
 				.GetOrDefault("DescriptionMatchScore")?[0]
@@ -107,6 +112,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 			}
 			// 添加各个商品的评价
 			var rateCount = 0;
+			var addedRatings = new List<Entities.ProductRating>();
 			using (UnitOfWork.Scope()) {
 				UnitOfWork.Context.BeginTransaction();
 				var orderProducts = GetUnratedOrderProducts(orderId);
@@ -131,11 +137,20 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 						DeliverySpeedScore = deliverySpeedScore.Value
 					};
 					Save(ref rating);
+					addedRatings.Add(rating);
 				}
 				UnitOfWork.Context.FinishTransaction();
 			}
 			if (rateCount == 0) {
 				throw new BadRequestException(new T("Please provide rating for atleast one product"));
+			}
+			// 保存上传的评价图片
+			foreach (var rating in addedRatings) {
+				var orderProductId = rating.OrderProduct.Id.ToString();
+				var photoFiles = files
+					.Where(p => p.First.Contains(orderProductId))
+					.OrderBy(p => p.First).ToList();
+				
 			}
 		}
 

@@ -49,7 +49,8 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Controllers {
 			}
 			// 提交评价
 			var arguments = Request.GetAllDictionary();
-			productRatingManager.AddRatingsFromRequestArguments(buyerOrderId.Value, arguments);
+			var files = Request.GetPostedFiles();
+			productRatingManager.AddRatingsFromRequestArguments(buyerOrderId.Value, arguments, files);
 			return new JsonResult(new {
 				message = new T("Rating successful, Redirecting to order list..."),
 				script = BaseScriptStrings.Redirect("/user/orders", 1500)

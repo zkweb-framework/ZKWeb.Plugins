@@ -36,7 +36,8 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Components.Translates {
 			{ "OrderRatePage", "订单评价页" },
 			{ "ProductRatingHistory", "商品评价记录" },
 			// TODO: 翻译到其他语言
-			{ "No Rating", "未评价" }
+			{ "No Rating", "未评价" },
+			{ "UploadPhotos", "上传图片" }
 		};
 
 		public bool CanTranslate(string code) {

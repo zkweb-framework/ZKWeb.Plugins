@@ -38,13 +38,22 @@
 								</label>
 								<label class="radio-inline" child-name="{{ rateFieldName }}" child-value="0">
 									<input name="{{ rateFieldName }}" value="" type="radio">
-									<i class="fa fa-sun-o"></i>{{ "RateNextTime" | trans }}
+									<i class=""></i>{{ "RateNextTime" | trans }}
 								</label>
 							</div>
 							<div class="comment">
 								<textarea class="form-control" rows="5"
 										  name="{{ "Comment_[0]" | format: info.OrderProductId }}"
 										  placeholder="{{ "Please fill in your evaluation of this product" | trans }}"></textarea>
+							</div>
+							<div class="photos">
+								<div class="text">{{ "UploadPhotos" | trans }}: </div>
+								{% for x in (1..3) %}
+								<div class="pull-left">
+									<input name="{{ "Photo_[0]_[1]" | format: info.OrderProductId, x }}" class="file-uploader" type="file">
+								</div>
+								{% endfor %}
+								<div class="clearfix"></div>
 							</div>
 						</div>
 					</div>
