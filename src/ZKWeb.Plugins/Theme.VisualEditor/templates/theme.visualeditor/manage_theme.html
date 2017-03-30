@@ -30,6 +30,11 @@
 					</div>
 				</div>
 				{% endfor %}
+				{% if themes.size == 0 %}
+				<div class="text-center-row">
+					{{ "No themes exist, please create or upload a new theme" | trans }}
+				</div>
+				{% endif %}
 			</div>
 			<div id="tabManageTheme-AutoBackupThemes" class="tab-pane">
 				<ul class="backup-themes">

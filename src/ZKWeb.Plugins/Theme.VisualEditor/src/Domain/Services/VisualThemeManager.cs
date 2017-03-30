@@ -235,6 +235,19 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		}
 
 		/// <summary>
+		/// 删除主题
+		/// </summary>
+		/// <param name="filename">文件名</param>
+		public virtual void DeleteTheme(string filename) {
+			var result = new List<VisualThemeInfo>();
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+			var file = fileStorage.GetStorageFile(ThemeDirectoryName, filename);
+			if (file.Exists) {
+				file.Delete();
+			}
+		}
+
+		/// <summary>
 		/// 上传主题
 		/// </summary>
 		/// <param name="filename">文件名</param>

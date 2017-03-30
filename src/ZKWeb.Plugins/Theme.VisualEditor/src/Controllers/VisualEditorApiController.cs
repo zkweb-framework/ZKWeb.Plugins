@@ -121,6 +121,21 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 		}
 
 		/// <summary>
+		/// 删除主题
+		/// </summary>
+		/// <returns></returns>
+		[Action("api/visual_editor/delete_theme", HttpMethods.POST)]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
+		public IActionResult DeleteTheme(string filename) {
+			var themeManager = Application.Ioc.Resolve<VisualThemeManager>();
+			themeManager.DeleteTheme(filename);
+			return new JsonResult(new {
+				message = new T("Delete theme success"),
+				script = BaseScriptStrings.RefreshModal
+			});
+		}
+
+		/// <summary>
 		/// 创建主题
 		/// </summary>
 		/// <returns></returns>

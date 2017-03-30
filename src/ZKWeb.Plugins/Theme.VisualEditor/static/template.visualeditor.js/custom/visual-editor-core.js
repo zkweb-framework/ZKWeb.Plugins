@@ -176,7 +176,6 @@ $(function () {
 						dialog.$modal.on("click", ".btn", function () {
 							callback && callback.call(this);
 						});
-						console.log(dialog);
 					}
 				});
 		},
@@ -193,6 +192,7 @@ $(function () {
 
 		// 应用主题
 		applyTheme: function (name, filename, isBackupTheme) {
+			var $this = $(this);
 			var baseUrl = isBackupTheme ?
 				"/api/visual_editor/apply_backup_theme" :
 				"/api/visual_editor/apply_theme";
@@ -208,7 +208,7 @@ $(function () {
 					}
 					$.post(baseUrl, { filename: filename }, function (data) {
 						$(window).off("beforeunload"); // 取消刷新前确认
-						$.handleAjaxResult(data);
+						$.handleAjaxResult.call($this, data);
 					});
 				}
 			});
@@ -216,6 +216,7 @@ $(function () {
 
 		// 删除主题
 		deleteTheme: function (name, filename, isBackupTheme) {
+			var $this = $(this);
 			var baseUrl = "/api/visual_editor/delete_theme";
 			BootstrapDialog.confirm({
 				title: $.translate("DeleteTheme"),
@@ -228,7 +229,7 @@ $(function () {
 						return;
 					}
 					$.post(baseUrl, { filename: filename }, function (data) {
-						$.handleAjaxResult(data);
+						$.handleAjaxResult.call($this, data);
 					});
 				}
 			});

@@ -62,10 +62,10 @@ $(function () {
 				VisualEditor.downloadTheme(filename, isBackupTheme);
 			} else if ($btn.is(".apply-theme")) {
 				// 应用主题
-				VisualEditor.applyTheme(name, filename, isBackupTheme);
+				VisualEditor.applyTheme.call($btn, name, filename, isBackupTheme);
 			} else if ($btn.is(".delete-theme")) {
 				// 删除主题
-				VisualEditor.deleteTheme(name, filename, isBackupTheme);
+				VisualEditor.deleteTheme.call($btn, name, filename, isBackupTheme);
 			}
 		});
 	};
