@@ -304,11 +304,16 @@ Finance.Payment
 
 Finance.Payment.Alipay
 	提供支付接口
-		TODO: 支付宝
-	TODO: 支持支付宝即时到账
-	TODO: 支持支付宝担保交易
-	TODO: 支持支付宝发货通知
-	TODO: 支持支付宝确认收货通知
+		支付宝
+	支持支付宝即时到账
+	支持支付宝担保交易
+	支持支付宝发货通知
+	支持支付宝确认收货通知
+
+Finance.Payment.Finance.Payment.AlipayMobile
+	提供支付接口
+		支付宝扫码支付
+	支持支付宝扫码支付
 
 Finance.Payment.Cash
 	提供支付接口
@@ -333,8 +338,10 @@ Finance.Payment.Tenpay
 
 Finance.Payment.WeChat
 	提供支付接口
-		TODO: 微信扫码支付
+		微信扫码支付
 		TODO: 微信公众号支付
+	支持微信扫码支付
+	TODO: 支持微信公众号支付
 
 Multishop.AfterSales
 	卖家中心审核退款
