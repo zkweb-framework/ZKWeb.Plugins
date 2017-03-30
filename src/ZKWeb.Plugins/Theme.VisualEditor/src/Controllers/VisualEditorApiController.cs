@@ -46,6 +46,8 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 			var backupThemes = themeManager.GetBackupThemes();
 			var uploadThemeForm = new UploadThemeForm();
 			var createThemeForm = new CreateThemeForm();
+			uploadThemeForm.Bind();
+			createThemeForm.Bind();
 			return new TemplateResult("theme.visualeditor/manage_theme.html",
 				new { themes, backupThemes, uploadThemeForm, createThemeForm });
 		}

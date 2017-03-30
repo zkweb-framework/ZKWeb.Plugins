@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -65,6 +67,14 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 					var widgetsEntry = archive.CreateEntry("areas/" + widgetsFile.Filename);
 					using (var writer = new StreamWriter(widgetsEntry.Open())) {
 						writer.Write(widgetsFile.ReadAllText());
+					}
+				}
+				// 添加预览图
+				if (!string.IsNullOrEmpty(info.PreviewImageBase64)) {
+					var previewEntry = archive.CreateEntry(PreviewFilename);
+					using (var entryStream = previewEntry.Open()) {
+						var previewImageBytes = Convert.FromBase64String(info.PreviewImageBase64);
+						entryStream.Write(previewImageBytes, 0, previewImageBytes.Length);
 					}
 				}
 			}
@@ -265,6 +275,27 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 			}
 			using (var fileStream = file.OpenWrite()) {
 				stream.CopyTo(fileStream);
+			}
+		}
+
+		/// <summary>
+		/// 创建主题
+		/// 根据当前使用的主题创建
+		/// </summary>
+		/// <param name="info">主题信息</param>
+		public virtual void CreateTheme(VisualThemeInfo info) {
+			var filenameWithoutExtension = Path.GetFileNameWithoutExtension(info.Filename);
+			var result = new List<VisualThemeInfo>();
+			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
+			int index = 0;
+			var saveFilename = $"{filenameWithoutExtension}.zip";
+			IFileEntry file = fileStorage.GetStorageFile(ThemeDirectoryName, saveFilename);
+			while (file.Exists) {
+				saveFilename = $"{filenameWithoutExtension}({++index}).zip";
+				file = fileStorage.GetStorageFile(ThemeDirectoryName, saveFilename);
+			}
+			using (var fileStream = file.OpenWrite()) {
+				ExportThemeToStream(info, fileStream);
 			}
 		}
 
