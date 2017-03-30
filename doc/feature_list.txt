@@ -544,7 +544,8 @@ Shopping.ProductRating
 		TODO: 支持评价时上传图片
 
 Testing.WebTester
-	TODO: 定义这里的功能列表
+	在网页上执行测试
+	查看测试的结果
 
 Theme.Mobile.Frame
 	手机版时替换页面顶部栏
@@ -555,21 +556,22 @@ Theme.VisualEditor
 	编辑指定url的页面
 	获取所有可编辑页面的url
 	获取所有模板模块
-	TODO: 添加模板模块到区域
-	TODO: 编辑在区域中的模板模块
-	TODO: 从区域删除模板模块
-	TODO: 拖动排序区域中的模板模块
-	TODO: 拖动一个区域的模块模块到另一个区域
-	TODO: 如果url是可编辑页面且登陆人有可视化编辑权限则显示悬浮编辑按钮
-	TODO: 列出主题包(App_Data\theme_packs)
-	TODO: 生成主题包(保存当前的所有编辑)
-	TODO: 导入主题包
-	TODO: 上传主题包
+	添加模板模块到区域
+	编辑在区域中的模板模块
+	从区域删除模板模块
+	拖动排序区域中的模板模块
+	拖动一个区域的模块模块到另一个区域
+	保存或切换主题时自动备份
+	列出主题
+	应用主题
+	删除主题
+	上传主题
+	创建主题
 
 Theme.Widgets.Base
-	TODO: 定义这里的功能列表
-	TODO: 自定义样式模块
-	TODO: 自定义脚本模块
+	可视化编辑模块
+		自定义Html模块
+		自定义内容模块
 
 Theme.Widgets.Product
 	TODO: 定义这里的功能列表
