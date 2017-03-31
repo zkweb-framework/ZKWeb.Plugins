@@ -145,12 +145,19 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services {
 				throw new BadRequestException(new T("Please provide rating for atleast one product"));
 			}
 			// 保存上传的评价图片
+			var albumManager = Application.Ioc.Resolve<ProductRatingAlbumManager>();
 			foreach (var rating in addedRatings) {
-				var orderProductId = rating.OrderProduct.Id.ToString();
+				var orderProductId = rating.OrderProduct.Id;
+				var orderProductIdStr = orderProductId.ToString();
 				var photoFiles = files
-					.Where(p => p.First.Contains(orderProductId))
+					.Where(p => p.First.Contains(orderProductIdStr))
 					.OrderBy(p => p.First).ToList();
-				
+				for (int i = 1; i <= photoFiles.Count; ++i) {
+					var file = photoFiles[i - 1];
+					using (var stream = file.Second.OpenReadStream()) {
+						albumManager.SaveAlbumImage(orderProductId, i, stream);
+					}
+				}
 			}
 		}
 

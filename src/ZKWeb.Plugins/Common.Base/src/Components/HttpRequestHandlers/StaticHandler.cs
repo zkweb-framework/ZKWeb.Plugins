@@ -1,5 +1,4 @@
-﻿using ZKWeb.Server;
-using ZKWeb.Storage;
+﻿using ZKWeb.Storage;
 using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
@@ -12,7 +11,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.HttpRequestHandlers {
 	/// 路径规则
 	/// /static/{路径}
 	///	返回文件
-	/// pathManager.GetResourcesPath("static", 路径);
+	/// fileStorage.GetResourceFile("static", 路径);
 	/// 文件不存在时抛出404例外
 	/// </summary>
 	[ExportMany, SingletonReuse]
