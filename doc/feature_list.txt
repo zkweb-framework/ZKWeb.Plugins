@@ -548,7 +548,7 @@ Shopping.ProductRating
 		商品详情页可以查看评价记录
 		订单详情页可以查看商品评价
 		TODO: 后台可以删除商品评价
-		TODO: 评价时可以上传图片
+		评价时可以上传图片
 
 Testing.WebTester
 	在网页上执行测试
