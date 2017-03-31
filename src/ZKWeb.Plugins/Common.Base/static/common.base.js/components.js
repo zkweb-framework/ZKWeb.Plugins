@@ -28,6 +28,7 @@
 // @koala-append "custom/_jquery.editableTable.js"
 // @koala-append "custom/_jquery.load.setup.js"
 // @koala-append "custom/_jquery.numberInput.js"
+// @koala-append "custom/_jquery.popupOriginal.js"
 // @koala-append "custom/_jquery.postLink.js"
 // @koala-append "custom/_jquery.refreshImage.js"
 // @koala-append "custom/_jquery.requireScript.js"

@@ -7,6 +7,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Bases;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable.Extensions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable;
 using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ProductMatchParametersDescriptionProviders.Extensions;
+using ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Enums;
 using ZKWeb.Plugins.Shopping.ProductRating.src.Domain.Services;
 using ZKWebStandard.Extensions;
 
@@ -35,6 +36,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.UIComponents.AjaxTableHandler
 			AjaxTableSearchRequest request,
 			IList<EntityToTableRow<Domain.Entities.ProductRating>> pairs) {
 			var ratingManager = Application.Ioc.Resolve<ProductRatingManager>();
+			var albumManager = Application.Ioc.Resolve<ProductRatingAlbumManager>();
 			foreach (var pair in pairs) {
 				var rankDescription = new T(pair.Entity.Rank.GetDescription());
 				pair.Row["Id"] = pair.Entity.Id;
@@ -43,8 +45,16 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.UIComponents.AjaxTableHandler
 				pair.Row["RankDescription"] = rankDescription;
 				pair.Row["Comment"] = string.IsNullOrEmpty(pair.Entity.Comment) ?
 					rankDescription : pair.Entity.Comment;
-				pair.Row["MatchParametersDescription"] = pair.Entity.Product.GetMatchParametersDescription(
-					pair.Entity.OrderProduct.MatchParameters);
+				pair.Row["Images"] = albumManager
+					.GetExistAlbumImageWebPaths(pair.Entity.OrderProduct.Id)
+					.Select(p => new {
+						url = p.GetOrDefault(ProductRatingAlbumImageType.Normal),
+						thumbnailUrl = p.GetOrDefault(ProductRatingAlbumImageType.Thumbnail)
+					})
+					.Where(p => p.url != null && p.thumbnailUrl != null)
+					.ToList();
+				pair.Row["MatchParametersDescription"] = pair.Entity.Product
+					.GetMatchParametersDescription(pair.Entity.OrderProduct.MatchParameters);
 				pair.Row["CreateTime"] = pair.Entity.CreateTime.ToClientTimeString();
 			}
 		}
@@ -59,6 +69,7 @@ namespace ZKWeb.Plugins.Shopping.ProductRating.src.UIComponents.AjaxTableHandler
 			response.Columns.AddMemberColumn("Rank");
 			response.Columns.AddMemberColumn("RankDescription");
 			response.Columns.AddMemberColumn("Comment");
+			response.Columns.AddMemberColumn("Images");
 			response.Columns.AddMemberColumn("CreateTime");
 		}
 	}

@@ -57,6 +57,7 @@ $.fn.ajaxTable = function (options) {
 				table.searchRequest.PageNo = data.PageNo;
 				table.searchRequest.PageSize = data.PageSize;
 				table.container.html(table.compiledTemplate({ result: data }));
+				$.dynamicLoaded(table.container);
 				// 绑定分页事件
 				var $pagination = table.container.find(".pagination");
 				$pagination.on("click", ".enabled", function () {

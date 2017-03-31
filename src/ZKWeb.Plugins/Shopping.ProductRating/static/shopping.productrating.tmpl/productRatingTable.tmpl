@@ -15,7 +15,14 @@
 					<span class="username pull-right"><%-row.Username%></span>
 				</div>
 				<div class="box-body">
-					<span class="comment"><%-row.Comment%></span>
+					<div>
+						<span class="comment"><%-row.Comment%></span>
+					</div>
+					<div class="images">
+						<% _.each(row.Images, function(image, index) { %>
+							<a><img src="<%-image.thumbnailUrl%>" alt="<%-$.translate('ProductRatingPhoto')%>" data-trigger="popup-original" data-original-src="<%-image.url%>" /></a>
+						<% }); %>
+					</div>
 				</div>
 			</div>
 		<% }); %>

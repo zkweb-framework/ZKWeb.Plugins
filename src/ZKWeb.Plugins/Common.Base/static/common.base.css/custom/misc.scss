@@ -98,3 +98,10 @@ dl.entity-summary {
 .border-themed {
 	border: 2px solid #0080BF !important;
 }
+
+/* 模态框中的原图 */
+.modal .original-image {
+	overflow-x: auto;
+	overflow-y: auto;
+	text-align: center;
+}
