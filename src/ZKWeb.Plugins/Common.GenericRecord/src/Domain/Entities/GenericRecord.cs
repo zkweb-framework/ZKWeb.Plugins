@@ -66,7 +66,8 @@ namespace ZKWeb.Plugins.Common.GenericRecord.src.Domain.Entities {
 			builder.Id(r => r.Id);
 			builder.Map(r => r.Type, new EntityMappingOptions() {
 				Nullable = false,
-				Index = "Idx_Type"
+				Index = "Idx_Type",
+				Length = 255
 			});
 			builder.Map(r => r.ReleatedId, new EntityMappingOptions() { Index = "Idx_ReleatedId" });
 			builder.References(r => r.Creator, new EntityMappingOptions() { Nullable = true });

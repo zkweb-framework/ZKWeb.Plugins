@@ -73,7 +73,9 @@ namespace ZKWeb.Plugins.Common.Admin.src.Domain.Entities {
 		/// </summary>
 		public virtual void Configure(IEntityMappingBuilder<User> builder) {
 			builder.Id(u => u.Id);
-			builder.Map(u => u.Type, new EntityMappingOptions() { Index = "Idx_Type" });
+			builder.Map(u => u.Type, new EntityMappingOptions() {
+				Index = "Idx_Type", Length = 255
+			});
 			builder.Map(u => u.Username, new EntityMappingOptions() {
 				Unique = true, Length = 255
 			});

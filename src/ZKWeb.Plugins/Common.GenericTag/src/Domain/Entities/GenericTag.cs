@@ -64,7 +64,9 @@ namespace ZKWeb.Plugins.Common.GenericTag.src.Domain.Entities {
 		/// </summary>
 		public virtual void Configure(IEntityMappingBuilder<GenericTag> builder) {
 			builder.Id(t => t.Id);
-			builder.Map(t => t.Type, new EntityMappingOptions() { Index = "Idx_Type" });
+			builder.Map(t => t.Type, new EntityMappingOptions() {
+				Index = "Idx_Type", Length = 255
+			});
 			builder.Map(t => t.Name);
 			builder.Map(t => t.CreateTime);
 			builder.Map(t => t.UpdateTime);

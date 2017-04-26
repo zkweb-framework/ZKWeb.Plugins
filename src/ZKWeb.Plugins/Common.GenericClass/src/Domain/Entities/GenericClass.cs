@@ -68,7 +68,9 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Domain.Entities {
 		/// </summary>
 		public virtual void Configure(IEntityMappingBuilder<GenericClass> builder) {
 			builder.Id(c => c.Id);
-			builder.Map(c => c.Type, new EntityMappingOptions() { Index = "Idx_Type" });
+			builder.Map(c => c.Type, new EntityMappingOptions() {
+				Index = "Idx_Type", Length = 255
+			});
 			builder.References(c => c.Parent, new EntityMappingOptions() { Nullable = true });
 			builder.Map(c => c.Name);
 			builder.Map(c => c.CreateTime);

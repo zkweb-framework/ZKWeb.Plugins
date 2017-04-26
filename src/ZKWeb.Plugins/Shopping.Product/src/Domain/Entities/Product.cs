@@ -110,10 +110,10 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Entities {
 			builder.Map(p => p.Name);
 			builder.Map(p => p.Introduction);
 			builder.Map(p => p.Type, new EntityMappingOptions() {
-				Nullable = false, Index = "Idx_Type"
+				Nullable = false, Index = "Idx_Type", Length = 255
 			});
 			builder.Map(p => p.State, new EntityMappingOptions() {
-				Nullable = false, Index = "Idx_State"
+				Nullable = false, Index = "Idx_State", Length = 255
 			});
 			builder.References(p => p.Seller);
 			builder.Map(p => p.CreateTime);

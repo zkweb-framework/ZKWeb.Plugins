@@ -97,7 +97,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Entities {
 			builder.Id(a => a.Id);
 			builder.Map(a => a.Name);
 			builder.Map(a => a.Type, new EntityMappingOptions() {
-				Index = "Idx_Type"
+				Index = "Idx_Type", Length = 255
 			});
 			builder.References(a => a.Owner, new EntityMappingOptions() {
 				Nullable = true

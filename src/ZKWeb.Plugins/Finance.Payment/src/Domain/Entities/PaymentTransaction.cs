@@ -129,13 +129,13 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Entities {
 				Nullable = false, Unique = true, Length = 255
 			});
 			builder.Map(t => t.Type, new EntityMappingOptions() {
-				Index = "Idx_Type"
+				Index = "Idx_Type", Length = 255
 			});
 			builder.References(t => t.Api, new EntityMappingOptions() {
 				Nullable = false
 			});
 			builder.Map(t => t.ExternalSerial, new EntityMappingOptions() {
-				Index = "Idx_ExternalSerial"
+				Index = "Idx_ExternalSerial", Length = 255
 			});
 			builder.Map(t => t.Amount, new EntityMappingOptions() {
 				Index = "Idx_Amount"
@@ -144,7 +144,7 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Entities {
 				Index = "Idx_PaymentFee"
 			});
 			builder.Map(t => t.CurrencyType, new EntityMappingOptions() {
-				Index = "Idx_CurrencyType"
+				Index = "Idx_CurrencyType", Length = 255
 			});
 			builder.References(t => t.Payer, new EntityMappingOptions() {
 				Nullable = true

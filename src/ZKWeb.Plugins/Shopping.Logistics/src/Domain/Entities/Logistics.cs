@@ -87,7 +87,7 @@ namespace ZKWeb.Plugins.Shopping.Logistics.src.Domain.Entities {
 			builder.Id(l => l.Id);
 			builder.Map(l => l.Name);
 			builder.Map(l => l.Type, new EntityMappingOptions() {
-				Index = "Idx_Type"
+				Index = "Idx_Type", Length = 255
 			});
 			builder.Map(l => l.PriceRules, new EntityMappingOptions() {
 				WithSerialization = true
