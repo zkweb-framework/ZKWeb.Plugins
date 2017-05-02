@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using System.DrawingCore;
 using System.IO;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Storage;

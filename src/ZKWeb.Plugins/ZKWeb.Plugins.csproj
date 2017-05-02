@@ -7,12 +7,11 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <DisableImplicitFrameworkReferences Condition=" '$(TargetFramework)' == 'net461' ">true</DisableImplicitFrameworkReferences>
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ZKWeb" Version="1.7.0" />
+    <PackageReference Include="ZKWeb" Version="1.8.0-beta-3" />
     <PackageReference Include="ZKWeb.Fork.QRCoder" Version="1.0.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.3.0" />
     <PackageReference Include="System.Net.Requests " Version="4.3.0" />
@@ -23,8 +22,6 @@
     <PackageReference Include="HtmlSanitizer" Version="2.0.5735.24296" />
     <PackageReference Include="ZKWeb.Repack.AopSdk" Version="1.0.0" />
     <Reference Include="System.Speech" />
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
