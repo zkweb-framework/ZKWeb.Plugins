@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "VisualThemeEditor",
-	"Version": "1.7.0",
+	"Version": "1.8.0",
 	"Description": "Allow edit website theme visually",
 	"Dependencies": [
 		"Common.Base",

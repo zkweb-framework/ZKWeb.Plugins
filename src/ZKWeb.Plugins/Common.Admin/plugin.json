@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "Admin Panel",
-	"Version": "1.7.0",
+	"Version": "1.8.0",
 	"Description": "Admin panel and users management",
 	"Dependencies": [ "Common.Base", "Commin.Captcha" ]
 }

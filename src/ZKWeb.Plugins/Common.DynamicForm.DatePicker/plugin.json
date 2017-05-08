@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "DynamicDatePicker",
-	"Version": "1.7.0",
+	"Version": "1.8.0",
 	"Description": "Dynamic form field for date picker",
 	"Dependencies": [ "Common.Base", "Common.Datepicker", "Common.DynamicForm" ]
 }

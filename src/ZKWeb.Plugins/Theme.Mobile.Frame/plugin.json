@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "MobileFrame",
-	"Version": "1.7.0",
+	"Version": "1.8.0",
 	"Description": "Mobile optimized page frame theme",
 	"Dependencies": [
 		"Common.Base",
