@@ -1,7 +1,7 @@
 ﻿{
 	"Name": "SlideShow",
-	"CacheTime": 15,
-	"CacheBy": "Locale",
+	// "CacheTime": 15,
+	// "CacheBy": "Locale",
 	"Arguments": [
 		{
 			"Type": "FileUploaderAsUrl",
@@ -38,6 +38,18 @@
 		{
 			"Type": "FileUploaderAsUrl",
 			"Name": "Image_9"
+		},
+		{
+			"Type": "TextBox",
+			"Name": "Height",
+			"PlaceHolder": "Default is 300",
+			"Group": "SlideShowOptions"
+		},
+		{
+			"Type": "TextBox",
+			"Name": "AutoPlayInterval",
+			"PlaceHolder": "Unit is millisecond, default is 4000",
+			"Group": "SlideShowOptions"
 		}
 	]
 }

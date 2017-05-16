@@ -24,7 +24,12 @@ namespace ZKWeb.Plugins.Theme.Widgets.Slideshow.src.Components.Translates {
 			{ "Image_6", "图片6" },
 			{ "Image_7", "图片7" },
 			{ "Image_8", "图片8" },
-			{ "Image_9", "图片9" }
+			{ "Image_9", "图片9" },
+			{ "SlideShowOptions", "轮播选项" },
+			{ "Height", "高度" },
+			{ "AutoPlayInterval", "自动播放间隔" },
+			{ "Default is 300", "默认是300" },
+			{ "Unit is millisecond, default is 4000", "单位是毫秒, 默认是4000" }
 		};
 
 		public bool CanTranslate(string code) {

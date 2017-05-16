@@ -1,3 +1,21 @@
-﻿<div class="slideshow">
-	{% raw_html CustomContents %}
+﻿{% include_css_here '/static/theme.slideshow.css/components.css' %}
+{% assign heightValue = '300' %}
+{% if Height and Height != '' %}
+{% assign heightValue = Height %}
+{% endif %}
+<div class="glide slideshow" style="height: {{ heightValue }}px" data-trigger="glide" require-script="/static/theme.slideshow.js/components.min.js">
+	<div class="glide__wrapper">
+		<ul class="glide__track">
+			{% for x in (1..9) %}
+			{% assign key = 'Image_[0]' | format: x %}
+			{% assign url = [key] %}
+			{% if url and url != '' %}
+			<li class="glide__slide">
+				<img class="slide-image" style="height: {{ heightValue }}px; width: 100%" src="{{ url }}" alt="slideshow" />
+			</li>
+			{% endif %}
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="glide__bullets"></div>
 </div>
