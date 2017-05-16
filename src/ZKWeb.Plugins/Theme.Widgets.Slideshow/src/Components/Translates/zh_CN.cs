@@ -15,6 +15,16 @@ namespace ZKWeb.Plugins.Theme.Widgets.Slideshow.src.Components.Translates {
 			// TODO: 翻译到其他语言
 			{ "SlideshowTemplateWidgets", "轮播模板模块" },
 			{ "Slideshow template widgets", "轮播的模板模块" },
+			{ "SlideShow", "轮播图" },
+			{ "Image_1", "图片1" },
+			{ "Image_2", "图片2" },
+			{ "Image_3", "图片3" },
+			{ "Image_4", "图片4" },
+			{ "Image_5", "图片5" },
+			{ "Image_6", "图片6" },
+			{ "Image_7", "图片7" },
+			{ "Image_8", "图片8" },
+			{ "Image_9", "图片9" }
 		};
 
 		public bool CanTranslate(string code) {

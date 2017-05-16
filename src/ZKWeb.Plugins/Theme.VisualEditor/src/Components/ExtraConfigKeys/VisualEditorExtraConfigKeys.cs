@@ -11,5 +11,9 @@
 		/// 模块信息的缓存时间，单位是秒
 		/// </summary>
 		public const string WidgetsCacheTime = "Theme.VisualEditor.WidgetsCacheTime";
+		/// <summary>
+		/// 文件上传目录名称
+		/// </summary>
+		public const string FileUploadDirectory = "Theme.VisualEditor.FileUploadDirectory";
 	}
 }

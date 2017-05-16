@@ -36,6 +36,11 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 		/// 模块信息的缓存
 		/// </summary>
 		public IKeyValueCache<int, IList<VisualWidgetGroup>> WidgetsCache { get; protected set; }
+		/// <summary>
+		/// 文件上传目录名称
+		/// 默认是 "theme.visualeditor.files"
+		/// </summary>
+		public string FileUploadDirectory { get; protected set; }
 
 		/// <summary>
 		/// 初始化
@@ -47,6 +52,8 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Domain.Services {
 			WidgetsCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				VisualEditorExtraConfigKeys.WidgetsCacheTime, 15));
 			WidgetsCache = cacheFactory.CreateCache<int, IList<VisualWidgetGroup>>();
+			FileUploadDirectory = extra.GetOrDefault<string>(
+				VisualEditorExtraConfigKeys.FileUploadDirectory, "theme.visualeditor.files");
 		}
 
 		/// <summary>

@@ -1,0 +1,5 @@
+﻿<input name="{{ name }}" type="file" class="file-uploader" {{ attributes | html_attributes }} />
+<input name="{{ name }}_Url" type="hidden" value="{{ value }}" />
+<label class="checkbox-inline">
+	<input name="{{ name }}_Delete" type="checkbox" value="true" />{{ "Delete" | trans }}
+</label>
