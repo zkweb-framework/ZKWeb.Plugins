@@ -6,10 +6,8 @@
 		<i class="fa fa-user"></i>
 		{{ "User Login" | trans }}
 	</h2>
-	{% area user_reg_form_before %}
-	<div class="user-login-form">
-		{{ form }}
-	</div>
-	{% area user_reg_form_after %}
+	{% area user_login_form_top %}
+	{% area user_login_form_center %}
+	{% area user_login_form_bottom %}
 </div>
 {% include common.base/footer.html %}

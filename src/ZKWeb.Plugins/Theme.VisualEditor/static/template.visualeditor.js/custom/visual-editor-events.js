@@ -144,6 +144,17 @@ $(function () {
 		$this.find(".template-widget-title-bar").remove();
 	};
 
+	// 拖动开始时的处理
+	var onSortStarted = function (e, data) {
+		var $item = $(data.item);
+		var width = $item.width();
+		var height = $item.height();
+		$(".ui-sortable-placeholder").css({
+			width: width,
+			height: height,
+		});
+	}
+
 	// 拖动停止后的处理
 	var onSortStopped = function (e, data) {
 		// 移除标题栏
@@ -186,6 +197,7 @@ $(function () {
 			handle: ".template-widget-title-bar",
 			tolerance: "pointer",
 			zIndex: 10050,
+			start: onSortStarted,
 			stop: onSortStopped,
 			update: onSortUpdated
 		}).disableSelection();

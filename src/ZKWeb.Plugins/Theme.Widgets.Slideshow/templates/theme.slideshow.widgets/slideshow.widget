@@ -1,7 +1,7 @@
 ﻿{
 	"Name": "SlideShow",
-	// "CacheTime": 15,
-	// "CacheBy": "Locale",
+	"CacheTime": 15,
+	"CacheBy": "Locale",
 	"Arguments": [
 		{
 			"Type": "FileUploaderAsUrl",

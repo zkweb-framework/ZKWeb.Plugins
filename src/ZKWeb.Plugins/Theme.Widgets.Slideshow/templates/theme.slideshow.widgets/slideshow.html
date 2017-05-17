@@ -3,7 +3,7 @@
 {% if Height and Height != '' %}
 {% assign heightValue = Height %}
 {% endif %}
-<div class="glide slideshow" style="height: {{ heightValue }}px" data-trigger="glide" require-script="/static/theme.slideshow.js/components.min.js">
+<div class="glide slideshow" style="height: {{ heightValue }}px; overflow: hidden;" data-trigger="glide" require-script="/static/theme.slideshow.js/components.min.js">
 	<div class="glide__wrapper">
 		<ul class="glide__track">
 			{% for x in (1..9) %}
