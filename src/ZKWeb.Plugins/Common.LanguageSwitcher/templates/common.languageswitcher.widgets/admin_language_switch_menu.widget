@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "LanguageSwitchMenuForAdminPanel",
 	"CacheTime": 15,
-	"CacheBy": "Locale"
+	"CacheBy": "Locale",
+	"Extra": {
+		"Preview": "/static/common.languageswitcher.images/widget_admin_language_switch_menu_preview.jpg"
+	}
 }

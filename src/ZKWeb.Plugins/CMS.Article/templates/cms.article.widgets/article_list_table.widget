@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "ArticleListTable",
 	"CacheTime": 15,
-	"CacheBy": "Ident,Locale,Url"
+	"CacheBy": "Ident,Locale,Url",
+	"Extra": {
+		"Preview": "/static/cms.article.images/widget_article_list_table_preview.jpg"
+	}
 }

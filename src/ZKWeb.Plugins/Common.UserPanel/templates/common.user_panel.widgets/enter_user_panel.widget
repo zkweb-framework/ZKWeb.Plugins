@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "EnterUserPanel",
 	"CacheTime": 15,
-	"CacheBy": "Ident,Locale"
+	"CacheBy": "Ident,Locale",
+	"Extra": {
+		"Preview": "/static/common.userpanel.images/widget_enter_user_panel_preview.jpg"
+	}
 }

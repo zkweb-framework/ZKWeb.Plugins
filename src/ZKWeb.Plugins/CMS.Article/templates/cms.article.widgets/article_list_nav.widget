@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "ArticleListNav",
 	"CacheTime": 15,
-	"CacheBy": "Ident,Locale"
+	"CacheBy": "Ident,Locale",
+	"Extra": {
+		"Preview": "/static/cms.article.images/widget_article_list_nav_preview.jpg"
+	}
 }
