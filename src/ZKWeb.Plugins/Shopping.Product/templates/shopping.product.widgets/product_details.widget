@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "ProductDetails",
 	"CacheTime": 15,
-	"CacheBy": "Locale,Url"
+	"CacheBy": "Locale,Url",
+	"Extra": {
+		"Preview": "/static/shopping.product.images/widget_product_details_preview.jpg"
+	}
 }

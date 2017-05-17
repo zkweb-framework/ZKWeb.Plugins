@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "ProductFilterByTag",
 	"CacheTime": 15,
-	"CacheBy": "Locale,Url"
+	"CacheBy": "Locale,Url",
+	"Extra": {
+		"Preview": "/static/shopping.product.images/widget_product_filter_by_tag_preview.jpg"
+	}
 }

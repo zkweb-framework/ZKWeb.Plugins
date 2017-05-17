@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "MiniCartMenu",
 	"CacheTime": 3,
-	"CacheBy": "Ident,Locale"
+	"CacheBy": "Ident,Locale",
+	"Extra": {
+		"Preview": "/static/shopping.order.images/widget_mini_cart_menu_preview.jpg"
+	}
 }

@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "ProductListTable",
 	"CacheTime": 15,
-	"CacheBy": "Ident,Locale,Url"
+	"CacheBy": "Ident,Locale,Url",
+	"Extra": {
+		"Preview": "/static/shopping.product.images/widget_product_list_table_preview.jpg"
+	}
 }

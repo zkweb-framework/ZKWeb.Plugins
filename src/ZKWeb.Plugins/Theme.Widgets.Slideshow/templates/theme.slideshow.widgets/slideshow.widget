@@ -2,6 +2,9 @@
 	"Name": "SlideShow",
 	"CacheTime": 15,
 	"CacheBy": "Locale",
+	"Extra": {
+		"Preview": "/static/theme.slideshow.images/widget_slideshow_preview.jpg"
+	},
 	"Arguments": [
 		{
 			"Type": "FileUploaderAsUrl",

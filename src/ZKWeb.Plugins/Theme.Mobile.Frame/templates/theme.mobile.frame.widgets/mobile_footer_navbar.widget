@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "MobileFooterNavbar",
 	"CacheTime": 15,
-	"CacheBy": "Locale"
+	"CacheBy": "Locale",
+	"Extra": {
+		"Preview": "/static/theme.mobile.frame.images/widget_mobile_footer_navbar_preview.jpg"
+	}
 }

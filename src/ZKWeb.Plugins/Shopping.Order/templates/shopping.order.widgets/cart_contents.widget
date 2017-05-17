@@ -1,1 +1,6 @@
-﻿{ "Name": "CartContents" }
+﻿{
+	"Name": "CartContents",
+	"Extra": {
+		"Preview": "/static/shopping.order.images/widget_cart_contents_preview.jpg"
+	}
+}

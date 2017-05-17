@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "ProductAddBookmark",
 	"CacheTime": 5,
-	"CacheBy": "Locale,Url,Ident"
+	"CacheBy": "Locale,Url,Ident",
+	"Extra": {
+		"Preview": "/static/shopping.productbookmark.images/widget_product_add_bookmark_preview.jpg"
+	}
 }

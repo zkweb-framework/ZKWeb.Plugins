@@ -2,6 +2,9 @@
 	"Name": "CustomContents",
 	"CacheTime": 15,
 	"CacheBy": "Locale",
+	"Extra": {
+		"Preview": "/static/theme.base.images/widget_custom_contents_preview.jpg"
+	},
 	"Arguments": [
 		{
 			"Type": "RichTextEditor",

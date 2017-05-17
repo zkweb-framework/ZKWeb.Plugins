@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "ProductNavMenu",
 	"CacheTime": 15,
-	"CacheBy": "Locale"
+	"CacheBy": "Locale",
+	"Extra": {
+		"Preview": "/static/shopping.product.images/widget_product_nav_menu_preview.jpg"
+	}
 }

@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "ProductFilterByPriceAndOrder",
 	"CacheTime": 15,
-	"CacheBy": "Locale,Url"
+	"CacheBy": "Locale,Url",
+	"Extra": {
+		"Preview": "/static/shopping.product.images/widget_product_filter_by_price_and_order_preview.jpg"
+	}
 }

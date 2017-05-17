@@ -42,4 +42,9 @@
     <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Shopping.Order\static\shopping.order.images\" />
+    <Folder Include="Theme.Mobile.Frame\static\theme.mobile.frame.images\" />
+  </ItemGroup>
+
 </Project>

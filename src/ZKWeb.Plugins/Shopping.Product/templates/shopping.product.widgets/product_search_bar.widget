@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "ProductSearchBar",
 	"CacheTime": 15,
-	"CacheBy": "Locale"
+	"CacheBy": "Locale",
+	"Extra": {
+		"Preview": "/static/shopping.product.images/widget_product_search_bar_preview.jpg"
+	}
 }
