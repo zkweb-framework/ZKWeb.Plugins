@@ -2,11 +2,13 @@
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.AdminSettings.src.UIComponents.ListItemProviders {
 	/// <summary>
 	/// 语言列表
 	/// </summary>
+	[ExportMany(ContractKey = "LanguageListItemProvider")]
 	public class LanguageListItemProvider : IListItemProvider {
 		/// <summary>
 		/// 获取选项列表

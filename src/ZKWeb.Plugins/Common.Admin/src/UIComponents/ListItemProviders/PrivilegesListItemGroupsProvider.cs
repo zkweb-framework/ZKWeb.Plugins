@@ -3,11 +3,13 @@ using System.Linq;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Admin.src.UIComponents.ListItemProviders {
 	/// <summary>
 	/// 权限的选项分组列表提供器
 	/// </summary>
+	[ExportMany(ContractKey = "PrivilegesListItemGroupsProvider")]
 	public class PrivilegesListItemGroupsProvider : IListItemGroupsProvider {
 		/// <summary>
 		/// 获取分组列表

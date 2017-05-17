@@ -4,11 +4,13 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
 using ZKWeb.Plugins.Shopping.Logistics.src.Components.LogisticsTypes.Interfaces;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Logistics.src.UIComponents.ListItemProviders {
 	/// <summary>
 	/// 物流类型的选项列表
 	/// </summary>
+	[ExportMany(ContractKey = "LogisticsTypeListItemProvider")]
 	public class LogisticsTypeListItemProvider : IListItemProvider {
 		/// <summary>
 		/// 获取选项列表

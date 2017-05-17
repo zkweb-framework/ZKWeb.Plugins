@@ -28,10 +28,20 @@ namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.StaticTableHandlers {
 			if (classId != null) {
 				query = query.Where(q => q.Classes.Any(c => c.Id == classId));
 			}
+			// 按分类列表
+			var classIds = request.Conditions.GetOrDefault<IList<Guid>>("classes");
+			if (classIds != null && classIds.Count > 0) {
+				query = query.Where(q => q.Classes.Any(c => classIds.Contains(c.Id)));
+			}
 			// 按标签
 			var tagId = request.Conditions.GetOrDefault<Guid?>("tag");
 			if (tagId != null) {
 				query = query.Where(q => q.Tags.Any(t => t.Id == tagId));
+			}
+			// 按标签列表
+			var tagIds = request.Conditions.GetOrDefault<IList<Guid>>("tags");
+			if (tagIds != null && tagIds.Count > 0) {
+				query = query.Where(q => q.Tags.Any(t => tagIds.Contains(t.Id)));
 			}
 			// 按价格范围（这里不考虑货币）
 			var priceRange = request.Conditions.GetOrDefault<string>("price_range");

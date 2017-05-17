@@ -18,6 +18,7 @@ using ZKWeb.Plugins.Common.GenericClass.src.Domain.Entities;
 using ZKWeb.Plugins.Common.GenericTag.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
+using ZKWeb.Plugins.Shopping.Product.src.UIComponents.ListItemProviders;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 	/// <summary>
@@ -129,14 +130,11 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 		/// <returns></returns>
 		[Action("api/product/sort_info", HttpMethods.POST)]
 		public IActionResult SortInfo() {
-			var sort_orders = new object[] {
-				new { name = "Default", value = "default" },
-				new { name = "BestSales", value = "best_sales" },
-				new { name = "LowerPrice", value = "lower_price" },
-				new { name = "HigherPrice", value = "higher_price" },
-				new { name = "NewestOnSale", value = "newest_on_sale" },
-			};
-			return new JsonResult(new { sort_orders });
+			var provider = new ProductSortTypeListItemProvider();
+			var sortOrders = provider.GetItems()
+				.Select(item => new { name = item.Name, value = item.Value })
+				.ToList();
+			return new JsonResult(new { sort_orders = sortOrders });
 		}
 
 		/// <summary>

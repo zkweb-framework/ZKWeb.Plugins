@@ -1,0 +1,38 @@
+﻿{
+	"Name": "ProductShowCase",
+	"CacheTime": 15,
+	"CacheBy": "Locale",
+	"Extra": {
+		"Preview": "/static/theme.product.images/widget_product_showcase_preview.jpg"
+	},
+	"Arguments": [
+		{
+			"Type": "TextBox",
+			"Name": "DisplayCount",
+			"PlaceHolder": "0",
+			"Validators": [
+				{ "Type": "Required" }
+			]
+		},
+		{
+			"Type": "TextBox",
+			"Name": "Keyword",
+			"PlaceHolder": "Name/Seller/Remark"
+		},
+		{
+			"Type": "DropdownList",
+			"Source": "ProductSortTypeListItemProvider",
+			"Name": "ProductSortType"
+		},
+		{
+			"Type": "CheckBoxTree",
+			"Source": "ProductClassListItemTreeProvider",
+			"Name": "ProductClass"
+		},
+		{
+			"Type": "CheckBoxGroup",
+			"Source": "ProductTagListItemProvider",
+			"Name": "ProductTag"
+		}
+	]
+}

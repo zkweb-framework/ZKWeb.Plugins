@@ -1,0 +1,52 @@
+﻿{% assign base_url = "/api/product/search" %}
+
+{% assign page_arg = "0" %}
+
+{% assign page_size_arg = DisplayCount %}
+{% assign keyword_arg = Keyword %}
+{% assign order_arg = ProductSortType %}
+{% assign classes_arg = ProductClass | json %}
+{% assign tags_arg = ProductTag | json %}
+
+{% assign url = base_url | url_set_param: "page", "0" | url_set_param: "page_size", page_size_arg %}
+{% assign url = url | url_set_param: "keyword", keyword_arg %}
+{% assign url = url | url_set_param: "order", order_arg %}
+{% assign url = url | url_set_param: "classes", classes_arg %}
+{% assign url = url | url_set_param: "tags", tags_arg %}
+
+{% fetch {url} > product_search_result %}
+{% include_css_here "/static/shopping.product.css/product-list.css" %}
+{% include_css_here "/static/shopping.product.css/product-list.css" %}
+{% include_css_here "/static/shopping.product.css/product-list.css" %}
+<div class="product-list-table-row prdouct-showcase">
+	<div class="table-container static-table-container">
+		{% if product_search_result.response.Rows.size > 0 %}
+		<div class="product-list-table">
+			{% for row in product_search_result.response.Rows %}
+			<div class="product-cell">
+				<dl>
+					<dt class="main-album">
+						<a href="{{ "/product/view?id=[0]" | format: row.Id | url }}" target="_blank" title="{{ row.Name }}">
+							<img src="{{ row.MainAlbumThumbnail }}" />
+						</a>
+					</dt>
+					<dd class="product-price">
+						<div title="{{ row.Price }}">{{ row.Price }}</div>
+					</dd>
+					<dd class="product-name">
+						<a href="{{ "/product/view?id=[0]" | format: row.Id | url }}" target="_blank" title="{{ row.Name }}">
+							{{ row.Name }}
+						</a>
+					</dd>
+				</dl>
+			</div>
+			{% endfor %}
+			<div class="clearfix"></div>
+		</div>
+		{% else %}
+		<div class="no-matched-records no-matched-products">
+			{{ "No matching products found, please change the condition and search again." | trans }}
+		</div>
+		{% endif %}
+	</div>
+</div>

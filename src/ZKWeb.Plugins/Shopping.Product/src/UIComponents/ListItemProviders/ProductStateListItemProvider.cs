@@ -4,11 +4,13 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
 using ZKWeb.Plugins.Shopping.Product.src.Components.ProductStates.Interfaces;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ListItemProviders {
 	/// <summary>
 	/// 商品状态的选项列表
 	/// </summary>
+	[ExportMany(ContractKey = "ProductStateListItemProvider")]
 	public class ProductStateListItemProvider : IListItemProvider {
 		/// <summary>
 		/// 获取选项列表

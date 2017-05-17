@@ -2,11 +2,13 @@
 using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Finance.Payment.Pingpp.src.UIComponents.ListItemProviders {
 	/// <summary>
 	/// Ping++的支付渠道提供器
 	/// </summary>
+	[ExportMany(ContractKey = "PingppPaymentChannelListItemProvider")]
 	public class PaymentChannelListItemProvider : IListItemProvider {
 		/// <summary>
 		/// 获取支付渠道列表

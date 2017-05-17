@@ -3,11 +3,13 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
 using ZKWeb.Plugins.Common.Region.src.Components.Countries.Bases;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Region.src.UIComponents.ListItemProviders {
 	/// <summary>
 	/// 国家/行政区列表
 	/// </summary>
+	[ExportMany(ContractKey = "CountryListItemProvider")]
 	public class CountryListItemProvider : IListItemProvider {
 		/// <summary>
 		/// 获取选项列表

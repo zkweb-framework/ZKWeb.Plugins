@@ -7,11 +7,13 @@ using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
 using ZKWeb.Plugins.Shopping.Order.src.Domain.Services;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Order.src.UIComponents.ListItemProviders {
 	/// <summary>
 	/// 当前登录用户的收货地址的选项列表
 	/// </summary>
+	[ExportMany(ContractKey = "ShippingAddressListItemProvider")]
 	public class ShippingAddressListItemProvider : IListItemProvider {
 		/// <summary>
 		/// 获取选项列表

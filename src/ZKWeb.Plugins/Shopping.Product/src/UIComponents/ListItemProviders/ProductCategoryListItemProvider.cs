@@ -3,11 +3,13 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
 using ZKWeb.Plugins.Shopping.Product.src.Domain.Services;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Shopping.Product.src.UIComponents.ListItemProviders {
 	/// <summary>
 	/// 商品类目的选项列表
 	/// </summary>
+	[ExportMany(ContractKey = "ProductCategoryListItemProvider")]
 	public class ProductCategoryListItemProvider : IListItemProvider {
 		/// <summary>
 		/// 获取选项列表

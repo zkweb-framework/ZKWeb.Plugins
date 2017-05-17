@@ -3,11 +3,13 @@ using ZKWeb.Localize;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.ListItems.Interfaces;
 using ZKWeb.Plugins.Common.Currency.src.Components.Interfaces;
+using ZKWebStandard.Ioc;
 
 namespace ZKWeb.Plugins.Common.Currency.src.UIComponents.ListItemProviders {
 	/// <summary>
 	/// 货币列表
 	/// </summary>
+	[ExportMany(ContractKey = "CurrencyListItemProvider")]
 	public class CurrencyListItemProvider : IListItemProvider {
 		/// <summary>
 		/// 获取选项列表

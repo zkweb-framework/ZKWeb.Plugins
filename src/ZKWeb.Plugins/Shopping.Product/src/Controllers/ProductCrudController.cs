@@ -216,12 +216,12 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Controllers {
 			/// <summary>
 			/// 商品分类
 			/// </summary>
-			[CheckBoxTreeField("ProductClass", typeof(GenericClassListItemTreeProvider<ProductClassController>))]
+			[CheckBoxTreeField("ProductClass", typeof(ProductClassListItemTreeProvider))]
 			public HashSet<Guid> ProductClass { get; set; }
 			/// <summary>
 			/// 商品标签
 			/// </summary>
-			[CheckBoxGroupField("ProductTag", typeof(GenericTagListItemProvider<ProductTagController>))]
+			[CheckBoxGroupField("ProductTag", typeof(ProductTagListItemProvider))]
 			public HashSet<Guid> ProductTag { get; set; }
 			/// <summary>
 			/// 卖家
