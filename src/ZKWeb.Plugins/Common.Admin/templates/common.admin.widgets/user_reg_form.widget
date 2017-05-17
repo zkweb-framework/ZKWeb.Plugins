@@ -1,3 +1,6 @@
 ﻿{
-	"Name": "UserRegForm"
+	"Name": "UserRegForm",
+	"Extra": {
+		"Preview": "/static/common.admin.images/widget_user_reg_form_preview.jpg"
+	}
 }

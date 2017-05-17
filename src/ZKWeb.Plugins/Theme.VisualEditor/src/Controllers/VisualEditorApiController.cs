@@ -163,6 +163,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 		/// 获取编辑模块的表单
 		/// </summary>
 		[Action("api/visual_editor/get_widget_edit_form", HttpMethods.POST)]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
 		public IActionResult GetWidgetEditForm(string path, IDictionary<string, object> args) {
 			// 获取模块信息
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
@@ -179,6 +180,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 		/// 提交编辑模块的表单
 		/// </summary>
 		[Action("api/visual_editor/submit_widget_edit_form", HttpMethods.POST)]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
 		public IActionResult SubmitWidgetEditForm(string path) {
 			// 获取模块信息
 			var areaManager = Application.Ioc.Resolve<TemplateAreaManager>();
@@ -195,6 +197,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 		/// 获取模块的Html
 		/// </summary>
 		[Action("api/visual_editor/get_widget_html", HttpMethods.POST)]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
 		public IActionResult GetWidgetHtml(string url, string path, IDictionary<string, object> args) {
 			var widgetManager = Application.Ioc.Resolve<VisualWidgetManager>();
 			var widgetHtml = widgetManager.GetWidgetHtml(url, path, args);
@@ -205,6 +208,7 @@ namespace ZKWeb.Plugins.Theme.VisualEditor.src.Controllers {
 		/// 保存可视化编辑的修改
 		/// </summary>
 		[Action("api/visual_editor/save_changes", HttpMethods.POST)]
+		[CheckPrivilege(typeof(ICanUseAdminPanel), "VisualEditor:VisualEditor")]
 		public IActionResult SaveChanges(VisualEditResult result) {
 			var themeManager = Application.Ioc.Resolve<VisualThemeManager>();
 			themeManager.SaveEditResult(result);

@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "EnterAdminPanel",
 	"CacheTime": 15,
-	"CacheBy": "Ident,Locale"
+	"CacheBy": "Ident,Locale",
+	"Extra": {
+		"Preview": "/static/common.admin.images/widget_enter_admin_panel_preview.jpg"
+	}
 }

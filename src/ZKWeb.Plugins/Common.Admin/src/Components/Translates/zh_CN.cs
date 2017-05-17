@@ -140,8 +140,16 @@ namespace ZKWeb.Plugins.Common.Admin.src.Components.Translates {
 			{ "AdminSidebarAppMenu", "后台侧边栏程序菜单" },
 			{ "EnterAdminPanel", "进入后台" },
 			{ "UserLoginInfo", "登录信息" },
+			// TODO: 翻译到其他语言
+			{ "IAmAdmin", "管理员" },
+			{ "IAmAnonymouseUser", "匿名用户" },
+			{ "IAmCooperationPartner", "合作人" },
+			{ "IAmSuperAdmin", "超级管理员" },
+			{ "IAmUser", "用户" },
+			{ "ICanUseAdminPanel", "可使用管理后台" },
 			{ "UserLoginForm", "用户登录表单" },
-			{ "UserRegForm", "用户注册表单" }
+			{ "UserRegForm", "用户注册表单" },
+			{ "AdminLoginForm", "管理员登录表单" }
 		};
 
 		public bool CanTranslate(string code) {

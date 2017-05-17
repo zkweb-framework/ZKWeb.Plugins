@@ -14,12 +14,7 @@
 	<div class="login-box">
 		<div class="login-logo"><a><img src="/static/common.admin.images/logo.png" alt="logo"></a></div>
 		<div class="login-box-body">
-			<h3 class="login-box-msg">{{ "Admin Login" | trans }}</h3>
-			<p class="text-danger">{{ warning }}</p>
-			{{ form }}
-			<div class="create-account">
-				<p><a class="btn btn-info" href="{{ "/user/reg" | url }}" id="register-btn">{{ "Register new user" | trans }}</a></p>
-			</div>
+			{% area admin_login_box %}
 		</div>
 	</div>
 	<input id="RedirectAfterLogin" name="RedirectAfterLogin" type="hidden" value="/admin" />

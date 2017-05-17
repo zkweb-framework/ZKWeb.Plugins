@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "AdminSidebarAppMenu",
 	"CacheTime": 15,
-	"CacheBy": "Ident,Locale"
+	"CacheBy": "Ident,Locale",
+	"Extra": {
+		"Preview": "/static/common.admin.images/widget_admin_sidebar_app_menu_preview.jpg"
+	}
 }

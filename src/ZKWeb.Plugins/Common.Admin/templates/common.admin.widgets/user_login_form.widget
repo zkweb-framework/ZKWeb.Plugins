@@ -1,3 +1,6 @@
 ﻿{
-	"Name": "UserLoginForm"
+	"Name": "UserLoginForm",
+	"Extra": {
+		"Preview": "/static/common.admin.images/widget_user_login_form_preview.jpg"
+	}
 }

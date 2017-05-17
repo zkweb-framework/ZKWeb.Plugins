@@ -15,6 +15,7 @@ namespace ZKWeb.Plugins.Theme.Widgets.Product.src.Components.Translates {
 			// TODO: 翻译到其他语言
 			{ "ProductTemplateWidgets", "商品模板模块" },
 			{ "Product template widgets", "商品的模板模块" },
+			{ "ProductShowCase", "商品展示" }
 		};
 
 		public bool CanTranslate(string code) {

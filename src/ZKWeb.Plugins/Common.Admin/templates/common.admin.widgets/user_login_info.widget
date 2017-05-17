@@ -1,5 +1,8 @@
 ﻿{
 	"Name": "UserLoginInfo",
 	"CacheTime": 15,
-	"CacheBy": "Ident,Locale"
+	"CacheBy": "Ident,Locale",
+	"Extra": {
+		"Preview": "/static/common.admin.images/widget_user_login_info_preview.jpg"
+	}
 }
