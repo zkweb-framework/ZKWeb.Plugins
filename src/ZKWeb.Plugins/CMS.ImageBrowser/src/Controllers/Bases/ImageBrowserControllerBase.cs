@@ -8,7 +8,6 @@ using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Web;
 using ZKWeb.Plugins.Common.Admin.src.Components.PrivilegeProviders;
-using ZKWeb.Plugins.Common.Base.src.Controllers.Bases;
 using ZKWeb.Plugins.Common.Admin.src.Domain.Entities.Interfaces;
 using System;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
@@ -17,7 +16,6 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.AjaxTable;
 using ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.BaseTable.Extensions;
-using ZKWeb.Plugins.Common.Admin.src.Domain.Services;
 using ZKWeb.Plugins.Common.Base.src.Controllers.Extensions;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
@@ -115,26 +113,28 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 			// 搜索图片列表
 			// 分页时如果没有结果，使用最后一页的结果
 			var imageManager = Application.Ioc.Resolve<ImageManager>();
-			var names = imageManager.Query(CategoryLower);
+			var queryResult = imageManager.Query(CategoryLower);
 			if (!string.IsNullOrEmpty(request.Keyword)) {
-				names = names.Where(name => name.Contains(request.Keyword)).ToList();
+				queryResult = queryResult.Where(q =>
+					q.FilenameWithoutExtension.Contains(request.Keyword)).ToList();
 			}
 			var response = new AjaxTableSearchResponse();
-			var result = response.Pagination.Paging(request, names.AsQueryable());
+			var result = response.Pagination.Paging(request, queryResult.AsQueryable());
 			// 返回搜索结果
 			response.PageNo = request.PageNo;
 			response.PageSize = request.PageSize;
-			response.Rows.AddRange(result.Select(name => {
+			response.Rows.AddRange(result.Select(q => {
 				var path = imageManager.GetImageWebPath(
-					CategoryLower, name, imageManager.ImageExtension);
+					CategoryLower, q.FilenameWithoutExtension, q.Extension);
 				var thumbnailPath = imageManager.GetImageWebPath(
-					CategoryLower, name, imageManager.ImageThumbnailExtension);
+					CategoryLower, q.FilenameWithoutExtension, imageManager.ImageThumbnailSuffix + q.Extension);
 				var storageFile = imageManager.GetImageStorageFile(
-					CategoryLower, name, imageManager.ImageExtension);
+					CategoryLower, q.FilenameWithoutExtension, q.Extension);
 				var lastWriteTime = storageFile.LastWriteTimeUtc.ToClientTimeString();
 				var fileSize = FileUtils.GetSizeDisplayName(storageFile.Length);
 				return new Dictionary<string, object>() {
-					{ "name", name },
+					{ "name", q.FilenameWithoutExtension },
+					{ "extension", q.Extension },
 					{ "path", path },
 					{ "thumbnailPath", thumbnailPath },
 					{ "lastWriteTime", lastWriteTime },
@@ -162,11 +162,10 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 		/// <returns></returns>
 		[ScaffoldAction(nameof(RemoveUrl), HttpMethods.POST)]
 		[ScaffoldCheckPrivilege(nameof(RequiredUserType), nameof(RequiredPrivileges))]
-		public virtual IActionResult RemoveAction() {
+		public virtual IActionResult RemoveAction(string name, string extension) {
 			this.RequireAjaxRequest();
 			var imageManager = Application.Ioc.Resolve<ImageManager>();
-			var name = Request.Get<string>("name");
-			imageManager.Remove(CategoryLower, name);
+			imageManager.Remove(CategoryLower, name, extension ?? imageManager.ImageExtension);
 			return new JsonResult(new { message = new T("Remove Successfully") });
 		}
 
@@ -230,22 +229,28 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Controllers.Bases {
 				if (imageFile == null) {
 					throw new BadRequestException(new T("Please select image file"));
 				}
-				((FileUploaderFieldAttribute)this.Form.Fields.First(
+				((FileUploaderFieldAttribute)Form.Fields.First(
 					f => f.Attribute.Name == "Image").Attribute).Check(imageFile);
 				var filename = string.IsNullOrEmpty(CustomName) ? imageFile.FileName : CustomName;
 				// 调用管理器保存
-				// 文件名有重复时自动向后添加(数字)
+				// 如果上传的文件是png则按原格式保存, 否则按默认格式保存
+				// 目前不支持gif原格式保存(类库不支持)
 				var imageManager = Application.Ioc.Resolve<ImageManager>();
+				var extension = imageManager.ImageExtension;
+				if (Path.GetExtension(filename).Equals(".png", StringComparison.OrdinalIgnoreCase)) {
+					extension = ".png";
+				}
+				// 文件名有重复时自动向后添加(数字)
 				var originalName = Path.GetFileNameWithoutExtension(filename);
 				var name = originalName;
 				var count = 1;
-				while (imageManager.Exists(Category, name)) {
+				while (imageManager.Exist(Category, name, extension)) {
 					name = string.Format("{0} ({1})", originalName, count++);
 				}
-				imageManager.Save(imageFile.OpenReadStream(), Category, name);
+				imageManager.Save(imageFile.OpenReadStream(), Category, name, extension);
 				return new {
 					message = new T("Upload Successfully"),
-					path = imageManager.GetImageWebPath(Category, name, imageManager.ImageExtension)
+					path = imageManager.GetImageWebPath(Category, name, extension)
 				};
 			}
 		}

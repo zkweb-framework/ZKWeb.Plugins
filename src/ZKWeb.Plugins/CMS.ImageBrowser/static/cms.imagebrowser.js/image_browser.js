@@ -25,9 +25,11 @@ $(function () {
 		var confirmMessage = $container.find(".translations .sure-to-remove").text();
 		if (confirm(confirmMessage)) {
 			var removeUrl = $container.find(".variables").data("removeUrl");
-			var $tile = $(this).closest(".image-tile");
-			var name = $tile.find("img").attr("title");
-			$.post(removeUrl, { name: name }, function (data) {
+			var $title = $(this).closest(".image-tile");
+			var $img = $title.find("img");
+			var name = $img.attr("title");
+			var extension = $img.attr("extension");
+			$.post(removeUrl, { name: name, extension: extension }, function (data) {
 				$.handleAjaxResult(data);
 				$(".image-browse-portlet .ajax-table").ajaxTable().refresh();
 			});

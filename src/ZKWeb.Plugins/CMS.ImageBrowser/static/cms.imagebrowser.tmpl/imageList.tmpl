@@ -2,7 +2,7 @@
 	<div class="image-tiles">
 		<% _.each(result.Rows, function(row, index) { %>
 			<div class="image-tile">
-				<img title="<%- row.name %>" alt="<%- row.name %>" src="<%- row.thumbnailPath %>" data-src-original="<%- row.path %>">
+				<img title="<%- row.name %>" extension="<%- row.extension %>" alt="<%- row.name %>" src="<%- row.thumbnailPath %>" data-src-original="<%- row.path %>">
 				<div title="<%- row.name %>" class="image-name"><%- row.name %></div>
 				<div title="<%- row.name %>" class="image-last-write-time"><%- row.lastWriteTime %></div>
 				<div class="image-actions">

@@ -7,13 +7,13 @@ using ZKWeb.Localize;
 using ZKWeb.Server;
 using ZKWebStandard.Collections;
 using ZKWebStandard.Extensions;
-using ZKWebStandard.Utils;
 using ZKWebStandard.Ioc;
 using ZKWeb.Cache;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services.Bases;
 using ZKWeb.Plugins.Common.Base.src.Components.Exceptions;
 using ZKWeb.Plugins.CMS.ImageBrowser.src.Components.ExtraConfigKeys;
 using ZKWeb.Storage;
+using ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Structs;
 
 namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 	/// <summary>
@@ -26,13 +26,17 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 		/// </summary>
 		public int ImageQuality { get; set; }
 		/// <summary>
-		/// 图片后缀，默认是.jpg
+		/// 默认的图片后缀，默认是.jpg
 		/// </summary>
 		public string ImageExtension { get; set; }
 		/// <summary>
-		/// 图片缩略图的后缀，默认是.thumb.jpg
+		/// 默认的图片缩略图的后缀，默认是.thumb
 		/// </summary>
-		public string ImageThumbnailExtension { get; set; }
+		public string ImageThumbnailSuffix { get; set; }
+		/// <summary>
+		/// 所有的图片后缀，默认是[.jpg, .jpeg, .bmp, .png, .gif]
+		/// </summary>
+		public string[] AllImageExtensions { get; set; }
 		/// <summary>
 		/// 图片基础路径的格式
 		/// 参数: 类别
@@ -51,7 +55,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 		/// 同一类别下的图片名的缓存
 		/// { 类别: [图片名, ...], ... }
 		/// </summary>
-		protected IKeyValueCache<string, List<string>> ImageNamesCache { get; set; }
+		protected IKeyValueCache<string, IReadOnlyList<ImageQueryResult>> ImageNamesCache { get; set; }
 
 		/// <summary>
 		/// 初始化
@@ -62,12 +66,13 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 			var extra = configManager.WebsiteConfig.Extra;
 			ImageQuality = 90;
 			ImageExtension = ".jpg";
-			ImageThumbnailExtension = ".thumb.jpg";
+			ImageThumbnailSuffix = ".thumb";
+			AllImageExtensions = new[] { ".jpg", "jpeg", ".bmp", ".png", ".gif" };
 			ImageBasePathFormat = "/static/cms.image_browser.images/{0}";
 			ImageThumbnailSize = new Size(135, 135);
 			ImageNamesCacheTime = TimeSpan.FromSeconds(extra.GetOrDefault(
 				ImageBrowserExtraConfigKeys.ImageNamesCacheTime, 15));
-			ImageNamesCache = cacheFactory.CreateCache<string, List<string>>();
+			ImageNamesCache = cacheFactory.CreateCache<string, IReadOnlyList<ImageQueryResult>>();
 		}
 
 		/// <summary>
@@ -81,17 +86,28 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 			return fileStorage.GetStorageDirectory(basePath.Substring(1));
 		}
 
+
 		/// <summary>
 		/// 获取图片的储存文件
 		/// </summary>
 		/// <param name="category">图片类别</param>
 		/// <param name="name">名称，不应该带后缀名</param>
-		/// <param name="extensions">后缀名</param>
 		/// <returns></returns>
-		public virtual IFileEntry GetImageStorageFile(string category, string name, string extensions) {
+		public virtual IFileEntry GetImageStorageFile(string category, string name) {
+			return GetImageStorageFile(category, name, ImageExtension);
+		}
+
+		/// <summary>
+		/// 获取图片的储存文件
+		/// </summary>
+		/// <param name="category">图片类别</param>
+		/// <param name="name">名称，不应该带后缀名</param>
+		/// <param name="extension">后缀名</param>
+		/// <returns></returns>
+		public virtual IFileEntry GetImageStorageFile(string category, string name, string extension) {
 			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
 			var basePath = string.Format(ImageBasePathFormat, category);
-			return fileStorage.GetStorageFile(basePath.Substring(1), name + extensions);
+			return fileStorage.GetStorageFile(basePath.Substring(1), name + extension);
 		}
 
 		/// <summary>
@@ -100,8 +116,19 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 		/// <param name="category">图片类别</param>
 		/// <param name="name">名称，不应该带后缀名</param>
 		/// <returns></returns>
-		public virtual bool Exists(string category, string name) {
-			return GetImageStorageFile(category, name, ImageExtension).Exists;
+		public virtual bool Exist(string category, string name) {
+			return Exist(category, name, ImageExtension);
+		}
+
+		/// <summary>
+		/// 判断图片是否存在
+		/// </summary>
+		/// <param name="category">图片类别</param>
+		/// <param name="name">名称，不应该带后缀名</param>
+		/// <param name="extension">后缀名</param>
+		/// <returns></returns>
+		public virtual bool Exist(string category, string name, string extension) {
+			return GetImageStorageFile(category, name, extension).Exists;
 		}
 
 		/// <summary>
@@ -109,12 +136,23 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 		/// </summary>
 		/// <param name="category">图片类别</param>
 		/// <param name="name">名称，不应该带后缀名</param>
-		/// <param name="extensions">后缀名</param>
 		/// <returns></returns>
-		public virtual string GetImageWebPath(string category, string name, string extensions) {
-			return string.Format("{0}/{1}{2}",
-				string.Format(ImageBasePathFormat, category), name, extensions);
+		public virtual string GetImageWebPath(string category, string name) {
+			return GetImageWebPath(category, name, ImageExtension);
 		}
+
+		/// <summary>
+		/// 获取图片的网页路径
+		/// </summary>
+		/// <param name="category">图片类别</param>
+		/// <param name="name">名称，不应该带后缀名</param>
+		/// <param name="extension">后缀名</param>
+		/// <returns></returns>
+		public virtual string GetImageWebPath(string category, string name, string extension) {
+			return string.Format("{0}/{1}{2}",
+				string.Format(ImageBasePathFormat, category), name, extension);
+		}
+
 
 		/// <summary>
 		/// 保存图片文件
@@ -123,6 +161,17 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 		/// <param name="category">类别</param>
 		/// <param name="name">名称，不应该带后缀名</param>
 		public virtual void Save(Stream imageStream, string category, string name) {
+			Save(imageStream, category, name, ImageExtension);
+		}
+
+		/// <summary>
+		/// 保存图片文件
+		/// </summary>
+		/// <param name="imageStream">读取图片的数据流</param>
+		/// <param name="category">类别</param>
+		/// <param name="name">名称，不应该带后缀名</param>
+		/// <param name="extension">后缀名</param>
+		public virtual void Save(Stream imageStream, string category, string name, string extension) {
 			Image image;
 			try {
 				image = Image.FromStream(imageStream);
@@ -131,15 +180,16 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 			}
 			using (image) {
 				// 保存原图
-				var imageFile = GetImageStorageFile(category, name, ImageExtension);
+				var imageFile = GetImageStorageFile(category, name, extension);
 				using (var stream = imageFile.OpenWrite()) {
-					image.SaveAuto(stream, ImageExtension, ImageQuality);
+					image.SaveAuto(stream, extension, ImageQuality);
 				}
 				// 保存缩略图
 				var thumbnailSize = ImageThumbnailSize;
+				var backgroundColor = extension == ".png" ? Color.Transparent : Color.Wheat;
 				using (var thumbnailImage = image.Resize(thumbnailSize.Width,
-					thumbnailSize.Height, ImageResizeMode.Padding, Color.White)) {
-					var thumbnailFile = GetImageStorageFile(category, name, ImageThumbnailExtension);
+					thumbnailSize.Height, ImageResizeMode.Padding, backgroundColor)) {
+					var thumbnailFile = GetImageStorageFile(category, name, ImageThumbnailSuffix + extension);
 					using (var stream = thumbnailFile.OpenWrite()) {
 						thumbnailImage.SaveAuto(stream, ImageExtension, ImageQuality);
 					}
@@ -155,10 +205,20 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 		/// <param name="category">类别</param>
 		/// <param name="name">名称，不应该带后缀名</param>
 		public virtual void Remove(string category, string name) {
+			Remove(category, name, ImageExtension);
+		}
+
+		/// <summary>
+		/// 删除图片文件
+		/// </summary>
+		/// <param name="category">类别</param>
+		/// <param name="name">名称，不应该带后缀名</param>
+		/// <param name="extension">后缀名</param>
+		public virtual void Remove(string category, string name, string extension) {
 			// 删除原图
-			GetImageStorageFile(category, name, ImageExtension).Delete();
+			GetImageStorageFile(category, name, extension).Delete();
 			// 删除缩略图
-			GetImageStorageFile(category, name, ImageThumbnailExtension).Delete();
+			GetImageStorageFile(category, name, ImageThumbnailSuffix + extension).Delete();
 			// 删除缓存
 			ImageNamesCache.Remove(category);
 		}
@@ -166,22 +226,26 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 		/// <summary>
 		/// 查询类别下的图片名称列表
 		/// 按最后修改的时间排序
-		/// 返回的结果仅图片名称，不带路径和后缀
 		/// </summary>
 		/// <param name="category">图片类别</param>
 		/// <returns></returns>
-		public virtual IReadOnlyList<string> Query(string category) {
+		public virtual IReadOnlyList<ImageQueryResult> Query(string category) {
 			// 获取类别对应的文件夹下的所有图片名称
 			var directoryEntry = GetImageStorageDirectory(category);
 			return ImageNamesCache.GetOrCreate(category, () => {
 				if (!directoryEntry.Exists) {
-					return new List<string>();
+					return new List<ImageQueryResult>();
 				} else {
 					return directoryEntry.EnumerateFiles()
-						.Where(file => file.Filename.EndsWith(ImageExtension) &&
-							!file.Filename.EndsWith(ImageThumbnailExtension))
+						.Where(file => AllImageExtensions.Any(e =>
+							file.Filename.EndsWith(e) &&
+							!file.Filename.EndsWith(ImageThumbnailSuffix + e)))
 						.OrderByDescending(file => file.LastWriteTimeUtc)
-						.Select(file => Path.GetFileNameWithoutExtension(file.Filename))
+						.Select(file => new ImageQueryResult() {
+							Category = category,
+							FilenameWithoutExtension = Path.GetFileNameWithoutExtension(file.Filename),
+							Extension = Path.GetExtension(file.Filename)
+						})
 						.ToList();
 				}
 			}, ImageNamesCacheTime);
