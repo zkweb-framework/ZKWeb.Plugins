@@ -191,7 +191,7 @@ namespace ZKWeb.Plugins.CMS.ImageBrowser.src.Domain.Services {
 					thumbnailSize.Height, ImageResizeMode.Padding, backgroundColor)) {
 					var thumbnailFile = GetImageStorageFile(category, name, ImageThumbnailSuffix + extension);
 					using (var stream = thumbnailFile.OpenWrite()) {
-						thumbnailImage.SaveAuto(stream, ImageExtension, ImageQuality);
+						thumbnailImage.SaveAuto(stream, extension, ImageQuality);
 					}
 				}
 			}
