@@ -119,11 +119,11 @@
 /* 商品表格样式 */
 .product-list-table-row {
 	.product-list-table {
-		margin: 8px;
+		margin: 8px -4px 8px 0px;
 
 		.product-cell {
-			width: 286px;
-			margin: 4px;
+			width: calc(100% / 4 - 4px);
+			margin: 0px 4px 4px 0px;
 			border: 1px solid #d5d5d5;
 			border-radius: 4px;
 			display: inline;
@@ -177,12 +177,19 @@
 	}
 }
 
+/* 列表页中的商品表格样式 */
+.product-list {
+	.product-list-table {
+		margin: 8px 4px 8px 8px;
+	}
+}
+
 /* 低分辨率下商品列表页显示2列，290*2+10 */
 @media (max-width: 590px) {
 	.product-list-table-row {
 		.product-list-table {
 			.product-cell {
-				width: 47%;
+				width: calc(100% / 2 - 4px);
 			}
 		}
 	}
