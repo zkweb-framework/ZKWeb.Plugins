@@ -1,0 +1,18 @@
+﻿{% assign url = Url %}
+{% assign qrcodeSize = "100" %}
+{% assign eccLevel = "Q" %}
+{% assign qrcodeDensity = "20" %}
+
+{% if QRCodeSize and QRCodeSize != '' %}
+{% assign qrcodeSize = QRCodeSize %}
+{% endif %}
+{% if ECCLevel and ECCLevel != '' %}
+{% assign eccLevel = ECCLevel %}
+{% endif %}
+{% if QRCodeDensity and QRCodeDensity != '' %}
+{% assign qrcodeDensity = QRCodeDensity %}
+{% endif %}
+
+<div class="qrcode" style="width: {{ qrcodeSize }}px; height: {{ qrcodeSize }}px">
+	{% qrcode url, eccLevel, qrcodeDensity %}
+</div>

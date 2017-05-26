@@ -1,0 +1,9 @@
+﻿{
+	"Name": "QRCodeTemplateWidgets",
+	"Version": "0.0",
+	"Description": "QRCode template widgets",
+	"Dependencies": [
+		"Common.Base",
+		"Common.QRCoder"
+	]
+}

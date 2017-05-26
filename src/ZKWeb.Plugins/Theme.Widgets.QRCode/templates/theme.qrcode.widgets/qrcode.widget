@@ -1,0 +1,31 @@
+﻿{
+	"Name": "QRCode",
+	"CacheTime": 180,
+	"Extra": {
+		"Preview": "/static/theme.qrcode.images/widget_qrcode_preview.jpg"
+	},
+	"Arguments": [
+		{
+			"Type": "TextBox",
+			"Name": "Url",
+			"Validators": [
+				{ "Type": "Required" }
+			]
+		},
+		{
+			"Type": "TextBox",
+			"Name": "QRCodeSize",
+			"PlaceHolder": "Default is 100"
+		},
+		{
+			"Type": "TextBox",
+			"Name": "ECCLevel",
+			"PlaceHolder": "L, M, Q, H, Default is Q"
+		},
+		{
+			"Type": "TextBox",
+			"Name": "QRCodeDensity",
+			"PlaceHolder": "QRCode Density, Default is 20"
+		}
+	]
+}

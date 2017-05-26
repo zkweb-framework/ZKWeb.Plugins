@@ -18,7 +18,7 @@ namespace ZKWeb.Plugins.Common.QRCoder.src.UIComponents.TemplateTags {
 		/// <summary>
 		/// 图片的Html格式
 		/// </summary>
-		public const string ImgHtmlFormat = "<img src='data:image/png;base64,{0}' alt='' />";
+		public const string ImgHtmlFormat = "<img src='data:image/png;base64,{0}' alt='' style='width: 100%; height: 100%;' />";
 		/// <summary>
 		/// 默认的二维码密度
 		/// </summary>
