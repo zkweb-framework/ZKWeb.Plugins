@@ -3,6 +3,7 @@ using ZKWeb.Web;
 using ZKWeb.Web.ActionResults;
 using ZKWebStandard.Extensions;
 using ZKWebStandard.Ioc;
+using ZKWebStandard.Utils;
 using ZKWebStandard.Web;
 
 namespace ZKWeb.Plugins.Common.Base.src.Components.HttpRequestHandlers {
@@ -31,7 +32,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Components.HttpRequestHandlers {
 				return;
 			}
 			var fileStorage = Application.Ioc.Resolve<IFileStorage>();
-			var subPath = path.Substring(Prefix.Length);
+			var subPath = HttpUtils.UrlDecode(path.Substring(Prefix.Length));
 			if (string.IsNullOrEmpty(subPath)) {
 				return;
 			}
