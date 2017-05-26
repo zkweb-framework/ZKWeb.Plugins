@@ -45,7 +45,6 @@
   <ItemGroup>
     <Folder Include="Shopping.Order\static\shopping.order.images\" />
     <Folder Include="Theme.Mobile.Frame\static\theme.mobile.frame.images\" />
-    <Folder Include="Theme.Widgets.QRCode\" />
   </ItemGroup>
 
 </Project>
