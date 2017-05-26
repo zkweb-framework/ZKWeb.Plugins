@@ -11,36 +11,72 @@
 			"Name": "Image_1"
 		},
 		{
+			"Type": "TextBox",
+			"Name": "ImageUrl_1"
+		},
+		{
 			"Type": "FileUploaderAsUrl",
 			"Name": "Image_2"
+		},
+		{
+			"Type": "TextBox",
+			"Name": "ImageUrl_2"
 		},
 		{
 			"Type": "FileUploaderAsUrl",
 			"Name": "Image_3"
 		},
 		{
+			"Type": "TextBox",
+			"Name": "ImageUrl_3"
+		},
+		{
 			"Type": "FileUploaderAsUrl",
 			"Name": "Image_4"
+		},
+		{
+			"Type": "TextBox",
+			"Name": "ImageUrl_4"
 		},
 		{
 			"Type": "FileUploaderAsUrl",
 			"Name": "Image_5"
 		},
 		{
+			"Type": "TextBox",
+			"Name": "ImageUrl_5"
+		},
+		{
 			"Type": "FileUploaderAsUrl",
 			"Name": "Image_6"
+		},
+		{
+			"Type": "TextBox",
+			"Name": "ImageUrl_6"
 		},
 		{
 			"Type": "FileUploaderAsUrl",
 			"Name": "Image_7"
 		},
 		{
+			"Type": "TextBox",
+			"Name": "ImageUrl_7"
+		},
+		{
 			"Type": "FileUploaderAsUrl",
 			"Name": "Image_8"
 		},
 		{
+			"Type": "TextBox",
+			"Name": "ImageUrl_8"
+		},
+		{
 			"Type": "FileUploaderAsUrl",
 			"Name": "Image_9"
+		},
+		{
+			"Type": "TextBox",
+			"Name": "ImageUrl_9"
 		},
 		{
 			"Type": "TextBox",

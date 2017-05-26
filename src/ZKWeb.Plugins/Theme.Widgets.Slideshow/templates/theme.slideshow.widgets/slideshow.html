@@ -9,9 +9,17 @@
 			{% for x in (1..9) %}
 			{% assign key = 'Image_[0]' | format: x %}
 			{% assign url = [key] %}
+			{% assign linkKey = 'ImageUrl_[0]' | format: x %}
+			{% assign linkUrl = [linkKey] %}
 			{% if url and url != '' %}
 			<li class="glide__slide">
-				<img class="slide-image" style="height: {{ heightValue }}px; width: 100%" src="{{ url }}" alt="slideshow" />
+				{% if linkUrl and linkUrl != '' %}
+				<a href="{{ linkUrl }}" target="_blank">
+					{% endif %}
+					<img class="slide-image" style="height: {{ heightValue }}px; width: 100%" src="{{ url }}" alt="slideshow" />
+					{% if linkUrl and linkUrl != '' %}
+				</a>
+				{% endif %}
 			</li>
 			{% endif %}
 			{% endfor %}

@@ -13,6 +13,7 @@
 		"Common.LanguageSwitcher",
 		"Common.Currency",
 		"Common.PesudoStatic",
+		"Common.QRCoder",
 		"Common.Region",
 		"Common.SerialGenerate",
 		"Common.CodeEditor",
@@ -42,6 +43,7 @@
 		"Theme.VisualEditor",
 		"Theme.Widgets.Base",
 		"Theme.Widgets.Product",
+		"Theme.Widgets.QRCode",
 		"Theme.Widgets.Slideshow"
 	],
 	"AppendPlugins": [

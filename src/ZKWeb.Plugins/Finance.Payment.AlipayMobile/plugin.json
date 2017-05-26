@@ -3,5 +3,5 @@
 	"Version": "1.8.0",
 	"Description": "Support pay transactions by alipay mobile",
 	"References": [ "AopSdk", "QRCoder" ],
-	"Dependencies": [ "Common.Admin", "Finance.Payment" ]
+	"Dependencies": [ "Common.Admin", "Common.QRCoder", "Finance.Payment" ]
 }

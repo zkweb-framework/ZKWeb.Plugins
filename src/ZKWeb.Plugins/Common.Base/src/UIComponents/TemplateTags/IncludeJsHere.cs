@@ -23,7 +23,7 @@ namespace ZKWeb.Plugins.Common.Base.src.UIComponents.TemplateTags {
 		public override void Render(Context context, TextWriter result) {
 			var path = (context[Markup.Trim()] ?? "").ToString();
 			if (string.IsNullOrEmpty(path)) {
-				throw new NullReferenceException("js path can't be empty");
+				throw new ArgumentNullException("js path can't be empty");
 			}
 			result.Write(string.Format(JsHtmlFormat, HttpUtils.HtmlEncode(path)));
 		}
