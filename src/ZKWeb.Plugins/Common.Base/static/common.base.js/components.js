@@ -5,6 +5,7 @@
 // @koala-append "components/jquery.validate.min.js"
 // @koala-append "custom/_jquery.validate.additional.js"
 // @koala-append "components/jquery.validate.unobtrusive.min.js"
+// @koala-append "custom/_jquery.validate.unobtrusive.additional.js"
 // @koala-append "components/jquery.form.min.js"
 // @koala-append "components/jquery.toast.min.js"
 // @koala-append "components/bootstrap.min.js"

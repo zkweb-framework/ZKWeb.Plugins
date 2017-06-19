@@ -10,6 +10,12 @@ $.validator.addMethod("extension", function (value, element, param) {
 	return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
 }, $.validator.format("Please enter a value with a valid extension."));
 
+// 验证隐藏字段
+// https://stackoverflow.com/questions/9707973/validate-a-hidden-field
+$.validator.setDefaults({
+	ignore: ".data-ignore-val" // 默认是 :hidden
+});
+
 /* 重新启用表单验证的函数，在表单html改变后可以调用 */
 $.fn.reactivateValidator = function () {
 	var $form = $(this);
