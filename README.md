@@ -1,15 +1,26 @@
-# Default plugins for zkweb framework [![Build status](https://ci.appveyor.com/api/projects/status/7i8s0vji60j8xcqd?svg=true)](https://ci.appveyor.com/project/303248153/zkweb-plugins) [![NuGet](https://buildstats.info/nuget/ZKWeb.Plugins)](http://www.nuget.org/packages/ZKWeb.Plugins)
+# MPA demo plugins for zkweb framework [![Build status](https://ci.appveyor.com/api/projects/status/7i8s0vji60j8xcqd?svg=true)](https://ci.appveyor.com/project/303248153/zkweb-plugins) [![NuGet](https://buildstats.info/nuget/ZKWeb.Plugins)](http://www.nuget.org/packages/ZKWeb.Plugins)
 
-## Links and License
+This repository only contains plugins, if you want to run it please do either:
 
-Framework: http://github.com/zkweb-framework/ZKWeb<br/>
-Document: http://zkweb-framework.github.io (Chinese)<br/>
+Use project creator from [ZKWeb](https://github.com/zkweb-framework/ZKWeb), select 'src\ZKWeb.Plugins\plugin.collection.json' as default plugin collection.
+
+Or, run it from the [ZKWeb.Demo](https://github.com/zkweb-framework/ZKWeb.Demo) project.
+
+# Screenshots
+
+![00001](screenshots/00001.jpg)
+![00002](screenshots/00002.jpg)
+![00003](screenshots/00003.jpg)
+
+# LICENSE
 
 MIT License<br />
 Copyright © 2016~2017 303248153@github<br />
 If you have any license issue please contact 303248153@qq.com.
 
 # Plugins informations:<br/>
+
+TODO: update for 2.0.0
 
 Directory Name |Name |Version |Full Version |Description
 :-----:|:-----:|:-----:|:-----:|:-----:
