@@ -1,9 +1,9 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Components.GenericConfigs;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Components.PesudoStatic.Enums;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Components.UrlFilters;
+using ZKWeb.Plugins.Common.PesudoStatic.src.Tests.HttpRequestHandlers;
 using ZKWebStandard.Testing;
 
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.UrlFilters {
@@ -15,10 +15,9 @@ namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.UrlFilters {
 			settings.ExcludeUrlPaths.Add("/exclude/me");
 			using (Application.OverrideIoc()) {
 				var filter = new PesudoStaticUrlFilter();
-				var configManagerMock = Substitute.For<GenericConfigManager>();
-				configManagerMock.GetData<PesudoStaticSettings>().Returns(settings);
 				Application.Ioc.Unregister<GenericConfigManager>();
-				Application.Ioc.RegisterInstance(configManagerMock);
+				Application.Ioc.RegisterInstance<GenericConfigManager>(
+					new PesudoStaticHandlerTest.GenericConfigManagerMock(settings));
 				var testUrl = new Func<string, string>(url => { filter.Filter(ref url); return url; });
 
 				Assert.Equals(testUrl(""), "");

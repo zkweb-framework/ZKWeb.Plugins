@@ -1,5 +1,4 @@
-﻿using NSubstitute;
-using System;
+﻿using System;
 using ZKWeb.Plugins.Common.Base.src.Domain.Services;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Components.GenericConfigs;
 using ZKWeb.Plugins.Common.PesudoStatic.src.Components.HttpRequestHandlers;
@@ -10,13 +9,27 @@ using ZKWebStandard.Web;
 namespace ZKWeb.Plugins.Common.PesudoStatic.src.Tests.HttpRequestHandlers {
 	[Tests]
 	class PesudoStaticHandlerTest {
+		public class GenericConfigManagerMock : GenericConfigManager {
+			private PesudoStaticSettings _settings;
+
+			public GenericConfigManagerMock(PesudoStaticSettings settings) {
+				_settings = settings;
+			}
+
+			public override T GetData<T>() {
+				if (typeof(T) == typeof(PesudoStaticSettings)) {
+					return (T)(object)_settings;
+				}
+				return base.GetData<T>();
+			}
+		}
+
 		public void OnRequest() {
 			var settings = new PesudoStaticSettings();
 			using (Application.OverrideIoc()) {
-				var configManagerMock = Substitute.For<GenericConfigManager>();
-				configManagerMock.GetData<PesudoStaticSettings>().Returns(settings);
 				Application.Ioc.Unregister<GenericConfigManager>();
-				Application.Ioc.RegisterInstance(configManagerMock);
+				Application.Ioc.RegisterInstance<GenericConfigManager>(
+					new GenericConfigManagerMock(new PesudoStaticSettings()));
 				var testUrl = new Func<string, string>(url => {
 					string parsedUrl = null;
 					var wrapper = new PesudoStaticHandlerWrapper();
