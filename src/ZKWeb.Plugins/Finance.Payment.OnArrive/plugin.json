@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "OnArrivePaymentApi",
-	"Version": "0.0",
+	"Version": "0.0.0",
 	"Description": "Support pay transactions on goods arrive",
 	"Dependencies": [ "Common.Admin", "Finance.Payment" ]
 }

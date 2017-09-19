@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "ProductRating",
-	"Version": "1.8.0",
+	"Version": "2.0.0",
 	"Description": "Order product rating feature for ec site",
 	"Dependencies": [
 		"Common.Admin",

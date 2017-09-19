@@ -1,6 +1,6 @@
 ﻿{
 	"Name": "Multishop order management",
-	"Version": "0.0",
+	"Version": "0.0.0",
 	"Description": "Provide order management for seller",
 	"Dependencies": [ "Common.Admin", "Shopping.Order", "Multishop.Base" ]
 }
