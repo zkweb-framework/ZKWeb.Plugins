@@ -20,7 +20,7 @@ If you have any license issue please contact 303248153@qq.com.
 
 # Plugins informations:<br/>
 
-**Directory Name **|**Name **|**Version **|**Full Version **|**Description**
+Directory Name |Name |Version |Full Version |Description
 :-----:|:-----:|:-----:|:-----:|:-----:
 Common.Base |Base Functions |2.0.0 |2.0.0 |Base functions and template pages
 Common.Captcha |Captcha |2.0.0 |2.0.0 |Provide captcha form field and validation
