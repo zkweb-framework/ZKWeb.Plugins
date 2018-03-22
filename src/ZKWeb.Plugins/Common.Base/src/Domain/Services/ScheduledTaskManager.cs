@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using ZKWeb.Logging;
 using ZKWeb.Plugins.Common.Base.src.Components.ScheduledTasks.Interfaces;
@@ -27,7 +28,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 		/// </summary>
 		private Lazy<IEnumerable<IScheduledTaskExecutor>> Executors =
 			new Lazy<IEnumerable<IScheduledTaskExecutor>>(() =>
-			Application.Ioc.ResolveMany<IScheduledTaskExecutor>());
+			Application.Ioc.ResolveMany<IScheduledTaskExecutor>().ToList());
 
 		/// <summary>
 		/// 创建执行定时任务的线程
