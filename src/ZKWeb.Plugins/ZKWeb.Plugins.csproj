@@ -15,13 +15,29 @@
     <PackageReference Include="ZKWeb.Fork.QRCoder" Version="1.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
     <PackageReference Include="System.Net.Requests " Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+    <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <PackageReference Include="CsQuery" Version="1.3.5-beta5" />
-    <PackageReference Include="HtmlSanitizer" Version="2.0.5735.24296" />
+    <Reference Include="CsQuery">
+      <HintPath>CMS.CKEditor\references\net\CsQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizer">
+      <HintPath>CMS.CKEditor\references\net\HtmlSanitizer.dll</HintPath>
+    </Reference>
     <PackageReference Include="ZKWeb.Repack.AopSdk" Version="1.0.0" />
     <Reference Include="System.Speech" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <Reference Include="CsQuery">
+      <HintPath>CMS.CKEditor\references\netstandard\CsQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizer">
+      <HintPath>CMS.CKEditor\references\netstandard\HtmlSanitizer.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
@@ -35,12 +51,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\ZKWeb.Plugins.xml</DocumentationFile>
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
-    <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
-    <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Shopping.Order\static\shopping.order.images\" />

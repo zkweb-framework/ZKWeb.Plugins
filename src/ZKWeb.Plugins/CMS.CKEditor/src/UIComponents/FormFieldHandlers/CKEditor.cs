@@ -8,9 +8,7 @@ using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Interfaces;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms;
 using System;
 using ZKWeb.Plugins.Common.Base.src.UIComponents.Forms.Extensions;
-#if !NETCORE
 using Ganss.XSS;
-#endif
 
 namespace ZKWeb.Plugins.CMS.CKEditor.src.UIComponents.FormFieldHandlers {
 	/// <summary>
@@ -40,9 +38,6 @@ namespace ZKWeb.Plugins.CMS.CKEditor.src.UIComponents.FormFieldHandlers {
 			// 解码提交回来的Html内容
 			var html = HttpUtils.HtmlDecode(values[0]);
 			// 过滤不安全的内容
-#if NETCORE
-			throw new NotSupportedException("HtmlSanitizer is unsupported on .Net Core");
-#else
 			var sanitizer = new HtmlSanitizer();
 			sanitizer.RemovingAttribute += (e, args) => {
 				// 允许base64图片，因为Uri有65520的长度限制，只能使用事件允许
@@ -52,7 +47,6 @@ namespace ZKWeb.Plugins.CMS.CKEditor.src.UIComponents.FormFieldHandlers {
 			};
 			html = sanitizer.Sanitize(html);
 			return html;
-#endif
 		}
 	}
 }
