@@ -1,5 +1,5 @@
 ﻿using System;
-using System.DrawingCore;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using ZKWeb.Localize;
