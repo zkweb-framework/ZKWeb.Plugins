@@ -57,7 +57,7 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Entities {
 			builder.Map(s => s.Items, new EntityMappingOptions() { WithSerialization = true });
 			builder.Map(s => s.IpAddress);
 			builder.Map(s => s.RememberLogin);
-			builder.Map(s => s.Expires, new EntityMappingOptions() { Index = "Idx_Expires" });
+			builder.Map(s => s.Expires, new EntityMappingOptions() { Index = "Idx_Session_Expires" });
 		}
 	}
 }

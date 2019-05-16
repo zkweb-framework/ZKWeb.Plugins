@@ -69,7 +69,7 @@ namespace ZKWeb.Plugins.Common.GenericClass.src.Domain.Entities {
 		public virtual void Configure(IEntityMappingBuilder<GenericClass> builder) {
 			builder.Id(c => c.Id);
 			builder.Map(c => c.Type, new EntityMappingOptions() {
-				Index = "Idx_Type", Length = 255
+				Index = "Idx_GenericClass_Type", Length = 255
 			});
 			builder.References(c => c.Parent, new EntityMappingOptions() { Nullable = true });
 			builder.Map(c => c.Name);

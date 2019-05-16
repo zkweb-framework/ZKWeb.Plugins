@@ -80,7 +80,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 			builder.Map(c => c.Type);
 			builder.References(c => c.Owner);
 			builder.Map(c => c.OwnerSessionId,
-				new EntityMappingOptions() { Index = "Idx_OwnerSessionId" });
+				new EntityMappingOptions() { Index = "Idx_CartProduct_OwnerSessionId" });
 			builder.References(c => c.Product);
 			builder.Map(c => c.Count);
 			builder.Map(c => c.MatchParameters,
@@ -88,7 +88,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 			builder.Map(c => c.CreateTime);
 			builder.Map(c => c.UpdateTime);
 			builder.Map(c => c.ExpireTime,
-				new EntityMappingOptions() { Index = "Idx_ExpireTime" });
+				new EntityMappingOptions() { Index = "Idx_CartProduct_ExpireTime" });
 		}
 	}
 }

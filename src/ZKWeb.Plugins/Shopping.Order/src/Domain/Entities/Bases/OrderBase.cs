@@ -51,13 +51,14 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities.Bases {
 		/// 配置数据库结构
 		/// </summary>
 		public virtual void Configure(IEntityMappingBuilder<TOrder> builder) {
+			var typeName = typeof(TOrder).Name;
 			builder.Id(o => o.Id);
 			builder.References(o => o.Owner);
-			builder.Map(o => o.CreateTime, new EntityMappingOptions() { Index = "Idx_CreateTime" });
-			builder.Map(o => o.UpdateTime, new EntityMappingOptions() { Index = "Idx_UpdateTime" });
+			builder.Map(o => o.CreateTime, new EntityMappingOptions() { Index = $"Idx_{typeName}_CreateTime" });
+			builder.Map(o => o.UpdateTime, new EntityMappingOptions() { Index = $"Idx_{typeName}_UpdateTime" });
 			builder.Map(o => o.Deleted);
 			builder.Map(o => o.Remark);
-			builder.Map(o => o.RemarkFlags, new EntityMappingOptions() { Index = "Idx_RemarkFlags" });
+			builder.Map(o => o.RemarkFlags, new EntityMappingOptions() { Index = $"Idx_{typeName}_RemarkFlags" });
 			builder.Map(o => o.Items, new EntityMappingOptions() { WithSerialization = true });
 		}
 	}

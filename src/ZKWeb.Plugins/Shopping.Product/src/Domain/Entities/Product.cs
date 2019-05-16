@@ -105,19 +105,19 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Entities {
 		public virtual void Configure(IEntityMappingBuilder<Product> builder) {
 			builder.Id(p => p.Id);
 			builder.References(p => p.Category, new EntityMappingOptions() {
-				Index = "Idx_Category"
+				Index = "Idx_Product_Category"
 			});
 			builder.Map(p => p.Name);
 			builder.Map(p => p.Introduction);
 			builder.Map(p => p.Type, new EntityMappingOptions() {
-				Nullable = false, Index = "Idx_Type", Length = 255
+				Nullable = false, Index = "Idx_Product_Type", Length = 255
 			});
 			builder.Map(p => p.State, new EntityMappingOptions() {
-				Nullable = false, Index = "Idx_State", Length = 255
+				Nullable = false, Index = "Idx_Product_State", Length = 255
 			});
 			builder.References(p => p.Seller);
 			builder.Map(p => p.CreateTime);
-			builder.Map(p => p.UpdateTime, new EntityMappingOptions() { Index = "Idx_UpdateTime" });
+			builder.Map(p => p.UpdateTime, new EntityMappingOptions() { Index = "Idx_Product_UpdateTime" });
 			builder.Map(p => p.DisplayOrder);
 			builder.Map(p => p.Remark);
 			builder.Map(p => p.Deleted);

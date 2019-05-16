@@ -79,15 +79,15 @@ namespace ZKWeb.Plugins.Shopping.Product.src.Domain.Entities {
 			builder.References(d => d.Product);
 			builder.Map(d => d.Conditions, new EntityMappingOptions() { WithSerialization = true });
 			builder.Map(d => d.Affects, new EntityMappingOptions() { WithSerialization = true });
-			builder.Map(d => d.Price, new EntityMappingOptions() { Index = "Idx_Price" });
+			builder.Map(d => d.Price, new EntityMappingOptions() { Index = "Idx_ProductMatchedData_Price" });
 			builder.Map(d => d.PriceCurrency);
 			builder.Map(d => d.Weight);
 			builder.Map(d => d.Stock);
 			builder.Map(d => d.ItemNo, new EntityMappingOptions() {
-				Index = "Idx_ItemNo", Length = 255
+				Index = "Idx_ProductMatchedData_ItemNo", Length = 255
 			});
 			builder.Map(d => d.BarCode, new EntityMappingOptions() {
-				Index = "Idx_BarCode", Length = 255
+				Index = "Idx_ProductMatchedData_BarCode", Length = 255
 			});
 			builder.Map(d => d.MatchOrder);
 			builder.Map(d => d.Remark);

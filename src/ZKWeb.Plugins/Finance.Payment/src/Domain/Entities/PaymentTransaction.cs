@@ -129,22 +129,22 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Entities {
 				Nullable = false, Unique = true, Length = 255
 			});
 			builder.Map(t => t.Type, new EntityMappingOptions() {
-				Index = "Idx_Type", Length = 255
+				Index = "Idx_PaymentTransaction_Type", Length = 255
 			});
 			builder.References(t => t.Api, new EntityMappingOptions() {
 				Nullable = false
 			});
 			builder.Map(t => t.ExternalSerial, new EntityMappingOptions() {
-				Index = "Idx_ExternalSerial", Length = 255
+				Index = "Idx_PaymentTransaction_ExternalSerial", Length = 255
 			});
 			builder.Map(t => t.Amount, new EntityMappingOptions() {
-				Index = "Idx_Amount"
+				Index = "Idx_PaymentTransaction_Amount"
 			});
 			builder.Map(t => t.PaymentFee, new EntityMappingOptions() {
-				Index = "Idx_PaymentFee"
+				Index = "Idx_PaymentTransaction_PaymentFee"
 			});
 			builder.Map(t => t.CurrencyType, new EntityMappingOptions() {
-				Index = "Idx_CurrencyType", Length = 255
+				Index = "Idx_PaymentTransaction_CurrencyType", Length = 255
 			});
 			builder.References(t => t.Payer, new EntityMappingOptions() {
 				Nullable = true
@@ -153,14 +153,14 @@ namespace ZKWeb.Plugins.Finance.Payment.src.Domain.Entities {
 				Nullable = true
 			});
 			builder.Map(t => t.ReleatedId, new EntityMappingOptions() {
-				Index = "Idx_ReleatedId"
+				Index = "Idx_PaymentTransaction_ReleatedId"
 			});
 			builder.HasMany(t => t.ReleatedTransactions, new EntityMappingOptions() {
 				CascadeDelete = false
 			});
 			builder.Map(t => t.Description);
 			builder.Map(t => t.State, new EntityMappingOptions() {
-				Index = "Idx_State"
+				Index = "Idx_PaymentTransaction_State"
 			});
 			builder.Map(t => t.ExtraData, new EntityMappingOptions() {
 				WithSerialization = true

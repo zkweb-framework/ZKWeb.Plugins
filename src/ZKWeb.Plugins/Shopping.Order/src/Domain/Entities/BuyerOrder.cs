@@ -36,7 +36,7 @@ namespace ZKWeb.Plugins.Shopping.Order.src.Domain.Entities {
 			base.Configure(builder);
 			builder.References(o => o.SellerOrder);
 			builder.Map(o => o.BuyerSessionId,
-				new EntityMappingOptions() { Index = "Idx_BuyerSessionId" });
+				new EntityMappingOptions() { Index = "Idx_BuyerOrder_BuyerSessionId" });
 		}
 	}
 }
