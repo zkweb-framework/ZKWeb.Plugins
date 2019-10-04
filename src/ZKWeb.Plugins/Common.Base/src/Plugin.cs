@@ -1,4 +1,5 @@
 ﻿using DotLiquid;
+using System;
 using ZKWeb.Templating.DynamicContents;
 using ZKWebStandard.Ioc;
 using ZKWeb.Plugin;
@@ -13,7 +14,7 @@ namespace ZKWeb.Plugins.Common.Base.src {
 	/// 载入插件时的处理
 	/// </summary>
 	[ExportMany, SingletonReuse]
-	public class Plugin : IPlugin {
+	public class Plugin : IPlugin, IDisposable {
 		/// <summary>
 		/// 初始化
 		/// </summary>
@@ -46,6 +47,13 @@ namespace ZKWeb.Plugins.Common.Base.src {
 			areaManager.GetArea("header_logobar").DefaultWidgets.Add("common.base.widgets/logo");
 			areaManager.GetArea("index_top_area_1").DefaultWidgets.Add("common.base.widgets/index_help");
 			areaManager.GetArea("footer_area_3").DefaultWidgets.Add("common.base.widgets/copyright");
+		}
+
+		/// <summary>
+		/// 卸载
+		/// </summary>
+		public void Dispose() {
+			Application.Ioc.Resolve<ScheduledTaskManager>().Dispose();
 		}
 	}
 }

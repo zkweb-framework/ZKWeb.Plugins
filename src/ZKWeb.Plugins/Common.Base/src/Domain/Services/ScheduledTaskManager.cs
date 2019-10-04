@@ -22,13 +22,15 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 	/// </summary>
 	[ExportMany, SingletonReuse]
 	public class ScheduledTaskManager :
-		DomainServiceBase<ScheduledTask, string> {
+		DomainServiceBase<ScheduledTask, string>, IDisposable {
 		/// <summary>
 		/// 定时任务执行器的列表
 		/// </summary>
 		private Lazy<IEnumerable<IScheduledTaskExecutor>> Executors =
 			new Lazy<IEnumerable<IScheduledTaskExecutor>>(() =>
 			Application.Ioc.ResolveMany<IScheduledTaskExecutor>().ToList());
+		private volatile bool _keepalive = true;
+		private ManualResetEvent _exited = new ManualResetEvent(false);
 
 		/// <summary>
 		/// 创建执行定时任务的线程
@@ -37,20 +39,33 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 			var logManager = Application.Ioc.Resolve<LogManager>();
 			var thread = new Thread(() => {
 				// 每分钟调查一次是否有需要执行的任务
-				while (true) {
-					Thread.Sleep(TimeSpan.FromMinutes(1));
-					// 枚举并处理定时任务
-					foreach (var executor in Executors.Value) {
-						try {
-							HandleTask(executor);
-						} catch (Exception e) {
-							logManager.LogError(e.ToString());
+				try {
+					while (_keepalive) {
+						for (int x = 0; x < 60; ++x) {
+							Thread.Sleep(TimeSpan.FromSeconds(1));
+							if (!_keepalive) {
+								return;
+							}
+						}
+						// 枚举并处理定时任务
+						foreach (var executor in Executors.Value) {
+							if (!_keepalive) {
+								return;
+							}
+							try {
+								HandleTask(executor);
+							} catch (Exception e) {
+								logManager.LogError(e.ToString());
+							}
 						}
 					}
+				} finally {
+					_exited.Set();
 				}
 			});
 			thread.IsBackground = true;
 			thread.Start();
+			logManager.LogInfo("Scheduled task manager thread started");
 		}
 
 		/// <summary>
@@ -74,6 +89,19 @@ namespace ZKWeb.Plugins.Common.Base.src.Domain.Services {
 			}
 			// 执行定时任务
 			executor.Execute();
+		}
+
+		/// <summary>
+		/// 停止执行定时任务的线程
+		/// </summary>
+		public virtual void Dispose() {
+			_keepalive = false;
+			if (_exited.WaitOne(TimeSpan.FromMinutes(5))) {
+				var logManager = Application.Ioc.Resolve<LogManager>();
+				logManager.LogInfo("Scheduled task manager thread stopped");
+			} else {
+				throw new TimeoutException("Wait for scheduled task manager thread stop failed");
+			}
 		}
 	}
 }
